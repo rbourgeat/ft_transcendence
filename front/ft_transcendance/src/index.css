@@ -3,19 +3,8 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
-  /* -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale; */
   background-color: #212529 !important;
   color: white !important;
-  /*
-  margin-left: 10px !important;
-  margin-right: 10px !important;
-  margin-bottom: 10px !important;
-  margin-top: 10px !important;
-  */
-  /* margin: 0px;
-  height: 100%; */
-  /*height: 100%;*/
 }
 
 code {
