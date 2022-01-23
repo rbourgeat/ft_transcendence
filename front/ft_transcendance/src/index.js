@@ -7,8 +7,6 @@ import reportWebVitals from './reportWebVitals';
 ReactDOM.render(
   <React.StrictMode>
     <head>
-    <link rel="stylesheet"
-      href="https://fonts.googleapis.com/css?family=Inconsolata&effect=font-effect-analygraph"></link>
     </head>
     <body>
       <App />
