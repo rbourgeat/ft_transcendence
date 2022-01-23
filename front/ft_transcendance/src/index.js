@@ -2,12 +2,17 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import Auth from './Auth/Auth'
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Auth/>
+    <head>
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Inconsolata&effect=font-effect-analygraph"></link>
+    </head>
+    <body>
+      <App />
+    </body>
   </React.StrictMode>,
   document.getElementById('root')
 );
