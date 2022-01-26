@@ -21,9 +21,9 @@ function App() {
   return (
     <>
     <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Auth />} />
+        <Route path="home" element={<Home />} />
         {/* On doit arriver sur la page de auth en premier si on est pas co */}
-        <Route path="auth" element={<Auth />} />
         <Route path="profile" element={<Profile />} />
         <Route path="admin" element={<Admin />} />
         <Route path="channels" element={<Channels />} />

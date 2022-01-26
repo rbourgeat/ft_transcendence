@@ -1,11 +1,12 @@
 import React from 'react'
+import { Container } from 'react-bootstrap';
 import ReactDOM from 'react-dom';
 import './Player.css';
 
 export default function Profile() {
     return (
         <div id="profile-div">
-          <div className="container">
+          <div className="container" id="container-profile">
             <div className="row" id='profile-row'>
               <div className="col align-self-start" id="profile-col">
                 {/* One of three columns */}
@@ -16,7 +17,7 @@ export default function Profile() {
                         {/* A centrer pour ne pas etre depasse par la nav bar */}
                         <h5 className="card-title">Profile</h5>
                         <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <a href="#" className="btn btn-primary">Go somewhere</a>
+                       {/* <a href="#" className="btn btn-primary">Go somewhere</a> */}
                       </div>
                     </div>
                   </div> 

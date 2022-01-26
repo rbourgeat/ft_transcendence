@@ -1,8 +1,14 @@
 import React from 'react'
 import ReactDOM from 'react-dom';
 import './Auth.css';
-import { Form, Button } from 'react-bootstrap';
+import { useNavigate } from "react-router-dom";
+import { Form, Button} from 'react-bootstrap';
 export default function Auth() {
+    let navigate = useNavigate(); 
+  const routeChange = () =>{ 
+    let path = `home`; 
+    navigate(path);
+  }
     return (
         < div id="auth-form-div" >
 
@@ -21,7 +27,7 @@ export default function Auth() {
                         <Form.Label>Mot de passe</Form.Label>
                         <Form.Control type="password" placeholder="Password" />
                     </Form.Group>
-                    <Button variant="primary" type="submit">
+                    <Button variant="primary" type="submit" onClick={routeChange}>
                         Me connecter
                     </Button>
                 </Form>

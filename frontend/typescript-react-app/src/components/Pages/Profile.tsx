@@ -5,9 +5,9 @@ import './Profile.css';
 
 export default function Profile() {
     return (
-        <>
+        <div id="profile">
         <Sidebar />
         <Player />
-        </>
+        </div>
     );
 }
