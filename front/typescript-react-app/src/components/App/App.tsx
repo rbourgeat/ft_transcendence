@@ -1,22 +1,37 @@
 import React from 'react';
 import './App.css';
-import Sidebar from '../Sidebar/Sidebar';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Home from '../Pages/Home'
+//Mettre dans page
 import Profile from '../Profile/Profile'
+import Admin from '../Pages/Admin'
+import Channels from '../Pages/Channels'
+import Friends from '../Pages/Friends'
+import History from '../Pages/History'
+import Messages from '../Pages/Messages'
+import Search from '../Pages/Search'
+import Settings from '../Pages/Settings'
+import Home from '../Pages/Home'
+//Mettre dans page
+import Auth from '../Auth/Auth'
+import Sidebar from '../Sidebar/Sidebar'
+
 import 'bootstrap/dist/css/bootstrap.min.css'
+import { Routes, Route } from 'react-router-dom';
 
 function App() {
   return (
-    <div className="app-div">
-      <Router>
-        <Routes>
-            {/* <Route path="/" element={<Sidebar />}>
-            <Route index element={<Home />} />
-            <Route path="profile" element={<Profile />}> */}
-        </Routes>
-      </Router>
-    </div>
+    <>
+    <Routes>
+        <Route path="/" element={<Home />} />
+        {/* On doit arriver sur la page de auth en premier si on est pas co */}
+        <Route path="auth" element={<Auth />} />
+        <Route path="profile" element={<Profile />} />
+        <Route path="admin" element={<Admin />} />
+        <Route path="channels" element={<Channels />} />
+        <Route path="messages" element={<Messages />} />
+        {/* <Route path="search" element={<Search />} /> */}
+        <Route path="settings" element={<Settings />} />
+      </Routes>
+    </>
   );
 }
 
