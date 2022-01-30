@@ -1,0 +1,45 @@
+version: "3"
+services:
+  backend:
+    container_name: app
+    build:
+      context: .
+      dockerfile: .Dockerfile
+    depends_on:
+      - postgres
+    environment:
+      DATABASE_URL: postgres://postgres:newPassword@postgres:5432/transcendence
+      NODE_ENV: development
+      PORT: 4000
+    ports:
+      - "4000:4000"
+  postgres:
+    container_name: postgres
+    image: postgres:10.4
+    ports:
+      - "5432:5432"
+    volumes: 
+      - ./postgresdata:/var/lib/postgresql/data
+      - ./src/migrations/dbinit.sql:/docker-entrypoint-initdb.d/dbinit.sql
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: newPassword
+      POSTGRES_DB: transcendence
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4:6.4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@transcendence.com
+      PGADMIN_DEFAULT_PASSWORD: secret
+      PGADMIN_LISTEN_PORT: 80
+    ports:
+      - "8080:80"
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    depends_on:
+      - postgres
+volumes:
+    db-data:
+    pgadmin-data:
