@@ -8,7 +8,7 @@ services:
     depends_on:
       - postgres
     environment:
-      DATABASE_URL: postgres://postgres:newPassword@postgres:5432/transcendence
+      DATABASE_URL: postgres://postgres:42mdp@postgres:5432/transcendence
       NODE_ENV: development
       PORT: 4000
     ports:
@@ -24,7 +24,7 @@ services:
     restart: always
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: newPassword
+      POSTGRES_PASSWORD: 42mdp
       POSTGRES_DB: transcendence
   pgadmin:
     container_name: pgadmin
@@ -32,10 +32,10 @@ services:
     restart: always
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@transcendence.com
-      PGADMIN_DEFAULT_PASSWORD: secret
-      PGADMIN_LISTEN_PORT: 80
+      PGADMIN_DEFAULT_PASSWORD: 42mdp
+      PGADMIN_LISTEN_PORT: 81
     ports:
-      - "8080:80"
+      - "8081:81"
     volumes:
       - pgadmin-data:/var/lib/pgadmin
     depends_on:

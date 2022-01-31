@@ -3,7 +3,7 @@
 ## TODO-LIST: User Account
 
 - [x] dockering backend
-- [ ] database postegreSQL 
+- [x] database postegreSQL 
 - [ ] 42 api OAuth
 - [ ] avatars
 - [ ] two-factor authentication
@@ -11,3 +11,16 @@
 - [ ] status
 - [ ] stats
 - [ ] match history
+
+## PostegreSQL
+
+- id (int)
+- login42 (text)
+- avatar (text)
+- status (int)
+- wins (int)
+- losses (int)
+- ladder_level (int)
+- achievements (text)
+- match_history (???)
+- friends (text)
