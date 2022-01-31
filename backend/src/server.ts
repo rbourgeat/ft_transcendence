@@ -1,41 +1,19 @@
-import express, { Application, Router } from 'express';
-import bodyParser from 'body-parser';
-import usersRouter from './routers/UsersRouter';
-import pool from './dbconfig/dbconnector';
+const express = require("express");
+const app = express();
 
-class Server {
-    private app;
+const PORT = process.env.PORT || '4000';
 
-    constructor() {
-        this.app = express();
-        this.config();
-        this.routerConfig();
-        this.dbConnect();
-    }
+app.set("view engine", "ejs");
 
-    private config() {
-        this.app.use(bodyParser.urlencoded({ extended:true }));
-        this.app.use(bodyParser.json({ limit: '1mb' })); // 100kb default
-    }
+app.get("/", (req, res) => {
+    //res.send("Hello, ft_transcendence !");
+    res.render("index");
+});
 
-    private dbConnect() {
-        pool.connect(function (err, client, done) {
-            if (err) throw new Error(err);
-            console.log('Connected');
-          }); 
-    }
+app.get("/game", (req, res) => {
+    res.render("game", { user: "rbourgea"});
+});
 
-    private routerConfig() {
-        this.app.use('/', usersRouter);
-    }
-
-    public start = (port: number) => {
-        return new Promise((resolve, reject) => {
-            this.app.listen(port, () => {
-                resolve(port);
-            }).on('error', (err: Object) => reject(err));
-        });
-    }
-}
-
-export default Server;
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+});
