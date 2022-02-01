@@ -4,25 +4,27 @@ const app = express();
 
 const PORT = process.env.PORT || '80';
 
-function me(token) {
+function checkIfRegister(info42, res) {
+	res.send(info42);
+}
+
+function me(token, res) {
 	var options = {
-		'method': 'POST',
+		'method': 'GET',
 		'url': 'https://api.intra.42.fr/v2/me',
 		'headers': {
-			'Content-Type': 'application/x-www-form-urlencoded'
-		},
-		form: {
-			'access_token': token
+			'Authorization': 'Bearer ' + token
 		},
 		json: true
 	};
 	request(options, function (error, response) {
 		if (error) throw new Error(error);
-			console.log(response.body);
+		console.log(response.body);
+		checkIfRegister(response.body, res);
 	});
 }
 
-function auth(code, state) {
+function auth(code, state, res) {
 	var options = {
 		'method': 'POST',
 		'url': 'https://api.intra.42.fr/oauth/token',
@@ -41,9 +43,9 @@ function auth(code, state) {
 	};
 	request(options, function (error, response) {
 		if (error) throw new Error(error);
-			console.log(response.body);
-		console.log('access_token = ' + response.body['access_token']);
-		me(response.body['access_token']);
+		console.log(response.body);
+		// console.log('access_token = ' + response.body['access_token']);
+		me(response.body['access_token'], res);
 	});
 }
 
@@ -80,16 +82,14 @@ app.get("/auth", (req, res) => {
 	var url = req.url;
 	var code = url.substring(url.indexOf("=") + 1, url.lastIndexOf("&"));
 	var state = url.substring(url.indexOf("state=") + 6, url.length - 1);
-	res.send("CODE = " + code + "\nSTATE = " + state);
 	if (code && state)
-		auth(code, state);
+		auth(code, state, res);
 	else
 		res.send("ERROR WITH 42 API");
 });
 
 app.get("/callback", (req, res) => {
 	res.send("YESSSS !");
-	
 });
 
 app.listen(PORT, () => {
