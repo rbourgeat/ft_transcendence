@@ -24,3 +24,15 @@
 - achievements (text)
 - match_history (???)
 - friends (text)
+
+
+/auth
+/game
+/user
+/chat?
+    ban
+
+
+localhost/user?login42=truc
+
+localhost/user?

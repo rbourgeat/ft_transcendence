@@ -21,6 +21,44 @@ var user = {
 // 	console.log('DB Connected');
 // });
 
+// function refreshUserRegister(info42)
+// {
+// 	user['login42'] = info42['login'];
+// 	user['avatar'] = info42['image_url'];
+// }
+
+async function getAllUser(res) { // On cherche si l'utilisateur existe
+	try {
+		const client = await pool.connect();
+		const sql = `SELECT * FROM users;`;
+		console.log(sql);
+		const { rows } = await client.query(sql);
+		client.release();
+		console.log(rows);
+
+		res.send(rows);
+
+	} catch (error) {
+		res.status(400).send(error); // L'utilisateur n'existe pas
+	}
+}
+
+async function getUser(user, res) { // On cherche si l'utilisateur existe
+	try {
+		const client = await pool.connect();
+		const sql = `SELECT * FROM users WHERE login42 = '${user}' LIMIT 1;`;
+		console.log(sql);
+		const { rows } = await client.query(sql);
+		client.release();
+		console.log(rows);
+
+		res.send(rows);
+
+	} catch (error) {
+		res.status(400).send(error); // L'utilisateur n'existe pas
+	}
+}
+
 async function signin(info42, res) {
 	try {
 		const client = await pool.connect();
@@ -29,10 +67,10 @@ async function signin(info42, res) {
 		const { rows } = await client.query(sql);
 		const users = rows;
 		client.release();
-		user['login42'] = info42['login'];
-		user['avatar'] = info42['image_url'];
+
 		//res.send("Bienvenue, " + info42['login']);
-		res.render("user", { login42: user['login42'], avatar: user['avatar']});
+		// res.render("user", { login42: user['login42'], avatar: user['avatar']});
+		getUser(user['login42'], res);
 
 	} catch (error) {
 		res.status(400).send(error); // problème d'inscription...
@@ -42,13 +80,14 @@ async function signin(info42, res) {
 async function checkIfRegister(info42, res) { // On cherche si l'utilisateur existe
 	try {
 		const client = await pool.connect();
-		const sql = `SELECT * FROM users as u WHERE u.login42 == '${info42['login']}';`;
+		const sql = `SELECT * FROM users WHERE login42 = '${info42['login']}' LIMIT 1;`;
+		console.log(sql);
 		const { rows } = await client.query(sql);
-		const users = rows;
 		client.release();
+		console.log(rows);
 
-		// res.send(users); // il existe, on affiche ses infos
-		res.render("user", { login42: user['login42'], avatar: user['avatar']});
+		//res.render("user", { login42: user['login42'], avatar: user['avatar']});
+		getUser(user['login42'], res);
 
 	} catch (error) {
 		//res.status(400).send(error); // L'utilisateur n'existe pas
@@ -114,7 +153,19 @@ app.get("/", (req, res) => {
 });
 
 app.get("/user", (req, res) => {
-	res.render("user", { login42: user['login42'], avatar: user['avatar']});
+	//res.render("user", { login42: user['login42'], avatar: user['avatar']});
+	var url = req.url;
+	var command = url.substring(url.indexOf("?") + 1, url.length);
+	if (command)
+	{
+		if (command.includes("login"))
+		{
+			var user = url.substring(url.indexOf("?login=") + 7, url.length);
+			getUser(user,res);
+		}
+		if (command.includes("all"))
+			getAllUser(res);
+	}
 });
 
 app.get("/game", (req, res) => {
