@@ -1,12 +1,10 @@
 CREATE TABLE users
 (
-    id integer NOT NULL,
     login42 text  NOT NULL,
     avatar text  NOT NULL,
     status integer NOT NULL,
-    wins integer DEFAULT 0,
-    losses integer DEFAULT 0,
+    wins integer NOT NULL,
+    losses integer NOT NULL,
     ladder_level integer NOT NULL,
-    achievements text NOT NULL,
-    CONSTRAINT users_pkey PRIMARY KEY (id)
+    achievements text NOT NULL
 )

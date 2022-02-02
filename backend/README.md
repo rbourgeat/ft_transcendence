@@ -4,7 +4,7 @@
 
 - [x] dockering backend
 - [x] database postegreSQL 
-- [ ] 42 api OAuth
+- [x] 42 api OAuth
 - [ ] avatars
 - [ ] two-factor authentication
 - [ ] friends
