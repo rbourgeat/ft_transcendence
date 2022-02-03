@@ -153,13 +153,14 @@ app.get("/", (req, res) => {
 
 app.get("/user", (req, res) => {
 	var url = req.url;
-	var command = url.substring(url.indexOf("?") + 1, url.length);
+	var command = url.substring(url.indexOf("/user?") + 6, url.length);
+	console.log("command=" + command);
 	if (command)
 	{
-		if (command.includes("login"))
+		if (command.includes("name"))
 		{
-			var user = url.substring(url.indexOf("?login=") + 7, url.length);
-			getUser(user,res);
+			var name = url.substring(url.indexOf("name=") + 5, url.length);
+			getUser(name,res);
 		}
 		if (command.includes("all"))
 			getAllUser(res);

@@ -12,18 +12,13 @@
 - [ ] stats
 - [ ] match history
 
-## PostegreSQL
+## Backend Requests:
 
-- id (int)
-- login42 (text)
-- avatar (text)
-- status (int)
-- wins (int)
-- losses (int)
-- ladder_level (int)
-- achievements (text)
-- match_history (???)
-- friends (text)
+| GET                    | Body                                                         |
+| ---------------------- | ------------------------------------------------------------ |
+| /user?name={user}      | [{"login42":"{user}","avatar":"{url}", ... }]                |
+| /user?all              | [{"login42":"{user}","avatar":"{url}", ... }, { ... }, ... ] |
+
 
 
 /auth
