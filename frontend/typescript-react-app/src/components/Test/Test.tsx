@@ -1,42 +1,20 @@
 import React, { useState } from 'react';
 import './Test.css';
+import Wave from 'react-wavify'
 
 function Test() {
     return (
-        <div id="test" >
-        <section className="blue">
-            <h1>Nice Curves</h1>
-            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Possimus eum neque perspiciatis, eius ut temporibus? Laborum, optio eligendi perferendis ipsa iusto totam nostrum doloribus magni, aspernatur corporis tempora labore qui.</p>
-            <div className="curve"></div>
-        </section>
-        <section className="dark">
-            <h1>Nice Curves</h1>
-            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Possimus eum neque perspiciatis, eius ut temporibus? Laborum, optio eligendi perferendis ipsa iusto totam nostrum doloribus magni, aspernatur corporis tempora labore qui.</p>
-        </section>
-        <section className="red">
-            <h1>Nice Curves</h1>
-            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Possimus eum neque perspiciatis, eius ut temporibus? Laborum, optio eligendi perferendis ipsa iusto totam nostrum doloribus magni, aspernatur corporis tempora labore qui.</p>
-        </section>
-        <section className="dark">
-            <h1>Nice Curves</h1>
-            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Possimus eum neque perspiciatis, eius ut temporibus? Laborum, optio eligendi perferendis ipsa iusto totam nostrum doloribus magni, aspernatur corporis tempora labore qui.</p>
-        </section>
-        <section className="blue">
-            <h1>Nice Curves</h1>
-            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Possimus eum neque perspiciatis, eius ut temporibus? Laborum, optio eligendi perferendis ipsa iusto totam nostrum doloribus magni, aspernatur corporis tempora labore qui.</p>
-        </section>
-        <section className="pink">
-            <h1>Nice Curves</h1>
-            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Possimus eum neque perspiciatis, eius ut temporibus? Laborum, optio eligendi perferendis ipsa iusto totam nostrum doloribus magni, aspernatur corporis tempora labore qui.</p>
-        </section>
-        <section className="red">
-            <h1>Nice Curves</h1>
-            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Possimus eum neque perspiciatis, eius ut temporibus? Laborum, optio eligendi perferendis ipsa iusto totam nostrum doloribus magni, aspernatur corporis tempora labore qui.</p>
-        </section>
-        <section className="dark">
-            <h1>Nice Curves</h1>
-            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Possimus eum neque perspiciatis, eius ut temporibus? Laborum, optio eligendi perferendis ipsa iusto totam nostrum doloribus magni, aspernatur corporis tempora labore qui.</p>
-        </section> 
+        <div>
+              <Wave fill='#f79902'
+                    paused={false}
+                    options={{
+                    height: 20,
+                    amplitude: 20,
+                    speed: 0.15,
+                    points: 3
+                    }}
+            />
         </div>
+
     );
 } export default Test;
