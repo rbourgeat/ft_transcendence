@@ -15,7 +15,7 @@ import Auth from '../Auth/Auth'
 import Sidebar from '../Sidebar/Sidebar'
 import Test from '../Test/Test'
 
-import 'bootstrap/dist/css/bootstrap.min.css'
+//  import 'bootstrap/dist/css/bootstrap.min.css'
 import { Routes, Route } from 'react-router-dom';
 
 function App() {
