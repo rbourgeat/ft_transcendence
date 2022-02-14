@@ -5,3 +5,25 @@
   right: 0px;
   left: 0px;
 }
+
+/* #auth--form {
+  border: 1rem solid red;
+} */
+
+/* #form-auth {
+  border: 1rem dashed blue;
+} */
+
+.forms {
+  width: 400px;
+  margin: 15px;
+  /* border: 1rem dashed blue; */
+}
+
+#auth-btn-1 {
+  width: 400px;
+}
+
+#auth-btn-2 {
+  width: 400px;
+}
