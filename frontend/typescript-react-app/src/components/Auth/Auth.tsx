@@ -10,8 +10,12 @@ export default function Auth() {
     navigate(path);
   }
     return (
+        <div>
+        <div className="wrapper">
+            <div className="wave"></div>
+        </div>
         < div id="auth-form-div" >
-
+           
             <div id="auth--form" className="d-flex justify-content-center">
                 <Form id="form-auth" className="forms">
                     <h2>Se connecter</h2>
@@ -34,10 +38,14 @@ export default function Auth() {
                     {/* <Button className="btn btn-primary btn-lg btn-block" type="submit" onClick={routeChange}>
                         Authentification API 42
                     </Button> */}
+                    {/* Attention aux id */}
                     <Form.Group className="mb-3" controlId="formBasicConnexion">
-                        <button type="submit" className="btn btn-secondary btn-block" onClick={routeChange} id="auth-btn-1">Block level button</button>
+                        <button type="submit" className="btn btn-light btn-block" onClick={routeChange} id="auth-btn-1">Me connecter</button>
                     </Form.Group>
-                    
+                    <hr className="my-4"></hr>
+                    <Form.Group className="mb-3" controlId="formAuth42">
+                        <button type="submit" className="btn btn-light btn-block" onClick={routeChange} id="auth-btn-3">Authentification 42</button>
+                    </Form.Group>
                 </Form>
                 
                 <Form className="forms">
@@ -60,13 +68,15 @@ export default function Auth() {
                         <Form.Control type="password" placeholder="******" />
                     </Form.Group>
 
-                    <Form.Group className="mb-3" controlId="formSignupConfirmPassword">
+                    {/* <Form.Group className="mb-3" controlId="formSignupConfirmPassword">
                         <Form.Label>Confirm Email</Form.Label>
                         <Form.Control type="confirmemail" placeholder="******" />
-                    </Form.Group>
+                    </Form.Group> */}
 
-                    <button type="submit" className="btn btn-secondary btn-block" onClick={routeChange} id="auth-btn-2">M'inscrire</button>
+                    <button type="submit" className="btn btn-light btn-block" onClick={routeChange} id="auth-btn-2">M'inscrire</button>
                 </Form>
             </div>
-        </div >);
+        </div >
+        </div>
+        );
 }
