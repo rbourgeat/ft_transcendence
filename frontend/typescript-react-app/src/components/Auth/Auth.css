@@ -82,3 +82,12 @@
     transform: rotate(360deg);
   }
 }
+
+#show_password {
+  border: 1rem solid red;
+}
+
+#togglePassword {
+  margin: 10px;
+  cursor: pointer;
+}

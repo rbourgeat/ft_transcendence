@@ -22,23 +22,13 @@ export default function Auth() {
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label>Login</Form.Label>
                         <Form.Control type="email" placeholder="Login" />
-                        {/* <Form.Text className="text-muted">
-                            Entrez votre login
-                        </Form.Text> */}
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formBasicPassword">
                         <Form.Label>Mot de passe</Form.Label>
                         <Form.Control type="password" placeholder="Mot de passe" />
                     </Form.Group>
-                    {/* <Button className="btn btn-primary btn-lg btn-block" type="submit" onClick={routeChange}>
-                        Je me connecte
-                    </Button> */}
                     <p></p>
-                    {/* <Button className="btn btn-primary btn-lg btn-block" type="submit" onClick={routeChange}>
-                        Authentification API 42
-                    </Button> */}
-                    {/* Attention aux id */}
                     <Form.Group className="mb-3" controlId="formBasicConnexion">
                         <button type="submit" className="btn btn-light btn-block" onClick={routeChange} id="auth-btn-1">Me connecter</button>
                     </Form.Group>
@@ -53,9 +43,6 @@ export default function Auth() {
                     <Form.Group className="mb-3" controlId="formSignupUsername">
                         <Form.Label>Username</Form.Label>
                         <Form.Control type="username" placeholder="malatini42" />
-                        {/* <Form.Text className="text-muted">
-                            Entrez votre login et non votre adresse mail.
-                        </Form.Text> */}
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formSignUpEmail">
@@ -64,15 +51,12 @@ export default function Auth() {
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formSignupPassword">
+                        {/* Pour ajouter des regles sur le password : https://developer.mozilla.org/fr/docs/Web/HTML/Element/Input/password */}
                         <Form.Label>Password</Form.Label>
+                        <i className="far fa-eye" id="togglePassword"></i>
                         <Form.Control type="password" placeholder="******" />
+                        {/* Ajouter un post ici ? */}
                     </Form.Group>
-
-                    {/* <Form.Group className="mb-3" controlId="formSignupConfirmPassword">
-                        <Form.Label>Confirm Email</Form.Label>
-                        <Form.Control type="confirmemail" placeholder="******" />
-                    </Form.Group> */}
-
                     <button type="submit" className="btn btn-light btn-block" onClick={routeChange} id="auth-btn-2">M'inscrire</button>
                 </Form>
             </div>
