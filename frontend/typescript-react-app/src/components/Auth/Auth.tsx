@@ -3,6 +3,9 @@ import ReactDOM from 'react-dom';
 import './Auth.css';
 // import { useNavigate } from "react-router-dom";
 import { Form, Button} from 'react-bootstrap';
+import useWindowSize from 'react-use/lib/useWindowSize'
+import Confetti from 'react-confetti'
+
 // import { trustedTypes } from 'trusted-types';
 export default function Auth() {
 //     let navigate = useNavigate(); 
@@ -15,9 +18,16 @@ export default function Auth() {
     const [showPassConfirm, setshowPassConfirm] = useState(false);
     const [showPassBis, setshowPassBis] = useState(false);
 
+    //Confetti
+    const { width, height } = useWindowSize();
+
     console.log(showPass);
     return (
         <>
+        <Confetti
+            width={width}
+            height={height}
+        />
         <div className="wrapper">
             <div className="wave"></div>
         </div>
