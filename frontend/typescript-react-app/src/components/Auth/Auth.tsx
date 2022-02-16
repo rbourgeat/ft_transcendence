@@ -27,6 +27,7 @@ export default function Auth() {
         <Confetti
             width={width}
             height={height}
+            // recycle={false}
         />
         <div className="wrapper">
             <div className="wave"></div>
@@ -41,11 +42,11 @@ export default function Auth() {
                     <h2>Bienvenue ! </h2>
                     <p>Pour jouer, vous devez vous authentifier 🏓</p>
                     {/* Mettre authentication 42 seule separement */}
-                    <hr className="my-4"></hr>
+                    {/* <hr className="my-4"></hr> */}
                     <Form.Group className="mb-3" controlId="formAuth42">
                         <button type="submit" className="btn btn-primary btn-block" id="auth-btn-3">Authentification 42</button>
                     </Form.Group>
-                    <hr className="my-4"></hr>
+                    {/* <hr className="my-4"></hr> */}
                     <h3>Se connecter</h3>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label>Username</Form.Label>
@@ -67,7 +68,7 @@ export default function Auth() {
                                             </button>
                                         </div>
                     </Form.Group>
-                    <p></p>
+                    <p id="connect-p"></p>
                     {/* onClick={routeChange}  */}
                     <hr className="my-4"></hr>
                     <Form.Group className="mb-3" controlId="formBasicConnexion">
