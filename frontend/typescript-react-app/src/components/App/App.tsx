@@ -13,6 +13,7 @@ import Home from '../Pages/Home'
 //Mettre dans page
 import Auth from '../Auth/Auth'
 import Sidebar from '../Sidebar/Sidebar'
+import Test from '../Test/Test'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { Routes, Route } from 'react-router-dom';
@@ -23,6 +24,7 @@ function App() {
     <Routes>
         <Route path="/" element={<Auth />} />
         <Route path="home" element={<Home />} />
+        <Route path="test" element={<Test />} />
         {/* On doit arriver sur la page de auth en premier si on est pas co */}
         <Route path="profile" element={<Profile />} />
         <Route path="admin" element={<Admin />} />
