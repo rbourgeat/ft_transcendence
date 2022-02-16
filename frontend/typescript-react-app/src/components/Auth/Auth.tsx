@@ -12,25 +12,30 @@ export default function Auth() {
 //   };
 //TODO: Attention a revoir l'indentation
     const [showPass, setshowPass] = useState(false);
+    const [showPassConfirm, setshowPassConfirm] = useState(false);
     const [showPassBis, setshowPassBis] = useState(false);
 
     console.log(showPass);
     return (
-        <div>
+        <>
         <div className="wrapper">
             <div className="wave"></div>
         </div>
-        < div id="auth-form-div" >
+        <div className="container">
+        < div id="auth-form-div">
            
             <div id="auth--form" className="d-flex justify-content-center">
             {/* <div className="row"> */}
+                {/* <div> */}
                 <Form id="form-auth" className="forms">
                     <h2>Bienvenue ! </h2>
                     <p>Pour jouer, vous devez vous authentifier 🏓</p>
                     {/* Mettre authentication 42 seule separement */}
+                    <hr className="my-4"></hr>
                     <Form.Group className="mb-3" controlId="formAuth42">
                         <button type="submit" className="btn btn-primary btn-block" id="auth-btn-3">Authentification 42</button>
                     </Form.Group>
+                    <hr className="my-4"></hr>
                     <h3>Se connecter</h3>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label>Username</Form.Label>
@@ -54,10 +59,11 @@ export default function Auth() {
                     </Form.Group>
                     <p></p>
                     {/* onClick={routeChange}  */}
+                    <hr className="my-4"></hr>
                     <Form.Group className="mb-3" controlId="formBasicConnexion">
                         <button type="submit" className="btn btn-light btn-block" id="auth-btn-1" >Me connecter</button>
                     </Form.Group>
-                    {/* <hr className="my-4"></hr> */}
+                    
                     {/* onClick={routeChange} */}
                 </Form>
                 
@@ -98,27 +104,46 @@ export default function Auth() {
                                         </div>
                                     </form>
                                     {/* En faire un deuxieme pour confirmation */}
+                                    <form>
+                                    <div>
+                                        <label>
+                                        Confirmation mot de passe
+                                        </label>
+                                        <input className="form-control" type={showPassConfirm? "text":"password"} placeholder="********"/>
+                                    </div>
+                                        <div className="mt-2" style={{textAlign:"right"}} >
+                                            <button type="button" id="show-password-3" className="btn btn-sm btn-light" onClick={() => {
+                                                if (showPassConfirm == true)
+                                                    setshowPassConfirm(false);
+                                                else 
+                                                    setshowPassConfirm(true);
+                                            }}>
+                                                {showPass ? "Cacher" : "Afficher"}
+                                            </button>
+                                        </div>
+                                    </form>
                             </div>
                         </div>
                     </div>
-                    {/* <p></p>
-                    <hr className="my-4"></hr> */}
+                    <hr className="my-4" id="signup-hr"></hr>
                     <button type="submit" className="btn btn-light btn-block" id="signup">M'inscrire</button>
                 </Form>
                 
-                {/* <div className="row">
-                    <h2>Coucou</h2>
-                    </div > */}
+                </div>
+                
+                    
                 </div> 
                 
                 
                 {/* </div> */}
                 
-            </div>
+            {/* </div> */}
            
             
        
         {/* Wrapper */}
         </div>
+        </>
         );
+        
 }

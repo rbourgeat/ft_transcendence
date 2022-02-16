@@ -39,6 +39,14 @@
   /* border: 1rem dashed blue; */
 }
 
+/* #signup {
+  margin-top: 10px;
+} */
+
+/* #signup-hr {
+  padding-top: 20px;
+} */
+
 #auth-btn-1, #auth-btn-2, #auth-btn-3, #signup {
   width: 100%;
 }
@@ -103,4 +111,9 @@
 #password-form {
   /* border: 0.1rem solid blue; */
   width: 100%
+}
+
+#show-password-3 {
+  /* border: 0.1rem solid red !important; */
+  margin-bottom: 27px;
 }
