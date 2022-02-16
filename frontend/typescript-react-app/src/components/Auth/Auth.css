@@ -37,15 +37,7 @@
   /* border: 1rem dashed blue; */
 }
 
-#auth-btn-1 {
-  width: 100%;
-}
-
-#auth-btn-2 {
-  width: 100%;
-}
-
-#auth-btn-3 {
+#auth-btn-1, #auth-btn-2, #auth-btn-3, #signup {
   width: 100%;
 }
 
@@ -87,7 +79,26 @@
   border: 1rem solid red;
 }
 
+/* Commente */
 #togglePassword {
   margin: 10px;
   cursor: pointer;
+}
+
+#show-password {
+  font-weight: 700;
+  /* margin-bottom: 20px; */
+  padding-bottom: 12px;
+  text-align: right;
+  cursor: pointer;
+}
+
+/* #sub-form {
+  border: 0.1rem solid red;
+  width: 100% !important;
+} */
+
+#password-form {
+  /* border: 0.1rem solid blue; */
+  width: 100%
 }
