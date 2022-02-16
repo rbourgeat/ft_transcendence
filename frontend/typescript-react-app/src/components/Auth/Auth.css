@@ -1,8 +1,9 @@
 #auth-form-div {
   position: absolute;
-  top: 20%;
+  top: 25%;
   left: 15%;
   width: 75%;
+  /* border: 0.1rem solid red; */
 }
 
 #auth--form {
@@ -12,6 +13,7 @@
   /* width: 1000px; */
   background-color: white !important;
   box-shadow: 2.5px 2.5px 2.5px #98a0a1;
+  padding: 25px;
   /* box-shadow: 10px black; */
 }
 
