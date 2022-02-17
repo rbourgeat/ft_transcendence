@@ -1,6 +1,6 @@
 import React, {useState }from 'react'
 import ReactDOM from 'react-dom';
-import './Auth.css';
+import './Auth.scss';
 // import { useNavigate } from "react-router-dom";
 import { Form, Button} from 'react-bootstrap';
 import useWindowSize from 'react-use/lib/useWindowSize'
@@ -82,6 +82,7 @@ export default function Auth() {
                     <h3>S'inscrire</h3>
                     <Form.Group className="mb-3" controlId="formSignupUsername">
                         <Form.Label>Username</Form.Label>
+                        {/* Verifier si le username est trouve dans la base de donnees ? */}
                         <input className="form-control" type="username" placeholder="malatini" required/>
                     </Form.Group>
 
