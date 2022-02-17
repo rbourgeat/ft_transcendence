@@ -43,20 +43,20 @@ export default function Auth() {
                     <p>Pour jouer, vous devez vous authentifier 🏓</p>
                     {/* Mettre authentication 42 seule separement */}
                     {/* <hr className="my-4"></hr> */}
-                    <Form.Group className="mb-3" controlId="formAuth42">
+                    <Form.Group className="form__mb-3" controlId="formAuth42">
                         <button type="submit" className="btn btn-primary btn-block" id="auth-btn-3">Authentification 42</button>
                     </Form.Group>
                     {/* <hr className="my-4"></hr> */}
-                    <h3>Se connecter</h3>
-                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <h3 id="se-connecter">Se connecter</h3>
+                    <Form.Group className="form__mb-3" controlId="formBasicEmail">
                         <Form.Label>Username</Form.Label>
                         {/* Attention entre username et login */}
-                        <Form.Control type="email" placeholder="malatini" />
+                        <input className="form-control" type="username" placeholder="malatini" required/>
                     </Form.Group>
 
-                    <Form.Group className="mb-3" controlId="formBasicPassword">
+                    <Form.Group className="form__mb-3" controlId="formBasicPassword">
                         <Form.Label>Mot de passe</Form.Label>
-                        <Form.Control type={showPassBis ? "text":"password"} placeholder="********" />
+                        <input className="form-control" type={showPassBis ? "text":"password"} placeholder="********" required/>
                         <div className="mt-2" style={{textAlign:"right"}} id="show-password">
                                             <button type="button" className="btn btn-sm btn-light" onClick={() => {
                                                 if (showPassBis == true)
@@ -70,8 +70,8 @@ export default function Auth() {
                     </Form.Group>
                     <p id="connect-p"></p>
                     {/* onClick={routeChange}  */}
-                    <hr className="my-4"></hr>
-                    <Form.Group className="mb-3" controlId="formBasicConnexion">
+                    <hr className="my-4" id="me-connecter_hr"></hr>
+                    <Form.Group className="form__mb-3" controlId="formBasicConnexion">
                         <button type="submit" className="btn btn-light btn-block" id="auth-btn-1" >Me connecter</button>
                     </Form.Group>
                     
@@ -82,12 +82,12 @@ export default function Auth() {
                     <h3>S'inscrire</h3>
                     <Form.Group className="mb-3" controlId="formSignupUsername">
                         <Form.Label>Username</Form.Label>
-                        <Form.Control type="username" placeholder="malatini" />
+                        <input className="form-control" type="username" placeholder="malatini" required/>
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formSignUpEmail">
                         <Form.Label>Email</Form.Label>
-                        <Form.Control type="email" placeholder="malatini@student.42.fr" />
+                        <input className="form-control" type="email" placeholder="malatini@student.42.fr" required/>
                     </Form.Group>
                 
                     {/* <div className="mb-3" id="formSignupPassword"> */}
@@ -101,7 +101,7 @@ export default function Auth() {
                                         <label>
                                         Mot de passe
                                         </label>
-                                        <input className="form-control" type={showPass? "text":"password"} placeholder="********"/>
+                                        <input className="form-control" type={showPass? "text":"password"} placeholder="********" required/>
                                     </div>
                                         <div className="mt-2" style={{textAlign:"right"}} id="show-password">
                                             <button type="button" className="btn btn-sm btn-light" onClick={() => {
@@ -120,7 +120,7 @@ export default function Auth() {
                                         <label>
                                         Confirmation mot de passe
                                         </label>
-                                        <input className="form-control" type={showPassConfirm? "text":"password"} placeholder="********"/>
+                                        <input className="form-control" type={showPassConfirm? "text":"password"} placeholder="********" required/>
                                     </div>
                                         <div className="mt-2" style={{textAlign:"right"}} >
                                             <button type="button" id="show-password-3" className="btn btn-sm btn-light" onClick={() => {

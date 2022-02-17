@@ -19,3 +19,26 @@ h1, h2, h3 {
   font-family: 'Bree Serif', serif;
 }
 
+input:hover{
+  /* border: 1rem solid purple !important; */
+  border: 1px solid #6300a0 !important;
+  transition: background-color 500ms;
+}
+
+/* input:not(:focus):invalid {
+  background-color: #b20a37;
+  border: 2px solid #b20a37;
+  color: #fff !important;
+} */
+
+input:hover:invalid {
+  background-color: #b20a37;
+  border: 1px solid #b20a37 !important;
+  color: #fff !important;
+}
+
+input:hover:valid {
+  background-color: #93F895;
+  border: 1px solid #93F895 !important;
+  color: #fff;
+}
