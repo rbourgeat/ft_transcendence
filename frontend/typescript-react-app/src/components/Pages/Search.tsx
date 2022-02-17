@@ -5,7 +5,7 @@ import './Search.scss';
 export default function Search() {
     return 
     ( <>
-        <Sidebar />
+        {/* <Sidebar /> */}
         </>
 );
 }

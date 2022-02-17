@@ -5,7 +5,7 @@ import './Channels.scss';
 export default function Channels() {
     return (
         <>
-        <Sidebar />
+        {/* <Sidebar /> */}
         </>
     );
 }

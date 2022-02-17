@@ -5,7 +5,7 @@ import './Admin.scss';
 export default function Admin() {
     return (
         <>
-        <Sidebar />
+        {/* <Sidebar /> */}
         </>
     );
 }

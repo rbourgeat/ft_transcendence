@@ -6,7 +6,7 @@ import './Profile.scss';
 export default function Profile() {
     return (
         <div id="profile">
-        <Sidebar />
+        {/* <Sidebar /> */}
         <Player />
         </div>
     );

@@ -1,19 +1,19 @@
 import React, {useState }from 'react'
 import ReactDOM from 'react-dom';
 import './Auth.scss';
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Form, Button} from 'react-bootstrap';
 import useWindowSize from 'react-use/lib/useWindowSize'
 import Confetti from 'react-confetti'
 
 // import { trustedTypes } from 'trusted-types';
 export default function Auth() {
-//     let navigate = useNavigate(); 
-//   const routeChange = () =>{ 
-//     let path = `home`; 
-//     navigate(path);
-//   };
-//TODO: Attention a revoir l'indentation
+    let navigate = useNavigate(); 
+    const routeChange = () =>{ 
+    let path = `home`; 
+    navigate(path);
+  };
+
     const [showPass, setshowPass] = useState(false);
     const [showPassConfirm, setshowPassConfirm] = useState(false);
     const [showPassBis, setshowPassBis] = useState(false);
@@ -27,27 +27,17 @@ export default function Auth() {
         <Confetti
             width={width}
             height={height}
-            // recycle={false}
         />
-        {/* <div className="wrapper">
-            <div className="wave"></div>
-        </div> */}
         <div className="container" id="auth-container">
-            <a id="moving-banner">LE PONG DU SIECLE - FT_TRANSCENDENCE</a>
         < div id="auth-form-div">
            
             <div id="auth--form" className="d-flex justify-content-center">
-            {/* <div className="row"> */}
-                {/* <div> */}
                 <Form id="form-auth" className="forms">
                     <h2>Bienvenue ! </h2>
                     <p>Pour jouer, vous devez vous authentifier 🏓</p>
-                    {/* Mettre authentication 42 seule separement */}
-                    {/* <hr className="my-4"></hr> */}
                     <Form.Group className="form__mb-3" controlId="formAuth42">
-                        <button type="submit" className="btn btn-primary btn-block" id="auth-btn-3">Authentification 42</button>
+                        <button type="submit" className="btn btn-primary btn-block" id="auth-btn-3" onClick={routeChange}>Authentification 42</button>
                     </Form.Group>
-                    {/* <hr className="my-4"></hr> */}
                     <h3 id="se-connecter">Se connecter</h3>
                     <Form.Group className="form__mb-3" controlId="formBasicEmail">
                         <Form.Label>Username</Form.Label>
@@ -73,7 +63,7 @@ export default function Auth() {
                     {/* onClick={routeChange}  */}
                     <hr className="my-4" id="me-connecter_hr"></hr>
                     <Form.Group className="form__mb-3" controlId="formBasicConnexion">
-                        <button type="submit" className="btn btn-light btn-block" id="auth-btn-1" >Me connecter</button>
+                        <button type="submit" className="btn btn-light btn-block" id="auth-btn-1" onClick={routeChange}>Me connecter</button>
                     </Form.Group>
                     
                     {/* onClick={routeChange} */}
@@ -139,7 +129,7 @@ export default function Auth() {
                         </div>
                     </div>
                     <hr className="my-4" id="signup-hr"></hr>
-                    <button type="submit" className="btn btn-light btn-block" id="signup">M'inscrire</button>
+                    <button type="submit" className="btn btn-light btn-block" id="signup" onClick={routeChange}>M'inscrire</button>
                 </Form>
                 
                 </div>
