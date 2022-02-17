@@ -29,10 +29,11 @@ export default function Auth() {
             height={height}
             // recycle={false}
         />
-        <div className="wrapper">
+        {/* <div className="wrapper">
             <div className="wave"></div>
-        </div>
+        </div> */}
         <div className="container" id="auth-container">
+            <a id="moving-banner">LE PONG DU SIECLE - FT_TRANSCENDENCE</a>
         < div id="auth-form-div">
            
             <div id="auth--form" className="d-flex justify-content-center">
@@ -51,12 +52,12 @@ export default function Auth() {
                     <Form.Group className="form__mb-3" controlId="formBasicEmail">
                         <Form.Label>Username</Form.Label>
                         {/* Attention entre username et login */}
-                        <input className="form-control" type="username" placeholder="malatini" required/>
+                        <input className="form-control" type="username" placeholder="malatini" /*required *//>
                     </Form.Group>
 
                     <Form.Group className="form__mb-3" controlId="formBasicPassword">
                         <Form.Label>Mot de passe</Form.Label>
-                        <input className="form-control" type={showPassBis ? "text":"password"} placeholder="********" required/>
+                        <input className="form-control" type={showPassBis ? "text":"password"} placeholder="********" /*required*/ />
                         <div className="mt-2" style={{textAlign:"right"}} id="show-password">
                                             <button type="button" className="btn btn-sm btn-light" onClick={() => {
                                                 if (showPassBis == true)
@@ -83,12 +84,12 @@ export default function Auth() {
                     <Form.Group className="mb-3" controlId="formSignupUsername">
                         <Form.Label>Username</Form.Label>
                         {/* Verifier si le username est trouve dans la base de donnees ? */}
-                        <input className="form-control" type="username" placeholder="malatini" required/>
+                        <input className="form-control" type="username" placeholder="malatini" /*required*//>
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formSignUpEmail">
                         <Form.Label>Email</Form.Label>
-                        <input className="form-control" type="email" placeholder="malatini@student.42.fr" required/>
+                        <input className="form-control" type="email" placeholder="malatini@student.42.fr" /*required*//>
                     </Form.Group>
                 
                     {/* <div className="mb-3" id="formSignupPassword"> */}
@@ -102,7 +103,7 @@ export default function Auth() {
                                         <label>
                                         Mot de passe
                                         </label>
-                                        <input className="form-control" type={showPass? "text":"password"} placeholder="********" required/>
+                                        <input className="form-control" type={showPass? "text":"password"} placeholder="********" /*required*//>
                                     </div>
                                         <div className="mt-2" style={{textAlign:"right"}} id="show-password">
                                             <button type="button" className="btn btn-sm btn-light" onClick={() => {
@@ -121,7 +122,7 @@ export default function Auth() {
                                         <label>
                                         Confirmation mot de passe
                                         </label>
-                                        <input className="form-control" type={showPassConfirm? "text":"password"} placeholder="********" required/>
+                                        <input className="form-control" type={showPassConfirm? "text":"password"} placeholder="********" /*required*//>
                                     </div>
                                         <div className="mt-2" style={{textAlign:"right"}} >
                                             <button type="button" id="show-password-3" className="btn btn-sm btn-light" onClick={() => {

@@ -3,6 +3,9 @@ body {
       "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
       sans-serif;
     background-color: rgb(237, 246, 247) !important;
+    // background-color: linear-gradient(#e66465, #9198e5) !important;
+    // background: -webkit-linear-gradient(to right, #1a2a6c, #b21f1f, #fdbb2d) !important;
+    // background: linear-gradient(to right, #1a2a6c, #b21f1f, #fdbb2d) !important; /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     margin: 0;
   }
   
@@ -10,4 +13,3 @@ body {
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
       monospace;
   }
-  

@@ -73,16 +73,21 @@
   margin-top: 20px;
 }
 
-/* Mixins */
-// @mixin gradientBg($startColor, $endColor) {
-// 	background: $startColor;
-// 	background: -moz-linear-gradient(left,  $startColor 0%, $endColor 80%,$endColor 100%);
-// 	background: -webkit-linear-gradient(left,  $startColor 0%, $endColor 80%,$endColor 100%);
-// 	background: linear-gradient(to right,  $startColor 0%, $endColor 80%,$endColor 100%);
-// }
+a{
+  position: absolute;
+  top: 50%;
+  left:50%;
+  padding: 15px 0;
+  font-size: 24px;
+  font-family: Arial, Helvetica, sans-serif;
+  text-decoration: none;
+  color: #262626;
+  border-top: 2px solid #262626;
+  border-bottom: 2px solid #262626;
+  letter-spacing: 2px;
+  transition: .5s;
 
-// /* bg shortcodes */
-// .btn btn-sm btn-light span,
-// .btn btn-sm btn-light:before {
-// 	@include gradientBg(#44ea76, #39fad7);
-// }
+}
+a:hover{
+  letter-spacing: 10px;
+}
