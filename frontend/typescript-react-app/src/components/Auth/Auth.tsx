@@ -32,7 +32,7 @@ export default function Auth() {
         <div className="wrapper">
             <div className="wave"></div>
         </div>
-        <div className="container">
+        <div className="container" id="auth-container">
         < div id="auth-form-div">
            
             <div id="auth--form" className="d-flex justify-content-center">

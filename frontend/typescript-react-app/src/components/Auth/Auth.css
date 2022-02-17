@@ -1,10 +1,9 @@
 /* TODO: faire des regles en fonction des tailles d ecran ? */
 #auth-form-div {
   position: absolute;
-  /* trouver d autres moyens de centrer ?*/
-  top: 5%;
-  left: 13%;
   width: 75%;
+  margin-top: 20%;
+  margin-left: 5%;
   /* border: 0.1rem solid red; */
 }
 
@@ -91,4 +90,8 @@
 
 #connect-p {
   margin-bottom: 63px;
+}
+
+#auth-container > * {
+  font-family: 'Lato';
 }
