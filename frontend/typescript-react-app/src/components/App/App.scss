@@ -20,7 +20,6 @@ h1, h2, h3 {
 }
 
 input:hover{
-  /* border: 1px solid #6300a0 !important; */
   transition: background-color 500ms;
 }
 
@@ -45,8 +44,6 @@ button {
 
 button:hover {
   transform: scale(1.025);
-  /* background-color: #6300a0 !important;
-  border: 1px solid #6300a0 !important; */
   background-image: linear-gradient(to right, #e66465, #9198e5) !important;
   border: 1px solid white !important;
   color: white !important;

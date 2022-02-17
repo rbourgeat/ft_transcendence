@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './Test.css';
+import './Test.scss';
 import Wave from 'react-wavify'
 
 function Test() {

@@ -1,7 +1,0 @@
-{
-  "dependencies": {
-    "react-confetti": "^6.0.1",
-    "react-use": "^17.3.2",
-    "react-wavify": "^1.5.4"
-  }
-}

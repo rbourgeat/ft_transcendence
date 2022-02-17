@@ -1,7 +1,7 @@
 import React from 'react'
 import { Container } from 'react-bootstrap';
 import ReactDOM from 'react-dom';
-import './Player.css';
+import './Player.scss';
 
 export default function Profile() {
     return (

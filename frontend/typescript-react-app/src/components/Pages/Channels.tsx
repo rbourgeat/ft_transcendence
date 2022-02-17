@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Sidebar from '../Sidebar/Sidebar'
-import './Channels.css';
+import './Channels.scss';
 
 export default function Channels() {
     return (

@@ -1,5 +1,5 @@
 import React from 'react';
-import './App.css';
+import './App.scss';
 //Mettre dans page
 import Profile from '../Pages/Profile'
 import Admin from '../Pages/Admin'
