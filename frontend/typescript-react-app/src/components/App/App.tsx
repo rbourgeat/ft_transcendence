@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.scss';
+// import '../index.scss';
 //Mettre dans page
 import Profile from '../Pages/Profile'
 import Admin from '../Pages/Admin'
@@ -12,7 +13,10 @@ import Settings from '../Pages/Settings'
 import Home from '../Pages/Home'
 //Mettre dans page
 import Auth from '../Auth/Auth'
+import Footer from '../Footer/Footer'
+import Header from '../Header/Header'
 import Sidebar from '../Sidebar/Sidebar'
+import Welcome from '../Welcome/Welcome'
 import Test from '../Test/Test'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -21,8 +25,9 @@ import { Routes, Route } from 'react-router-dom';
 function App() {
   return (
     <>
-    <Routes>
-        <Route path="/" element={<Auth />} />
+      <Routes>
+        <Route path="/" element={<Welcome />} />
+        <Route path="auth" element={<Auth />} />
         <Route path="home" element={<Home />} />
         <Route path="test" element={<Test />} />
         {/* On doit arriver sur la page de auth en premier si on est pas co */}
