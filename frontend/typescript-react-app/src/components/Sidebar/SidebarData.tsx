@@ -30,15 +30,4 @@ export const SidebarData = [
         icon: <FaIcons.FaEnvelopeOpenText />,
         cName: 'nav-text'
     }
-    //Admin
-    //Settings
-    
-    // },
-    // {
-    //     title: 'Support',
-    //     path: '/support',
-    //     icon: <IoIcons.IoMdHelpCircle />,
-    //     cName: 'nav-text'
-    // }
-
 ];

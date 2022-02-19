@@ -1,10 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
-// :not(:footer)
 *:not(canvas) {
   margin: 0;
   padding: 0;
-  //background-image: linear-gradient(to right, #8a2387, #e94057, #f27121); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */;
-  //color: white;
 }
 
 .home,
@@ -14,21 +11,22 @@
   align-items: center;
   justify-content: center;
   font-size: 3rem;
-  // color: beige;
 }
 
 #main {
-  max-width:5120px;
-  min-height:100%;
-  margin:0 auto;
-  position:relative;
+  max-width: 5120px;
+  min-height: 100%;
+  margin: 0 auto;
+  position: relative;
 }
 
-h1, h2, h3 {
-  font-family: 'Bree Serif', serif;
+h1,
+h2,
+h3 {
+  font-family: "Bree Serif", serif;
 }
 
-input:hover{
+input:hover {
   transition: background-color 500ms;
 }
 
@@ -39,8 +37,8 @@ input:hover:invalid {
 }
 
 input:hover:valid {
-  background-color: #93F895;
-  border: 1px solid #93F895 !important;
+  background-color: #93f895;
+  border: 1px solid #93f895 !important;
   color: #fff;
 }
 

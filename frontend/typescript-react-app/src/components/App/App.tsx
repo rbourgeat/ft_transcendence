@@ -1,6 +1,12 @@
 import React from 'react';
 import './App.scss';
-// import '../index.scss';
+import Auth from '../Auth/Auth'
+import Footer from '../Footer/Footer'
+import Header from '../Header/Header'
+import Welcome from '../Welcome/Welcome'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import { Routes, Route } from 'react-router-dom';
+
 // import Profile from '../Pages/Profile'
 // import Admin from '../Pages/Admin'
 // import Channels from '../Pages/Channels'
@@ -10,16 +16,9 @@ import './App.scss';
 // import Search from '../Pages/Search'
 // import Settings from '../Pages/Settings'
 // import Home from '../Pages/Home'
-import Auth from '../Auth/Auth'
-import Footer from '../Footer/Footer'
-import Header from '../Header/Header'
-import Sidebar from '../Sidebar/Sidebar'
-import Welcome from '../Welcome/Welcome'
-import Test from '../Test/Test'
-import Game from '../Game/Game'
-
-import 'bootstrap/dist/css/bootstrap.min.css'
-import { Routes, Route } from 'react-router-dom';
+// import Sidebar from '../Sidebar/Sidebar'
+// import Test from '../Test/Test'
+// import Game from '../Game/Game'
 
 function App() {
   return (
@@ -28,13 +27,12 @@ function App() {
         <Route path="/" element={<Welcome />} />
         <Route path="auth" element={<Auth />} />
         {/* <Route path="home" element={<Home />} /> */}
-        <Route path="test" element={<Test />} />
-        {/* On doit arriver sur la page de auth en premier si on est pas co */}
+        {/* <Route path="test" element={<Test />} /> */}
         {/* <Route path="profile" element={<Profile />} /> */}
         {/* <Route path="admin" element={<Admin />} /> */}
         {/* <Route path="channels" element={<Channels />} />
         <Route path="messages" element={<Messages />} /> */}
-        <Route path="game" element={<Game />} />
+        {/* <Route path="game" element={<Game />} /> */}
         {/* <Route path="search" element={<Search />} /> */}
         {/* <Route path="settings" element={<Settings />} /> */}
       </Routes>

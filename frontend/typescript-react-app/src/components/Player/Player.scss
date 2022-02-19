@@ -1,15 +1,3 @@
-#profile-div {
-    background-color: sandybrown;
-    /*height: 100% !important;*/
-  }
-  
-  #profile-col {
-    background: red;
-  }
-  
-  /*Ne pas utiliser des pourcentages mais plutot des tailles fixes
-  voir la taille de l ecran de l ecran et faire quelques media queries */
-  #container-profile {
-    height: 800px;
-  }
-  
+#container-profile {
+  height: 800px;
+}

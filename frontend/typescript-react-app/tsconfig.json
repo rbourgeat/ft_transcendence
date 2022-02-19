@@ -6,6 +6,7 @@
       "dom.iterable",
       "esnext"
     ],
+    //TODO: attention a changer
     "allowJs": true,/* a changer */
     "skipLibCheck": true,
     "esModuleInterop": true,
