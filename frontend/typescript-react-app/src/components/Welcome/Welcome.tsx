@@ -16,8 +16,9 @@ export default function Welcome() {
         <Header />
         <div id="welcome--video-div">
             This is our inspiration
-            <div>
-                <video src={video1} autoPlay loop id="welcome--video-video"/>
+            <div id="test">
+                {/* id="welcome--video-div-sub" */}
+                <video autoPlay loop muted src={video1}  height="500" id="welcome--video-video"/>
             </div>
             <Footer />
         </div>
