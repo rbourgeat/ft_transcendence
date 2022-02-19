@@ -1,7 +1,6 @@
 import React from 'react';
 import './App.scss';
 // import '../index.scss';
-//Mettre dans page
 import Profile from '../Pages/Profile'
 import Admin from '../Pages/Admin'
 import Channels from '../Pages/Channels'
@@ -11,7 +10,6 @@ import Messages from '../Pages/Messages'
 import Search from '../Pages/Search'
 import Settings from '../Pages/Settings'
 import Home from '../Pages/Home'
-//Mettre dans page
 import Auth from '../Auth/Auth'
 import Footer from '../Footer/Footer'
 import Header from '../Header/Header'
@@ -24,7 +22,7 @@ import { Routes, Route } from 'react-router-dom';
 
 function App() {
   return (
-    <>
+    <div id="main">
       <Routes>
         <Route path="/" element={<Welcome />} />
         <Route path="auth" element={<Auth />} />
@@ -32,13 +30,13 @@ function App() {
         <Route path="test" element={<Test />} />
         {/* On doit arriver sur la page de auth en premier si on est pas co */}
         <Route path="profile" element={<Profile />} />
-        <Route path="admin" element={<Admin />} />
+        {/* <Route path="admin" element={<Admin />} /> */}
         <Route path="channels" element={<Channels />} />
         <Route path="messages" element={<Messages />} />
         {/* <Route path="search" element={<Search />} /> */}
-        <Route path="settings" element={<Settings />} />
+        {/* <Route path="settings" element={<Settings />} /> */}
       </Routes>
-    </>
+    </div>
   );
 }
 

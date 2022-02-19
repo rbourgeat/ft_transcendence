@@ -15,6 +15,13 @@
   color: beige;
 }
 
+#main {
+  max-width:5120px;
+  min-height:100%;
+  margin:0 auto;
+  position:relative;
+}
+
 h1, h2, h3 {
   font-family: 'Bree Serif', serif;
 }
