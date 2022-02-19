@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom';
 import './Auth.scss';
 import { useNavigate } from "react-router-dom";
 import { Form, Button } from 'react-bootstrap';
-import useWindowSize from 'react-use/lib/useWindowSize'
-import Confetti from 'react-confetti'
+// import useWindowSize from 'react-use/lib/useWindowSize'
+// import Confetti from 'react-confetti'
 
 //TODO: revoit tout le routing
 
@@ -21,7 +21,7 @@ export default function Auth() {
     const [showPassBis, setshowPassBis] = useState(false);
 
     //Confetti
-    const { width, height } = useWindowSize();
+    // const { width, height } = useWindowSize();
 
     console.log(showPass);
     return (
