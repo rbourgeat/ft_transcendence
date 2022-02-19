@@ -2,14 +2,18 @@
   //position: absolute;
   width: 75%;
   // TODO: a centrer mieux ?
+  background-color: white !important;
+  background-image: none !important;
   margin-top: 15%;
   margin-left: 10%;
+  border-radius: 1rem;
 }
 
 #auth--form {
-  border-radius: 10px;
-  border: 0.1rem solid white;
-  background-color: white !important;
+  border-radius: 1rem;
+  border: 1rem solid white;
+  // background-color: white !important;
+  //background-image: none !important;
   // padding: 25px;
 }
 
@@ -24,16 +28,13 @@
 #auth-btn-3,
 #signup {
   width: 100%;
+  // background-image: none !important;
 }
 
 .wrapper {
   width: 100%;
   height: 100%;
-  border-radius: 5px;
-}
-
-#show_password {
-  border: 1rem solid red;
+  // border-radius: 5px;
 }
 
 #show-password {

@@ -31,7 +31,7 @@ export default function Auth() {
                 height={height}
             /> */}
             <div className="container" id="auth-container">
-                < div id="auth-form-div">
+                <div id="auth-form-div">
 
                     <div id="auth--form" className="d-flex justify-content-center">
                         <Form id="form-auth" className="forms">
