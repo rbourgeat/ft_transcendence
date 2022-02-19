@@ -4,8 +4,9 @@ footer{
     bottom: 0;
     padding-top: 15px;
     width: 100%;
-    background-image: linear-gradient(to right, #8a2387, #e94057, #f27121); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */;
-    color: white;
+    // background-image: linear-gradient(to right, #8a2387, #e94057, #f27121); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */;
+    // color: white;
+    background-color: transparentize !important;
     text-align: center;
     font-family: 'Press Start 2P', cursive;
     overflow: hidden;
