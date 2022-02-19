@@ -14,11 +14,14 @@ export default function Welcome() {
     return (
         <>
         <Header />
-        <div id="welcome--video-div">
+        <div id="welcome--video-div-main" /*className="row" */>
             This is our inspiration
-            <div id="test">
-                {/* id="welcome--video-div-sub" */}
-                <video autoPlay loop muted src={video1}  height="500" id="welcome--video-video"/>
+            <p></p>
+            <div  id="welcome--video-div" /*className="row" */>
+                <div id="test" /* A renommer */>
+                    {/* id="welcome--video-div-sub" */}
+                    <video autoPlay loop muted src={video1}  height="200" id="welcome--video-video"/>
+                </div>
             </div>
             <Footer />
         </div>

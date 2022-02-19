@@ -15,6 +15,34 @@
 //     // width="600" height="300"
 // }
 
+//TODO: faire un cercle pour le rendre "imparfait"
 #test, video {
-    background-image: black !important;
+    background-color: black !important;
+    position: absolute;
+	top: 50%;
+	left: 20%;
+    //height: 15%;
+    //width: auto;
 }
+
+// #welcome--video-div:after {
+//     top: -30px;
+//     left: -30px;
+//     height: 140%;
+//     width: 120%;
+// }
+
+#welcome--video-div {
+    // height: 400px;
+    // width: 10%;
+    background-color: black !important;
+    //border-radius: 50%;
+    // object-fit: cover;
+    // display: inline-block;
+    // overflow: hidden;
+    height: 800px;
+	background: #00A2E8;
+	clip-path: polygon(0 50%, 100% 0,100% 50%,0 100%);
+	position: relative;
+
+  }
