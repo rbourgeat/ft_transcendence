@@ -11,8 +11,7 @@ export default function Header() {
                     </a>
                     FT_TRANSCENDENCE
                 </div>
-                </nav>
-            
+                </nav>     
         </div>
     )
 }

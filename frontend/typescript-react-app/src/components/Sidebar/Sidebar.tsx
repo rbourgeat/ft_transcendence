@@ -3,6 +3,10 @@ import * as FaIcons from 'react-icons/fa';
 import * as AiIcons from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 import { SidebarData } from './SidebarData';
+
+//A changer de dossier
+import useWindowDimensions from "../Game/useWindowDimensions"
+
 import './Sidebar.scss';
 import { IconContext } from 'react-icons';
 //A supprimer 
@@ -13,10 +17,11 @@ import { IconContext } from 'react-icons';
 // import '@trendmicro/react-sidenav/dist/react-sidenav.css';
 
 function Navbar() {
-    const [sidebar, setSidebar] = useState(false);
+    //const [sidebar, setSidebar] = useState(false);
 
-    const showSidebar = () => setSidebar(!sidebar);
-
+    //const showSidebar = () => setSidebar(!sidebar);
+    //let size = useWindowDimensions();
+    const { height, width } = useWindowDimensions();
     return (
         <>
             {/* <IconContext.Provider value={{ color: '#fff' }}>
@@ -45,8 +50,8 @@ function Navbar() {
                     </ul>
                 </nav>
             </IconContext.Provider> */}
-            <div id="navbar">
-                <p>coucou</p>
+            <div id="sidebar-div">
+             width: {width} ~ height: {height}
             </div>
         </>
     );
