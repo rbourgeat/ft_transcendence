@@ -4,7 +4,7 @@ import Footer from "../Footer/Footer"
 
 export default function Game() {
     return (
-        <div /*id="game-div" ref={el => (this.div = el)}*/>
+        <div id="game-div" /*ref={el => (this.div = el)}*/>
             <p>
             {/* Game ! */}
             </p>
