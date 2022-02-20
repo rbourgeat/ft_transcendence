@@ -1,3 +1,4 @@
+// Arevoir
 {
   "compilerOptions": {
     "target": "es5",
@@ -25,5 +26,8 @@
   },
   "include": [
     "src", "../Pages"
-  ]
+  ],
+  "target": "es6",
+  "lib": ["es6"],
+  "jsx": "react",
 }
