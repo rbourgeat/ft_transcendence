@@ -4,12 +4,8 @@ import Footer from "../Footer/Footer"
 
 export default function Game() {
     return (
-        <div id="game-div" /*ref={el => (this.div = el)}*/>
-            <p>
-            {/* Game ! */}
-            </p>
-            <canvas id="currentGame">
-            </canvas>
+        <div /*id="game-div" ref={el => (this.div = el)}*/>
+            <canvas id="currentGame" height="400px" width="600px"></canvas>
             <Footer />
         </div>
     )

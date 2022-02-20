@@ -3,6 +3,10 @@ import ReactDOM from 'react-dom';
 import './Auth.scss';
 import { useNavigate } from "react-router-dom";
 import { Form, Button } from 'react-bootstrap';
+
+import Header from "../Header/Header";
+import Footer from "../Footer/Footer";
+
 // import useWindowSize from 'react-use/lib/useWindowSize'
 // import Confetti from 'react-confetti'
 
@@ -30,6 +34,7 @@ export default function Auth() {
                 width={width}
                 height={height}
             /> */}
+            <Header />
             <div className="container" id="auth-container">
                 <div id="auth-form-div">
 
@@ -38,7 +43,7 @@ export default function Auth() {
                             <h2>Bienvenue ! </h2>
                             <p>Pour jouer, vous devez vous authentifier 🏓</p>
                             <Form.Group className="form__mb-3" controlId="formAuth42">
-                                <button type="submit" className="btn btn-primary btn-block" id="auth-btn-3" onClick={routeChange}>Authentification 42</button>
+                                <button type="submit" className="btn btn-dark btn-block" id="auth-btn-3" onClick={routeChange}>Authentification 42</button>
                             </Form.Group>
                             <h3 id="se-connecter">Se connecter</h3>
                             <Form.Group className="form__mb-3" controlId="formBasicEmail">
@@ -133,21 +138,10 @@ export default function Auth() {
                             <hr className="my-4" id="signup-hr"></hr>
                             <button type="submit" className="btn btn-light btn-block" id="signup" onClick={routeChange}>M'inscrire</button>
                         </Form>
-
                     </div>
-
-
                 </div>
-
-
-                {/* </div> */}
-
-                {/* </div> */}
-
-
-
-                {/* Wrapper */}
             </div>
+            <Footer />
         </>
     );
 

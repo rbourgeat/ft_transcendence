@@ -15,7 +15,7 @@ export default function Welcome() {
         <>
         <Header />
         <div id="welcome--video-div-main">
-            This is our inspiration
+            {/* This is our inspiration */}
             <p></p>
             <div  id="welcome--video-div">
                 <div id="test">
