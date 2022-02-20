@@ -1,12 +1,12 @@
 import React from 'react';
 import './App.scss';
-import Auth from '../Auth/Auth'
-import Footer from '../Footer/Footer'
-import Header from '../Header/Header'
-import Welcome from '../Welcome/Welcome'
-import 'bootstrap/dist/css/bootstrap.min.css'
+import Auth from '../Auth/Auth';
+import Footer from '../Footer/Footer';
+import Header from '../Header/Header';
+import Welcome from '../Welcome/Welcome';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { Routes, Route } from 'react-router-dom';
-import Game from '../Game/Game'
+import Game from '../Game/Game';
 
 // import Profile from '../Pages/Profile'
 // import Admin from '../Pages/Admin'

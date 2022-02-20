@@ -1,6 +1,8 @@
 //@import url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
 
-@use '../../variables';
+@use "../../variables";
+
+//TODO: variabiliser tout ce qui se trouve dans ce fichier
 
 *:not(canvas) {
   margin: 0;
@@ -28,6 +30,8 @@ h2,
 h3 {
   font-family: variables.$big-font;
   font-size: variables.$big-font-size;
+  //TODO: a variabiliser
+  color: black !important;
 }
 
 input:hover {
@@ -76,8 +80,7 @@ button:hover {
   color: white !important;
 }
 
-.App
-{
+.App {
   width: 100%;
   height: 100%;
 }

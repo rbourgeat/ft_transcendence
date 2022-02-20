@@ -30,19 +30,19 @@ export default function Welcome() {
                     repeat="Infitiny"
                 />
                 {/* <figcaption>Authors : </figcaption> */}
-                <br></br>
+                {/* <br></br> */}
                     <li>bahaas</li>
                     <li>rbourgea</li>
                     <li>malatini</li>
                     <button id="play-button-1" onClick={routeChange}>Play !</button>
                 </ul>
             </div>
-            <br></br>
-            <div  id="welcome--video-div">
+            {/* <br></br> */}
+            {/* <div  id="welcome--video-div">
                 <div id="test">
-                    <video autoPlay loop muted src={video1}  height="200" id="welcome--video-video"/>
+                    <video autoPlay loop muted src={video1}  height="10%" id="welcome--video-video"/>
                 </div>
-            </div>
+            </div> */}
             
             <Footer />
         </div>

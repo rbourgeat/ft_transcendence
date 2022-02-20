@@ -4,6 +4,7 @@ import * as AiIcons from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 import { SidebarData } from './SidebarData';
 
+
 //A changer de dossier
 import useWindowDimensions from "../Game/useWindowDimensions"
 
@@ -50,8 +51,13 @@ function Navbar() {
                     </ul>
                 </nav>
             </IconContext.Provider> */}
-            <div id="sidebar-div">
-             width: {width} ~ height: {height}
+            <div id="sidebar-div" className="side-menu">
+                <div className="top-section">
+                    {/* <div className="logo">
+                    </div> */}
+                </div>
+             {/* width: {width} ~ height: {height} */}
+
             </div>
         </>
     );

@@ -37,25 +37,25 @@ export default function Auth() {
             <Header />
             <div className="container" id="auth-container">
                 <div id="auth-form-div">
-
-                    <div id="auth--form" className="d-flex justify-content-center">
-                        <Form id="form-auth" className="forms">
+                    {/* Rajouter des media queries ? */}
+                    <div id="auth--form" /*className="d-flex justify-content-center"*/>
+                        <Form id="form-auth" /*className="forms*/ >
                             <h2>Bienvenue ! </h2>
                             <p>Pour jouer, vous devez vous authentifier 🏓</p>
                             <Form.Group className="form__mb-3" controlId="formAuth42">
                                 <button type="submit" className="btn btn-dark btn-block" id="auth-btn-3" onClick={routeChange}>Authentification 42</button>
                             </Form.Group>
                             <h3 id="se-connecter">Se connecter</h3>
-                            <Form.Group className="form__mb-3" controlId="formBasicEmail">
+                            <Form.Group /*className="form__mb-3"*/ controlId="formBasicEmail">
                                 <Form.Label>Username</Form.Label>
                                 {/* Attention entre username et login */}
                                 <input className="form-control" type="username" placeholder="malatini" /*required */ />
                             </Form.Group>
 
-                            <Form.Group className="form__mb-3" controlId="formBasicPassword">
+                            <Form.Group /*className="form__mb-3"*/ controlId="formBasicPassword">
                                 <Form.Label>Mot de passe</Form.Label>
                                 <input className="form-control" type={showPassBis ? "text" : "password"} placeholder="********" /*required*/ />
-                                <div className="mt-2" style={{ textAlign: "right" }} id="show-password">
+                                <div /*className="mt-2"*/ style={{ textAlign: "right" }} id="show-password">
                                     <button type="button" className="btn btn-sm btn-light" onClick={() => {
                                         if (showPassBis == true)
                                             setshowPassBis(false);
@@ -77,14 +77,14 @@ export default function Auth() {
                         </Form>
 
                         <Form className="forms">
-                            <h3>S'inscrire</h3>
-                            <Form.Group className="mb-3" controlId="formSignupUsername">
+                            <h3 id="signin-h3">S'inscrire</h3>
+                            <Form.Group /*className="mb-3"*/ controlId="formSignupUsername">
                                 <Form.Label>Username</Form.Label>
                                 {/* Verifier si le username est trouve dans la base de donnees ? */}
                                 <input className="form-control" type="username" placeholder="malatini" /*required*/ />
                             </Form.Group>
 
-                            <Form.Group className="mb-3" controlId="formSignUpEmail">
+                            <Form.Group /*className="mb-3"*/ controlId="formSignUpEmail">
                                 <Form.Label>Email</Form.Label>
                                 <input className="form-control" type="email" placeholder="malatini@student.42.fr" /*required*/ />
                             </Form.Group>
@@ -121,7 +121,7 @@ export default function Auth() {
                                                 </label>
                                                 <input className="form-control" type={showPassConfirm ? "text" : "password"} placeholder="********" /*required*/ />
                                             </div>
-                                            <div className="mt-2" style={{ textAlign: "right" }} >
+                                            <div /*className="mt-2"*/ style={{ textAlign: "right" }} >
                                                 <button type="button" id="show-password-3" className="btn btn-sm btn-light" onClick={() => {
                                                     if (showPassConfirm == true)
                                                         setshowPassConfirm(false);

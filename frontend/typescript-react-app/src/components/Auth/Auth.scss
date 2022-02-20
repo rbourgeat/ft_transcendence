@@ -1,11 +1,13 @@
-@use '../../variables';
+@use "../../variables";
 
 #auth-form-div {
-  width: 75%;
+  // width: 75%;
   background-color: white !important;
   background-image: none !important;
-  margin-top: 15%;
-  margin-left: 10%;
+  // TODO: si j y arrive: faire un centre parfait
+  margin-top: 10px;
+  // margin-left: 13.5%;
+  margin-bottom: 50px;
   border-radius: 1rem;
 }
 
@@ -14,11 +16,11 @@
   border: 1rem solid white;
 }
 
-#forms-auth,
-.forms {
-  width: 80%;
-  margin: 15px;
-}
+// #forms-auth,
+// .forms {
+//   // width: 80%;
+//   margin: 15px;
+// }
 
 #auth-btn-1,
 #auth-btn-2,
@@ -43,10 +45,6 @@
   width: 100%;
 }
 
-#connect-p {
-  margin-bottom: 75px;
-}
-
 #auth-container > * {
   // font-family: "Lato";
   font-family: variables.$basic-font;
@@ -59,9 +57,9 @@
 
 a {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  padding: 15px 0;
+  // top: 50%;
+  // left: 50%;
+  // padding: 15px 0;
   font-size: variables.$small-font-size;
   font-family: variables.$basic-font;
   text-decoration: none;
@@ -73,4 +71,8 @@ a {
 }
 a:hover {
   letter-spacing: 10px;
+}
+
+#signin-h3 {
+  margin-top: 20px;
 }

@@ -19,14 +19,15 @@ export default function Game() {
     // let size = useWindowSize();
     let size = useWindowDimensions();
     return (
-        <>
-            <Sidebar />
-            <Header />
+        <div id="game-root">
+            <h1>Game !</h1>
+            {/* <Sidebar /> */}
+            {/* <Header /> */}
             {/* <div>
                 <h3 id="game-title">Game</h3>
                 <Canvas />
                 <Footer />
             </div> */}
-        </>
+        </div>
     );
 }

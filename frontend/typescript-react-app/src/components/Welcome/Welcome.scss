@@ -1,4 +1,4 @@
-@use '../../variables';
+@use "../../variables";
 
 // #welcome {
 //     background-color: white !important;
@@ -13,18 +13,19 @@
 
 // #welcome--video-video {
 //     max-width: 20em;
-//     margin: 0 auto; 
+//     margin: 0 auto;
 //     // width="600" height="300"
 // }
 
 //TODO: faire un cercle pour le rendre "imparfait"
-#test, video {
-    background-color: black !important;
-    position: absolute;
-	top: 50%;
-	left: 20%;
-    //height: 15%;
-    //width: auto;
+#test,
+video {
+  background-color: black !important;
+  position: absolute;
+  top: 10%;
+  left: 20%;
+  //height: 15%;
+  //width: auto;
 }
 
 // #welcome--video-div:after {
@@ -35,29 +36,28 @@
 // }
 
 #welcome--video-div {
-    // height: 400px;
-    // width: 10%;
-    background-color: black !important;
-    //border-radius: 50%;
-    // object-fit: cover;
-    // display: inline-block;
-   // overflow: hidden;
-    height: 600px;
-	background: #00A2E8;
-	clip-path: polygon(0 50%, 100% 0,100% 50%,0 100%);
-	position: relative;
+  // height: 400px;
+  // width: 10%;
+  background-color: black !important;
+  //border-radius: 50%;
+  // object-fit: cover;
+  // display: inline-block;
+  // overflow: hidden;
+  height: 50%;
+  background: #00a2e8;
+  clip-path: polygon(0 50%, 100% 0, 100% 50%, 0 100%);
+  position: relative;
+}
 
-  }
+#authors--ul {
+  margin-left: 5%;
+  margin-top: 5%;
+  font-size: 25px;
+}
 
-  #authors--ul {
-    margin-left: 5%;
-    margin-top: 5%;
-    font-size: 25px;
-  }
-
-  #play-button-1 {
-      padding: 12px 25px;
-      font-size: variables.$big-font-size;
-      margin-top: 20px;
-     // transform: none !important;
-  }
+#play-button-1 {
+  padding: 12px 25px;
+  font-size: variables.$big-font-size;
+  margin-top: 20px;
+  // transform: none !important;
+}
