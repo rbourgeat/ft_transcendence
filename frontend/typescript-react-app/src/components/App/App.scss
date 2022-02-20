@@ -1,4 +1,7 @@
-@import url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
+//@import url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
+
+@use '../../variables';
+
 *:not(canvas) {
   margin: 0;
   padding: 0;
@@ -23,25 +26,35 @@
 h1,
 h2,
 h3 {
-  font-family: "Bree Serif", serif;
+  font-family: variables.$big-font;
+  font-size: variables.$big-font-size;
 }
 
 input:hover {
   transition: background-color 500ms;
 }
 
-input:hover:invalid {
-  background-color: #b20a37;
-  border: 1px solid #b20a37 !important;
-  color: #fff !important;
+// TODO: a revoir
+// input:hover:invalid {
+//   background-color: #b20a37;
+//   border: 1px solid #b20a37 !important;
+//   color: #fff !important;
+// }
+
+input {
+  font-size: variables.$small-font-size;
+  margin-bottom: 10px !important;
 }
 
-input:hover:valid {
-  //background-color: #93f895;
-  background-color: #8ae9b3;
-  background-image: linear-gradient(315deg, #8ae9b3 0%, #c8d6e5 74%);
-  border: 1px solid linear-gradient(315deg, #8ae9b3 0%, #c8d6e5 74%) !important;
-  color: #fff;
+// input:hover:valid {
+//   background-color: #8ae9b3;
+//   background-image: linear-gradient(315deg, #8ae9b3 0%, #c8d6e5 74%);
+//   border: 1px solid linear-gradient(315deg, #8ae9b3 0%, #c8d6e5 74%) !important;
+//   color: #fff;
+// }
+
+label {
+  font-weight: variables.$bold;
 }
 
 button {
@@ -49,6 +62,8 @@ button {
   transition-property: tranform;
   border-radius: 0.5rem !important;
   transition-duration: all 300ms !important;
+  font-family: variables.$big-font;
+  font-size: variables.$mini-font-size;
 }
 
 button:hover {

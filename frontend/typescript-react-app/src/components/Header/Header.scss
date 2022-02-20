@@ -1,8 +1,9 @@
+@use '../../variables';
+
 #header--nav, #header-nav > * {
     height: 45px;
     padding-top: 10px;
     background-color: black !important;
     color: white !important;
-    background-image: none ! important;
-    font-family: "Press Start 2P", cursive !important;
+    font-family: variables.$big-font;
 }

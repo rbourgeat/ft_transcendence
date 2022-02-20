@@ -1,11 +1,13 @@
+@use '../../variables';
+
 footer {
   position: fixed;
   bottom: 0;
   padding-top: 15px;
   width: 100%;
   text-align: center;
-  font-family: "Press Start 2P", cursive;
-  overflow: hidden;
+  font-family: variables.$big-font;
+ // overflow: hidden;
 }
 
 #footer--p {

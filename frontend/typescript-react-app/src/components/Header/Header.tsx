@@ -9,7 +9,7 @@ export default function Header() {
                     <a className="navbar-brand" href="#">
                         <img src="" alt="" width="30" height="24" /*className="d-inline-block align-text-top"*//>
                     </a>
-                    FT_TRANSCENDANCE
+                    FT_TRANSCENDENCE
                 </div>
                 </nav>
             
