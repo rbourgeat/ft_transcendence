@@ -39,10 +39,16 @@
     //border-radius: 50%;
     // object-fit: cover;
     // display: inline-block;
-    // overflow: hidden;
+    overflow: hidden;
     height: 800px;
 	background: #00A2E8;
 	clip-path: polygon(0 50%, 100% 0,100% 50%,0 100%);
 	position: relative;
 
+  }
+
+  #authors--ul {
+    margin-left: 5%;
+    margin-top: 5%;
+    font-size: 25px;
   }

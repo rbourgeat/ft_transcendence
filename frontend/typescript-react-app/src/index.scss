@@ -1,7 +1,5 @@
-// Scss "global" variables
-$border-radius: 0.5rem;
-$big-font: "Press Start 2P", cursive !important;
 
+@use "variables";
 
 body, html {
 height: 100%;
@@ -21,4 +19,11 @@ body {
   code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
       monospace;
+  }
+
+  ul {
+    list-style: none;
+    color: white;
+    font-weight: variables.$bold;
+    font-family: variables.$big-font;
   }

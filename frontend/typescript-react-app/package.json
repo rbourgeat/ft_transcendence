@@ -24,6 +24,7 @@
     "react-router-dom": "^6.2.1",
     "react-script-tag": "^1.1.2",
     "react-scripts": "^5.0.0",
+    "react-type-animation": "^1.1.2",
     "react-wavify": "^1.5.4",
     "sass": "^1.49.7",
     "typescript": "^4.5.5",
