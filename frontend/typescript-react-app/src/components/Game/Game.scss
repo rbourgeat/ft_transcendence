@@ -1,18 +1,16 @@
+@use '../../variables';
+
 #currentGame {
-    background-color: black !important;
-   // background-image: none !important;
     width: 60%;
-    margin-top: 10%;
-    margin-left: 20%;
+    margin-top: 5%;
+    // margin-left: 20%;
     padding: 10px;
     border-radius: 1rem;
-    background-color: black !important;
+    background-color: white !important;
 }
 
-// #game-div {
-//     padding: 10px;
-//     border-radius: 1rem;
-//     background-color: black !important;
-//     width: 60%;
-//     height: 40%;
-// }
+#game-title {
+    margin-top: 25px;
+    color: white !important;
+    font-size: 40px !important;
+}

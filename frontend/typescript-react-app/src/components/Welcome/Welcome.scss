@@ -1,3 +1,5 @@
+@use '../../variables';
+
 // #welcome {
 //     background-color: white !important;
 //     // border-radius: 5px;
@@ -39,8 +41,8 @@
     //border-radius: 50%;
     // object-fit: cover;
     // display: inline-block;
-    overflow: hidden;
-    height: 800px;
+   // overflow: hidden;
+    height: 600px;
 	background: #00A2E8;
 	clip-path: polygon(0 50%, 100% 0,100% 50%,0 100%);
 	position: relative;
@@ -51,4 +53,11 @@
     margin-left: 5%;
     margin-top: 5%;
     font-size: 25px;
+  }
+
+  #play-button-1 {
+      padding: 12px 25px;
+      font-size: variables.$big-font-size;
+      margin-top: 20px;
+     // transform: none !important;
   }

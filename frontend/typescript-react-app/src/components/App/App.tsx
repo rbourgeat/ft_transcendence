@@ -27,7 +27,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Welcome />} />
         <Route path="auth" element={<Auth />} />
-        <Route path="game" element={<Game />} />
+        <Route path="/auth/game" element={<Game />} />
         {/* <Route path="home" element={<Home />} /> */}
         {/* <Route path="test" element={<Test />} /> */}
         {/* <Route path="profile" element={<Profile />} /> */}

@@ -16,7 +16,7 @@ import Footer from "../Footer/Footer";
 export default function Auth() {
     let navigate = useNavigate();
     const routeChange = () => {
-        let path = `home`;
+        let path = `game`;
         navigate(path);
     };
 

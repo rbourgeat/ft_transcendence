@@ -5,14 +5,17 @@ import '../../index.scss';
 
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
-
 import video1 from "../../images/pong-demo.mp4";
-
 import TypeAnimation from 'react-type-animation';
-
-//TODO: a ranger dans Pages
+import { useNavigate } from "react-router-dom";
 
 export default function Welcome() {
+    let navigate = useNavigate();
+    //TODO: faire une condition si la personne est deja authentifiee ? Voir cookie ?
+    const routeChange = () => {
+        let path = 'auth';
+        navigate(path);
+    }
     return (
         <>
         <Header />
@@ -31,6 +34,7 @@ export default function Welcome() {
                     <li>bahaas</li>
                     <li>rbourgea</li>
                     <li>malatini</li>
+                    <button id="play-button-1" onClick={routeChange}>Play !</button>
                 </ul>
             </div>
             <br></br>
