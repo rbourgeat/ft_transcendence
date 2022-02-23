@@ -3,17 +3,29 @@ import * as FaIcons from 'react-icons/fa';
 import * as AiIcons from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 import { SidebarData } from './SidebarData';
-import './Sidebar.css';
+
+
+//A changer de dossier
+import useWindowDimensions from "../Game/useWindowDimensions"
+
+import './Sidebar.scss';
 import { IconContext } from 'react-icons';
+//A supprimer 
+// import { slide as Menu } from 'react-burger-menu'
+
+//A supprimer
+// import SideNav, { Toggle, Nav, NavItem, NavIcon, NavText } from '@trendmicro/react-sidenav';
+// import '@trendmicro/react-sidenav/dist/react-sidenav.css';
 
 function Navbar() {
-    const [sidebar, setSidebar] = useState(false);
+    //const [sidebar, setSidebar] = useState(false);
 
-    const showSidebar = () => setSidebar(!sidebar);
-
+    //const showSidebar = () => setSidebar(!sidebar);
+    //let size = useWindowDimensions();
+    const { height, width } = useWindowDimensions();
     return (
         <>
-            <IconContext.Provider value={{ color: '#fff' }}>
+            {/* <IconContext.Provider value={{ color: '#fff' }}>
                 <div className='navbar'>
                     <Link to='#' className='menu-bars'>
                         <FaIcons.FaBars onClick={showSidebar} />
@@ -38,7 +50,15 @@ function Navbar() {
                         })}
                     </ul>
                 </nav>
-            </IconContext.Provider>
+            </IconContext.Provider> */}
+            <div id="sidebar-div" className="side-menu">
+                <div className="top-section">
+                    {/* <div className="logo">
+                    </div> */}
+                </div>
+             {/* width: {width} ~ height: {height} */}
+
+            </div>
         </>
     );
 }

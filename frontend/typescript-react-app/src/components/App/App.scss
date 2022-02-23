@@ -1,0 +1,86 @@
+//@import url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
+
+@use "../../variables";
+
+//TODO: variabiliser tout ce qui se trouve dans ce fichier
+
+*:not(canvas) {
+  margin: 0;
+  padding: 0;
+}
+
+.home,
+.reports,
+.products {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+}
+
+// #main {
+//   // max-width: 5120px;
+//   // min-height: 100%;
+//   margin: 0 auto;
+//   // position: relative;
+// }
+
+h1,
+h2,
+h3 {
+  font-family: variables.$big-font;
+  font-size: variables.$big-font-size;
+  //TODO: a variabiliser
+  color: black !important;
+}
+
+input:hover {
+  transition: background-color 500ms;
+}
+
+// TODO: a revoir
+// input:hover:invalid {
+//   background-color: #b20a37;
+//   border: 1px solid #b20a37 !important;
+//   color: #fff !important;
+// }
+
+input {
+  font-size: variables.$small-font-size;
+  margin-bottom: 10px !important;
+}
+
+// input:hover:valid {
+//   background-color: #8ae9b3;
+//   background-image: linear-gradient(315deg, #8ae9b3 0%, #c8d6e5 74%);
+//   border: 1px solid linear-gradient(315deg, #8ae9b3 0%, #c8d6e5 74%) !important;
+//   color: #fff;
+// }
+
+label {
+  font-weight: variables.$bold;
+}
+
+button {
+  transform: scale(1);
+  transition-property: tranform;
+  border-radius: 0.5rem !important;
+  transition-duration: all 300ms !important;
+  font-family: variables.$big-font;
+  font-size: variables.$mini-font-size;
+}
+
+button:hover {
+  // transform: scale(1.025);
+  //background-image: linear-gradient(to right, #e66465, #9198e5) !important;
+  //background-color: #3e187a;
+  background-color: #4d4855;
+  background-image: linear-gradient(147deg, #4d4855 0%, #000000 74%) !important;
+  border: 1px solid white !important;
+  color: white !important;
+}
+
+.App {
+  width: 100%;
+  height: 100%;
+}

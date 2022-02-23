@@ -1,0 +1,63 @@
+@use "../../variables";
+
+// #welcome {
+//     background-color: white !important;
+//     // border-radius: 5px;
+// }
+
+// #welcome--video-div {
+//     // background-image: linear-gradient(45deg, #6303B1, #ff0099);
+//     background-image: linear-gradient(to right, #8a2387, #e94057, #f27121); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */;
+//     color: white;
+// }
+
+// #welcome--video-video {
+//     max-width: 20em;
+//     margin: 0 auto;
+//     // width="600" height="300"
+// }
+
+//TODO: faire un cercle pour le rendre "imparfait"
+#test,
+video {
+  background-color: black !important;
+  position: absolute;
+  top: 10%;
+  left: 20%;
+  //height: 15%;
+  //width: auto;
+}
+
+// #welcome--video-div:after {
+//     top: -30px;
+//     left: -30px;
+//     height: 140%;
+//     width: 120%;
+// }
+
+#welcome--video-div {
+  // height: 400px;
+  // width: 10%;
+  background-color: black !important;
+  //border-radius: 50%;
+  // object-fit: cover;
+  // display: inline-block;
+  // overflow: hidden;
+  height: 50%;
+  background: #00a2e8;
+  clip-path: polygon(0 50%, 100% 0, 100% 50%, 0 100%);
+  position: relative;
+}
+
+#authors--ul {
+  margin-left: 5%;
+  margin-top: 5%;
+  font-size: 25px;
+}
+
+#play-button-1 {
+  padding: 12px 25px;
+  font-size: variables.$big-font-size;
+  margin-top: 20px;
+  // transform: none !important;
+}

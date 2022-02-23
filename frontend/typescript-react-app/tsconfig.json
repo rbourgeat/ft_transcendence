@@ -1,3 +1,4 @@
+// Arevoir
 {
   "compilerOptions": {
     "target": "es5",
@@ -6,21 +7,27 @@
       "dom.iterable",
       "esnext"
     ],
-    "allowJs": true,
+    //TODO: attention a changer
+    "allowJs": true,/* a changer */
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "strict": true,
+    "checkJs": false,
+    // "noEmit": true,
+    "strict": false,/* A changer ? */
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
     "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "strictNullChecks": false,//Ajout pour que canvas fonctionne
   },
   "include": [
-    "src"
-  ]
+    "src", "../Pages"
+  ],
+  "target": "es6",
+  "lib": ["es6"],
+  "jsx": "react",
 }

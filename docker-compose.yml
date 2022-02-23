@@ -1,43 +1,16 @@
 version: '3'
-#A revoir, brouillon
 volumes:
-  # database:
-  #   driver: local
-  #   driver_opts:
-  #     device: /home/ft_transcendence/data/database
-  #     type: volume
-  #     o: bind
   frontend:
     driver: local
     driver_opts:
       device: /Users/transcendence/data/frontend
       type: volume
       o: bind
-  # backend:
-  #   driver: local
-  #   driver_opts:
-  #     device: /home/malatini/data/backend
-  #     type: volume
-  #     o: bind
 
 networks:
   transcendence-network:
 
 services:
-  # Backend 
-  # api:
-  #   build:
-  #     context: ./docker/
-  #     dockerfile: Dockerfile-backend
-  #   ports:
-  #     - "3000:3000"
-  #   volumes:
-  #     - ./backend:/app_backend
-  #   networks:
-  #     - transcendence-network
-  #   restart: on-failure
-  #   container_name: backend_app
-  # Front end
   frontend:
     build:
       context: ./docker/
@@ -53,31 +26,3 @@ services:
     networks:
       - transcendence-network
     restart: on-failure
-
-  #Base de donnees 
-  # db:
-  #   image: postgres:13-alpine
-  #   environment:
-  #     POSTGRES_USER: postgres
-  #     POSTGRES_PASSWORD: postgres
-  #     POSTGRES_DB: database_transcendence
-  #   ports:
-  #     - "31415:5432"
-  #   volumes:
-  #     - ./database-data:/var/lib/postgresql/data
-  #   networks:
-  #     - database
-  #   restart: no
-  #   container_name: db_app
-
-  # pgadmin:
-  #   image: dpage/pgadmin4
-  #   environment:
-  #     PGADMIN_DEFAULT_EMAIL: admin@admin.com
-  #     PGADMIN_DEFAULT_PASSWORD: root
-  #   ports:
-  #     - "5050:80"
-  #   networks:
-  #     - database
-  #   restart: no
-  #   container_name: pgadmin
