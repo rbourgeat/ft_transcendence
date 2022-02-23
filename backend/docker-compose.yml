@@ -1,45 +1,49 @@
-version: "3"
+version: '3'
+
 services:
-  backend:
-    container_name: server
+  api:
     build:
-      context: .
-      dockerfile: .Dockerfile
-    depends_on:
-      - postgres
-    environment:
-      DATABASE_URL: postgres://postgres:42mdp@postgres:5432/transcendence
-      NODE_ENV: development
-      PORT: 80
+      context: ./docker/
+      dockerfile: Dockerfile-backend
     ports:
-      - "80:80"
-  postgres:
-    container_name: postgres
-    image: postgres:10.4
-    ports:
-      - "5432:5432"
-    volumes: 
-      - ./postgresdata:/var/lib/postgresql/data
-      - ./src/db/dbinit.sql:/docker-entrypoint-initdb.d/dbinit.sql
+      - "3000:3000"
+    volumes:
+      - ./backend:/app_backend
+    networks:
+      - webapp
+      - database
     restart: always
+    container_name: backend_app
+
+  db:
+    image: postgres:13-alpine
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 42mdp
-      POSTGRES_DB: transcendence
-  pgadmin:
-    container_name: pgadmin
-    image: dpage/pgadmin4:6.4
-    restart: always
-    environment:
-      PGADMIN_DEFAULT_EMAIL: admin@transcendence.com
-      PGADMIN_DEFAULT_PASSWORD: 42mdp
-      PGADMIN_LISTEN_PORT: 81
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: database_transcendence
     ports:
-      - "8081:81"
+      - "31415:5432"
     volumes:
-      - pgadmin-data:/var/lib/pgadmin
-    depends_on:
-      - postgres
-volumes:
-    db-data:
-    pgadmin-data:
+      - ./database-data:/var/lib/postgresql/data
+    networks:
+      - database
+    restart: always
+    container_name: db_app
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: root
+    ports:
+      - "5050:80"
+    networks:
+      - database
+    restart: always
+    container_name: pgadmin
+
+networks:
+  webapp:
+    driver: bridge
+  database:
+    driver: bridge

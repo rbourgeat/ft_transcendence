@@ -10,9 +10,9 @@ services:
     environment:
       DATABASE_URL: postgres://postgres:42mdp@postgres:5432/transcendence
       NODE_ENV: development
-      PORT: 3000
+      PORT: 80
     ports:
-      - "3000:3000"
+      - "80:80"
   postgres:
     container_name: postgres
     image: postgres:10.4
