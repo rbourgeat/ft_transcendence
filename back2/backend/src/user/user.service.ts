@@ -15,8 +15,18 @@ export class UserService {
         return this.userRepository.find();
     }
 
+    /*
     async getUserById(id: number) {
-        const user = await this.userRepository.findOne(id);
+        const user = await this.userRepository.findOne({ id: id });
+        if (user) {
+            return user;
+        }
+        throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+    }
+    */
+
+    async getUserByLogin(login: string) {
+        const user = await this.userRepository.findOne({ login: login });
         if (user) {
             return user;
         }

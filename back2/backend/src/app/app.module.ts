@@ -3,8 +3,8 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { UserModule } from './user/user.module';
-import { User } from './user/user.entity';
+import { UserModule } from '../user/user.module';
+import { User } from '../user/user.entity';
 
 @Module({
   imports: [
@@ -21,6 +21,11 @@ import { User } from './user/user.entity';
       //autoLoadEntities: true,
       synchronize: true,
       entities: ['dist/**/*.entity{.ts,.js}'],
+      migrations: ['dist/migrations/**/*{.ts,.js}'],
+      cli: {
+        migrationsDir: 'src/migrations',
+      },
+      migrationsRun: true //run migration query on start (creating factice data)..
     }),
     UserModule
   ],
