@@ -46,11 +46,15 @@ export class UserService {
     }
 
     async addFriend(login: string, friend: string) {
-        // WIP
+        const u = await this.userRepository.findOne(login);
+        u.friends.push(friend)
     }
 
     async removeFriend(login: string, friend: string) {
-        // WIP
+        const u = await this.userRepository.findOne(login);
+        for(var i = 0; i < u.friends.length; i++)
+            if ( u.friends[i] === friend)
+                u.friends.splice(i, 1); 
     }
 
     //WIP might be deleted
