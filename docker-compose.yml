@@ -26,8 +26,8 @@
 #      - ./server:/app
 
  
-version: "3"
-services:
+# version: "3"
+# services:
   # db:
   #   image: postgres
   #   container_name: postgres-db
@@ -71,28 +71,42 @@ services:
   #   networks:
   #     - db-network
   #     - webapp-network
-  ui:
-    build:
-      dockerfile: ./frontend/Dockerfile
-    container_name: react-frontend
-    hostname: react-frontend
-    ports:
-      - '80:80'
-      - '443:443'
-      - '10000-10010:10000-10010'
-      - '8080:8080'
-    volumes:
-      - ./frontend/typescript-react-app:/usr/src/app/ui
-    networks:
-      - webapp-network
-    restart: unless-stopped
-    # depends_on:
-    # - api
-networks:
+#   ui:
+#     build:
+#       dockerfile: ./frontend/Dockerfile
+#     container_name: react-frontend
+#     hostname: react-frontend
+#     ports:
+#       - '80:80'
+#       - '443:443'
+#       - '10000-10010:10000-10010'
+#       - '8080:8080'
+#       - '3000:3000'
+#     volumes:
+#       - ./frontend/typescript-react-app:/usr/src/app/ui
+#     networks:
+#       - webapp-network
+#     restart: unless-stopped
+#     # depends_on:
+#     # - api
+# networks:
   # db-network:
   #   driver: bridge
-  webapp-network:
-    driver: bridge
+  # webapp-network:
+  #   driver: bridge
 # volumes:
 #   pgadmin-data:
 #   pgdata:
+
+version: '3.7'
+services:
+  frontend:
+    container_name: frontend
+    build: 
+      dockerfile: ./frontend/Dockerfile
+    ports:
+      - 3000:3000
+    stdin_open: true
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    command: npm start
