@@ -57,6 +57,11 @@ export class UserService {
                 u.friends.splice(i, 1); 
     }
 
+    async updateStatus(login: string, status: string) {
+        const u = await this.userRepository.findOne(login);
+        u.status = status;
+    }
+
     //WIP might be deleted
     async createtest(userData: CreateUserDtoTest) {
         const newUser = await this.userRepository.create(userData);

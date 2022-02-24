@@ -8,6 +8,8 @@ import { LocalAuthenticationGuard } from './localauth.guard';
 import { Response } from 'express';
 import JwtAuthenticationGuard from './jwt-authentication.guard';
 
+import { UserService } from '../user/user.service';
+
 @ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
@@ -28,6 +30,7 @@ export class AuthController {
         const cookie = this.authService.getCookieWithJwtToken(user.id);
         response.setHeader('Set-Cookie', cookie);
         user.password = undefined;
+        // updateStatus(user.login, "Online");
         return response.send(user);
     }
 
@@ -35,6 +38,8 @@ export class AuthController {
     @Post('log-out')
     async logOut(@Req() request: RequestWithUser, @Res() response: Response) {
         response.setHeader('Set-Cookie', this.authService.getCookieForLogOut());
+        const { user } = request;
+        // updateStatus(user.login, "Offline");
         return response.sendStatus(200);
     }
 

@@ -95,7 +95,7 @@ export class UserController {
     }
 
     /**
-    **  Adding user friend
+    **  Adding friend user
     **/
 
     @ApiOperation({ summary: 'Adding new {friend}' }) //endpoint summary on swaggerui
@@ -108,7 +108,7 @@ export class UserController {
     }
 
     /**
-    **  Remove user friend
+    **  Remove friend user
     **/
 
     @ApiOperation({ summary: 'Adding new {friend}' }) //endpoint summary on swaggerui
@@ -116,7 +116,7 @@ export class UserController {
     @ApiConflictResponse({ description: '{friend} already {login} friend' }) //not working atm
     @Delete(':login/remove/:friend')
     async removeFriend(@Param('login') login: string, @Param('friend') friend: string) {
-        console.log('Adding friend')
+        console.log('Remove friend')
         return this.usersService.removeFriend(login, friend);
     }
 }
