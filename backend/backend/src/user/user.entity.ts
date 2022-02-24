@@ -14,6 +14,9 @@ export class User {
     @Column()
     login: string;
 
+    @Column({ nullable: true })
+    avatar: string = "https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg";
+
     @Column()
     status: string = "offline";
 

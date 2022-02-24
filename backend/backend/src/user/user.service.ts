@@ -45,6 +45,14 @@ export class UserService {
         }
     }
 
+    async addFriend(login: string, friend: string) {
+        // WIP
+    }
+
+    async removeFriend(login: string, friend: string) {
+        // WIP
+    }
+
     //WIP might be deleted
     async createtest(userData: CreateUserDtoTest) {
         const newUser = await this.userRepository.create(userData);

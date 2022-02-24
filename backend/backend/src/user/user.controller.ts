@@ -1,7 +1,8 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, UseInterceptors, UploadedFile } from '@nestjs/common';
 import { UserService } from './user.service';
-import { CreateUserDto, UpdateUserDto } from './user.dto';
+import { CreateUserDto, UpdateUserDto, UploadAvatarDto } from './user.dto';
 import { ApiBody, ApiConflictResponse, ApiConsumes, ApiOkResponse, ApiOperation, ApiParam, ApiQuery, ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger'
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @ApiTags('Users') //Create a category on swagger
 @Controller('api/user')
@@ -65,5 +66,57 @@ export class UserController {
     async deleteUser(@Param('login') login: string) {
         console.log('Delete user ' + login)
         return this.usersService.deleteUser(String(login));
+    }
+
+    /**
+    **  Upload user avatar
+    **/
+
+    @ApiOperation({ summary: 'Upload {login} avatar' }) //endpoint summary on swaggerui
+    @ApiOkResponse({ description: '{login} avatar uploaded' }) //answer sent back
+    @ApiConflictResponse({ description: '{login} avatar conflict' }) //not working atm
+    @ApiConsumes('multipart/form-data')
+    @ApiBody({
+        schema: {
+            type: 'object',
+            properties: {
+                file: {
+                    type: 'string',
+                    format: 'binary',
+                },
+            },
+        },
+    })
+    @Post(':login/upload')
+    @UseInterceptors(FileInterceptor('avatar'))
+    uploadFile(@Body() body: UploadAvatarDto, @UploadedFile() file: Express.Multer.File) {
+        // console.log(file);
+        return { file: file.buffer.toString() };
+    }
+
+    /**
+    **  Adding user friend
+    **/
+
+    @ApiOperation({ summary: 'Adding new {friend}' }) //endpoint summary on swaggerui
+    @ApiOkResponse({ description: '{friend} added' }) //answer sent back
+    @ApiConflictResponse({ description: '{friend} already {login} friend' }) //not working atm
+    @Post(':login/add/:friend')
+    async addFriend(@Param('login') login: string, @Param('friend') friend: string) {
+        console.log('Adding friend')
+        return this.usersService.addFriend(login, friend);
+    }
+
+    /**
+    **  Remove user friend
+    **/
+
+    @ApiOperation({ summary: 'Adding new {friend}' }) //endpoint summary on swaggerui
+    @ApiOkResponse({ description: '{friend} added' }) //answer sent back
+    @ApiConflictResponse({ description: '{friend} already {login} friend' }) //not working atm
+    @Delete(':login/remove/:friend')
+    async removeFriend(@Param('login') login: string, @Param('friend') friend: string) {
+        console.log('Adding friend')
+        return this.usersService.removeFriend(login, friend);
     }
 }

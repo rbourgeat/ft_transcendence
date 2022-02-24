@@ -56,6 +56,9 @@ export class UpdateUserDto {
     password_confirmation: string;
 }
 
+export class UploadAvatarDto {
+    name: string;
+}
 
 //WIP might be deleted
 export class CreateUserDtoTest {
