@@ -2,7 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
-import { CreateUserDto, UpdateUserDto } from './user.dto';
+import { CreateUserDto, UpdateUserDto, CreateUserDtoTest } from './user.dto';
 
 @Injectable()
 export class UserService {
@@ -14,16 +14,6 @@ export class UserService {
     getAllUsers() {
         return this.userRepository.find();
     }
-
-    /*
-    async getUserById(id: number) {
-        const user = await this.userRepository.findOne({ id: id });
-        if (user) {
-            return user;
-        }
-        throw new HttpException('User not found', HttpStatus.NOT_FOUND);
-    }
-    */
 
     async getUserByLogin(login: string) {
         const user = await this.userRepository.findOne({ login: login });
@@ -39,19 +29,34 @@ export class UserService {
         return newUser;
     }
 
-    async updateUser(id: number, user: UpdateUserDto) {
-        await this.userRepository.update(id, user);
-        const updatedUser = await this.userRepository.findOne(id);
+    async updateUser(login: string, user: UpdateUserDto) {
+        await this.userRepository.update(login, user);
+        const updatedUser = await this.userRepository.findOne(login);
         if (updatedUser) {
             return updatedUser
         }
         throw new HttpException('User not found', HttpStatus.NOT_FOUND);
     }
 
-    async deleteUser(id: number) {
-        const deleteResponse = await this.userRepository.delete(id);
+    async deleteUser(login: string) {
+        const deleteResponse = await this.userRepository.delete(login);
         if (!deleteResponse.affected) {
             throw new HttpException('Post not found', HttpStatus.NOT_FOUND);
         }
+    }
+
+    //WIP might be deleted
+    async createtest(userData: CreateUserDtoTest) {
+        const newUser = await this.userRepository.create(userData);
+        await this.userRepository.save(newUser);
+        return newUser;
+    }
+
+    async getById(id: number) {
+        const user = await this.userRepository.findOne({ id });
+        if (user) {
+            return user;
+        }
+        throw new HttpException('User with this id does not exist', HttpStatus.NOT_FOUND);
     }
 }
