@@ -1,28 +1,26 @@
 version: '3'
-volumes:
-  frontend:
-    driver: local
-    driver_opts:
-      device: /Users/transcendence/data/frontend
-      type: volume
-      o: bind
 
-networks:
-  transcendence-network:
+# networks:
+#   transcendence-network:
 
 services:
   frontend:
+    container_name: client
     build:
-      context: ./docker/
-      dockerfile: ../frontend/typescript-react-app/Dockerfile-frontend
+      context: ./client
+      dockerfile: Dockerfile
+    image: react
     ports:
-      - 3001:3000
-    stdin_open: true
-    environment:
-      - CHOKIDAR_USEPOLLING=true
+     - "3000:3000"
     volumes:
-      - /app/node_modules
-      - .:/app
-    networks:
-      - transcendence-network
-    restart: on-failure
+     - ./client:/app
+  backend:
+    container_name: backend
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    image: server
+    ports:
+     - "5000:5000"
+    volumes:
+     - ./server:/app
