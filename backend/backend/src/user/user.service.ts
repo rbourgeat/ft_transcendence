@@ -62,6 +62,11 @@ export class UserService {
         u.status = status;
     }
 
+    async toggleTwoFactorAuthentication(login: string) {
+        const u = await this.userRepository.findOne(login);
+        u.two_factor_auth = !u.two_factor_auth;
+    }
+
     //WIP might be deleted
     async createtest(userData: CreateUserDtoTest) {
         const newUser = await this.userRepository.create(userData);

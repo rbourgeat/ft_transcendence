@@ -119,4 +119,17 @@ export class UserController {
         console.log('Remove friend')
         return this.usersService.removeFriend(login, friend);
     }
+
+    /**
+    **  Toggle Two Factor Authentication
+    **/
+
+    @ApiOperation({ summary: 'Toggle {login} Two Factor Authentication' }) //endpoint summary on swaggerui
+    @ApiOkResponse({ description: 'Two Factor Authentication Toggled' }) //answer sent back
+    @ApiConflictResponse({ description: 'Can\'t toggle Two Factor Authentication' }) //not working atm
+    @Get(':login')
+    async toggleTwoFactorAuthentication(@Param('login') login: string) {
+        console.log('Toggle ' + login + ' Two Factor Authentication')
+        return this.usersService.toggleTwoFactorAuthentication(String(login));
+    }
 }
