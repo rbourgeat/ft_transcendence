@@ -127,9 +127,22 @@ export class UserController {
     @ApiOperation({ summary: 'Toggle {login} Two Factor Authentication' }) //endpoint summary on swaggerui
     @ApiOkResponse({ description: 'Two Factor Authentication Toggled' }) //answer sent back
     @ApiConflictResponse({ description: 'Can\'t toggle Two Factor Authentication' }) //not working atm
-    @Get(':login')
+    @Get(':login/2fa')
     async toggleTwoFactorAuthentication(@Param('login') login: string) {
         console.log('Toggle ' + login + ' Two Factor Authentication')
         return this.usersService.toggleTwoFactorAuthentication(String(login));
+    }
+
+    /**
+    **  Setup Two Factor Authentication
+    **/
+
+    @ApiOperation({ summary: 'Setup {login} Two Factor Authentication' }) //endpoint summary on swaggerui
+    @ApiOkResponse({ description: 'Two Factor Authentication set' }) //answer sent back
+    @ApiConflictResponse({ description: 'Can\'t setup Two Factor Authentication' }) //not working atm
+    @Get(':login/2fa/:secret')
+    async setupTwoFactorAuthentication(@Param('login') login: string, @Param('login') secret: string) {
+        console.log('Setup ' + login + ' Two Factor Authentication')
+        return this.usersService.setupTwoFactorAuthentication(login, secret);
     }
 }

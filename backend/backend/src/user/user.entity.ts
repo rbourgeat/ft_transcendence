@@ -46,6 +46,9 @@ export class User {
     two_factor_auth: boolean;
 
     @Column({ default: false })
+    two_factor_secret: string;
+
+    @Column({ default: false })
     is_ban: boolean;
 
     @Column({ default: false })

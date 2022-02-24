@@ -14,6 +14,7 @@ import { UserService } from '../user/user.service';
 @Controller('auth')
 export class AuthController {
     constructor(
+        private readonly userService: UserService,
         private readonly authService: AuthService
     ) { }
 
@@ -30,7 +31,7 @@ export class AuthController {
         const cookie = this.authService.getCookieWithJwtToken(user.id);
         response.setHeader('Set-Cookie', cookie);
         user.password = undefined;
-        // updateStatus(user.login, "Online");
+        this.userService.updateStatus(user.login, "Online");
         return response.send(user);
     }
 
@@ -39,7 +40,7 @@ export class AuthController {
     async logOut(@Req() request: RequestWithUser, @Res() response: Response) {
         response.setHeader('Set-Cookie', this.authService.getCookieForLogOut());
         const { user } = request;
-        // updateStatus(user.login, "Offline");
+        this.userService.updateStatus(user.login, "Offline");
         return response.sendStatus(200);
     }
 
