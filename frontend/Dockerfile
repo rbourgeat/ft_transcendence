@@ -76,9 +76,9 @@
 
 FROM node
 WORKDIR /app
-COPY ./frontend/typescript-react-app/package.json .
-COPY ./frontend/typescript-react-app/package-lock.json .
-COPY ./frontend/typescript-react-app .
+COPY ./typescript-react-app/package.json .
+COPY ./typescript-react-app/package-lock.json .
+COPY ./typescript-react-app .
 RUN npm install
-EXPOSE 3000
+EXPOSE 80
 CMD ["npm", "start"]
