@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, UnsupportedMediaTypeException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
@@ -72,6 +72,12 @@ export class UserService {
         u.two_factor_secret = secret;
     }
 
+    async addAvatar(login: string, filename: string)
+    {
+        const u = await this.userRepository.findOne(login);
+        u.avatar = filename;
+    }
+
     //WIP might be deleted
     async createtest(userData: CreateUserDtoTest) {
         const newUser = await this.userRepository.create(userData);
@@ -87,3 +93,23 @@ export class UserService {
         throw new HttpException('User with this id does not exist', HttpStatus.NOT_FOUND);
     }
 }
+
+export function fileMimetypeFilter(...mimetypes: string[]) {
+    return (
+      req,
+      file: Express.Multer.File,
+      callback: (error: Error | null, acceptFile: boolean) => void,
+    ) => {
+      if (mimetypes.some((m) => file.mimetype.includes(m))) {
+        callback(null, true);
+      } else {
+        callback(
+          new UnsupportedMediaTypeException(
+            `File type is not matching: ${mimetypes.join(', ')}`,
+          ),
+          false,
+        );
+      }
+    };
+  }
+  

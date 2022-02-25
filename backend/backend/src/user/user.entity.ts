@@ -24,16 +24,16 @@ export class User {
     password: string;
 
     @Column({ nullable: true })
-    total_games: number;
+    total_games: number = 0;
 
     @Column({ nullable: true })
-    total_wins: number;
+    total_wins: number = 0;
 
     @Column({ nullable: true })
-    total_loss: number;
+    total_loss: number = 0;
 
     @Column({ nullable: true })
-    win_loss_ration: number;
+    win_loss_ration: number = 0;
 
     @Column("simple-array", { nullable: true })
     friends: string[];
@@ -43,7 +43,7 @@ export class User {
     //game_history: [];
 
     @Column({ default: false })
-    two_factor_auth: boolean;
+    two_factor_auth: boolean = false;
 
     @Column({ default: false })
     two_factor_secret: string;
