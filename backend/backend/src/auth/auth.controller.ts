@@ -1,26 +1,22 @@
-import { ApiTags } from '@nestjs/swagger';
-
-import { Body, Req, Controller, Post, HttpCode, UseGuards, Res, Get } from '@nestjs/common';
+import { Body, Req, Controller, HttpCode, Post, UseGuards, Res, Get } from '@nestjs/common';
+import { Response } from 'express';
 import { AuthService } from './auth.service';
 import RegisterDto from './register.dto';
 import RequestWithUser from './requestWithUser.interface';
 import { LocalAuthenticationGuard } from './localauth.guard';
-import { Response } from 'express';
 import JwtAuthenticationGuard from './jwt-authentication.guard';
+import { ApiBody, ApiConflictResponse, ApiConsumes, ApiOkResponse, ApiOperation, ApiParam, ApiQuery, ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger'
 
-import { UserService } from '../user/user.service';
-
-@ApiTags('Auth')
-@Controller('auth')
-export class AuthController {
+@ApiTags('Auth') //Create a category on swagger
+@Controller('api/auth')
+export class AuthenticationController {
     constructor(
-        private readonly userService: UserService,
-        private readonly authService: AuthService
+        private readonly authenticationService: AuthService
     ) { }
 
     @Post('register')
     async register(@Body() registrationData: RegisterDto) {
-        return this.authService.register(registrationData);
+        return this.authenticationService.register(registrationData);
     }
 
     @HttpCode(200)
@@ -28,19 +24,16 @@ export class AuthController {
     @Post('log-in')
     async logIn(@Req() request: RequestWithUser, @Res() response: Response) {
         const { user } = request;
-        const cookie = this.authService.getCookieWithJwtToken(user.id);
+        const cookie = this.authenticationService.getCookieWithJwtToken(user.id);
         response.setHeader('Set-Cookie', cookie);
         user.password = undefined;
-        this.userService.updateStatus(user.login, "Online");
         return response.send(user);
     }
 
     @UseGuards(JwtAuthenticationGuard)
     @Post('log-out')
-    async logOut(@Req() request: RequestWithUser, @Res() response: Response) {
-        response.setHeader('Set-Cookie', this.authService.getCookieForLogOut());
-        const { user } = request;
-        this.userService.updateStatus(user.login, "Offline");
+    async logOut(@Res() response: Response) {
+        response.setHeader('Set-Cookie', this.authenticationService.getCookieForLogOut());
         return response.sendStatus(200);
     }
 

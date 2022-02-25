@@ -52,9 +52,9 @@ export class UserService {
 
     async removeFriend(login: string, friend: string) {
         const u = await this.userRepository.findOne(login);
-        for(var i = 0; i < u.friends.length; i++)
-            if ( u.friends[i] === friend)
-                u.friends.splice(i, 1); 
+        for (var i = 0; i < u.friends.length; i++)
+            if (u.friends[i] === friend)
+                u.friends.splice(i, 1);
     }
 
     async updateStatus(login: string, status: string) {
@@ -73,10 +73,18 @@ export class UserService {
     }
 
     //WIP might be deleted
-    async createtest(userData: CreateUserDtoTest) {
+    async create(userData: CreateUserDtoTest) {
         const newUser = await this.userRepository.create(userData);
         await this.userRepository.save(newUser);
         return newUser;
+    }
+
+    async getByEmail(email: string) {
+        const user = await this.userRepository.findOne({ email });
+        if (user) {
+            return user;
+        }
+        throw new HttpException('User with this email does not exist', HttpStatus.NOT_FOUND);
     }
 
     async getById(id: number) {

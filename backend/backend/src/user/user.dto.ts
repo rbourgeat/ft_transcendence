@@ -61,9 +61,15 @@ export class UploadAvatarDto {
 }
 
 //WIP might be deleted
+@ApiTags('Auth') //Create a category on swagger
 export class CreateUserDtoTest {
+    @IsNotEmpty()
     email: string;
+
+    @IsNotEmpty()
     login: string;
+
+    @IsNotEmpty()
     password: string;
 }
 

@@ -31,7 +31,7 @@ import { AuthModule } from 'src/auth/auth.module';
       migrationsRun: true //run migration query on start (creating factice data)..
     }),
     UserModule,
-    //AuthModule
+    AuthModule
   ],
   controllers: [AppController],
   providers: [AppService],
