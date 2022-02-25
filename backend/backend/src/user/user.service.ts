@@ -68,8 +68,9 @@ export class UserService {
     }
 
     async setupTwoFactorAuthentication(login: string, secret: string) {
-        const u = await this.userRepository.findOne(login);
-        u.two_factor_secret = secret;
+        return this.userRepository.update(login, {
+            two_factor_secret: secret
+        });
     }
 
     async addAvatar(login: string, filename: string)
