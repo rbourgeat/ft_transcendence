@@ -14,15 +14,20 @@ export class AuthenticationController {
         private readonly authenticationService: AuthService
     ) { }
 
+    @ApiOperation({ summary: 'register new user' }) //endpoint summary on swaggerui
+    @ApiOkResponse({ description: 'Your registration suceed' }) //answer sent back
     @Post('register')
     async register(@Body() registrationData: RegisterDto) {
         return this.authenticationService.register(registrationData);
     }
 
+    @ApiOperation({ summary: 'log in user' }) //endpoint summary on swaggerui
+    @ApiOkResponse({ description: 'You logged in' }) //answer sent back
     @HttpCode(200)
     @UseGuards(LocalAuthenticationGuard)
     @Post('log-in')
     async logIn(@Req() request: RequestWithUser, @Res() response: Response) {
+        console.log('test');
         const { user } = request;
         const cookie = this.authenticationService.getCookieWithJwtToken(user.id);
         response.setHeader('Set-Cookie', cookie);
@@ -30,6 +35,8 @@ export class AuthenticationController {
         return response.send(user);
     }
 
+    @ApiOperation({ summary: 'log out user' }) //endpoint summary on swaggerui
+    @ApiOkResponse({ description: 'You logged out' }) //answer sent back
     @UseGuards(JwtAuthenticationGuard)
     @Post('log-out')
     async logOut(@Res() response: Response) {

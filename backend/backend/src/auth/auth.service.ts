@@ -5,6 +5,7 @@ import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import TokenPayload from './tokenPayload.interface';
+import PostgresErrorCode from './postgresErrorCodes.enum';
 
 @Injectable()
 export class AuthService {
@@ -24,7 +25,7 @@ export class AuthService {
             createdUser.password = undefined;
             return createdUser;
         } catch (error) {
-            if (error?.code === 23505) {
+            if (error?.code === PostgresErrorCode.UniqueViolation) {
                 throw new HttpException('User with that email already exists', HttpStatus.BAD_REQUEST);
             }
             throw new HttpException('Something went wrong', HttpStatus.INTERNAL_SERVER_ERROR);
