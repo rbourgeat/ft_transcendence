@@ -1,26 +1,112 @@
-version: '3'
+# version: '3'
 
+# # networks:
+# #   transcendence-network:
+
+# services:
+#   frontend:
+#     container_name: client
+#     build:
+#       context: ./client
+#       dockerfile: Dockerfile
+#     image: react
+#     ports:
+#      - "3000:3000"
+#     volumes:
+#      - ./client:/app
+#   backend:
+#     container_name: backend
+#     build:
+#       context: ./server
+#       dockerfile: Dockerfile
+#     image: server
+#     ports:
+#      - "5000:5000"
+#     volumes:
+#      - ./server:/app
+
+ 
+# version: "3"
+# services:
+  # db:
+  #   image: postgres
+  #   container_name: postgres-db
+  #   hostname: postgres-db
+  #   env_file:
+  #     - ".env"
+  #   ports:
+  #   - '5432:5432'
+  #   volumes:
+  #     - ./pgdata:/var/lib/postgresql/data
+  #   restart: unless-stopped
+  #   networks:
+  #     - db-network
+  # pgadmin:
+  #   container_name: pgadmin
+  #   image: dpage/pgadmin4
+  #   ports:
+  #     - "8081:80"
+  #   volumes:
+  #     - ./pgadmin-data:/root/.pgadmin
+  #   env_file:
+  #     - docker.env
+  #   depends_on:
+  #     - db
+  #   networks:
+  #     - db-network
+  # api:
+  #   build:
+  #     context: ./api
+  #     dockerfile: Dockerfile
+  #   container_name: nestjs-api
+  #   hostname: nestjs-api
+  #   env_file:
+  #     - ".env"
+  #   ports:
+  #     - '3000:3000'
+  #   volumes:
+  #     - ./api:/usr/src/app/api
+  #   depends_on:
+  #     - db
+  #   networks:
+  #     - db-network
+  #     - webapp-network
+#   ui:
+#     build:
+#       dockerfile: ./frontend/Dockerfile
+#     container_name: react-frontend
+#     hostname: react-frontend
+#     ports:
+#       - '80:80'
+#       - '443:443'
+#       - '10000-10010:10000-10010'
+#       - '8080:8080'
+#       - '3000:3000'
+#     volumes:
+#       - ./frontend/typescript-react-app:/usr/src/app/ui
+#     networks:
+#       - webapp-network
+#     restart: unless-stopped
+#     # depends_on:
+#     # - api
 # networks:
-#   transcendence-network:
+  # db-network:
+  #   driver: bridge
+  # webapp-network:
+  #   driver: bridge
+# volumes:
+#   pgadmin-data:
+#   pgdata:
 
+version: '3.7'
 services:
   frontend:
-    container_name: client
-    build:
-      context: ./client
-      dockerfile: Dockerfile
-    image: react
+    container_name: frontend
+    build: 
+      dockerfile: ./frontend/Dockerfile
     ports:
-     - "3000:3000"
-    volumes:
-     - ./client:/app
-  backend:
-    container_name: backend
-    build:
-      context: ./server
-      dockerfile: Dockerfile
-    image: server
-    ports:
-     - "5000:5000"
-    volumes:
-     - ./server:/app
+      - 3000:3000
+    stdin_open: true
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    command: npm start

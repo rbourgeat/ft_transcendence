@@ -9,7 +9,7 @@ import { MulterModule } from '@nestjs/platform-express';
   imports: [
     TypeOrmModule.forFeature([User]),
     MulterModule.register({
-      dest: './files',
+      dest: './upload',
     })],
   controllers: [UserController],
   providers: [UserService],

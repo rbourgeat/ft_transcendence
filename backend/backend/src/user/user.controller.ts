@@ -1,8 +1,10 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, UseInterceptors, UploadedFile } from '@nestjs/common';
-import { UserService } from './user.service';
+import { Req, Body, Controller, Delete, Get, Param, Patch, Post, UseInterceptors, UploadedFile } from '@nestjs/common';
+import { UserService, fileMimetypeFilter } from './user.service';
 import { CreateUserDto, UpdateUserDto, UploadAvatarDto } from './user.dto';
 import { ApiBody, ApiConflictResponse, ApiConsumes, ApiOkResponse, ApiOperation, ApiParam, ApiQuery, ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger'
 import { FileInterceptor } from '@nestjs/platform-express';
+import { ApiImageFile } from './api-file.decorator';
+import { ParseFile } from './parse-file.pipe';
 
 @ApiTags('Users') //Create a category on swagger
 @Controller('api/user')
@@ -75,23 +77,13 @@ export class UserController {
     @ApiOperation({ summary: 'Upload {login} avatar' }) //endpoint summary on swaggerui
     @ApiOkResponse({ description: '{login} avatar uploaded' }) //answer sent back
     @ApiConflictResponse({ description: '{login} avatar conflict' }) //not working atm
+    @Post(':login/avatar')
+    @UseInterceptors(FileInterceptor('file')) // 👈 field name must match
     @ApiConsumes('multipart/form-data')
-    @ApiBody({
-        schema: {
-            type: 'object',
-            properties: {
-                file: {
-                    type: 'string',
-                    format: 'binary',
-                },
-            },
-        },
-    })
-    @Post(':login/upload')
-    @UseInterceptors(FileInterceptor('avatar'))
-    uploadFile(@Body() body: UploadAvatarDto, @UploadedFile() file: Express.Multer.File) {
-        // console.log(file);
-        return { file: file.buffer.toString() };
+    @ApiImageFile('avatar', true)
+    uploadFile(@Param('login') login: string, @UploadedFile(ParseFile) file: Express.Multer.File) {
+        console.log(login, file);
+        return this.usersService.addAvatar(String(login), String(file.filename));
     }
 
     /**
@@ -111,9 +103,9 @@ export class UserController {
     **  Remove friend user
     **/
 
-    @ApiOperation({ summary: 'Adding new {friend}' }) //endpoint summary on swaggerui
-    @ApiOkResponse({ description: '{friend} added' }) //answer sent back
-    @ApiConflictResponse({ description: '{friend} already {login} friend' }) //not working atm
+    @ApiOperation({ summary: 'Remove new {friend}' }) //endpoint summary on swaggerui
+    @ApiOkResponse({ description: '{friend} deleted' }) //answer sent back
+    @ApiConflictResponse({ description: '{friend} not {login} friend' }) //not working atm
     @Delete(':login/remove/:friend')
     async removeFriend(@Param('login') login: string, @Param('friend') friend: string) {
         console.log('Remove friend')
@@ -140,9 +132,9 @@ export class UserController {
     @ApiOperation({ summary: 'Setup {login} Two Factor Authentication' }) //endpoint summary on swaggerui
     @ApiOkResponse({ description: 'Two Factor Authentication set' }) //answer sent back
     @ApiConflictResponse({ description: 'Can\'t setup Two Factor Authentication' }) //not working atm
-    @Get(':login/2fa/:secret')
+    @Post(':login/2fa/:secret')
     async setupTwoFactorAuthentication(@Param('login') login: string, @Param('login') secret: string) {
         console.log('Setup ' + login + ' Two Factor Authentication')
-        return this.usersService.setupTwoFactorAuthentication(login, secret);
+        return this.usersService.setupTwoFactorAuthentication(String(login), String(secret));
     }
 }
