@@ -9,6 +9,6 @@ RUN apk add --update --no-cache python3 && ln -sf python3 /usr/bin/python
 # Install dependencies required for project
 RUN npm i -g @nestjs/cli
 
-EXPOSE 80
+EXPOSE 3000
 
 ENTRYPOINT npm install && npm run start:dev

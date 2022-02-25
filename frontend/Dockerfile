@@ -80,5 +80,5 @@ COPY ./typescript-react-app/package.json .
 COPY ./typescript-react-app/package-lock.json .
 COPY ./typescript-react-app .
 RUN npm install
-EXPOSE 80
+EXPOSE 3030
 CMD ["npm", "start"]
