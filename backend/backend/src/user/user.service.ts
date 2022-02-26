@@ -57,9 +57,10 @@ export class UserService {
                 u.friends.splice(i, 1);
     }
 
-    async updateStatus(login: string, status: string) {
-        const u = await this.userRepository.findOne(login);
-        u.status = status;
+    async updateStatus(login: string, s: string) {
+        return this.userRepository.update(login, {
+            status: s
+        });
     }
 
     async toggleTwoFactorAuthentication(login: string) {
