@@ -46,12 +46,12 @@ export class UserService {
     }
 
     async addFriend(login: string, friend: string) {
-        const u = await this.userRepository.findOne(login);
+        const u = await this.userRepository.findOne({login});
         u.friends.push(friend)
     }
 
     async removeFriend(login: string, friend: string) {
-        const u = await this.userRepository.findOne(login);
+        const u = await this.userRepository.findOne({login});
         for (var i = 0; i < u.friends.length; i++)
             if (u.friends[i] === friend)
                 u.friends.splice(i, 1);
@@ -64,19 +64,19 @@ export class UserService {
     }
 
     async toggleTwoFactorAuthentication(login: string) {
-        const u = await this.userRepository.findOne(login);
+        const u = await this.userRepository.findOne({login});
         u.two_factor_auth = !u.two_factor_auth;
     }
 
     async setupTwoFactorAuthentication(login: string, secret: string) {
-        return this.userRepository.update(login, {
+        return this.userRepository.update({login}, {
             two_factor_secret: secret
         });
     }
 
     async addAvatar(login: string, filename: string)
     {
-        const u = await this.userRepository.findOne(login);
+        const u = await this.userRepository.findOne({login});
         u.avatar = filename;
     }
 
