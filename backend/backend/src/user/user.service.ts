@@ -58,7 +58,7 @@ export class UserService {
     }
 
     async updateStatus(login: string, s: string) {
-        return this.userRepository.update(login, {
+        return this.userRepository.update({login}, {
             status: s
         });
     }

@@ -87,6 +87,19 @@ export class UserController {
     }
 
     /**
+    **  Update user status
+    **/
+
+    @ApiOperation({ summary: 'Update {status} of {login}' }) //endpoint summary on swaggerui
+    @ApiOkResponse({ description: '{status} added' }) //answer sent back
+    @ApiConflictResponse({ description: '{status} conflict with {login}' }) //not working atm
+    @Post(':login/status/:status')
+    async updateStatus(@Param('login') login: string, @Param('status') status: string) {
+        console.log('Update status')
+        return this.usersService.updateStatus(String(login), String(status));
+    }
+
+    /**
     **  Adding friend user
     **/
 
