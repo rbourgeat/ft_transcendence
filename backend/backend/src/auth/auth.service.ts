@@ -6,6 +6,8 @@ import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import TokenPayload from './tokenPayload.interface';
 import PostgresErrorCode from './postgresErrorCodes.enum';
+import { ExtractJwt, Strategy } from 'passport-jwt';
+import { PassportStrategy } from '@nestjs/passport';
 
 @Injectable()
 export class AuthService {
@@ -14,6 +16,15 @@ export class AuthService {
         private readonly jwtService: JwtService,
         private readonly configService: ConfigService
     ) { }
+
+    public getCookieWithJwtAccessToken(userId: number, isSecondFactorAuthenticated = false) {
+        const payload: TokenPayload = { userId, isSecondFactorAuthenticated };
+        const token = this.jwtService.sign(payload, {
+            secret: this.configService.get('JWT_ACCESS_TOKEN_SECRET'),
+            expiresIn: `${this.configService.get('JWT_ACCESS_TOKEN_EXPIRATION_TIME')}s`
+        });
+        return `Authentication=${token}; HttpOnly; Path=/; Max-Age=${this.configService.get('JWT_ACCESS_TOKEN_EXPIRATION_TIME')}`;
+    }
 
     public async register(registrationData: RegisterDto) {
         const hashedPassword = await bcrypt.hash(registrationData.password, 10);
@@ -32,10 +43,13 @@ export class AuthService {
         }
     }
 
-    public getCookieWithJwtToken(userId: number) {
-        const payload: TokenPayload = { userId };
-        const token = this.jwtService.sign(payload);
-        return `Authentication=${token}; HttpOnly; Path=/; Max-Age=${this.configService.get('JWT_EXPIRATION_TIME')}`;
+    public getCookieWithJwtToken(userId: number, isSecondFactorAuthenticated = false) {
+        const payload: TokenPayload = { userId, isSecondFactorAuthenticated };
+        const token = this.jwtService.sign(payload, {
+            secret: this.configService.get('JWT_ACCESS_TOKEN_SECRET'),
+            expiresIn: `${this.configService.get('JWT_ACCESS_TOKEN_EXPIRATION_TIME')}s`
+        });
+        return `Authentication=${token}; HttpOnly; Path=/; Max-Age=${this.configService.get('JWT_ACCESS_TOKEN_EXPIRATION_TIME')}`;
     }
 
     public getCookieForLogOut() {
@@ -59,6 +73,34 @@ export class AuthService {
         );
         if (!isPasswordMatching) {
             throw new HttpException('Wrong credentials provided', HttpStatus.BAD_REQUEST);
+        }
+    }
+}
+
+@Injectable()
+export class JwtTwoFactorStrategy extends PassportStrategy(
+    Strategy,
+    'jwt-two-factor'
+) {
+    constructor(
+        private readonly configService: ConfigService,
+        private readonly userService: UserService,
+    ) {
+        super({
+            jwtFromRequest: ExtractJwt.fromExtractors([(request: Request) => {
+                return request?.cookies?.Authentication;
+            }]),
+            secretOrKey: configService.get('JWT_ACCESS_TOKEN_SECRET')
+        });
+    }
+
+    async validate(payload: TokenPayload) {
+        const user = await this.userService.getById(payload.userId);
+        if (!user.two_factor_auth) {
+            return user;
+        }
+        if (payload.isSecondFactorAuthenticated) {
+            return user;
         }
     }
 }

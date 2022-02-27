@@ -168,12 +168,12 @@ export class UserController {
     **  Setup Two Factor Authentication
     **/
 
-    @ApiOperation({ summary: 'Setup {login} Two Factor Authentication' }) //endpoint summary on swaggerui
-    @ApiOkResponse({ description: 'Two Factor Authentication set' }) //answer sent back
-    @ApiConflictResponse({ description: 'Can\'t setup Two Factor Authentication' }) //not working atm
-    @Post(':login/2fa/:secret')
-    async setupTwoFactorAuthentication(@Param('login') login: string, @Param('login') secret: string) {
-        console.log('Setup ' + login + ' Two Factor Authentication')
-        return this.usersService.setupTwoFactorAuthentication(String(login), String(secret));
-    }
+    // @ApiOperation({ summary: 'Setup {login} Two Factor Authentication' }) //endpoint summary on swaggerui
+    // @ApiOkResponse({ description: 'Two Factor Authentication set' }) //answer sent back
+    // @ApiConflictResponse({ description: 'Can\'t setup Two Factor Authentication' }) //not working atm
+    // @Post(':login/2fa/:secret')
+    // async setupTwoFactorAuthentication(@Param('login') login: string, @Param('login') secret: string) {
+    //     console.log('Setup ' + login + ' Two Factor Authentication')
+    //     return this.usersService.setupTwoFactorAuthentication(String(login), String(secret));
+    // }
 }
