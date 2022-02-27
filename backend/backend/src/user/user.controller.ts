@@ -109,7 +109,7 @@ export class UserController {
     @Post(':login/add/:friend')
     async addFriend(@Param('login') login: string, @Param('friend') friend: string) {
         console.log('Adding friend')
-        return this.usersService.addFriend(login, friend);
+        return this.usersService.addFriend(String(login), String(friend));
     }
 
     /**
@@ -122,20 +122,46 @@ export class UserController {
     @Delete(':login/remove/:friend')
     async removeFriend(@Param('login') login: string, @Param('friend') friend: string) {
         console.log('Remove friend')
-        return this.usersService.removeFriend(login, friend);
+        return this.usersService.removeFriend(String(login), String(friend));
     }
 
     /**
     **  Toggle Two Factor Authentication
     **/
 
-    @ApiOperation({ summary: 'Toggle {login} Two Factor Authentication' }) //endpoint summary on swaggerui
-    @ApiOkResponse({ description: 'Two Factor Authentication Toggled' }) //answer sent back
-    @ApiConflictResponse({ description: 'Can\'t toggle Two Factor Authentication' }) //not working atm
-    @Get(':login/2fa')
+    // @ApiOperation({ summary: 'Toggle {login} Two Factor Authentication' }) //endpoint summary on swaggerui
+    // @ApiOkResponse({ description: 'Two Factor Authentication Toggled' }) //answer sent back
+    // @ApiConflictResponse({ description: 'Can\'t toggle Two Factor Authentication' }) //not working atm
+    // @Get(':login/2fa')
+    // async toggleTwoFactorAuthentication(@Param('login') login: string) {
+    //     console.log('Toggle ' + login + ' Two Factor Authentication')
+    //     return this.usersService.toggleTwoFactorAuthentication(String(login));
+    // }
+
+    /**
+    **  Turn On Two Factor Authentication
+    **/
+
+    @ApiOperation({ summary: 'Turn On {login} Two Factor Authentication' }) //endpoint summary on swaggerui
+    @ApiOkResponse({ description: 'Two Factor Authentication {login} turned On' }) //answer sent back
+    @ApiConflictResponse({ description: 'Can\'t turn On Two Factor Authentication' }) //not working atm
+    @Get(':login/2fa/on')
     async toggleTwoFactorAuthentication(@Param('login') login: string) {
-        console.log('Toggle ' + login + ' Two Factor Authentication')
-        return this.usersService.toggleTwoFactorAuthentication(String(login));
+        console.log('Turn On ' + login + ' Two Factor Authentication')
+        return this.usersService.turnOnTwoFactorAuthentication(String(login));
+    }
+
+    /**
+    **  Turn Off Two Factor Authentication
+    **/
+
+    @ApiOperation({ summary: 'Turn Off {login} Two Factor Authentication' }) //endpoint summary on swaggerui
+    @ApiOkResponse({ description: 'Two Factor Authentication {login} turned Off' }) //answer sent back
+    @ApiConflictResponse({ description: 'Can\'t turn Off Two Factor Authentication' }) //not working atm
+    @Get(':login/2fa/off')
+    async turnOffTwoFactorAuthentication(@Param('login') login: string) {
+        console.log('Turn Off ' + login + ' Two Factor Authentication')
+        return this.usersService.turnOnTwoFactorAuthentication(String(login));
     }
 
     /**

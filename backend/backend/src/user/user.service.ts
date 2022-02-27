@@ -63,9 +63,21 @@ export class UserService {
         });
     }
 
-    async toggleTwoFactorAuthentication(login: string) {
-        const u = await this.userRepository.findOne({login});
-        u.two_factor_auth = !u.two_factor_auth;
+    // async toggleTwoFactorAuthentication(login: string) {
+    //     const u = await this.userRepository.findOne({login});
+    //     u.two_factor_auth = !u.two_factor_auth;
+    // }
+
+    async turnOnTwoFactorAuthentication(login: string) {
+        return this.userRepository.update({ login }, {
+            two_factor_auth: true
+        });
+    }
+
+    async turnOffTwoFactorAuthentication(login: string) {
+        return this.userRepository.update({ login }, {
+            two_factor_auth: false
+        });
     }
 
     async setupTwoFactorAuthentication(login: string, secret: string) {
