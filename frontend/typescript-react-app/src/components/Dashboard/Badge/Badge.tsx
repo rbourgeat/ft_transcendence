@@ -1,6 +1,8 @@
 import React from 'react';
 import './Badge.scss';
 
+import { PieChart } from 'react-minimal-pie-chart';
+
 //TODO: a (re) diviser
 export default function Badge(props) {
     return (
@@ -29,21 +31,31 @@ export default function Badge(props) {
                                 <p id="badge--achievements" className="badge--stats-text">Achievements : x</p>
                             {/* </div> */}
                         </div>
+                        <div className="col" id="badge--wins">
+                            <h2 id="wins-title">Wins</h2>
+                            <br/>
+                            {/* /?<div className="row"> */}
+                                <p id="p--wins">6 wins</p>
+                            {/* </div> */}
+                        </div>
                     </div>
                     {/* Wins */}
-                    <div className="col" id="badge--wins">
-                        <h2 id="wins-title">Wins</h2>
-                        <br/>
-                        {/* /?<div className="row"> */}
-                            <p id="p--wins">6 wins</p>
-                        {/* </div> */}
-                    </div>
+                    
 
                     {/* TODO: a revoir */}
                     {/* Graph */}
-                    {/* <div className="col" id="badge--graph">
+                    <div className="col" id="badge--graph">
                         <h2 id="graph-title">Graph</h2>
-                    </div> */}
+                        <PieChart
+                            data={
+                                // lineWidth: true;                               
+                                [
+                                { title: 'One', value: 75, color: '#469536' },
+                                { title: 'Two', value: 25, color: '#FF4040' },
+                            ]}
+                            
+                            />
+                    </div>
                 </div>
             {/* </div> */}
             {/* </div> */}

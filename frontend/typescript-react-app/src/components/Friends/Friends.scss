@@ -1,4 +1,6 @@
-#dashboard {
+@use "../../variables";
+
+#friends {
   background-image: url("../../../public/wallpapersden.com_frosty-blue-polygon_2560x1080.jpg") !important;
   background-repeat: repeat !important;
   background-color: #cccccc !important;
@@ -7,15 +9,11 @@
   height: 100vh !important;
 }
 
-#friends-button,
-#match-history-button {
-  padding-left: 25px;
-  padding-right: 25px;
-  padding-top: 15px;
-  padding-bottom: 15px;
-}
-
-#dashboard-buttons {
-  margin-top: 30px;
-  margin-bottom: 30px;
+#friends-title {
+  background: variables.$blue;
+  //   color: black !important; //TODO: trouver un joli gris
+  border-radius: variables.$border-radius-big;
+  padding: 10px;
+  font-size: large;
+  font-family: variables.$basic-font;
 }

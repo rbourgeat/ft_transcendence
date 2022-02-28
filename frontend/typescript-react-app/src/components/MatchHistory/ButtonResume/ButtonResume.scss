@@ -20,11 +20,11 @@ span {
 //TODO: voir conditions si le player a gagne ou perdu
 
 .winner {
-  color: #469536 !important;
+  color: variables.$green;
 }
 
 .looser {
-  color: #ff4040 !important;
+  color: variables.$red;
 }
 
 .score {
