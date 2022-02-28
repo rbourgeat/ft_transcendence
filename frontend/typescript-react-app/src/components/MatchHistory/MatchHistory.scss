@@ -1,0 +1,12 @@
+@use "../../variables";
+
+#matchhistory--older {
+  background-color: white !important;
+  min-height: 300px;
+  border-radius: variables.$border-radius-big;
+  padding: 20px;
+}
+
+#matchhistory--title {
+  text-decoration: underline;
+}
