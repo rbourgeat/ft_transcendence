@@ -1,12 +1,19 @@
 @use "../../variables";
 
-#matchhistory--older {
-  background-color: white !important;
-  min-height: 300px;
+#matchhistory--div {
+  //   background-color: #292b2c !important;
+  //   opacity: 0.33;
   border-radius: variables.$border-radius-big;
   padding: 20px;
+  width: 50%;
+  margin-left: 25%;
 }
 
 #matchhistory--title {
   text-decoration: underline;
+  color: white !important;
+}
+
+#match--history {
+  margin-top: 50px !important;
 }
