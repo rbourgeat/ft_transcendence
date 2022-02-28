@@ -14,12 +14,26 @@
   font-size: 3rem;
 }
 
-h1,
+h1 {
+  font-family: variables.$big-font;
+  font-size: variables.$big-font-size;
+  color: white !important;
+  opacity: 1 !important;
+}
+
 h2,
 h3 {
   font-family: variables.$big-font;
   font-size: variables.$big-font-size;
   color: black !important;
+  opacity: 1 !important;
+}
+
+ul {
+  list-style: none;
+  color: white;
+  font-weight: variables.$bold;
+  font-family: variables.$big-font;
 }
 
 input:hover {
