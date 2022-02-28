@@ -1,19 +1,14 @@
 @use "../../variables";
 
-//TODO: faire un cercle pour le rendre "imparfait"
 #test,
 video {
   background-color: black !important;
-  // position: absolute;
-  // top: 10%;
-  // left: 20%;
+  padding-left: 40%;
 }
 
 #welcome--video-div {
   background-color: black !important;
   margin-top: 2%;
-  // clip-path: polygon(0 50%, 100% 0, 100% 50%, 0 100%);
-  // position: relative;
 }
 
 #authors--ul {
@@ -26,5 +21,4 @@ video {
   padding: 12px 25px;
   font-size: variables.$big-font-size;
   margin-top: 20px;
-  // transform: none !important;
 }

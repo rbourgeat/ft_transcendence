@@ -9,14 +9,12 @@ import Footer from "../Footer/Footer";
 
 // import useWindowSize from 'react-use/lib/useWindowSize'
 // import Confetti from 'react-confetti'
-
-//TODO: revoit tout le routing
-
 // import { trustedTypes } from 'trusted-types';
+
 export default function Auth() {
     let navigate = useNavigate();
     const routeChange = () => {
-        let path = `game`;
+        let path = `/game`;
         navigate(path);
     };
 
@@ -37,23 +35,21 @@ export default function Auth() {
             <Header />
             <div className="container" id="auth-container">
                 <div id="auth-form-div">
-                    {/* Rajouter des media queries ? */}
-                    <div id="auth--form" /*className="d-flex justify-content-center"*/>
-                        <Form id="form-auth" /*className="forms*/ >
+                    <div id="auth--form1"/*className="d-flex justify-content-center"*/ >
+                        <div id="form--auth1" className="forms">
                             <h2>Bienvenue ! </h2>
                             <p>Pour jouer, vous devez vous authentifier 🏓</p>
-                            <Form.Group className="form__mb-3" controlId="formAuth42">
+                            <div /*className="form__mb-3"*/ id="formAuth42">
                                 <button type="submit" className="btn btn-dark btn-block" id="auth-btn-3" onClick={routeChange}>Authentification 42</button>
-                            </Form.Group>
+                            </div>
                             <h3 id="se-connecter">Se connecter</h3>
-                            <Form.Group /*className="form__mb-3"*/ controlId="formBasicEmail">
-                                <Form.Label>Username</Form.Label>
-                                {/* Attention entre username et login */}
+                            <div /*className="form__mb-3"*/ id="formBasicEmail">
+                                <label>Username</label>
                                 <input className="form-control" type="username" placeholder="malatini" /*required */ />
-                            </Form.Group>
+                            </div>
 
-                            <Form.Group /*className="form__mb-3"*/ controlId="formBasicPassword">
-                                <Form.Label>Mot de passe</Form.Label>
+                            <div /*className="form__mb-3"*/ id="formBasicPassword">
+                                <label>Mot de passe</label>
                                 <input className="form-control" type={showPassBis ? "text" : "password"} placeholder="********" /*required*/ />
                                 <div /*className="mt-2"*/ style={{ textAlign: "right" }} id="show-password">
                                     <button type="button" className="btn btn-sm btn-light" onClick={() => {
@@ -65,41 +61,34 @@ export default function Auth() {
                                         {showPass ? "Cacher" : "Afficher"}
                                     </button>
                                 </div>
-                            </Form.Group>
+                            </div>
                             <p id="connect-p"></p>
                             {/* onClick={routeChange}  */}
                             <hr className="my-4" id="me-connecter_hr"></hr>
-                            <Form.Group className="form__mb-3" controlId="formBasicConnexion">
+                            <div /*className="form__mb-3"*/ id="formBasicConnexion">
                                 <button type="submit" className="btn btn-light btn-block" id="auth-btn-1" onClick={routeChange}>Me connecter</button>
-                            </Form.Group>
-
+                            </div>
                             {/* onClick={routeChange} */}
-                        </Form>
-
-                        <Form className="forms">
-                            <h3 id="signin-h3">S'inscrire</h3>
-                            <Form.Group /*className="mb-3"*/ controlId="formSignupUsername">
-                                <Form.Label>Username</Form.Label>
-                                {/* Verifier si le username est trouve dans la base de donnees ? */}
+                    </div>
+                    <div id="auth--form2"/*className="d-flex justify-content-center"*/></div>
+                        <div className="forms" id="form--auth2">
+                            <h3 id="sinscrire">S'inscrire</h3>
+                            <div /*className="form__mb-3"*/ id="formSignupUsername">
+                                <label>Username</label>
                                 <input className="form-control" type="username" placeholder="malatini" /*required*/ />
-                            </Form.Group>
+                            </div>
 
-                            <Form.Group /*className="mb-3"*/ controlId="formSignUpEmail">
-                                <Form.Label>Email</Form.Label>
+                            <div /*className="form__mb-3"*/ id="formSignUpEmail">
+                                <label>Email</label>
                                 <input className="form-control" type="email" placeholder="malatini@student.42.fr" /*required*/ />
-                            </Form.Group>
-
-                            {/* <div className="mb-3" id="formSignupPassword"> */}
+                            </div>
                             <div id="password-form">
                                 {/* Pour ajouter des regles sur le password : https://developer.mozilla.org/fr/docs/Web/HTML/Element/Input/password */}
                                 <div id="sub-form">
                                     <div>
-                                        {/* className="col-lg-6" */}
                                         <form>
                                             <div>
-                                                <label>
-                                                    Mot de passe
-                                                </label>
+                                                <label>Mot de passe</label>
                                                 <input className="form-control" type={showPass ? "text" : "password"} placeholder="********" /*required*/ />
                                             </div>
                                             <div className="mt-2" style={{ textAlign: "right" }} id="show-password">
@@ -113,15 +102,12 @@ export default function Auth() {
                                                 </button>
                                             </div>
                                         </form>
-                                        {/* En faire un deuxieme pour confirmation */}
                                         <form>
                                             <div>
-                                                <label>
-                                                    Confirmation mot de passe
-                                                </label>
+                                                <label>Confirmation mot de passe</label>
                                                 <input className="form-control" type={showPassConfirm ? "text" : "password"} placeholder="********" /*required*/ />
                                             </div>
-                                            <div /*className="mt-2"*/ style={{ textAlign: "right" }} >
+                                            <div className="mt-2" style={{ textAlign: "right" }} >
                                                 <button type="button" id="show-password-3" className="btn btn-sm btn-light" onClick={() => {
                                                     if (showPassConfirm == true)
                                                         setshowPassConfirm(false);
@@ -137,7 +123,8 @@ export default function Auth() {
                             </div>
                             <hr className="my-4" id="signup-hr"></hr>
                             <button type="submit" className="btn btn-light btn-block" id="signup" onClick={routeChange}>M'inscrire</button>
-                        </Form>
+                    </div>
+                    {/* </div> */}
                     </div>
                 </div>
             </div>
