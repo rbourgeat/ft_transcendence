@@ -9,6 +9,9 @@ import video1 from "../../images/pong-demo.mp4";
 import TypeAnimation from 'react-type-animation';
 import { useNavigate } from "react-router-dom";
 
+import Media from 'react-media'
+
+
 export default function Welcome() {
     let navigate = useNavigate();
     //TODO: faire une condition si la personne est deja authentifiee ? Voir cookie ?
@@ -39,9 +42,11 @@ export default function Welcome() {
                 </ul>
             </div>
             <br></br>
-            <div  id="welcome--video-div">
+            <Media query="(min-width: 2575px)">
+                <div  id="welcome--video-div">
                     <video autoPlay loop muted src={video1} id="welcome--video-video" height="400px"/>
-            </div>        
+                </div>
+            </Media>
             <Footer />
         </div>
         </>
