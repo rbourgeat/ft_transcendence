@@ -7,18 +7,8 @@ import Welcome from '../Welcome/Welcome';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Routes, Route } from 'react-router-dom';
 import Game from '../Game/Game';
-
-// import Profile from '../Pages/Profile'
-// import Admin from '../Pages/Admin'
-// import Channels from '../Pages/Channels'
-// import Friends from '../Pages/Friends'
-// import History from '../Pages/History'
-// import Messages from '../Pages/Messages'
-// import Search from '../Pages/Search'
-// import Settings from '../Pages/Settings'
-// import Home from '../Pages/Home'
-// import Sidebar from '../Sidebar/Sidebar'
-// import Test from '../Test/Test'
+import Dashboard from '../Dashboard/Dashboard'
+import Friends from '../Friends/Friends'
 
 
 function App() {
@@ -27,7 +17,9 @@ function App() {
       <Routes>
         <Route path="/" element={<Welcome />} />
         <Route path="auth" element={<Auth />} />
-        <Route path="/auth/game" element={<Game />} />
+        <Route path="game" element={<Game />} />
+        <Route path="dashboard" element={<Dashboard />} />
+        <Route path="friends" element={<Friends />} />
         {/* <Route path="home" element={<Home />} /> */}
         {/* <Route path="test" element={<Test />} /> */}
         {/* <Route path="profile" element={<Profile />} /> */}

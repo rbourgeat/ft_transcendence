@@ -1,8 +1,4 @@
-//@import url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
-
 @use "../../variables";
-
-//TODO: variabiliser tout ce qui se trouve dans ce fichier
 
 *:not(canvas) {
   margin: 0;
@@ -18,37 +14,41 @@
   font-size: 3rem;
 }
 
-// #main {
-//   // max-width: 5120px;
-//   // min-height: 100%;
-//   margin: 0 auto;
-//   // position: relative;
-// }
+h1 {
+  font-family: variables.$big-font;
+  font-size: variables.$big-font-size;
+  color: white !important;
+  opacity: 1 !important;
+}
 
-h1,
 h2,
 h3 {
   font-family: variables.$big-font;
   font-size: variables.$big-font-size;
-  //TODO: a variabiliser
   color: black !important;
+  opacity: 1 !important;
+}
+
+ul {
+  list-style: none;
+  color: white;
+  font-weight: variables.$bold;
+  font-family: variables.$big-font;
 }
 
 input:hover {
   transition: background-color 500ms;
 }
 
-// TODO: a revoir
+// Style pour input invalides
+
 // input:hover:invalid {
 //   background-color: #b20a37;
 //   border: 1px solid #b20a37 !important;
 //   color: #fff !important;
 // }
 
-input {
-  font-size: variables.$small-font-size;
-  margin-bottom: 10px !important;
-}
+//Style pour input valides
 
 // input:hover:valid {
 //   background-color: #8ae9b3;
@@ -57,12 +57,17 @@ input {
 //   color: #fff;
 // }
 
+input {
+  font-size: variables.$small-font-size;
+  margin-bottom: 10px !important;
+}
+
 label {
   font-weight: variables.$bold;
 }
 
 button {
-  transform: scale(1);
+  // transform: scale(1);
   transition-property: tranform;
   border-radius: 0.5rem !important;
   transition-duration: all 300ms !important;
@@ -71,12 +76,9 @@ button {
 }
 
 button:hover {
-  // transform: scale(1.025);
-  //background-image: linear-gradient(to right, #e66465, #9198e5) !important;
-  //background-color: #3e187a;
   background-color: #4d4855;
   background-image: linear-gradient(147deg, #4d4855 0%, #000000 74%) !important;
-  border: 1px solid white !important;
+  // border: 1px solid white !important;
   color: white !important;
 }
 
