@@ -8,7 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Routes, Route } from 'react-router-dom';
 import Game from '../Game/Game';
 import Dashboard from '../Dashboard/Dashboard'
-// import Nav from '../Nav/Nav'
+import Friends from '../Friends/Friends'
 
 
 function App() {
@@ -19,6 +19,7 @@ function App() {
         <Route path="auth" element={<Auth />} />
         <Route path="game" element={<Game />} />
         <Route path="dashboard" element={<Dashboard />} />
+        <Route path="friends" element={<Friends />} />
         {/* <Route path="home" element={<Home />} /> */}
         {/* <Route path="test" element={<Test />} /> */}
         {/* <Route path="profile" element={<Profile />} /> */}
