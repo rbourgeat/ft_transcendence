@@ -29,21 +29,19 @@ export default function Welcome() {
                     wrapper="figcaption"
                     repeat="Infitiny"
                 />
-                {/* <figcaption>Authors : </figcaption> */}
-                {/* <br></br> */}
+                <br></br>
                     <li>bahaas</li>
                     <li>rbourgea</li>
                     <li>malatini</li>
+                    <li>darbid</li>
+                    <li>macrespo</li>
                     <button id="play-button-1" onClick={routeChange}>Play !</button>
                 </ul>
             </div>
-            {/* <br></br> */}
-            {/* <div  id="welcome--video-div">
-                <div id="test">
-                    <video autoPlay loop muted src={video1}  height="10%" id="welcome--video-video"/>
-                </div>
-            </div> */}
-            
+            <br></br>
+            <div  id="welcome--video-div">
+                    <video autoPlay loop muted src={video1} id="welcome--video-video" height="400px"/>
+            </div>        
             <Footer />
         </div>
         </>
