@@ -36,7 +36,7 @@ export default function Welcome() {
                     <li>bahaas</li>
                     <li>rbourgea</li>
                     <li>malatini</li>
-                    <li>darbid</li>
+                    <li>darbib</li>
                     <li>macrespo</li>
                     <button id="play-button-1" onClick={routeChange}>Play !</button>
                 </ul>
