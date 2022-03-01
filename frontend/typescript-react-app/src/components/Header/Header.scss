@@ -1,11 +1,10 @@
-@use '../../variables';
+@use "../../variables";
 
-#header--nav, #header-nav > * {
-    height: 45px;
-    padding-top: 10px;
-    background-color: black !important;
-    color: white !important;
-    font-family: variables.$big-font;
-    // margin-left: 15vh;
-   // margin-left: 25%;
+#header--nav,
+#header-nav > * {
+  height: 45px;
+  padding-top: 10px;
+  background-color: black !important;
+  color: white !important;
+  font-family: variables.$big-font;
 }

@@ -1,0 +1,29 @@
+#dashboard {
+  background-image: url("../../../public/wallpapersden.com_frosty-blue-polygon_2560x1080.jpg") !important;
+  background-repeat: repeat !important;
+  background-color: #cccccc !important;
+  background-size: auto 100% !important;
+  background-position: left top;
+  height: 100vh !important;
+}
+
+#friends-button,
+#match-history-button {
+  padding-left: 25px;
+  padding-right: 25px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+#dashboard-buttons {
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+// /* ----------- Non-Retina Screens ----------- */
+// @media screen and (min-device-width: 1200px) and (max-device-width: 1600px) and (-webkit-min-device-pixel-ratio: 1) {
+// }
+
+// /* ----------- Retina Screens ----------- */
+// @media screen and (min-device-width: 1200px) and (max-device-width: 1600px) and (-webkit-min-device-pixel-ratio: 2) and (min-resolution: 192dpi) {
+// }

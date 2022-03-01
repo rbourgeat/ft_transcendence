@@ -1,0 +1,33 @@
+@use "../../../variables";
+
+span {
+  color: white !important;
+}
+
+#buttonresume--result {
+  //   background: #292b2c !important;
+  background: #c0dfef !important;
+  border-radius: variables.$border-radius-big;
+  width: 1200px !important;
+  min-height: 50px;
+  text-align: center !important;
+  padding-top: 15px;
+  color: black !important;
+  font-weight: variables.$bold;
+  z-index: 2;
+}
+
+//TODO: voir conditions si le player a gagne ou perdu
+
+.winner {
+  color: variables.$green;
+}
+
+.looser {
+  color: variables.$red;
+}
+
+.score {
+  color: black !important;
+  font-size: 18px;
+}

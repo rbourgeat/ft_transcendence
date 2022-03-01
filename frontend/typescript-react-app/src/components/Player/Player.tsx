@@ -3,6 +3,8 @@ import { Container } from 'react-bootstrap';
 import ReactDOM from 'react-dom';
 import './Player.scss';
 
+//TODO: a revoir
+
 export default function Profile() {
     return (
         <div id="profile-div">
