@@ -36,7 +36,7 @@ export default function Dashboard() {
             </div>
             </div>
             {/* <button>Achievements</button> */}
-            <Media query="(min-width: 2575px)">
+            <Media query="(min-width: 1200px)">
                 <MatchHistory />
             </Media>
             

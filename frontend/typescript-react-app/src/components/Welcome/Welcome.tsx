@@ -42,11 +42,11 @@ export default function Welcome() {
                 </ul>
             </div>
             <br></br>
-            <Media query="(min-width: 2575px)">
+            {/* <Media query="(min-width: 800px)"> */}
                 <div  id="welcome--video-div">
                     <video autoPlay loop muted src={video1} id="welcome--video-video" height="400px"/>
                 </div>
-            </Media>
+            {/* </Media> */}
             <Footer />
         </div>
         </>
