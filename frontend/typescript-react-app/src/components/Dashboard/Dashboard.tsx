@@ -8,6 +8,8 @@ import Footer from "../Footer/Footer"
 
 import { PieChart } from 'react-minimal-pie-chart';
 
+import Media from 'react-media'
+
 
 export default function Dashboard() {
     return (
@@ -34,7 +36,10 @@ export default function Dashboard() {
             </div>
             </div>
             {/* <button>Achievements</button> */}
-            <MatchHistory />
+            <Media query="(min-width: 2575px)">
+                <MatchHistory />
+            </Media>
+            
             <Footer />
             {/* <h1>Dashboard</h1> */}
         </div>
