@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, CreateDateColumn, Column, Unique } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, CreateDateColumn, Column, Unique, ManyToOne } from "typeorm";
+import { Game } from '../game/game.entity'
 
 @Entity('user')
 export class User {
@@ -41,9 +42,8 @@ export class User {
     @Column("simple-array", { nullable: true })
     friends: string[];
 
-    //One to many / Many to many stuff
-    //@Column()
-    //game_history: [];
+    @ManyToOne(type => Game, game => game.id)
+    games: Game[];
 
     @Column({ default: false })
     two_factor_auth: boolean = false;
