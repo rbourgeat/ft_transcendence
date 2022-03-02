@@ -42,7 +42,7 @@ export class User {
     @Column("simple-array", { nullable: true })
     friends: string[];
 
-    @ManyToOne(type => Game, game => game.id, { nullable: true })
+    @ManyToOne(type => Game, { nullable: true })
     games: Game[];
 
     @Column({ default: false })

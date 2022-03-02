@@ -6,7 +6,7 @@ import { AppService } from './app.service';
 import { UserModule } from '../user/user.module';
 import { User } from '../user/user.entity';
 import { AuthModule } from 'src/auth/auth.module';
-import { GameModule } from 'src/game/game.module'
+import { GameModule } from 'src/game/game.module';
 
 @Module({
   imports: [

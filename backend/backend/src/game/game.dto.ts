@@ -1,14 +1,14 @@
 import { ApiProperty, ApiTags } from '@nestjs/swagger';
 import { IsAlphanumeric, IsEmail, IsNotEmpty, Length, MinLength, Matches, IsOptional, IsDefined } from 'class-validator';
-import { CreateUserDto } from 'src/user/user.dto';
+import { GameUserDto } from 'src/user/user.dto';
 
 @ApiTags('Games') //Create a category on swagger
 export class CreateGameDto {
     @IsNotEmpty()
     @ApiProperty()
-    login1: CreateUserDto;
+    login1: GameUserDto;
 
     @IsNotEmpty()
     @ApiProperty()
-    login2: CreateUserDto;
+    login2: GameUserDto;
 }

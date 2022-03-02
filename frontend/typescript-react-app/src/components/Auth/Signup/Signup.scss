@@ -1,0 +1,42 @@
+@use "../../../variables";
+
+//TODO: re spliter le scss pour chaque sub folder
+
+#auth-form-div {
+  background-color: white !important;
+  background-image: none !important;
+  border-radius: variables.$border-radius;
+}
+
+#auth-btn-1,
+#auth-btn-2,
+#auth-btn-3,
+#signup {
+  width: 100%;
+}
+
+#show-password {
+  font-weight: variables.$bold;
+  padding-bottom: 12px;
+}
+
+#auth-container {
+  background-image: none !important;
+  // background-color: red !important;
+}
+
+#auth-container > * {
+  font-family: variables.$basic-font;
+  font-size: variables.$small-font-size;
+}
+
+#se-connecter,
+#sinscrire {
+  margin-top: 25px;
+}
+
+#auth-form-div {
+  background-color: white !important;
+  padding: 5%;
+  border-radius: variables.$border-radius;
+}
