@@ -9,19 +9,62 @@ import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";
 import { AiFillPauseCircle } from 'react-icons/ai';
 
-class Signup extends React.Component {
+
+class Signup extends React.Component
+{
+    state = {
+        username: "",
+        email: "",
+        password: "",
+        password_conf: ""
+    }
 
     constructor(props)
     {
         super(props);
+    }
 
+    submit=(event)=>{
+        event.preventDefault();
+        
+        const formData = new FormData();
+        formData.append("email", this.state.email);
+        formData.append("login", this.state.username);
+        formData.append("password", this.state.password);
+        formData.append("password_confirmation", this.state.password_conf);
+    
+        axios({
+            method: "POST",
+            url: "http://localhost:3000/api/auth/register/",
+            data: formData
+        }).then(res=>{
+            console.log(res.data);
+        })}
+
+    HandleClickParams(Email: string, Username: string, 
+        Password: string, PasswordConfirmation: string)
+    {
+    
+        let payload = {
+            email: Email,
+            login: Username, 
+            password: Password,
+            password_confirmation: PasswordConfirmation
+        }
+        // this.notifySuccessParam(Email);
+        // this.notifySuccessParam(Username);
+        // this.notifySuccessParam(Password);
+        // this.notifySuccessParam(PasswordConfirmation);
+        
+       let res = axios.post('/auth/register', payload);
+       console.log(res);
     }
 
     //On definit la "propriete" de la classe Signup (equivalent attribut membre)
     rep = {};
 
     instance = axios.create({
-        baseURL: "http://localhost:3000/api/"}
+        baseURL: "http://localhost:3000/api"}
     );
 
     notifySuccess = () => 
@@ -68,61 +111,12 @@ class Signup extends React.Component {
         progress: undefined,
         });
     
-        //pour test
-        HandleClick = () => 
-        {
-           axios.post('/api/auth/register/', 
-           {
-                    "email": "coucou@student.42.fr",
-                    "login": "malatini",
-                    "password": "889282HSJ",
-                    "password_confirmation": "889282HSJ"}
-
-            ).then(
-                (response) => { this.notifySuccess();},
-                (error) => {this.notifyDanger();}
-
-            )            
-        }
-
-        HandleClickParams(Email: string, Login: string, 
-            Password: string, PasswordConfirmation: string)
-        {
-            this.notifySuccessParam(Email);
-            if (Email.length == 0)
-            {
-                this.notifyDangerParam("Erreur param vide");
-                return; 
-            }
-           axios.post('/api/auth/register/', 
-           {
-                    "email": Email,
-                    "login": Login,
-                    "password": Password,
-                    "password_confirmation": PasswordConfirmation}
-
-            ).then(
-                (response) => { this.notifySuccess();},
-                // (error) => {
-                //     this.notifyDanger();
-                //     console.log(error);
-                // }
-            ).catch(e => {
-                console.log(e.response.data);
-            })
-        }
 
     //TODO: a revoir
     // [showPass: string, setshowPass: string] = useState(false);
     // [showPassConfirm: string, setshowPassConfirm:string] = useState(false);
     // [showPassBis: string, setshowPassBis: string] = useState(false);
 
-    state = {
-        username: "",
-        email: "",
-        password: "",
-        password_conf: ""
-    }
 
     //TODO: a reindenter
     render() {
@@ -197,9 +191,10 @@ class Signup extends React.Component {
                                 </div>
                             </div>
                             <hr className="my-4" id="signup-hr"></hr>
-                            <button type="submit" className="btn btn-light btn-block" id="signup" 
+                            <button onClick={this.submit} className="btn btn-light btn-block" id="signup" 
                             // onClick={this.HandleClick}
-                            onClick={() => this.HandleClickParams(this.state.email, this.state.username, this.state.password, this.state.password_conf)}
+                            // onClick={() => this.HandleClickParams(this.state.email, this.state.username, this.state.password, this.state.password_conf)}
+    
                             >M'inscrire
                             {/* {this.state.display} */}
                                 {/* <ToastContainer /> */}
