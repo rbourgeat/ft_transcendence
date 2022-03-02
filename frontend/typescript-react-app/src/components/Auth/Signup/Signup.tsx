@@ -1,32 +1,54 @@
 import './Signup.scss';
 import { useNavigate } from "react-router-dom";
-import { useState } from 'react';
+import React , { useState } from 'react';
+// import PropTypes from "prop-types";
 
 import Axios from "axios";
 
 
-function SignupPost(string p_email, string p_login, string p_password) {
+
+
+class Signup extends React.Component {
+
+    constructor(props)
+    {
+        super(props);
+
+    }
+
+    //On definit la "propriete" de la classe Signup (equivalent attribut membre)
+    rep = {};
+
+    SignupPost(Email: string, Login: string, Password: string) {
     var self = this;
     Axios.post('/api/auth/register/', {
-        email: p_email,
-        login: p_login,
-        password: p_password
+        email: Email,
+        login: Login,
+        password: Password
+    }).
+    then((rep) =>  { this.rep = rep.data})
+    .catch((err) => {
+        self.rep = err;
     })
 };
 
-function Signup() {
-    let navigate = useNavigate();
-    const routeChange = () => {
+    //TODO: a revoir (fonction anynome, callback etc)
+    navigate = useNavigate();
+
+    routeChange = () => {
         let path = `/dashboard`;
-        navigate(path);
+        this.navigate(path);
     };
 
-    const [showPass, setshowPass] = useState(false);
-    const [showPassConfirm, setshowPassConfirm] = useState(false);
-    const [showPassBis, setshowPassBis] = useState(false);
+    //TODO: pas bon    
+    // [showPass: string, setshowPass: string] = useState(false);
+    // [showPassConfirm: string, setshowPassConfirm:string] = useState(false);
+    // [showPassBis: string, setshowPassBis: string] = useState(false);
 
     // Axios.post('/api/auth/register/');
+
     //TODO: a reindenter
+    render() {
     return (
         <div>
              <div className="d-flex justify-content-center"></div>
@@ -47,32 +69,34 @@ function Signup() {
                                         <form>
                                             <div>
                                                 <label>Mot de passe</label>
-                                                <input className="form-control" type={showPass ? "text" : "password"} placeholder="********" />
+                                                <input className="form-control" type=/*{showPass ? "text" : */"password"/*}*/ placeholder="********" />
                                             </div>
                                             <div className="mt-2" style={{ textAlign: "right" }} id="show-password">
-                                                <button type="button" className="btn btn-sm btn-light" onClick={() => {
+                                                <button type="button" className="btn btn-sm btn-light" /*onClick={() => {
                                                     if (showPass == true)
                                                         setshowPass(false);
                                                     else
                                                         setshowPass(true);
-                                                }}>
-                                                    {showPass ? "Cacher" : "Afficher"}
+                                                }}*/>
+                                                    Afficher
+                                                    {/* {showPass ? "Cacher" : "Afficher"} */}
                                                 </button>
                                             </div>
                                         </form>
                                         <form>
                                             <div>
                                                 <label>Confirmation mot de passe</label>
-                                                <input className="form-control" type={showPassConfirm ? "text" : "password"} placeholder="********" />
-                                            </div>
+                                                <input className="form-control" type=/*{showPassConfirm ? "text" : */"password"/*}*/ placeholder="********" />
+                                            </div>/*
                                             <div className="mt-2" style={{ textAlign: "right" }} >
-                                                <button type="button" id="show-password-3" className="btn btn-sm btn-light" onClick={() => {
+                                                <button type="button" id="show-password-3" className="btn btn-sm btn-light" /*onClick={() => {
                                                     if (showPassConfirm == true)
                                                         setshowPassConfirm(false);
                                                     else
                                                         setshowPassConfirm(true);
-                                                }}>
-                                                    {showPass ? "Cacher" : "Afficher"}
+                                                }}*/>
+                                                    Afficher
+                                                    {/* {showPass ? "Cacher" : "Afficher"} */}
                                                 </button>
                                             </div>
                                         </form>
@@ -80,10 +104,13 @@ function Signup() {
                                 </div>
                             </div>
                             <hr className="my-4" id="signup-hr"></hr>
-                            <button type="submit" className="btn btn-light btn-block" id="signup" onClick={routeChange}>M'inscrire</button>
+                            <button type="submit" className="btn btn-light btn-block" id="signup" /*onClick={this.SignupPost("coucou", "ca va", "bien")}*/>M'inscrire
+                            {/* {this.state.display} */}
+                            </button>
                     </div> 
         </div>
 
     );
+     }
 } export default Signup;
 
