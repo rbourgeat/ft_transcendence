@@ -1,4 +1,4 @@
-version: '3.7'
+version: '3'
 services:
   frontend:
     container_name: frontend
@@ -6,12 +6,19 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
     ports:
-      - 3030:3030
+      - "3030:3030"
+    #ajout
+    networks:
+      - webapp
+    restart: always
+    # depends_on: api
     stdin_open: true
+    tty: true
     environment:
-      - CHOKIDAR_USEPOLLING=true
-    command: npm start
-
+     - CHOKIDAR_USEPOLLING=true
+    volumes:
+      - ./frontend/typescript-react-app:/app
+    # command: npm start
   api:
     build:
       context: ./backend/docker/
