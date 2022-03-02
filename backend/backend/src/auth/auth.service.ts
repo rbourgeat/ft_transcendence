@@ -1,11 +1,12 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import RegisterDto from './register.dto';
-import * as bcrypt from 'bcrypt';
+//import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import TokenPayload from './tokenPayload.interface';
 import PostgresErrorCode from './postgresErrorCodes.enum';
+//import * as argon2 from "argon2";
 
 @Injectable()
 export class AuthService {
@@ -17,7 +18,11 @@ export class AuthService {
 
     public async register(registrationData: RegisterDto) {
         console.log('went by register in auth service');
-        const hashedPassword = await bcrypt.hash(registrationData.password, 10);
+        //const hashedPassword = await bcrypt.hash(registrationData.password, 10);
+        //const hashedPassword = await argon2.hash(registrationData.password);
+        const hashedPassword = registrationData.password;
+
+        console.log('argon2 hash suceess  in auth service');
         try {
             const createdUser = await this.usersService.create({
                 ...registrationData,
@@ -61,11 +66,15 @@ export class AuthService {
 
     private async verifyPassword(plainTextPassword: string, hashedPassword: string) {
         console.log('went by verifypassword in auth service');
-        const isPasswordMatching = await bcrypt.compare(
+        //const isPasswordMatching = await bcrypt.compare(
+        /*
+        const isPasswordMatching = await argon2.verify(
             plainTextPassword,
             hashedPassword
         );
-        if (!isPasswordMatching) {
+        */
+        //if (!isPasswordMatching) {
+        if (plainTextPassword != hashedPassword) {
             throw new HttpException('Wrong credentials provided', HttpStatus.BAD_REQUEST);
         }
     }
