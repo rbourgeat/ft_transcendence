@@ -56,6 +56,15 @@ export class UpdateUserDto {
     password_confirmation: string;
 }
 
+@ApiTags('Users') //Create a category on swagger
+export class GameUserDto {
+    @IsNotEmpty()
+    @Length(4, 20)
+    @IsAlphanumeric()
+    @ApiProperty()
+    login: string;
+}
+
 export class UploadAvatarDto {
     name: string;
 }
