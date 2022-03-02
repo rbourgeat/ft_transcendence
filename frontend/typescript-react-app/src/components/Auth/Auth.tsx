@@ -24,10 +24,6 @@ export default function Auth() {
     console.log(showPass);
     return (
         <>
-            {/* <Confetti
-                width={width}
-                height={height}
-            /> */}
             <Header />
             <div className="container" id="auth-container">
                 <div id="auth-form-div">
