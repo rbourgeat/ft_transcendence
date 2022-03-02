@@ -14,5 +14,11 @@ export class GameService {
     getAllGames() {
         return this.gameRepository.find();
     }
+
+    async createGame(game: CreateGameDto) {
+        const newGame = await this.gameRepository.create(game);
+        await this.gameRepository.save(newGame);
+        return newGame;
+    }
     
 }

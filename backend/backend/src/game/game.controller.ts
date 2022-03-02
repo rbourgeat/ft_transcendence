@@ -14,8 +14,21 @@ export class GameController {
     @ApiOperation({ summary: 'Retrieve all games data' }) //endpoint summary on swaggerui
     @ApiOkResponse({ description: 'Data received' }) //answer sent back
     @Get()
-    getAllUsers() {
+    getAllGames() {
         return this.gameService.getAllGames();
+    }
+
+    /**
+    **  Save a new game to db
+    **/
+
+    @ApiOperation({ summary: 'Create a new game' }) //endpoint summary on swaggerui
+    @ApiOkResponse({ description: 'Game creation suceed' }) //answer sent back
+    @ApiConflictResponse({ description: 'Game already exist' }) //not working atm
+    @Post()
+    async createGame(@Body() game: CreateGameDto) {
+        console.log('Create game: ' + game.login1 + 'vs' + game.login2)
+        return this.gameService.createGame(game);
     }
     
 }
