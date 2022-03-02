@@ -22,7 +22,7 @@ export class CreateUserDto {
     @IsNotEmpty()
     @MinLength(8)
     @Matches(/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/, { message: 'password is too weak, it must have minimum 8 characters, at least 1 letter and 1 number', })
-    @ApiProperty({ description: 'minimum 8 characters, at least 1 letter and 1 number' })
+    @ApiProperty({ description: 'minimum 8 characters, at least 1 uppercase, 1 lowercase and 1 number' })
     password: string;
 
     @IsNotEmpty()
@@ -69,9 +69,9 @@ export class UploadAvatarDto {
     name: string;
 }
 
-//WIP might be deleted
+//Used while a new user is registering
 @ApiTags('Auth') //Create a category on swagger
-export class CreateUserDtoTest {
+export class CreateUserDtoViaRegistration {
     @IsNotEmpty()
     email: string;
 
@@ -82,4 +82,4 @@ export class CreateUserDtoTest {
     password: string;
 }
 
-export default CreateUserDtoTest;
+export default CreateUserDtoViaRegistration;

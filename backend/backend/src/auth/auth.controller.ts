@@ -5,9 +5,11 @@ import RegisterDto from './register.dto';
 import RequestWithUser from './requestWithUser.interface';
 import { LocalAuthenticationGuard } from './localauth.guard';
 import JwtAuthenticationGuard from './jwt-authentication.guard';
-import { ApiBody, ApiConflictResponse, ApiConsumes, ApiOkResponse, ApiOperation, ApiParam, ApiQuery, ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger'
+import { ApiBody, ApiConflictResponse, ApiConsumes, ApiExtraModels, ApiOkResponse, ApiOperation, ApiParam, ApiQuery, ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger'
+import LogInDto from './logIn.dto';
 
 @ApiTags('Auth') //Create a category on swagger
+@ApiExtraModels(LogInDto) //force unused dto to show on swagger
 @Controller('api/auth')
 export class AuthenticationController {
     constructor(
@@ -18,6 +20,7 @@ export class AuthenticationController {
     @ApiOkResponse({ description: 'Your registration suceed' }) //answer sent back
     @Post('register')
     async register(@Body() registrationData: RegisterDto) {
+        console.log('went by register in auth controller');
         return this.authenticationService.register(registrationData);
     }
 
@@ -26,12 +29,13 @@ export class AuthenticationController {
     @HttpCode(200)
     @UseGuards(LocalAuthenticationGuard)
     @Post('log-in')
-    async logIn(@Req() request: RequestWithUser, @Res() response: Response) {
-        console.log('test');
+    async logIn(@Body() loginDto: LogInDto, @Req() request: RequestWithUser, @Res() response: Response) {
+        console.log('went by login in auth controller');
         const { user } = request;
         const cookie = this.authenticationService.getCookieWithJwtToken(user.id);
         response.setHeader('Set-Cookie', cookie);
         user.password = undefined;
+        console.log('END OF LOGIN');
         return response.send(user);
     }
 
@@ -40,13 +44,18 @@ export class AuthenticationController {
     @UseGuards(JwtAuthenticationGuard)
     @Post('log-out')
     async logOut(@Res() response: Response) {
+        console.log('went by logout in auth controller');
         response.setHeader('Set-Cookie', this.authenticationService.getCookieForLogOut());
+        console.log('END OF LOGOUT');
         return response.sendStatus(200);
     }
 
     @UseGuards(JwtAuthenticationGuard)
+    @ApiOperation({ summary: 'Check user session via cookie' }) //endpoint summary on swaggerui
+    @ApiOkResponse({ description: 'Valid session returning user data' }) //answer sent back
     @Get()
     authenticate(@Req() request: RequestWithUser) {
+        console.log('went by authenticate in auth controller');
         const user = request.user;
         user.password = undefined;
         return user;

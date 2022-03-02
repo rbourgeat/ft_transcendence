@@ -12,10 +12,10 @@ export class User {
     @CreateDateColumn({ nullable: true })
     updateAt?: Date;
 
-    @Column()
+    @Column({ unique: true })
     login: string;
 
-    @Column({ nullable: true })
+    @Column({ nullable: true, unique: true })
     email: string;
 
     @Column({ nullable: true })
