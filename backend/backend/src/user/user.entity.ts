@@ -12,10 +12,10 @@ export class User {
     @CreateDateColumn({ nullable: true })
     updateAt?: Date;
 
-    @Column()
+    @Column({ unique: true })
     login: string;
 
-    @Column({ nullable: true })
+    @Column({ nullable: true, unique: true })
     email: string;
 
     @Column({ nullable: true })
@@ -42,7 +42,7 @@ export class User {
     @Column("simple-array", { nullable: true })
     friends: string[];
 
-    @ManyToOne(type => Game, game => game.id)
+    @ManyToOne(type => Game, game => game.id, { nullable: true })
     games: Game[];
 
     @Column({ default: false })

@@ -18,9 +18,9 @@ import { UserService } from 'src/user/user.service';
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => ({
-        secret: configService.get('JWT_SECRET'),
+        secret: process.env.JWT_SECRET,
         signOptions: {
-          expiresIn: `${configService.get('JWT_EXPIRATION_TIME')}s`,
+          expiresIn: `${process.env.JWT_EXPIRATION_TIME}s`,
         },
       }),
     }),

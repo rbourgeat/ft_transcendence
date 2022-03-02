@@ -6,13 +6,12 @@ import { AppService } from './app.service';
 import { UserModule } from '../user/user.module';
 import { User } from '../user/user.entity';
 import { AuthModule } from 'src/auth/auth.module';
+import { GameModule } from 'src/game/game.module'
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      //JWT_SECRET: process.env.JWT_SECRET,
-      //JWT_EXPIRATION_TIME: process.env.JWT_EXPIRATION_TIME,
     }),
     TypeOrmModule.forRoot({
       type: 'postgres',
@@ -31,7 +30,8 @@ import { AuthModule } from 'src/auth/auth.module';
       migrationsRun: true //run migration query on start (creating factice data)..
     }),
     UserModule,
-    AuthModule
+    AuthModule,
+    GameModule
   ],
   controllers: [AppController],
   providers: [AppService],

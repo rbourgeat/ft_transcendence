@@ -2,7 +2,7 @@ import { HttpException, HttpStatus, Injectable, UnsupportedMediaTypeException } 
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
-import { CreateUserDto, UpdateUserDto, CreateUserDtoTest } from './user.dto';
+import { CreateUserDto, UpdateUserDto, CreateUserDtoViaRegistration } from './user.dto';
 
 @Injectable()
 export class UserService {
@@ -46,19 +46,19 @@ export class UserService {
     }
 
     async addFriend(login: string, friend: string) {
-        const u = await this.userRepository.findOne({login});
+        const u = await this.userRepository.findOne({ login });
         u.friends.push(friend)
     }
 
     async removeFriend(login: string, friend: string) {
-        const u = await this.userRepository.findOne({login});
+        const u = await this.userRepository.findOne({ login });
         for (var i = 0; i < u.friends.length; i++)
             if (u.friends[i] === friend)
                 u.friends.splice(i, 1);
     }
 
     async updateStatus(login: string, s: string) {
-        return this.userRepository.update({login}, {
+        return this.userRepository.update({ login }, {
             status: s
         });
     }
@@ -81,19 +81,18 @@ export class UserService {
     }
 
     async setupTwoFactorAuthentication(login: string, secret: string) {
-        return this.userRepository.update({login}, {
+        return this.userRepository.update({ login }, {
             two_factor_secret: secret
         });
     }
 
-    async addAvatar(login: string, filename: string)
-    {
-        const u = await this.userRepository.findOne({login});
+    async addAvatar(login: string, filename: string) {
+        const u = await this.userRepository.findOne({ login });
         u.avatar = filename;
     }
 
-    //WIP might be deleted
-    async create(userData: CreateUserDtoTest) {
+    async create(userData: CreateUserDtoViaRegistration) {
+        console.log('went by create in user service');
         const newUser = await this.userRepository.create(userData);
         await this.userRepository.save(newUser);
         return newUser;
@@ -118,20 +117,19 @@ export class UserService {
 
 export function fileMimetypeFilter(...mimetypes: string[]) {
     return (
-      req,
-      file: Express.Multer.File,
-      callback: (error: Error | null, acceptFile: boolean) => void,
+        req,
+        file: Express.Multer.File,
+        callback: (error: Error | null, acceptFile: boolean) => void,
     ) => {
-      if (mimetypes.some((m) => file.mimetype.includes(m))) {
-        callback(null, true);
-      } else {
-        callback(
-          new UnsupportedMediaTypeException(
-            `File type is not matching: ${mimetypes.join(', ')}`,
-          ),
-          false,
-        );
-      }
+        if (mimetypes.some((m) => file.mimetype.includes(m))) {
+            callback(null, true);
+        } else {
+            callback(
+                new UnsupportedMediaTypeException(
+                    `File type is not matching: ${mimetypes.join(', ')}`,
+                ),
+                false,
+            );
+        }
     };
-  }
-  
+}
