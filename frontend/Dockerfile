@@ -4,7 +4,7 @@ WORKDIR /app
 # COPY ./typescript-react-app/package-lock.json .
 COPY ./typescript-react-app .
 COPY ./typescript-react-app/.env .
-# RUN rm -rf node_modules
+RUN rm -rf node_modules
 # RUN rm -rf package-lock.json
 RUN npm i -g npm@latest
 RUN npm i -g serve

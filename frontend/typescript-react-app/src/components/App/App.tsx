@@ -11,6 +11,8 @@ import Friends from '../Friends/Friends'
 import Channels from '../Channels/Channels'
 import NotFound from '../NotFound/NotFound'
 
+// import 'bootstrap/dist/css/bootstrap.min.css';
+
 function App() {
   return (
     <div id="main">

@@ -7,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import axios from "axios";
 
+//TODO: changer le statut offline moi meme possible
 class Login extends React.Component 
 {
     state = {
