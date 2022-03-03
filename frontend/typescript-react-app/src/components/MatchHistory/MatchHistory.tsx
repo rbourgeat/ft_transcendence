@@ -5,9 +5,6 @@ import ButtonResume from "./ButtonResume/ButtonResume";
 export default function MatchHistory() {
     return (
         <div id="matchhistory--div"className="container">
-        {/* On fera un map ensuite pour boucler proprement sur les matchs */}
-        {/* <h2>Match history</h2> */}
-        {/* Donnes bidons pour tests */}
         <div className="row">
         <div  className="d-flex justify-content-center">
             <h3 id="matchhistory--title">Match history</h3>
@@ -22,7 +19,7 @@ export default function MatchHistory() {
                     <li><ButtonResume /></li>
                     <li><ButtonResume /></li>
                 </ul>
-                
+
             </div>
         </div>
         </div>

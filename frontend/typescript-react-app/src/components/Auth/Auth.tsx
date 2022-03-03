@@ -6,7 +6,6 @@ import Header from "../Header/Header";
 import Login from "./Login/Login"
 import Signup from "./Signup/Signup"
 
-
 export default function Auth() {
     let navigate = useNavigate();
     const routeChange = () => {
@@ -30,16 +29,15 @@ export default function Auth() {
                     <div id="auth--form1"/*className="d-flex justify-content-center"*/ >
                         <div id="form--auth1" className="forms">
                             <h2>Bienvenue ! </h2>
-                            {/* <h2>Coucou</h2> */}
                             <p>Pour jouer, vous devez vous authentifier 🏓</p>
                             <div /*className="form__mb-3"*/ id="formAuth42">
                                 <button type="submit" className="btn btn-dark btn-block" id="auth-btn-3" onClick={routeChange}>
                                     Authentification 42
                                     </button>
                             </div>
-                            <Login />
+                            <Signup />
                     </div>
-                        <Signup />
+                        <Login />
                     </div>
                 </div>
             </div>

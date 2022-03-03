@@ -15,7 +15,7 @@
   padding: 40px;
   //   margin-left: 20px;
   //   background-color: hsl(200, 4%, 17%) !important;
-  background: #c0dfef !important;
+  background: variables.$grey !important;
 }
 
 #badge--graph {
@@ -31,6 +31,9 @@
   margin-top: 30px;
 }
 
+#graph-title {
+  color: white !important;
+}
 #badge--wins {
   //   border: 0.5rem solid red !important;
   //   background-color: red !important;
@@ -43,8 +46,6 @@
 #p--wins {
   color: black !important;
   font-family: variables.$big-font;
-  //   border: 0.1rem solid red;
-  //   float: right !important;
 }
 
 #badge--graph {
@@ -70,7 +71,6 @@
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  //   padding-bottom: 10px
   margin-left: 10px;
   margin-right: 10px;
   margin-bottom: 10px;

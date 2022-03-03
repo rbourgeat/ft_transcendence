@@ -5,8 +5,7 @@ span {
 }
 
 #buttonresume--result {
-  //   background: #292b2c !important;
-  background: #c0dfef !important;
+  background: variables.$grey !important;
   border-radius: variables.$border-radius-big;
   width: 1200px !important;
   min-height: 50px;
@@ -16,8 +15,6 @@ span {
   font-weight: variables.$bold;
   z-index: 2;
 }
-
-//TODO: voir conditions si le player a gagne ou perdu
 
 .winner {
   color: variables.$green;

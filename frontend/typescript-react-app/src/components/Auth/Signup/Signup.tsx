@@ -13,7 +13,9 @@ class Signup extends React.Component
         username: "",
         email: "",
         password: "",
-        password_conf: ""
+        password_conf: "",
+        open: false,
+        open2: false
     }
 
     constructor(props)
@@ -21,7 +23,7 @@ class Signup extends React.Component
         super(props);
     }
 
-    notifyDanger = () => 
+    notifyDanger = () =>
         toast.warning('Oops ! An error happened', {
         position: "top-right",
         autoClose: 5000,
@@ -32,7 +34,7 @@ class Signup extends React.Component
         progress: undefined,
         });
 
-    notifySuccess = () => 
+    notifySuccess = () =>
         toast.success('🦄 Yes! You are now registered ! You may log in.', {
         position: "top-right",
         autoClose: 5000,
@@ -74,23 +76,6 @@ class Signup extends React.Component
         })
     }
 
-    // HandleClickParams(Email: string, Username: string, 
-    //     Password: string, PasswordConfirmation: string)
-    // {
-    
-    //     let payload = {
-    //         email: Email,
-    //         login: Username, 
-    //         password: Password,
-    //         password_confirmation: PasswordConfirmation
-    //     }
-    //    let res = axios.post('/auth/register', payload);
-    //    console.log(res);
-    // }
-
-    //On definit la "propriete" de la classe Signup (equivalent attribut membre)
-    rep = {};
-
     instance = axios.create({
         baseURL: "http://localhost:3000/api"}
     );
@@ -115,16 +100,14 @@ class Signup extends React.Component
             pauseOnHover: true,
             draggable: true,
             progress: undefined,
-            })};    
+            })};
 
-    //TODO: a revoir
     // [showPass: string, setshowPass: string] = useState(false);
     // [showPassConfirm: string, setshowPassConfirm:string] = useState(false);
     // [showPassBis: string, setshowPassBis: string] = useState(false);
 
-
-    //TODO: a reindenter
     render() {
+
     return (
         <div>
              <div className="d-flex justify-content-center"></div>
@@ -132,21 +115,22 @@ class Signup extends React.Component
                             <h3 id="sinscrire">S'inscrire</h3>
                             <div id="formSignupUsername">
                                 <label>Username</label>
-                                <input className="form-control" type="text" placeholder="malatini" 
-                            
-                                value={this.state.username}
-                                onChange={(e)=>{this.setState({username: e.target.value})}}
-                                
-                                />
+                                <input
+                                  className="form-control"
+                                  type="text"
+                                  placeholder="malatini"
+                                  value={this.state.username}
+                                  onChange={(e)=>{this.setState({username: e.target.value})}} />
                             </div>
 
                             <div id="formSignUpEmail">
                                 <label>Email</label>
-                                <input className="form-control" type="email" placeholder="malatini@student.42.fr"
-                                value={this.state.email}
-
-                                onChange={(e)=>{this.setState({email: e.target.value})}}
-                                />
+                                <input
+                                  className="form-control"
+                                  type="email"
+                                  placeholder="malatini@student.42.fr"
+                                  value={this.state.email}
+                                  onChange={(e)=>{this.setState({email: e.target.value})}} />
                             </div>
                             <div id="password-form">
                                 <div id="sub-form">
@@ -154,53 +138,33 @@ class Signup extends React.Component
                                         <form>
                                             <div>
                                                 <label>Mot de passe</label>
-                                                <input className="form-control" type=/*{showPass ? "text" : */"password"/*}*/ placeholder="********" value={this.state.password}
-                                                
-                                                onChange={(e)=>{this.setState({password: e.target.value})}}
-                                                />
-                                            </div>
-                                            <div className="mt-2" style={{ textAlign: "right" }} id="show-password">
-                                                <button type="button" className="btn btn-sm btn-light" /*onClick={() => {
-                                                    if (showPass == true)
-                                                        setshowPass(false);
-                                                    else
-                                                        setshowPass(true);
-                                                }}*/>
-                                                    Afficher
-                                                    {/* {showPass ? "Cacher" : "Afficher"} */}
-                                                </button>
+                                                <input
+                                                className="form-control"
+                                                type={this.state.open ? "text" : "password"}
+                                                placeholder="********"
+                                                value={this.state.password}
+                                                onChange={(e)=>{this.setState({password: e.target.value})}} />
                                             </div>
                                         </form>
+
                                         <form>
                                             <div>
                                                 <label>Confirmation mot de passe</label>
-                                                <input className="form-control" type=/*{showPassConfirm ? "text" : */"password"/*}*/ placeholder="********"
+                                                <input className="form-control" type={this.state.open2 ? "text" : "password"} placeholder="********"
                                                 value={this.state.password_conf}
-                                                
+
                                                 onChange={(e)=>{this.setState({password_conf: e.target.value})}}
                                                 />
                                             </div>
                                             <div className="mt-2" style={{ textAlign: "right" }} >
-                                                <button type="button" id="show-password-3" className="btn btn-sm btn-light" /*onClick={() => {
-                                                    if (showPassConfirm == true)
-                                                        setshowPassConfirm(false);
-                                                    else
-                                                        setshowPassConfirm(true);
-                                                }}*/>
-                                                    Afficher
-                                                    {/* {showPass ? "Cacher" : "Afficher"} */}
-                                                </button>
                                             </div>
                                         </form>
                                     </div>
                                 </div>
                             </div>
                             <hr className="my-4" id="signup-hr"></hr>
-                            <button onClick={this.submit} className="btn btn-light btn-block" id="signup" 
-                            // onClick={this.HandleClick}
-                            // onClick={() => this.HandleClickParams(this.state.email, this.state.username, this.state.password, this.state.password_conf)}
-    
-                            >M'inscrire
+                            <button onClick={this.submit} className="btn btn-light btn-block" id="signup">
+                                M'inscrire
                                 <ToastContainer
                                     position="top-right"
                                     autoClose={5000}
@@ -213,7 +177,7 @@ class Signup extends React.Component
                                     pauseOnHover
                                 />
                             </button>
-                    </div> 
+                    </div>
         </div>
 
     );
