@@ -10,10 +10,10 @@ COPY ./typescript-react-app .
 COPY ./typescript-react-app/.env .
 
 
-RUN npm install --silent
-RUN npm install -g typescript
+# RUN npm install --silent
+# RUN npm install -g typescript
 # COPY . ./
 
 EXPOSE 3030
 
-CMD ["npm", "start"]
+CMD ["npm", "install", "&&", "npm", "start"]
