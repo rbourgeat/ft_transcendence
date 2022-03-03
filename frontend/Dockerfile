@@ -13,8 +13,7 @@ RUN npm install -g typescript
 # RUN npm install --save react react-dom react-scripts
 COPY . ./
 # RUN rm -rf package-lock.json
-RUN npm install react-scripts@5.0.0 -g --silent
-COPY . ./
+# RUN npm install react-scripts@5.0.0 -g --silent
 EXPOSE 3030
 # RUN npm run build
 CMD ["npm", "start"]

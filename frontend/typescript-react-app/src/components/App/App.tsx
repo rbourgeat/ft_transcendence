@@ -1,10 +1,6 @@
 import React from 'react';
 import './App.scss';
 import { Routes, Route } from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.min.css';
-
-// import Footer from '../Footer/Footer';
-// import Header from '../Header/Header';
 
 import Auth from '../Auth/Auth';
 import Welcome from '../Welcome/Welcome';
