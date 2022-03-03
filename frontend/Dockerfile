@@ -1,7 +1,7 @@
 FROM node:17-alpine3.14
 WORKDIR /app
 
-COPY ./typescript-react-app/package-lock.json .
+# COPY ./typescript-react-app/package-lock.json .
 COPY ./typescript-react-app/package.json .
 
 RUN rm -rf node_modules
@@ -12,7 +12,7 @@ COPY ./typescript-react-app/.env .
 
 RUN npm install --silent
 RUN npm install -g typescript
-COPY . ./
+# COPY . ./
 
 EXPOSE 3030
 
