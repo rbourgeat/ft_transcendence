@@ -1,7 +1,6 @@
 import './Signup.scss';
 import { useNavigate } from "react-router-dom";
 import React , { useState, useEffect} from 'react';
-// import PropTypes from "prop-types";
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -24,54 +23,8 @@ class Signup extends React.Component
         super(props);
     }
 
-    submit=(event)=>{
-        event.preventDefault();
-        
-        const bod = {
-            email: this.state.email,
-            login: this.state.username,
-            password:  this.state.password,
-            password_confirmation: this.state.password_conf
-        }
-    
-        this.notifySuccessParam(this.state.email);
-        this.notifySuccessParam(this.state.username);
-        this.notifySuccessParam(this.state.password);
-        this.notifySuccessParam(this.state.password_conf);
-
-        console.log(bod);
-        let res = axios.post('https://localhost:3000/api/auth/register', bod).then(res=>{
-            console.log(res.data);
-        })}
-
-    HandleClickParams(Email: string, Username: string, 
-        Password: string, PasswordConfirmation: string)
-    {
-    
-        let payload = {
-            email: Email,
-            login: Username, 
-            password: Password,
-            password_confirmation: PasswordConfirmation
-        }
-        // this.notifySuccessParam(Email);
-        // this.notifySuccessParam(Username);
-        // this.notifySuccessParam(Password);
-        // this.notifySuccessParam(PasswordConfirmation);
-        
-       let res = axios.post('/auth/register', payload);
-       console.log(res);
-    }
-
-    //On definit la "propriete" de la classe Signup (equivalent attribut membre)
-    rep = {};
-
-    instance = axios.create({
-        baseURL: "http://localhost:3000/api"}
-    );
-
-    notifySuccess = () => 
-        toast.success('🦄 Yes! You are not registered !You must now login', {
+    notifyDanger = () => 
+        toast.warning('Oops ! An error happened', {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -80,6 +33,69 @@ class Signup extends React.Component
         draggable: true,
         progress: undefined,
         });
+
+    notifySuccess = () => 
+        toast.success('🦄 Yes! You are now registered ! You may log in.', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        });
+
+    submit=(event)=>{
+        event.preventDefault();
+        axios.defaults.baseURL = 'http://localhost:3000/';
+        axios.defaults.headers.post['Content-Type'] ='*';
+        axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+
+        const bod = {
+            email: this.state.email,
+            login: this.state.username,
+            password:  this.state.password,
+            password_confirmation: this.state.password_conf
+        }
+
+        const headers = {
+            'Content-Type': 'application/json'
+        };
+
+        console.log(bod);
+        let res = axios.post('http://localhost:3000/api/auth/register/', bod, {headers}).then(res=>{
+            console.log(res.data);
+            console.log(res.status)
+            if (res.status == 201)
+                this.notifySuccess();
+            else
+                this.notifyDanger();
+        }).catch((error) => {
+            console.log(error);
+            this.notifyDanger();
+        })
+    }
+
+    // HandleClickParams(Email: string, Username: string, 
+    //     Password: string, PasswordConfirmation: string)
+    // {
+    
+    //     let payload = {
+    //         email: Email,
+    //         login: Username, 
+    //         password: Password,
+    //         password_confirmation: PasswordConfirmation
+    //     }
+    //    let res = axios.post('/auth/register', payload);
+    //    console.log(res);
+    // }
+
+    //On definit la "propriete" de la classe Signup (equivalent attribut membre)
+    rep = {};
+
+    instance = axios.create({
+        baseURL: "http://localhost:3000/api"}
+    );
 
     notifySuccessParam(Param: string) {
         toast.success(Param, {
@@ -101,19 +117,7 @@ class Signup extends React.Component
             pauseOnHover: true,
             draggable: true,
             progress: undefined,
-            })};
-
-    notifyDanger = () => 
-        toast.warning('Oops ! An error happened', {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        });
-    
+            })};    
 
     //TODO: a revoir
     // [showPass: string, setshowPass: string] = useState(false);
@@ -199,8 +203,6 @@ class Signup extends React.Component
                             // onClick={() => this.HandleClickParams(this.state.email, this.state.username, this.state.password, this.state.password_conf)}
     
                             >M'inscrire
-                            {/* {this.state.display} */}
-                                {/* <ToastContainer /> */}
                                 <ToastContainer
                                     position="top-right"
                                     autoClose={5000}
