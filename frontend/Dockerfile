@@ -7,6 +7,7 @@ COPY ./typescript-react-app/package.json .
 RUN rm -rf node_modules
 
 COPY ./typescript-react-app .
+RUN rm -rf node-modules/
 COPY ./typescript-react-app/.env .
 
 RUN npm install --silent
