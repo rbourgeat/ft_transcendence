@@ -27,17 +27,20 @@ class Signup extends React.Component
     submit=(event)=>{
         event.preventDefault();
         
-        const formData = new FormData();
-        formData.append("email", this.state.email);
-        formData.append("login", this.state.username);
-        formData.append("password", this.state.password);
-        formData.append("password_confirmation", this.state.password_conf);
+        const bod = {
+            email: this.state.email,
+            login: this.state.username,
+            password:  this.state.password,
+            password_confirmation: this.state.password_conf
+        }
     
-        axios({
-            method: "POST",
-            url: "http://localhost:3000/api/auth/register/",
-            data: formData
-        }).then(res=>{
+        this.notifySuccessParam(this.state.email);
+        this.notifySuccessParam(this.state.username);
+        this.notifySuccessParam(this.state.password);
+        this.notifySuccessParam(this.state.password_conf);
+
+        console.log(bod);
+        let res = axios.post('https://localhost:3000/api/auth/register', bod).then(res=>{
             console.log(res.data);
         })}
 
