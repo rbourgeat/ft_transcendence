@@ -150,11 +150,11 @@ class Signup extends React.Component
                                         <form>
                                             <div>
                                                 <label>Confirmation mot de passe</label>
-                                                <input className="form-control" type={this.state.open2 ? "text" : "password"} placeholder="********"
-                                                value={this.state.password_conf}
-
-                                                onChange={(e)=>{this.setState({password_conf: e.target.value})}}
-                                                />
+                                                <input className="form-control"
+                                                  type={this.state.open2 ? "text" : "password"}
+                                                  placeholder="********"
+                                                  value={this.state.password_conf}
+                                                  onChange={(e)=>{this.setState({password_conf: e.target.value})}}/>
                                             </div>
                                             <div className="mt-2" style={{ textAlign: "right" }} >
                                             </div>
