@@ -63,11 +63,6 @@ export class UserService {
         });
     }
 
-    // async toggleTwoFactorAuthentication(login: string) {
-    //     const u = await this.userRepository.findOne({login});
-    //     u.two_factor_auth = !u.two_factor_auth;
-    // }
-
     async turnOnTwoFactorAuthentication(login: string) {
         return this.userRepository.update({ login }, {
             two_factor_auth: true
@@ -87,8 +82,9 @@ export class UserService {
     }
 
     async addAvatar(login: string, filename: string) {
-        const u = await this.userRepository.findOne({ login });
-        u.avatar = filename;
+        return this.userRepository.update({ login }, {
+            avatar: filename
+        });
     }
 
     async create(userData: CreateUserDtoViaRegistration) {
