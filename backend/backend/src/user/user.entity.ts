@@ -39,8 +39,8 @@ export class User {
     @Column({ nullable: true })
     win_loss_ration: number = 0;
 
-    @Column("simple-array")
-    friends: string[] = [];
+    @Column("simple-array", { nullable: true })
+    friends: string[];
 
     @ManyToOne(type => Game, { nullable: true })
     games: Game[];

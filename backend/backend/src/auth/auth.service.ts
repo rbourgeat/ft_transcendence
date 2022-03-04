@@ -22,7 +22,7 @@ export class AuthService {
         //const hashedPassword = await argon2.hash(registrationData.password);
         const hashedPassword = registrationData.password;
 
-        console.log('argon2 hash suceess  in auth service');
+        //console.log('argon2 hash suceess  in auth service');
         try {
             const createdUser = await this.usersService.create({
                 ...registrationData,
