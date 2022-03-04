@@ -51,6 +51,9 @@ export class UserService {
     async addFriend(login: string, friend: string) {
         const u = await this.userRepository.findOne({ login });
         u.friends.push(friend)
+        return this.userRepository.update({ login }, {
+            friends: u.friends
+        });
     }
 
     async removeFriend(login: string, friend: string) {
@@ -58,6 +61,9 @@ export class UserService {
         for (var i = 0; i < u.friends.length; i++)
             if (u.friends[i] === friend)
                 u.friends.splice(i, 1);
+        return this.userRepository.update({ login }, {
+            friends: u.friends
+        });
     }
 
     async updateStatus(login: string, s: string) {
@@ -65,11 +71,6 @@ export class UserService {
             status: s
         });
     }
-
-    // async toggleTwoFactorAuthentication(login: string) {
-    //     const u = await this.userRepository.findOne({login});
-    //     u.two_factor_auth = !u.two_factor_auth;
-    // }
 
     async turnOnTwoFactorAuthentication(login: string) {
         return this.userRepository.update({ login }, {
@@ -90,8 +91,9 @@ export class UserService {
     }
 
     async addAvatar(login: string, filename: string) {
-        const u = await this.userRepository.findOne({ login });
-        u.avatar = filename;
+        return this.userRepository.update({ login }, {
+            avatar: filename
+        });
     }
 
     async create(userData: CreateUserDtoViaRegistration) {

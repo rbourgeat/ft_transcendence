@@ -8,7 +8,6 @@ export default function MatchHistory() {
         <div className="row">
         <div  className="d-flex justify-content-center">
             <h3 id="matchhistory--title">Match history</h3>
-            {/* <br/> */}
         </div>
         <br/>
         <div className="row" id="match--history">
