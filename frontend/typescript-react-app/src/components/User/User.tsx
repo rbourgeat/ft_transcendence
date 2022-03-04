@@ -3,14 +3,14 @@ import Nav from "../Nav/Nav";
 import './User.scss'
 
 //On va mettre en props ce qu on va utiliser pour creer le components et en state ce qui doit etre modifie
-type UserProps = {
+interface UserProps {
   username?: string,
   email?: string,
   // password?: string,
   // passord_conf?: string
 }
 
-type MyState = {
+interface MyState {
   count: number,// like this
   date: Date,
   name?: string,
@@ -26,28 +26,26 @@ type MyState = {
 
 };
 
-export default class User extends React.Component<UserProps, MyState> {
+export default class User extends React.Component<UserProps, MyState>
+{
 
-
-    state: MyState = {
-    // optional second annotation for better type inference
-    count: 0,
-    date: new Date(),
-    avatar: "https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg",
-     //TODO: Checker connection ou pas
-     status: "Online",
-     totalGames: 0,
-     totalWins: 0,
-     totalLoss: 0,
-     winLoss: 0,
-     friends: {},
-     channels: {}
+    constructor(props: UserProps)
+    {
+      super(props);
+      this.state = {
+        count: 0,
+        date: new Date(),
+        avatar: "https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg",
+         //TODO: Checker connection ou pas
+         status: "Online",
+         totalGames: 0,
+         totalWins: 0,
+         totalLoss: 0,
+         winLoss: 0,
+         friends: {},
+         channels: {}
+      }
     }
-
-    // static props: UserProps = {
-    //   username: "",
-    //   email: "",
-    // }
 
   //il va falloir verifier que la valeur des props sont a jours
   render() {
