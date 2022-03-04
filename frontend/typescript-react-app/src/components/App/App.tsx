@@ -1,21 +1,39 @@
 import React from 'react';
 import './App.scss';
-import { Routes, Route } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect
+} from "react-router-dom";
 
 import Auth from '../Auth/Auth';
 import Welcome from '../Welcome/Welcome';
-import NotFound from '../NotFound/NotFound'
+import NotFound from '../NotFound/NotFound';
+import Dashboard from '../Dashboard/Dashboard';
 
 import 'bootstrap/dist/css/bootstrap.css';
 
 function App() {
   return (
     <div id="main">
-      <Routes>
-        <Route path="/" element={<Welcome />} />
-        <Route path="/auth" element={<Auth />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+      <Router>
+        <Switch>
+          <Route path="/welcome">
+            <Welcome />
+          </Route>
+          <Route exact path="/">
+            <Welcome />
+          </Route>
+          <Route path="/auth">
+            <Auth />
+          </Route>
+          <Route path="/dashboard">
+            <Dashboard />
+          </Route>
+        </Switch>
+
+      </Router>
     </div>
   );
 }

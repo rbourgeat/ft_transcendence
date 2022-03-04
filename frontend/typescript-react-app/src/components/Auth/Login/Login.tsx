@@ -1,45 +1,36 @@
 import './Login.scss';
-import { Navigate, Outlet, useLocation, useNavigate } from "react-router-dom";
-import React, { useState, useEffect } from 'react';
+import { Redirect, useHistory, Link } from 'react-router-dom'
+import React, { useState, useEffect} from 'react';
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+import ToastAlerts from "../../Utils/ToastAlerts/ToastAlerts"
 import axios from "axios";
+
+import Dashboard from "../../Dashboard/Dashboard"
 
 class Login extends React.Component
 {
-    state = {
-        email: "",
-        password: ""
-    }
+        //pas exactement comme il faudrait mais j'ai pas reussi a faire autrement
+        state =
+        {
+            email: "",
+            password: "",
+            isLogged: false
+        }
+        constructor(props)
+        {
+            super(props);
+        }
 
-    constructor(props)
-    {
-        super(props);
-    }
+        // const history = useHistory();
+        //
+        // const routeChange = () =>{
+        //   let path = `/auth`;
+        //   history.push(path);
+        // }
 
-    notifyDanger = () =>
-        toast.warning('Oops ! Login or password incorrect', {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        });
-
-    notifySuccess = () =>
-        toast.success('Login OK ! Redirecting...', {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        });
 
         submit=(event)=>{
             event.preventDefault();
@@ -56,32 +47,44 @@ class Login extends React.Component
                 'Content-Type': 'application/json'
             };
 
+            let toast = new ToastAlerts(null);
             console.log(bod);
-            let res = axios.post('http://localhost:3000/api/auth/log-in/', bod, {headers}).then(res=>{
+            let self = this;
+            let res = axios.post('http://localhost:3000/api/auth/log-in/', bod, {headers})
+            .then(res=>{
                 console.log(res.data);
                 console.log(res.status)
                 if (res.status == 200)
                 {
-                    this.notifySuccess();
-                    //On redirige vers la page principale
-                    return ;
-                    const nav = useNavigate();
-                    nav('/dashboard', { replace: true })
-                    // const routeChange = () => {
-                    //     let path = `/dashboard`;
-                    //     navigate(path);
-                    // };
+                    //toast.notifySuccess('You are log in, redirection in progress...');
+                    this.setState({isLogged: true});
+                    console.log(this.state.isLogged);
+                    window.top.location = "/dashboard/";
+                    //this.routeChange();
                 }
                 else
-                    this.notifyDanger();
-            }).catch((error) => {
-                console.log(error);
-                this.notifyDanger();
+                {
+                    toast.notifyDanger('Oops ! An error happened');
+                    //return ;
+                }
+                //this.routeChange();
+            })
+            .catch(function (error) {
+              console.log(error);
+              toast.notifyDanger('Oops ! An error happened');
             })
         }
+      //}
 
         render()
         {
+          // if (this.state.isLogged)
+          // {
+          //   // redirect to home if signed up
+          //   return <Redirect to = {{ pathname: "/dashbard" }} />;
+          // }
+          //else
+          //{
             return (
                 <div>
                     <h3 id="se-connecter">Se connecter</h3>
@@ -89,6 +92,7 @@ class Login extends React.Component
                       <label>Email</label>
                       <input className="form-control" type="email"
                         placeholder="malatini"
+                        //value={this.state.email.bind(this)}
                         value={this.state.email}
                         onChange={(e)=>{this.setState({email: e.target.value})}}
                       />
@@ -101,6 +105,7 @@ class Login extends React.Component
                       type="password"
                       /*type={showPassBis ? "text" : "password"}*/
                       placeholder="********"
+                      //value={this.state.password.bind(this)}
                       value={this.state.password}
                       onChange={(e)=>{this.setState({password: e.target.value})}}
                     />
@@ -115,12 +120,14 @@ class Login extends React.Component
                 className="btn btn-light btn-block"
                 id="auth-btn-1"
                 onClick={this.submit}
-                /*onClick={routeChange}*/
                 >
                 Me connecter
+
               </button>
+
           </div>
         </div>
     );
-  }
+  //}
+}
 } export default Login;

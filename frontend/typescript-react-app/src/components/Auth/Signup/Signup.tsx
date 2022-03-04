@@ -1,49 +1,37 @@
 import './Signup.scss';
-import { useNavigate } from "react-router-dom";
+//import { useNavigate } from "react-router-dom";
 import React , { useState, useEffect} from 'react';
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import ToastAlerts from "../../Utils/ToastAlerts/ToastAlerts"
 
 import axios from "axios";
 
 class Signup extends React.Component
 {
-    state = {
-        username: "",
-        email: "",
-        password: "",
-        password_conf: "",
-        open: false,
-        open2: false
+  //Equivalent du hook d etat
+  state = {
+      username: "",
+      email: "",
+      password: "",
+      password_conf: "",
+      open: false,
+      open2: false
+  }
+  constructor(props)
+  {
+      super(props);
+  }
+
+    resetName = function() {
+      this.setState({
+        email: '',
+        username: '',
+        password: '',
+        password_conf: ''
+      });
     }
-
-    constructor(props)
-    {
-        super(props);
-    }
-
-    notifyDanger = () =>
-        toast.warning('Oops ! An error happened', {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        });
-
-    notifySuccess = () =>
-        toast.success('🦄 Yes! You are now registered ! You may log in.', {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        });
 
     submit=(event)=>{
         event.preventDefault();
@@ -62,18 +50,30 @@ class Signup extends React.Component
             'Content-Type': 'application/json'
         };
 
+        let toast = new ToastAlerts(null);
         console.log(bod);
+
         let res = axios.post('http://localhost:3000/api/auth/register/', bod, {headers}).then(res=>{
             console.log(res.data);
             console.log(res.status)
+
             if (res.status == 201)
-                this.notifySuccess();
+            {
+              toast.notifySuccess('🦄 Yes! You are now registered ! You may log in.');
+              //const nav = useNavigate();
+              //redirection
+              //nav('/welcome', { replace: true })
+            }
             else
-                this.notifyDanger();
+            {
+              toast.notifyDanger('Oops ! An error happened');
+            }
         }).catch((error) => {
             console.log(error);
-            this.notifyDanger();
+            toast.notifyDanger('Oops ! An error happened');
         })
+        //on vide ce qu il y a dans les inputs
+        this.resetName();
     }
 
     instance = axios.create({
@@ -107,8 +107,7 @@ class Signup extends React.Component
     // [showPassBis: string, setshowPassBis: string] = useState(false);
 
     render() {
-
-    return (
+      return (
         <div>
              <div className="d-flex justify-content-center"></div>
                         <div className="forms" id="form--auth2">
@@ -163,7 +162,11 @@ class Signup extends React.Component
                                 </div>
                             </div>
                             <hr className="my-4" id="signup-hr"></hr>
-                            <button onClick={this.submit} className="btn btn-light btn-block" id="signup">
+                            <button
+                              onClick={this.submit}
+                              className="btn btn-light btn-block"
+                              id="signup"
+                            >
                                 M'inscrire
                                 <ToastContainer
                                     position="top-right"
