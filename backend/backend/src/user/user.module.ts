@@ -4,6 +4,7 @@ import { UserController } from './user.controller';
 import { UserService } from './user.service';
 import { User } from './user.entity'
 import { MulterModule } from '@nestjs/platform-express';
+import { UserEvent } from './user.event';
 
 @Module({
   imports: [
@@ -12,7 +13,7 @@ import { MulterModule } from '@nestjs/platform-express';
       dest: './upload',
     })],
   controllers: [UserController],
-  providers: [UserService],
+  providers: [UserService, UserEvent],
   exports: [UserService]
 })
 export class UserModule { }

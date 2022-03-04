@@ -3,10 +3,12 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
 import { CreateUserDto, UpdateUserDto, CreateUserDtoViaRegistration } from './user.dto';
+import { UserEvent } from './user.event';
 
 @Injectable()
 export class UserService {
     constructor(
+        private readonly userEvent: UserEvent,
         @InjectRepository(User)
         private userRepository: Repository<User>
     ) { }
@@ -30,10 +32,11 @@ export class UserService {
     }
 
     async updateUser(login: string, user: UpdateUserDto) {
-        await this.userRepository.update(login, user);
-        const updatedUser = await this.userRepository.findOne(login);
+        await this.userRepository.update({ login }, user);
+        const updatedUser = await this.userRepository.findOne({ login });
         if (updatedUser) {
-            return updatedUser
+            this.userEvent.emitEvent();
+            return updatedUser;
         }
         throw new HttpException('User not found', HttpStatus.NOT_FOUND);
     }

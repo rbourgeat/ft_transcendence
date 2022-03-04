@@ -7,6 +7,7 @@ import { UserModule } from '../user/user.module';
 import { User } from '../user/user.entity';
 import { AuthModule } from 'src/auth/auth.module';
 import { GameModule } from 'src/game/game.module';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 
 @Module({
   imports: [
@@ -31,7 +32,8 @@ import { GameModule } from 'src/game/game.module';
     }),
     UserModule,
     AuthModule,
-    GameModule
+    GameModule,
+    EventEmitterModule.forRoot()
   ],
   controllers: [AppController],
   providers: [AppService],

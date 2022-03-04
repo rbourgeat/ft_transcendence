@@ -37,7 +37,6 @@ export class AuthenticationController {
         const cookie = this.authenticationService.getCookieWithJwtToken(user.id);
         response.setHeader('Set-Cookie', cookie);
         user.password = undefined;
-        // user.status = "Online";
         this.userService.updateStatus(user.login, "Online");
         console.log('END OF LOGIN');
         return response.send(user);

@@ -43,17 +43,17 @@ export class UpdateUserDto {
     @ApiProperty()
     email: string;
 
-    @IsOptional()
-    @MinLength(8)
-    @Matches(/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/, { message: 'password is too weak, it must have minimum 8 characters, at least 1 letter and 1 number', })
-    @ApiProperty({ description: 'minimum 8 characters, at least 1 letter and 1 number' })
-    password: string;
-
-    @IsOptional()
-    @IsNotEmpty()
-    @Match('password', { message: 'password doesn\'t match' })
-    @ApiProperty({ description: 'password confirmation has to match initial password' })
-    password_confirmation: string;
+    //@IsOptional()
+    //@MinLength(8)
+    //@Matches(/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/, { message: 'password is too weak, it must have minimum 8 characters, at least 1 letter and 1 number', })
+    //@ApiProperty({ description: 'minimum 8 characters, at least 1 letter and 1 number' })
+    //password: string;
+    //
+    //@IsOptional()
+    //@IsNotEmpty()
+    //@Match('password', { message: 'password doesn\'t match' })
+    //@ApiProperty({ description: 'password confirmation has to match initial password' })
+    //password_confirmation: string;
 }
 
 @ApiTags('Users') //Create a category on swagger
