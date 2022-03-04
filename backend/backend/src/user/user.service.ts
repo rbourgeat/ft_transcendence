@@ -48,6 +48,9 @@ export class UserService {
     async addFriend(login: string, friend: string) {
         const u = await this.userRepository.findOne({ login });
         u.friends.push(friend)
+        return this.userRepository.update({ login }, {
+            friends: u.friends
+        });
     }
 
     async removeFriend(login: string, friend: string) {
@@ -55,6 +58,9 @@ export class UserService {
         for (var i = 0; i < u.friends.length; i++)
             if (u.friends[i] === friend)
                 u.friends.splice(i, 1);
+        return this.userRepository.update({ login }, {
+            friends: u.friends
+        });
     }
 
     async updateStatus(login: string, s: string) {
