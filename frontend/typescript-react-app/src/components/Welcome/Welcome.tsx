@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Welcome.scss';
 import '../App/App.scss';
 import '../../index.scss';
@@ -8,22 +8,20 @@ import Header from "../Header/Header";
 import video1 from "../../images/pong-demo.mp4";
 import TypeAnimation from 'react-type-animation';
 import { Redirect, useHistory, Link } from 'react-router-dom'
-//import { useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 import Media from 'react-media'
 
 export default function Welcome() {
-
-    // const routeChange = () => {
-    //     return (<Redirect to="/auth" />)
-    // }
-
     const history = useHistory();
 
     const routeChange = () =>{
       let path = `/auth`;
       history.push(path);
     }
+
+    // const [cookies, setCookie] = useCookies(["name"]);
+    // const [name, setName] = useState("");
 
     return (
         <>
