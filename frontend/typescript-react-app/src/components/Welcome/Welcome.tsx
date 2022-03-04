@@ -7,23 +7,28 @@ import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
 import video1 from "../../images/pong-demo.mp4";
 import TypeAnimation from 'react-type-animation';
-import { useNavigate } from "react-router-dom";
+import { Redirect, useHistory, Link } from 'react-router-dom'
+//import { useNavigate } from "react-router-dom";
 
 import Media from 'react-media'
 
-
 export default function Welcome() {
-    let navigate = useNavigate();
-    //TODO: faire une condition si la personne est deja authentifiee ? Voir cookie ?
-    const routeChange = () => {
-        let path = 'auth';
-        navigate(path);
+
+    // const routeChange = () => {
+    //     return (<Redirect to="/auth" />)
+    // }
+
+    const history = useHistory();
+
+    const routeChange = () =>{
+      let path = `/auth`;
+      history.push(path);
     }
+
     return (
         <>
         <Header />
         <div id="welcome--video-div-main">
-            {/* This is our inspiration */}
             <div id="authors">
                 <ul id="authors--ul">
                 <TypeAnimation
@@ -38,15 +43,13 @@ export default function Welcome() {
                     <li>malatini</li>
                     <li>darbib</li>
                     <li>macrespo</li>
-                    <button id="play-button-1" onClick={routeChange}>Play !</button>
+                    <button id="play-button-1" onClick={routeChange} className="detalii">Play !</button>
                 </ul>
             </div>
             <br></br>
-            {/* <Media query="(min-width: 800px)"> */}
                 <div  id="welcome--video-div">
                     <video autoPlay loop muted src={video1} id="welcome--video-video" height="400px"/>
                 </div>
-            {/* </Media> */}
             <Footer />
         </div>
         </>
