@@ -7,13 +7,15 @@ import { LocalAuthenticationGuard } from './localauth.guard';
 import JwtAuthenticationGuard from './jwt-authentication.guard';
 import { ApiBody, ApiConflictResponse, ApiConsumes, ApiExtraModels, ApiOkResponse, ApiOperation, ApiParam, ApiQuery, ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger'
 import LogInDto from './logIn.dto';
+import { UserService } from 'src/user/user.service';
 
 @ApiTags('Auth') //Create a category on swagger
 @ApiExtraModels(LogInDto) //force unused dto to show on swagger
 @Controller('api/auth')
 export class AuthenticationController {
     constructor(
-        private readonly authenticationService: AuthService
+        private readonly authenticationService: AuthService,
+        private readonly userService: UserService
     ) { }
 
     @ApiOperation({ summary: 'register new user' }) //endpoint summary on swaggerui
@@ -35,7 +37,8 @@ export class AuthenticationController {
         const cookie = this.authenticationService.getCookieWithJwtToken(user.id);
         response.setHeader('Set-Cookie', cookie);
         user.password = undefined;
-        user.status = "Online";
+        // user.status = "Online";
+        this.userService.updateStatus(user.login, "Online");
         console.log('END OF LOGIN');
         return response.send(user);
     }
@@ -59,7 +62,7 @@ export class AuthenticationController {
         console.log('went by authenticate in auth controller');
         const user = request.user;
         user.password = undefined;
-        user.status = "Online";
+        this.userService.updateStatus(user.login, "Online");
         return user;
     }
 }
