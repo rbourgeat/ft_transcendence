@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import './Welcome.scss';
 import '../App/App.scss';
 import '../../index.scss';
@@ -11,6 +11,8 @@ import { Redirect, useHistory, Link } from 'react-router-dom'
 import { useCookies } from "react-cookie";
 
 import Media from 'react-media'
+
+import { UserContext } from "../App/UserContext"
 
 export default function Welcome() {
     const history = useHistory();
@@ -42,6 +44,7 @@ export default function Welcome() {
                     <li>darbib</li>
                     <li>macrespo</li>
                     <button id="play-button-1" onClick={routeChange} className="detalii">Play !</button>
+                    <button onClick={() => this.setValue("context test")}>test context</button>
                 </ul>
             </div>
             <br></br>

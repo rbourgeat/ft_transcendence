@@ -14,15 +14,18 @@ import Dashboard from '../Dashboard/Dashboard';
 import User from '../User/User';
 // import UserContext from './UserContext';
 import 'bootstrap/dist/css/bootstrap.css';
-
+import {UserContext} from './UserContext';
 import { useCookies } from "react-cookie";
 
 function App() {
+  
+  const [value, setValue] = useState('hello from context');
+
   return (
     <div id="main">
       <Router>
         <Switch>
-          {/*<UserContext.Provider>*/}
+          <UserContext.Provider value={value}>
           <Route path="/welcome">
             <Welcome />
           </Route>
@@ -38,7 +41,7 @@ function App() {
           <Route path="/user">
             <User/>
           </Route>
-          {/*</UserContext.Provider>*/}
+          </UserContext.Provider>
         </Switch>
       </Router>
     </div>
