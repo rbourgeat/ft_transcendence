@@ -35,7 +35,6 @@ export class UserService {
         await this.userRepository.update({ login }, user);
         const updatedUser = await this.userRepository.findOne({ login });
         if (updatedUser) {
-            this.userEvent.emitEvent();
             return updatedUser;
         }
         throw new HttpException('User not found', HttpStatus.NOT_FOUND);
@@ -100,7 +99,15 @@ export class UserService {
     async create(userData: CreateUserDtoViaRegistration) {
         console.log('went by create in user service');
         const newUser = await this.userRepository.create(userData);
+        newUser.friends = [];
+        newUser.achievements = [];
+        const login = newUser.login;
+        this.userRepository.update({ login }, {
+            friends: [],
+            achievements: []
+        });
         await this.userRepository.save(newUser);
+        this.userEvent.achievement42(newUser);
         return newUser;
     }
 
