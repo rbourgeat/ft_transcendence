@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import './App.scss';
 import {
   BrowserRouter as Router,
@@ -19,12 +19,16 @@ import { useCookies } from "react-cookie";
 
 function App() {
   
-  const [value, setValue] = useState('hello from context');
+  const [user, setUser] = useState(null);
+
+  const value = useMemo( () => 
+  ({user, setUser}), [user, setUser]);
 
   return (
     <div id="main">
       <Router>
         <Switch>
+          {/*<UserContext.Provider value={{value, setValue}}>*/}
           <UserContext.Provider value={value}>
           <Route path="/welcome">
             <Welcome />

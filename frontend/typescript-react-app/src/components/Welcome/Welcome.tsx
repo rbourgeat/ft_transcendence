@@ -10,9 +10,10 @@ import TypeAnimation from 'react-type-animation';
 import { Redirect, useHistory, Link } from 'react-router-dom'
 import { useCookies } from "react-cookie";
 
-import Media from 'react-media'
+import Media from 'react-media';
 
-import { UserContext } from "../App/UserContext"
+import { UserContext } from "../App/UserContext";
+import { login } from "./Login";
 
 export default function Welcome() {
     const history = useHistory();
@@ -24,6 +25,8 @@ export default function Welcome() {
 
     // const [cookies, setCookie] = useCookies(["name"]);
     // const [name, setName] = useState("");
+
+    const {user, setUser} = useContext(UserContext);
 
     return (
         <>
@@ -44,7 +47,21 @@ export default function Welcome() {
                     <li>darbib</li>
                     <li>macrespo</li>
                     <button id="play-button-1" onClick={routeChange} className="detalii">Play !</button>
-                    <button onClick={() => this.setValue("context test")}>test context</button>
+                    
+                    <br />
+                    <br />
+                    {/* On va utiliser context pour l'instant pour bloquer l'affichage si la personne n'est pas connectee */}
+                    <pre>{JSON.stringify(user, null, 2).length > 4 ? JSON.stringify(user, null, 2) : ""}</pre>
+                    { user ? (<button onClick={ () => setUser(null)}>logout</button>) : 
+                        (<button onClick={ async () => 
+                        {
+                            const user = await login();
+                            setUser(user);
+                        }
+                        }>
+                        login
+                    </button>)
+                    }
                 </ul>
             </div>
             <br></br>
