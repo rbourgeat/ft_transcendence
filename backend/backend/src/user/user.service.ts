@@ -50,7 +50,8 @@ export class UserService {
 
     async addFriend(login: string, friend: string) {
         const u = await this.userRepository.findOne({ login });
-        u.friends.push(friend)
+        u.friends.push(friend);
+        this.userEvent.achievementFriend(u);
         return this.userRepository.update({ login }, {
             friends: u.friends
         });
