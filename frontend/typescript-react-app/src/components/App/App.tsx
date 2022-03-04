@@ -12,7 +12,7 @@ import Welcome from '../Welcome/Welcome';
 import NotFound from '../NotFound/NotFound';
 import Dashboard from '../Dashboard/Dashboard';
 import User from '../User/User';
-
+// import UserContext from './UserContext';
 import 'bootstrap/dist/css/bootstrap.css';
 
 import { useCookies } from "react-cookie";
@@ -22,6 +22,7 @@ function App() {
     <div id="main">
       <Router>
         <Switch>
+          {/*<UserContext.Provider>*/}
           <Route path="/welcome">
             <Welcome />
           </Route>
@@ -37,6 +38,7 @@ function App() {
           <Route path="/user">
             <User/>
           </Route>
+          {/*</UserContext.Provider>*/}
         </Switch>
       </Router>
     </div>
