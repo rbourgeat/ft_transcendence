@@ -88,10 +88,10 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
             axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 
             const bod = {
-                email: this.state.email,
-                login: this.state.username,
-                password:  this.state.password,
-                password_confirmation: this.state.password_conf
+                email: this.props.email,
+                login: this.props.username,
+                password:  this.props.password,
+                password_confirmation: this.props.password_conf
             }
 
             const headers = {

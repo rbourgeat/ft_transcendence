@@ -3,13 +3,10 @@ import React , { useState, useEffect} from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ToastAlerts from "../../Utils/ToastAlerts/ToastAlerts"
-
 import axios from "axios";
 import myAxios from "../../Axios/Axios"
 
-interface SignupProps {
-
-}
+interface SignupProps {}
 
 interface SignupState {
     username?: string,
@@ -60,49 +57,9 @@ class Signup extends React.Component<SignupProps, SignupState>
         })
 
         let res = ax.signup();
+        console.log(res);
         this.resetName();
-
-    //    axios.defaults.baseURL = 'http://localhost:3000/';
-    //    axios.defaults.headers.post['Content-Type'] ='*';
-    //    axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
-
-    //    const bod = {
-    //        email: this.state.email,
-    //        login: this.state.username,
-    //        password:  this.state.password,
-    //        password_confirmation: this.state.password_conf
-    //    }
-
-    //    const headers = {
-    //        'Content-Type': 'application/json'
-    //    };
-
-    //    let toast = new ToastAlerts(null);
-    //    console.log(bod);
-
-    //    let res = axios.post('http://localhost:3000/api/auth/register/', bod, {headers}).then(res=>{
-    //        console.log(res.data);
-    //        console.log(res.status)
-
-    //        if (res.status == 201)
-    //        {
-    //          toast.notifySuccess('🦄 Yes! You are now registered ! You may log in.');
-    //        }
-    //        else
-    //        {
-    //          toast.notifyDanger('Oops ! An error happened');
-    //        }
-    //    }).catch((error) => {
-    //        console.log(error);
-    //        toast.notifyDanger('Oops ! An error happened');
-    //    })
-    //    this.resetName();
     }
-
-    //Laisser tomber ca a priori
-    //instance = axios.create({
-    //    baseURL: "http://localhost:3000/api"}
-    //);
 
     render() {
       return (
@@ -137,18 +94,19 @@ class Signup extends React.Component<SignupProps, SignupState>
                                                 <label>Mot de passe</label>
                                                 <input
                                                 className="form-control"
-                                                type={this.state.open ? "text" : "password"}
+                                               // type={this.state.open ? "text" : "password"}
+                                               type="password"
                                                 placeholder="********"
                                                 value={this.state.password}
                                                 onChange={(e)=>{this.setState({password: e.target.value})}} />
                                             </div>
                                         </form>
-
                                         <form>
                                             <div>
                                                 <label>Confirmation mot de passe</label>
                                                 <input className="form-control"
-                                                  type={this.state.open2 ? "text" : "password"}
+                                                  //type={this.state.open2 ? "text" : "password"}
+                                                  type="password"
                                                   placeholder="********"
                                                   value={this.state.password_conf}
                                                   onChange={(e)=>{this.setState({password_conf: e.target.value})}}/>
