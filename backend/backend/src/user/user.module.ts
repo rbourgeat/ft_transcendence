@@ -1,11 +1,13 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserController } from './user.controller';
-import { UserService } from './user.service';
-import { User } from './user.entity'
 import { MulterModule } from '@nestjs/platform-express';
-import { UserEvent } from './user.event';
-import { UsersRepository } from './user.repository';
+
+import { UserController } from 'src/user/user.controller';
+import { UsersRepository } from 'src/user/user.repository';
+import { UserService } from 'src/user/user.service';
+import { User } from 'src/user/entity/user.entity'
+import { UserEvent } from 'src/user/user.event';
+
 
 @Module({
   imports: [

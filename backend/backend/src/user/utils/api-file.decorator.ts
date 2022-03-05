@@ -1,17 +1,17 @@
+import { MulterOptions } from '@nestjs/platform-express/multer/interfaces/multer-options.interface';
 import { applyDecorators, UseInterceptors } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { MulterOptions } from '@nestjs/platform-express/multer/interfaces/multer-options.interface';
+import { fileMimetypeFilter } from 'src/user/user.service';
 import { ApiBody, ApiConsumes } from '@nestjs/swagger';
-import { fileMimetypeFilter } from './user.service'
 
 export function ApiImageFile(
-    fileName: string = 'image',
-    required: boolean = false,
-  ) {
-    return ApiFile(fileName, required, {
-      fileFilter: fileMimetypeFilter('image'),
-    });
-  }
+  fileName: string = 'image',
+  required: boolean = false,
+) {
+  return ApiFile(fileName, required, {
+    fileFilter: fileMimetypeFilter('image'),
+  });
+}
 
 export function ApiFile(
   fieldName: string = 'file',

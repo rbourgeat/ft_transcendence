@@ -1,12 +1,16 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { UserService } from '../user/user.service';
-import RegisterDto from './register.dto';
-//import * as bcrypt from 'bcrypt';
+import { UserService } from 'src/user/user.service';
+import RegisterDto from 'src/auth/dto/register.dto';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
-import TokenPayload from './tokenPayload.interface';
-import PostgresErrorCode from './postgresErrorCodes.enum';
+import TokenPayload from 'src/auth/interface/tokenPayload.interface';
+import PostgresErrorCode from 'src/auth/utils/postgresErrorCodes.enum';
+
+//IMPORTANT either use argon2 or bcrypt package to hash password.
+//Not in use atm because not working on mac. Leave line with those package commented. It's working, we'll enable it late
 //import * as argon2 from "argon2";
+//import * as bcrypt from 'bcrypt';
+
 
 @Injectable()
 export class AuthService {
@@ -21,22 +25,15 @@ export class AuthService {
         //const hashedPassword = await bcrypt.hash(registrationData.password, 10);
         //const hashedPassword = await argon2.hash(registrationData.password);
         const hashedPassword = registrationData.password;
-
-        //console.log('argon2 hash suceess  in auth service');
         try {
-            const createdUser = await this.usersService.create({
-                ...registrationData,
-                password: hashedPassword
-            });
+            const createdUser = await this.usersService.create({ ...registrationData, password: hashedPassword });
             createdUser.password = undefined;
             console.log('SUCESS: new user registered');
             return createdUser;
         } catch (error) {
             if (error?.code === PostgresErrorCode.UniqueViolation) {
-                console.log('FAIL: new user isn\'t registered');
                 throw new HttpException('User with that email already exists', HttpStatus.BAD_REQUEST);
             }
-            console.log('FAIL: new user isn\'t registered');
             throw new HttpException('Something went wrong', HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

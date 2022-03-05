@@ -1,8 +1,9 @@
 import { HttpException, HttpStatus, Injectable, UnsupportedMediaTypeException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Game } from './game.entity';
-import { CreateGameDto } from './game.dto';
+
+import { CreateGameDto } from 'src/game/dto/game.dto';
+import { Game } from 'src/game/entity/game.entity';
 
 @Injectable()
 export class GameService {
@@ -20,5 +21,5 @@ export class GameService {
         await this.gameRepository.save(newGame);
         return newGame;
     }
-    
+
 }

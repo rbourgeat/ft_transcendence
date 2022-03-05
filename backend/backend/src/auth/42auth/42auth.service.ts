@@ -1,9 +1,10 @@
-import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+
 import { UserService } from 'src/user/user.service';
-import { User42Dto } from 'src/user/user.dto'
-import { User } from "src/user/user.entity"
+import { User } from 'src/user/entity/user.entity';
+import { User42Dto } from 'src/user/dto/user.dto';
 
 @Injectable()
 export class Auth42Service {

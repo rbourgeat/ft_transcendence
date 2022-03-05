@@ -1,10 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { UserModule } from '../user/user.module';
-import { User } from '../user/user.entity';
+import { UserModule } from 'src/user/user.module';
 import { AuthModule } from 'src/auth/auth.module';
 import { GameModule } from 'src/game/game.module';
 import { EventEmitterModule } from '@nestjs/event-emitter';
@@ -21,7 +18,7 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
       username: process.env.DATABASE_USERNAME,
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME,
-      //autoLoadEntities: true,
+      autoLoadEntities: true,
       synchronize: true,
       entities: ['dist/**/*.entity{.ts,.js}'],
       migrations: ['dist/migrations/**/*{.ts,.js}'],
@@ -35,7 +32,7 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
     GameModule,
     EventEmitterModule.forRoot()
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule { }

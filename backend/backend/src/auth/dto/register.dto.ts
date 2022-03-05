@@ -1,6 +1,6 @@
-import { ApiProperty, ApiTags } from '@nestjs/swagger';
 import { IsNotEmpty, IsEmail, Length, IsAlphanumeric, MinLength, Matches } from 'class-validator';
-import { Match } from './match.decorator';
+import { ApiProperty, ApiTags } from '@nestjs/swagger';
+import { Match } from 'src/auth/utils/match.decorator';
 
 @ApiTags('Auth') //Create a category on swagger
 export class RegisterDto {

@@ -1,6 +1,6 @@
-//found code here : https://stackoverflow.com/questions/60451337/password-confirmation-in-typescript-with-class-validator
-
 import { registerDecorator, ValidationArguments, ValidationOptions, ValidatorConstraint, ValidatorConstraintInterface } from 'class-validator';
+
+//found code here : https://stackoverflow.com/questions/60451337/password-confirmation-in-typescript-with-class-validator
 
 export function Match(property: string, validationOptions?: ValidationOptions) {
     return (object: any, propertyName: string) => {

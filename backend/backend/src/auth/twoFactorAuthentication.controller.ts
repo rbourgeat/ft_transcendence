@@ -1,19 +1,9 @@
-import {
-    ClassSerializerInterceptor,
-    Controller,
-    Post,
-    UseInterceptors,
-    UseGuards,
-    Res,
-    Req,
-    Body,
-    UnauthorizedException, HttpCode,
-} from '@nestjs/common';
+import { ClassSerializerInterceptor, Controller, Post, UseInterceptors, UseGuards, Res, Req, Body, UnauthorizedException, HttpCode } from '@nestjs/common';
 import { TwoFactorAuthenticationService } from './twoFactorAuthentication.service';
 import { Response } from 'express';
-import JwtAuthenticationGuard from './jwt-authentication.guard';
-import RequestWithUser from './requestWithUser.interface';
-import { UserService } from '../user/user.service';
+import JwtAuthenticationGuard from 'src/auth/guard/jwt-authentication.guard';
+import RequestWithUser from 'src/auth/interface/requestWithUser.interface';
+import { UserService } from 'src/user/user.service';
 
 @Controller('2fa')
 @UseInterceptors(ClassSerializerInterceptor)

@@ -1,6 +1,6 @@
 import { Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { Auth42Guard } from './42auth.guard';
+import { Auth42Guard } from 'src/auth/42auth/guard/42auth.guard';
 import { Auth42Service } from './42auth.service';
 
 @ApiTags('42auth')

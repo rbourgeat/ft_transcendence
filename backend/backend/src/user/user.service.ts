@@ -1,10 +1,10 @@
 import { HttpException, HttpStatus, Injectable, UnsupportedMediaTypeException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { User } from './user.entity';
-import { CreateUserDto, UpdateUserDto, CreateUserDtoViaRegistration, User42Dto } from './user.dto';
-import { UserEvent } from './user.event';
-import { UsersRepository } from './user.repository';
+import { User } from 'src/user/entity/user.entity';
+import { UpdateUserDto, CreateUserDtoViaRegistration, User42Dto } from 'src/user/dto/user.dto';
+import { UserEvent } from 'src/user/user.event';
+import { UsersRepository } from 'src/user/user.repository';
 
 @Injectable()
 export class UserService {
@@ -26,12 +26,6 @@ export class UserService {
             return user;
         }
         throw new HttpException('User not found', HttpStatus.NOT_FOUND);
-    }
-
-    async createUser(user: CreateUserDto) {
-        const newUser = await this.userRepository.create(user);
-        await this.userRepository.save(newUser);
-        return newUser;
     }
 
     async updateUser(login: string, user: UpdateUserDto) {

@@ -1,10 +1,10 @@
 import { Req, Body, Controller, Delete, Get, Param, Patch, Post, UseInterceptors, UploadedFile } from '@nestjs/common';
 import { UserService, fileMimetypeFilter } from './user.service';
-import CreateUserDtoViaRegistration, { CreateUserDto, UpdateUserDto, UploadAvatarDto } from './user.dto';
+import CreateUserDtoViaRegistration, { UpdateUserDto, UploadAvatarDto } from 'src/user/dto/user.dto';
 import { ApiBody, ApiExtraModels, ApiConflictResponse, ApiConsumes, ApiOkResponse, ApiOperation, ApiParam, ApiQuery, ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger'
 import { FileInterceptor } from '@nestjs/platform-express';
-import { ApiImageFile } from './api-file.decorator';
-import { ParseFile } from './parse-file.pipe';
+import { ApiImageFile } from 'src/user/utils/api-file.decorator';
+import { ParseFile } from 'src/user/utils/parse-file.pipe';
 
 @ApiTags('Users') //Create a category on swagger
 @ApiExtraModels(CreateUserDtoViaRegistration) //force unused dto to show on swagger
@@ -32,19 +32,6 @@ export class UserController {
     getUserByLogin(@Param('login') login: string) {
         console.log('Get user ' + login + ' data')
         return this.usersService.getUserByLogin(String(login));
-    }
-
-    /**
-    **  Save a new user to db
-    **/
-
-    @ApiOperation({ summary: 'Create a new user' }) //endpoint summary on swaggerui
-    @ApiOkResponse({ description: 'User creation suceed' }) //answer sent back
-    @ApiConflictResponse({ description: 'User already exist' }) //not working atm
-    @Post()
-    async createUser(@Body() user: CreateUserDto) {
-        console.log('Create user ' + user.login)
-        return this.usersService.createUser(user);
     }
 
     /**
