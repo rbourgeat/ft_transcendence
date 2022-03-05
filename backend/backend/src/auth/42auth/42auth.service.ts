@@ -10,7 +10,7 @@ import { User42Dto } from 'src/user/dto/user.dto';
 export class Auth42Service {
     constructor(
         private readonly usersService: UserService,
-        private readonly jwtService: JwtService,
+        //private readonly jwtService: JwtService,
         private readonly configService: ConfigService
     ) { }
 

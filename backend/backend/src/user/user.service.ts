@@ -126,6 +126,7 @@ export class UserService {
 
     ////
     async validateUser42(userData: User42Dto): Promise<User> {
+        console.log('went in validateyser42 in user service');
         let user: User = undefined;
 
         const { login42 } = userData;
