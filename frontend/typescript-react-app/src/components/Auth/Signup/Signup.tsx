@@ -1,7 +1,5 @@
 import './Signup.scss';
-//import { useNavigate } from "react-router-dom";
 import React , { useState, useEffect} from 'react';
-
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ToastAlerts from "../../Utils/ToastAlerts/ToastAlerts"
@@ -10,7 +8,6 @@ import axios from "axios";
 
 class Signup extends React.Component
 {
-  //Equivalent du hook d etat
   state = {
       username: "",
       email: "",
@@ -19,9 +16,18 @@ class Signup extends React.Component
       open: false,
       open2: false
   }
+
   constructor(props)
   {
       super(props);
+      
+      //Initialisation state
+      this.state.username = "";
+      this.state.email = "";
+      this.state.password = "";
+      this.state.password_conf = "";
+      //this.state.open = false;
+      //this.state.open2 = false; 
   }
 
     resetName = function() {
@@ -60,9 +66,6 @@ class Signup extends React.Component
             if (res.status == 201)
             {
               toast.notifySuccess('🦄 Yes! You are now registered ! You may log in.');
-              //const nav = useNavigate();
-              //redirection
-              //nav('/welcome', { replace: true })
             }
             else
             {
@@ -72,35 +75,12 @@ class Signup extends React.Component
             console.log(error);
             toast.notifyDanger('Oops ! An error happened');
         })
-        //on vide ce qu il y a dans les inputs
         this.resetName();
     }
 
     instance = axios.create({
         baseURL: "http://localhost:3000/api"}
     );
-
-    notifySuccessParam(Param: string) {
-        toast.success(Param, {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        })};
-
-    notifyDangerParam(Param: string) {
-            toast.warning(Param, {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            })};
 
     // [showPass: string, setshowPass: string] = useState(false);
     // [showPassConfirm: string, setshowPassConfirm:string] = useState(false);

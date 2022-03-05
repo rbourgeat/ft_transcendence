@@ -1,24 +1,21 @@
 version: '3'
 services:
-  #frontend:
-  #  container_name: frontend
-  #  build:
-  #    context: ./frontend
-  #    dockerfile: Dockerfile
-  #  ports:
-  #    - "3030:3030"
-  #  #ajout
-  #  networks:
-  #    - webapp
-  #  restart: always
-  #  # depends_on: api
-  #  stdin_open: true
-  #  tty: true
-  #  environment:
-  #   - CHOKIDAR_USEPOLLING=true
-  #  volumes:
-  #    - ./frontend/typescript-react-app:/app
-  #  # command: npm start
+  frontend:
+   container_name: frontend
+   build:
+     context: ./frontend
+     dockerfile: Dockerfile
+   ports:
+     - "3030:3030"
+   networks:
+     - webapp
+   restart: always
+   stdin_open: true
+   tty: true
+   environment:
+    - CHOKIDAR_USEPOLLING=true
+   volumes:
+     - ./frontend/typescript-react-app:/app
   api:
     build:
       context: ./backend/

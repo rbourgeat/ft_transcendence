@@ -1,6 +1,6 @@
 import './Login.scss';
 import { Redirect, useHistory, Link } from 'react-router-dom'
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect, Props} from 'react';
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -10,20 +10,33 @@ import axios from "axios";
 
 import Dashboard from "../../Dashboard/Dashboard"
 
-class Login extends React.Component
+interface LoginProps {
+  //voir si la personne est deja connectee ?
+}
+
+interface LoginState {
+  //voir si la personne est deja connectee ?
+  email?: string,
+  password?: string,
+  isLogged?: boolean
+}
+
+export default class Login extends React.Component<LoginProps, LoginState>
 {
-        state =
-        {
-            email: "",
-            password: "",
-            isLogged: false
-        }
-        constructor(props)
+        constructor(props: LoginProps)
         {
             super(props);
+            
+            //Init state
+            this.state = {
+              email: "",
+              password: "",
+              isLogged: false
+            }
         }
 
-        submit=(event)=>{
+        submit=(event)=>
+        {
             event.preventDefault();
             axios.defaults.baseURL = 'http://localhost:3000/';
             axios.defaults.headers.post['Content-Type'] ='*';
@@ -116,6 +129,5 @@ class Login extends React.Component
           </div>
         </div>
     );
-  //}
 }
-} export default Login;
+}
