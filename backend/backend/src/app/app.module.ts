@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from 'src/user/user.module';
 import { AuthModule } from 'src/auth/auth.module';
 import { GameModule } from 'src/game/game.module';
+import { ChatModule } from 'src/chat/chat.module';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { Auth42Module } from 'src/auth/42auth/42auth.module';
 
@@ -32,6 +33,7 @@ import { Auth42Module } from 'src/auth/42auth/42auth.module';
     AuthModule,
     GameModule,
     Auth42Module,
+    ChatModule,
     EventEmitterModule.forRoot()
   ],
   controllers: [],

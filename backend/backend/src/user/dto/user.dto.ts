@@ -23,7 +23,7 @@ export class UpdateUserDto {
 }
 
 @ApiTags('Users') //Create a category on swagger
-export class GameUserDto {
+export class UserDto {
     @IsNotEmpty()
     @Length(4, 20)
     @IsAlphanumeric()
