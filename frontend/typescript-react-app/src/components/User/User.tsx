@@ -3,14 +3,14 @@ import Nav from "../Nav/Nav";
 import './User.scss'
 
 //On va mettre en props ce qu on va utiliser pour creer le components et en state ce qui doit etre modifie
-interface UserProps {
+export interface UserProps {
   username?: string,
   email?: string,
   // password?: string,
   // passord_conf?: string
 }
 
-interface MyState {
+export interface MyState {
   count: number,// like this
   date: Date,
   name?: string,

@@ -12,7 +12,6 @@ import Welcome from '../Welcome/Welcome';
 import NotFound from '../NotFound/NotFound';
 import Dashboard from '../Dashboard/Dashboard';
 import User from '../User/User';
-// import UserContext from './UserContext';
 import 'bootstrap/dist/css/bootstrap.css';
 import {UserContext} from './UserContext';
 import { useCookies } from "react-cookie";
@@ -28,7 +27,6 @@ function App() {
     <div id="main">
       <Router>
         <Switch>
-          {/*<UserContext.Provider value={{value, setValue}}>*/}
           <UserContext.Provider value={value}>
           <Route path="/welcome">
             <Welcome />
@@ -53,6 +51,8 @@ function App() {
 }
 
 export default App;
+
+// Tentative pour transformer en classe infructueuse pour l instant 
 
 // class App extends React.Component {
 //
