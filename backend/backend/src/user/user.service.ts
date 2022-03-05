@@ -2,15 +2,18 @@ import { HttpException, HttpStatus, Injectable, UnsupportedMediaTypeException } 
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
-import { CreateUserDto, UpdateUserDto, CreateUserDtoViaRegistration } from './user.dto';
+import { CreateUserDto, UpdateUserDto, CreateUserDtoViaRegistration, User42Dto } from './user.dto';
 import { UserEvent } from './user.event';
+import { UsersRepository } from './user.repository';
 
 @Injectable()
 export class UserService {
     constructor(
         private readonly userEvent: UserEvent,
         @InjectRepository(User)
-        private userRepository: Repository<User>
+        private userRepository: Repository<User>,
+        @InjectRepository(UsersRepository)
+        private usersRepository: UsersRepository,
     ) { }
 
     getAllUsers() {
@@ -125,6 +128,29 @@ export class UserService {
             return user;
         }
         throw new HttpException('User with this id does not exist', HttpStatus.NOT_FOUND);
+    }
+
+    ////
+    async validateUser42(userData: User42Dto): Promise<User> {
+        let user: User = undefined;
+
+        const { login42 } = userData;
+        user = await this.userRepository.findOne({ login42: login42 });
+        if (user)
+            return user;
+        let { login } = userData;
+        user = await this.userRepository.findOne({ login });
+        if (user) {
+            const rand = Math.random().toString(16).substr(2, 5);
+            login = login + '-' + rand;
+            userData.login = login;
+        }
+        const newUser: User = await this.createUser42(userData);
+        return newUser;
+    }
+
+    createUser42(userData: User42Dto): Promise<User> {
+        return this.usersRepository.createUser42(userData)
     }
 }
 
