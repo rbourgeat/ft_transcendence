@@ -118,4 +118,10 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
                 toast.notifyDanger('Oops ! An error happened');
             })
     }
+
+    //a reprendre quand ok pour user
+    getavatar()
+    {
+
+    }
 }

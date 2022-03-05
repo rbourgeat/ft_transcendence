@@ -17,10 +17,10 @@ import {UserContext} from './UserContext';
 import { useCookies } from "react-cookie";
 
 function App() {
-  
+
   const [user, setUser] = useState(null);
 
-  const value = useMemo( () => 
+  const value = useMemo( () =>
   ({user, setUser}), [user, setUser]);
 
   return (
@@ -41,7 +41,8 @@ function App() {
             <Dashboard />
           </Route>
           <Route path="/user">
-            <User/>
+            {/*Revoir en fonction du contexte avec la connexion*/}
+            <User username="malatini" email="malatini@gmail.com" password="Babyalex2016" password_conf="Babyalex2016"/>
           </Route>
           </UserContext.Provider>
         </Switch>
@@ -52,7 +53,7 @@ function App() {
 
 export default App;
 
-// Tentative pour transformer en classe infructueuse pour l instant 
+// Tentative pour transformer en classe infructueuse pour l instant
 
 // class App extends React.Component {
 //

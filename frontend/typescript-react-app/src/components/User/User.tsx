@@ -1,13 +1,17 @@
 import React, { useState, useEffect} from 'react';
 import Nav from "../Nav/Nav";
-import './User.scss'
+import './User.scss';
+import axios from 'axios';
+
+//import { Link } from 'react-router-dom';
+//creer un user avec le contexte de la connection?
 
 //On va mettre en props ce qu on va utiliser pour creer le components et en state ce qui doit etre modifie
 export interface UserProps {
   username?: string,
   email?: string,
-  // password?: string,
-  // passord_conf?: string
+  password?: string,
+  password_conf?: string
 }
 
 export interface MyState {
@@ -24,6 +28,7 @@ export interface MyState {
   channels?: Object,
   cookie?: string,
 
+  username?: string
 };
 
 export default class User extends React.Component<UserProps, MyState>
@@ -42,8 +47,25 @@ export default class User extends React.Component<UserProps, MyState>
          totalLoss: 0,
          winLoss: 0,
          friends: {},
-         channels: {}
+         channels: {},
+         username: this.props.username,
       }
+    }
+
+    get_avatar=(event) =>
+    {
+      //if (this.props.username && this.props.username != "null")
+      //{
+        let username = this.state.username;
+        axios.defaults.baseURL = 'http://localhost:3000/';
+        axios.defaults.headers.get['Content-Type'] ='*';
+        axios.defaults.headers.get['Access-Control-Allow-Origin'] = '*';
+       let url = "http://localhost:3000/api/user/".concat(username);
+        //+ this.props.username;
+        console.log(url);
+        //let res = axios.get(url);
+        return (1);
+      //}
     }
 
   //il va falloir verifier que la valeur des props sont a jours
@@ -67,6 +89,10 @@ export default class User extends React.Component<UserProps, MyState>
                 alt="avatar"
                 id="avatar-id"
                 />
+                <br/>
+                <br/>
+                <button onClick={this.get_avatar}>Change avatar</button>
+                <br />
                 <br/>
                 <p>Total games : <span className="span--stats">{this.state.totalGames ? this.state.totalGames : 0}</span></p>
                 <p>Total wins : <span className="span--stats">{this.state.totalWins ? this.state.totalWins : 0}</span></p>
