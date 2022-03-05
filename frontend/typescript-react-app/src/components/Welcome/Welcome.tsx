@@ -18,8 +18,10 @@ import { useCookies } from "react-cookie";
  * @malatini
  * page de welcome (afficher si pas connecte, sinon rediriger - a continuer / revoir)
  * voir useContext (quand fini mettre dans dossier pages) ?
+ * On laisse en fonction et pas en classe pour utiliser les hooks car je ne sais pas faire sans pour l'instant
  */
 export default function Welcome() {
+
     const history = useHistory();
 
     const routeChange = () =>{
@@ -51,12 +53,10 @@ export default function Welcome() {
                     <li>darbib</li>
                     <li>macrespo</li>
                     <button id="play-button-1" onClick={routeChange} className="detalii">Play !</button>
-
                     <br />
                     <br />
-                    {/*
                     <pre>{JSON.stringify(user, null, 2).length > 4 ? JSON.stringify(user, null, 2) : ""}</pre>
-                    { user ? (<button onClick={ () => setUser(null)}>logout</button>) :
+                    {/*{ user ? (<button onClick={ () => setUser(null)}>logout</button>) :
                         (<button onClick={ async () =>
                         {
                             const user = await login();
@@ -64,9 +64,8 @@ export default function Welcome() {
                         }
                         }>
                         login
-                    </button>)
-                    }
-                */}
+                    </button>
+                    }*/}
                 </ul>
             </div>
             <br></br>
@@ -79,69 +78,62 @@ export default function Welcome() {
     )
 }
 
-//Tentative pour transformer en classe infructueuse pour l'instant
+    //interface WelcomeProps {
+    // }
 
-// interface WelcomeProps {
-//     history?: Object
-//     navigation?: NavigationScreenProp<NavigationState, NavigationParams>;
-// }
+    // interface WelcomeState {
+    // }
 
-// interface WelcomeState {
-//     history?: Object
-// }
+    // export default class Welcome extends React.Component<WelcomeProps, WelcomeState>
+    // {
+    //     render ()
+    //     {
+    //         return (
+    //             <>
+    //             <Header />
+    //             <div id="welcome--video-div-main">
+    //                 <div id="authors">
+    //                     <ul id="authors--ul">
+    //                     <TypeAnimation
+    //                         cursor={true}
+    //                         sequence={['Authors :', 5000, '']}
+    //                         wrapper="figcaption"
+    //                         repeat="Infitiny"
+    //                     />
+    //                     <br></br>
+    //                         <li>bahaas</li>
+    //                         <li>rbourgea</li>
+    //                         <li>malatini</li>
+    //                         <li>darbib</li>
+    //                         <li>macrespo</li>
+    //                         <button id="play-button-1"
+    //                              onClick={() => {
+    //                                 //navigation.navigate('/auth');
+    //                                 window.top.location = "/auth/"
+    //                               }}
+    //                             className="detalii">Play !</button>
 
-// export default class Welcome extends React.Component<WelcomeProps, WelcomeState>
-// {
-//     //const {user, setUser} = useContext(UserContext);
-
-//     render ()
-//     {
-//         //const { navigation } = this.props;
-//         return (
-//             <>
-//             <Header />
-//             <div id="welcome--video-div-main">
-//                 <div id="authors">
-//                     <ul id="authors--ul">
-//                     <TypeAnimation
-//                         cursor={true}
-//                         sequence={['Authors :', 5000, '']}
-//                         wrapper="figcaption"
-//                         repeat="Infitiny"
-//                     />
-//                     <br></br>
-//                         <li>bahaas</li>
-//                         <li>rbourgea</li>
-//                         <li>malatini</li>
-//                         <li>darbib</li>
-//                         <li>macrespo</li>
-//                         <button id="play-button-1"
-//                              onClick={() => {
-//                                 //navigation.navigate('/auth');
-//                               }}
-//                             className="detalii">Play !</button>
-
-//                         <br />
-//                         <br />
-//                         <pre>{JSON.stringify(user, null, 2).length > 4 ? JSON.stringify(user, null, 2) : ""}</pre>
-//                         { user ? (<button onClick={ () => setUser(null)}>logout</button>) :
-//                             (<button onClick={ async () =>
-//                             {
-//                                 const user = await login();
-//                                 setUser(user);
-//                             }
-//                             }>
-//                             login
-//                         </button>)
-//                         }
-//                     </ul>
-//                 </div>
-//                 <br></br>
-//                     <div  id="welcome--video-div">
-//                         {/*<video autoPlay loop muted src={video1} id="welcome--video-video" height="400px"/>*/}
-//                     </div>
-//                 <Footer />
-//             </div>
-//             </>
-//      )
-// }}
+    //                         <br />
+    //                         <br />
+    //                         {/*<pre>{JSON.stringify(user, null, 2).length > 4 ? JSON.stringify(user, null, 2) : ""}</pre>
+    //                         { user ? (<button onClick={ () => setUser(null)}>logout</button>) :
+    //                             (<button onClick={ async () =>
+    //                             {
+    //                                 const user = await login();
+    //                                 setUser(user);
+    //                             }
+    //                             }>
+    //                             login
+    //                         </button>)
+    //                         }*/}
+    //                     </ul>
+    //                 </div>
+    //                 <br></br>
+    //                     <div  id="welcome--video-div">
+    //                         <video autoPlay loop muted src={video1} id="welcome--video-video" height="400px"/>
+    //                     </div>
+    //                 <Footer />
+    //             </div>
+    //             </>
+    //      )
+    // }}
