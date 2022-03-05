@@ -10,12 +10,12 @@ import axios from "axios";
 
 import Dashboard from "../../Dashboard/Dashboard"
 
+import myAxios from "../../Axios/Axios"
+
 interface LoginProps {
-  //voir si la personne est deja connectee ?
 }
 
 interface LoginState {
-  //voir si la personne est deja connectee ?
   email?: string,
   password?: string,
   isLogged?: boolean
@@ -26,7 +26,7 @@ export default class Login extends React.Component<LoginProps, LoginState>
         constructor(props: LoginProps)
         {
             super(props);
-            
+
             //Init state
             this.state = {
               email: "",
@@ -37,55 +37,19 @@ export default class Login extends React.Component<LoginProps, LoginState>
 
         submit=(event)=>
         {
-            event.preventDefault();
-            axios.defaults.baseURL = 'http://localhost:3000/';
-            axios.defaults.headers.post['Content-Type'] ='*';
-            axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
-
-            const bod = {
-                email: this.state.email,
-                password: this.state.password,
-            }
-
-            const headers = {
-                'Content-Type': 'application/json'
-            };
-
-            let toast = new ToastAlerts(null);
-            console.log(bod);
-            let self = this;
-            let res = axios.post('http://localhost:3000/api/auth/log-in/', bod, {headers})
-            .then(res=>{
-                console.log(res.data);
-                console.log(res.status);
-                console.log(res);
-                if (res.status == 200)
-                {
-                    console.log(res);
-                    this.setState({isLogged: true});
-                    console.log(this.state.isLogged);
-                    window.top.location = "/user/";
-                }
-                else
-                {
-                    toast.notifyDanger('Oops ! An error happened');
-                }
+            let ax = new myAxios(
+            {
+              method: "GET",
+              ressource: "/user/:id",
+              email: this.state.email,
+              password: this.state.password
             })
-            .catch(function (error) {
-              console.log(error);
-              toast.notifyDanger('Oops ! An error happened');
-            })
+
+            let res = ax.login();
         }
 
         render()
         {
-          // if (this.state.isLogged)
-          // {
-          //   // redirect to home if signed up
-          //   return <Redirect to = {{ pathname: "/dashbard" }} />;
-          // }
-          //else
-          //{
             return (
                 <div>
                     <h3 id="se-connecter">Se connecter</h3>
@@ -123,9 +87,7 @@ export default class Login extends React.Component<LoginProps, LoginState>
                 onClick={this.submit}
                 >
                 Me connecter
-
               </button>
-
           </div>
         </div>
     );

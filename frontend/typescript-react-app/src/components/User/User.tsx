@@ -36,7 +36,6 @@ export default class User extends React.Component<UserProps, MyState>
         count: 0,
         date: new Date(),
         avatar: "https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg",
-         //TODO: Checker connection ou pas
          status: "Online",
          totalGames: 0,
          totalWins: 0,

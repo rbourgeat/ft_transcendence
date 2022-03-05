@@ -50,12 +50,13 @@ export default function Welcome() {
                     <li>darbib</li>
                     <li>macrespo</li>
                     <button id="play-button-1" onClick={routeChange} className="detalii">Play !</button>
-                    
+
                     <br />
                     <br />
+                    {/*
                     <pre>{JSON.stringify(user, null, 2).length > 4 ? JSON.stringify(user, null, 2) : ""}</pre>
-                    { user ? (<button onClick={ () => setUser(null)}>logout</button>) : 
-                        (<button onClick={ async () => 
+                    { user ? (<button onClick={ () => setUser(null)}>logout</button>) :
+                        (<button onClick={ async () =>
                         {
                             const user = await login();
                             setUser(user);
@@ -64,6 +65,7 @@ export default function Welcome() {
                         login
                     </button>)
                     }
+                */}
                 </ul>
             </div>
             <br></br>
@@ -76,7 +78,7 @@ export default function Welcome() {
     )
 }
 
-//Tentative pour transformer en classe infructueuse pour l'instant 
+//Tentative pour transformer en classe infructueuse pour l'instant
 
 // interface WelcomeProps {
 //     history?: Object
@@ -117,12 +119,12 @@ export default function Welcome() {
 //                                 //navigation.navigate('/auth');
 //                               }}
 //                             className="detalii">Play !</button>
-                        
+
 //                         <br />
 //                         <br />
 //                         <pre>{JSON.stringify(user, null, 2).length > 4 ? JSON.stringify(user, null, 2) : ""}</pre>
-//                         { user ? (<button onClick={ () => setUser(null)}>logout</button>) : 
-//                             (<button onClick={ async () => 
+//                         { user ? (<button onClick={ () => setUser(null)}>logout</button>) :
+//                             (<button onClick={ async () =>
 //                             {
 //                                 const user = await login();
 //                                 setUser(user);
