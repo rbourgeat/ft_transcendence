@@ -44,49 +44,95 @@ export class UserEvent {
 
     @OnEvent('achievement.friend')
     handleAchievementFriend(user: User) {
-        if (user.friends.length == 1)
-            this.saveAchievements(user, "AddFriend");
+        if (user.friends.length == 1) {
+            var login = user.login;
+            user.achievements.push("AddFriend");
+            this.userRepository.update({ login }, {
+                achievements: user.achievements
+            });
+            console.log('User ' + login + ' unlocked the friend achievement');
+        }
     }
 
     @OnEvent('achievement.42')
     handleAchievement42(user: User) {
-        if (user.login == "norminet")
-            this.saveAchievements(user, "42");
+        if (user.login == "norminet") {
+            var login = user.login;
+            user.achievements.push("42");
+            this.userRepository.update({ login }, {
+                achievements: user.achievements
+            });
+            console.log('User ' + login + ' unlocked the 42 achievement');
+        }
     }
 
     @OnEvent('achievement.1000Game')
     handleAchievement1000Game(user: User) {
-        if (user.total_games == 1000)
-            this.saveAchievements(user, "1000Game");
+        if (user.total_games == 1000) {
+            var login = user.login;
+            user.achievements.push("1000Game");
+            this.userRepository.update({ login }, {
+                achievements: user.achievements
+            });
+            console.log('User ' + login + ' unlocked the 1000Game achievement');
+        }
     }
+
 
     @OnEvent('achievement.avatarUpload')
     handleAchievementAvatarUpload(user: User) {
         console.log('TODO achievement uploadavatar event');
+        /*
+        if (user.total_games == 1000) {
+            var login = user.login;
+            user.achievements.push("AvatarUpload");
+            this.userRepository.update({ login }, {
+                achievements: user.achievements
+            });
+            console.log('User ' + login + ' unlocked the AvatarUpload achievement');
+        }
+        */
     }
 
     @OnEvent('achievement.duellist')
     handleAchievementDuellist(user: User) {
         console.log('TODO achievement duellist event');
+        /*
+        if (user.total_games == 1000) {
+            var login = user.login;
+            user.achievements.push("Duellist");
+            this.userRepository.update({ login }, {
+                achievements: user.achievements
+            });
+            console.log('User ' + login + ' unlocked the Duellist achievement');
+        }
+        */
     }
 
     @OnEvent('achievement.rankLadder')
     handleAchievementRankLadder(user: User) {
         console.log('TODO achievement rankladder event');
+        /*
+        if (user.total_games == 1000) {
+            var login = user.login;
+            user.achievements.push("RankLadder");
+            this.userRepository.update({ login }, {
+                achievements: user.achievements
+            });
+            console.log('User ' + login + ' unlocked the RankLadder achievement');
+        }
+        */
     }
 
     @OnEvent('achievement.firstGame')
     handleAchievementFirstGame(user: User) {
-        if (user.total_games == 1)
-            this.saveAchievements(user, "FirstGame");
-    }
-
-    saveAchievements(user: User, achievementTitle: string) {
-        var login = user.login;
-        user.achievements.push(achievementTitle);
-        this.userRepository.update({ login }, {
-            achievements: user.achievements
-        });
-        console.log('User ' + login + ' unlocked the' + achievementTitle + 'achievement');
+        if (user.total_games == 1) {
+            var login = user.login;
+            user.achievements.push("FirstGame");
+            this.userRepository.update({ login }, {
+                achievements: user.achievements
+            });
+            console.log('User ' + login + ' unlocked the FirstGame achievement');
+        }
     }
 }

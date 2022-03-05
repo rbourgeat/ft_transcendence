@@ -12,7 +12,6 @@ import Dashboard from "../../Dashboard/Dashboard"
 
 class Login extends React.Component
 {
-        //pas exactement comme il faudrait mais j'ai pas reussi a faire autrement
         state =
         {
             email: "",
@@ -23,14 +22,6 @@ class Login extends React.Component
         {
             super(props);
         }
-
-        // const history = useHistory();
-        //
-        // const routeChange = () =>{
-        //   let path = `/auth`;
-        //   history.push(path);
-        // }
-
 
         submit=(event)=>{
             event.preventDefault();
@@ -53,28 +44,25 @@ class Login extends React.Component
             let res = axios.post('http://localhost:3000/api/auth/log-in/', bod, {headers})
             .then(res=>{
                 console.log(res.data);
-                console.log(res.status)
+                console.log(res.status);
+                console.log(res);
                 if (res.status == 200)
                 {
-                    //toast.notifySuccess('You are log in, redirection in progress...');
+                    console.log(res);
                     this.setState({isLogged: true});
                     console.log(this.state.isLogged);
-                    window.top.location = "/dashboard/";
-                    //this.routeChange();
+                    window.top.location = "/user/";
                 }
                 else
                 {
                     toast.notifyDanger('Oops ! An error happened');
-                    //return ;
                 }
-                //this.routeChange();
             })
             .catch(function (error) {
               console.log(error);
               toast.notifyDanger('Oops ! An error happened');
             })
         }
-      //}
 
         render()
         {

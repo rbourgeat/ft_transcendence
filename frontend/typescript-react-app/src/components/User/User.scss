@@ -1,0 +1,37 @@
+@use "../../variables";
+
+#user--time {
+  color: white !important;
+}
+
+#bonjour--user {
+  margin-top: 35px !important;
+}
+
+#avatar-id {
+  border-radius: 50%;
+  margin-top: 25px;
+  border: 0.1rem solid black;
+  // margin-bottom: 20px;
+}
+
+#user--div--info {
+  color: white !important;
+}
+
+.user--stats > * {
+  color: black !important;
+  text-align: left !important;
+  font-family: variables.$basic-font;
+  font-weight: variables.$bold;
+}
+
+.span--stats {
+  color: black !important;
+  //text-align: right !important;
+}
+.user--stats {
+  padding: 15px !important;
+  background-color: white !important;
+  border-radius: variables.$border-radius-big;
+}

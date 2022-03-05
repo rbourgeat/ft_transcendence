@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useContext } from 'react';
 import './Welcome.scss';
 import '../App/App.scss';
 import '../../index.scss';
@@ -8,22 +8,25 @@ import Header from "../Header/Header";
 import video1 from "../../images/pong-demo.mp4";
 import TypeAnimation from 'react-type-animation';
 import { Redirect, useHistory, Link } from 'react-router-dom'
-//import { useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
-import Media from 'react-media'
+import Media from 'react-media';
+
+import { UserContext } from "../App/UserContext";
+import { login } from "./Login";
 
 export default function Welcome() {
-
-    // const routeChange = () => {
-    //     return (<Redirect to="/auth" />)
-    // }
-
     const history = useHistory();
 
     const routeChange = () =>{
       let path = `/auth`;
       history.push(path);
     }
+
+    // const [cookies, setCookie] = useCookies(["name"]);
+    // const [name, setName] = useState("");
+
+    const {user, setUser} = useContext(UserContext);
 
     return (
         <>
@@ -44,6 +47,21 @@ export default function Welcome() {
                     <li>darbib</li>
                     <li>macrespo</li>
                     <button id="play-button-1" onClick={routeChange} className="detalii">Play !</button>
+                    
+                    <br />
+                    <br />
+                    {/* On va utiliser context pour l'instant pour bloquer l'affichage si la personne n'est pas connectee */}
+                    <pre>{JSON.stringify(user, null, 2).length > 4 ? JSON.stringify(user, null, 2) : ""}</pre>
+                    { user ? (<button onClick={ () => setUser(null)}>logout</button>) : 
+                        (<button onClick={ async () => 
+                        {
+                            const user = await login();
+                            setUser(user);
+                        }
+                        }>
+                        login
+                    </button>)
+                    }
                 </ul>
             </div>
             <br></br>
