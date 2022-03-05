@@ -1,18 +1,17 @@
 import React from 'react';
 import './Header.scss';
 
+/**
+ * @malatini petit composant Header plus utilise, probablement a supprimer
+ */
 export default function Header() {
     return (
         <div id="header">
-            <nav id="header--nav" /*className="navbar navbar-light bg-light"*/>
+            <nav id="header--nav">
                 <div className="container-fluid">
-                    {/* TODO faire une regle media queries ici */}
-                    {/* <a className="navbar-brand" href="#">
-                        <img src="" alt="" width="30" height="24" />
-                    </a> */}
                     FT_TRANSCENDENCE
                 </div>
-                </nav>     
+            </nav>
         </div>
     )
 }

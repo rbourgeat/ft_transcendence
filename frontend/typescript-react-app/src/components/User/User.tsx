@@ -2,11 +2,8 @@ import React, { useState, useEffect} from 'react';
 import Nav from "../Nav/Nav";
 import './User.scss';
 import axios from 'axios';
-import MyAxios from '../Axios/Axios';
+import MyAxios from '../Utils/Axios/Axios';
 import { ToastContainer, toast } from 'react-toastify';
-
-//import { Link } from 'react-router-dom';
-//creer un user avec le contexte de la connection?
 
 //On va mettre en props ce qu on va utiliser pour creer le components et en state ce qui doit etre modifie
 export interface UserProps {
@@ -33,9 +30,12 @@ export interface MyState {
   username?: string
 };
 
+/**
+ * @malatini
+ * Page (et sous composants à faire) du User / Profile
+ */
 export default class User extends React.Component<UserProps, MyState>
 {
-
     constructor(props: UserProps)
     {
       super(props);
@@ -54,45 +54,20 @@ export default class User extends React.Component<UserProps, MyState>
       }
     }
 
-    //On va modifier le state
+    //TODO: a reprendre
     post_avatar=(event) =>
     {
-      //if (this.props.username && this.props.username != "null")
-      //{
         let username = this.state.username;
         axios.defaults.baseURL = 'http://localhost:3000/';
         axios.defaults.headers.get['Content-Type'] ='*';
         axios.defaults.headers.get['Access-Control-Allow-Origin'] = '*';
         let url = "http://localhost:3000/api/user/".concat(username);
-        //+ this.props.username;
         console.log(url);
         let ax = new MyAxios({});
         let avatar: string;
         avatar = ax.get_avatar(url);
-        //return (avatar);
-        //console.log(res);
-      //}
     }
 
-    //get_avatar(): string
-    //{
-    //  //if (this.props.username && this.props.username != "null")
-    //  //{
-    //    console.log("get avatar called");
-    //    let username = this.state.username;
-    //    axios.defaults.baseURL = 'http://localhost:3000/';
-    //    axios.defaults.headers.get['Content-Type'] ='*';
-    //    axios.defaults.headers.get['Access-Control-Allow-Origin'] = '*';
-    //   let url = "http://localhost:3000/api/user/".concat(username);
-    //    //+ this.props.username;
-    //    console.log(url);
-    //    let ax = new MyAxios({});
-    //    let avatar: string = ax.get_avatar(url)!;
-    //    console.log(avatar);
-    //    return (avatar);
-    //    //console.log(res);
-    //  //}
-    //}
 
   //il va falloir verifier que la valeur des props sont a jours
   render() {
@@ -157,3 +132,24 @@ export default class User extends React.Component<UserProps, MyState>
   }
 }
 // export default User;
+
+//brouillon a voir si besoin reprendre
+   //get_avatar(): string
+    //{
+    //  //if (this.props.username && this.props.username != "null")
+    //  //{
+    //    console.log("get avatar called");
+    //    let username = this.state.username;
+    //    axios.defaults.baseURL = 'http://localhost:3000/';
+    //    axios.defaults.headers.get['Content-Type'] ='*';
+    //    axios.defaults.headers.get['Access-Control-Allow-Origin'] = '*';
+    //   let url = "http://localhost:3000/api/user/".concat(username);
+    //    //+ this.props.username;
+    //    console.log(url);
+    //    let ax = new MyAxios({});
+    //    let avatar: string = ax.get_avatar(url)!;
+    //    console.log(avatar);
+    //    return (avatar);
+    //    //console.log(res);
+    //  //}
+    //}

@@ -1,6 +1,4 @@
-import React from 'react';
 import './Dashboard.scss';
-
 import Nav from '../Nav/Nav'
 import MatchHistory from '../MatchHistory/MatchHistory';
 import Badge from './Badge/Badge';
@@ -8,8 +6,10 @@ import Footer from "../Footer/Footer"
 import { PieChart } from 'react-minimal-pie-chart';
 import Media from 'react-media'
 
+/**
+ * @malatini page de Dashboard a améliorer
+ */
 export default function Dashboard() {
-  //Condition si la personne est connectee ou pas
     return (
         <div id="dashboard">
             <Nav />
@@ -46,7 +46,6 @@ export default function Dashboard() {
                     <Footer />
             </div>
             </div>
-
         </div>
     )
 }

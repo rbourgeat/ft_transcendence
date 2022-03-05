@@ -7,6 +7,7 @@ class ToastAlerts extends React.Component
     constructor(pros)
     {
         super(pros);
+        this.state = {}
     }
 
     notifyDanger(Param: string)

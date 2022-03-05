@@ -1,5 +1,9 @@
 import config from "./config"
 
+/**
+ * @malatini
+ * suivi d'un tutoriel mais pas encore utilisé
+ */
 const DEFAULT_NAMESPACE = config.defaults.namespace;
 
 const info = (message: any, namespace?: string) => {

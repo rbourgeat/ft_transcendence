@@ -1,23 +1,24 @@
-import React, { useState, useContext, Component } from 'react';
+import React, { useState, useContext} from 'react';
 
 import './Welcome.scss';
 import '../App/App.scss';
 import '../../index.scss';
-
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
 import video1 from "../../public/pong-demo.mp4";
+
 import TypeAnimation from 'react-type-animation';
-import { Redirect, useHistory, Link, withRoute, useNavigate, withRouter} from 'react-router-dom'
-import PropTypes from "prop-types";
-import { useCookies } from "react-cookie";
+import { useHistory } from 'react-router-dom'
 import Media from 'react-media';
 import { UserContext } from "../App/UserContext";
 import { login } from "./Login";
+import { useCookies } from "react-cookie";
 
-
-
-
+/**
+ * @malatini
+ * page de welcome (afficher si pas connecte, sinon rediriger - a continuer / revoir)
+ * voir useContext (quand fini mettre dans dossier pages) ?
+ */
 export default function Welcome() {
     const history = useHistory();
 

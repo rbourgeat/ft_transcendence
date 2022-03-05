@@ -5,11 +5,14 @@ import Nav from '../Nav/Nav';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 
+/**
+ * @malatini
+ * Préparation en cours du composant pour afficher la liste d'amis (a revoir)
+ */
 export default function Friends() {
     return (
         <div id="friends">
-            {/* <Header /> */}
-            <Nav /> 
+            <Nav />
             <div className="container">
             <h1>Friends</h1>
                 <br/>
@@ -22,7 +25,6 @@ export default function Friends() {
                     <div className="col"><span>Games</span></div>
                     <div className="col"><span>W/L</span></div>
                 </div>
-                {/* On va afficher jusqu a 10 amis ? */}
             </div>
             <Footer />
         </div>

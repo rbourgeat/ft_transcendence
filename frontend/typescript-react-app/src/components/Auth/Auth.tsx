@@ -5,24 +5,12 @@ import Header from "../Header/Header";
 import Login from "./Login/Login"
 import Signup from "./Signup/Signup"
 
-// import { useNavigate } from "react-router-dom";
-
-
+/**
+ * @malatini
+ * Page de connexion / register / Auth42.
+ * TODO: gérer auth42, remettre en place le système d'afficher/cache les mots de passes
+ */
 export default function Auth() {
-
-    // let navigate = useNavigate();
-    // const routeChange = () => {
-    //     let path = `/dashboard`;
-    //     navigate(path);
-    // };
-
-    // const [showPass, setshowPass] = useState(false);
-    // const [showPassConfirm, setshowPassConfirm] = useState(false);
-    // const [showPassBis, setshowPassBis] = useState(false);
-
-    //Confetti
-    // const { width, height } = useWindowSize();
-
     return (
         <>
             <Header />
@@ -31,7 +19,7 @@ export default function Auth() {
                     <div id="auth--form1" >
                         <div id="form--auth1" className="forms">
                             <h2>Bienvenue ! </h2>
-                            <p>Pour jouer, vous devez vous authentifier 🏓</p>
+                            <p>Pour jouer, vous devez vous authentifier 🏓 </p>
                             <div id="formAuth42">
                                 <button
                                   type="submit"

@@ -1,14 +1,12 @@
 import React from 'react';
 import './Nav.scss';
-//import { useNavigate } from "react-router-dom";
+
+/**
+ * @malatini
+ * Notre navbar / menu, à continuer , à mettre en classe et pas en fonction, utilise window
+ */
 
 export default function Nav() {
-    // let navigate = useNavigate();
-    // const routeChange = () => {
-    //     //A changer en fonction du bouton clique
-    //     let path = `/channels`;
-    //     navigate(path);
-    // };
     return (
         <div id="nav">
             <nav className="navbar navbar-expand-lg navbar-dark bg-dark">

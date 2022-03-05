@@ -4,8 +4,12 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ToastAlerts from "../../Utils/ToastAlerts/ToastAlerts"
 import axios from "axios";
-import myAxios from "../../Axios/Axios"
+import myAxios from "../../Utils/Axios/Axios"
 
+/**
+ * @malatini
+ * Page Auth, permet de register un user (ajout dans la bdd, permettra de se connecter si OK)
+ */
 interface SignupProps {}
 
 interface SignupState {
