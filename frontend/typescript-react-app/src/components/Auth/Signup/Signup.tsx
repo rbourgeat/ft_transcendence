@@ -5,31 +5,38 @@ import 'react-toastify/dist/ReactToastify.css';
 import ToastAlerts from "../../Utils/ToastAlerts/ToastAlerts"
 
 import axios from "axios";
+import myAxios from "../../Axios/Axios"
 
-class Signup extends React.Component
+interface SignupProps {
+
+}
+
+interface SignupState {
+    username?: string,
+    email?: string,
+    password?: string,
+    password_conf?: string
+    /* Pour les boutons afficher mot de pase
+    open: bool,
+    open2: bool
+    */
+}
+
+class Signup extends React.Component<SignupProps, SignupState>
 {
-  state = {
-      username: "",
-      email: "",
-      password: "",
-      password_conf: "",
-      open: false,
-      open2: false
-  }
+    constructor(props: SignupProps)
+    {
+        super(props);
 
-  constructor(props)
-  {
-      super(props);
-      
-      //Initialisation state
-      this.state.username = "";
-      this.state.email = "";
-      this.state.password = "";
-      this.state.password_conf = "";
-      //this.state.open = false;
-      //this.state.open2 = false; 
-  }
+        this.state = {
+            username: "",
+            email: "",
+            password: "",
+            password_conf: ""
+        }
+    }
 
+    //Utile pour vider le formulaire quand on a cliqué sur le bouton
     resetName = function() {
       this.setState({
         email: '',
@@ -39,52 +46,63 @@ class Signup extends React.Component
       });
     }
 
-    submit=(event)=>{
-        event.preventDefault();
-        axios.defaults.baseURL = 'http://localhost:3000/';
-        axios.defaults.headers.post['Content-Type'] ='*';
-        axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
-
-        const bod = {
+    submit=(event)=>
+    {
+        //event.preventDefault();
+        let ax = new myAxios(
+        {
+            method: "POST",
+            ressource: "/user/auth",
             email: this.state.email,
-            login: this.state.username,
-            password:  this.state.password,
-            password_confirmation: this.state.password_conf
-        }
-
-        const headers = {
-            'Content-Type': 'application/json'
-        };
-
-        let toast = new ToastAlerts(null);
-        console.log(bod);
-
-        let res = axios.post('http://localhost:3000/api/auth/register/', bod, {headers}).then(res=>{
-            console.log(res.data);
-            console.log(res.status)
-
-            if (res.status == 201)
-            {
-              toast.notifySuccess('🦄 Yes! You are now registered ! You may log in.');
-            }
-            else
-            {
-              toast.notifyDanger('Oops ! An error happened');
-            }
-        }).catch((error) => {
-            console.log(error);
-            toast.notifyDanger('Oops ! An error happened');
+            username: this.state.username,
+            password: this.state.password,
+            password_conf: this.state.password_conf
         })
+
+        let res = ax.signup();
         this.resetName();
+
+    //    axios.defaults.baseURL = 'http://localhost:3000/';
+    //    axios.defaults.headers.post['Content-Type'] ='*';
+    //    axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+
+    //    const bod = {
+    //        email: this.state.email,
+    //        login: this.state.username,
+    //        password:  this.state.password,
+    //        password_confirmation: this.state.password_conf
+    //    }
+
+    //    const headers = {
+    //        'Content-Type': 'application/json'
+    //    };
+
+    //    let toast = new ToastAlerts(null);
+    //    console.log(bod);
+
+    //    let res = axios.post('http://localhost:3000/api/auth/register/', bod, {headers}).then(res=>{
+    //        console.log(res.data);
+    //        console.log(res.status)
+
+    //        if (res.status == 201)
+    //        {
+    //          toast.notifySuccess('🦄 Yes! You are now registered ! You may log in.');
+    //        }
+    //        else
+    //        {
+    //          toast.notifyDanger('Oops ! An error happened');
+    //        }
+    //    }).catch((error) => {
+    //        console.log(error);
+    //        toast.notifyDanger('Oops ! An error happened');
+    //    })
+    //    this.resetName();
     }
 
-    instance = axios.create({
-        baseURL: "http://localhost:3000/api"}
-    );
-
-    // [showPass: string, setshowPass: string] = useState(false);
-    // [showPassConfirm: string, setshowPassConfirm:string] = useState(false);
-    // [showPassBis: string, setshowPassBis: string] = useState(false);
+    //Laisser tomber ca a priori
+    //instance = axios.create({
+    //    baseURL: "http://localhost:3000/api"}
+    //);
 
     render() {
       return (

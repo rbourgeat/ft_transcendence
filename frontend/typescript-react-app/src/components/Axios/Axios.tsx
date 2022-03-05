@@ -7,6 +7,8 @@ interface AxiosProps {
     ressource?: string
     email?: string,
     password?: string,
+    password_conf?: string,
+    username?: string
    // isLogged?: boolean
 }
 
@@ -75,6 +77,45 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
             .catch(function (error) {
               console.log(error);
               toast.notifyDanger('Oops ! An error happened');
+            })
+    }
+
+    //TODO: revoir encryption du mot de passe
+    signup()
+    {
+            axios.defaults.baseURL = 'http://localhost:3000/';
+            axios.defaults.headers.post['Content-Type'] ='*';
+            axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+
+            const bod = {
+                email: this.state.email,
+                login: this.state.username,
+                password:  this.state.password,
+                password_confirmation: this.state.password_conf
+            }
+
+            const headers = {
+                'Content-Type': 'application/json'
+            };
+
+            let toast = new ToastAlerts(null);
+            console.log(bod);
+
+            let res = axios.post('http://localhost:3000/api/auth/register/', bod, {headers}).then(res=>{
+                console.log(res.data);
+                console.log(res.status)
+
+                if (res.status == 201)
+                {
+                toast.notifySuccess('🦄 Yes! You are now registered ! You may log in.');
+                }
+                else
+                {
+                toast.notifyDanger('Oops ! An error happened');
+                }
+            }).catch((error) => {
+                console.log(error);
+                toast.notifyDanger('Oops ! An error happened');
             })
     }
 }
