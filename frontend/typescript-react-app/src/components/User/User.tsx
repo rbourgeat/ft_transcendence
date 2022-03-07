@@ -10,7 +10,7 @@ export interface UserProps {
   username?: string,
   email?: string,
   password?: string,
-  password_conf?: string
+  password_conf?: string,
 }
 
 export interface MyState {
@@ -42,6 +42,7 @@ export default class User extends React.Component<UserProps, MyState>
       this.state = {
         count: 0,
         date: new Date(),
+        //Attention ca doit etre en accord avec la bdd
         avatar: "https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg",
          status: "Online",
          totalGames: 0,
@@ -54,23 +55,68 @@ export default class User extends React.Component<UserProps, MyState>
       }
     }
 
-    //TODO: a reprendre
-    post_avatar=(event) =>
+    //brouillon a voir si besoin reprendre
+   get_avatar(): string
     {
-        let username = this.state.username;
-        axios.defaults.baseURL = 'http://localhost:3000/';
-        axios.defaults.headers.get['Content-Type'] ='*';
-        axios.defaults.headers.get['Access-Control-Allow-Origin'] = '*';
-        let url = "http://localhost:3000/api/user/".concat(username);
-        console.log(url);
-        let ax = new MyAxios({});
-        let avatar: string;
-        avatar = ax.get_avatar(url);
+      //console.log("get avatar called");
+      let username = this.state.username;
+      axios.defaults.baseURL = 'http://localhost:3000/';
+      axios.defaults.headers.get['Content-Type'] ='*';
+      axios.defaults.headers.get['Access-Control-Allow-Origin'] = '*';
+      let url = "http://localhost:3000/api/user/".concat(username);
+      console.log(url);
+      let ax = new MyAxios({});
+      let avatar: string = ax.get_avatar(url)!;
+      console.log(avatar);
+      return (avatar);
+    }
+
+    //TODO: a reprendre
+    //post_avatar=(event) =>
+    //{
+    //    let username = this.state.username;
+    //    axios.defaults.baseURL = 'http://localhost:3000/';
+    //    axios.defaults.headers.get['Content-Type'] ='*';
+    //    axios.defaults.headers.get['Access-Control-Allow-Origin'] = '*';
+    //    let url = "http://localhost:3000/api/user/".concat(username);
+    //    console.log(url);
+    //    let ax = new MyAxios({});
+    //    let avatar: string;
+    //    avatar = ax.get_avatar(url);
+    //}
+
+    edit_avatar()
+    {
+      //let path: string  = "/user/" + this.props.username + "/avatar";
+      //TODO: revoir le design de ma classe ?
+      let myAx = new MyAxios({
+        method: "POST",
+        ressource: "/user/:id/avatar",
+        email: this.props.email,
+        password: this.props.password
+      });
+
+      //this.setState({avatar: })
+      //let res = myAx.post_avatar(this.state.avatar);
+    }
+
+    imageHandler = (e: any) => {
+      const reader = new FileReader();
+      reader.onload = ()  => {
+        if (reader.readyState === 2)
+        {
+          this.setState({avatar: reader.result as string});
+        }
+      }
+      reader.readAsDataURL(e.target.files[0]);
+      this.edit_avatar();
     }
 
 
   //il va falloir verifier que la valeur des props sont a jours
   render() {
+
+    //const {avatar} = this.state;
     return (
       <div id="user--div">
       <Nav />
@@ -84,18 +130,26 @@ export default class User extends React.Component<UserProps, MyState>
               <h2>Information</h2>
               <img
                 // src={this.props.avatar}
-                src={this.state.avatar}
+               // src={this.state.avatar}
+               src={this.state.avatar}
                 height="80"
                 alt="avatar"
                 id="avatar-id"
                 />
                 <br/>
                 <br/>
-                <button
-                  /*onClick={this.get_avatar}*/
+                {/*<button
                 >
                   Change avatar
-                </button>
+                </button>*/}
+                <div className="col-4 mx-auto text-center" id="input-div">
+                  <input type="file" name="image-upload" id="input--upload" accept="image/*" onChange={this.imageHandler}/>
+                    <div className="label">
+                    {/*<label htmlFor="input" id="label">
+                        <i className='material-icons'></i>
+                    </label>*/}
+                    </div>
+                  </div>
                 <ToastContainer
                                     position="top-right"
                                     autoClose={5000}
@@ -107,8 +161,6 @@ export default class User extends React.Component<UserProps, MyState>
                                     draggable
                                     pauseOnHover
                                 />
-                <br />
-                <br/>
                 <p>Total games : <span className="span--stats">{this.state.totalGames ? this.state.totalGames : 0}</span></p>
                 <p>Total wins : <span className="span--stats">{this.state.totalWins ? this.state.totalWins : 0}</span></p>
                 <p>Total loss : <span className="span--stats">{this.state.totalLoss ? this.state.totalLoss : 0}</span></p>
@@ -132,24 +184,3 @@ export default class User extends React.Component<UserProps, MyState>
   }
 }
 // export default User;
-
-//brouillon a voir si besoin reprendre
-   //get_avatar(): string
-    //{
-    //  //if (this.props.username && this.props.username != "null")
-    //  //{
-    //    console.log("get avatar called");
-    //    let username = this.state.username;
-    //    axios.defaults.baseURL = 'http://localhost:3000/';
-    //    axios.defaults.headers.get['Content-Type'] ='*';
-    //    axios.defaults.headers.get['Access-Control-Allow-Origin'] = '*';
-    //   let url = "http://localhost:3000/api/user/".concat(username);
-    //    //+ this.props.username;
-    //    console.log(url);
-    //    let ax = new MyAxios({});
-    //    let avatar: string = ax.get_avatar(url)!;
-    //    console.log(avatar);
-    //    return (avatar);
-    //    //console.log(res);
-    //  //}
-    //}

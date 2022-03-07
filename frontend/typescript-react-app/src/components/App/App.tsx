@@ -12,6 +12,7 @@ import Welcome from '../Welcome/Welcome';
 import NotFound from '../NotFound/NotFound';
 import Dashboard from '../Dashboard/Dashboard';
 import User from '../User/User';
+import Userfunc from '../User/Userfunc';
 import 'bootstrap/dist/css/bootstrap.css';
 import {UserContext} from './UserContext';
 import { useCookies } from "react-cookie";
@@ -41,8 +42,8 @@ function App() {
             <Dashboard />
           </Route>
           <Route path="/user">
-            {/*Revoir en fonction du contexte avec la connexion*/}
-            <User username="malatini" email="malatini@gmail.com" password="Babyalex2016" password_conf="Babyalex2016"/>
+            {/*Revoir en fonction du contexte avec la connexion */}
+            <Userfunc username="malatini" email="malatini@gmail.com" password="Babyalex2016" password_conf="Babyalex2016" />
           </Route>
           </UserContext.Provider>
         </Switch>

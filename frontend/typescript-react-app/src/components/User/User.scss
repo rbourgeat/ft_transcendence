@@ -34,3 +34,29 @@
   background-color: white !important;
   border-radius: variables.$border-radius-big;
 }
+
+#input {
+  border: 0.1rem solid black !important;
+  //text-align: center;
+}
+
+#input--upload {
+  //display: none;
+  cursor: pointer;
+}
+
+//.chooseFile {
+//  padding-left: 20px;
+//}
+
+//#label {
+//  border: 0.1rem solid black !important;
+//}
+
+//#input-div {
+//  border: 0.1rem solid red;
+//}
+
+//input[type='file'] {
+//  opacity:0
+//}
