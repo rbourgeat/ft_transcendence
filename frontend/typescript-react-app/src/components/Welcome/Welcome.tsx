@@ -24,7 +24,8 @@ export default function Welcome() {
 
     const history = useHistory();
 
-    const routeChange = () =>{
+    const routeChange = (e: any) =>{
+	  e.preventDefault();
       let path = `/auth`;
       history.push(path);
     }

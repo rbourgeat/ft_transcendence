@@ -36,8 +36,9 @@ export default class Login extends React.Component<LoginProps, LoginState>
             }
         }
 
-        submit=(event)=>
+        submit=(event: any)=>
         {
+		        event.preventDefault();
             let ax = new myAxios(
             {
               method: "GET",

@@ -1,4 +1,11 @@
-import React, { useState, useEffect, useContext, useMemo} from 'react';
+import React, { useState, useEffect} from 'react';
+
+//a voir
+import { createStore, combineReducers } from 'redux';
+
+import qs from "qs";
+import { createBrowserHistory } from "history";
+
 import Nav from "../Nav/Nav";
 import './User.scss';
 import axios from 'axios';
@@ -9,6 +16,7 @@ import { UserContext } from "../App/UserContext";
 //Pour l'upload de l'image
 import { Image } from 'react-konva';
 import useImage from 'use-image';
+import { Prev } from 'react-bootstrap/esm/PageItem';
 
 //const url = 'https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg';
 
@@ -39,13 +47,8 @@ export default function User(props:UserProps)
 	const [picture, setPicture] = useState(null);
   	const [imgData, setImgData] = useState("https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg");
 
-	const ava = useMemo( () =>
-		({picture, setPicture}), [picture, setPicture]);
-
-	const avat = useMemo( () =>
-		({imgData, setImgData}), [imgData, setImgData]);
-
 	  const onChangePicture = (e: any) => {
+		e.preventDefault();
 		if (e.target.files[0]) {
 		  console.log("picture: ", e.target.files);
 		  setPicture(e.target.files[0]);
@@ -56,6 +59,22 @@ export default function User(props:UserProps)
 		  reader.readAsDataURL(e.target.files[0]);
 		}
 	  }
+
+	  let name: string;
+	  let value: string;
+
+	  //setPicture((prev: any) => ({...prev, [name]: value}));
+	  //setImgData((prev: any) => ({...prev, [name]: value}));
+
+	  useEffect(() => { localStorage.setItem("user", JSON.stringify(imgData))
+	  ,[imgData]})
+
+	  useEffect(() => {
+		  const images = JSON.parse(localStorage.getItem("user"));
+		  if (imgData === "https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg")
+		  {
+			setImgData((prev: any) => ({...prev, ...images}));
+		  }}, []);
 
 	//let avatar = url;
     return (

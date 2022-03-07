@@ -47,9 +47,9 @@ class Signup extends React.Component<SignupProps, SignupState>
       });
     }
 
-    submit=(event)=>
+    submit=(event: any)=>
     {
-        //event.preventDefault();
+        event.preventDefault();
         let ax = new myAxios(
         {
             method: "POST",
