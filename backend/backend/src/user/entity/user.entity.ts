@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, CreateDateColumn, Column, Unique, ManyToOne, ManyToMany, JoinTable } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, CreateDateColumn, Column, Unique, ManyToOne, ManyToMany, JoinTable, OneToMany } from "typeorm";
 import { Game } from 'src/game/entity/game.entity'
 
 @Entity('user')
@@ -42,8 +42,8 @@ export class User {
     // @Column("simple-array", { nullable: true })
     // friends: string[];
 
-    @JoinTable()
-    @ManyToMany(() => User)
+    // @JoinTable()
+    @ManyToOne(() => User)
     friends: User[];
 
     // @ManyToOne(type => Game, { nullable: true })

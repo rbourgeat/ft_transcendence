@@ -10,12 +10,31 @@ export class Chat {
     createdAt?: Date;
 
     @JoinTable()
-    @ManyToMany(() => User, { nullable: false })
-    admin: User[];
+    @ManyToMany(() => User)
+    owner: User;
+
+    @JoinTable()
+    @ManyToMany(() => User)
+    admins: User[];
 
     @JoinTable()
     @ManyToMany(() => User)
     members: User[];
+
+    @Column()
+    public: boolean = true;
+
+    @JoinTable()
+    @ManyToMany(() => User)
+    blocked_users: User[];
+
+    @JoinTable()
+    @ManyToMany(() => User)
+    temp_ban: User[];
+
+    @JoinTable()
+    @ManyToMany(() => User)
+    temp_mute: User[];
 
     // @OneToMany(type => User, user => user.login, { nullable: true })
     // admin?: User;
@@ -27,6 +46,4 @@ export class Chat {
     // @Column({nullable: true})
     // messages: string[];
 
-
-    // passwords, channels, message
 }
