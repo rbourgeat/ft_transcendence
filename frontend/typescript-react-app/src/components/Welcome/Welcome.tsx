@@ -55,17 +55,18 @@ export default function Welcome() {
                     <button id="play-button-1" onClick={routeChange} className="detalii">Play !</button>
                     <br />
                     <br />
-                    <pre>{JSON.stringify(user, null, 2).length > 4 ? JSON.stringify(user, null, 2) : ""}</pre>
-                    {/*{ user ? (<button onClick={ () => setUser(null)}>logout</button>) :
+
+                    {/*<pre>{JSON.stringify(user, null, 2).length > 4 ? JSON.stringify(user, null, 2) : ""}</pre>
+                    { user ? (<button onClick={ () => setUser(null)}>logout</button>) :
                         (<button onClick={ async () =>
                         {
                             const user = await login();
                             setUser(user);
                         }
-                        }>
+                        }>)
                         login
                     </button>
-                    }*/}
+                        )}*/}
                 </ul>
             </div>
             <br></br>
@@ -77,63 +78,3 @@ export default function Welcome() {
         </>
     )
 }
-
-    //interface WelcomeProps {
-    // }
-
-    // interface WelcomeState {
-    // }
-
-    // export default class Welcome extends React.Component<WelcomeProps, WelcomeState>
-    // {
-    //     render ()
-    //     {
-    //         return (
-    //             <>
-    //             <Header />
-    //             <div id="welcome--video-div-main">
-    //                 <div id="authors">
-    //                     <ul id="authors--ul">
-    //                     <TypeAnimation
-    //                         cursor={true}
-    //                         sequence={['Authors :', 5000, '']}
-    //                         wrapper="figcaption"
-    //                         repeat="Infitiny"
-    //                     />
-    //                     <br></br>
-    //                         <li>bahaas</li>
-    //                         <li>rbourgea</li>
-    //                         <li>malatini</li>
-    //                         <li>darbib</li>
-    //                         <li>macrespo</li>
-    //                         <button id="play-button-1"
-    //                              onClick={() => {
-    //                                 //navigation.navigate('/auth');
-    //                                 window.top.location = "/auth/"
-    //                               }}
-    //                             className="detalii">Play !</button>
-
-    //                         <br />
-    //                         <br />
-    //                         {/*<pre>{JSON.stringify(user, null, 2).length > 4 ? JSON.stringify(user, null, 2) : ""}</pre>
-    //                         { user ? (<button onClick={ () => setUser(null)}>logout</button>) :
-    //                             (<button onClick={ async () =>
-    //                             {
-    //                                 const user = await login();
-    //                                 setUser(user);
-    //                             }
-    //                             }>
-    //                             login
-    //                         </button>)
-    //                         }*/}
-    //                     </ul>
-    //                 </div>
-    //                 <br></br>
-    //                     <div  id="welcome--video-div">
-    //                         <video autoPlay loop muted src={video1} id="welcome--video-video" height="400px"/>
-    //                     </div>
-    //                 <Footer />
-    //             </div>
-    //             </>
-    //      )
-    // }}

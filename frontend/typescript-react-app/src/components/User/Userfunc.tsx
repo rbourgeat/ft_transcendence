@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext} from 'react';
+import React, { useState, useEffect, useContext, useMemo} from 'react';
 import Nav from "../Nav/Nav";
 import './User.scss';
 import axios from 'axios';
@@ -10,7 +10,7 @@ import { UserContext } from "../App/UserContext";
 import { Image } from 'react-konva';
 import useImage from 'use-image';
 
-const url = 'https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg';
+//const url = 'https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg';
 
 export interface UserProps {
 	username?: string,
@@ -25,7 +25,7 @@ export interface UserProps {
   }
 
 User.defaultProps = {
-	avatar: "https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg",
+	//avatar: "https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg",
 	totalWin: 0,
 	totalGanes: 0,
 	totalLoss: 0,
@@ -35,8 +35,15 @@ User.defaultProps = {
 export default function User(props:UserProps)
 {
 
+	//Tuto stack overflow
 	const [picture, setPicture] = useState(null);
   	const [imgData, setImgData] = useState("https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg");
+
+	const ava = useMemo( () =>
+		({picture, setPicture}), [picture, setPicture]);
+
+	const avat = useMemo( () =>
+		({imgData, setImgData}), [imgData, setImgData]);
 
 	  const onChangePicture = (e: any) => {
 		if (e.target.files[0]) {
@@ -50,7 +57,7 @@ export default function User(props:UserProps)
 		}
 	  }
 
-	let avatar = url;
+	//let avatar = url;
     return (
       <div id="user--div">
       <Nav />
@@ -70,31 +77,10 @@ export default function User(props:UserProps)
                 <br/>
                 <br/>
                 <div className="col-4 mx-auto text-center" id="input-div">
-                  <input type="file" name="image-upload" id="input--upload" accept="image/*" onChange={onChangePicture}
-					//  (e) => {
-					//const reader = new FileReader();
-					//reader.onload = ()  => {
-					//  if (reader.readyState === 2)
-					//  {
-					//	  console.log("The state is ready");
-					//	  //this.setAvatar(reader.result as string);
-					//  }
-					//}
-				  	/>
+                  <input type="file" name="image-upload" id="input--upload" accept="image/*" onChange={onChangePicture}/>
                     <div className="label">
                     </div>
                   </div>
-                <ToastContainer
-                                    position="top-right"
-                                    autoClose={5000}
-                                    hideProgressBar={false}
-                                    newestOnTop={false}
-                                    closeOnClick
-                                    rtl={false}
-                                    pauseOnFocusLoss
-                                    draggable
-                                    pauseOnHover
-                                />
                 <p>Total games : <span className="span--stats">{props.totalGames ? props.totalGames : 0}</span></p>
                 <p>Total wins : <span className="span--stats">{props.totalWins ? props.totalWins : 0}</span></p>
                 <p>Total loss : <span className="span--stats">{props.totalLoss ? props.totalLoss : 0}</span></p>
