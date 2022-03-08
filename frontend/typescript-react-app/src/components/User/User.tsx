@@ -55,35 +55,20 @@ export default class User extends React.Component<UserProps, MyState>
       }
     }
 
-    //brouillon a voir si besoin reprendre
-   get_avatar(): string
+    // TODO: a reprendre
+    post_avatar=(event) =>
     {
-      //console.log("get avatar called");
-      let username = this.state.username;
-      axios.defaults.baseURL = 'http://localhost:3000/';
-      axios.defaults.headers.get['Content-Type'] ='*';
-      axios.defaults.headers.get['Access-Control-Allow-Origin'] = '*';
-      let url = "http://localhost:3000/api/user/".concat(username);
-      console.log(url);
-      let ax = new MyAxios({});
-      let avatar: string = ax.get_avatar(url)!;
-      console.log(avatar);
-      return (avatar);
-    }
 
-    //TODO: a reprendre
-    //post_avatar=(event) =>
-    //{
-    //    let username = this.state.username;
-    //    axios.defaults.baseURL = 'http://localhost:3000/';
-    //    axios.defaults.headers.get['Content-Type'] ='*';
-    //    axios.defaults.headers.get['Access-Control-Allow-Origin'] = '*';
-    //    let url = "http://localhost:3000/api/user/".concat(username);
-    //    console.log(url);
-    //    let ax = new MyAxios({});
-    //    let avatar: string;
-    //    avatar = ax.get_avatar(url);
-    //}
+        //axios.defaults.baseURL = 'http://localhost:3000/';
+        //axios.defaults.headers.get['Content-Type'] ='*';
+        //axios.defaults.headers.get['Access-Control-Allow-Origin'] = '*';
+        let username = this.state.username;
+        let url = "http://localhost:3000/api/user/".concat(username);
+        let ax = new MyAxios({});
+        //let avatar: string;
+        //ax.post_avatar(url);
+        //avatar = ax.post_avatar(url);
+    }
 
     edit_avatar()
     {
@@ -109,7 +94,7 @@ export default class User extends React.Component<UserProps, MyState>
         }
       }
       reader.readAsDataURL(e.target.files[0]);
-      this.edit_avatar();
+      //this.edit_avatar();
     }
 
 

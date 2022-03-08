@@ -45,7 +45,8 @@ export default function User(props:UserProps)
 
 	//Tuto stack overflow
 	const [picture, setPicture] = useState(null);
-  	const [imgData, setImgData] = useState("https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg");
+  	const [imgData, setImgData] = useState(null);
+
 
 	  const onChangePicture = (e: any) => {
 		e.preventDefault();
@@ -58,23 +59,43 @@ export default function User(props:UserProps)
 		  });
 		  reader.readAsDataURL(e.target.files[0]);
 		}
+		//On post la nouvelle image
+		let username = this.state.username;
+        let url = "http://localhost:3000/api/user/".concat(username);
+		let img = imgData;
+        let ax = new MyAxios({});
+		//ax.post_avatar(url);
 	  }
 
-	  let name: string;
-	  let value: string;
-
-	  //setPicture((prev: any) => ({...prev, [name]: value}));
-	  //setImgData((prev: any) => ({...prev, [name]: value}));
-
-	  useEffect(() => { localStorage.setItem("user", JSON.stringify(imgData))
-	  ,[imgData]})
-
-	  useEffect(() => {
-		  const images = JSON.parse(localStorage.getItem("user"));
-		  if (imgData === "https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg")
-		  {
-			setImgData((prev: any) => ({...prev, ...images}));
-		  }}, []);
+	const getImage = () => {
+		let username = this.state.username;
+		//axios.defaults.baseURL = 'http://localhost:3000/';
+		//axios.defaults.headers.get['Content-Type'] ='*';
+		//axios.defaults.headers.get['Access-Control-Allow-Origin'] = '*';
+		let url = "http://localhost:3000/api/user/".concat(username);
+		console.log(url);
+		let ax = new MyAxios({});
+		//let avatar: string = ax.get_avatar(url).
+		let result = axios.get(url).then(res => {
+				console.log(res.statusText);
+                if (res.statusText == "OK")
+                {
+                    const { data } = res;
+                    let test: any = JSON.parse(res.data.avatar);
+                    let avatar: string = ((data.avatar) as string);
+                    //return (this.state.avatar);
+					setImgData(avatar);
+                }
+				else
+				{
+					console.log("Error when getting avatar img");
+					setImgData("https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg" as string)
+				}
+	}).catch((error) => {
+		console.log("Error catched when getting avatar");
+		setImgData("https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg" as string)
+	})
+	}
 
 	//let avatar = url;
     return (
@@ -90,6 +111,7 @@ export default function User(props:UserProps)
               <img
                	src={imgData}
 			    height="80"
+				width="80"
                 alt="avatar"
                 id="avatar-id"
                 />

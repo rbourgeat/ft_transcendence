@@ -20,7 +20,7 @@ interface AxiosState {
 
 /**
  * @malatini
- * Couche d'abstraction sur les requetes axios pour pouvoir la réutiliser dans différents composants
+ * ! Attention je n ai pas supprime le fichier mais je travaille avec la version functional component
  */
 export default class MyAxios extends React.Component<AxiosProps, AxiosState>
 {
@@ -132,37 +132,37 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
             })
     }
 
-    //a reprendre quand ok pour user
-    get_avatar(url: string): string
-    {
-        axios.defaults.baseURL = 'http://localhost:3000/';
+    //Reprise directement dans la classe user pour l instant
+    //get_avatar(url: string): string
+    //{
+    //    axios.defaults.baseURL = 'http://localhost:3000/';
 
-        let toast = new ToastAlerts(null);
+    //    let toast = new ToastAlerts(null);
 
-        let res = axios.get(url)
-            .then(res=>
-            {
-                console.log(res.statusText);
-                if (res.statusText == "OK")
-                {
-                    const { data } = res;
-                    let test: any = JSON.parse(res.data.avatar);
-                    let avatar: string = ((data.avatar) as string);
-                    return (this.state.avatar);
-                }
-                else
-                {
-                    toast.notifyDanger('🥲 Avatar was not retrieved successfully');
-                    return ("https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg" as string);
-                }
-            }
-            )
-            .catch((error) => {
-                console.log("Catched error !");
-                return ("https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg");
-            })
-            return ("https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg" as string);
-    }
+    //    let res = axios.get(url)
+    //        .then(res=>
+    //        {
+    //            console.log(res.statusText);
+    //            if (res.statusText == "OK")
+    //            {
+    //                const { data } = res;
+    //                let test: any = JSON.parse(res.data.avatar);
+    //                let avatar: string = ((data.avatar) as string);
+    //                return (this.state.avatar);
+    //            }
+    //            else
+    //            {
+    //                //toast.notifyDanger('🥲 Avatar was not retrieved successfully');
+    //                return ("https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg" as string);
+    //            }
+    //        }
+    //        )
+    //        .catch((error) => {
+    //            //console.log("Catched error !");
+    //            return ("https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg");
+    //        })
+    //        return ("https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg" as string);
+    //}
 }
 
 //interface User {
