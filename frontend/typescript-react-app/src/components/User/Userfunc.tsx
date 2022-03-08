@@ -58,13 +58,48 @@ export default function User(props:UserProps)
 			setImgData(reader.result as string);
 		  });
 		  reader.readAsDataURL(e.target.files[0]);
-		}
+		  //const file = reader.result;
+		  const file = e.target.files[0];
+		  console.log("file is " + file);
+
+		  let username = props.username;
+			let url = "http://localhost:3000/api/user/".concat(username);
+			console.log("url is " + url);
+			//let img = imgData;
+			//let ax = new MyAxios({});
+			//ax.post_avatar(url);
+
+			//axios.defaults.baseURL = 'http://localhost:3000/';
+			axios.defaults.headers.post['Content-Type'] ='multipart/form-data';
+			axios.defaults.headers.post['Accept'] ='*/*';
+			axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+
+			//const bod = {
+			//	avatar: imgData,
+			//}
+
+			const headers = {
+				'Content-Type': 'multipart/form-data'
+			};
+
+			let res = axios.post(url, file, {headers}).then(res=>{
+				console.log(res.data);
+				console.log(res.status)
+				if (res.status == 201)
+				{
+					console.log("Yay ! Avatar updated")
+				}
+				else
+				{
+					console.log("Oops! Avatar not updated")
+				}
+			}).catch((error) => {
+				console.log("Catched error !");
+				console.log(error);
+				//return (null);
+			})
+			}
 		//On post la nouvelle image
-		let username = this.state.username;
-        let url = "http://localhost:3000/api/user/".concat(username);
-		let img = imgData;
-        let ax = new MyAxios({});
-		//ax.post_avatar(url);
 	  }
 
 	const getImage = () => {

@@ -5,6 +5,9 @@ import axios from 'axios';
 import MyAxios from '../Utils/Axios/Axios';
 import { ToastContainer, toast } from 'react-toastify';
 
+import FormData from "form-data"
+import fs, { appendFileSync } from "fs"
+
 //On va mettre en props ce qu on va utiliser pour creer le components et en state ce qui doit etre modifie
 export interface UserProps {
   username?: string,
@@ -55,7 +58,7 @@ export default class User extends React.Component<UserProps, MyState>
       }
     }
 
-    // TODO: a reprendre
+    // TODO: a supprimer ?
     post_avatar=(event) =>
     {
 
@@ -95,6 +98,19 @@ export default class User extends React.Component<UserProps, MyState>
       }
       reader.readAsDataURL(e.target.files[0]);
       //this.edit_avatar();
+      //const formData = new FormData();
+      //formData.append("avatar");
+
+      //POST de l image pour enregistrement dans la bdd
+      //axios.defaults.baseURL = 'http://localhost:3000/';
+      //axios.defaults.headers.post['Content-Type'] ='multipart/form-data';
+      //axios.defaults.headers.post['Accept'] ='*/*';
+      //axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+
+      //  const bod = {
+      //    avatar: imgData,
+      //}
+
     }
 
 
