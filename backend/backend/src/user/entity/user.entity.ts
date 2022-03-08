@@ -43,7 +43,7 @@ export class User {
     // friends: string[];
 
     // @JoinTable()
-    @ManyToOne(() => User)
+    @ManyToMany(() => User)
     friends: User[];
 
     // @ManyToOne(type => Game, { nullable: true })

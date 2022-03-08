@@ -45,10 +45,8 @@ export class UserService {
 	}
 
 	async addFriend(user: string, friend: string) {
-		var login = user;
-		const u = await this.userRepository.findOne({ login });
-		login = friend;
-		const f = await this.userRepository.findOne({ login });
+		const u = await this.userRepository.findOne({ where: { login: user }, relations: ["friends"] });
+		const f = await this.userRepository.findOne({ where: { login: friend } });
 		console.log("test1: " + u.friends)
 		if (!u.friends) {
 			u.friends = [];
@@ -57,9 +55,11 @@ export class UserService {
 		u.friends.push(f);
 		// this.userEvent.achievementFriend(u);
 		console.log("test3: " + u.friends)
-		return this.userRepository.update({ login }, {
+		var login = user;
+		this.userRepository.update({ login }, {
 		    friends: u.friends
 		});
+		// return this.userRepository.save(u);
 	}
 
 	async removeFriend(user: string, friend: string) {
