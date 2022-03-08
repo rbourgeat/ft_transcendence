@@ -11,8 +11,8 @@ import Auth from '../Auth/Auth';
 import Welcome from '../Welcome/Welcome';
 import NotFound from '../NotFound/NotFound';
 import Dashboard from '../Dashboard/Dashboard';
-import User from '../User/User';
-import Userfunc from '../User/Userfunc';
+import UserMain from '../User/UserMain';
+// import UserSub from '../User/UserSub';
 import 'bootstrap/dist/css/bootstrap.css';
 import {UserContext} from './UserContext';
 import { useCookies } from "react-cookie";
@@ -43,7 +43,7 @@ function App() {
           </Route>
           <Route path="/user">
             {/*Revoir en fonction du contexte avec la connexion */}
-            <Userfunc username="yaya" email="yaya@gmail.com" password="Babyalex2016" password_conf="Babyalex2016" />
+            <UserMain />
           </Route>
           </UserContext.Provider>
         </Switch>
