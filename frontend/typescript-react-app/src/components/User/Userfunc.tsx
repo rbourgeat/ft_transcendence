@@ -18,6 +18,10 @@ import { Image } from 'react-konva';
 import useImage from 'use-image';
 import { Prev } from 'react-bootstrap/esm/PageItem';
 
+//var fileupload = require("express-fileupload");
+
+import fs from "fs"
+
 //const url = 'https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg';
 
 export interface UserProps {
@@ -42,71 +46,10 @@ User.defaultProps = {
 
 export default function User(props:UserProps)
 {
+  	const [imgData, setImgData] = useState("https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg");
 
-	//Tuto stack overflow
-	const [picture, setPicture] = useState(null);
-  	const [imgData, setImgData] = useState(null);
-
-
-	  const onChangePicture = (e: any) => {
-		e.preventDefault();
-		if (e.target.files[0]) {
-		  console.log("picture: ", e.target.files);
-		  setPicture(e.target.files[0]);
-		  const reader = new FileReader();
-		  reader.addEventListener("load", () => {
-			setImgData(reader.result as string);
-		  });
-		  reader.readAsDataURL(e.target.files[0]);
-		  //const file = reader.result;
-		  const file = e.target.files[0];
-		  console.log("file is " + file);
-
-		  let username = props.username;
-			let url = "http://localhost:3000/api/user/".concat(username);
-			console.log("url is " + url);
-			//let img = imgData;
-			//let ax = new MyAxios({});
-			//ax.post_avatar(url);
-
-			//axios.defaults.baseURL = 'http://localhost:3000/';
-			axios.defaults.headers.post['Content-Type'] ='multipart/form-data';
-			axios.defaults.headers.post['Accept'] ='*/*';
-			axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
-
-			//const bod = {
-			//	avatar: imgData,
-			//}
-
-			const headers = {
-				'Content-Type': 'multipart/form-data'
-			};
-
-			let res = axios.post(url, file, {headers}).then(res=>{
-				console.log(res.data);
-				console.log(res.status)
-				if (res.status == 201)
-				{
-					console.log("Yay ! Avatar updated")
-				}
-				else
-				{
-					console.log("Oops! Avatar not updated")
-				}
-			}).catch((error) => {
-				console.log("Catched error !");
-				console.log(error);
-				//return (null);
-			})
-			}
-		//On post la nouvelle image
-	  }
-
-	const getImage = () => {
+	  const getImage = () => {
 		let username = this.state.username;
-		//axios.defaults.baseURL = 'http://localhost:3000/';
-		//axios.defaults.headers.get['Content-Type'] ='*';
-		//axios.defaults.headers.get['Access-Control-Allow-Origin'] = '*';
 		let url = "http://localhost:3000/api/user/".concat(username);
 		console.log(url);
 		let ax = new MyAxios({});
@@ -131,6 +74,64 @@ export default function User(props:UserProps)
 		setImgData("https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg" as string)
 	})
 	}
+
+	//const [imgData, setImgData] = useState(getImage);
+
+	  const onChangePicture = (e: any) => {
+		e.preventDefault();
+		if (e.target.files[0]) {
+		  //console.log("picture: ", e.target.files);
+		  //setPicture(e.target.files[0]);
+		  const reader = new FileReader();
+		  reader.addEventListener("load", () => {
+			setImgData(reader.result as string);
+		  });
+		  reader.readAsDataURL(e.target.files[0]);
+		  //let file: string = reader.result as string;
+
+		  console.log(e.target.files[0]);
+		  const file_name = e.target.files[0].name;
+		  //console.log(file_name);
+		  console.log("coucou");
+
+		  const file = e.target.files[0];
+		  //console.log("file is " + file);
+
+		  	let username = props.username;
+			let url = "http://localhost:3000/api/user/".concat(username).concat("/avatar/");
+			console.log("url is " + url);
+
+			axios.defaults.baseURL = 'http://localhost:3000/api/';
+			axios.defaults.headers.post['Content-Type'] ='multipart/form-data';
+			axios.defaults.headers.post['Accept'] ='*/*';
+			axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+
+			const headers = {
+				'Content-Type': 'multipart/form-data'
+			};
+
+			const formData = new FormData();
+			formData.append('avatar', file);
+			formData.append('type', 'file');
+
+			let res = axios.post(url, formData, {headers}).then(res=>{
+				console.log(res.data);
+				console.log(res.status)
+				if (res.status == 201)
+				{
+					console.log("Yay ! Avatar updated");
+				}
+				else
+				{
+					console.log("Oops! Avatar not updated");
+				}
+			}).catch((error) => {
+				console.log("Catched error !");
+				console.log(error);
+				return (null);
+			})
+			}
+	  }
 
 	//let avatar = url;
     return (

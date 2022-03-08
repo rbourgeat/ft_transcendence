@@ -43,7 +43,7 @@ function App() {
           </Route>
           <Route path="/user">
             {/*Revoir en fonction du contexte avec la connexion */}
-            <Userfunc username="malatini" email="malatini@gmail.com" password="Babyalex2016" password_conf="Babyalex2016" />
+            <Userfunc username="yaya" email="yaya@gmail.com" password="Babyalex2016" password_conf="Babyalex2016" />
           </Route>
           </UserContext.Provider>
         </Switch>
