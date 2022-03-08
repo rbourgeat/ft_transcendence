@@ -40,7 +40,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     //pour l instant on va faire un peu betement et on verra comment faire une facon plus smart plus tard
     login()
     {
-        axios.defaults.baseURL = 'http://localhost:3000/';
+        axios.defaults.baseURL = 'http://localhost:3000/api/';
         axios.defaults.headers.post['Content-Type'] ='*';
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 
@@ -68,7 +68,8 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
                 console.log(res.data);
                 console.log(res.status);
                 console.log(res);
-                if (res.status == 200)
+                //if (res.status == 200)
+                if (res.statusText == "OK")
                 {
                     console.log(res);
                     //TODO: utiliser plutot useContext (attention avec la classe ca risque d etre plus compliquee qu'avec la version)
@@ -90,7 +91,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     //TODO: revoir encryption du mot de passe
     signup()
     {
-            axios.defaults.baseURL = 'http://localhost:3000/';
+            axios.defaults.baseURL = 'http://localhost:3000/api/';
             axios.defaults.headers.post['Content-Type'] ='*';
             axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 
@@ -106,29 +107,29 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
             };
 
             let toast = new ToastAlerts(null);
-            console.log(bod);
+            //console.log(bod);
 
             let res = axios.post('http://localhost:3000/api/auth/register/', bod, {headers}).then(res=>{
-                console.log(res.data);
+                //console.log(res.data);
+                //console.log(res.status)
+                //console.log(res.statusText)
                 console.log(res.status)
                 if (res.status == 201)
                 {
-                    if (res.data.avatar)
-                    {
-                        toast.notifySuccess('🦄 Yes! You are now registered ! You may log in.');
-                        return (res.data);
-                    }
-
+                    toast.notifySuccess('🦄 Yes! You are now registered ! You may log in.');
+                    //return (res.data);
+                    //return (null);
                 }
                 else
                 {
-                    toast.notifyDanger('Oops ! An error happened');
-                    return (null);
+                    toast.notifyDanger('Oops ! An error happened during signup.');
+                    //return (null);
                 }
-            }).catch((error) => {
-                console.log("Catched error !");
-                console.log(error);
-                return (null);
+            })
+            .catch((error) => {
+                console.log("Catched error in signup function!");
+                //console.log(error);
+                //return (null);
             })
     }
 

@@ -14,6 +14,7 @@ export default function Game() {
     return (
         <div id="game-root">
             <h1>Game !</h1>
+            <canvas></canvas>
             {/* <Header /> */}
             {/* <div>
                 <h3 id="game-title">Game</h3>

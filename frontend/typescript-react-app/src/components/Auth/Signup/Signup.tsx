@@ -59,9 +59,9 @@ class Signup extends React.Component<SignupProps, SignupState>
             password: this.state.password,
             password_conf: this.state.password_conf
         })
-
+        //let res = ax.signup(this.state.username, this.state.email, this.state.password, this.state.password_conf);
         let res = ax.signup();
-        console.log(res);
+        //console.log(res);
         this.resetName();
     }
 
@@ -128,7 +128,7 @@ class Signup extends React.Component<SignupProps, SignupState>
                               id="signup"
                             >
                                 M'inscrire
-                                <ToastContainer
+                                {/*<ToastContainer
                                     position="top-right"
                                     autoClose={5000}
                                     hideProgressBar={false}
@@ -138,7 +138,7 @@ class Signup extends React.Component<SignupProps, SignupState>
                                     pauseOnFocusLoss
                                     draggable
                                     pauseOnHover
-                                />
+                                />*/}
                             </button>
                     </div>
         </div>

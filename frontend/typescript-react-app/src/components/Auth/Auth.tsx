@@ -11,6 +11,7 @@ import Signup from "./Signup/Signup"
  * TODO: gérer auth42, remettre en place le système d'afficher/cache les mots de passes
  */
 export default function Auth() {
+
     return (
         <>
             <Header />
