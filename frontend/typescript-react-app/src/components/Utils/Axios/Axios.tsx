@@ -68,7 +68,8 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
                     console.log(res);
                     //TODO: utiliser plutot useContext (attention avec la classe ca risque d etre plus compliquee qu'avec la version)
                     //Solution trouvee apres maintes recherches pour rediriger depuis une classe et pas une fonction react
-                    window.top.location = "/user/";
+                    //window.top.location = "/user/";
+                    window.top.location = "/chat/";
                     return ;
                 }
                 else

@@ -16,6 +16,7 @@ import UserMain from '../User/UserMain';
 import 'bootstrap/dist/css/bootstrap.css';
 import {UserContext} from './UserContext';
 import { useCookies } from "react-cookie";
+import Channels from "../Channels/Channels";
 
 function App() {
 
@@ -44,6 +45,9 @@ function App() {
           <Route path="/user">
             {/*Revoir en fonction du contexte avec la connexion */}
             <UserMain />
+          </Route>
+          <Route path="/chat">
+            <Channels />
           </Route>
           </UserContext.Provider>
         </Switch>

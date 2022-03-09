@@ -1,5 +1,7 @@
 import './Channels.scss';
 import Nav from '../Nav/Nav';
+import TypingMessage from "./TypingMessage/TypingMessage";
+import ListDiscussions from "./ListDiscussions/ListDiscussions";
 
 /**
  * @malatini ou @macrespo
@@ -10,11 +12,18 @@ export default function Channels() {
         <div id="channels">
             <Nav />
             <div className="container">
-                <h1 id="channels--tile">Channels</h1>
+                <div className="row d-flex justify-content-center text-center">
+                    <div className="col-7">
+                        <h1 id="channels--tile">Channels</h1>
+                        <h2 id="websocket--tile">Websocket chat</h2>
+                        <ListDiscussions />
+                        <TypingMessage />
+                    </div>
                 {/* Components mes channels */}
                 {/* Component discussion */}
                 {/* Component participants */}
                 {/* Component taper un message */}
+                </div>
             </div>
         </div>
     );
