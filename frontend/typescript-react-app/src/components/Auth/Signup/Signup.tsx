@@ -129,6 +129,17 @@ class Signup extends React.Component<SignupProps, SignupState>
                             >
                                 M'inscrire
                             </button>
+                            <ToastContainer
+                                position="top-right"
+                                autoClose={5000}
+                                hideProgressBar={false}
+                                newestOnTop={false}
+                                closeOnClick
+                                rtl={false}
+                                pauseOnFocusLoss
+                                draggable
+                                pauseOnHover
+                            />
                     </div>
         </div>
 

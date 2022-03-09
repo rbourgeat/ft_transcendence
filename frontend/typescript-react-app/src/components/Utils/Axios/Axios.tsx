@@ -69,18 +69,23 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
                     //TODO: utiliser plutot useContext (attention avec la classe ca risque d etre plus compliquee qu'avec la version)
                     //Solution trouvee apres maintes recherches pour rediriger depuis une classe et pas une fonction react
                     window.top.location = "/user/";
+                    return ;
                 }
                 else
                 {
                     //return (400);
-                    toast.notifyDanger('Oops ! An error happened');
-                    console.log("Went to the else condition");
+                    toast.notifyDanger('Oops ! An error happened, incorrect email or password.');
+                    //console.log("Went to the else condition");
+                    return ;
                 }
             })
             .catch(function (error) {
               //console.log(error);
-              toast.notifyDanger('Oops ! An error happened');
+              toast.notifyDanger('Oops ! An error happened, incorrect email or password.');
+              //console.log("Catched error !");
+              return ;
             })
+        //console.log("here!");
     }
 
     //TODO: revoir encryption du mot de passe

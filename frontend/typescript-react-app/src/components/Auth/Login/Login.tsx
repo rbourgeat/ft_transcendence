@@ -88,6 +88,17 @@ export default class Login extends React.Component<LoginProps, LoginState>
                 >
                 Me connecter
               </button>
+              <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+              />
           </div>
         </div>
     );
