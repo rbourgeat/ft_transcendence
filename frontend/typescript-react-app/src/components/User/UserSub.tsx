@@ -75,7 +75,7 @@ export default function User(props:UserfuncProps)
 			formData.append('avatar', file);
 			formData.append('type', 'file');
 
-			localStorage.setItem('my_avatar', file);
+			//localStorage.setItem('my_avatar', file);
 
 			let res = axios.post(url, formData, {headers}).then(res=>{
 				console.log(res.data);
@@ -83,7 +83,7 @@ export default function User(props:UserfuncProps)
 				if (res.status == 201)
 				{
 					console.log("Yay ! Avatar updated");
-					localStorage.setItem('avatar', file);
+					//localStorage.setItem('avatar', file);
 				}
 				else
 				{

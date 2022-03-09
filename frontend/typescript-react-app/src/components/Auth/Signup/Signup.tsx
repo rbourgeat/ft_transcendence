@@ -37,7 +37,7 @@ class Signup extends React.Component<SignupProps, SignupState>
         }
     }
 
-    //Utile pour vider le formulaire quand on a cliqué sur le bouton
+    //Utile pour vider le formulaire quand on a cliqué sur le bouton (a mettre dans utils)
     resetName = function() {
       this.setState({
         email: '',
