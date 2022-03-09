@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, CreateDateColumn, Column, Unique, ManyToOne } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, CreateDateColumn, Column, Unique, ManyToOne, ManyToMany, JoinTable, OneToMany } from "typeorm";
 import { Game } from 'src/game/entity/game.entity'
 
 @Entity('user')
@@ -39,10 +39,18 @@ export class User {
     @Column({ nullable: true })
     win_loss_ration: number = 0;
 
-    @Column("simple-array", { nullable: true })
-    friends: string[];
+    // @Column("simple-array", { nullable: true })
+    // friends: string[];
 
-    @ManyToOne(type => Game, { nullable: true })
+    // @JoinTable()
+    @ManyToMany(() => User)
+    friends: User[];
+
+    // @ManyToOne(type => Game, { nullable: true })
+    // games: Game[];
+
+    @JoinTable()
+    @ManyToMany(() => Game)
     games: Game[];
 
     @Column({ default: false })
