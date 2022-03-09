@@ -1,0 +1,20 @@
+@use "../../../variables";
+
+#ListParticipant {
+	margin-top: 85px;
+	border: 0.1rem solid grey !important;
+	height: 700px;
+	padding: 30px;
+	border-radius: variables.$border-radius;
+	background-color: white;
+}
+
+#participant--title {
+	//color: white !important;
+	font-size: variables.$small-font-size;
+}
+
+#sub--div {
+	overflow-y: scroll;
+	height: 625px;
+}
