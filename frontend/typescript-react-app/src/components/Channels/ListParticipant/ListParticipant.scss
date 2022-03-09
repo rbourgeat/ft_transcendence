@@ -1,0 +1,40 @@
+@use "../../../variables";
+
+#ListParticipant {
+	margin-top: 85px;
+	border: 0.1rem solid grey !important;
+	height: 700px;
+	padding: 30px;
+	border-radius: variables.$border-radius;
+	background-color: white;
+}
+
+#participant--title {
+	//color: white !important;
+	font-size: variables.$small-font-size;
+}
+
+#sub--div {
+	overflow-y: scroll;
+	//height: 625px;
+}
+
+#participants--div {
+	height: 350px;
+	//border: 0.1rem solid red !important;
+}
+
+#roles--title {
+	margin-bottom: 20px;
+	font-size: 16px !important;
+}
+
+#roles {
+	height: 200px;
+	margin-top: 25px;
+}
+
+#roles > *:not(h3) {
+	font-family: variables.$basic-font;
+	font-size: 14px;
+}

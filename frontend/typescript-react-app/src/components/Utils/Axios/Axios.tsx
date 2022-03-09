@@ -63,26 +63,30 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
 
         let res = axios.post('http://localhost:3000/api/auth/log-in/', bod, {headers})
             .then(res=>{
-                //console.log(res.data);
-                //console.log(res.status);
-                //console.log(res);
                 if (res.status == 200 || res.status == 201)
                 {
                     console.log(res);
                     //TODO: utiliser plutot useContext (attention avec la classe ca risque d etre plus compliquee qu'avec la version)
                     //Solution trouvee apres maintes recherches pour rediriger depuis une classe et pas une fonction react
-                    window.top.location = "/user/";
+                    //window.top.location = "/user/";
+                    window.top.location = "/chat/";
+                    return ;
                 }
                 else
                 {
                     //return (400);
-                    toast.notifyDanger('Oops ! An error happened');
+                    toast.notifyDanger('Oops ! An error happened, incorrect email or password.');
+                    //console.log("Went to the else condition");
+                    return ;
                 }
             })
             .catch(function (error) {
-              console.log(error);
-              toast.notifyDanger('Oops ! An error happened');
+              //console.log(error);
+              toast.notifyDanger('Oops ! An error happened, incorrect email or password.');
+              //console.log("Catched error !");
+              return ;
             })
+        //console.log("here!");
     }
 
     //TODO: revoir encryption du mot de passe
