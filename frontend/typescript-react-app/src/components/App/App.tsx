@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect} from 'react';
 import './App.scss';
 import {
   BrowserRouter as Router,
@@ -6,6 +6,8 @@ import {
   Route,
   Redirect
 } from "react-router-dom";
+
+import io from "socket.io-client"
 
 import Auth from '../Auth/Auth';
 import Welcome from '../Welcome/Welcome';
@@ -49,7 +51,7 @@ function App() {
             <UserMain />
           </Route>
           <Route path="/chat">
-            <Channels />
+            <Channels username="yuyo"/>
           </Route>
           <Route path="/search">
             <Search />
