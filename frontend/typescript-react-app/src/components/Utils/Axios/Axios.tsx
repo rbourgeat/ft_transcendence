@@ -63,9 +63,6 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
 
         let res = axios.post('http://localhost:3000/api/auth/log-in/', bod, {headers})
             .then(res=>{
-                //console.log(res.data);
-                //console.log(res.status);
-                //console.log(res);
                 if (res.status == 200 || res.status == 201)
                 {
                     console.log(res);
@@ -77,10 +74,11 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
                 {
                     //return (400);
                     toast.notifyDanger('Oops ! An error happened');
+                    console.log("Went to the else condition");
                 }
             })
             .catch(function (error) {
-              console.log(error);
+              //console.log(error);
               toast.notifyDanger('Oops ! An error happened');
             })
     }

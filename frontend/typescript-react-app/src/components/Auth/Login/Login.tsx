@@ -32,10 +32,11 @@ export default class Login extends React.Component<LoginProps, LoginState>
             this.state = {
               email: "",
               password: "",
-              isLogged: false
+              //isLogged: false
             }
         }
 
+        //Connexion ou tentative de connection en utilisant notre "utilitaire" myAxios
         submit=(event: any)=>
         {
 		        event.preventDefault();
