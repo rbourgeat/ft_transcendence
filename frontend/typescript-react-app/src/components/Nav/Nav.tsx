@@ -17,11 +17,11 @@ export default function Nav() {
                 <div className="collapse navbar-collapse" id="navbarNav">
                     <ul className="navbar-nav">
                     <li className="nav-item">
-                        <a className="nav-link">Channels</a>
+                        <a className="nav-link">Chat</a>
                     </li>
-                    <li className="nav-item">
+                    {/*<li className="nav-item">
                         <a className="nav-link">Messages</a>
-                    </li>
+                    </li>*/}
                     <li className="nav-item">
                         <a className="nav-link">Account</a>
                     </li>

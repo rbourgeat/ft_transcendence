@@ -27,6 +27,7 @@ export default class Participant extends React.Component<ParticipantSProps, Part
     {
         return (
 		<div className="row">
+			{/* Attention pas responsive pour l instant */}
 			<p>
 				{this.props.username}
 				{this.props.status === "Online" ? <span className="online"></span> : <span></span>}
