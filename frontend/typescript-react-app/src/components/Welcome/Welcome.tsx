@@ -1,30 +1,37 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext} from 'react';
+
 import './Welcome.scss';
 import '../App/App.scss';
 import '../../index.scss';
-
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
-import video1 from "../../images/pong-demo.mp4";
+import video1 from "../../public/pong-demo.mp4";
+
 import TypeAnimation from 'react-type-animation';
-import { Redirect, useHistory, Link } from 'react-router-dom'
-import { useCookies } from "react-cookie";
-
+import { useHistory } from 'react-router-dom'
 import Media from 'react-media';
-
 import { UserContext } from "../App/UserContext";
 import { login } from "./Login";
+import { useCookies } from "react-cookie";
 
+/**
+ * @malatini
+ * page de welcome (afficher si pas connecte, sinon rediriger - a continuer / revoir)
+ * voir useContext (quand fini mettre dans dossier pages) ?
+ * On laisse en fonction et pas en classe pour utiliser les hooks car je ne sais pas faire sans pour l'instant
+ */
 export default function Welcome() {
+
     const history = useHistory();
 
-    const routeChange = () =>{
+    const routeChange = (e: any) =>{
+	  e.preventDefault();
       let path = `/auth`;
       history.push(path);
     }
 
-    // const [cookies, setCookie] = useCookies(["name"]);
-    // const [name, setName] = useState("");
+    const [cookies, setCookie] = useCookies(["name"]);
+    const [name, setName] = useState("");
 
     const {user, setUser} = useContext(UserContext);
 
@@ -47,21 +54,20 @@ export default function Welcome() {
                     <li>darbib</li>
                     <li>macrespo</li>
                     <button id="play-button-1" onClick={routeChange} className="detalii">Play !</button>
-                    
                     <br />
                     <br />
-                    {/* On va utiliser context pour l'instant pour bloquer l'affichage si la personne n'est pas connectee */}
-                    <pre>{JSON.stringify(user, null, 2).length > 4 ? JSON.stringify(user, null, 2) : ""}</pre>
-                    { user ? (<button onClick={ () => setUser(null)}>logout</button>) : 
-                        (<button onClick={ async () => 
+
+                    {/*<pre>{JSON.stringify(user, null, 2).length > 4 ? JSON.stringify(user, null, 2) : ""}</pre>
+                    { user ? (<button onClick={ () => setUser(null)}>logout</button>) :
+                        (<button onClick={ async () =>
                         {
                             const user = await login();
                             setUser(user);
                         }
-                        }>
+                        }>)
                         login
-                    </button>)
-                    }
+                    </button>
+                        )}*/}
                 </ul>
             </div>
             <br></br>

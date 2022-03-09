@@ -1,8 +1,10 @@
-// import React from 'react';
-
 import './Channels.scss';
 import Nav from '../Nav/Nav';
 
+/**
+ * @malatini ou @macrespo
+ * Page principale pour afficher les channels, voir les sous composants
+ */
 export default function Channels() {
     return (
         <div id="channels">

@@ -1,7 +1,7 @@
 @use "../../variables";
 
 #friends {
-  background-image: url("../../../public/wallpapersden.com_frosty-blue-polygon_2560x1080.jpg") !important;
+ // background-image: url("../../../public/wallpapersden.com_frosty-blue-polygon_2560x1080.jpg") !important;
   background-repeat: repeat !important;
   background-color: #cccccc !important;
   background-size: auto 100% !important;
@@ -11,7 +11,6 @@
 
 #friends-title {
   background: variables.$blue;
-  //   color: black !important; //TODO: trouver un joli gris
   border-radius: variables.$border-radius-big;
   padding: 10px;
   font-size: large;

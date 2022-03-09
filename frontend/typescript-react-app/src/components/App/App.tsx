@@ -11,24 +11,23 @@ import Auth from '../Auth/Auth';
 import Welcome from '../Welcome/Welcome';
 import NotFound from '../NotFound/NotFound';
 import Dashboard from '../Dashboard/Dashboard';
-import User from '../User/User';
-// import UserContext from './UserContext';
+import UserMain from '../User/UserMain';
+// import UserSub from '../User/UserSub';
 import 'bootstrap/dist/css/bootstrap.css';
 import {UserContext} from './UserContext';
 import { useCookies } from "react-cookie";
 
 function App() {
-  
+
   const [user, setUser] = useState(null);
 
-  const value = useMemo( () => 
+  const value = useMemo( () =>
   ({user, setUser}), [user, setUser]);
 
   return (
     <div id="main">
       <Router>
         <Switch>
-          {/*<UserContext.Provider value={{value, setValue}}>*/}
           <UserContext.Provider value={value}>
           <Route path="/welcome">
             <Welcome />
@@ -43,7 +42,8 @@ function App() {
             <Dashboard />
           </Route>
           <Route path="/user">
-            <User/>
+            {/*Revoir en fonction du contexte avec la connexion */}
+            <UserMain />
           </Route>
           </UserContext.Provider>
         </Switch>
@@ -53,6 +53,8 @@ function App() {
 }
 
 export default App;
+
+// Tentative pour transformer en classe infructueuse pour l instant
 
 // class App extends React.Component {
 //
