@@ -16,9 +16,9 @@ export class ChatService {
     }
 
     async createChat(chat: CreateChatDto) {
-        const newChat = await this.chatRepository.create(chat);
-        await this.chatRepository.save(newChat);
-        return newChat;
+        // const newChat = await this.chatRepository.create(chat);
+        // await this.chatRepository.save(newChat);
+        // return newChat;
     }
 
 }

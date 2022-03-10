@@ -17,6 +17,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import {UserContext} from './UserContext';
 import { useCookies } from "react-cookie";
 import Channels from "../Channels/Channels";
+import Search from "../Search/Search"
 
 function App() {
 
@@ -48,6 +49,9 @@ function App() {
           </Route>
           <Route path="/chat">
             <Channels />
+          </Route>
+          <Route path="/search">
+            <Search />
           </Route>
           </UserContext.Provider>
         </Switch>

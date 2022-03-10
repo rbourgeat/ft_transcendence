@@ -9,10 +9,13 @@ import * as https from 'https';
 import * as express from 'express';
 import * as passport from 'passport';
 import * as session from 'express-session';
+import { join } from 'path';
+import { NestExpressApplication } from '@nestjs/platform-express';
 
 async function bootstrap() {
 
-  const app = await NestFactory.create(AppModule);
+  // const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
   const document = SwaggerModule.createDocument(app, new DocumentBuilder()
     .setTitle('API')
@@ -44,6 +47,9 @@ async function bootstrap() {
 
   app.useGlobalPipes(new ValidationPipe());
   app.use(cookieParser());
+
+  app.useStaticAssets(join(__dirname, '..', 'static'));
+
   await app.listen(3000);
 }
 bootstrap();

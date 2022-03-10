@@ -2,6 +2,7 @@ import './Channels.scss';
 import Nav from '../Nav/Nav';
 import TypingMessage from "./TypingMessage/TypingMessage";
 import ListDiscussions from "./ListDiscussions/ListDiscussions";
+import ListParticipant from './ListParticipant/ListParticipant';
 import React from "react";
 //import { w3cwebsocket} from "websocket";
 
@@ -59,6 +60,9 @@ export default class Channels extends React.Component<ChatProps, ChatState>
                             <h2 id="websocket--tile">Websocket chat</h2>
                             <ListDiscussions />
                             <TypingMessage />
+                        </div>
+                        <div className="col-4" id="list--participants">
+                            <ListParticipant />
                         </div>
                     {/* Components mes channels */}
                     {/* Component discussion */}
