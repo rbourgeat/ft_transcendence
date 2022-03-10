@@ -89,6 +89,41 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
         //console.log("here!");
     }
 
+    createchat(username: string)
+    {
+        axios.defaults.baseURL = 'http://localhost:3000/api/';
+        axios.defaults.headers.post['Content-Type'] ='*';
+        axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+
+        const bod = {
+            admin: {
+                login: username
+            }
+        }
+
+        let toast = new ToastAlerts(null);
+
+        const headers = {
+            'Content-Type': 'application/json'
+        };
+
+        let res = axios.post('http://localhost:3000/api/chat', bod, {headers}).then(res=>{
+                console.log(res.status)
+                if (res.status == 201)
+                {
+                    toast.notifySuccess('💬  Chat created !');
+                }
+                else
+                {
+                    toast.notifyDanger('Oops ! An creating chat.');
+                }
+            })
+            .catch((error) => {
+                toast.notifyDanger('Oops ! An creating chat.');
+                console.log("Catched error during post chat!");
+            })
+    }
+
     //TODO: revoir encryption du mot de passe
     signup()
     {

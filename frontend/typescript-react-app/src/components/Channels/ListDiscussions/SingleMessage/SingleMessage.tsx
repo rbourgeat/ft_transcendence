@@ -16,7 +16,7 @@ export default class ListChannels extends React.Component<MessageProps>
     render()
 	{
 		return (
-		<div id="message">
+		<div id="message--div">
 			<p>
 				<span id="username">{this.props.username} : </span>
 				<span>{this.props.text}</span>
