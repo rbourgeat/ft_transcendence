@@ -44,22 +44,43 @@ export class UserService {
 		}
 	}
 
+	// async addFriend(user: string, friend: string) {
+	// 	const u = await this.userRepository.findOne({ where: { login: user }, relations: ["friends"] });
+	// 	const f = await this.userRepository.findOne({ where: { login: friend } });
+	// 	console.log("test1: " + u.friends)
+	// 	if (!u.friends) {
+	// 		u.friends = [];
+	// 		console.log("test2: " + u.friends)
+	// 	}
+	// 	u.friends.push(f);
+	// 	// this.userEvent.achievementFriend(u);
+	// 	console.log("test3: " + u.friends)
+	// 	var login = user;
+	// 	this.userRepository.update({ login }, {
+	// 	    friends: u.friends
+	// 	});
+	// 	// return this.userRepository.save(u);
+	// }
+
 	async addFriend(user: string, friend: string) {
-		const u = await this.userRepository.findOne({ where: { login: user }, relations: ["friends"] });
-		const f = await this.userRepository.findOne({ where: { login: friend } });
-		console.log("test1: " + u.friends)
-		if (!u.friends) {
-			u.friends = [];
-			console.log("test2: " + u.friends)
-		}
-		u.friends.push(f);
-		// this.userEvent.achievementFriend(u);
-		console.log("test3: " + u.friends)
+		var init = false;
 		var login = user;
-		this.userRepository.update({ login }, {
+		const u = await this.userRepository.findOne({ login });
+		login = friend;
+		const f = await this.userRepository.findOne({ login });
+		if (!u.friends) {
+			u.friends = [""];
+			init = true;
+		}
+		u.friends.push(f.login);
+		if (init)
+			u.friends.splice(0, 1);
+		// this.userEvent.achievementFriend(u);
+		console.log("u.friends: " + u.friends)
+		login = user;
+		return this.userRepository.update({ login }, {
 		    friends: u.friends
 		});
-		// return this.userRepository.save(u);
 	}
 
 	async removeFriend(user: string, friend: string) {
@@ -68,7 +89,7 @@ export class UserService {
 		login = friend;
 		const f = await this.userRepository.findOne({ login });
 		for (var i = 0; i < u.friends.length; i++)
-			if (u.friends[i] === f)
+			if (u.friends[i] === f.login)
 				u.friends.splice(i, 1);
 		return this.userRepository.update({ login }, {
 			friends: u.friends
