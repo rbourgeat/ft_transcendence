@@ -1,4 +1,4 @@
-import { Req, Body, Controller, Delete, Get, Param, Patch, Post, UseInterceptors, UploadedFile } from '@nestjs/common';
+import { Req, Body, Controller, Delete, Get, Param, Patch, Post, UseInterceptors, UploadedFile, Header } from '@nestjs/common';
 import { UserService, fileMimetypeFilter } from './user.service';
 import CreateUserDtoViaRegistration, { UpdateUserDto, UploadAvatarDto } from 'src/user/dto/user.dto';
 import { ApiBody, ApiExtraModels, ApiConflictResponse, ApiConsumes, ApiOkResponse, ApiOperation, ApiParam, ApiQuery, ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger'

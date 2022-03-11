@@ -35,6 +35,39 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
         //On parsera les props pour appeler directement la bonne methode ?
     }
 
+    fourtytwoauth()
+    {
+        let toast = new ToastAlerts(null);
+        const headers = {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*'
+        };
+
+        const bod = {
+            email: this.props.email,
+            password: this.props.password,
+        }
+
+        axios.defaults.baseURL = 'http://localhost:3000/';
+
+        let res = axios.get("http://localhost:3000/api/login/42"
+        /*, bod, {headers}*/).then(res=> {
+            if (res.status == 200 || res.status == 201)
+            {
+                console.log(res);
+                toast.notifySuccess("First 42 auth GET got 200 !");
+            }
+            else
+            {
+                console.log(res);
+                toast.notifyDanger("First 42 auth GET got error...");
+            }
+        })
+        .catch((error) => {
+              toast.notifyDanger('Oops ! First 42 auth GET got error...');
+            })
+    }
+
     //pour l instant on va faire un peu betement et on verra comment faire une facon plus smart plus tard
     login()
     {
@@ -80,12 +113,12 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
                     return ;
                 }
             })
-            .catch(function (error) {
-              //console.log(error);
-              toast.notifyDanger('Oops ! An error happened, incorrect email or password.');
-              //console.log("Catched error !");
-              return ;
-            })
+            //.catch(function (error) =>
+            //{
+            //  //console.log(error);
+            //  toast.notifyDanger('Oops ! An error happened, incorrect email or password.');
+            //  //console.log("Catched error !");
+            //})
         //console.log("here!");
     }
 
@@ -118,10 +151,10 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
                     toast.notifyDanger('Oops ! An creating chat.');
                 }
             })
-            .catch((error) => {
-                toast.notifyDanger('Oops ! An creating chat.');
-                console.log("Catched error during post chat!");
-            })
+            //.catch((error) => {
+            //    toast.notifyDanger('Oops ! An creating chat.');
+            //    console.log("Catched error during post chat!");
+            //})
     }
 
     //TODO: revoir encryption du mot de passe

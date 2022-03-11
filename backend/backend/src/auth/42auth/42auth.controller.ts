@@ -1,7 +1,8 @@
-import { Controller, Get, Redirect, UseGuards } from '@nestjs/common';
+import { Controller, Get, Redirect, UseGuards, Header } from '@nestjs/common';
 import { FtOauthGuard } from './guard/ft-oauth.guard';
 
-@Controller('login')
+@Controller('api/login')
+//@Header('Access-Control-Allow-Origin', '*')
 export class Auth42Controller {
     @Get('42')
     @UseGuards(FtOauthGuard)
@@ -10,7 +11,7 @@ export class Auth42Controller {
         return;
     }
 
-    @Get('42/return')
+    @Get('api/42/return')
     @UseGuards(FtOauthGuard)
     @Redirect('/')
     ftAuthCallback() {
