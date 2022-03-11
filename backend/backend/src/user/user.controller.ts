@@ -1,10 +1,12 @@
-import { Req, Body, Controller, Delete, Get, Param, Patch, Post, UseInterceptors, UploadedFile, Header } from '@nestjs/common';
+import { Req, Body, Controller, Delete, Get, Param, Patch, Post, UseGuards, UseInterceptors, UploadedFile, Header } from '@nestjs/common';
 import { UserService, fileMimetypeFilter } from './user.service';
 import CreateUserDtoViaRegistration, { UpdateUserDto, UploadAvatarDto } from 'src/user/dto/user.dto';
 import { ApiBody, ApiExtraModels, ApiConflictResponse, ApiConsumes, ApiOkResponse, ApiOperation, ApiParam, ApiQuery, ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger'
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiImageFile } from 'src/user/utils/api-file.decorator';
 import { ParseFile } from 'src/user/utils/parse-file.pipe';
+
+import { FtOauthGuard } from 'src/auth/42auth/guard/ft-oauth.guard';
 
 @ApiTags('Users') //Create a category on swagger
 @ApiExtraModels(CreateUserDtoViaRegistration) //force unused dto to show on swagger

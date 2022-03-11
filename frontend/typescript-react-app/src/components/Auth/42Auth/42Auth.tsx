@@ -7,10 +7,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import ToastAlerts from "../../Utils/ToastAlerts/ToastAlerts"
 import myAxios from "../../Utils/Axios/Axios"
 
-interface FourtyTwoProps {}
+interface FourtyTwoProps { }
 
-interface FourtyTwoState
-{
+interface FourtyTwoState {
   email?: string,
   password?: string,
   //isLogged?: boolean
@@ -23,57 +22,54 @@ interface FourtyTwoState
  */
 export default class Login extends React.Component<FourtyTwoProps, FourtyTwoState>
 {
-        constructor(props: FourtyTwoProps)
-        {
-            super(props);
-            //Init state
-            this.state = {
-              email: "",
-              password: "",
-              //isLogged: false
-            }
-        }
+  constructor(props: FourtyTwoProps) {
+    super(props);
+    //Init state
+    this.state = {
+      email: "",
+      password: "",
+      //isLogged: false
+    }
+  }
 
-        //Connexion ou tentative de connection en utilisant notre "utilitaire" myAxios
-        fourtytwo=(event: any)=>
-        {
-		      event.preventDefault();
-            let ax = new myAxios(
-            {
-              method: "GET",
-              ressource: "/login/42",
-            })
+  //Connexion ou tentative de connection en utilisant notre "utilitaire" myAxios
+  fourtytwo = (event: any) => {
+    event.preventDefault();
+    let ax = new myAxios(
+      {
+        method: "GET",
+        ressource: "/42auth/login",
+      })
 
-            let res = ax.fourtytwoauth();
-        }
+    let res = ax.fourtytwoauth();
+  }
 
-        render()
-        {
-            return (
-                <div>
-					<div id="formAuth42">
-                                <button
-                                  type="submit"
-                                  className="btn btn-dark btn-block"
-                                  id="auth-btn-3"
-                                  onClick={this.fourtytwo}
-                                  >
-                                    Authentification 42
+  render() {
+    return (
+      <div>
+        <div id="formAuth42">
+          <button
+            type="submit"
+            className="btn btn-dark btn-block"
+            id="auth-btn-3"
+            onClick={this.fourtytwo}
+          >
+            Authentification 42
                                 </button>
-                                <ToastContainer
-                                  position="top-right"
-                                  autoClose={5000}
-                                  hideProgressBar={false}
-                                  newestOnTop={false}
-                                  closeOnClick
-                                  rtl={false}
-                                  pauseOnFocusLoss
-                                  draggable
-                                  pauseOnHover
-                                />
+          <ToastContainer
+            position="top-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+          />
 
-                	</div>
-       			</div>
+        </div>
+      </div>
     );
-}
+  }
 }
