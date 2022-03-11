@@ -12,7 +12,7 @@ export class FtStrategy extends PassportStrategy(Strategy, '42') {
             clientID: process.env.FORTYTWO_CLIENT_ID,
             clientSecret: process.env.FORTYTWO_CLIENT_SECRET,
             //callbackURL: '/login/42/return',
-            callbackURL: 'api/42auth/redirect',
+            callbackURL: '/api/42auth/redirect',
             passReqToCallback: true,
         });
     }
