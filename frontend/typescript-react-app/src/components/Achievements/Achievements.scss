@@ -35,3 +35,13 @@
 #third-row {
     border: 0.1rem solid purple !important;
 }
+
+#achievements > *, .card, .card-group {
+    border-radius: variables.$border-radius !important;
+    //border: 0.1rem solid red;
+}
+
+// #trophee {
+//     float: left;
+//     display: flex;
+// }
