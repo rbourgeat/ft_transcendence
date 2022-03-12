@@ -12,6 +12,7 @@ import axios from 'axios';
 import MyAxios from '../Utils/Axios/Axios';
 import { ToastContainer, toast } from 'react-toastify';
 import ls from 'local-storage'
+import { render } from 'react-dom';
 
 export interface UserfuncProps
 {
@@ -26,14 +27,14 @@ export interface UserfuncProps
 	winLoss?: number
 }
 
-export interface UserfuncState
-{
-	avatar?: string,
-	totalGames?: number,
-	totalWins?: number,
-	totalLoss?: number,
-	winLoss?: number
-}
+// export interface UserfuncState
+// {
+// 	avatar?: string,
+// 	totalGames?: number,
+// 	totalWins?: number,
+// 	totalLoss?: number,
+// 	winLoss?: number
+// }
 
 export default function User(props:UserfuncProps)
 {
@@ -83,6 +84,7 @@ export default function User(props:UserfuncProps)
 				if (res.status == 201)
 				{
 					console.log("Yay ! Avatar updated");
+					renderImage(props.username);
 				}
 				else
 				{
@@ -106,7 +108,7 @@ export default function User(props:UserfuncProps)
 				<br />
 				<div className="user--stats">
 				<h2>Information</h2>
-				{renderImage()}
+				{renderImage(props.username)}
 				{/* <img
 					src={imgData}
 					//src={renderImage}
@@ -138,15 +140,31 @@ export default function User(props:UserfuncProps)
     );
  };
 
-function renderImage() {
+function renderImage(login: string) {
 	//throw new Error('Function not implemented.');
 	let imageCode = "https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg";
 
 	//TO DO: refaire le get sur l image
-		  let imageName = "alt-photo";
+	let imageName = "alt-photo";
 
-		  //Chercher l image 
-		  return (
-			  <img src={imageCode} alt={imageName} height="80" width="80" id="avatar-id"/>
-		  );
+	let url = "http://localhost:3000/api/user/".concat(login);
+	console.log(url);
+	let res = axios.get(url)
+	.then(res => {
+		console.log(res);
+		imageCode = JSON.stringify(res.data.avatar);
+		console.log(imageCode);
+		console.log("Image is " + JSON.stringify(res.data.avatar));
+		return (
+			<img src={imageCode} alt={imageName} height="80" width="80" id="avatar-id"/>
+		);
+	})
+	.catch(error => {
+		console.log("Catched error getting avatar");
+	})
+	//Chercher l image 
+	console.log("Eo");
+	return (
+		<img src={imageCode} alt={imageName} height="80" width="80" id="avatar-id"/>
+	);
 }

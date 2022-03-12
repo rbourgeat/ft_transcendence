@@ -48,10 +48,10 @@ function App() {
           </Route>
           <Route path="/user">
             {/*Revoir en fonction du contexte avec la connexion */}
-            <UserMain />
+            <UserMain username="dummy5" />
           </Route>
           <Route path="/chat">
-            <Channels username="yuyo"/>
+            <Channels username="dummy5"/>
           </Route>
           <Route path="/search">
             <Search />
