@@ -48,7 +48,7 @@ export default class Achievements extends React.Component<AchievementsProps, Ach
                                                     <div className="card-body">
                                                         <h5 className="card-title">On fire</h5>
                                                         <p className="card-text">Win 5 games in a row</p>
-                                                        <img src=""></img>
+                                                        <img src="https://cdn2.iconfinder.com/data/icons/house-6/100/Fire-512.png"></img>
                                                     </div>
                                                 </div>
 
