@@ -3,10 +3,13 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Chat } from './entity/chat.entity';
 import { CreateChatDto } from './dto/chat.dto';
+import { User } from 'src/user/entity/user.entity';
 
 @Injectable()
 export class ChatService {
     constructor(
+        @InjectRepository(User)
+		private userRepository: Repository<User>,
         @InjectRepository(Chat)
         private chatRepository: Repository<Chat>
     ) { }
@@ -16,9 +19,24 @@ export class ChatService {
     }
 
     async createChat(chat: CreateChatDto) {
-        // const newChat = await this.chatRepository.create(chat);
-        // await this.chatRepository.save(newChat);
-        // return newChat;
+        const newChat = await this.chatRepository.create(chat);
+        await this.chatRepository.save(newChat);
+
+        var init = false;
+        var login = chat.owner;
+		const u = await this.userRepository.findOne({ login });
+        if (!u.chats) {
+			u.chats = [42];
+			init = true;
+		}
+		u.chats.push(newChat.id);
+		if (init)
+			u.chats.splice(0, 1);
+		this.userRepository.update({ login }, {
+		    chats: u.chats
+		});
+
+        return newChat;
     }
 
 }

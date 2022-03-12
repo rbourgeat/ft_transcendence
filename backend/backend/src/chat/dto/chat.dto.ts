@@ -6,5 +6,9 @@ import { UserDto } from 'src/user/dto/user.dto';
 export class CreateChatDto {
     @IsNotEmpty()
     @ApiProperty()
-    admin: UserDto;
+    owner: string;
+
+    @IsOptional()
+    @ApiProperty()
+    members: string[];
 }

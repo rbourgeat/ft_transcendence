@@ -46,15 +46,24 @@ export class User {
     // friends: string[];
 
     // @JoinTable()
-    @ManyToMany(() => User)
-    friends: User[];
+    // @ManyToMany(() => User)
+    // friends: User[];
+
+    @Column("simple-array", { nullable: true })
+    friends: string[];
 
     // @ManyToOne(type => Game, { nullable: true })
     // games: Game[];
 
-    @JoinTable()
-    @ManyToMany(() => Game)
-    games: Game[];
+    // @JoinTable()
+    // @ManyToMany(() => Game)
+    // games: Game[];
+
+    @Column("simple-array", { nullable: true })
+    games: number[];
+
+    @Column("simple-array", { nullable: true })
+    chats: number[];
 
     @Column({ default: false })
     two_factor_auth: boolean = false;
