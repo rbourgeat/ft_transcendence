@@ -1,6 +1,8 @@
 import './TypingMessage.scss';
 import React from "react";
 import { w3cwebsocket} from "websocket";
+import io from "socket.io-client";
+import SingleMessage from "../ListDiscussions/SingleMessage/SingleMessage"
 
 /**
  * @malatini ou @macrespo
@@ -16,6 +18,9 @@ export interface TypingState {
 }
 
 //const client = new w3cwebsocket("ws//127.0.0.1:8000");
+const socket = io("http://localhost:3000/");
+const message = document.getElementById('message');
+const messages = document.getElementById('messages');
 
 export default class TypingMessage extends React.Component<TypingProps, TypingState>
 {
@@ -44,7 +49,30 @@ export default class TypingMessage extends React.Component<TypingProps, TypingSt
         //    const dataFromServer = JSON.parse(message.data);
         //    console.log("Got reply !");
         //}
+
+        socket.on('message', ({data}) => {
+            this.handleNewMessage(data);
+            //console.log(message);
+        });
+
+     }
+
+     handleNewMessage = (message) => {
+        //messages.appendChild(this.buildNewMessage(message))
+        //console.log(message);
+        //let res = React.createElement(
+        //    'div', message,
+        //    {username: "malatini", text: message}, null
+        //  )
+        //console.log(res);
+        //return;
     }
+
+    //buildNewMessage = (message) => {
+    //    const li = document.createElement("li");
+    //    li.appendChild(document.createTextNode(message));
+    //    return (li);
+    //}
 
     sendMessage=(event: any)=>
     {
@@ -53,6 +81,11 @@ export default class TypingMessage extends React.Component<TypingProps, TypingSt
         //    type: "message",
         //    msg: event
         //}))
+
+        socket.emit('message', {data: this.state.text});
+        console.log(this.state.text);
+        this.handleNewMessage(this.state.text);
+
         this.resetText();
     }
 
@@ -66,6 +99,7 @@ export default class TypingMessage extends React.Component<TypingProps, TypingSt
                     /*className="typing--input"*/
                     value={this.state.text}
                     className="form-control"
+                    id="message"
                     onChange={(e)=>{this.setState({text: e.target.value})}}
                     />
                 <button

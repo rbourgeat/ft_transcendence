@@ -30,7 +30,7 @@ export default function Badge(props) {
                                 <p id="p--wins">6 wins</p>
                         </div>
                     </div>
-                    <div className="col" id="badge--graph">
+                    {/*<div className="col" id="badge--graph">
                         <h2 id="graph-title">Graph</h2>
                         <PieChart
                             data={
@@ -40,7 +40,7 @@ export default function Badge(props) {
                              ]}
 
                             />
-                    </div>
+                    </div>*/}
                 </div>
             </div>
         </div>

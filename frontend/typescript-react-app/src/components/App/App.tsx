@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect} from 'react';
 import './App.scss';
 import {
   BrowserRouter as Router,
@@ -6,6 +6,8 @@ import {
   Route,
   Redirect
 } from "react-router-dom";
+
+import io from "socket.io-client"
 
 import Auth from '../Auth/Auth';
 import Welcome from '../Welcome/Welcome';
@@ -18,6 +20,7 @@ import {UserContext} from './UserContext';
 import { useCookies } from "react-cookie";
 import Channels from "../Channels/Channels";
 import Search from "../Search/Search"
+import Achievements from "../Achievements/Achievements"
 
 function App() {
 
@@ -48,10 +51,13 @@ function App() {
             <UserMain />
           </Route>
           <Route path="/chat">
-            <Channels />
+            <Channels username="yuyo"/>
           </Route>
           <Route path="/search">
             <Search />
+          </Route>
+          <Route path="/achievements">
+            <Achievements />
           </Route>
           </UserContext.Provider>
         </Switch>

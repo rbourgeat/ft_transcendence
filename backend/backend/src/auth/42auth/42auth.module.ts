@@ -1,20 +1,11 @@
-import { PassportModule } from '@nestjs/passport';
-import { ConfigModule } from '@nestjs/config';
 import { Module } from '@nestjs/common';
-
-import { Auth42Strategy } from 'src/auth/42auth/strategy/42auth.strategy';
-import { Auth42Controller } from 'src/auth/42auth/42auth.controller';
-import { Auth42Service } from 'src/auth/42auth/42auth.service';
-import { JwtStrategy } from 'src/auth/strategy/jwt.strategy';
-import { UserModule } from 'src/user/user.module';
+import { ConfigService } from '@nestjs/config';
+import { FtStrategy } from './ft.strategy';
+import { Auth42Controller } from './42auth.controller';
+import { SessionSerializer } from './session.serializer';
 
 @Module({
-    imports: [
-        UserModule,
-        PassportModule,
-        ConfigModule,
-    ],
-    providers: [Auth42Service, Auth42Strategy, JwtStrategy],
-    controllers: [Auth42Controller]
+    controllers: [Auth42Controller],
+    providers: [ConfigService, FtStrategy, SessionSerializer],
 })
 export class Auth42Module { }

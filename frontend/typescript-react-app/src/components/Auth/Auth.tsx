@@ -4,6 +4,7 @@ import './Auth.scss';
 import Header from "../Header/Header";
 import Login from "./Login/Login"
 import Signup from "./Signup/Signup"
+import FourtyTwo from "./42Auth/42Auth";
 
 /**
  * @malatini
@@ -21,19 +22,10 @@ export default function Auth() {
                         <div id="form--auth1" className="forms">
                             <h2>Bienvenue ! </h2>
                             <p>Pour jouer, vous devez vous authentifier 🏓 </p>
-                            <div id="formAuth42">
-                                <button
-                                  type="submit"
-                                  className="btn btn-dark btn-block"
-                                  id="auth-btn-3"
-                                  // onClick={routeChange}
-                                  >
-                                    Authentification 42
-                                </button>
-                            </div>
-                            <Signup />
+                            <FourtyTwo />
+                            {/*<Signup />*/}
                     </div>
-                        <Login />
+                        {/*<Login />*/}
                     </div>
                 </div>
             </div>

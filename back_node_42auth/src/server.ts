@@ -6,7 +6,7 @@ const app = express();
 const PORT = process.env.PORT || '80';
 
 var user = {
-	"login42": "", 
+	"login42": "",
 	"avatar": "",
 	"status": "",
 	"wins": 0,
@@ -138,7 +138,7 @@ function makeid(length) { // pour générer le state code de sécurité
     var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     var charactersLength = characters.length;
     for ( var i = 0; i < length; i++ ) {
-      result += characters.charAt(Math.floor(Math.random() * 
+      result += characters.charAt(Math.floor(Math.random() *
  charactersLength));
    }
    return result;

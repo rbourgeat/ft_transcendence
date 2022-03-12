@@ -9,7 +9,6 @@ export class UsersRepository extends Repository<User> {
         //const salt = await bcrypt.genSalt();
         //user.password = await bcrypt.hash(user.password, salt);
         user.friends = [];
-        user.achievements = [];
         user.login42 = userData.login42;
         //user.profile_picture = await this.generateProfilePicture();
         //const numberUsers = await this.createQueryBuilder('user').getCount().catch(() => 0);

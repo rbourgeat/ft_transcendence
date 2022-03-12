@@ -4,9 +4,12 @@ import TypingMessage from "./TypingMessage/TypingMessage";
 import ListDiscussions from "./ListDiscussions/ListDiscussions";
 import ListParticipant from './ListParticipant/ListParticipant';
 import React from "react";
+import MyAxios from '../Utils/Axios/Axios';
+import ToastAlerts from '../Utils/ToastAlerts/ToastAlerts';
+import { ToastContainer, toast } from 'react-toastify';
 //import { w3cwebsocket} from "websocket";
 
-import socketIOClient from "socket.io-client";
+import io from "socket.io-client";
 
 
 /**
@@ -15,15 +18,15 @@ import socketIOClient from "socket.io-client";
  */
 
 export interface ChatProps {
-
+    username?: string
 }
 
 export interface ChatState {
     data: any
 }
 
-//const client = new w3cwebsocket("127.0.0.1:8000");
-const ENDPOINT = "http://127.0.0.1:3000";
+//const socket = io("http://localhost:4000");
+//const message = document.getElementById('message');
 
 export default class Channels extends React.Component<ChatProps, ChatState>
 {
@@ -46,6 +49,21 @@ export default class Channels extends React.Component<ChatProps, ChatState>
         //socket.on("FromAPI", iodata => {
         //    this.setState({ data: iodata})
         //})
+        let myax = new MyAxios({
+            method: "POST",
+            ressource: "/api/chat",
+            username: this.props.username
+        });
+
+        //TODO: a revoir entre la creation et le get
+        let res = myax.createchat(this.props.username);
+        //console.log("Coucou!");
+        //const socket = socketIOClient(ENDPOINT);
+        //socket.on("FromAPI", iodata => {
+        //    this.setState({ data: iodata})
+        //    console.log("Socket ok!");
+        //})
+
     }
 
     render()
@@ -53,6 +71,17 @@ export default class Channels extends React.Component<ChatProps, ChatState>
         return (
             <div id="channels">
                 <Nav />
+                <ToastContainer
+                                position="top-right"
+                                autoClose={5000}
+                                hideProgressBar={false}
+                                newestOnTop={false}
+                                closeOnClick
+                                rtl={false}
+                                pauseOnFocusLoss
+                                draggable
+                                pauseOnHover
+                            />
                 <div className="container">
                     <div className="row d-flex justify-content-center text-center">
                         <div className="col-7">

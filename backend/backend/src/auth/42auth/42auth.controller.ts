@@ -1,31 +1,28 @@
-import { Controller, Get, Post, UseGuards, Res, Req } from '@nestjs/common';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { Auth42Guard } from 'src/auth/42auth/guard/42auth.guard';
-import { Auth42Service } from './42auth.service';
+import { Controller, Get, Redirect, UseGuards, Header } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
+import { FtOauthGuard } from './guard/ft-oauth.guard';
 
-@ApiTags('42auth')
+@ApiTags('Auth')
+//@Controller('api/login')
 @Controller('api/42auth')
+//@Header('Access-Control-Allow-Origin', '*')
 export class Auth42Controller {
-    constructor(
-        private readonly auth42Service: Auth42Service
-    ) { }
-
-    @ApiOperation({ summary: 'login with 42 API' })
-    @UseGuards(Auth42Guard)
+    //@Get('42')
     @Get('login')
-    async login() { }
+    @UseGuards(FtOauthGuard)
+    ftAuth() {
+        console.log('ftauth in controller');
+        return;
+    }
 
-    @ApiOperation({ summary: 'Redirection to front home page after 42 authentication' })
+    //@Get('api/42/return')
     @Get('redirect')
-    @UseGuards(Auth42Guard)
-    //async redirect(@Res({ passthrough: true }) res: Response, @Req() req: Request) {
-    async redirect() {
-        // const login = req.user['login'];
-        //let auth: boolean = false;
-        //const payload: JwtPayload = { login, auth };
-        //const accessToken: string = await this.jwtService.sign(payload);
-        //res.cookie('jwt', accessToken, { httpOnly: true });
-        //res.redirect(process.env.IP_BACKEND);
-        console.log('in redirect of 42auth');
+    @UseGuards(FtOauthGuard)
+    //@Redirect('/')
+    //@Redirect({ statusCode: HttpStatus.TEMPORARY_REDIRECT, url: 'https://nestjs.com' })
+    @Redirect('/api')
+    ftAuthCallback() {
+        console.log('ftauthcallback in controller');
+        return;
     }
 }

@@ -168,12 +168,12 @@ export class UserService {
 		user = await this.userRepository.findOne({ login42: login42 });
 		if (user)
 			return user;
-		let { login } = userData;
-		user = await this.userRepository.findOne({ login });
+		let { username } = userData;
+		user = await this.userRepository.findOne({ username });
 		if (user) {
 			const rand = Math.random().toString(16).substr(2, 5);
-			login = login + '-' + rand;
-			userData.login = login;
+			username = username + '-' + rand;
+			userData.username = username;
 		}
 		const newUser: User = await this.createUser42(userData);
 		return newUser;
