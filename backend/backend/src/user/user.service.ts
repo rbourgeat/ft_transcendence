@@ -76,7 +76,6 @@ export class UserService {
 		if (init)
 			u.friends.splice(0, 1);
 		// this.userEvent.achievementFriend(u);
-		console.log("u.friends: " + u.friends)
 		login = user;
 		return this.userRepository.update({ login }, {
 		    friends: u.friends
@@ -88,9 +87,12 @@ export class UserService {
 		const u = await this.userRepository.findOne({ login });
 		login = friend;
 		const f = await this.userRepository.findOne({ login });
-		for (var i = 0; i < u.friends.length; i++)
-			if (u.friends[i] === f.login)
-				u.friends.splice(i, 1);
+		if (u.friends.length == 1)
+			u.friends = [];
+		else
+			for (var i = 0; i < u.friends.length; i++)
+				if (u.friends[i] === f.login)
+					u.friends.splice(i, 1);
 		return this.userRepository.update({ login }, {
 			friends: u.friends
 		});

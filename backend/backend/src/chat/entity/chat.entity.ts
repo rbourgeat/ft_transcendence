@@ -9,32 +9,26 @@ export class Chat {
     @CreateDateColumn({ nullable: true })
     createdAt?: Date;
 
-    @JoinTable()
-    @ManyToMany(() => User)
-    owner: User;
+    @Column({nullable: false})
+    owner: string;
 
-    @JoinTable()
-    @ManyToMany(() => User)
-    admins: User[];
+    @Column("simple-array", { nullable: true })
+    admins: string[];
 
-    @JoinTable()
-    @ManyToMany(() => User)
-    members: User[];
+    @Column("simple-array", { nullable: true })
+    members: string[];
 
     @Column()
     public: boolean = true;
 
-    @JoinTable()
-    @ManyToMany(() => User)
-    blocked_users: User[];
+    @Column("simple-array", { nullable: true })
+    blocked_users: string[];
 
-    @JoinTable()
-    @ManyToMany(() => User)
-    temp_ban: User[];
+    @Column("simple-array", { nullable: true })
+    temp_ban: string[];
 
-    @JoinTable()
-    @ManyToMany(() => User)
-    temp_mute: User[];
+    @Column("simple-array", { nullable: true })
+    temp_mute: string[];
 
     // @OneToMany(type => User, user => user.login, { nullable: true })
     // admin?: User;

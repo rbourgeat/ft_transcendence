@@ -52,9 +52,15 @@ export class User {
     // @ManyToOne(type => Game, { nullable: true })
     // games: Game[];
 
-    @JoinTable()
-    @ManyToMany(() => Game)
-    games: Game[];
+    // @JoinTable()
+    // @ManyToMany(() => Game)
+    // games: Game[];
+
+    @Column("simple-array", { nullable: true })
+    games: number[];
+
+    @Column("simple-array", { nullable: true })
+    chats: number[];
 
     @Column({ default: false })
     two_factor_auth: boolean = false;
