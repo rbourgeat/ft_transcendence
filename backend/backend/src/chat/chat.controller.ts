@@ -31,4 +31,13 @@ export class ChatController {
         return this.chatService.createChat(chat);
     }
 
+    @ApiOperation({ summary: 'Remove a chat' }) //endpoint summary on swaggerui
+    @ApiOkResponse({ description: 'Chat removed successfully' }) //answer sent back
+    @ApiConflictResponse({ description: 'Chat already removed' }) //not working atm
+    @Delete()
+    async removeChat(@Body() id: number) {
+        console.log('Remove chat: ' + id)
+        return this.chatService.removeChat(id);
+    }
+
 }

@@ -36,7 +36,14 @@ export class ChatService {
 		    chats: u.chats
 		});
 
+        // pas fini d'ajouter les membres si il y en a
+
         return newChat;
+    }
+
+    async removeChat(id: number) {
+        const chat = await this.chatRepository.findOne({ id });
+        this.chatRepository.delete(chat);
     }
 
 }
