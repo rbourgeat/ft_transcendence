@@ -22,13 +22,13 @@ export class Chat {
     public: boolean = true;
 
     @Column("simple-array", { nullable: true })
-    blocked_users: string[];
+    bans: string[];
 
     @Column("simple-array", { nullable: true })
-    temp_ban: string[];
+    temp_bans: string[];
 
     @Column("simple-array", { nullable: true })
-    temp_mute: string[];
+    temp_mutes: string[];
 
     // @OneToMany(type => User, user => user.login, { nullable: true })
     // admin?: User;

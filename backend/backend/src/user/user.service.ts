@@ -87,7 +87,7 @@ export class UserService {
 		const u = await this.userRepository.findOne({ login });
 		login = friend;
 		const f = await this.userRepository.findOne({ login });
-		if (u.friends.length == 1)
+		if (u.friends.length == 1 && u.friends[0] === f.login)
 			u.friends = [];
 		else
 			for (var i = 0; i < u.friends.length; i++)
