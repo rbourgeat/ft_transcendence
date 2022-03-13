@@ -33,43 +33,42 @@ export default class Achievements extends React.Component<AchievementsProps, Ach
 							<div className="row d-flex justify-content-center text-center" id="row-cards">
                                 <h1>Achievements</h1>
                             </div>
+                            {/* TODO: checker si les achivements ont ete atteint ou pas */}
                                         <div className="row" id="first-row">
                                             <div className="card-group">
                                                 <div className="card">
                                                     <div className="card-body">
                                                         <h5 className="card-title">The challender</h5>
                                                         <p className="card-text">Reach the first position in the ladder</p>
-                                                        <img id="trophee" src="https://cdn.icon-icons.com/icons2/2534/PNG/512/trophy_winner_icon_152036.png" height="25px"></img>
+                                                        <img className="achievements--img" src="https://cdn.icon-icons.com/icons2/2534/PNG/512/trophy_winner_icon_152036.png" height="80px"></img>
                                                     </div>
                                                  </div>
 
-                                            {/* Deuxieme */}
                                                 <div className="card">
                                                     <div className="card-body">
                                                         <h5 className="card-title">On fire</h5>
                                                         <p className="card-text">Win 5 games in a row</p>
-                                                        <img src="https://cdn2.iconfinder.com/data/icons/house-6/100/Fire-512.png"></img>
+                                                        <img className="achievements--img" src="https://icon-library.com/images/fire-icon/fire-icon-22.jpg" height="80px"></img>
                                                     </div>
                                                 </div>
 
-                                                {/* Troisieme */}
                                                 <div className="card">
                                                     <div className="card-body">
                                                         <h5 className="card-title">Finally i'm a g4m3r</h5>
                                                         <p className="card-text">Play more than a 1000 games</p>
-                                                        <img src=""></img>
+                                                        <img src="https://www.iconpacks.net/icons/1/free-keyboard-icon-1405-thumb.png" className="achievements--img" height="80px"></img>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                            
+
                                         <div className="row" id="second-row">
                                             <div className="card-group">
                                                 <div className="card">
                                                     <div className="card-body">
                                                         <h5 className="card-title">This is how I met...</h5>
                                                         <p className="card-text">Had someone as your friend</p>
-                                                        <img src=""></img>
+                                                        <img src="https://static.thenounproject.com/png/355154-200.png" className="achievements--img" height="80px"></img>
                                                     </div>
                                                 </div>
 
@@ -77,16 +76,15 @@ export default class Achievements extends React.Component<AchievementsProps, Ach
                                                     <div className="card-body">
                                                         <h5 className="card-title">I am not noob</h5>
                                                         <p className="card-text">Launch your first game</p>
-                                                        <img src=""></img>
+                                                        <img src="https://icons-for-free.com/iconfiles/png/512/off+power+reboot+restart+icon-1320086062721850594.png" className="achievements--img" height="80px"></img>
                                                     </div>
                                                 </div>
-                                                
 
                                                 <div className="card">
                                                     <div className="card-body">
                                                         <h5 className="card-title">Stand together</h5>
                                                         <p className="card-text">Create or join guild</p>
-                                                        <img src=""></img>
+                                                        <img src="https://simpleicon.com/wp-content/uploads/flag.png" className="achievements--img" height="80px"></img>
                                                     </div>
                                                 </div>
                                             </div>
@@ -98,6 +96,7 @@ export default class Achievements extends React.Component<AchievementsProps, Ach
                                                     <div className="card-body">
                                                         <h5 className="card-title">Oh boy, you look good</h5>
                                                         <p className="card-text">Upload your own avatar</p>
+                                                        <img src="https://cdn3.iconfinder.com/data/icons/glypho-travel/64/history-swords-crossed-512.png" className="achievements--img" height="80px"></img>
                                                     </div>
                                                 </div>
 
@@ -105,16 +104,15 @@ export default class Achievements extends React.Component<AchievementsProps, Ach
                                                     <div className="card-body">
                                                         <h5 className="card-title">???</h5>
                                                         <p className="card-text">42 could the answer</p>
-                                                        <img src=""></img>
+                                                        <img src="https://cdn.onlinewebfonts.com/svg/img_183371.png" className="achievements--img" height="80px"></img>
                                                     </div>
                                                 </div>
-                                                
 
                                                 <div className="card">
                                                     <div className="card-body">
                                                         <h5 className="card-title">I want you to hit me</h5>
                                                         <p className="card-text">Invite 10 people to a duel</p>
-                                                        <img src=""></img>
+                                                        <img src="https://icon-library.com/images/punch-icon/punch-icon-25.jpg" className="achievements--img" height="80px"></img>
                                                     </div>
                                                 </div>
                                             </div>

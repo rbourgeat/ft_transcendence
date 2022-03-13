@@ -37,6 +37,29 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
         //On parsera les props pour appeler directement la bonne methode ?
     }
 
+    fourtytwoauthbis()
+    {
+        const headers = {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*'
+        };
+
+        const bod = {
+            //email: this.props.email,
+            //password: this.props.password,
+        }
+        axios.defaults.baseURL = 'http://localhost:3000/api/';
+
+        let res = axios.get("http://localhost:3000/api/auth/")
+        .then(res => {
+            console.log(res);
+        })
+        .catch((error) => {
+            console.log("Catched error second auth");
+            console.log(res);
+        })
+    }
+
     fourtytwoauth() {
         let toast = new ToastAlerts(null);
         const headers = {
@@ -49,7 +72,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
             password: this.props.password,
         }
 
-        axios.defaults.baseURL = 'http://localhost:3000/';
+        axios.defaults.baseURL = 'http://localhost:3000/api/';
 
         let res = axios.get("http://localhost:3000/api/42auth/login"
         /*, bod, {headers}*/).then(res => {
