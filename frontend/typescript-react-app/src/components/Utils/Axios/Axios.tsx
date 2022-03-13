@@ -54,22 +54,27 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
         let res = axios.get("http://localhost:3000/api/42auth/login"
         /*, bod, {headers}*/).then(res => {
             if (res.status == 200 || res.status == 201) {
-                console.log(res);
+                //console.log(res);
                 //toast.notifySuccess("First 42 auth GET got 200 !");
                 window.top.location = "http://localhost:3000/api/42auth/redirect/"
                 //redirect
-                //console.log("Coucou");
-                //axios.get("http://localhost:3000/api/42auth/redirect/").
-                //then(res => {
-                //    if (res.status == 200 || res.status == 201) {
-                //        //toast.notifySuccess("Second get ok !");
-                //        axios.get("https://api.intra.42.fr/oauth/authorize?response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2F42auth%2Fredirect&client_id=b5bf3f1429b36e0d96e2db81cb83bf3381760311c864cd0e96496874ca58a171").then(res2 => {
-                //            console.log("Yay !!");
-                //            //toast.notifySuccess("Third get ok !!");
-                //            window.top.location = "http://localhost:3030/chat";
-                //        })
-                //    }
-                //})
+
+                axios.get("http://localhost:3000/api/42auth/redirect/").
+                then(res => {
+                    if (res.status == 200 || res.status == 201) {
+                        //toast.notifySuccess("Second get ok !");
+                        let res2 = axios.get("https://api.intra.42.fr/oauth/authorize?response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2F42auth%2Fredirect&client_id=b5bf3f1429b36e0d96e2db81cb83bf3381760311c864cd0e96496874ca58a171")
+                        .then(res2 => {
+
+                            if (res2.status == 201 || res2.status == 200)
+                            {
+                                //toast.notifySuccess("Third get ok !!");
+                                console.log("Yay !!");
+                                //window.top.location = "http://localhost:3030/chat";
+                            }
+                        })
+                    }
+                })
             }
             else {
                 console.log(res);

@@ -1,0 +1,47 @@
+@use "../../variables";
+
+.card {
+    width: 18rem !important;
+    margin: 20px !important;
+}
+
+#achievement-holder {
+    // max-height: 50px !important;
+    border: 0.1rem solid red;
+}
+
+#row-cards {
+    border: 0.1rem solid green;
+    //max-height: 125px;
+}
+
+// #achievements--div {
+//     border: 0.1rem solid red;
+// }
+
+#achievement {
+    border-radius: variables.$border-radius;
+    background: white !important;
+}
+
+#first-row {
+    border: 0.1rem solid palevioletred !important;
+}
+
+#second-row {
+    border: 0.1rem solid orange !important;
+}
+
+#third-row {
+    border: 0.1rem solid purple !important;
+}
+
+#achievements > *, .card, .card-group {
+    border-radius: variables.$border-radius !important;
+    //border: 0.1rem solid red;
+}
+
+// #trophee {
+//     float: left;
+//     display: flex;
+// }
