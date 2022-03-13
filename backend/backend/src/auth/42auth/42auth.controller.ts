@@ -20,7 +20,7 @@ export class Auth42Controller {
     @UseGuards(FtOauthGuard)
     //@Redirect('/')
     //@Redirect({ statusCode: HttpStatus.TEMPORARY_REDIRECT, url: 'https://nestjs.com' })
-    @Redirect('/api')
+    @Redirect('http://localhost:3030/chat')
     ftAuthCallback() {
         console.log('ftauthcallback in controller');
         return;

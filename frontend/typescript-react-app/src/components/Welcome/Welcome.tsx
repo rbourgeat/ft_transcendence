@@ -9,7 +9,7 @@ import video1 from "../../public/pong-demo.mp4";
 
 import TypeAnimation from 'react-type-animation';
 import { useHistory } from 'react-router-dom'
-import Media from 'react-media';
+//import Media from 'react-media';
 import { UserContext } from "../App/UserContext";
 import { login } from "./Login";
 import { useCookies } from "react-cookie";

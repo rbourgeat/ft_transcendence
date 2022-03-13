@@ -11,7 +11,7 @@ import './User.scss';
 import axios from 'axios';
 import MyAxios from '../Utils/Axios/Axios';
 import { ToastContainer, toast } from 'react-toastify';
-import ls from 'local-storage'
+//import ls from 'local-storage'
 
 export interface UserfuncProps
 {

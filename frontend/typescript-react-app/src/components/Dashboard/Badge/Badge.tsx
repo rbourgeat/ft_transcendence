@@ -1,7 +1,7 @@
 import React from 'react';
 import './Badge.scss';
 
-import { PieChart } from 'react-minimal-pie-chart';
+//import { PieChart } from 'react-minimal-pie-chart';
 
 /**
  * @malatini : "Badge" correcpond à la section avec les stats principales du player
