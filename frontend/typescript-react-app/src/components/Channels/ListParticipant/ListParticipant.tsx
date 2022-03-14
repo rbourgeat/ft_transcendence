@@ -1,29 +1,36 @@
 import './ListParticipant.scss';
-import React from "react";
+import React, {useState} from "react";
 import Participant from './Participant/Participant';
 import Footer from "../../Footer/Footer";
+//import TimePicker from "react-time-picker";
+import { useTimer } from 'react-timer-hook';
+import MyTimer from "./MyTimer/MyTimer";
 
 export interface ParticipantProps{
-
 }
 
-export interface ParticipantState {
+// export interface ParticipantState {
 
-}
+// }
 
-export default class ListParticipant extends React.Component<ParticipantProps, ParticipantState>
+export default function ListParticipant()
 {
-    constructor(props: ParticipantProps)
-    {
-        super(props);
+    // constructor(props: ParticipantProps)
+    // {
+    //     super(props);
 
-        this.state = {}
-    }
+    //     this.state = {}
+    // }
 
-    componentDidMount() {}
+    // componentDidMount() {}
 
-    render()
-    {
+    // render()
+    // {
+
+        // const [value, onChange] = useState('10:00');
+        const time = new Date();
+        time.setSeconds(time.getSeconds() + 600);
+
         return (
             <div id="ListParticipant">
                 <h2 id="participant--title">Participants</h2>
@@ -36,28 +43,29 @@ export default class ListParticipant extends React.Component<ParticipantProps, P
                             <Participant username="macrespo" status="Online" admin={true}/>
                     </div>
                     <h2>tests</h2>
-                    <div className="row d-flex justify-content-center text-center">
+                    {/* <div className="row d-flex justify-content-center text-center">
                         <button id="bann-button" className="btn btn-danger">Ban</button>
                     </div>
                     <div className="row d-flex justify-content-center text-center">
                         <button id="mute-button" className="btn btn-warning">Mute</button>
-                    </div>
-                    {/* TODO: faire un input avec le choix de combien de temps */}
-                    {/* <button className="bann-temp-button">Ban temporarily</button>
-                    <button className="mute-temp-button">Mute temporalily</button> */}
-                    </div>
-                
+                    </div> */}
+                    <button id="bann-temp-button" className="btn btn-danger">Ban temporarily</button>
+                    <button id="mute-temp-button" className="btn btn-warning">Mute temporalily</button>
+                    <MyTimer expiryTimestamp={time} />
 
-                <div id="roles">
+                </div>
+                {/* Si je clique je dois pouvoir selectionner un minuteur */}
+                   
+
+                {/* <div id="roles">
                     <h3 id="roles--title">Roles</h3>
                     <p className="p--participants">Online <span className="online"></span></p>
                     <p className="p--participants">Offline <span className="offline"></span></p>
                     <p className="p--participants">Admin <span className="admin"></span></p>
                     <p className="p--participants">Owner <span className="owner"></span></p>
-                </div>
+                </div> */}
+
             <Footer />
             </div>
         );
     }
-
-}
