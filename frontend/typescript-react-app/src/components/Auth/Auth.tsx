@@ -23,9 +23,9 @@ export default function Auth() {
                             <h2>Bienvenue ! </h2>
                             <p>Pour jouer, vous devez vous authentifier 🏓 </p>
                             <FourtyTwo />
-                            {/*<Signup />*/}
+                            <Signup />
                     </div>
-                        {/*<Login />*/}
+                        <Login />
                     </div>
                 </div>
             </div>

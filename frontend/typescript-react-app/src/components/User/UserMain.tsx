@@ -2,12 +2,29 @@ import React  from 'react';
 import Usersub from "./UserSub"
 import Header from "../Header/Header";
 
-export default function UserMain()
+export interface UserMainProps
+{
+	username?: string,
+	email?: string,
+	password?: string,
+	password_conf?: string,
+	avatar?: string,
+	totalGames?: number,
+	totalWins?: number,
+	totalLoss?: number,
+	winLoss?: number
+}
+
+// export interface UserMainState
+// {
+// }
+
+export default function UserMain(props: UserMainProps)
 {
 	return (
 		<div>
-			{/*<Header />*/}
-			<Usersub username="yaya" email="yaya@gmail.com" password="Babyalex2016" password_conf="Babyalex2016" />
+			{/* transmettre ses props au sous composant */}
+			<Usersub username="dummy5"/>
 		</div>
 	);
 }

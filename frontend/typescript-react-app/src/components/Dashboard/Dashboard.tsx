@@ -3,8 +3,8 @@ import Nav from '../Nav/Nav'
 import MatchHistory from '../MatchHistory/MatchHistory';
 import Badge from './Badge/Badge';
 import Footer from "../Footer/Footer"
-import { PieChart } from 'react-minimal-pie-chart';
-import Media from 'react-media'
+//import { PieChart } from 'react-minimal-pie-chart';
+//import Media from 'react-media'
 
 /**
  * @malatini page de Dashboard a améliorer
@@ -40,9 +40,9 @@ export default function Dashboard() {
                         <button id="friends-button">Friends</button>
                         <br />
                     </div>
-                    <Media query="(min-width: 1200px)">
+                    {/*<Media query="(min-width: 1200px)">
                         <MatchHistory />
-                    </Media>
+                    </Media>*/}
                     <Footer />
             </div>
             </div>

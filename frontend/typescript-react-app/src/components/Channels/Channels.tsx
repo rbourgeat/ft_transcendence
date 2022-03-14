@@ -22,7 +22,6 @@ export interface ChatProps {
 }
 
 export interface ChatState {
-    data: any
 }
 
 //const socket = io("http://localhost:4000");
@@ -36,7 +35,6 @@ export default class Channels extends React.Component<ChatProps, ChatState>
         super(props);
 
         this.state = {
-            data: null
         }
     }
 

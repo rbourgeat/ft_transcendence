@@ -3,17 +3,16 @@
 .card {
     width: 18rem !important;
     margin: 20px !important;
+    //background-color: grey;
 }
 
-#achievement-holder {
-    // max-height: 50px !important;
-    border: 0.1rem solid red;
-}
+//#achievement-holder {
+//    border: 0.1rem solid red;
+//}
 
-#row-cards {
-    border: 0.1rem solid green;
-    //max-height: 125px;
-}
+//#row-cards {
+//    border: 0.1rem solid green;
+//}
 
 // #achievements--div {
 //     border: 0.1rem solid red;
@@ -24,10 +23,41 @@
     background: white !important;
 }
 
-#first-row {
-    border: 0.1rem solid palevioletred !important;
+//#first-row {
+//    border: 0.1rem solid palevioletred !important;
+//}
+
+//#second-row {
+//    border: 0.1rem solid orange !important;
+//}
+
+//#third-row {
+//    border: 0.1rem solid purple !important;
+//}
+
+#achievements > *, .card, .card-group {
+    border-radius: variables.$border-radius !important;
+    //border: 0.1rem solid red;
 }
 
-#second-row {
-    border: 0.1rem solid orange !important;
+// #trophee {
+//     float: left;
+//     display: flex;
+// }
+
+.card-title {
+    font-family: variables.$big-font;
+    font-size: 16px;
+    text-align: center;
+}
+
+.card-text {
+    font-family: variables.$basic-font;
+    text-align: center;
+    font-size: 20px;
+}
+
+.achievements--img {
+    display: flex;
+    float: right;
 }
