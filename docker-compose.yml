@@ -15,8 +15,8 @@ services:
    environment:
     - CHOKIDAR_USEPOLLING=true
    volumes:
-     #- ./frontend/typescript-react-app:/
-     - ./frontend/typescript-react-app:/sgoinfre/goinfre/Perso/malatini/app
+     - ./frontend/typescript-react-app:/app
+     #- ./frontend/typescript-react-app:/sgoinfre/goinfre/Perso/malatini/app
   api:
     build:
       context: ./backend/
