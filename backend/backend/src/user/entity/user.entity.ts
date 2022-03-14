@@ -1,5 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, CreateDateColumn, Column, Unique, ManyToOne, ManyToMany, JoinTable, OneToMany } from "typeorm";
 import { Game } from 'src/game/entity/game.entity'
+import { Message } from 'src/chat/message/entity/message.entity'
+import { Participate } from 'src/participate/participate.entity'
 
 @Entity('user')
 export class User {
@@ -14,7 +16,7 @@ export class User {
 
     @CreateDateColumn({ nullable: true })
     updateAt?: Date;
-
+    s
     @Column({ unique: true })
     login: string;
 
@@ -85,4 +87,10 @@ export class User {
 
     @Column("text", { default: "" })
     login42: string;
+
+    @OneToMany(() => Message, message => message.user)
+    messages: Message[];
+
+    @OneToMany(() => Participate, participate => participate.user)
+    participate: Participate[];
 }

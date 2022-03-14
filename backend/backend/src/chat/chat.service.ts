@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { Chat } from './entity/chat.entity';
 import { CreateChatDto } from './dto/chat.dto';
 import { User } from 'src/user/entity/user.entity';
+import { Message } from 'src/chat/message/entity/message.entity'
 
 @Injectable()
 export class ChatService {
@@ -11,7 +12,9 @@ export class ChatService {
 		@InjectRepository(User)
 		private userRepository: Repository<User>,
 		@InjectRepository(Chat)
-		private chatRepository: Repository<Chat>
+		private chatRepository: Repository<Chat>,
+		@InjectRepository(Message)
+		private messageRepository: Repository<Message>
 	) { }
 
 	getAllChats() {
@@ -22,6 +25,7 @@ export class ChatService {
 		const newChat = await this.chatRepository.create(chat);
 		await this.chatRepository.save(newChat);
 
+		/*
 		var init = false;
 		var login = chat.owner;
 		const u = await this.userRepository.findOne({ login });
@@ -35,7 +39,7 @@ export class ChatService {
 		this.userRepository.update({ login }, {
 			chats: u.chats
 		});
-
+		*/
 		// pas fini d'ajouter les membres si il y en a
 
 		return newChat;
@@ -46,7 +50,25 @@ export class ChatService {
 		this.chatRepository.delete(chat);
 	}
 
+	async getMessages(id: number) {
+		const chat = await this.chatRepository.findOne({ id });
+
+		const query = this.messageRepository
+			.createQueryBuilder('message')
+			.leftJoin('message.chat', 'chat')
+			.where('chat.id = :id', { id: chat.id })
+		//.orderBy(createdAt, DESC)
+		const messageFound: Message[] = await query.getMany();
+
+		let history: Message[] = [];
+		for (const message of messageFound) {
+			history.push(message);
+		}
+		return history;
+	}
+
 	async addMember(id: number, login: string, to: string) {
+		/*
 		const chat = await this.chatRepository.findOne({ id });
 		var init = false;
 		const u = await this.userRepository.findOne({ login });
@@ -106,11 +128,13 @@ export class ChatService {
 				temp_bans: chat.temp_bans
 			});
 		}
+		*/
 	}
 
 	async removeMember(id: number, login: string, to: string) {
+		/*
 		const chat = await this.chatRepository.findOne({ id });
-		
+
 		if (to == "member")
 		{
 			for (var i = 0; i < chat.members.length; i++)
@@ -147,6 +171,6 @@ export class ChatService {
 				temp_bans: chat.temp_bans
 			});
 		}
+	*/
 	}
-
 }

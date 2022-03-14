@@ -42,7 +42,8 @@ export default class Login extends React.Component<FourtyTwoProps, FourtyTwoStat
       })
 
     //let res = ax.fourtytwoauth();
-    let res = ax.fourtytwoauthbis();
+    let res = ax.fourtytwoauth();
+    console.log('test');
   }
 
   render() {

@@ -4,6 +4,7 @@ import { UserDto } from 'src/user/dto/user.dto';
 
 @ApiTags('Chats') //Create a category on swagger
 export class CreateChatDto {
+    /*
     @IsNotEmpty()
     @ApiProperty()
     owner: string;
@@ -11,4 +12,8 @@ export class CreateChatDto {
     @IsOptional()
     @ApiProperty()
     members: string[];
+    */
+    @IsNotEmpty()
+    @ApiProperty()
+    name: string;
 }

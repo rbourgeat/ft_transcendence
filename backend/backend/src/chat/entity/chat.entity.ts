@@ -1,5 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, CreateDateColumn, Column, Unique, OneToMany, ManyToMany, JoinTable } from "typeorm";
 import { User } from '../../user/entity/user.entity'
+import { Message } from 'src/chat/message/entity/message.entity'
+import { Participate } from 'src/participate/participate.entity'
 
 @Entity('chat')
 export class Chat {
@@ -9,35 +11,18 @@ export class Chat {
     @CreateDateColumn({ nullable: true })
     createdAt?: Date;
 
-    @Column({nullable: false})
-    owner: string;
+    @Column({ unique: true })
+    name: string
 
-    @Column("simple-array", { nullable: true })
-    admins: string[];
-
-    @Column("simple-array", { nullable: true })
-    members: string[];
+    @Column({ nullable: true })
+    password: string
 
     @Column()
     public: boolean = true;
 
-    @Column("simple-array", { nullable: true })
-    bans: string[];
+    @OneToMany(() => Message, message => message.chat)
+    messages: Message[];
 
-    @Column("simple-array", { nullable: true })
-    temp_bans: string[];
-
-    @Column("simple-array", { nullable: true })
-    temp_mutes: string[];
-
-    // @OneToMany(type => User, user => user.login, { nullable: true })
-    // admin?: User;
-
-    // @OneToMany(type => User, user => user.login, { nullable: true })
-    // members?: User[];
-
-    // ERROR
-    // @Column({nullable: true})
-    // messages: string[];
-
+    @OneToMany(() => Participate, participate => participate.chat)
+    participate: Participate[];
 }

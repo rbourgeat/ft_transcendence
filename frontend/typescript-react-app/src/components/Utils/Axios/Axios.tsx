@@ -37,8 +37,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
         //On parsera les props pour appeler directement la bonne methode ?
     }
 
-    fourtytwoauthbis()
-    {
+    fourtytwoauthbis() {
         const headers = {
             'Content-Type': 'application/json',
             'Access-Control-Allow-Origin': '*'
@@ -51,13 +50,13 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
         axios.defaults.baseURL = 'http://localhost:3000/api/';
 
         let res = axios.get("http://localhost:3000/api/auth/")
-        .then(res => {
-            console.log(res);
-        })
-        .catch((error) => {
-            console.log("Catched error second auth");
-            console.log(res);
-        })
+            .then(res => {
+                console.log(res);
+            })
+            .catch((error) => {
+                console.log("Catched error second auth");
+                console.log(res);
+            })
     }
 
     fourtytwoauth() {
@@ -83,21 +82,20 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
                 //redirect
 
                 axios.get("http://localhost:3000/api/42auth/redirect/").
-                then(res => {
-                    if (res.status == 200 || res.status == 201) {
-                        //toast.notifySuccess("Second get ok !");
-                        let res2 = axios.get("https://api.intra.42.fr/oauth/authorize?response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2F42auth%2Fredirect&client_id=b5bf3f1429b36e0d96e2db81cb83bf3381760311c864cd0e96496874ca58a171")
-                        .then(res2 => {
+                    then(res => {
+                        if (res.status == 200 || res.status == 201) {
+                            toast.notifySuccess("Second get ok !");
+                            let res2 = axios.get("https://api.intra.42.fr/oauth/authorize?response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2F42auth%2Fredirect&client_id=b5bf3f1429b36e0d96e2db81cb83bf3381760311c864cd0e96496874ca58a171")
+                                .then(res2 => {
 
-                            if (res2.status == 201 || res2.status == 200)
-                            {
-                                //toast.notifySuccess("Third get ok !!");
-                                console.log("Yay !!");
-                                //window.top.location = "http://localhost:3030/chat";
-                            }
-                        })
-                    }
-                })
+                                    if (res2.status == 201 || res2.status == 200) {
+                                        toast.notifySuccess("Third get ok !!");
+                                        console.log("Yay !!");
+                                        //window.top.location = "http://localhost:3030/chat";
+                                    }
+                                })
+                        }
+                    })
             }
             else {
                 console.log(res);

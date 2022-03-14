@@ -40,6 +40,15 @@ export class ChatController {
         return this.chatService.removeChat(id);
     }
 
+    @ApiOperation({ summary: 'Retrieve message history' }) //endpoint summary on swaggerui
+    @ApiOkResponse({ description: 'Messages load successfully' }) //answer sent back
+    @ApiConflictResponse({ description: 'Fail' }) //not working atm
+    @Get(':id/messages')
+    async getMessages(@Body() id: number) {
+        console.log('Retrieve message history from chat: ' + id)
+        return this.chatService.getMessages(id);
+    }
+
     @ApiOperation({ summary: 'Adding new member' }) //endpoint summary on swaggerui
     @ApiOkResponse({ description: 'new member added' }) //answer sent back
     @ApiConflictResponse({ description: 'member already member' }) //not working atm
