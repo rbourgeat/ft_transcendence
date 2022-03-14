@@ -26,19 +26,19 @@ export default class Participant extends React.Component<ParticipantSProps, Part
     render()
     {
         return (
-		<div className="row">
-			{/* Attention pas responsive pour l instant */}
-			<p>
-				{this.props.username}
-				{this.props.status === "Online" ? <span className="online"></span> : <span></span>}
-				{this.props.status === "Offline" ? <span className="offline"></span> : <span></span>}
-				{this.props.admin == true ? <span className="admin"></span> : <span></span>}
-				{this.props.owner == true ? <span className="owner"></span> : <span></span>}
-			</p>
+				<>
+				{/* Attention pas responsive pour l instant */}
+				<p className="p--participant">
+					{this.props.username}
+					{this.props.status === "Online" ? <span className="online"></span> : <span></span>}
+					{this.props.status === "Offline" ? <span className="offline"></span> : <span></span>}
+					{this.props.admin == true ? <span className="admin"></span> : <span></span>}
+					{this.props.owner == true ? <span className="owner"></span> : <span></span>}
+				</p>
 
-			{/*<button>
-		   </button>*/}
-		</div>
+				{/*<button>
+			</button>*/}
+		   </>
         );
     }
 

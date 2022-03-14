@@ -75,12 +75,12 @@ button {
   font-size: variables.$mini-font-size;
 }
 
-button:hover {
-  background-color: #4d4855;
-  background-image: linear-gradient(147deg, #4d4855 0%, #000000 74%) !important;
-  // border: 1px solid white !important;
-  color: white !important;
-}
+// button:hover {
+//   // background-color: #4d4855;
+//   // background-image: linear-gradient(147deg, #4d4855 0%, #000000 74%) !important;
+//   // border: 1px solid white !important;
+//   // color: white !important;
+// }
 
 .App {
   width: 100%;
