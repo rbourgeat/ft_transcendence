@@ -138,7 +138,7 @@ export class UserController {
     @Get(':login/2fa/on')
     async toggleTwoFactorAuthentication(@Param('login') login: string) {
         console.log('Turn On ' + login + ' Two Factor Authentication')
-        return this.usersService.turnOnTwoFactorAuthentication(String(login));
+        //return this.usersService.turnOnTwoFactorAuthentication(String(login));
     }
 
     /**
@@ -151,7 +151,7 @@ export class UserController {
     @Get(':login/2fa/off')
     async turnOffTwoFactorAuthentication(@Param('login') login: string) {
         console.log('Turn Off ' + login + ' Two Factor Authentication')
-        return this.usersService.turnOnTwoFactorAuthentication(String(login));
+        //return this.usersService.turnOnTwoFactorAuthentication(String(login));
     }
 
     /**

@@ -103,13 +103,13 @@ export class UserService {
 			status: s
 		});
 	}
-
-	async turnOnTwoFactorAuthentication(login: string) {
-		return this.userRepository.update({ login }, {
-			two_factor_auth: true
-		});
-	}
-
+	/*
+		async turnOnTwoFactorAuthentication(login: string) {
+			return this.userRepository.update({ login }, {
+				two_factor_auth: true
+			});
+		}
+	*/
 	async turnOffTwoFactorAuthentication(login: string) {
 		return this.userRepository.update({ login }, {
 			two_factor_auth: false
@@ -161,6 +161,19 @@ export class UserService {
 
 	createUser42(userData: User42Dto): Promise<User> {
 		return this.usersRepository.createUser42(userData)
+	}
+
+	async setTwoFactorAuthenticationSecret(secret: string, userId: number) {
+		return this.usersRepository.update(userId, {
+			twoFactorAuthenticationSecret: secret
+		});
+	}
+
+	async turnOnTwoFactorAuthentication(userId: number) {
+		console.log('has set 2fa to true for user');
+		return this.usersRepository.update(userId, {
+			isTwoFactorAuthenticationEnabled: true
+		});
 	}
 }
 

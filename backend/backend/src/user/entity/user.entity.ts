@@ -90,4 +90,10 @@ export class User {
 
     @OneToMany(() => Participate, participate => participate.user)
     participate: Participate[];
+
+    @Column({ nullable: true })
+    public twoFactorAuthenticationSecret?: string;
+
+    @Column({ default: false })
+    public isTwoFactorAuthenticationEnabled: boolean;
 }

@@ -14,8 +14,6 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { CorsOptions } from '@nestjs/common/interfaces/external/cors-options.interface';
 
 async function bootstrap() {
-
-  // const app = await NestFactory.create(AppModule);
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
   const document = SwaggerModule.createDocument(app, new DocumentBuilder()
@@ -25,30 +23,23 @@ async function bootstrap() {
 
   SwaggerModule.setup('api', app, document);
 
-  app.enableCors();
 
-  var cors = require('cors');
+  app.enableCors({
+    origin: true,
+    credentials: true
+  });
 
-  var allowCrossDomain = function (req: any, res: any, next: any) {
-    res.header('Access-Control-Allow-Origin', "*");
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-    // res.header('Access-Control-Allow-Headers', 'Content-Type');
-    res.header("Access-Control-Allow-Headers", "X-Requested-With, Content-Type, Authorization, Origin, Accept");
-    next();
-  }
 
-  app.use(allowCrossDomain);
-
+  //42auth
   app.use(
     session({ resave: false, saveUninitialized: false, secret: '!Seoul' }),
   );
   app.use(passport.initialize());
   app.use(passport.session());
-  //some other code
 
+  //others
   app.useGlobalPipes(new ValidationPipe());
   app.use(cookieParser());
-
   app.useStaticAssets(join(__dirname, '..', 'static'));
 
   await app.listen(3000);

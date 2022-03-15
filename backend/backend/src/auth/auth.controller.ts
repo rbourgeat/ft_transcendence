@@ -32,15 +32,34 @@ export class AuthenticationController {
     @HttpCode(200)
     @UseGuards(LocalAuthenticationGuard)
     @Post('log-in')
-    async logIn(@Body() loginDto: LogInDto, @Req() request: RequestWithUser, @Res() response: Response) { //loginDto not used but mandatory to let know that params needs to be sent
+    //async logIn(@Body() loginDto: LogInDto, @Req() request: RequestWithUser, @Res() response: Response) { //loginDto not used but mandatory to let know that params needs to be sent
+    async logIn(@Body() loginDto: LogInDto, @Req() request: RequestWithUser) { //loginDto not used but mandatory to let know that params needs to be sent
+        /*
         console.log('went by login in auth controller');
         const { user } = request;
         const cookie = this.authenticationService.getCookieWithJwtToken(user.id);
         response.setHeader('Set-Cookie', cookie);
         user.password = undefined;
         this.userService.updateStatus(user.login, "Online");
-        console.log('END OF LOGIN');
         return response.send(user);
+        */
+        const { user } = request;
+        const accessTokenCookie = this.authenticationService.getCookieWithJwtAccessToken(user.id);
+        /*
+         const {
+          cookie: refreshTokenCookie,
+          token: refreshToken
+        } = this.authenticationService.getCookieWithJwtRefreshToken(user.id);
+
+        await this.usersService.setCurrentRefreshToken(refreshToken, user.id);
+         */
+        request.res.setHeader('Set-Cookie', accessTokenCookie);
+        console.log('end of login');
+        if (user.isTwoFactorAuthenticationEnabled) {
+            return;
+        }
+
+        return user;
     }
 
     @ApiOperation({ summary: 'log out user' })

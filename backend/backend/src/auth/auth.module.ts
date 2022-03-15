@@ -8,6 +8,8 @@ import { LocalStrategy } from 'src/auth/strategy/local.strategy';
 import { JwtStrategy } from 'src/auth/strategy/jwt.strategy';
 import { AuthService } from 'src/auth/auth.service';
 import { UserModule } from 'src/user/user.module';
+import { TwoFactorAuthenticationController } from './twoFactorAuthentication.controller';
+import { TwoFactorAuthenticationService } from './twoFactorAuthentication.service';
 
 @Module({
   imports: [
@@ -25,7 +27,7 @@ import { UserModule } from 'src/user/user.module';
       }),
     }),
   ],
-  providers: [AuthService, LocalStrategy, JwtStrategy],
-  controllers: [AuthenticationController]
+  providers: [AuthService, LocalStrategy, JwtStrategy, TwoFactorAuthenticationService],
+  controllers: [AuthenticationController, TwoFactorAuthenticationController]
 })
 export class AuthModule { }
