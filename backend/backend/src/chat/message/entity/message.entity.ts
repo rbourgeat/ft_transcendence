@@ -2,7 +2,7 @@ import { Entity, PrimaryGeneratedColumn, CreateDateColumn, Column, Unique, OneTo
 import { Chat } from 'src/chat/entity/chat.entity'
 import { User } from 'src/user/entity/user.entity'
 
-Entity('message')
+@Entity('message')
 export class Message {
     @PrimaryGeneratedColumn()
     id?: number;
@@ -13,9 +13,9 @@ export class Message {
     @Column()
     content: string;
 
-    @ManyToOne(() => User, user => user.messages)
+    @ManyToOne(() => User, user => user.message)
     user: User[];
 
-    @ManyToOne(() => Chat, chat => chat.messages)
+    @ManyToOne(() => Chat, chat => chat.message)
     chat: Chat[];
 }

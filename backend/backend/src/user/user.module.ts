@@ -6,11 +6,15 @@ import { UsersRepository } from 'src/user/user.repository';
 import { UserService } from 'src/user/user.service';
 import { User } from 'src/user/entity/user.entity'
 import { UserEvent } from 'src/user/user.event';
+import { Message } from 'src/chat/message/entity/message.entity';
+import { Participate } from 'src/participate/participate.entity'
 
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([User]),
+    TypeOrmModule.forFeature([Message]),
+    TypeOrmModule.forFeature([Participate]),
     TypeOrmModule.forFeature([UsersRepository]),
     MulterModule.register({
       dest: './upload',

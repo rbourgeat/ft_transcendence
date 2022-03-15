@@ -11,6 +11,9 @@ export enum UserStatus {
 
 @Entity('participate')
 export class Participate {
+    @PrimaryGeneratedColumn()
+    id?: number;
+
     @Column({ default: false })
     admin: boolean
 

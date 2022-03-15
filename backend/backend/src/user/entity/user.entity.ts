@@ -89,7 +89,7 @@ export class User {
     login42: string;
 
     @OneToMany(() => Message, message => message.user)
-    messages: Message[];
+    message: Message[];
 
     @OneToMany(() => Participate, participate => participate.user)
     participate: Participate[];

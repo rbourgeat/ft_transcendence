@@ -21,7 +21,7 @@ export class Chat {
     public: boolean = true;
 
     @OneToMany(() => Message, message => message.chat)
-    messages: Message[];
+    message: Message[];
 
     @OneToMany(() => Participate, participate => participate.chat)
     participate: Participate[];
