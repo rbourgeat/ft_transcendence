@@ -80,3 +80,8 @@
 #badge--wins > * {
   color: variables.$green;
 }
+
+#badge {
+  border: 0.1rem solid white !important;
+  border-radius: variables.$border-radius-big;
+}

@@ -13,36 +13,23 @@ export default function Dashboard() {
     return (
         <div id="dashboard">
             <Nav />
-            <Badge />
-            <br />
             <div className="container">
-                <div className="row">
-                </div>
-            </div>
-            <div className="container">
-
                 <div
                   className="row d-flex justify-content-center text-center"
                   id="dashboard-buttons"
                   >
-
-                    <div className="col-4">
-                    <br />
+                    <Badge />
+                    {/*<div className="col-4">
                         <button
                           id="match-history-button"
                         >
                           Match history
                         </button>
-                        <br />
-                    </div>
-                    <div className="col-4">
-                      <br />
+                    </div>*/}
+                    {/*<div className="col-4">
                         <button id="friends-button">Friends</button>
-                        <br />
-                    </div>
-                    {/*<Media query="(min-width: 1200px)">
-                        <MatchHistory />
-                    </Media>*/}
+                    </div>*/}
+                    <MatchHistory />
                     <Footer />
             </div>
             </div>

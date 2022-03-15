@@ -42,7 +42,6 @@ export default function ListParticipant()
                             <Participant username="darbib" status="Online"/>
                             <Participant username="macrespo" status="Online" admin={true}/>
                     </div>
-                    <h2>tests</h2>
                     {/* <div className="row d-flex justify-content-center text-center">
                         <button id="bann-button" className="btn btn-danger">Ban</button>
                     </div>
@@ -51,11 +50,11 @@ export default function ListParticipant()
                     </div> */}
                     <button id="bann-temp-button" className="btn btn-danger">Ban temporarily</button>
                     <button id="mute-temp-button" className="btn btn-warning">Mute temporalily</button>
-                    <MyTimer expiryTimestamp={time} />
+                    {/*<MyTimer expiryTimestamp={time} />*/}
 
                 </div>
                 {/* Si je clique je dois pouvoir selectionner un minuteur */}
-                   
+
 
                 {/* <div id="roles">
                     <h3 id="roles--title">Roles</h3>
