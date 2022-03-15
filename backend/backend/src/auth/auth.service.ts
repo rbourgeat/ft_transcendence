@@ -37,19 +37,11 @@ export class AuthService {
         }
     }
 
-    //Classic
-    public getCookieWithJwtToken(userId: number) {
-        console.log('went by getcookiewithjwttoken in auth service');
-        const payload: TokenPayload = { userId };
-        const token = this.jwtService.sign(payload);
-        return `Authentication=${token}; HttpOnly; Path=/; Max-Age=${process.env.JWT_EXPIRATION_TIME}`;
-    }
-
     //2FA
     public getCookieWithJwtAccessToken(userId: number, isSecondFactorAuthenticated = false) {
         const payload: TokenPayload = { userId, isSecondFactorAuthenticated };
         const token = this.jwtService.sign(payload, {
-            secret: process.env.WT_ACCESS_TOKEN_SECRET,
+            secret: process.env.JWT_ACCESS_TOKEN_SECRET,
             expiresIn: `${process.env.JWT_ACCESS_TOKEN_EXPIRATION_TIME}s`
         });
         return `Authentication=${token}; HttpOnly; Path=/; Max-Age=${process.env.JWT_ACCESS_TOKEN_EXPIRATION_TIME}`;

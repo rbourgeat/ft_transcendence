@@ -7,12 +7,8 @@ import { UserService } from 'src/user/user.service';
 import TokenPayload from './interface/tokenPayload.interface';
 
 @Injectable()
-export class JwtTwoFactorStrategy extends PassportStrategy(
-    Strategy,
-    'jwt-two-factor'
-) {
+export class JwtTwoFactorStrategy extends PassportStrategy(Strategy, 'jwt-two-factor') {
     constructor(
-        private readonly configService: ConfigService,
         private readonly userService: UserService,
     ) {
         super({
@@ -24,12 +20,11 @@ export class JwtTwoFactorStrategy extends PassportStrategy(
     }
 
     async validate(payload: TokenPayload) {
+        console.log('validate function for 2FA, gonna get user by id');
         const user = await this.userService.getById(payload.userId);
-        if (!user.isTwoFactorAuthenticationEnabled) {
+        if (!user.isTwoFactorAuthenticationEnabled)
             return user;
-        }
-        if (payload.isSecondFactorAuthenticated) {
+        if (payload.isSecondFactorAuthenticated)
             return user;
-        }
     }
 }

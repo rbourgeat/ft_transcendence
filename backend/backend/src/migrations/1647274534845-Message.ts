@@ -14,13 +14,24 @@ export class Message1647274534845 implements MigrationInterface {
             .where("user.login = :login", { login: 'dummy1' })
             .getOne();
 
-        const message1 = await queryRunner.manager.save(
-            queryRunner.manager.create<Message>(Message, {
-                content: 'message1',
-                //user: user1,
-                //status: 'offline',
-            }),
-        );
+        await getConnection()
+            .createQueryBuilder()
+            .insert()
+            .into(User)
+            .values({
+                login: "test2",
+                email: "test2@test2.com"
+            })
+            .execute();
+        /*
+                const message1 = await queryRunner.manager.save(
+                    queryRunner.manager.create<Message>(Message, {
+                        content: 'message1',
+                        user: user1,
+                        status: 'offline',
+                    }),
+                );
+                */
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {

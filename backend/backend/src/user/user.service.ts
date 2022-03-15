@@ -103,24 +103,6 @@ export class UserService {
 			status: s
 		});
 	}
-	/*
-		async turnOnTwoFactorAuthentication(login: string) {
-			return this.userRepository.update({ login }, {
-				two_factor_auth: true
-			});
-		}
-	*/
-	async turnOffTwoFactorAuthentication(login: string) {
-		return this.userRepository.update({ login }, {
-			two_factor_auth: false
-		});
-	}
-
-	async setupTwoFactorAuthentication(login: string, secret: string) {
-		return this.userRepository.update({ login }, {
-			two_factor_secret: secret
-		});
-	}
 
 	async addAvatar(login: string, filename: string) {
 		return this.userRepository.update({ login }, {

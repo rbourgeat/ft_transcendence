@@ -68,12 +68,6 @@ export class User {
     chats: number[];
 
     @Column({ default: false })
-    two_factor_auth: boolean = false;
-
-    @Column({ default: false })
-    two_factor_secret: string;
-
-    @Column({ default: false })
     is_ban: boolean;
 
     @Column({ default: false })
