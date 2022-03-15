@@ -15,6 +15,7 @@ export default function Badge(props) {
                     <div id="badge--div--sub" className="row">
                         <div className="col">
                             <h2 id="badge--title">Badge</h2>
+                            {/* TODO: revoir les images */}
                             <img src="https://miro.medium.com/max/720/1*W35QUSvGpcLuxPo3SRTH4w.png" alt="default" id="badge-picture"/>
                         </div>
                         <div className="col" id="badge--stats">
@@ -24,11 +25,11 @@ export default function Badge(props) {
                             <p id="badge--games" className="badge--stats-text">Games: x</p>
                             <p id="badge--achievements" className="badge--stats-text">Achievements : x</p>
                         </div>
-                        <div className="col" id="badge--wins">
+                        {/*<div className="col" id="badge--wins">
                             <h2 id="wins-title">Wins</h2>
                             <br/>
                                 <p id="p--wins">6 wins</p>
-                        </div>
+                        </div>*/}
                     </div>
                     {/*<div className="col" id="badge--graph">
                         <h2 id="graph-title">Graph</h2>

@@ -20,8 +20,6 @@ export default function MatchHistory() {
                 <ul>
                     <li><ButtonResume /></li>
                     <li><ButtonResume /></li>
-                    <li><ButtonResume /></li>
-                    <li><ButtonResume /></li>
                 </ul>
             </div>
         </div>
