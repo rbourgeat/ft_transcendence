@@ -78,7 +78,7 @@ export class UserService {
 		// this.userEvent.achievementFriend(u);
 		login = user;
 		return this.userRepository.update({ login }, {
-		    friends: u.friends
+			friends: u.friends
 		});
 	}
 
@@ -157,26 +157,6 @@ export class UserService {
 			return user;
 		}
 		throw new HttpException('User with this id does not exist', HttpStatus.NOT_FOUND);
-	}
-
-	////
-	async validateUser42(userData: User42Dto): Promise<User> {
-		console.log('went in validateyser42 in user service');
-		let user: User = undefined;
-
-		const { login42 } = userData;
-		user = await this.userRepository.findOne({ login42: login42 });
-		if (user)
-			return user;
-		let { username } = userData;
-		user = await this.userRepository.findOne({ username });
-		if (user) {
-			const rand = Math.random().toString(16).substr(2, 5);
-			username = username + '-' + rand;
-			userData.username = username;
-		}
-		const newUser: User = await this.createUser42(userData);
-		return newUser;
 	}
 
 	createUser42(userData: User42Dto): Promise<User> {

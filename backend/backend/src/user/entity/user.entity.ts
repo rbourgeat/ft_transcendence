@@ -85,9 +85,6 @@ export class User {
     @Column("simple-array", { nullable: true })
     achievements: string[];
 
-    @Column("text", { default: "" })
-    login42: string;
-
     @OneToMany(() => Message, message => message.user)
     message: Message[];
 

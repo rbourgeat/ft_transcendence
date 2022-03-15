@@ -65,8 +65,7 @@ export default CreateUserDtoViaRegistration;
 
 @ApiTags('42Auth')
 export class User42Dto {
-    username: string;
+    login: string;
     email: string;
     password: string;
-    login42: string;
 }

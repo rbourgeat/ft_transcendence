@@ -5,15 +5,13 @@ import { User42Dto } from 'src/user/dto/user.dto';
 @EntityRepository(User)
 export class UsersRepository extends Repository<User> {
     async createUser42(userData: User42Dto): Promise<User> {
+        console.log('went in createuser42');
         const user: User = this.create(userData);
         //const salt = await bcrypt.genSalt();
         //user.password = await bcrypt.hash(user.password, salt);
-        user.friends = [];
-        user.login42 = userData.login42;
-        //user.profile_picture = await this.generateProfilePicture();
-        //const numberUsers = await this.createQueryBuilder('user').getCount().catch(() => 0);
-        //if (numberUsers === 0)
-        //    user.isAdmin = true;
+        user.password = userData.password;
+        user.login = userData.login;
+        user.email = userData.email;
         return this.save(user);
     }
 }
