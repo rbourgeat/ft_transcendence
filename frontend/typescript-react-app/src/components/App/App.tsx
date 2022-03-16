@@ -21,6 +21,7 @@ import { useCookies } from "react-cookie";
 import Channels from "../Channels/Channels";
 import Search from "../Search/Search"
 import Achievements from "../Achievements/Achievements"
+import GameRules from "../GameRules/GameRules";
 
 function App() {
 
@@ -58,6 +59,9 @@ function App() {
           </Route>
           <Route path="/achievements">
             <Achievements />
+          </Route>
+          <Route path="/gamerules">
+            <GameRules />
           </Route>
           </UserContext.Provider>
         </Switch>

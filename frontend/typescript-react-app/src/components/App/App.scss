@@ -86,3 +86,9 @@ button {
   width: 100%;
   height: 100%;
 }
+
+p {
+  font-family: variables.$basic-font;
+  color: #D3D3D3 !important;
+  line-height: 0.5rem !important;
+}
