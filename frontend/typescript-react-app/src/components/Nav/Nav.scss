@@ -4,7 +4,7 @@
   margin-bottom: 20px;
   font-family: variables.$big-font;
   font-size: 12px !important;
-  color: white !important;
+  color: variables.$white !important;
   padding: 10px;
   padding-left: 20px;
   //   opacity: 0.36 !important;
@@ -13,4 +13,6 @@
 #nav--title {
   padding-right: 30px;
   font-size: 28px !important;
+  color: variables.$white;
+  text-decoration: none;
 }
