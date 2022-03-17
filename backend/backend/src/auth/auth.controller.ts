@@ -35,7 +35,8 @@ export class AuthenticationController {
     //async logIn(@Body() loginDto: LogInDto, @Req() request: RequestWithUser, @Res() response: Response) { //loginDto not used but mandatory to let know that params needs to be sent
     async logIn(@Body() loginDto: LogInDto, @Req() request: RequestWithUser) { //loginDto not used but mandatory to let know that params needs to be sent
         const { user } = request;
-        const accessTokenCookie = this.authenticationService.getCookieWithJwtAccessToken(user.id);
+        //const accessTokenCookie = this.authenticationService.getCookieWithJwtAccessToken(user.id);
+        const accessTokenCookie = this.authenticationService.getCookieWithJwtToken(user.id);
         /*
          const {
           cookie: refreshTokenCookie,
