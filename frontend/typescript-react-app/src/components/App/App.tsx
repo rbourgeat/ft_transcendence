@@ -2,9 +2,8 @@ import React, { useState, useMemo, useEffect} from 'react';
 import './App.scss';
 import {
   BrowserRouter as Router,
-  Switch,
   Route,
-  Redirect
+  Routes
 } from "react-router-dom";
 
 import io from "socket.io-client"
@@ -31,37 +30,18 @@ function App() {
 
   return (
     <div id="main">
-      <Router>
-        <Switch>
-          <UserContext.Provider value={value}>
-          <Route path="/welcome">
-            <Welcome />
-          </Route>
-          <Route exact path="/">
-            <Welcome />
-          </Route>
-          <Route path="/auth">
-            <Auth />
-          </Route>
-          <Route path="/dashboard">
-            <Dashboard />
-          </Route>
-          <Route path="/user">
-            {/*Revoir en fonction du contexte avec la connexion */}
-            <UserMain username="dummy5" />
-          </Route>
-          <Route path="/chat">
-            <Channels username="dummy5"/>
-          </Route>
-          <Route path="/search">
-            <Search />
-          </Route>
-          <Route path="/achievements">
-            <Achievements />
-          </Route>
-          </UserContext.Provider>
-        </Switch>
-      </Router>
+      <UserContext.Provider value={value}>
+      <Routes>
+		 <Route path="/" element={<Welcome />} />
+		 <Route path="/auth" element={<Auth />} />
+		 <Route path="/dashboard" element={<Dashboard />}/>
+         {/*Revoir en fonction du contexte avec la connexion */}
+		 <Route path="/user" element={<UserMain username="dummy5" />} />
+		 <Route path="/chat" element={<Channels username="dummy5"/>} />
+		 <Route path="/search" element={<Search />}  />
+		 <Route path="/achievements" element={<Achievements />}  />
+      </Routes>
+      </UserContext.Provider>
     </div>
   );
 }
