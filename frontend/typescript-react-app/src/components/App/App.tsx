@@ -12,6 +12,7 @@ import Auth from '../Auth/Auth';
 import Welcome from '../Welcome/Welcome';
 import NotFound from '../NotFound/NotFound';
 import Dashboard from '../Dashboard/Dashboard';
+import Error from '../Error/'
 import UserMain from '../User/UserMain';
 // import UserSub from '../User/UserSub';
 import 'bootstrap/dist/css/bootstrap.css';
@@ -40,6 +41,7 @@ function App() {
 		 <Route path="/chat" element={<Channels username="dummy5"/>} />
 		 <Route path="/search" element={<Search />}  />
 		 <Route path="/achievements" element={<Achievements />}  />
+		 <Route path="*" element={<Error />}  />
       </Routes>
       </UserContext.Provider>
     </div>
