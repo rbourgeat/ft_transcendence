@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
  * Notre navbar / menu, à continuer , à mettre en classe et pas en fonction, utilise window
  */
 
-export default function Nav() {
+function Nav() {
     return (
         <div id="nav">
             <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -44,3 +44,5 @@ export default function Nav() {
         </div>
     );
 }
+
+export default Nav

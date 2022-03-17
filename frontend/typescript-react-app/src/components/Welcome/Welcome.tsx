@@ -20,6 +20,7 @@ import { useCookies } from "react-cookie";
  * voir useContext (quand fini mettre dans dossier pages) ?
  * On laisse en fonction et pas en classe pour utiliser les hooks car je ne sais pas faire sans pour l'instant
  */
+
 export default function Welcome() {
 
     const navigate = useNavigate();
@@ -45,7 +46,7 @@ export default function Welcome() {
                     cursor={true}
                     sequence={['Authors :', 5000, '']}
                     wrapper="figcaption"
-                    repeat="Infitiny"
+                    repeat={Infinity}
                 />
                 <br></br>
                     <li>bahaas</li>
