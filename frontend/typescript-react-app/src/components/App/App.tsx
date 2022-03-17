@@ -1,3 +1,4 @@
+import 'bootstrap/dist/css/bootstrap.css';
 import React, { useState, useMemo, useEffect} from 'react';
 import './App.scss';
 import {
@@ -14,7 +15,6 @@ import NotFound from '../NotFound/NotFound';
 import Dashboard from '../Dashboard/Dashboard';
 import UserMain from '../User/UserMain';
 // import UserSub from '../User/UserSub';
-import 'bootstrap/dist/css/bootstrap.css';
 import {UserContext} from './UserContext';
 import { useCookies } from "react-cookie";
 import Channels from "../Channels/Channels";
@@ -33,6 +33,7 @@ function App() {
       <UserContext.Provider value={value}>
       <Routes>
 		 <Route path="/" element={<Welcome />} />
+		 <Route path="/welcome" element={<Welcome />} />
 		 <Route path="/auth" element={<Auth />} />
 		 <Route path="/dashboard" element={<Dashboard />}/>
          {/*Revoir en fonction du contexte avec la connexion */}
