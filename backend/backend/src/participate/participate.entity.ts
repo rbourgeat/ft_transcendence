@@ -17,8 +17,10 @@ export class Participate {
     @Column({ default: false })
     admin: boolean
 
+    /*
     @Column()
     public: boolean = true;
+    */
 
     @Column({ nullable: true })
     timestamp: Date;
@@ -26,9 +28,15 @@ export class Participate {
     @Column({ type: "enum", enum: UserStatus, default: UserStatus.ACTIVE })
     role: UserStatus;
 
-    @ManyToOne(() => User, user => user.participate)
+    @ManyToOne(() => User, (user: User) => user.participate)
     user: User;
 
-    @ManyToOne(() => Chat, chat => chat.participate)
+    /*
+    @ManyToOne(() => Chat, (chat: Chat) => chat.participate)
     chat: Chat;
+    */
+
+    @ManyToMany(() => Chat, (chat: Chat) => chat.participates)
+    @JoinTable()
+    public chats: Chat[];
 }

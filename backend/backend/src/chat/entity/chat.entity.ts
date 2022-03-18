@@ -8,21 +8,29 @@ export class Chat {
     @PrimaryGeneratedColumn()
     id?: number;
 
+    /*
     @CreateDateColumn({ nullable: true })
     createdAt?: Date;
-
+    */
     @Column({ unique: true })
     name: string
 
+    /*
     @Column({ nullable: true })
     password: string
 
     @Column()
     public: boolean = true;
 
-    @OneToMany(() => Message, message => message.chat)
-    message: Message[];
+    @OneToMany(() => Message, (message: Message) => message.channel)
+    public message: Message[];
+*/
 
+    /*
     @OneToMany(() => Participate, participate => participate.chat)
-    participate: Participate[];
+    public participate: Participate[];
+    */
+
+    @ManyToMany(() => Participate, (Participate: Participate) => Participate.chats)
+    public participates: Participate[];
 }

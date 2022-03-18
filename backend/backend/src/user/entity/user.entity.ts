@@ -79,11 +79,11 @@ export class User {
     @Column("simple-array", { nullable: true })
     achievements: string[];
 
-    @OneToMany(() => Message, message => message.user)
-    message: Message[];
+    @OneToMany(() => Message, (message: Message) => message.author)
+    public message: Message[];
 
-    @OneToMany(() => Participate, participate => participate.user)
-    participate: Participate[];
+    @OneToMany(() => Participate, (participate: Participate) => participate.user)
+    public participate: Participate[];
 
     @Column({ nullable: true })
     public twoFactorAuthenticationSecret?: string;

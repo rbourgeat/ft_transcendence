@@ -5,17 +5,15 @@ import { User } from 'src/user/entity/user.entity'
 @Entity('message')
 export class Message {
     @PrimaryGeneratedColumn()
-    id?: number;
-
-    @CreateDateColumn({ nullable: true })
-    createdAt?: Date;
+    id: number;
 
     @Column()
     content: string;
 
-    @ManyToOne(() => User, user => user.message)
-    user: User[];
-
-    @ManyToOne(() => Chat, chat => chat.message)
-    chat: Chat[];
+    @ManyToOne(() => User, (author: User) => author.message)
+    author: User;
+    /*
+        @ManyToOne(() => Chat, (channel: Chat) => channel.message)
+        channel: Chat;
+    */
 }

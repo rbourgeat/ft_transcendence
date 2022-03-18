@@ -5,6 +5,8 @@ import { Chat } from './entity/chat.entity';
 import { CreateChatDto } from './dto/chat.dto';
 import { User } from 'src/user/entity/user.entity';
 import { Message } from 'src/chat/message/entity/message.entity'
+import CreateMessageDto from './dto/message.dto';
+import { Participate } from 'src/participate/participate.entity';
 
 @Injectable()
 export class ChatService {
@@ -14,17 +16,43 @@ export class ChatService {
 		@InjectRepository(Chat)
 		private chatRepository: Repository<Chat>,
 		@InjectRepository(Message)
-		private messageRepository: Repository<Message>
+		private messageRepository: Repository<Message>,
+		@InjectRepository(Participate)
+		private participateRepository: Repository<Participate>
 	) { }
 
 	getAllChats() {
 		return this.chatRepository.find();
 	}
 
-	async createChat(chat: CreateChatDto) {
-		const newChat = await this.chatRepository.create(chat);
-		await this.chatRepository.save(newChat);
+	async createChat(chat: CreateChatDto, user: User) {
 
+		console.log('create owner of channel');
+		const newParticipate = await this.participateRepository.create(
+			{
+				user: user,
+			}
+		);
+		await this.participateRepository.save(newParticipate);
+
+		console.log('create owner done: ' + newParticipate.user.login);
+		console.log('create channel');
+		const newChat = await this.chatRepository.create(
+			{
+				...chat,
+				participates: [newParticipate]
+			}
+		);
+		await this.chatRepository.save(newChat);
+		console.log('create channel done');
+
+		//add channel to the participate user table
+		//await this.participateRepository.update(newParticipate.id, newChat);
+		//console.log('add channel to participation users table');
+
+		//add participate to the channel table
+		//await this.chatRepository.update(newChat.id, newParticipate);
+		return newChat;
 		/*
 		var init = false;
 		var login = chat.owner;
@@ -42,7 +70,16 @@ export class ChatService {
 		*/
 		// pas fini d'ajouter les membres si il y en a
 
-		return newChat;
+		//return newChat;
+	}
+
+	async createMessage(message: CreateMessageDto, user: User) {
+		const newMessage = await this.messageRepository.create({
+			...message,
+			author: user
+		});
+		await this.messageRepository.save(newMessage);
+		return newMessage;
 	}
 
 	async removeChat(id: number) {
