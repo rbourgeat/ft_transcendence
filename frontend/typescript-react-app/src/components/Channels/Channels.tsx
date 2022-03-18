@@ -9,7 +9,7 @@ import ToastAlerts from '../Utils/ToastAlerts/ToastAlerts';
 import { ToastContainer, toast } from 'react-toastify';
 //import { w3cwebsocket} from "websocket";
 
-import io from "socket.io-client";
+//import io from "socket.io-client";
 
 
 /**
