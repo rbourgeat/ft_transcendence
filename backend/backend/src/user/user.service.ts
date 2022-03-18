@@ -141,7 +141,12 @@ export class UserService {
 		throw new HttpException('User with this id does not exist', HttpStatus.NOT_FOUND);
 	}
 
-	createUser42(userData: User42Dto): Promise<User> {
+	async createUser42(userData: User42Dto): Promise<User> {
+		const user = await this.userRepository.findOne({ email: userData.email });
+		if (user) {
+			console.log("that user already exists");
+			return;
+		}
 		return this.usersRepository.createUser42(userData)
 	}
 
