@@ -1,5 +1,5 @@
 import { User } from "src/user/entity/user.entity";
-import { MigrationInterface, QueryRunner } from "typeorm";
+import { MigrationInterface, QueryRunner, getConnection } from "typeorm";
 
 export class UserMigration1645626140921 implements MigrationInterface {
 
@@ -36,6 +36,17 @@ export class UserMigration1645626140921 implements MigrationInterface {
                 status: 'online',
             }),
         );
+
+        await getConnection()
+            .createQueryBuilder()
+            .insert()
+            .into(User)
+            .values({
+                login: "string",
+                email: "string@a.com",
+                password: "string2A"
+            })
+            .execute();
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {

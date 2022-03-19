@@ -22,11 +22,27 @@ export class ChatService {
 	) { }
 
 	getAllChats() {
-		return this.chatRepository.find();
+		return this.chatRepository.find({ relations: ['participates'] });
+	}
+
+	async getChatByName(name: string) {
+		console.log('we search for chat: ' + name);
+		//const chat = await this.chatRepository.findOne({ where: { name: name } })
+		const chat = await this.chatRepository.findOne({ name: name });
+		if (chat) {
+			return chat;
+		}
+		else {
+			console.log(chat + ' not found');
+			return;
+		}
 	}
 
 	async createChat(chat: CreateChatDto, user: User) {
-
+		if (await this.getChatByName(chat.name)) {
+			console.log('error: ' + chat + ' already exist');
+			return;
+		}
 		console.log('create owner of channel');
 		const newParticipate = await this.participateRepository.create(
 			{

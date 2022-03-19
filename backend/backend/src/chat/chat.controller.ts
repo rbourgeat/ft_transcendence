@@ -27,9 +27,7 @@ export class ChatController {
     @UseGuards(JwtAuthenticationGuard)
     @Post('message')
     async createMessage(@Body() message: CreateMessageDto, @Req() req: RequestWithUser) {
-        //console.log('Create message: ' + message.content)
         return this.chatService.createMessage(message, req.user);
-        //return this.chatService.createChat(chat);
     }
 
     /**
