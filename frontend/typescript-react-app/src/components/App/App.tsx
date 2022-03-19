@@ -7,7 +7,7 @@ import {
   Redirect
 } from "react-router-dom";
 
-import io from "socket.io-client"
+//import io from "socket.io-client"
 
 import Auth from '../Auth/Auth';
 import Welcome from '../Welcome/Welcome';

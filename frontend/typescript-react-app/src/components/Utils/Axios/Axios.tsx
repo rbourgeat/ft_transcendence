@@ -37,60 +37,66 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
         //On parsera les props pour appeler directement la bonne methode ?
     }
 
+    
+    // fourtytwoauth() {
+    //     let toast = new ToastAlerts(null);
+    //     const headers = {
+    //         'Content-Type': '*',
+    //         'Accept': '*/*',
+    //         'Vary': 'Origin'
+    //     };
 
-    fourtytwoauth() {
-        let toast = new ToastAlerts(null);
-        const headers = {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*'
-        };
 
-        const bod = {
-            email: this.props.email,
-            password: this.props.password,
-        }
+    //     axios.defaults.headers.common['Access-Control-Allow-Origin'] = 'http://localhost:3000/api/42auth/login';
+    //     axios.defaults.headers.common['Access-Control-Allow-Headers'] = 'Origin, Content-Type, Accept, Authorization, X-Request-With, Set-Cookie, Cookie, Bearer, Authorization, Access-Control-Allow-Origin';
+    //     axios.defaults.headers.common['Access-Control-Allow-Methods'] = 'GET,PUT,POST,DELETE,OPTIONS';
+    //     axios.defaults.headers.common['Accept'] = '*/*';
+    //     axios.defaults.headers.common['Vary'] = 'Origin';
 
-        axios.defaults.baseURL = 'http://localhost:3000/api/';
+    //     let res = axios.get("http://localhost:3000/api/42auth/login", /*{ headers }*/
+    //     /*, bod, {headers}*/).then(res => {
+    //         if (res.status == 200 || res.status == 201) {
+    //             //console.log(res);
+    //             //toast.notifySuccess("First 42 auth GET got 200 !");
+    //             window.top.location = "http://localhost:3000/api/42auth/redirect/"
+    //             //redirect
 
-        let res = axios.get("http://localhost:3000/api/42auth/login"
-        /*, bod, {headers}*/).then(res => {
-            if (res.status == 200 || res.status == 201) {
-                //console.log(res);
-                //toast.notifySuccess("First 42 auth GET got 200 !");
-                window.top.location = "http://localhost:3000/api/42auth/redirect/"
-                //redirect
+    //             axios.get("http://localhost:3000/api/42auth/redirect/",/*{ headers}*/).
+    //                 then(res => {
+    //                     if (res.status == 200 || res.status == 201) {
+    //                         //toast.notifySuccess("Second get ok !");
+    //                         /*
+    //                         let res2 = axios.get("https://api.intra.42.fr/oauth/authorize?response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2F42auth%2Fredirect&client_id=b5bf3f1429b36e0d96e2db81cb83bf3381760311c864cd0e96496874ca58a171")
+    //                             .then(res2 => {
 
-                axios.get("http://localhost:3000/api/42auth/redirect/").
-                    then(res => {
-                        if (res.status == 200 || res.status == 201) {
-                            //toast.notifySuccess("Second get ok !");
-                            let res2 = axios.get("https://api.intra.42.fr/oauth/authorize?response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2F42auth%2Fredirect&client_id=b5bf3f1429b36e0d96e2db81cb83bf3381760311c864cd0e96496874ca58a171")
-                                .then(res2 => {
-
-                                    if (res2.status == 201 || res2.status == 200) {
-                                        //toast.notifySuccess("Third get ok !!");
-                                        console.log("42 auth ok !");
-                                        //window.top.location = "http://localhost:3030/chat";
-                                    }
-                                })
-                        }
-                    })
-            }
-            else {
-                console.log(res);
-                toast.notifyDanger("First 42 auth GET got error...");
-            }
-        })
-            .catch((error) => {
-                toast.notifyDanger('Oops ! First 42 auth GET got error...');
-            })
-    }
+    //                                 if (res2.status == 201 || res2.status == 200) {
+    //                                     //toast.notifySuccess("Third get ok !!");
+    //                                     console.log("42 auth ok !");
+    //                                     window.top.location = "http://localhost:3030/chat";
+    //                                 }
+    //                             })
+    //                         */
+    //                        console.log("yes !!!");
+    //                     }
+    //                 })
+    //         }
+    //         else {
+    //             console.log(res);
+    //             toast.notifyDanger("First 42 auth GET got error...");
+    //         }
+    //     })
+    //         .catch((error) => {
+    //             toast.notifyDanger('Oops ! First 42 auth GET got error...');
+    //         })
+    // }
 
     //pour l instant on va faire un peu betement et on verra comment faire une facon plus smart plus tard
     login() {
+        /*
         axios.defaults.baseURL = 'http://localhost:3000/api/';
         axios.defaults.headers.post['Content-Type'] = '*';
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+        */
 
         let toast = new ToastAlerts(null);
 
@@ -137,10 +143,11 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     }
 
     createchat(username: string) {
+        /*
         axios.defaults.baseURL = 'http://localhost:3000/api/';
         axios.defaults.headers.post['Content-Type'] = '*';
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
-
+        */
         const bod = {
             admin: {
                 login: username
@@ -170,9 +177,11 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
 
     //TODO: revoir encryption du mot de passe
     signup() {
+        /*
         axios.defaults.baseURL = 'http://localhost:3000/api/';
         axios.defaults.headers.post['Content-Type'] = '*';
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+        */
 
         const bod = {
             email: this.props.email,

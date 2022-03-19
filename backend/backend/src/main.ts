@@ -12,6 +12,7 @@ import * as session from 'express-session';
 import { join } from 'path';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { CorsOptions } from '@nestjs/common/interfaces/external/cors-options.interface';
+const { createProxyMiddleware } = require('http-proxy-middleware');
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -22,13 +23,6 @@ async function bootstrap() {
     .build());
 
   SwaggerModule.setup('api', app, document);
-
-
-  app.enableCors({
-    origin: true,
-    credentials: true
-  });
-
 
   //42auth
   app.use(
@@ -41,6 +35,16 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
   app.use(cookieParser());
   app.useStaticAssets(join(__dirname, '..', 'static'));
+
+  app.use((req, res, next) => {
+    next();
+  });
+
+
+    /*
+  app.enableCors({origin: true,
+    credentials: true});
+  */
 
   await app.listen(3000);
 }

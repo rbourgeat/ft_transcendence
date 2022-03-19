@@ -1,7 +1,7 @@
 import './TypingMessage.scss';
 import React from "react";
 import { w3cwebsocket} from "websocket";
-import io from "socket.io-client";
+//import io from "socket.io-client";
 import SingleMessage from "../ListDiscussions/SingleMessage/SingleMessage"
 
 /**
@@ -18,7 +18,7 @@ export interface TypingState {
 }
 
 //const client = new w3cwebsocket("ws//127.0.0.1:8000");
-const socket = io("http://localhost:3000/");
+//const socket = io("http://localhost:3000/");
 const message = document.getElementById('message');
 const messages = document.getElementById('messages');
 
@@ -50,10 +50,9 @@ export default class TypingMessage extends React.Component<TypingProps, TypingSt
         //    console.log("Got reply !");
         //}
 
-        socket.on('message', ({data}) => {
-            this.handleNewMessage(data);
-            //console.log(message);
-        });
+        //socket.on('message', ({data}) => {
+        //    this.handleNewMessage(data);
+        //});
 
      }
 
@@ -82,7 +81,7 @@ export default class TypingMessage extends React.Component<TypingProps, TypingSt
         //    msg: event
         //}))
 
-        socket.emit('message', {data: this.state.text});
+        //socket.emit('message', {data: this.state.text});
         console.log(this.state.text);
         this.handleNewMessage(this.state.text);
 

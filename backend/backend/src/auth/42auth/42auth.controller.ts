@@ -17,6 +17,7 @@ export class Auth42Controller {
     @UseGuards(FtOauthGuard)
     @Redirect('http://localhost:3030/chat')
     ftAuthCallback() {
+        console.log("coucou on est passe par la");
         return;
     }
 }

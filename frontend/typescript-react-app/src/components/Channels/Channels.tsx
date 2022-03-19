@@ -9,7 +9,7 @@ import ToastAlerts from '../Utils/ToastAlerts/ToastAlerts';
 import { ToastContainer, toast } from 'react-toastify';
 //import { w3cwebsocket} from "websocket";
 
-import io from "socket.io-client";
+//import io from "socket.io-client";
 
 
 /**
@@ -47,14 +47,16 @@ export default class Channels extends React.Component<ChatProps, ChatState>
         //socket.on("FromAPI", iodata => {
         //    this.setState({ data: iodata})
         //})
+        /*
         let myax = new MyAxios({
             method: "POST",
             ressource: "/api/chat",
             username: this.props.username
         });
+        */
 
         //TODO: a revoir entre la creation et le get
-        let res = myax.createchat(this.props.username);
+       // let res = myax.createchat(this.props.username);
         //console.log("Coucou!");
         //const socket = socketIOClient(ENDPOINT);
         //socket.on("FromAPI", iodata => {
