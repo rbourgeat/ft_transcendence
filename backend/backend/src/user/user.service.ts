@@ -114,11 +114,11 @@ export class UserService {
 		console.log('went by create in user service');
 		const newUser = await this.userRepository.create(userData);
 		newUser.friends = [];
-		newUser.achievements = [];
+		// newUser.achievements = [];
 		const login = newUser.login;
 		this.userRepository.update({ login }, {
 			friends: [],
-			achievements: []
+			// achievements: []
 		});
 		await this.userRepository.save(newUser);
 		this.userEvent.achievement42(newUser);
