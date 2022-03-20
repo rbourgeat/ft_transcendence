@@ -2,6 +2,7 @@ import { Entity, PrimaryGeneratedColumn, CreateDateColumn, Column, Unique, ManyT
 import { Game } from 'src/game/entity/game.entity'
 import { Message } from 'src/chat/message/entity/message.entity'
 import { Participate } from 'src/participate/participate.entity'
+import { Achievement } from './achievements.entity';
 
 @Entity('user')
 export class User {
@@ -76,8 +77,10 @@ export class User {
     @Column("simple-array", { nullable: true })
     blocked_users: string[];
 
-    @Column("simple-array", { nullable: true })
-    achievements: string[];
+    // @Column("simple-array", { nullable: true })
+    // achievements: string[];
+    @OneToMany(() => Achievement, (achievement: Achievement) => achievement.id)
+    public achievement: Achievement[];
 
     @OneToMany(() => Message, (message: Message) => message.author)
     public message: Message[];

@@ -84,11 +84,11 @@ export class UserEvent {
     }
 
     saveAchievement(user: User, achievementTitle: string) {
-        var login = user.login;
-        user.achievements.push(achievementTitle);
-        this.userRepository.update({ login }, {
-            achievements: user.achievements
-        });
-        console.log('User ' + login + ' unlocked the ' + achievementTitle + ' achievement');
+        // var login = user.login;
+        // user.achievements.push(achievementTitle);
+        // this.userRepository.update({ login }, {
+        //     achievements: user.achievements
+        // });
+        // console.log('User ' + login + ' unlocked the ' + achievementTitle + ' achievement');
     }
 }
