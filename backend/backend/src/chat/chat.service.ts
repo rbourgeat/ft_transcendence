@@ -2,7 +2,7 @@ import { HttpException, HttpStatus, Injectable, UnsupportedMediaTypeException } 
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, getConnection, QueryRunner } from 'typeorm';
 import { Chat } from './entity/chat.entity';
-import { CreateChatDto } from './dto/chat.dto';
+import { CreateChatDto, PasswordChatDto } from './dto/chat.dto';
 import { User } from 'src/user/entity/user.entity';
 import { Message } from 'src/chat/message/entity/message.entity'
 import CreateMessageDto from './dto/message.dto';
