@@ -118,10 +118,21 @@ export default function User(props:UserfuncProps)
 					<br/>
 					<br/>
 					<div className="col-4 mx-auto text-center" id="input-div">
-					<input type="file" name="image-upload" id="input--upload" accept="image/*" onChange={onChangePicture} />
-						<div className="label">
-						</div>
+					{/*<label className="label-file">Upload avatar</label>*/}
+					<input
+						type="file"
+						name="image-upload"
+						id="input--upload"
+						accept="image/*"
+						onChange={onChangePicture}
+						//placeholder=""
+					/>
+						{/*<div className="label" >
+						</div>*/}
+
 					</div>
+					<button className="btn btn-light" id="button--2fa">Activate 2FA</button>
+					<br />
 					<p>Total games : <span className="span--stats">{props.totalGames ? props.totalGames : 0}</span></p>
 					<p>Total wins : <span className="span--stats">{props.totalWins ? props.totalWins : 0}</span></p>
 					<p>Total loss : <span className="span--stats">{props.totalLoss ? props.totalLoss : 0}</span></p>

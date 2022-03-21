@@ -15,9 +15,9 @@ export class Auth42Controller {
     @ApiOperation({ summary: '[do not use in swagger, won\'t work]' })
     @Get('redirect')
     @UseGuards(FtOauthGuard)
-    @Redirect('http://localhost:3030/chat')
+    @Redirect('http://localhost:3030/user')
     ftAuthCallback() {
-        console.log("coucou on est passe par la");
+        //console.log("coucou on est passe par la");
         return;
     }
 }
