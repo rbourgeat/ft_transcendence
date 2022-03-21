@@ -1,6 +1,7 @@
 import { Entity, ManyToOne, PrimaryGeneratedColumn, CreateDateColumn, Column, Unique, OneToMany, ManyToMany, JoinTable } from "typeorm";
 import { User } from 'src/user/entity/user.entity'
 import { Chat } from 'src/chat/entity/chat.entity'
+import { PasswordChatDto } from '../chat/dto/chat.dto';
 
 
 export enum UserStatus {

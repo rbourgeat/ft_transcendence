@@ -17,3 +17,10 @@ export class CreateChatDto {
     @ApiProperty({ example: 'chat-1' })
     name: string;
 }
+
+@ApiTags('Chats') //Create a category on swagger
+export class PasswordChatDto {
+    @IsOptional()
+    @ApiProperty({ description: 'password null == désactivate' })
+    password: string;
+}
