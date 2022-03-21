@@ -15,6 +15,9 @@ export class Participate {
     id?: number;
 
     @Column({ default: false })
+    owner: boolean
+
+    @Column({ default: false })
     admin: boolean
 
     /*
