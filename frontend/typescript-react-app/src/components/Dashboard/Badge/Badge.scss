@@ -85,3 +85,7 @@
   border: 0.1rem solid white !important;
   border-radius: variables.$border-radius-big;
 }
+
+#badge--stats > * {
+  color: white !important;
+}

@@ -42,6 +42,8 @@
 #input--upload {
   //display: none;
   cursor: pointer;
+  margin-left: 100px !important;
+  //border: 0.1rem solid red;
 }
 
 #button--2fa {
@@ -71,16 +73,25 @@
 
 p {
   color: black !important;
+  text-align: center !important;
   //padding-right: 10px !important;
 }
 
 input {
-  color: white !important;
-  margin: 10px !important;
+ // color: white !important;
+  //margin-right: auto;
+  margin-left: auto;margin: 10px !important;
   margin-bottom: 25px !important;
+  //display: block;
+  //margin-right: auto;
+  //margin-left: auto;
 }
 
 //.input-file-upload {
 //  background-color: red !important;
 //  background: red !important;
 //}
+
+button {
+  margin-top: 15px !important;
+}

@@ -141,29 +141,29 @@ export default function User(props:UserfuncProps)
 					/> */}
 					<br/>
 					<br/>
-					<div className="col-4 mx-auto text-center" id="input-div">
+					<div className="col-9 mx-auto text-center" id="input-div">
 					<h2 id="user--data">Hello {props.username}</h2>
-					{/*<label className="label-file">Upload avatar</label>*/}
-					<input
-						type="file"
-						name="image-upload"
-						id="input--upload"
-						accept="image/*"
-						onChange={onChangePicture}
-						className="input-file-upload"
-						//placeholder=""
-					/>
+					<p>
+						{/*<label className="label-file">Upload avatar</label>*/}
+						<input
+							type="file"
+							name="image-upload"
+							id="input--upload"
+							accept="image/*"
+							onChange={onChangePicture}
+							className="input-file-upload"
+							//placeholder=""
+						/>
+					</p>
 						{/*<div className="label" >
 						</div>*/}
-
-					<br />
 					</div>
-					<div id="stats" className="text-center">
+					<div id="stats" className="col-9 mx-auto text-center">
 						<p>Total games : <span className="span--stats">{props.totalGames ? props.totalGames : 0}</span></p>
 						<p>Total wins : <span className="span--stats">{props.totalWins ? props.totalWins : 0}</span></p>
 						<p>Total loss : <span className="span--stats">{props.totalLoss ? props.totalLoss : 0}</span></p>
 						<p>Win/loss ratio : <span className="span--stats">{props.winLoss ? props.winLoss : 0}</span></p>
-						<button className="btn btn-outline-info" id="button--2fa" onClick={handle2FA}>Activate 2FA</button>
+						<p><button className="btn btn-outline-info" id="button--2fa" onClick={handle2FA}>Activate 2FA</button></p>
 					</div>
 				</div>
 				<br />

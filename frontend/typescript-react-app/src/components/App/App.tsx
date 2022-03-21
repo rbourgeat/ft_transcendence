@@ -1,10 +1,10 @@
+import 'bootstrap/dist/css/bootstrap.css';
 import React, { useState, useMemo, useEffect} from 'react';
 import './App.scss';
 import {
   BrowserRouter as Router,
-  Switch,
   Route,
-  Redirect
+  Routes
 } from "react-router-dom";
 
 //import io from "socket.io-client"
@@ -15,7 +15,6 @@ import NotFound from '../NotFound/NotFound';
 import Dashboard from '../Dashboard/Dashboard';
 import UserMain from '../User/UserMain';
 // import UserSub from '../User/UserSub';
-import 'bootstrap/dist/css/bootstrap.css';
 import {UserContext} from './UserContext';
 import { useCookies } from "react-cookie";
 import Channels from "../Channels/Channels";
@@ -32,40 +31,20 @@ function App() {
 
   return (
     <div id="main">
-      <Router>
-        <Switch>
-          <UserContext.Provider value={value}>
-          <Route path="/welcome">
-            <Welcome />
-          </Route>
-          <Route exact path="/">
-            <Welcome />
-          </Route>
-          <Route path="/auth">
-            <Auth />
-          </Route>
-          <Route path="/dashboard">
-            <Dashboard />
-          </Route>
-          <Route path="/user">
-            {/*Revoir en fonction du contexte avec la connexion */}
-            <UserMain username="dummy5" />
-          </Route>
-          <Route path="/chat">
-            <Channels username="dummy5"/>
-          </Route>
-          <Route path="/search">
-            <Search />
-          </Route>
-          <Route path="/achievements">
-            <Achievements />
-          </Route>
-          <Route path="/gamerules">
-            <GameRules />
-          </Route>
-          </UserContext.Provider>
-        </Switch>
-      </Router>
+      <UserContext.Provider value={value}>
+      <Routes>
+		 <Route path="/" element={<Welcome />} />
+		 <Route path="/welcome" element={<Welcome />} />
+		 <Route path="/auth" element={<Auth />} />
+		 <Route path="/dashboard" element={<Dashboard />}/>
+         {/*Revoir en fonction du contexte avec la connexion */}
+		 <Route path="/user" element={<UserMain username="dummy5" />} />
+		 <Route path="/chat" element={<Channels username="dummy5"/>} />
+		 <Route path="/search" element={<Search />}  />
+		 <Route path="/achievements" element={<Achievements />}  />
+		 <Route path="*" element={<NotFound />}  />
+      </Routes>
+      </UserContext.Provider>
     </div>
   );
 }

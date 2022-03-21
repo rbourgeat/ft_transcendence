@@ -34,10 +34,25 @@
 #se-connecter,
 #sinscrire {
   margin-top: 25px;
+  margin-left: 10px !important;
 }
 
 #auth-form-div {
   background-color: white !important;
-  padding: 5%;
+  //padding: 5%;
   border-radius: variables.$border-radius;
 }
+
+label {
+  //border: 0.1rem solid red !important;
+  display: block;
+  margin-left: 10px !important;
+  margin-top: 10px !important;
+  font-family: variables.$big-font;
+  font-size: 10px !important;
+  font-weight: 100 !important;
+}
+
+//input {
+
+//}
