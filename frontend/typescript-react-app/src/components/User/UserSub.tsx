@@ -11,6 +11,7 @@ import './User.scss';
 import axios from 'axios';
 import MyAxios from '../Utils/Axios/Axios';
 import { ToastContainer, toast } from 'react-toastify';
+import ToastAlerts from '../Utils/ToastAlerts/ToastAlerts';
 
 export interface UserfuncProps
 {
@@ -38,6 +39,30 @@ export default function User(props:UserfuncProps)
 {
   	//const [imgData, setImgData] = useState("https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg");
 
+	 const handle2FA = (event: any) => {
+		event.preventDefault();
+		//let res = myAx.get_api_user(props.username);
+		//console.log(res);
+		axios.defaults.baseURL = 'http://localhost:3000/api/';
+       // axios.defaults.headers.post['Content-Type'] = '*';
+       // axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+
+        let toast = new ToastAlerts(null);
+        let url = "http://localhost:3000/api/user/".concat(props.username);
+
+        let res = axios.get(url)
+        .then( res => {
+            console.log(res);
+			let secret = res.data.twoFactorAuthenticationSecret;
+			console.log("secret is is " + secret);
+        })
+        .catch((error) => {
+            console.log(error);
+            //return (error);
+        })
+	  }
+
+
 	  const onChangePicture = (e: any) => {
 		e.preventDefault();
 		if (e.target.files[0])
@@ -45,7 +70,7 @@ export default function User(props:UserfuncProps)
 		  const reader = new FileReader();
 		  reader.addEventListener("load", () => {
 			//setImgData(reader.result as string);
-				console.log("You must re render the image with the new avatar");
+				//console.log("You must re render the image with the new avatar");
 			});
 
 		  reader.readAsDataURL(e.target.files[0]);
@@ -101,11 +126,10 @@ export default function User(props:UserfuncProps)
 		<Nav />
 			<div className="container">
 			<div className="row d-flex justify-content-center text-center">
-				<div className="col-4" id="bonjour--user">
+				<div className="col-9" id="bonjour--user">
 				<h1>Bonjour <span></span></h1>
 				<br />
 				<div className="user--stats">
-				<h2>Information</h2>
 				{renderImage(props.username)}
 				{/* <img
 					src={imgData}
@@ -117,26 +141,30 @@ export default function User(props:UserfuncProps)
 					/> */}
 					<br/>
 					<br/>
-					<div className="col-4 mx-auto text-center" id="input-div">
-					{/*<label className="label-file">Upload avatar</label>*/}
-					<input
-						type="file"
-						name="image-upload"
-						id="input--upload"
-						accept="image/*"
-						onChange={onChangePicture}
-						//placeholder=""
-					/>
+					<div className="col-9 mx-auto text-center" id="input-div">
+					<h2 id="user--data">Hello {props.username}</h2>
+					<p>
+						{/*<label className="label-file">Upload avatar</label>*/}
+						<input
+							type="file"
+							name="image-upload"
+							id="input--upload"
+							accept="image/*"
+							onChange={onChangePicture}
+							className="input-file-upload"
+							//placeholder=""
+						/>
+					</p>
 						{/*<div className="label" >
 						</div>*/}
-
 					</div>
-					<button className="btn btn-light" id="button--2fa">Activate 2FA</button>
-					<br />
-					<p>Total games : <span className="span--stats">{props.totalGames ? props.totalGames : 0}</span></p>
-					<p>Total wins : <span className="span--stats">{props.totalWins ? props.totalWins : 0}</span></p>
-					<p>Total loss : <span className="span--stats">{props.totalLoss ? props.totalLoss : 0}</span></p>
-					<p>Win/loss ratio : <span className="span--stats">{props.winLoss ? props.winLoss : 0}</span></p>
+					<div id="stats" className="col-9 mx-auto text-center">
+						<p>Total games : <span className="span--stats">{props.totalGames ? props.totalGames : 0}</span></p>
+						<p>Total wins : <span className="span--stats">{props.totalWins ? props.totalWins : 0}</span></p>
+						<p>Total loss : <span className="span--stats">{props.totalLoss ? props.totalLoss : 0}</span></p>
+						<p>Win/loss ratio : <span className="span--stats">{props.winLoss ? props.winLoss : 0}</span></p>
+						<p><button className="btn btn-outline-info" id="button--2fa" onClick={handle2FA}>Activate 2FA</button></p>
+					</div>
 				</div>
 				<br />
 				<br />
@@ -155,7 +183,6 @@ function renderImage(login: string) {
 
 	//TO DO: refaire le get sur l image
 	let imageName = "alt-photo";
-
 	let url = "http://localhost:3000/api/user/".concat(login);
 	console.log(url);
 	let res = axios.get(url)
@@ -171,9 +198,13 @@ function renderImage(login: string) {
 	.catch(error => {
 		console.log("Catched error getting avatar");
 	})
-	//Chercher l image
-	console.log("Eo");
 	return (
 		<img src={imageCode} alt={imageName} height="80" width="80" id="avatar-id"/>
 	);
+}
+
+//TODO: a reprendre quand back ok
+function render2Fa(username: string)
+{
+	return (<div></div>)
 }

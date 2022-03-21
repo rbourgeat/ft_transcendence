@@ -22,10 +22,9 @@ export class Chat {
 
     @Column()
     public: boolean = true;
-
-    @OneToMany(() => Message, (message: Message) => message.channel)
-    public message: Message[];
 */
+    @OneToMany(() => Message, (message: Message) => message.channel, { eager: true })
+    public message: Message[];
 
     @Column()
     public: boolean = true;
