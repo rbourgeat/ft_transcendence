@@ -8,4 +8,16 @@ export class CreateMessageDto {
     content: string;
 }
 
-export default CreateMessageDto;
+//export default CreateMessageDto;
+
+export class SendMessageToChatDto {
+    @IsString()
+    @IsNotEmpty()
+    @ApiProperty({ example: 'Hello world !' })
+    content: string;
+
+    @IsString()
+    @IsNotEmpty()
+    @ApiProperty({ example: 'chat-1' })
+    channel: string;
+}

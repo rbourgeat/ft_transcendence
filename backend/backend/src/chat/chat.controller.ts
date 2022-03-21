@@ -5,7 +5,7 @@ import { ApiBody, ApiConflictResponse, ApiConsumes, ApiOkResponse, ApiOperation,
 import { FileInterceptor } from '@nestjs/platform-express';
 import RequestWithUser from 'src/auth/interface/requestWithUser.interface';
 import JwtAuthenticationGuard from 'src/auth/guard/jwt-authentication.guard';
-import CreateMessageDto from './dto/message.dto';
+import { CreateMessageDto, SendMessageToChatDto } from './dto/message.dto';
 
 @ApiTags('Chats') //Create a category on swagger
 @Controller('api/chat')
@@ -21,7 +21,6 @@ export class ChatController {
         return this.chatService.getAllChats();
     }
 
-    ///TEST WORKING !
     @ApiOperation({ summary: 'Create a new message' })
     @ApiOkResponse({ description: 'Message creation suceed' })
     @UseGuards(JwtAuthenticationGuard)
@@ -38,6 +37,22 @@ export class ChatController {
         return this.chatService.joinChat(chat, req.user);
     }
 
+
+    @ApiOperation({ summary: 'Send a message to a chat' })
+    @ApiOkResponse({ description: 'message sent' })
+    @UseGuards(JwtAuthenticationGuard)
+    @Post('sendMessage')
+    async sendMessage(@Body() message: SendMessageToChatDto, @Req() req: RequestWithUser) {
+        return this.chatService.sendMessage(message, req.user);
+    }
+
+    @ApiOperation({ summary: 'Quit a chat' })
+    @ApiOkResponse({ description: 'chat quit' })
+    @UseGuards(JwtAuthenticationGuard)
+    @Post('quit')
+    async quitChat(@Req() req: RequestWithUser) {
+        return this.chatService.quitChat(req.user);
+    }
     /**
     **  Save a new chat to db
     **/
