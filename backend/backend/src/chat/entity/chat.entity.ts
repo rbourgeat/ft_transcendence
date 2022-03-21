@@ -30,7 +30,7 @@ export class Chat {
     public: boolean = true;
 
     @Column({ nullable: true })
-    password: PasswordChatDto;
+    password: string;
 
     @OneToMany(() => Participate, participate => participate.chat, { eager: true })
     public participates: Participate[];
