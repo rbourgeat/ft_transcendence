@@ -6,7 +6,7 @@ import { CreateChatDto } from './dto/chat.dto';
 import { User } from 'src/user/entity/user.entity';
 import { Message } from 'src/chat/message/entity/message.entity'
 import CreateMessageDto from './dto/message.dto';
-import { Participate } from 'src/participate/participate.entity';
+import { Participate, UserStatus } from 'src/participate/participate.entity';
 
 @Injectable()
 export class ChatService {
@@ -248,4 +248,40 @@ export class ChatService {
 		}
 	*/
 	}
+
+	async ban(id: number, login: string, admin: User)
+    {
+        const chat = await this.chatRepository.findOne({ id });
+        const user = await this.userRepository.findOne({ login });
+        const participate = chat.participates.find(e => e == user.participate.find(e => e.chat == chat));
+		if (!participate)
+			return console.log("L'utilisateur ne peut pas être banni car il n'est pas dans le chat !");
+		if (!admin.participate.find(e => e.chat == chat).admin)
+			return console.log("L'utilisateur ne peut pas bannir car il n'est pas admin du chat !");
+		if (user.participate.find(e => e.chat == chat).admin || user.participate.find(e => e.chat == chat).owner)
+			return console.log("L'utilisateur ne peut pas bannir un admin !");
+
+		user.participate.find(e => e.chat == chat).role = UserStatus.BAN;
+		
+        await this.userRepository.save(user);
+        console.log(user + ' banned');
+		return user.participate.find(e => e.chat == chat);
+    }
+
+	async unban(id: number, login: string, admin: User)
+    {
+        const chat = await this.chatRepository.findOne({ id });
+        const user = await this.userRepository.findOne({ login });
+        const participate = chat.participates.find(e => e == user.participate.find(e => e.chat == chat));
+		if (!participate)
+			return console.log("L'utilisateur ne peut pas être débanni car il n'est pas dans le chat !");
+		if (!admin.participate.find(e => e.chat == chat).admin)
+			return console.log("L'utilisateur ne peut pas débannir car il n'est pas admin du chat !");
+
+		user.participate.find(e => e.chat == chat).role = UserStatus.ACTIVE;
+		
+        await this.userRepository.save(user);
+        console.log(user + ' unbanned');
+		return user.participate.find(e => e.chat == chat);
+    }
 }
