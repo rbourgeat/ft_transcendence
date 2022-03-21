@@ -37,7 +37,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
         //On parsera les props pour appeler directement la bonne methode ?
     }
 
-    
+
     // fourtytwoauth() {
     //     let toast = new ToastAlerts(null);
     //     const headers = {
@@ -89,6 +89,34 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     //             toast.notifyDanger('Oops ! First 42 auth GET got error...');
     //         })
     // }
+
+
+    get_api_user(username: string) {
+        /*
+        const headers = {
+			'Access-Control-Allow-Origin': 'http://localhost:3030',
+			'Access-Control-Allow-Headers': 'Origin, Content-Type, Accept, Authorization, X-Request-With, Set-Cookie, Cookie, Bearer, Authorization, Access-Control-Allow-Origin',
+			'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,OPTIONS'
+		};*/
+
+
+        axios.defaults.baseURL = 'http://localhost:3000/api/';
+       // axios.defaults.headers.post['Content-Type'] = '*';
+       // axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+
+        let toast = new ToastAlerts(null);
+        let url = "http://localhost:3000/api/user/".concat(username);
+
+        let res = axios.get(url)
+        .then( res => {
+            console.log(res);
+            return (res);
+        })
+        .catch((error) => {
+            console.log(error);
+            return (error);
+        })
+    }
 
     //pour l instant on va faire un peu betement et on verra comment faire une facon plus smart plus tard
     login() {

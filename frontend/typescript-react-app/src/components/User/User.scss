@@ -46,7 +46,7 @@
 
 #button--2fa {
   font-size: 12px !important;
-  margin-bottom: 25px;
+  margin-bottom: 10px;
 }
 
 .label-file {
@@ -60,6 +60,27 @@
   color: #25a5c4;
 }
 
+#user--data {
+  font-size: 14px !important;
+  text-align: center;
+}
+
 //#input--upload {
 //  display: none;
+//}
+
+p {
+  color: black !important;
+  //padding-right: 10px !important;
+}
+
+input {
+  color: white !important;
+  margin: 10px !important;
+  margin-bottom: 25px !important;
+}
+
+//.input-file-upload {
+//  background-color: red !important;
+//  background: red !important;
 //}
