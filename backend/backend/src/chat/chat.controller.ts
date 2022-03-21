@@ -1,6 +1,6 @@
 import { Req, Body, Controller, Delete, Get, Param, Patch, Post, UseInterceptors, UploadedFile, UseGuards } from '@nestjs/common';
 import { ChatService } from './chat.service';
-import { CreateChatDto } from './dto/chat.dto';
+import { CreateChatDto, PasswordChatDto } from './dto/chat.dto';
 import { ApiBody, ApiConflictResponse, ApiConsumes, ApiOkResponse, ApiOperation, ApiParam, ApiQuery, ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger'
 import { FileInterceptor } from '@nestjs/platform-express';
 import RequestWithUser from 'src/auth/interface/requestWithUser.interface';
@@ -131,6 +131,15 @@ export class ChatController {
     async unmute(@Body() idChat: number, @Body() user: string, @Req() req: RequestWithUser) {
         console.log(req.user + ' unmute ' + user + ' in chat' + idChat)
         return this.chatService.active(idChat, user, req.user);
+    }
+
+    @ApiOperation({ summary: 'set chat password' }) //endpoint summary on swaggerui
+    @ApiOkResponse({ description: 'Chat password done' }) //answer sent back
+    @ApiConflictResponse({ description: 'Chat password error' }) //not working atm
+    @Post('password')
+    async password(@Body() idChat: number, @Req() req: RequestWithUser, @Body() password: PasswordChatDto) {
+        console.log(' set password to chat ' + idChat)
+        return this.chatService.password(idChat, req.user, password);
     }
 
 }

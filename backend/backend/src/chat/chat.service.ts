@@ -327,4 +327,22 @@ export class ChatService {
         console.log(user + ' is now an admin');
 		return user.participate.find(e => e.chat == chat);
 	}
+
+	async password(id: number, admin: User, password: PasswordChatDto)
+	{
+		const chat = await this.chatRepository.findOne({ id });
+		if (!admin.participate.find(e => e.chat == chat).owner)
+			return console.log("L'utilisateur ne peut pas setup un mdp car il n'est pas owner du chat !");
+
+		chat.password = password;
+
+		if (chat.password != null)
+			chat.public = false;
+		else
+			chat.public = true;
+
+		await this.chatRepository.save(chat);
+		console.log("chat password edit");
+		return chat;
+	}
 }
