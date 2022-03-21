@@ -110,9 +110,9 @@ export class ChatController {
     @ApiOkResponse({ description: 'user banned' }) //answer sent back
     @ApiConflictResponse({ description: 'user already banned' }) //not working atm
     @Post('ban')
-    async ban(@Body() idChat: number, @Body() user: string, @Req() req: RequestWithUser) {
+    async ban(@Body() idChat: number, @Body() user: string, @Req() req: RequestWithUser, @Body() time: Date) {
         console.log(req.user + ' ban ' + user + ' in chat' + idChat)
-        return this.chatService.ban(idChat, user, req.user);
+        return this.chatService.ban(idChat, user, req.user, time);
     }
 
     @ApiOperation({ summary: 'Unban user' }) //endpoint summary on swaggerui

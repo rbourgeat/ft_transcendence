@@ -249,7 +249,7 @@ export class ChatService {
 	*/
 	}
 
-	async ban(id: number, login: string, admin: User)
+	async ban(id: number, login: string, admin: User, time: Date)
     {
         const chat = await this.chatRepository.findOne({ id });
         const user = await this.userRepository.findOne({ login });
@@ -262,6 +262,8 @@ export class ChatService {
 			return console.log("L'utilisateur ne peut pas bannir un admin !");
 
 		user.participate.find(e => e.chat == chat).role = UserStatus.BAN;
+		if (time)
+			user.participate.find(e => e.chat == chat).timestamp = time;
 		
         await this.userRepository.save(user);
         console.log(user + ' banned');
@@ -279,6 +281,7 @@ export class ChatService {
 			return console.log("L'utilisateur ne peut pas débannir car il n'est pas admin du chat !");
 
 		user.participate.find(e => e.chat == chat).role = UserStatus.ACTIVE;
+		user.participate.find(e => e.chat == chat).timestamp = null;
 		
         await this.userRepository.save(user);
         console.log(user + ' unbanned');
