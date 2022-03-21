@@ -11,6 +11,7 @@ import './User.scss';
 import axios from 'axios';
 import MyAxios from '../Utils/Axios/Axios';
 import { ToastContainer, toast } from 'react-toastify';
+import ToastAlerts from '../Utils/ToastAlerts/ToastAlerts';
 
 export interface UserfuncProps
 {
@@ -40,10 +41,25 @@ export default function User(props:UserfuncProps)
 
 	 const handle2FA = (event: any) => {
 		event.preventDefault();
-
-		let myAx = new MyAxios({});
 		//let res = myAx.get_api_user(props.username);
 		//console.log(res);
+		axios.defaults.baseURL = 'http://localhost:3000/api/';
+       // axios.defaults.headers.post['Content-Type'] = '*';
+       // axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+
+        let toast = new ToastAlerts(null);
+        let url = "http://localhost:3000/api/user/".concat(props.username);
+
+        let res = axios.get(url)
+        .then( res => {
+            console.log(res);
+			let secret = res.data.twoFactorAuthenticationSecret;
+			console.log("secret is is " + secret);
+        })
+        .catch((error) => {
+            console.log(error);
+            //return (error);
+        })
 	  }
 
 
@@ -167,15 +183,6 @@ function renderImage(login: string) {
 
 	//TO DO: refaire le get sur l image
 	let imageName = "alt-photo";
-
-	/*
-	const headers = {
-
-		'Access-Control-Allow-Origin': 'http://localhost:3030/',
-		'Access-Control-Allow-Headers': 'Origin, Content-Type, Accept, Authorization, X-Request-With, Set-Cookie, Cookie, Bearer, Authorization, Access-Control-Allow-Origin',
-		'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,OPTIONS'
-	};*/
-
 	let url = "http://localhost:3000/api/user/".concat(login);
 	console.log(url);
 	let res = axios.get(url)
@@ -191,9 +198,13 @@ function renderImage(login: string) {
 	.catch(error => {
 		console.log("Catched error getting avatar");
 	})
-	//Chercher l image
-	//console.log("Eo");
 	return (
 		<img src={imageCode} alt={imageName} height="80" width="80" id="avatar-id"/>
 	);
+}
+
+//TODO: a reprendre quand back ok
+function render2Fa(username: string)
+{
+	return (<div></div>)
 }

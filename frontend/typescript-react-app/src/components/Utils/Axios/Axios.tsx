@@ -98,8 +98,6 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
 			'Access-Control-Allow-Headers': 'Origin, Content-Type, Accept, Authorization, X-Request-With, Set-Cookie, Cookie, Bearer, Authorization, Access-Control-Allow-Origin',
 			'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,OPTIONS'
 		};*/
-
-
         axios.defaults.baseURL = 'http://localhost:3000/api/';
        // axios.defaults.headers.post['Content-Type'] = '*';
        // axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
