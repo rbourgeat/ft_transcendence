@@ -1,34 +1,29 @@
 import './CreateChan.scss';
-import React from "react";
-import Nav from "../../Nav/Nav"
+import React, {Component} from "react";
+import Nav from "../../Nav/Nav";
+import {Modal, Button, Row, Col, Form} from "react-bootstrap";
+import MyVerticallyCenteredModal from "../../Utils/Modal/Modal";
 
-export default class CreateChan extends React.Component
+export default function CreateChan(props)
 {
 
-    //constructor()
-    //{
-    //    super();
-    //    this.state = {
-    //    }
-    //}
-
-    componentDidMount() {
-    }
-
-    render()
-    {
-        return (
-            <div id="channels">
-                <Nav />
-                <div className="container">
-                    <div className="row d-flex justify-content-center text-center">
-                        <div className="col-7">
-                        </div>
-                        <div className="col-4" id="list--participants">
+	const [modalShow, setModalShow] = React.useState(false);
+    return (
+        <div id="channels">
+            <Nav />
+            <div className="container">
+                <div className="row d-flex justify-content-center text-center">
+                    <div className="col-7">
+					<Button variant="primary" onClick={() => setModalShow(true)}>
+						Launch vertically centered modal
+					</Button>
+					<MyVerticallyCenteredModal
+						show={modalShow}
+						onHide={() => setModalShow(false)}
+					/>
                         </div>
                     </div>
                 </div>
             </div>
         );
     }
-}

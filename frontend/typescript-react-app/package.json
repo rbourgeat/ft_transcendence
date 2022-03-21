@@ -19,7 +19,7 @@
     "form-data": "^4.0.0",
     "react": "^17.0.2",
     "react-alert": "^7.0.3",
-    "react-bootstrap": "^2.1.2",
+    "react-bootstrap": "^2.2.1",
     "react-burger-menu": "^3.0.6",
     "react-cookie": "^4.1.1",
     "react-dom": "^17.0.2",
@@ -47,7 +47,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-	"test-coverage": "npm run test -- --coverage --watchAll=false"
+    "test-coverage": "npm run test -- --coverage --watchAll=false"
   },
   "eslintConfig": {
     "extends": [
