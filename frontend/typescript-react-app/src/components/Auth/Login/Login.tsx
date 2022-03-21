@@ -77,7 +77,7 @@ export default class Login extends React.Component<LoginProps, LoginState>
                   </div>
                 </div>
               <p id="connect-p"></p>
-              <hr className="my-4" id="me-connecter_hr"></hr>
+              {/*<hr className="my-4" id="me-connecter_hr"></hr>*/}
               <div id="formBasicConnexion">
               <button
                 type="submit"

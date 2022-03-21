@@ -121,7 +121,7 @@ class Signup extends React.Component<SignupProps, SignupState>
                                     </div>
                                 </div>
                             </div>
-                            <hr className="my-4" id="signup-hr"></hr>
+                            {/*<hr className="my-4" id="signup-hr"></hr>*/}
                             <button
                               onClick={this.submit}
                               className="btn btn-light btn-block"

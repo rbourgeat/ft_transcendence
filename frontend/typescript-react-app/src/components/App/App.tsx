@@ -18,9 +18,10 @@ import UserMain from '../User/UserMain';
 import {UserContext} from './UserContext';
 import { useCookies } from "react-cookie";
 import Channels from "../Channels/Channels";
-import Search from "../Search/Search"
-import Achievements from "../Achievements/Achievements"
+import Search from "../Search/Search";
+import Achievements from "../Achievements/Achievements";
 import GameRules from "../GameRules/GameRules";
+import CreateChan from "../Channels/CreateChan/CreateChan";
 
 function App() {
 
@@ -37,9 +38,9 @@ function App() {
 		 <Route path="/welcome" element={<Welcome />} />
 		 <Route path="/auth" element={<Auth />} />
 		 <Route path="/dashboard" element={<Dashboard />}/>
-         {/*Revoir en fonction du contexte avec la connexion */}
 		 <Route path="/user" element={<UserMain username="dummy5" />} />
 		 <Route path="/chat" element={<Channels username="dummy5"/>} />
+     <Route path="/createchat" element={<CreateChan/>} />
 		 <Route path="/search" element={<Search />}  />
 		 <Route path="/achievements" element={<Achievements />}  />
 		 <Route path="*" element={<NotFound />}  />
