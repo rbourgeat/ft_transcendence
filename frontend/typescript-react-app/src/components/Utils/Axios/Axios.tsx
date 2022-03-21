@@ -2,8 +2,6 @@ import React from "react";
 import axios from "axios";
 import ToastAlerts from "../ToastAlerts/ToastAlerts"
 import cookie from 'react-cookie';
-import { Redirect } from 'react-router-dom';
-
 
 interface AxiosProps {
     method?: string,
