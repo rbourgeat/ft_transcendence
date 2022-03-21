@@ -124,19 +124,19 @@ export class ChatController {
     @ApiOperation({ summary: 'Ban user' }) //endpoint summary on swaggerui
     @ApiOkResponse({ description: 'user banned' }) //answer sent back
     @ApiConflictResponse({ description: 'user already banned' }) //not working atm
-    @Post(':id/ban/:user')
-    async addBanned(@Param('id') id: number, @Param('user') user: string) {
-        console.log('Adding banned')
-        return this.chatService.addMember(id, String(user), "ban");
+    @Post('ban')
+    async ban(@Body() idChat: number, @Body() user: string, @Req() req: RequestWithUser) {
+        console.log(req.user + ' ban ' + user + ' in chat' + idChat)
+        return this.chatService.ban(idChat, user, req.user);
     }
 
     @ApiOperation({ summary: 'Unban user' }) //endpoint summary on swaggerui
     @ApiOkResponse({ description: 'user unbanned' }) //answer sent back
-    @ApiConflictResponse({ description: 'user already unbanned' }) //not working atm
-    @Post(':id/unban/:user')
-    async removeBanned(@Param('id') id: number, @Param('user') user: string) {
-        console.log('Remove banned')
-        return this.chatService.removeMember(id, String(user), "ban");
+    @ApiConflictResponse({ description: 'user not banned' }) //not working atm
+    @Post('unban')
+    async unban(@Body() idChat: number, @Body() user: string, @Req() req: RequestWithUser) {
+        console.log(req.user + ' unban ' + user + ' in chat' + idChat)
+        return this.chatService.unban(idChat, user, req.user);
     }
 
     @ApiOperation({ summary: 'TempBan user' }) //endpoint summary on swaggerui

@@ -42,11 +42,13 @@
 #input--upload {
   //display: none;
   cursor: pointer;
+  margin-left: 100px !important;
+  //border: 0.1rem solid red;
 }
 
 #button--2fa {
   font-size: 12px !important;
-  margin-bottom: 25px;
+  margin-bottom: 10px;
 }
 
 .label-file {
@@ -60,6 +62,36 @@
   color: #25a5c4;
 }
 
+#user--data {
+  font-size: 14px !important;
+  text-align: center;
+}
+
 //#input--upload {
 //  display: none;
 //}
+
+p {
+  color: black !important;
+  text-align: center !important;
+  //padding-right: 10px !important;
+}
+
+input {
+ // color: white !important;
+  //margin-right: auto;
+  margin-left: auto;margin: 10px !important;
+  margin-bottom: 25px !important;
+  //display: block;
+  //margin-right: auto;
+  //margin-left: auto;
+}
+
+//.input-file-upload {
+//  background-color: red !important;
+//  background: red !important;
+//}
+
+button {
+  margin-top: 15px !important;
+}

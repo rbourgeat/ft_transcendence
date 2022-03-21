@@ -57,7 +57,7 @@ input:hover {
 //   color: #fff;
 // }
 
-input {
+input{
   font-size: variables.$small-font-size;
   margin-bottom: 10px !important;
 }
@@ -90,5 +90,5 @@ button {
 p {
   font-family: variables.$basic-font;
   color: #D3D3D3 !important;
-  line-height: 0.5rem !important;
+  //line-height: 0.5rem !important;
 }

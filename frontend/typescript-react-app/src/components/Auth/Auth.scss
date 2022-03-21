@@ -13,10 +13,10 @@
   width: 100%;
 }
 
-#show-password {
-  font-weight: variables.$bold;
-  padding-bottom: 12px;
-}
+//#show-password {
+//  font-weight: variables.$bold;
+//  padding-bottom: 12px;
+//}
 
 #auth-container {
   background-image: none !important;
@@ -34,6 +34,6 @@
 
 #auth-form-div {
   background-color: white !important;
-  padding: 5%;
+  //padding: 5%;
   border-radius: variables.$border-radius;
 }

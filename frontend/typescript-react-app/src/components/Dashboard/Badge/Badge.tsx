@@ -14,11 +14,11 @@ export default function Badge(props) {
                 <div className="row" id="badge--div">
                     <div id="badge--div--sub" className="row">
                         <div className="col">
-                            <h2 id="badge--title">Badge</h2>
                             {/* TODO: revoir les images */}
                             <img src="https://miro.medium.com/max/720/1*W35QUSvGpcLuxPo3SRTH4w.png" alt="default" id="badge-picture"/>
                         </div>
                         <div className="col" id="badge--stats">
+                            <h2 id="badge--title">Your stats : </h2>
                             <br/>
                             <p id="badge--rank" className="badge--stats-text">Rank: x</p>
                             <p id="badge--total-score" className="badge--stats-text">Total score : x</p>

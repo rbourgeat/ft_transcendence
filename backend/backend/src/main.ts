@@ -41,10 +41,9 @@ async function bootstrap() {
   });
 
 
-  /*
+//Tres utile pour les appels sur notre api !
 app.enableCors({origin: true,
   credentials: true});
-*/
 
   await app.listen(3000);
 }
