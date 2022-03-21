@@ -5,11 +5,11 @@ import { IsNotEmpty } from 'class-validator';
 export class LogInDto {
 
     @IsNotEmpty()
-    @ApiProperty()
+    @ApiProperty({ example: 'john@gmail.com' })
     email: string;
 
     @IsNotEmpty()
-    @ApiProperty()
+    @ApiProperty({ example: 'root123A' })
     password: string;
 }
 

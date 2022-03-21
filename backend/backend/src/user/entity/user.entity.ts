@@ -85,7 +85,7 @@ export class User {
     @OneToMany(() => Message, (message: Message) => message.author)
     public message: Message[];
 
-    @OneToMany(() => Participate, (participate: Participate) => participate.user)
+    @OneToMany(() => Participate, (participate: Participate) => participate.user, { eager: true })
     public participate: Participate[];
 
     @Column({ nullable: true })

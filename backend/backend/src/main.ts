@@ -12,7 +12,7 @@ import * as session from 'express-session';
 import { join } from 'path';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { CorsOptions } from '@nestjs/common/interfaces/external/cors-options.interface';
-const { createProxyMiddleware } = require('http-proxy-middleware');
+// const { createProxyMiddleware } = require('http-proxy-middleware');
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -41,10 +41,10 @@ async function bootstrap() {
   });
 
 
-    /*
-  app.enableCors({origin: true,
-    credentials: true});
-  */
+  /*
+app.enableCors({origin: true,
+  credentials: true});
+*/
 
   await app.listen(3000);
 }

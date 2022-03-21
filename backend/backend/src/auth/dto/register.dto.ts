@@ -7,23 +7,23 @@ export class RegisterDto {
     @IsNotEmpty()
     @Length(4, 20)
     @IsAlphanumeric()
-    @ApiProperty()
+    @ApiProperty({ example: 'John' })
     login: string;
 
     @IsNotEmpty()
     @IsEmail()
-    @ApiProperty()
+    @ApiProperty({ example: 'john@gmail.com' })
     email: string;
 
     @IsNotEmpty()
     @MinLength(8)
     @Matches(/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/, { message: 'password is too weak, it must have minimum 8 characters, at least 1 letter and 1 number', })
-    @ApiProperty({ description: 'minimum 8 characters, at least 1 uppercase, 1 lowercase and 1 number' })
+    @ApiProperty({ description: 'minimum 8 characters, at least 1 uppercase, 1 lowercase and 1 number', example: 'root123A' })
     password: string;
 
     @IsNotEmpty()
     @Match('password', { message: 'password doesn\'t match' })
-    @ApiProperty({ description: 'password confirmation has to match initial password' })
+    @ApiProperty({ description: 'password confirmation has to match initial password', example: 'root123A' })
     password_confirmation: string;
 }
 

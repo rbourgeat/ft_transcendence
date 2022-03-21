@@ -5,6 +5,6 @@ import { ApiProperty, ApiTags } from '@nestjs/swagger';
 export class TwoFactorAuthenticationCodeDto {
     @IsString()
     @IsNotEmpty()
-    @ApiProperty()
+    @ApiProperty({ example: '123456' })
     twoFactorAuthenticationCode: string;
 }

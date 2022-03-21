@@ -47,7 +47,7 @@ export class CreateUserDtoViaRegistration {
     @IsNotEmpty()
     @IsEmail()
     @ApiProperty()
-    email: string = 'azerty@azerty.com';
+    email: string;
 
     @IsNotEmpty()
     @MinLength(8)

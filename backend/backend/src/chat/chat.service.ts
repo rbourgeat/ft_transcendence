@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable, UnsupportedMediaTypeException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, getConnection, QueryRunner } from 'typeorm';
 import { Chat } from './entity/chat.entity';
 import { CreateChatDto } from './dto/chat.dto';
 import { User } from 'src/user/entity/user.entity';
@@ -39,54 +39,34 @@ export class ChatService {
 	}
 
 	async createChat(chat: CreateChatDto, user: User) {
+		//check if channel with that name doest not already exist
 		if (await this.getChatByName(chat.name)) {
 			console.log('error: ' + chat + ' already exist');
 			return;
 		}
 		console.log('create owner of channel');
+		//spawn new participate (channel owner)
 		const newParticipate = await this.participateRepository.create(
 			{
 				user: user,
+				admin: true
 			}
 		);
 		await this.participateRepository.save(newParticipate);
-
 		console.log('create owner done: ' + newParticipate.user.login);
+
+		//then create the new channel
 		console.log('create channel');
 		const newChat = await this.chatRepository.create(
 			{
 				...chat,
-				participates: [newParticipate]
+				participates: [newParticipate] //enough to save the relation :)
 			}
 		);
 		await this.chatRepository.save(newChat);
 		console.log('create channel done');
 
-		//add channel to the participate user table
-		//await this.participateRepository.update(newParticipate.id, newChat);
-		//console.log('add channel to participation users table');
-
-		//add participate to the channel table
-		//await this.chatRepository.update(newChat.id, newParticipate);
 		return newChat;
-		/*
-		var init = false;
-		var login = chat.owner;
-		const u = await this.userRepository.findOne({ login });
-		if (!u.chats) {
-			u.chats = [42];
-			init = true;
-		}
-		u.chats.push(newChat.id);
-		if (init)
-			u.chats.splice(0, 1);
-		this.userRepository.update({ login }, {
-			chats: u.chats
-		});
-		*/
-		// pas fini d'ajouter les membres si il y en a
-
-		//return newChat;
 	}
 
 	async createMessage(message: CreateMessageDto, user: User) {
@@ -101,6 +81,48 @@ export class ChatService {
 	async removeChat(id: number) {
 		const chat = await this.chatRepository.findOne({ id });
 		this.chatRepository.delete(chat);
+	}
+
+	async joinChat(chat: CreateChatDto, user: User) {
+		let chatT = await this.getChatByName(chat.name);
+		if (chatT) {
+			const newParticipate = await this.participateRepository.create(
+				{
+					user: user,
+					chat: chatT //possible solution :D
+				}
+			);
+			await this.participateRepository.save(newParticipate);
+			console.log('create new channel member: ' + newParticipate.user.login);
+
+			//need to find a way how to add a participate join an already existing channel.
+
+			//2 first try got this error :  ERROR [ExceptionsHandler] Cannot query across one-to-many for property participates
+			//await this.chatRepository.update(chatT, newParticipate); //not working
+			//await this.chatRepository.update(chatT.id, { participates: [newParticipate] }); //not working
+
+			//not working
+			/*
+			await getConnection()
+				.createQueryBuilder()
+				.update(Chat)
+				.set({
+					participates: [newParticipate]
+				})
+				.where("id = :id", { id: chatT.id })
+				.execute();
+			*/
+
+			//not working
+			//let queryRunner: QueryRunner;
+			//let newChat = await queryRunner.manager.update(Chat, chatT.id, { participates: [newParticipate] });
+
+			return;
+		}
+		else {
+			console.log(chat + ' not found');
+			return;
+		}
 	}
 
 	async getMessages(id: number) {

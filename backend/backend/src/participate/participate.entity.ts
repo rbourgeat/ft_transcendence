@@ -28,15 +28,16 @@ export class Participate {
     @Column({ type: "enum", enum: UserStatus, default: UserStatus.ACTIVE })
     role: UserStatus;
 
+    //can't have eager on both sides :(
     @ManyToOne(() => User, (user: User) => user.participate)
     user: User;
 
-    /*
-    @ManyToOne(() => Chat, (chat: Chat) => chat.participate)
+    @ManyToOne(() => Chat, (chat: Chat) => chat.participates)
     chat: Chat;
-    */
 
-    @ManyToMany(() => Chat, (chat: Chat) => chat.participates)
+    /*
+    @ManyToMany(() => Chat, (chat: Chat) => chat.participates, { eager: true })
     @JoinTable()
     public chats: Chat[];
+    */
 }

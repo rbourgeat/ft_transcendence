@@ -14,6 +14,6 @@ export class CreateChatDto {
     members: string[];
     */
     @IsNotEmpty()
-    @ApiProperty()
+    @ApiProperty({ example: 'chat-1' })
     name: string;
 }

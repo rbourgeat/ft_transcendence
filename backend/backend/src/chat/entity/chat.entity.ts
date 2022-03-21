@@ -26,11 +26,12 @@ export class Chat {
     public message: Message[];
 */
 
-    /*
-    @OneToMany(() => Participate, participate => participate.chat)
-    public participate: Participate[];
-    */
 
+    @OneToMany(() => Participate, participate => participate.chat, { eager: true })
+    public participates: Participate[];
+
+    /*
     @ManyToMany(() => Participate, (Participate: Participate) => Participate.chats)
     public participates: Participate[];
+    */
 }
