@@ -5,8 +5,9 @@ import { Chat } from './entity/chat.entity';
 import { CreateChatDto } from './dto/chat.dto';
 import { User } from 'src/user/entity/user.entity';
 import { Message } from 'src/chat/message/entity/message.entity'
-import CreateMessageDto from './dto/message.dto';
+import { CreateMessageDto, SendMessageToChatDto } from './dto/message.dto';
 import { Participate, UserStatus } from 'src/participate/participate.entity';
+
 
 @Injectable()
 export class ChatService {
@@ -78,6 +79,25 @@ export class ChatService {
 		return newMessage;
 	}
 
+	async sendMessage(message: SendMessageToChatDto, user: User) {
+		console.log('search for chat');
+
+		let chat = await this.getChatByName(message.channel);
+
+		let participate = await this.participateRepository.findOne({ user: user, chat: chat });
+		if (participate.role == 'ban' || participate.role == 'mute') {
+			console.log('can\'t send message, you are banned or mute');
+			return;
+		}
+		const newMessage = await this.messageRepository.create({
+			content: message.content,
+			author: user,
+			channel: chat
+		});
+		await this.messageRepository.save(newMessage);
+		return newMessage;
+	}
+
 	async removeChat(id: number) {
 		const chat = await this.chatRepository.findOne({ id });
 		this.chatRepository.delete(chat);
@@ -94,35 +114,18 @@ export class ChatService {
 			);
 			await this.participateRepository.save(newParticipate);
 			console.log('create new channel member: ' + newParticipate.user.login);
-
-			//need to find a way how to add a participate join an already existing channel.
-
-			//2 first try got this error :  ERROR [ExceptionsHandler] Cannot query across one-to-many for property participates
-			//await this.chatRepository.update(chatT, newParticipate); //not working
-			//await this.chatRepository.update(chatT.id, { participates: [newParticipate] }); //not working
-
-			//not working
-			/*
-			await getConnection()
-				.createQueryBuilder()
-				.update(Chat)
-				.set({
-					participates: [newParticipate]
-				})
-				.where("id = :id", { id: chatT.id })
-				.execute();
-			*/
-
-			//not working
-			//let queryRunner: QueryRunner;
-			//let newChat = await queryRunner.manager.update(Chat, chatT.id, { participates: [newParticipate] });
-
 			return;
 		}
 		else {
 			console.log(chat + ' not found');
 			return;
 		}
+	}
+
+	async quitChat(user: User) {
+		let participateToDelete = await this.participateRepository.findOne({ user: user });
+		await this.participateRepository.delete(participateToDelete);
+		return;
 	}
 
 	async getMessages(id: number) {
@@ -249,11 +252,10 @@ export class ChatService {
 	*/
 	}
 
-	async ban(id: number, login: string, admin: User)
-    {
-        const chat = await this.chatRepository.findOne({ id });
-        const user = await this.userRepository.findOne({ login });
-        const participate = chat.participates.find(e => e == user.participate.find(e => e.chat == chat));
+	async ban(id: number, login: string, admin: User) {
+		const chat = await this.chatRepository.findOne({ id });
+		const user = await this.userRepository.findOne({ login });
+		const participate = chat.participates.find(e => e == user.participate.find(e => e.chat == chat));
 		if (!participate)
 			return console.log("L'utilisateur ne peut pas être banni car il n'est pas dans le chat !");
 		if (!admin.participate.find(e => e.chat == chat).admin)
@@ -262,26 +264,25 @@ export class ChatService {
 			return console.log("L'utilisateur ne peut pas bannir un admin !");
 
 		user.participate.find(e => e.chat == chat).role = UserStatus.BAN;
-		
-        await this.userRepository.save(user);
-        console.log(user + ' banned');
-		return user.participate.find(e => e.chat == chat);
-    }
 
-	async unban(id: number, login: string, admin: User)
-    {
-        const chat = await this.chatRepository.findOne({ id });
-        const user = await this.userRepository.findOne({ login });
-        const participate = chat.participates.find(e => e == user.participate.find(e => e.chat == chat));
+		await this.userRepository.save(user);
+		console.log(user + ' banned');
+		return user.participate.find(e => e.chat == chat);
+	}
+
+	async unban(id: number, login: string, admin: User) {
+		const chat = await this.chatRepository.findOne({ id });
+		const user = await this.userRepository.findOne({ login });
+		const participate = chat.participates.find(e => e == user.participate.find(e => e.chat == chat));
 		if (!participate)
 			return console.log("L'utilisateur ne peut pas être débanni car il n'est pas dans le chat !");
 		if (!admin.participate.find(e => e.chat == chat).admin)
 			return console.log("L'utilisateur ne peut pas débannir car il n'est pas admin du chat !");
 
 		user.participate.find(e => e.chat == chat).role = UserStatus.ACTIVE;
-		
-        await this.userRepository.save(user);
-        console.log(user + ' unbanned');
+
+		await this.userRepository.save(user);
+		console.log(user + ' unbanned');
 		return user.participate.find(e => e.chat == chat);
-    }
+	}
 }
