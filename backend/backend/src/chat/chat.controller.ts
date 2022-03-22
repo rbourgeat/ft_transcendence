@@ -127,4 +127,22 @@ export class ChatController {
         return this.chatService.password(chat.idChat, req.user, chat.password);
     }
 
+    @ApiOperation({ summary: 'setting chat to private' }) //endpoint summary on swaggerui
+    @ApiOkResponse({ description: 'Chat now private' }) //answer sent back
+    @ApiConflictResponse({ description: 'Chat can\'t being private' }) //not working atm
+    @Post('setPrivate')
+    async setPrivate(@Body() chat: ChatDto, @Req() req: RequestWithUser) {
+        console.log(' set chat ' + chat.idChat + ' to private')
+        return this.chatService.setPrivate(chat.idChat, req.user);
+    }
+
+    @ApiOperation({ summary: 'setting chat to public' }) //endpoint summary on swaggerui
+    @ApiOkResponse({ description: 'Chat now public' }) //answer sent back
+    @ApiConflictResponse({ description: 'Chat can\'t being public' }) //not working atm
+    @Post('setPublic')
+    async setPublic(@Body() chat: ChatDto, @Req() req: RequestWithUser) {
+        console.log(' set chat ' + chat.idChat + ' to public')
+        return this.chatService.setPublic(chat.idChat, req.user);
+    }
+
 }
