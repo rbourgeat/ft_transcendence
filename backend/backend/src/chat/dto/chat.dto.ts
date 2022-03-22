@@ -1,26 +1,26 @@
 import { ApiProperty, ApiTags } from '@nestjs/swagger';
-import { IsAlphanumeric, IsEmail, IsNotEmpty, Length, MinLength, Matches, IsOptional, IsDefined } from 'class-validator';
-import { UserDto } from 'src/user/dto/user.dto';
+import { IsNotEmpty, IsOptional, IsAlphanumeric, Length } from 'class-validator';
 
-@ApiTags('Chats') //Create a category on swagger
+@ApiTags('Chats')
 export class CreateChatDto {
-    /*
-    @IsNotEmpty()
+    @IsOptional()
+    @IsAlphanumeric()
+    @Length(4, 10)
     @ApiProperty()
-    owner: string;
+    password: string;
 
     @IsOptional()
     @ApiProperty()
-    members: string[];
-    */
+    public: boolean;
+
     @IsNotEmpty()
     @ApiProperty({ example: 'chat-1' })
     name: string;
 }
 
-@ApiTags('Chats') //Create a category on swagger
+@ApiTags('Chats')
 export class PasswordChatDto {
     @IsOptional()
     @ApiProperty({ description: 'password null == désactivate' })
-    password: string;
+    password: string = null;
 }

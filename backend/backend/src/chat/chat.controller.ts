@@ -21,7 +21,7 @@ export class ChatController {
         return this.chatService.getAllChats();
     }
 
-    @ApiOperation({ summary: 'Create a new message' })
+    @ApiOperation({ summary: 'Create a new message [jwt-protected + for swagger test only]' })
     @ApiOkResponse({ description: 'Message creation suceed' })
     @UseGuards(JwtAuthenticationGuard)
     @Post('message')
@@ -29,7 +29,7 @@ export class ChatController {
         return this.chatService.createMessage(message, req.user);
     }
 
-    @ApiOperation({ summary: 'Join a chat' })
+    @ApiOperation({ summary: 'Join a chat [jwt-protected]' })
     @ApiOkResponse({ description: 'Join chat suceed' })
     @UseGuards(JwtAuthenticationGuard)
     @Post('join')
@@ -38,7 +38,7 @@ export class ChatController {
     }
 
 
-    @ApiOperation({ summary: 'Send a message to a chat' })
+    @ApiOperation({ summary: 'Send a message to a chat [jwt-protected]' })
     @ApiOkResponse({ description: 'message sent' })
     @UseGuards(JwtAuthenticationGuard)
     @Post('sendMessage')
@@ -46,34 +46,21 @@ export class ChatController {
         return this.chatService.sendMessage(message, req.user);
     }
 
-    @ApiOperation({ summary: 'Quit a chat' })
+    @ApiOperation({ summary: 'Quit a chat [jwt-protected]' })
     @ApiOkResponse({ description: 'chat quit' })
     @UseGuards(JwtAuthenticationGuard)
     @Post('quit')
-    async quitChat(@Req() req: RequestWithUser) {
-        return this.chatService.quitChat(req.user);
+    async quitChat(@Body() chat: CreateChatDto, @Req() req: RequestWithUser) {
+        return this.chatService.quitChat(chat, req.user);
     }
-    /**
-    **  Save a new chat to db
-    **/
 
-    @ApiOperation({ summary: 'Create a new chat' }) //endpoint summary on swaggerui
-    @ApiOkResponse({ description: 'Chat creation suceed' }) //answer sent back
-    @ApiConflictResponse({ description: 'Chat already exist' }) //not working atm
+    @ApiOperation({ summary: 'Create a new chat [jwt-protected]' })
+    @ApiOkResponse({ description: 'Chat creation suceed' })
+    @ApiConflictResponse({ description: 'Chat already exist' })
     @UseGuards(JwtAuthenticationGuard)
     @Post()
     async createChat(@Body() chat: CreateChatDto, @Req() req: RequestWithUser) {
-        //console.log('Create chat: ' + chat)
         return this.chatService.createChat(chat, req.user);
-    }
-
-    @ApiOperation({ summary: 'Remove a chat' }) //endpoint summary on swaggerui
-    @ApiOkResponse({ description: 'Chat removed successfully' }) //answer sent back
-    @ApiConflictResponse({ description: 'Chat already removed' }) //not working atm
-    @Delete()
-    async removeChat(@Body() id: number) {
-        console.log('Remove chat: ' + id)
-        return this.chatService.removeChat(id);
     }
 
     @ApiOperation({ summary: 'Retrieve message history' }) //endpoint summary on swaggerui
@@ -83,24 +70,6 @@ export class ChatController {
     async getMessages(@Body() id: number) {
         console.log('Retrieve message history from chat: ' + id)
         return this.chatService.getMessages(id);
-    }
-
-    @ApiOperation({ summary: 'Adding new member' }) //endpoint summary on swaggerui
-    @ApiOkResponse({ description: 'new member added' }) //answer sent back
-    @ApiConflictResponse({ description: 'member already member' }) //not working atm
-    @Post(':id/add/:member')
-    async addMember(@Param('id') id: number, @Param('member') member: string) {
-        console.log('Adding member')
-        return this.chatService.addMember(id, String(member), "member");
-    }
-
-    @ApiOperation({ summary: 'Remove member' }) //endpoint summary on swaggerui
-    @ApiOkResponse({ description: 'member removed' }) //answer sent back
-    @ApiConflictResponse({ description: 'member already removed' }) //not working atm
-    @Post(':id/remove/:member')
-    async removeMember(@Param('id') id: number, @Param('member') member: string) {
-        console.log('Remove member')
-        return this.chatService.removeMember(id, String(member), "member");
     }
 
     @ApiOperation({ summary: 'Adding new admin' }) //endpoint summary on swaggerui
@@ -116,7 +85,7 @@ export class ChatController {
     @ApiOkResponse({ description: 'user banned' }) //answer sent back
     @ApiConflictResponse({ description: 'user already banned' }) //not working atm
     @Post('ban')
-    async ban(@Body() idChat: number, @Body() user: string, @Req() req: RequestWithUser, @Body() time: Date) {
+    async ban(@Body() idChat: number, @Body() user: string, @Body() time: Date, @Req() req: RequestWithUser) {
         console.log(req.user + ' ban ' + user + ' in chat' + idChat)
         return this.chatService.ban(idChat, user, req.user, time);
     }

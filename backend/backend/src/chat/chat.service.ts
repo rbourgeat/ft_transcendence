@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable, UnsupportedMediaTypeException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, getConnection, QueryRunner } from 'typeorm';
+import { Repository, getConnection, QueryRunner, PessimisticLockTransactionRequiredError } from 'typeorm';
 import { Chat } from './entity/chat.entity';
 import { CreateChatDto, PasswordChatDto } from './dto/chat.dto';
 import { User } from 'src/user/entity/user.entity';
@@ -28,45 +28,41 @@ export class ChatService {
 
 	async getChatByName(name: string) {
 		console.log('we search for chat: ' + name);
-		//const chat = await this.chatRepository.findOne({ where: { name: name } })
 		const chat = await this.chatRepository.findOne({ name: name });
-		if (chat) {
+		if (chat)
 			return chat;
-		}
 		else {
 			console.log(chat + ' not found');
 			return;
 		}
 	}
 
+	/**
+	 * 1.check for duplicate
+	 * 2.create new participant
+	 * 3. create new channel
+	 */
+
 	async createChat(chat: CreateChatDto, user: User) {
-		//check if channel with that name doest not already exist
-		if (await this.getChatByName(chat.name)) {
-			console.log('error: ' + chat + ' already exist');
-			return;
-		}
-		console.log('create owner of channel');
-		//spawn new participate (channel owner)
+		if (await this.getChatByName(chat.name))
+			return console.log('error: ' + chat + ' already exist');;
+
 		const newParticipate = await this.participateRepository.create(
 			{
 				user: user,
-				admin: true
+				admin: true,
+				owner: true
 			}
 		);
 		await this.participateRepository.save(newParticipate);
-		console.log('create owner done: ' + newParticipate.user.login);
 
-		//then create the new channel
-		console.log('create channel');
 		const newChat = await this.chatRepository.create(
 			{
 				...chat,
-				participates: [newParticipate] //enough to save the relation :)
+				participates: [newParticipate]
 			}
 		);
 		await this.chatRepository.save(newChat);
-		console.log('create channel done');
-
 		return newChat;
 	}
 
@@ -85,7 +81,7 @@ export class ChatService {
 		let chat = await this.getChatByName(message.channel);
 
 		let participate = await this.participateRepository.findOne({ user: user, chat: chat });
-		if (participate.role == 'ban' || participate.role == 'mute') {
+		if (participate.role == UserStatus.BAN || participate.role == UserStatus.MUTE) {
 			console.log('can\'t send message, you are banned or mute');
 			return;
 		}
@@ -98,34 +94,47 @@ export class ChatService {
 		return newMessage;
 	}
 
-	async removeChat(id: number) {
-		const chat = await this.chatRepository.findOne({ id });
-		this.chatRepository.delete(chat);
-	}
+	/**
+	 *	1. check if chat exists
+	 *	2. check if private + password
+	 *	3. save new participant
+	 */
 
 	async joinChat(chat: CreateChatDto, user: User) {
-		let chatT = await this.getChatByName(chat.name);
-		if (chatT) {
-			const newParticipate = await this.participateRepository.create(
-				{
-					user: user,
-					chat: chatT //possible solution :D
+		let joinedChat = await this.getChatByName(chat.name);
+		if (joinedChat) {
+			if (chat.password == joinedChat.password) {
+				console.log('has good pass');
+				let chatT = await this.getChatByName(chat.name);
+				let participate = await this.participateRepository.findOne({ user: user, chat: chatT });
+				console.log(participate);
+				if (!participate) {
+					const newParticipate = await this.participateRepository.create(
+						{
+							user: user,
+							chat: joinedChat
+						}
+					);
+					await this.participateRepository.save(newParticipate);
+					return console.log('create new channel member: ' + newParticipate.user.login);;
 				}
-			);
-			await this.participateRepository.save(newParticipate);
-			console.log('create new channel member: ' + newParticipate.user.login);
-			return;
+				else if (participate && participate.role != UserStatus.BAN)
+					return console.log('you are banned from this channel');
+				else if (participate)
+					return console.log('already in channel');
+			}
+			else
+				return console.log('wrong password');
 		}
-		else {
-			console.log(chat + ' not found');
-			return;
-		}
+		else
+			return console.log(chat + ' not found');
 	}
 
-	async quitChat(user: User) {
-		let participateToDelete = await this.participateRepository.findOne({ user: user });
+	async quitChat(chat: CreateChatDto, user: User) {
+		const chatT = await this.chatRepository.findOne({ name: chat.name });
+		let participateToDelete = await this.participateRepository.findOne({ user: user, chat: chatT });
 		await this.participateRepository.delete(participateToDelete);
-		return;
+		return console.log('has quit chat');
 	}
 
 	async getMessages(id: number) {
@@ -143,113 +152,6 @@ export class ChatService {
 			history.push(message);
 		}
 		return history;
-	}
-
-	async addMember(id: number, login: string, to: string) {
-		/*
-		const chat = await this.chatRepository.findOne({ id });
-		var init = false;
-		const u = await this.userRepository.findOne({ login });
-
-		if (!u)
-			return; // comment générer une erreur ???
-
-		if (to == "member")
-		{
-			if (!chat.members) {
-				chat.members = [""];
-				init = true;
-			}
-			chat.members.push(u.login);
-			if (init)
-				chat.members.splice(0, 1);
-			this.chatRepository.update({ id }, {
-				members: chat.members
-			});
-		}
-		else if (to == "admin")
-		{
-			if (!chat.admins) {
-				chat.admins = [""];
-				init = true;
-			}
-			chat.admins.push(u.login);
-			if (init)
-				chat.admins.splice(0, 1);
-			this.chatRepository.update({ id }, {
-				admins: chat.admins
-			});
-		}
-		else if (to == "ban")
-		{
-			if (!chat.bans) {
-				chat.bans = [""];
-				init = true;
-			}
-			chat.bans.push(u.login);
-			if (init)
-				chat.bans.splice(0, 1);
-			this.chatRepository.update({ id }, {
-				bans: chat.bans
-			});
-		}
-		else if (to == "temp_ban")
-		{
-			if (!chat.temp_bans) {
-				chat.temp_bans = [""];
-				init = true;
-			}
-			chat.temp_bans.push(u.login);
-			if (init)
-				chat.temp_bans.splice(0, 1);
-			this.chatRepository.update({ id }, {
-				temp_bans: chat.temp_bans
-			});
-		}
-		*/
-	}
-
-	async removeMember(id: number, login: string, to: string) {
-		/*
-		const chat = await this.chatRepository.findOne({ id });
-
-		if (to == "member")
-		{
-			for (var i = 0; i < chat.members.length; i++)
-				if (chat.members[i] === login)
-					chat.members.splice(i, 1);
-			this.chatRepository.update({ id }, {
-				members: chat.members
-			});
-		}
-		else if (to == "admin")
-		{
-			for (var i = 0; i < chat.admins.length; i++)
-				if (chat.admins[i] === login)
-					chat.admins.splice(i, 1);
-			this.chatRepository.update({ id }, {
-				admins: chat.admins
-			});
-		}
-		else if (to == "ban")
-		{
-			for (var i = 0; i < chat.bans.length; i++)
-				if (chat.bans[i] === login)
-					chat.bans.splice(i, 1);
-			this.chatRepository.update({ id }, {
-				bans: chat.bans
-			});
-		}
-		else if (to == "temp_ban")
-		{
-			for (var i = 0; i < chat.temp_bans.length; i++)
-				if (chat.temp_bans[i] === login)
-					chat.temp_bans.splice(i, 1);
-			this.chatRepository.update({ id }, {
-				temp_bans: chat.temp_bans
-			});
-		}
-	*/
 	}
 
 	async ban(id: number, login: string, admin: User, time: Date) {
@@ -338,11 +240,12 @@ export class ChatService {
 
 		chat.password = password.password;
 
+		/*
 		if (chat.password != null)
 			chat.public = false;
 		else
 			chat.public = true;
-
+		*/
 		await this.chatRepository.save(chat);
 		console.log("chat password edit");
 		return chat;
