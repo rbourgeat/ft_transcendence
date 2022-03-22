@@ -1,6 +1,6 @@
 import { Req, Body, Controller, Delete, Get, Param, Patch, Post, UseInterceptors, UploadedFile, UseGuards } from '@nestjs/common';
 import { ChatService } from './chat.service';
-import { CreateChatDto, PasswordChatDto } from './dto/chat.dto';
+import { CreateChatDto, ChatDto } from './dto/chat.dto';
 import { ApiBody, ApiConflictResponse, ApiConsumes, ApiOkResponse, ApiOperation, ApiParam, ApiQuery, ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger'
 import { FileInterceptor } from '@nestjs/platform-express';
 import RequestWithUser from 'src/auth/interface/requestWithUser.interface';
@@ -72,58 +72,59 @@ export class ChatController {
         return this.chatService.getMessages(id);
     }
 
+
     @ApiOperation({ summary: 'Adding new admin' }) //endpoint summary on swaggerui
     @ApiOkResponse({ description: 'new admin added' }) //answer sent back
     @ApiConflictResponse({ description: 'admin already admin' }) //not working atm
     @Post('setAdmin')
-    async setAdmin(@Body() idChat: number, @Body() user: string, @Req() req: RequestWithUser) {
-        console.log(req.user + 'set admin' + user + ' to chat ' + idChat)
-        return this.chatService.setAdmin(idChat, user, req.user);
+    async setAdmin(@Body() chat: ChatDto, @Req() req: RequestWithUser) {
+        console.log(req.user + 'set admin' + chat.user + ' to chat ' + chat.idChat)
+        return this.chatService.setAdmin(chat.idChat, chat.user, req.user);
     }
 
     @ApiOperation({ summary: 'Ban user' }) //endpoint summary on swaggerui
     @ApiOkResponse({ description: 'user banned' }) //answer sent back
     @ApiConflictResponse({ description: 'user already banned' }) //not working atm
     @Post('ban')
-    async ban(@Body() idChat: number, @Body() user: string, @Body() time: Date, @Req() req: RequestWithUser) {
-        console.log(req.user + ' ban ' + user + ' in chat' + idChat)
-        return this.chatService.ban(idChat, user, req.user, time);
+    async ban(@Body() chat: ChatDto, @Req() req: RequestWithUser) {
+        console.log(req.user + ' ban ' + chat.user + ' in chat' + chat.idChat)
+        return this.chatService.ban(chat.idChat, chat.user, req.user, chat.time);
     }
 
     @ApiOperation({ summary: 'Unban user' }) //endpoint summary on swaggerui
     @ApiOkResponse({ description: 'user unbanned' }) //answer sent back
     @ApiConflictResponse({ description: 'user not banned' }) //not working atm
     @Post('unban')
-    async unban(@Body() idChat: number, @Body() user: string, @Req() req: RequestWithUser) {
-        console.log(req.user + ' unban ' + user + ' in chat' + idChat)
-        return this.chatService.active(idChat, user, req.user);
+    async unban(@Body() chat: ChatDto, @Req() req: RequestWithUser) {
+        console.log(req.user + ' unban ' + chat.user + ' in chat' + chat.idChat)
+        return this.chatService.active(chat.idChat, chat.user, req.user);
     }
 
     @ApiOperation({ summary: 'Mute user' }) //endpoint summary on swaggerui
     @ApiOkResponse({ description: 'user mute' }) //answer sent back
     @ApiConflictResponse({ description: 'user already mute' }) //not working atm
     @Post('mute')
-    async mute(@Body() idChat: number, @Body() user: string, @Req() req: RequestWithUser, @Body() time: Date) {
-        console.log(req.user + ' mute ' + user + ' in chat' + idChat)
-        return this.chatService.ban(idChat, user, req.user, time);
+    async mute(@Body() chat: ChatDto, @Req() req: RequestWithUser) {
+        console.log(req.user + ' mute ' + chat.user + ' in chat' + chat.idChat)
+        return this.chatService.ban(chat.idChat, chat.user, req.user, chat.time);
     }
 
     @ApiOperation({ summary: 'Unmute user' }) //endpoint summary on swaggerui
     @ApiOkResponse({ description: 'user unmute' }) //answer sent back
     @ApiConflictResponse({ description: 'user not mute' }) //not working atm
     @Post('unmute')
-    async unmute(@Body() idChat: number, @Body() user: string, @Req() req: RequestWithUser) {
-        console.log(req.user + ' unmute ' + user + ' in chat' + idChat)
-        return this.chatService.active(idChat, user, req.user);
+    async unmute(@Body() chat: ChatDto, @Req() req: RequestWithUser) {
+        console.log(req.user + ' unmute ' + chat.user + ' in chat' + chat.idChat)
+        return this.chatService.active(chat.idChat, chat.user, req.user);
     }
 
     @ApiOperation({ summary: 'set chat password' }) //endpoint summary on swaggerui
     @ApiOkResponse({ description: 'Chat password done' }) //answer sent back
     @ApiConflictResponse({ description: 'Chat password error' }) //not working atm
     @Post('password')
-    async password(@Body() idChat: number, @Req() req: RequestWithUser, @Body() password: PasswordChatDto) {
-        console.log(' set password to chat ' + idChat)
-        return this.chatService.password(idChat, req.user, password);
+    async password(@Body() chat: ChatDto, @Req() req: RequestWithUser) {
+        console.log(' set password to chat ' + chat.idChat)
+        return this.chatService.password(chat.idChat, req.user, chat.password);
     }
 
 }
