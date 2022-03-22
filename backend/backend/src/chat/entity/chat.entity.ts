@@ -2,7 +2,6 @@ import { Entity, PrimaryGeneratedColumn, CreateDateColumn, Column, Unique, OneTo
 import { User } from '../../user/entity/user.entity'
 import { Message } from 'src/chat/message/entity/message.entity'
 import { Participate } from 'src/participate/participate.entity'
-import { PasswordChatDto } from '../dto/chat.dto'
 
 @Entity('chat')
 export class Chat {

@@ -18,9 +18,28 @@ export class CreateChatDto {
     name: string;
 }
 
+// @ApiTags('Chats') //Create a category on swagger
+// export class PasswordChatDto {
+//     @IsOptional()
+//     @ApiProperty({ description: 'password null == désactivate' })
+//     password: string;
+// }
+
 @ApiTags('Chats') //Create a category on swagger
-export class PasswordChatDto {
+export class ChatDto {
+    @IsNotEmpty()
+    @ApiProperty()
+    idChat: number;
+
     @IsOptional()
-    @ApiProperty({ description: 'password null == désactivate' })
+    @ApiProperty()
+    user: string;
+
+    @IsOptional()
+    @ApiProperty()
+    time: Date;
+
+    @IsOptional()
+    @ApiProperty()
     password: string;
 }

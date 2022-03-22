@@ -2,7 +2,7 @@ import { HttpException, HttpStatus, Injectable, UnsupportedMediaTypeException } 
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, getConnection, QueryRunner } from 'typeorm';
 import { Chat } from './entity/chat.entity';
-import { CreateChatDto, PasswordChatDto } from './dto/chat.dto';
+import { CreateChatDto } from './dto/chat.dto';
 import { User } from 'src/user/entity/user.entity';
 import { Message } from 'src/chat/message/entity/message.entity'
 import { CreateMessageDto, SendMessageToChatDto } from './dto/message.dto';
@@ -331,12 +331,12 @@ export class ChatService {
 		return user.participate.find(e => e.chat == chat);
 	}
 
-	async password(id: number, admin: User, password: PasswordChatDto) {
+	async password(id: number, admin: User, password: string) {
 		const chat = await this.chatRepository.findOne({ id });
 		if (!admin.participate.find(e => e.chat == chat).owner)
 			return console.log("L'utilisateur ne peut pas setup un mdp car il n'est pas owner du chat !");
 
-		chat.password = password.password;
+		chat.password = password;
 
 		if (chat.password != null)
 			chat.public = false;
