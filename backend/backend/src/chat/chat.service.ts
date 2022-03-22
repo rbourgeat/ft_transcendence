@@ -250,4 +250,29 @@ export class ChatService {
 		console.log("chat password edit");
 		return chat;
 	}
+
+	async setPrivate(id: number, admin: User) {
+		const chat = await this.chatRepository.findOne({ id });
+		if (!admin.participate.find(e => e.chat == chat).owner)
+			return console.log("L'utilisateur ne peut pas set le chat en privé car il n'est pas owner !");
+
+		chat.public = false;
+
+		await this.chatRepository.save(chat);
+		console.log("chat set to private");
+		return chat;
+	}
+
+	async setPublic(id: number, admin: User) {
+		const chat = await this.chatRepository.findOne({ id });
+		if (!admin.participate.find(e => e.chat == chat).owner)
+			return console.log("L'utilisateur ne peut pas set le chat en public car il n'est pas owner !");
+
+		chat.public = true;
+
+		await this.chatRepository.save(chat);
+		console.log("chat set to public");
+		return chat;
+	}
+	
 }
