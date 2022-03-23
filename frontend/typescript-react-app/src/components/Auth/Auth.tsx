@@ -21,8 +21,8 @@ export default function Auth() {
                     <div id="auth-form-div" className="col-8">
                         <div id="auth--form1" >
                             <div id="form--auth1" className="forms">
-                                <h2>Bienvenue ! </h2>
-                                <p>Pour jouer, vous devez vous authentifier 🏓 </p>
+                                {/*<h2>Bienvenue ! </h2>*/}
+                                <p id="jouer">Pour jouer, vous devez vous authentifier 🏓 </p>
                                 <FourtyTwo />
                                 <Signup />
                         </div>

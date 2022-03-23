@@ -1,8 +1,5 @@
 @use "../../variables";
 
-#user--time {
-  color: white !important;
-}
 
 #bonjour--user {
   margin-top: 35px !important;
@@ -14,15 +11,8 @@
   border: 0.1rem solid black;
 }
 
-#user--div--info {
+#user--div--info, #user--time {
   color: white !important;
-}
-
-.user--stats > * {
-  color: black !important;
-  text-align: left !important;
-  font-family: variables.$basic-font;
-  font-weight: variables.$bold;
 }
 
 .span--stats {
@@ -36,14 +26,6 @@
 
 #input {
   border: 0.1rem solid black !important;
-  //text-align: center;
-}
-
-#input--upload {
-  //display: none;
-  cursor: pointer;
-  margin-left: 100px !important;
-  //border: 0.1rem solid red;
 }
 
 #button--2fa {
@@ -67,24 +49,18 @@
   text-align: center;
 }
 
-//#input--upload {
-//  display: none;
-//}
-
-p {
+#stats > *
+{
   color: black !important;
-  text-align: center !important;
-  //padding-right: 10px !important;
 }
 
 input {
- // color: white !important;
-  //margin-right: auto;
   margin-left: auto;margin: 10px !important;
   margin-bottom: 25px !important;
-  //display: block;
-  //margin-right: auto;
-  //margin-left: auto;
+}
+
+button {
+  margin-top: 15px !important;
 }
 
 //.input-file-upload {
@@ -92,6 +68,19 @@ input {
 //  background: red !important;
 //}
 
-button {
-  margin-top: 15px !important;
-}
+//.user--stats > * {
+//  color: black !important;
+//  text-align: left !important;
+//  font-family: variables.$basic-font;
+//  font-weight: variables.$bold;
+//}
+
+//p {
+//  color: black !important;
+//  text-align: center !important;
+//}
+
+//#input--upload {
+//  cursor: pointer;
+//  margin-left: 100px !important;
+//}

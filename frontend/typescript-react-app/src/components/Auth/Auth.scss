@@ -14,11 +14,6 @@
   width: 100%;
 }
 
-//#show-password {
-//  font-weight: variables.$bold;
-//  padding-bottom: 12px;
-//}
-
 #auth-container {
   background-image: none !important;
 }
@@ -29,13 +24,13 @@
 }
 
 #se-connecter,
-#sinscrire {
-  margin-top: 25px;
+#sinscrire, #jouer {
+  margin-top: 5px;
+  color: black !important;
 }
 
 #auth-form-div {
   background-color: white !important;
-  //padding: 5%;
   border-radius: variables.$border-radius;
-  margin-top: 50px !important;
+  margin-top: 10px !important;
 }
