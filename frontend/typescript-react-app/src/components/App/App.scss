@@ -14,15 +14,7 @@
   font-size: 3rem;
 }
 
-h1 {
-  font-family: variables.$big-font;
-  font-size: variables.$big-font-size;
-  color: white !important;
-  opacity: 1 !important;
-}
-
-h2,
-h3 {
+h1, h2, h3 {
   font-family: variables.$big-font;
   font-size: variables.$big-font-size;
   color: black !important;
@@ -89,6 +81,7 @@ button {
 
 p {
   font-family: variables.$basic-font;
-  color: #D3D3D3 !important;
+  //color: #D3D3D3 !important;
+  color: black !important;
   //line-height: 0.5rem !important;
 }

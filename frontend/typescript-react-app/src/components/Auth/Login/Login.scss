@@ -1,6 +1,5 @@
 @use "../../../variables";
 
-
 #auth-form-div {
   background-color: white !important;
   background-image: none !important;
@@ -14,14 +13,8 @@
   width: 100%;
 }
 
-#show-password {
-  font-weight: variables.$bold;
-  padding-bottom: 12px;
-}
-
 #auth-container {
   background-image: none !important;
-  // background-color: red !important;
 }
 
 #auth-container > * {
@@ -29,13 +22,18 @@
   font-size: variables.$small-font-size;
 }
 
-#se-connecter,
-#sinscrire {
-  margin-top: 25px;
-}
-
 #auth-form-div {
   background-color: white !important;
   padding: 5%;
   border-radius: variables.$border-radius;
 }
+
+//#se-connecter,
+//#sinscrire {
+//  margin-top: 5px;
+//}
+
+//#show-password {
+//  font-weight: variables.$bold;
+//  padding-bottom: 5px;
+//}
