@@ -6,6 +6,15 @@ import { UpdateUserDto, CreateUserDtoViaRegistration, User42Dto } from 'src/user
 import { UserEvent } from 'src/user/user.event';
 import { UsersRepository } from 'src/user/user.repository';
 
+import { FriendRequestEntity } from 'src/user/entity/friend-request.entity';
+import {
+	FriendRequest,
+	FriendRequestStatus,
+	FriendRequest_Status,
+} from 'src/user/interface/friend-request.interface';
+import { from, Observable, of } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators'
+
 @Injectable()
 export class UserService {
 	constructor(
@@ -14,6 +23,8 @@ export class UserService {
 		private userRepository: Repository<User>,
 		@InjectRepository(UsersRepository)
 		private usersRepository: UsersRepository,
+		@InjectRepository(FriendRequestEntity)
+		private readonly friendRequestRepository: Repository<FriendRequestEntity>,
 	) { }
 
 	getAllUsers() {
@@ -81,22 +92,23 @@ export class UserService {
 			friends: u.friends
 		});
 	}
-
-	async removeFriend(user: string, friend: string) {
-		var login = user;
-		const u = await this.userRepository.findOne({ login });
-		login = friend;
-		const f = await this.userRepository.findOne({ login });
-		if (u.friends.length == 1 && u.friends[0] === f.login)
-			u.friends = [];
-		else
-			for (var i = 0; i < u.friends.length; i++)
-				if (u.friends[i] === f.login)
-					u.friends.splice(i, 1);
-		return this.userRepository.update({ login }, {
-			friends: u.friends
-		});
-	}
+	/*
+		async removeFriend(user: string, friend: string) {
+			var login = user;
+			const u = await this.userRepository.findOne({ login });
+			login = friend;
+			const f = await this.userRepository.findOne({ login });
+			if (u.friends.length == 1 && u.friends[0] === f.login)
+				u.friends = [];
+			else
+				for (var i = 0; i < u.friends.length; i++)
+					if (u.friends[i] === f.login)
+						u.friends.splice(i, 1);
+			return this.userRepository.update({ login }, {
+				friends: u.friends
+			});
+		}
+		*/
 
 	async updateStatus(login: string, s: string) {
 		return this.userRepository.update({ login }, {
@@ -161,6 +173,157 @@ export class UserService {
 		return this.usersRepository.update(userId, {
 			isTwoFactorAuthenticationEnabled: true
 		});
+	}
+
+	////////////////
+	async findUserById(id: number) {
+		console.log('we search for user: ' + id);
+		const user = await this.userRepository.findOne({ id: id });
+		if (user)
+			return user;
+		else {
+			console.log(user + ' not found');
+			return;
+		}
+		/*
+		return from(this.userRepository.findOne({ id }),
+		).pipe(
+			map((user: User) => {
+				if (!user) {
+					throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+				}
+				delete user.password;
+				return user;
+			}),
+		);
+		*/
+	}
+
+	/**
+	 * check in db if we find an invitation already exist with the 2 user
+	 */
+	async hasRequestBeenSentOrReceived(creator: User, receiver: User) {
+		const invite = await this.friendRequestRepository.findOne({
+			where: [
+				{ creator, receiver },
+				{ creator: receiver, receiver: creator },
+			],
+		});
+		if (invite)
+			return true;
+		return false;
+	}
+
+	/*
+	* 1.check self invite
+	* 2.check if receiver exists
+	* 3.check if no invite to him / request from him already exist
+	* 4.add new invitation
+	*/
+	async sendFriendRequest(receiverId: number, creator: User) {
+		if (receiverId === creator.id)
+			return console.log('It is not possible to add yourself!');
+		const receiver = await this.findUserById(receiverId);
+		if (!receiver)
+			return console.log('user not found');
+		const duplicate_request = await this.hasRequestBeenSentOrReceived(creator, receiver)
+		if (duplicate_request)
+			return console.log('A friend request has already been (sent to/received from) that user');
+		const newFriendRequest = this.friendRequestRepository.create(
+			{
+				creator: creator,
+				receiver: receiver,
+				status: 'pending'
+			}
+		);
+		this.friendRequestRepository.save(newFriendRequest);
+	}
+
+	/*
+		getFriendRequestStatus(receiverId: number, currentUser: User): Observable<FriendRequestStatus> {
+			return this.findUserById(receiverId).pipe(
+				switchMap((receiver: User) => {
+					return from(this.friendRequestRepository.findOne({
+						where: [
+							{ creator: currentUser, receiver: receiver },
+							{ creator: receiver, receiver: currentUser },
+						],
+						relations: ['creator', 'receiver'],
+					}),
+					);
+				}),
+				switchMap((friendRequest: FriendRequest) => {
+					if (friendRequest?.receiver.id === currentUser.id) {
+						return of({
+							status: 'waiting-for-current-user-response' as FriendRequest_Status,
+						});
+					}
+					return of({ status: friendRequest?.status || 'not-sent' });
+				}),
+			);
+		}
+	*/
+
+
+	getFriendRequestUserById(friendRequestId: number) {
+		return this.friendRequestRepository.findOne({ where: [{ id: friendRequestId }] });
+	}
+
+	/*
+	* update the status of the request only
+	*/
+	async respondToFriendRequest(statusResponse: FriendRequest_Status, friendRequestId: number) {
+		await this.friendRequestRepository.update(friendRequestId, { status: statusResponse })
+		const friendRequest = await this.getFriendRequestUserById(friendRequestId)
+		return friendRequest;
+	}
+
+	/**
+	 * find all invite where receiver is user, relations:[] allows to send the user element details :)
+	 */
+	getFriendRequestsFromRecipients(currentUser: User): Observable<FriendRequest[]> {
+		return from(this.friendRequestRepository.find({
+			where: [{ receiver: currentUser }],
+			relations: ['receiver', 'creator'],
+		}),
+		);
+	}
+
+	/**
+	 * 1.search for all elemtns of requestRepo where user is creator or receiver
+	 * 2. for each of them, store the id of the friend in a list
+	 * 3. return the research in userRepo with the friends id list
+	 */
+	async getFriends(currentUser: User) {
+		let list = await this.friendRequestRepository.find({
+			where: [
+				{ creator: currentUser, status: 'accepted' },
+				{ receiver: currentUser, status: 'accepted' },
+			],
+			relations: ['creator', 'receiver'],
+		});
+
+		let userIds: number[] = [];
+		list.forEach((friend: FriendRequest) => {
+			if (friend.creator.id === currentUser.id) {
+				userIds.push(friend.receiver.id);
+			} else if (friend.receiver.id === currentUser.id) {
+				userIds.push(friend.creator.id);
+			}
+		});
+		return this.userRepository.findByIds(userIds);
+	}
+
+	/*
+	* find user you want to unfriend, delete the relation either if it was the targer or u that
+	* made the invitation
+	 */
+	async removeFriend(userToRemoveId: number, currentUser: User) {
+		console.log('test1:' + userToRemoveId);
+		const userToRemove = await this.findUserById(userToRemoveId);
+		console.log('test before delete:' + currentUser.id + '');
+		await this.friendRequestRepository.delete({ receiver: currentUser, creator: userToRemove });
+		await this.friendRequestRepository.delete({ receiver: userToRemove, creator: currentUser });
 	}
 }
 

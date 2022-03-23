@@ -8,6 +8,7 @@ import { User } from 'src/user/entity/user.entity'
 import { UserEvent } from 'src/user/user.event';
 import { Message } from 'src/chat/message/entity/message.entity';
 import { Participate } from 'src/participate/participate.entity'
+import { FriendRequestEntity } from './entity/friend-request.entity';
 
 
 @Module({
@@ -16,6 +17,7 @@ import { Participate } from 'src/participate/participate.entity'
     TypeOrmModule.forFeature([Message]),
     TypeOrmModule.forFeature([Participate]),
     TypeOrmModule.forFeature([UsersRepository]),
+    TypeOrmModule.forFeature([FriendRequestEntity]),
     MulterModule.register({
       dest: './upload',
     })],
