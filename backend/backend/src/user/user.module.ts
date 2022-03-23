@@ -18,9 +18,10 @@ import { FriendRequestEntity } from './entity/friend-request.entity';
     TypeOrmModule.forFeature([Participate]),
     TypeOrmModule.forFeature([UsersRepository]),
     TypeOrmModule.forFeature([FriendRequestEntity]),
-    MulterModule.register({
-      dest: './upload',
-    })],
+    // MulterModule.register({
+    //   dest: './upload',
+    // })
+  ],
   controllers: [UserController],
   providers: [UserService, UserEvent],
   exports: [UserService]
