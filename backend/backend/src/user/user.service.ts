@@ -55,8 +55,8 @@ export class UserService {
 		});
 	}
 
-	async addAvatar(login: string, filename: string) {
-		return this.userRepository.update({ login }, {
+	async addAvatar(id: number, filename: string) {
+		return this.userRepository.update(id, {
 			avatar: filename
 		});
 	}

@@ -1,10 +1,13 @@
-import { Request, Req, Body, Controller, Delete, Put, Get, Param, Patch, Post, UseGuards, UseInterceptors, UploadedFile, Header } from '@nestjs/common';
+import { Request, Req, Body, Controller, Delete, Put, Get, Param, Patch, Post, UseGuards, UseInterceptors, UploadedFile, Header, Res } from '@nestjs/common';
 import { UserService, fileMimetypeFilter } from './user.service';
 import CreateUserDtoViaRegistration, { UpdateUserDto, UploadAvatarDto } from 'src/user/dto/user.dto';
 import { ApiBody, ApiExtraModels, ApiConflictResponse, ApiConsumes, ApiOkResponse, ApiOperation, ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger'
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiImageFile } from 'src/user/utils/api-file.decorator';
 import { ParseFile } from 'src/user/utils/parse-file.pipe';
+import { diskStorage } from 'multer';
+import { extname } from 'path';
+import { FtOauthGuard } from 'src/auth/42auth/guard/ft-oauth.guard';
 import JwtAuthenticationGuard from 'src/auth/guard/jwt-authentication.guard';
 import { Observable } from 'rxjs';
 import { RelationStatusClass, } from 'src/user/interface/friend-request.interface';
@@ -50,16 +53,39 @@ export class UserController {
         return this.userService.deleteUser(String(login));
     }
 
-    @ApiOperation({ summary: 'Upload {login} avatar' })
-    @ApiOkResponse({ description: '{login} avatar uploaded' })
-    @ApiConflictResponse({ description: '{login} avatar conflict' })
-    @Post(':login/avatar')
-    @UseInterceptors(FileInterceptor('file')) // 👈 field name must match
+    /**
+    **  Upload user avatar
+    **/
+
+    @ApiOperation({ summary: 'Upload {id} avatar' }) //endpoint summary on swaggerui
+    @ApiOkResponse({ description: '{id} avatar uploaded' }) //answer sent back
+    @ApiConflictResponse({ description: '{id} avatar conflict' }) //not working atm
+    @Post(':id/avatar')
+    @UseInterceptors(FileInterceptor('file',
+        {
+            storage: diskStorage({
+                destination: './upload',
+                filename: (req, file, cb) => {
+                    const randomName = Array(32).fill(null).map(() => (Math.round(Math.random() * 16)).toString(16)).join('')
+                    return cb(null, `${randomName}${extname(file.originalname)}`)
+                }
+            })
+        }
+    )
+    )
     @ApiConsumes('multipart/form-data')
-    @ApiImageFile('avatar', true)
-    uploadFile(@Param('login') login: string, @UploadedFile(ParseFile) file: Express.Multer.File) {
-        console.log(login, file);
-        return this.userService.addAvatar(String(login), String(file.filename));
+    @ApiImageFile('file', true)
+    uploadFile(@Param('id') id: number, @UploadedFile() file) {
+        console.log(id, file);
+        return this.userService.addAvatar(id, file.name);
+    }
+
+    @ApiOperation({ summary: 'Get {fileId} avatar' }) //endpoint summary on swaggerui
+    @ApiOkResponse({ description: '{fileId} avatar displayed' }) //answer sent back
+    @ApiConflictResponse({ description: '{fileId} avatar conflict' }) //not working atm
+    @Get(':fileId/avatar')
+    async serveAvatar(@Param('fileId') fileId, @Res() res): Promise<any> {
+        res.sendFile(fileId, { root: 'upload' });
     }
 
     @ApiOperation({ summary: 'Update {status} of {login}' })
