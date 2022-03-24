@@ -1,19 +1,14 @@
-import { HttpException, HttpStatus, Injectable, UnsupportedMediaTypeException } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, UnsupportedMediaTypeException, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from 'src/user/entity/user.entity';
 import { UpdateUserDto, CreateUserDtoViaRegistration, User42Dto } from 'src/user/dto/user.dto';
 import { UserEvent } from 'src/user/user.event';
 import { UsersRepository } from 'src/user/user.repository';
-
-import { FriendRequestEntity } from 'src/user/entity/friend-request.entity';
-import {
-	FriendRequest,
-	FriendRequestStatus,
-	FriendRequest_Status,
-} from 'src/user/interface/friend-request.interface';
-import { from, Observable, of } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators'
+import { UserRelation } from 'src/user/entity/friend-request.entity';
+import { RelationInvitation, RelationStatus } from 'src/user/interface/friend-request.interface';
+import { from, Observable } from 'rxjs';
+import { UserStatus } from 'src/participate/participate.entity';
 
 @Injectable()
 export class UserService {
@@ -23,8 +18,9 @@ export class UserService {
 		private userRepository: Repository<User>,
 		@InjectRepository(UsersRepository)
 		private usersRepository: UsersRepository,
-		@InjectRepository(FriendRequestEntity)
-		private readonly friendRequestRepository: Repository<FriendRequestEntity>,
+		@InjectRepository(UserRelation)
+		private readonly userRelationRepository: Repository<UserRelation>,
+		//private readonly logger: Logger = new Logger('UserService')
 	) { }
 
 	getAllUsers() {
@@ -33,18 +29,16 @@ export class UserService {
 
 	async getUserByLogin(login: string) {
 		const user = await this.userRepository.findOne({ login: login });
-		if (user) {
+		if (user)
 			return user;
-		}
 		throw new HttpException('User not found', HttpStatus.NOT_FOUND);
 	}
 
 	async updateUser(login: string, user: UpdateUserDto) {
 		await this.userRepository.update({ login }, user);
 		const updatedUser = await this.userRepository.findOne({ login });
-		if (updatedUser) {
+		if (updatedUser)
 			return updatedUser;
-		}
 		throw new HttpException('User not found', HttpStatus.NOT_FOUND);
 	}
 
@@ -54,61 +48,6 @@ export class UserService {
 			throw new HttpException('Post not found', HttpStatus.NOT_FOUND);
 		}
 	}
-
-	// async addFriend(user: string, friend: string) {
-	// 	const u = await this.userRepository.findOne({ where: { login: user }, relations: ["friends"] });
-	// 	const f = await this.userRepository.findOne({ where: { login: friend } });
-	// 	console.log("test1: " + u.friends)
-	// 	if (!u.friends) {
-	// 		u.friends = [];
-	// 		console.log("test2: " + u.friends)
-	// 	}
-	// 	u.friends.push(f);
-	// 	// this.userEvent.achievementFriend(u);
-	// 	console.log("test3: " + u.friends)
-	// 	var login = user;
-	// 	this.userRepository.update({ login }, {
-	// 	    friends: u.friends
-	// 	});
-	// 	// return this.userRepository.save(u);
-	// }
-
-	async addFriend(user: string, friend: string) {
-		var init = false;
-		var login = user;
-		const u = await this.userRepository.findOne({ login });
-		login = friend;
-		const f = await this.userRepository.findOne({ login });
-		if (!u.friends) {
-			u.friends = [""];
-			init = true;
-		}
-		u.friends.push(f.login);
-		if (init)
-			u.friends.splice(0, 1);
-		// this.userEvent.achievementFriend(u);
-		login = user;
-		return this.userRepository.update({ login }, {
-			friends: u.friends
-		});
-	}
-	/*
-		async removeFriend(user: string, friend: string) {
-			var login = user;
-			const u = await this.userRepository.findOne({ login });
-			login = friend;
-			const f = await this.userRepository.findOne({ login });
-			if (u.friends.length == 1 && u.friends[0] === f.login)
-				u.friends = [];
-			else
-				for (var i = 0; i < u.friends.length; i++)
-					if (u.friends[i] === f.login)
-						u.friends.splice(i, 1);
-			return this.userRepository.update({ login }, {
-				friends: u.friends
-			});
-		}
-		*/
 
 	async updateStatus(login: string, s: string) {
 		return this.userRepository.update({ login }, {
@@ -126,12 +65,8 @@ export class UserService {
 		console.log('went by create in user service');
 		const newUser = await this.userRepository.create(userData);
 		newUser.friends = [];
-		// newUser.achievements = [];
 		const login = newUser.login;
-		this.userRepository.update({ login }, {
-			friends: [],
-			// achievements: []
-		});
+		this.userRepository.update({ login }, { friends: [] });
 		await this.userRepository.save(newUser);
 		this.userEvent.achievement42(newUser);
 		return newUser;
@@ -139,17 +74,15 @@ export class UserService {
 
 	async getByEmail(email: string) {
 		const user = await this.userRepository.findOne({ email });
-		if (user) {
+		if (user)
 			return user;
-		}
 		throw new HttpException('User with this email does not exist', HttpStatus.NOT_FOUND);
 	}
 
 	async getById(id: number) {
 		const user = await this.userRepository.findOne({ id });
-		if (user) {
+		if (user)
 			return user;
-		}
 		throw new HttpException('User with this id does not exist', HttpStatus.NOT_FOUND);
 	}
 
@@ -175,7 +108,6 @@ export class UserService {
 		});
 	}
 
-	////////////////
 	async findUserById(id: number) {
 		console.log('we search for user: ' + id);
 		const user = await this.userRepository.findOne({ id: id });
@@ -185,25 +117,13 @@ export class UserService {
 			console.log(user + ' not found');
 			return;
 		}
-		/*
-		return from(this.userRepository.findOne({ id }),
-		).pipe(
-			map((user: User) => {
-				if (!user) {
-					throw new HttpException('User not found', HttpStatus.NOT_FOUND);
-				}
-				delete user.password;
-				return user;
-			}),
-		);
-		*/
 	}
 
 	/**
 	 * check in db if we find an invitation already exist with the 2 user
 	 */
-	async hasRequestBeenSentOrReceived(creator: User, receiver: User) {
-		const invite = await this.friendRequestRepository.findOne({
+	async hasExistingRelation(creator: User, receiver: User) {
+		const invite = await this.userRelationRepository.findOne({
 			where: [
 				{ creator, receiver },
 				{ creator: receiver, receiver: creator },
@@ -220,71 +140,53 @@ export class UserService {
 	* 3.check if no invite to him / request from him already exist
 	* 4.add new invitation
 	*/
-	async sendFriendRequest(receiverId: number, creator: User) {
+	async sendInvitation(receiverId: number, creator: User) {
 		if (receiverId === creator.id)
 			return console.log('It is not possible to add yourself!');
 		const receiver = await this.findUserById(receiverId);
 		if (!receiver)
 			return console.log('user not found');
-		const duplicate_request = await this.hasRequestBeenSentOrReceived(creator, receiver)
-		if (duplicate_request)
+		if (await this.hasExistingRelation(creator, receiver)) {
+			const invite = await this.userRelationRepository.findOne({
+				where: [
+					{ creator, receiver },
+					{ creator: receiver, receiver: creator },
+				],
+			});
+			if (invite.status == 'blocked')
+				return console.log('You have been blocked by that user');
 			return console.log('A friend request has already been (sent to/received from) that user');
-		const newFriendRequest = this.friendRequestRepository.create(
+		}
+		const newRelation = this.userRelationRepository.create(
 			{
 				creator: creator,
 				receiver: receiver,
 				status: 'pending'
 			}
 		);
-		this.friendRequestRepository.save(newFriendRequest);
+		this.userRelationRepository.save(newRelation);
 	}
 
-	/*
-		getFriendRequestStatus(receiverId: number, currentUser: User): Observable<FriendRequestStatus> {
-			return this.findUserById(receiverId).pipe(
-				switchMap((receiver: User) => {
-					return from(this.friendRequestRepository.findOne({
-						where: [
-							{ creator: currentUser, receiver: receiver },
-							{ creator: receiver, receiver: currentUser },
-						],
-						relations: ['creator', 'receiver'],
-					}),
-					);
-				}),
-				switchMap((friendRequest: FriendRequest) => {
-					if (friendRequest?.receiver.id === currentUser.id) {
-						return of({
-							status: 'waiting-for-current-user-response' as FriendRequest_Status,
-						});
-					}
-					return of({ status: friendRequest?.status || 'not-sent' });
-				}),
-			);
-		}
-	*/
-
-
-	getFriendRequestUserById(friendRequestId: number) {
-		return this.friendRequestRepository.findOne({ where: [{ id: friendRequestId }] });
+	getInvitationById(invitationId: number) {
+		return this.userRelationRepository.findOne({ where: [{ id: invitationId }] });
 	}
 
 	/*
 	* update the status of the request only
 	*/
-	async respondToFriendRequest(statusResponse: FriendRequest_Status, friendRequestId: number) {
-		await this.friendRequestRepository.update(friendRequestId, { status: statusResponse })
-		const friendRequest = await this.getFriendRequestUserById(friendRequestId)
+	async answerToInvitation(statusResponse: RelationStatus, invitationId: number) {
+		await this.userRelationRepository.update(invitationId, { status: statusResponse })
+		const friendRequest = await this.getInvitationById(invitationId)
 		return friendRequest;
 	}
 
 	/**
 	 * find all invite where receiver is user, relations:[] allows to send the user element details :)
 	 */
-	getFriendRequestsFromRecipients(currentUser: User): Observable<FriendRequest[]> {
-		return from(this.friendRequestRepository.find({
+	getReceivedInvitations(currentUser: User): Observable<RelationInvitation[]> {
+		return from(this.userRelationRepository.find({
 			where: [{ receiver: currentUser }],
-			relations: ['receiver', 'creator'],
+			relations: ['receiver', 'creator']
 		}),
 		);
 	}
@@ -295,7 +197,8 @@ export class UserService {
 	 * 3. return the research in userRepo with the friends id list
 	 */
 	async getFriends(currentUser: User) {
-		let list = await this.friendRequestRepository.find({
+		console.log('test');
+		let list = await this.userRelationRepository.find({
 			where: [
 				{ creator: currentUser, status: 'accepted' },
 				{ receiver: currentUser, status: 'accepted' },
@@ -304,7 +207,7 @@ export class UserService {
 		});
 
 		let userIds: number[] = [];
-		list.forEach((friend: FriendRequest) => {
+		list.forEach((friend: RelationInvitation) => {
 			if (friend.creator.id === currentUser.id) {
 				userIds.push(friend.receiver.id);
 			} else if (friend.receiver.id === currentUser.id) {
@@ -314,16 +217,75 @@ export class UserService {
 		return this.userRepository.findByIds(userIds);
 	}
 
+	/**
+ * 1.search for all elemtns of requestRepo where user is creator
+ * 2. for each of them, store the id of the friend in a list
+ * 3. return the research in userRepo with the friends id list
+ */
+	async getBlockedUsers(currentUser: User) {
+		let list = await this.userRelationRepository.find({
+			where: [
+				{ creator: currentUser, status: 'blocked' },
+			],
+			relations: ['creator', 'receiver'],
+		});
+
+		let userIds: number[] = [];
+		list.forEach((friend: RelationInvitation) => {
+			if (friend.creator.id === currentUser.id)
+				userIds.push(friend.receiver.id);
+		});
+		return this.userRepository.findByIds(userIds);
+	}
+
 	/*
-	* find user you want to unfriend, delete the relation either if it was the targer or u that
+	* find user you want to unfriend, delete the relation either if it was the target or u that
 	* made the invitation
 	 */
 	async removeFriend(userToRemoveId: number, currentUser: User) {
-		console.log('test1:' + userToRemoveId);
 		const userToRemove = await this.findUserById(userToRemoveId);
-		console.log('test before delete:' + currentUser.id + '');
-		await this.friendRequestRepository.delete({ receiver: currentUser, creator: userToRemove });
-		await this.friendRequestRepository.delete({ receiver: userToRemove, creator: currentUser });
+		await this.userRelationRepository.delete({ receiver: currentUser, creator: userToRemove });
+		await this.userRelationRepository.delete({ receiver: userToRemove, creator: currentUser });
+	}
+
+	/**
+	 * compared to removeFriend, delete only the relation from the person requesting it.
+	 */
+	async unblockUser(userToRemoveId: number, currentUser: User) {
+		const userToRemove = await this.findUserById(userToRemoveId);
+		await this.userRelationRepository.delete({ receiver: userToRemove, creator: currentUser, status: 'blocked' });
+	}
+
+	/**
+	* 1.block yourself / 2. user not existing / 3. user already blocked / 4. update if relation already existing
+	*/
+	async blockUser(receiverId: number, creator: User) {
+		if (receiverId === creator.id)
+			return console.log('It is not possible to block yourself!');
+		const receiver = await this.findUserById(receiverId);
+		if (!receiver)
+			return console.log('user not found');
+		const existing_invitation = await this.hasExistingRelation(creator, receiver)
+		if (existing_invitation) {
+			const invite = await this.userRelationRepository.findOne({
+				where: [
+					{ creator, receiver },
+					{ creator: receiver, receiver: creator },
+				],
+			});
+			if (invite.status == 'blocked')
+				return console.log('You have already blocked that user');
+			await this.answerToInvitation('blocked', invite.id);
+			return console.log('update the existing relation. you blocked the targeted user');
+		}
+		const newRelation = this.userRelationRepository.create(
+			{
+				creator: creator,
+				receiver: receiver,
+				status: 'blocked'
+			}
+		);
+		this.userRelationRepository.save(newRelation);
 	}
 }
 

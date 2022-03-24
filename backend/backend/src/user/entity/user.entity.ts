@@ -3,7 +3,7 @@ import { Game } from 'src/game/entity/game.entity'
 import { Message } from 'src/chat/message/entity/message.entity'
 import { Participate } from 'src/participate/participate.entity'
 import { Achievement } from './achievements.entity';
-import { FriendRequestEntity } from 'src/user/entity/friend-request.entity';
+import { UserRelation } from 'src/user/entity/friend-request.entity';
 
 @Entity('user')
 export class User {
@@ -95,10 +95,10 @@ export class User {
     @Column({ default: false })
     public isTwoFactorAuthenticationEnabled: boolean;
 
-    @OneToMany(() => FriendRequestEntity, (friendRequestEntity) => friendRequestEntity.creator)
-    sentFriendRequests: FriendRequestEntity[];
+    @OneToMany(() => UserRelation, (userRelation) => userRelation.creator)
+    sentFriendRequests: UserRelation[];
 
-    @OneToMany(() => FriendRequestEntity, (friendRequestEntity) => friendRequestEntity.receiver)
-    receivedFriendRequests: FriendRequestEntity[];
+    @OneToMany(() => UserRelation, (userRelation) => userRelation.receiver)
+    receivedFriendRequests: UserRelation[];
 
 }

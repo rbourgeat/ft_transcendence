@@ -1,21 +1,22 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { User } from 'src/user/entity/user.entity';
 
-export type FriendRequest_Status =
+export type RelationStatus =
     | 'not-sent'
     | 'pending'
     | 'accepted'
     | 'declined'
+    | 'blocked'
     | 'waiting-for-current-user-response';
 
-export class FriendRequestStatus {
+export class RelationStatusClass {
     @ApiProperty()
-    status?: FriendRequest_Status;
+    status?: RelationStatus;
 }
 
-export interface FriendRequest {
+export interface RelationInvitation {
     id?: number;
     creator?: User;
     receiver?: User;
-    status?: FriendRequest_Status;
+    status?: RelationStatus;
 }
