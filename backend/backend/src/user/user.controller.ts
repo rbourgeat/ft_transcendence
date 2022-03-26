@@ -12,6 +12,7 @@ import JwtAuthenticationGuard from 'src/auth/guard/jwt-authentication.guard';
 import { Observable } from 'rxjs';
 import { RelationStatusClass, } from 'src/user/interface/friend-request.interface';
 import { User } from 'src/user/entity/user.entity';
+import { editFileName, imageFileFilter, myStorage } from './upload.utils'
 
 @ApiTags('Users')
 @ApiExtraModels(CreateUserDtoViaRegistration) //force unused dto to show on swagger
@@ -57,28 +58,33 @@ export class UserController {
     **  Upload user avatar
     **/
 
-    @ApiOperation({ summary: 'Upload {id} avatar' }) //endpoint summary on swaggerui
-    @ApiOkResponse({ description: '{id} avatar uploaded' }) //answer sent back
-    @ApiConflictResponse({ description: '{id} avatar conflict' }) //not working atm
-    @Post(':id/avatar')
-    @UseInterceptors(FileInterceptor('file',
-        {
-            storage: diskStorage({
-                destination: './upload',
-                filename: (req, file, cb) => {
-                    const randomName = Array(32).fill(null).map(() => (Math.round(Math.random() * 16)).toString(16)).join('')
-                    return cb(null, `${randomName}${extname(file.originalname)}`)
-                }
-            })
-        }
-    )
-    )
-    @ApiConsumes('multipart/form-data')
+    @ApiOperation({ summary: 'Upload {login} avatar' }) //endpoint summary on swaggerui
+    @ApiOkResponse({ description: '{login} avatar uploaded' }) //answer sent back
+    @ApiConflictResponse({ description: '{login} avatar conflict' }) //not working atm
+    @Post('avatar/:login')
     @ApiImageFile('file', true)
-    uploadFile(@Param('id') id: number, @UploadedFile() file) {
-        console.log(id, file);
-        return this.userService.addAvatar(id, file.name);
-    }
+    @UseInterceptors(
+        FileInterceptor('file', {
+          storage: diskStorage({
+            destination: './upload',
+            filename: editFileName,
+          }),
+          fileFilter: imageFileFilter,
+        }),
+      )
+      async uploadedFile(@Param('login') login: string, @UploadedFile() file) {
+        const response = {
+          login: login,
+          originalname: file.originalname,
+          filename: file.filename,
+        };
+        console.log(response);
+        return this.userService.addAvatar(login, file.filename);
+      }
+    // uploadAvatar(@Param('login') login: string, @UploadedFile() file: Express.Multer.File) {
+    //     console.log("login: " + login + ", upload: " + file.filename);
+    //     return this.userService.addAvatar(login, file.filename);
+    // }
 
     @ApiOperation({ summary: 'Get {fileId} avatar' }) //endpoint summary on swaggerui
     @ApiOkResponse({ description: '{fileId} avatar displayed' }) //answer sent back
