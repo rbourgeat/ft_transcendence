@@ -1,38 +1,32 @@
-import { MessageBody, SubscribeMessage, WebSocketGateway, OnGatewayInit, WebSocketServer, OnGatewayConnection, OnGatewayDisconnect, } from '@nestjs/websockets';
-import { Logger } from '@nestjs/common';
-import { Socket, Server } from 'socket.io';
+import { ConnectedSocket, MessageBody, OnGatewayConnection, SubscribeMessage, WebSocketGateway, WebSocketServer, } from '@nestjs/websockets';
+import { Server, Socket } from 'socket.io';
+import { ChatService } from './chat.service';
 
-@WebSocketGateway({
-    //cors: {
-    //origin: '*',
-    //}
-    cors: true
-})
-export class ChatGateway implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
+@WebSocketGateway()
+export class ChatGateway implements OnGatewayConnection {
+	@WebSocketServer()
+	server: Server;
 
-    //Event handlers
-    @WebSocketServer() server: Server;
-    private logger: Logger = new Logger('ChatGateway');
+	constructor(private readonly chatService: ChatService) { }
 
-    //@SubscribeMessage('msgToServer')
-    //handleMessage(client: Socket, payload: string): void {
-    //    this.server.emit('msgToClient', payload);
-    //}
+	async handleConnection(socket: Socket) {
+		await this.chatService.getUserFromSocket(socket);
+	}
 
-    @SubscribeMessage('message')
-    handleMessage(@MessageBody() message: string): void {
-        this.server.emit('message', message);
-    }
+	@SubscribeMessage('send_message')
+	async listenForMessages(@MessageBody() content: string, @ConnectedSocket() socket: Socket) {
 
-    afterInit(server: Server) {
-        this.logger.log('Init');
-    }
+		const author = await this.chatService.getUserFromSocket(socket);
+		const message = await this.chatService.saveMessage(content, author);
+	
+		this.server.sockets.emit('receive_message', message);
+	}
 
-    handleDisconnect(client: Socket) {
-        this.logger.log(`Client disconnected: ${client.id}`);
-    }
+	@SubscribeMessage('request_all_messages')
+	async requestAllMessages(@ConnectedSocket() socket: Socket) {
+		await this.chatService.getUserFromSocket(socket);
+		const messages = await this.chatService.getAllMessages();
 
-    handleConnection(client: Socket, ...args: any[]) {
-        this.logger.log(`Client connected: ${client.id}`);
-    }
+		socket.emit('send_all_messages', messages);
+	}
 }

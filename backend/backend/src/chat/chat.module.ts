@@ -7,6 +7,7 @@ import { ChatGateway } from './chat.gateway';
 import { User } from 'src/user/entity/user.entity';
 import { Message } from 'src/chat/message/entity/message.entity';
 import { Participate } from 'src/participate/participate.entity';
+import { AuthService } from '../auth/auth.service';
 
 @Module({
     imports: [
@@ -16,7 +17,7 @@ import { Participate } from 'src/participate/participate.entity';
         TypeOrmModule.forFeature([Participate])
     ],
     controllers: [ChatController],
-    providers: [ChatService, ChatGateway],
+    providers: [ChatService, ChatGateway, AuthService],
     exports: [ChatService]
 })
 export class ChatModule { }

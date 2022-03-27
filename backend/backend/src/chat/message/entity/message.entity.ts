@@ -5,14 +5,15 @@ import { User } from 'src/user/entity/user.entity'
 @Entity('message')
 export class Message {
     @PrimaryGeneratedColumn()
-    id: number;
+    public id: number;
 
     @Column()
-    content: string;
+    public content: string;
 
     @ManyToOne(() => User, (author: User) => author.message)
-    author: User;
+    public author: User;
 
     @ManyToOne(() => Chat, (channel: Chat) => channel.message)
-    channel: Chat;
+    public channel: Chat;
 }
+
