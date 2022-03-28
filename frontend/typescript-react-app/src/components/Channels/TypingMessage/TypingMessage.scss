@@ -29,3 +29,9 @@
 	padding: 10px;
 	float: right;
 }
+
+
+//Nesting for children CSS selectors
+#typing--div > * {
+	color: black !important;
+}

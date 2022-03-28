@@ -7,67 +7,55 @@ import React from "react";
 import MyAxios from '../Utils/Axios/Axios';
 import ToastAlerts from '../Utils/ToastAlerts/ToastAlerts';
 import { ToastContainer, toast } from 'react-toastify';
-//import { w3cwebsocket} from "websocket";
+import cookieClient from "react-cookie";
+import GetCookie from '../Utils/Hooks/getCookie';
 
+//import { Cookies } from "react-cookie"
+//import Cookie from 'js-cookie'
+//import { w3cwebsocket} from "websocket";
 //import io from "socket.io-client";
 
 
 /**
  * @malatini ou @macrespo
  * Page principale pour afficher les channels, voir les sous composants
- */
+*/
 
 export interface ChatProps {
     username?: string
 }
 
+/*
 export interface ChatState {
 }
-
 //const socket = io("http://localhost:4000");
 //const message = document.getElementById('message');
+*/
 
-export default class Channels extends React.Component<ChatProps, ChatState>
-{
-
-    constructor(props: ChatProps)
+export default function Channels(props: ChatProps) {
+    function createChat()
     {
-        super(props);
+        //Initialisation de notre classe MyAxios (sans prop)
 
-        this.state = {
-        }
+        //Retrieve chats
+
+        let ax = new MyAxios(null);
+
+        //let cookie = cookieClient.load("Authentication");
+        //console.log(cookie);
+        //let res = ax.get_api_chat();
+        //let cookie = Cookie.get('Authentication');
+        //console.log("Cookie : " + cookie);
+
+        //let cookie = GetCookie("Authentication");
+        //console.log("cookie is " + cookie);
+
+        //Creating chat
+        //let res = ax.post_api_chat("pass!1717", true, "chat-6");
     }
 
-    componentDidMount() {
-        //client.onopen = () => {
-        //    console.log('Websocket Client Connected')
-        //}
-
-        //const socket = socketIOClient(ENDPOINT);
-        //socket.on("FromAPI", iodata => {
-        //    this.setState({ data: iodata})
-        //})
-        /*
-        let myax = new MyAxios({
-            method: "POST",
-            ressource: "/api/chat",
-            username: this.props.username
-        });
-        */
-
-        //TODO: a revoir entre la creation et le get
-       // let res = myax.createchat(this.props.username);
-        //console.log("Coucou!");
-        //const socket = socketIOClient(ENDPOINT);
-        //socket.on("FromAPI", iodata => {
-        //    this.setState({ data: iodata})
-        //    console.log("Socket ok!");
-        //})
-
-    }
-
-    render()
-    {
+    //render()
+    //{
         return (
             <div id="channels">
                 <Nav />
@@ -82,10 +70,11 @@ export default class Channels extends React.Component<ChatProps, ChatState>
                                 draggable
                                 pauseOnHover
                             />
-                <div className="container">
+                <div className="container" id="chat--container">
                     <div className="row d-flex justify-content-center text-center">
                         <div className="col-7">
                             <h1 id="channels--tile">Channels</h1>
+                            <button onClick={createChat}>Create chat</button>
                             <h2 id="websocket--tile">Websocket chat</h2>
                             <ListDiscussions />
                             <TypingMessage />
@@ -101,4 +90,4 @@ export default class Channels extends React.Component<ChatProps, ChatState>
             </div>
         );
     }
-}
+//}
