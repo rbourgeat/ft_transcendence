@@ -14,11 +14,6 @@ import { UserRelation } from './entity/friend-request.entity';
 @Module({
   imports: [
     TypeOrmModule.forFeature([User, Message, Participate, UsersRepository, UserRelation]),
-    /*TypeOrmModule.forFeature([Message]),
-    TypeOrmModule.forFeature([Participate]),
-    TypeOrmModule.forFeature([UsersRepository]),
-    TypeOrmModule.forFeature([FriendRequestEntity]),
-    */
     MulterModule.register({
       dest: './upload',
     })
