@@ -21,15 +21,9 @@ export interface UserfuncProps
 
 export default function User(props:UserfuncProps)
 {
-  	//const [imgData, setImgData] = useState("https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg");
-
 	 const handle2FA = (event: any) => {
 		event.preventDefault();
-		//let res = myAx.get_api_user(props.username);
-		//console.log(res);
 		axios.defaults.baseURL = 'http://localhost:3000/api/';
-       // axios.defaults.headers.post['Content-Type'] = '*';
-       // axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 
         let toast = new ToastAlerts(null);
         let url = "http://localhost:3000/api/user/".concat(props.username);
@@ -42,10 +36,8 @@ export default function User(props:UserfuncProps)
         })
         .catch((error) => {
             console.log(error);
-            //return (error);
         })
 	  }
-
 
 	  const onChangePicture = (e: any) => {
 		e.preventDefault();
@@ -92,7 +84,6 @@ export default function User(props:UserfuncProps)
 				}
 			}).catch((error) => {
 				console.log("Catched error !");
-				//console.log(error);
 			})
 			}
 	  }
@@ -153,11 +144,8 @@ export default function User(props:UserfuncProps)
 
 //TODO: faire un get avec le "file id"
 function renderImage(login: string) {
-	//throw new Error('Function not implemented.');
-	let imageCode = "https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg";
-	//let imageCode = "";
+	let imageCode = "";
 
-	//TO DO: refaire le get sur l image
 	let imageName = "alt-photo";
 	let url = "http://localhost:3000/api/user/".concat(login);
 	console.log(url);
@@ -173,10 +161,8 @@ function renderImage(login: string) {
 	})
 	.catch(error => {
 		console.log("Catched error getting avatar");
+		<img src="https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg" alt={imageName} height="80" width="80" id="avatar-id"/>
 	})
-	return (
-		<img src={imageCode} alt={imageName} height="80" width="80" id="avatar-id"/>
-	);
 }
 
 //TODO: a reprendre quand back ok
