@@ -8,16 +8,32 @@ import { User } from 'src/user/entity/user.entity';
 import { Message } from 'src/chat/message/entity/message.entity';
 import { Participate } from 'src/participate/participate.entity';
 import { AuthService } from '../auth/auth.service';
+import { AuthModule } from 'src/auth/auth.module';
+import { UserModule } from 'src/user/user.module';
+import { JwtModule } from '@nestjs/jwt';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
     imports: [
         TypeOrmModule.forFeature([User]),
         TypeOrmModule.forFeature([Chat]),
         TypeOrmModule.forFeature([Message]),
-        TypeOrmModule.forFeature([Participate])
+        TypeOrmModule.forFeature([Participate]),
+        AuthModule,
+        UserModule,
+        JwtModule.registerAsync({
+            imports: [ConfigModule],
+            inject: [ConfigService],
+            useFactory: async (configService: ConfigService) => ({
+                secret: process.env.JWT_SECRET,
+                signOptions: {
+                    expiresIn: `${process.env.JWT_EXPIRATION_TIME}s`,
+                },
+            }),
+        }),
     ],
     controllers: [ChatController],
     providers: [ChatService, ChatGateway, AuthService],
-    exports: [ChatService]
+    exports: [ChatService, AuthService]
 })
 export class ChatModule { }
