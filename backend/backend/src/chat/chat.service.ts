@@ -7,6 +7,7 @@ import { User } from 'src/user/entity/user.entity';
 import { Message } from 'src/chat/message/entity/message.entity'
 import { CreateMessageDto, SendMessageToChatDto } from './dto/message.dto';
 import { Participate, UserStatus } from 'src/participate/participate.entity';
+import { AuthService } from 'src/auth/auth.service';
 
 
 @Injectable()
@@ -19,7 +20,8 @@ export class ChatService {
 		@InjectRepository(Message)
 		private messageRepository: Repository<Message>,
 		@InjectRepository(Participate)
-		private participateRepository: Repository<Participate>
+		private participateRepository: Repository<Participate>,
+		private readonly authenticationService: AuthService
 	) { }
 
 	getAllChats() {
@@ -274,5 +276,5 @@ export class ChatService {
 		console.log("chat set to public");
 		return chat;
 	}
-	
+
 }

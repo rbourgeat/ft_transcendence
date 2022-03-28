@@ -80,13 +80,14 @@ export class UserService {
 	}
 
 	async getById(id: number) {
+		console.log(id);
 		const user = await this.userRepository.findOne({ id });
 		if (user)
 			return user;
 		throw new HttpException('User with this id does not exist', HttpStatus.NOT_FOUND);
 	}
 
-	async createUser42(userData: User42Dto): Promise<User> {
+	async createUser42(userData: User42Dto)/*: Promise<User> */ {
 		const user = await this.userRepository.findOne({ email: userData.email });
 		if (user) {
 			console.log("that user already exists");
@@ -141,21 +142,25 @@ export class UserService {
 	* 4.add new invitation
 	*/
 	async sendInvitation(receiverId: number, creator: User) {
-		if (receiverId === creator.id)
+		if (receiverId == creator.id)
 			return console.log('It is not possible to add yourself!');
 		const receiver = await this.findUserById(receiverId);
 		if (!receiver)
 			return console.log('user not found');
+		console.log(creator.login + ' try to invite ' + receiver.login);
 		if (await this.hasExistingRelation(creator, receiver)) {
-			const invite = await this.userRelationRepository.findOne({
-				where: [
-					{ creator, receiver },
-					{ creator: receiver, receiver: creator },
-				],
-			});
-			if (invite.status == 'blocked')
+			const inviteFromHim = await this.userRelationRepository.findOne({ creator: receiver, receiver: creator });
+			if (inviteFromHim && inviteFromHim.status == 'blocked')
 				return console.log('You have been blocked by that user');
-			return console.log('A friend request has already been (sent to/received from) that user');
+			else if (inviteFromHim && inviteFromHim.status == 'pending')
+				return console.log('A friend request has already been (sent to/received from) that user');
+
+			const inviteFromYou = await this.userRelationRepository.findOne({ creator: creator, receiver: receiver });
+			if (inviteFromYou && inviteFromYou.status == 'blocked')
+				return console.log('You have blocked that user, unblock it first');
+			if (inviteFromYou && (inviteFromYou.status == 'pending', inviteFromYou.status == 'accepted'))
+				return console.log('You have already sent a invite to that user or you are already friends');
+			//si demande de chaque coté, on update automatiquement la relation a accepted ?
 		}
 		const newRelation = this.userRelationRepository.create(
 			{
@@ -267,16 +272,30 @@ export class UserService {
 			return console.log('user not found');
 		const existing_invitation = await this.hasExistingRelation(creator, receiver)
 		if (existing_invitation) {
-			const invite = await this.userRelationRepository.findOne({
+			const inviteFromYou = await this.userRelationRepository.findOne({
 				where: [
 					{ creator, receiver },
-					{ creator: receiver, receiver: creator },
+					{ creator: creator, receiver: receiver },
 				],
 			});
-			if (invite.status == 'blocked')
+			if (inviteFromYou && inviteFromYou.status != 'blocked') {
+				await this.answerToInvitation('blocked', inviteFromYou.id);
+				return console.log('update the existing relation. you blocked the targeted user invite from you');
+			}
+			else if (inviteFromYou && inviteFromYou.status == 'blocked')
 				return console.log('You have already blocked that user');
-			await this.answerToInvitation('blocked', invite.id);
-			return console.log('update the existing relation. you blocked the targeted user');
+			/*
+		const inviteFromHim = await this.userRelationRepository.findOne({
+			where: [
+				{ creator, receiver },
+				{ creator: receiver, receiver: creator },
+			],
+		});
+		//if (invite.status == 'blocked')
+		//	return console.log('You have already blocked that user');
+		await this.answerToInvitation('blocked', inviteFromHim.id);
+		return console.log('update the existing relation. you blocked the targeted user');
+		*/
 		}
 		const newRelation = this.userRelationRepository.create(
 			{
