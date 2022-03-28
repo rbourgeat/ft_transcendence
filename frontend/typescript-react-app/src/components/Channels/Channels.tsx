@@ -41,6 +41,8 @@ export default function Channels(props: ChatProps) {
 
         let ax = new MyAxios(null);
 
+        let res = ax.get_api_user_cookie_test();
+
         //let cookie = cookieClient.load("Authentication");
         //console.log(cookie);
         //let res = ax.get_api_chat();

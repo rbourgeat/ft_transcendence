@@ -32,10 +32,13 @@ export class UserController {
     @ApiOperation({ summary: 'Retrieve all users data' })
     @ApiOkResponse({ description: 'Data received' })
     @Get('cookie/test')
-    @UseGuards(JwtAuthenticationGuard)
+    //@UseGuards(JwtAuthenticationGuard)
     getCookie(@Req() request) {
+        console.log(request.cookies);
         return request.cookies;
+        //return (response.cookies);
     }
+
 
     @ApiOperation({ summary: 'Retrieve {login}\'s data' })
     @ApiOkResponse({ description: 'Data received' })

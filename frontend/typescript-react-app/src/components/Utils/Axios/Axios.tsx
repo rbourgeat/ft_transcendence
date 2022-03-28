@@ -117,6 +117,52 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     }
 
     /*
+    ** get api cookie test
+    */
+   get_api_user_cookie_test()
+   {
+        const headers = {
+            //'Content-Type': 'application/json',
+            'Accept': '*/*'
+        };
+        axios.defaults.baseURL = 'http://localhost:3000/api/';
+
+        /*
+        axios.interceptors.request.use(request => {
+            console.log('Starting Request', JSON.stringify(request, null, 2))
+            return request
+          })
+
+        axios.interceptors.response.use(response => {
+            console.log('Response:', JSON.stringify(response, null, 2))
+            return response
+          })
+        */
+
+        let url = "http://localhost:3000/api/user/cookie/test";
+        let res = axios.get(url)
+        .then (res => {
+            console.log("Successfully got cookies");
+            console.log(res);
+            console.log(res.data);
+        })
+        .catch((error) => {
+            console.log("Catched error while getting cookies !");
+            console.log(error);
+            if (error.response) {
+                // client received an error response (5xx, 4xx)
+                console.log(error.response)
+              } else if (error.request) {
+                // client never received a response, or request never left
+                console.log("Error in request");
+              } else {
+                // anything else
+                console.log("Other type of error");
+              }
+        })
+   }
+
+    /*
     ** User endpoint
     */
     get_api_user(username: string) {
