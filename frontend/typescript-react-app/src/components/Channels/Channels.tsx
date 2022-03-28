@@ -38,11 +38,15 @@ export default class Channels extends React.Component<ChatProps, ChatState>
         }
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         //Initialisation de notre classe MyAxios (sans prop)
+
+        //Retrieve chats
         let ax = new MyAxios(null);
-        let res = ax.get_api_chat();
-        console.log(res);
+        let res = await ax.get_api_chat();
+
+        //Creating chat
+        res = await ax.post_api_chat("first room", true, "");
     }
 
     render()

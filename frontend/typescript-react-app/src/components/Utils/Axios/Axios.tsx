@@ -51,6 +51,26 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
         })
     }
 
+    post_api_chat(channame: string, pub: boolean, pass: string)
+    {
+        let url = "http://localhost:3000/api/game/";
+        let body = {
+            password: pass,
+            public: pub,
+            name: channame
+        }
+        let res = axios.post(url, {body})
+        .then( res => {
+            console.log("successfully posted a chat !");
+            return (res);
+        })
+        .catch((error) => {
+            console.log("Catched error on post api chat.");
+            console.log(error);
+            return (error);
+        })
+    }
+
     createchat(username: string) {
         const bod = {
             admin: {
