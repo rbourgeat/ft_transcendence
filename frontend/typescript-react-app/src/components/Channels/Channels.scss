@@ -1,9 +1,5 @@
 @use "../../variables";
 
-// #channels {
-//   background-color: aliceblue !important;
-// }
-
 #channels--tile {
   color: white !important;
   margin-top: 10px;
@@ -13,4 +9,8 @@
   color: white !important;
   font-size: 12px !important;
   margin-top: 10px;
+}
+
+#chat--container > * {
+  color: black !important;
 }

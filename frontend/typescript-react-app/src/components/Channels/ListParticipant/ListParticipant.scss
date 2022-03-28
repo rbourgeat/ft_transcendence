@@ -7,11 +7,10 @@
 	padding: 30px;
 	border-radius: variables.$border-radius;
 	background-color: white;
+	color: black !important;
 }
 
 #participant--title {
-	//color: white !important;
-	//font-size: variables.$small-font-size;
 	font-size: 12px !important;
 }
 
@@ -42,16 +41,10 @@
 	font-size: 12px !important;
 }
 
-// #participants--div {
-// 	//height: 350px;
-// }
-
 #bann-button, #mute-button, #bann-temp-button, #mute-temp-button {
 	margin: 5px;
 	padding-top: 5px;
 	padding-bottom: 5px;
-	//width: 40%;
-	//text-align: center;
 }
 
 #bann-button:hover, #mute-button:hover {

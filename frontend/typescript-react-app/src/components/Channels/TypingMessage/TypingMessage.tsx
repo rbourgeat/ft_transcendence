@@ -8,7 +8,6 @@ import SingleMessage from "../ListDiscussions/SingleMessage/SingleMessage"
  * @malatini ou @macrespo
  * Composant qui permettra à l'user de "preparer" / ecrire le message qu'il va envoyer sur le channel ou le dm.
  */
-
 export interface TypingProps {
 
 }

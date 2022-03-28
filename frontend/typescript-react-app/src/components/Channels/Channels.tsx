@@ -39,31 +39,10 @@ export default class Channels extends React.Component<ChatProps, ChatState>
     }
 
     componentDidMount() {
-        //client.onopen = () => {
-        //    console.log('Websocket Client Connected')
-        //}
-
-        //const socket = socketIOClient(ENDPOINT);
-        //socket.on("FromAPI", iodata => {
-        //    this.setState({ data: iodata})
-        //})
-        /*
-        let myax = new MyAxios({
-            method: "POST",
-            ressource: "/api/chat",
-            username: this.props.username
-        });
-        */
-
-        //TODO: a revoir entre la creation et le get
-       // let res = myax.createchat(this.props.username);
-        //console.log("Coucou!");
-        //const socket = socketIOClient(ENDPOINT);
-        //socket.on("FromAPI", iodata => {
-        //    this.setState({ data: iodata})
-        //    console.log("Socket ok!");
-        //})
-
+        //Initialisation de notre classe MyAxios (sans prop)
+        let ax = new MyAxios(null);
+        let res = ax.get_api_chat();
+        console.log(res);
     }
 
     render()
@@ -82,7 +61,7 @@ export default class Channels extends React.Component<ChatProps, ChatState>
                                 draggable
                                 pauseOnHover
                             />
-                <div className="container">
+                <div className="container" id="chat--container">
                     <div className="row d-flex justify-content-center text-center">
                         <div className="col-7">
                             <h1 id="channels--tile">Channels</h1>
