@@ -1,10 +1,3 @@
-//import { createStore, combineReducers } from 'redux';
-//import { createBrowserHistory } from "history";
-//import { UserContext } from "../App/UserContext";
-//import { useLocalStorage } from "./useLocalStorage";
-//import fs from "fs"
-//import { useSelector } from "react-redux";
-
 import React, { useState, useEffect, useReducer} from 'react';
 import Nav from "../Nav/Nav";
 import './User.scss';
@@ -25,15 +18,6 @@ export interface UserfuncProps
 	totalLoss?: number,
 	winLoss?: number
 }
-
-// export interface UserfuncState
-// {
-// 	avatar?: string,
-// 	totalGames?: number,
-// 	totalWins?: number,
-// 	totalLoss?: number,
-// 	winLoss?: number
-// }
 
 export default function User(props:UserfuncProps)
 {
@@ -69,21 +53,16 @@ export default function User(props:UserfuncProps)
 		{
 		  const reader = new FileReader();
 		  reader.addEventListener("load", () => {
-			//setImgData(reader.result as string);
-				//console.log("You must re render the image with the new avatar");
+				console.log("Load event listener");
 			});
 
 		  reader.readAsDataURL(e.target.files[0]);
 
-		  //console.log(e.target.files[0]);
 		  const file_name = e.target.files[0].name;
 		  const file = e.target.files[0];
 
 		  	let username = props.username;
-			let url = "http://localhost:3000/api/user/".concat(username).concat("/avatar/");
-			//console.log("url is " + url);
-
-			//TODO: a mettre dans la classe axios
+			let url = "http://localhost:3000/api/user/avatar/".concat(username);
 
 			//POST de la nouvelle image
 			axios.defaults.baseURL = 'http://localhost:3000/api/';
@@ -96,10 +75,8 @@ export default function User(props:UserfuncProps)
 			};
 
 			const formData = new FormData();
-			formData.append('avatar', file);
-			formData.append('type', 'file');
-
-			//localStorage.setItem('my_avatar', file);
+			formData.append('file', file);
+			formData.append('type', 'file');;
 
 			let res = axios.post(url, formData, {headers}).then(res=>{
 				console.log(res.data);
@@ -115,8 +92,7 @@ export default function User(props:UserfuncProps)
 				}
 			}).catch((error) => {
 				console.log("Catched error !");
-				console.log(error);
-				return (null);
+				//console.log(error);
 			})
 			}
 	  }
@@ -155,8 +131,6 @@ export default function User(props:UserfuncProps)
 							//placeholder=""
 						/>
 					</p>
-						{/*<div className="label" >
-						</div>*/}
 					</div>
 					<div id="stats" className="col-9 mx-auto text-center">
 						<p>Total games : <span className="span--stats">{props.totalGames ? props.totalGames : 0}</span></p>
@@ -177,9 +151,11 @@ export default function User(props:UserfuncProps)
     );
  };
 
+//TODO: faire un get avec le "file id"
 function renderImage(login: string) {
 	//throw new Error('Function not implemented.');
 	let imageCode = "https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg";
+	//let imageCode = "";
 
 	//TO DO: refaire le get sur l image
 	let imageName = "alt-photo";
