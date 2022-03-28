@@ -7,6 +7,10 @@ import React from "react";
 import MyAxios from '../Utils/Axios/Axios';
 import ToastAlerts from '../Utils/ToastAlerts/ToastAlerts';
 import { ToastContainer, toast } from 'react-toastify';
+import cookieClient from "react-cookie";
+
+//import { Cookies } from "react-cookie"
+//import Cookie from 'js-cookie'
 //import { w3cwebsocket} from "websocket";
 
 //import io from "socket.io-client";
@@ -29,24 +33,35 @@ export interface ChatState {
 
 export default class Channels extends React.Component<ChatProps, ChatState>
 {
-
     constructor(props: ChatProps)
     {
         super(props);
 
         this.state = {
+            //username: Cookies.get('Authication');
         }
     }
 
-    async componentDidMount() {
+    componentDidMount() {
+
+    }
+
+    createChat()
+    {
         //Initialisation de notre classe MyAxios (sans prop)
 
         //Retrieve chats
+
         let ax = new MyAxios(null);
-        let res = await ax.get_api_chat();
+
+        //let cookie = cookieClient.load("Authentication");
+        //console.log(cookie);
+        //let res = ax.get_api_chat();
+        //let cookie = Cookie.get('Authentication');
+        //console.log("Cookie : " + cookie);
 
         //Creating chat
-        res = await ax.post_api_chat("first room", true, "");
+        let res = ax.post_api_chat("pass!1717", true, "chat-6");
     }
 
     render()
@@ -69,6 +84,7 @@ export default class Channels extends React.Component<ChatProps, ChatState>
                     <div className="row d-flex justify-content-center text-center">
                         <div className="col-7">
                             <h1 id="channels--tile">Channels</h1>
+                            <button onClick={this.createChat}>Create chat</button>
                             <h2 id="websocket--tile">Websocket chat</h2>
                             <ListDiscussions />
                             <TypingMessage />

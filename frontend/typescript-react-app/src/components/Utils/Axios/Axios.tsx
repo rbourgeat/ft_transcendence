@@ -38,7 +38,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     */
     get_api_chat()
     {
-        let url = "http://localhost:3000/api/game/";
+        let url = "http://localhost:3000/api/chat/";
         let res = axios.get(url)
         .then( res => {
             console.log("Get api chat successfully called.");
@@ -53,21 +53,43 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
 
     post_api_chat(channame: string, pub: boolean, pass: string)
     {
-        let url = "http://localhost:3000/api/game/";
+        let url = "http://localhost:3000/api/chat/";
+        let headers = {
+            'Accept': '*/*',
+            'Content-Type': 'application/json'
+        }
+
         let body = {
             password: pass,
             public: pub,
             name: channame
         }
-        let res = axios.post(url, {body})
+
+        console.log(body);
+        console.log(headers);
+        console.log(url);
+
+        //Intercepteur pour voir la requete
+        axios.interceptors.request.use(request => {
+            console.log('Starting Request', JSON.stringify(request, null, 2))
+            return request
+          })
+
+        axios.interceptors.response.use(response => {
+            console.log('Response:', JSON.stringify(response, null, 2))
+            return response
+          })
+
+        let res = axios.post(url, body, { headers })
         .then( res => {
+            console.log(res);
             console.log("successfully posted a chat !");
-            return (res);
+            //return (res);
         })
         .catch((error) => {
             console.log("Catched error on post api chat.");
             console.log(error);
-            return (error);
+            //return (error);
         })
     }
 
