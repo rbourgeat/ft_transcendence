@@ -29,6 +29,14 @@ export class UserController {
         return this.userService.getAllUsers();
     }
 
+    @ApiOperation({ summary: 'Retrieve all users data' })
+    @ApiOkResponse({ description: 'Data received' })
+    @Get('cookie/test')
+    @UseGuards(JwtAuthenticationGuard)
+    getCookie(@Req() request) {
+        return request.cookies;
+    }
+
     @ApiOperation({ summary: 'Retrieve {login}\'s data' })
     @ApiOkResponse({ description: 'Data received' })
     @ApiConflictResponse({ description: '{login} does\'t exist' })
@@ -65,22 +73,22 @@ export class UserController {
     @ApiImageFile('file', true)
     @UseInterceptors(
         FileInterceptor('file', {
-          storage: diskStorage({
-            destination: './upload',
-            filename: editFileName,
-          }),
-          fileFilter: imageFileFilter,
+            storage: diskStorage({
+                destination: './upload',
+                filename: editFileName,
+            }),
+            fileFilter: imageFileFilter,
         }),
-      )
-      async uploadedFile(@Param('login') login: string, @UploadedFile() file) {
+    )
+    async uploadedFile(@Param('login') login: string, @UploadedFile() file) {
         const response = {
-          login: login,
-          originalname: file.originalname,
-          filename: file.filename,
+            login: login,
+            originalname: file.originalname,
+            filename: file.filename,
         };
         console.log(response);
         return this.userService.addAvatar(login, file.filename);
-      }
+    }
     // uploadAvatar(@Param('login') login: string, @UploadedFile() file: Express.Multer.File) {
     //     console.log("login: " + login + ", upload: " + file.filename);
     //     return this.userService.addAvatar(login, file.filename);
