@@ -15,7 +15,6 @@ import { WsException } from '@nestjs/websockets';
 @Injectable()
 export class ChatService {
 	constructor(
-		private readonly authenticationService: AuthService,
 		@InjectRepository(User)
 		private userRepository: Repository<User>,
 		@InjectRepository(Chat)
@@ -23,33 +22,34 @@ export class ChatService {
 		@InjectRepository(Message)
 		private messageRepository: Repository<Message>,
 		@InjectRepository(Participate)
-		private participateRepository: Repository<Participate>
+		private participateRepository: Repository<Participate>,
+		private readonly authenticationService: AuthService
 	) { }
 
 	async saveMessage(content: string, author: User) {
 		const newMessage = await this.messageRepository.create({
-		  content,
-		  author
+			content,
+			author
 		});
 		await this.messageRepository.save(newMessage);
 		return newMessage;
-	  }
-	 
-	  async getAllMessages() {
+	}
+
+	async getAllMessages() {
 		return this.messageRepository.find({
-		  relations: ['author']
+			relations: ['author']
 		});
-	  }
+	}
 
 	async getUserFromSocket(socket: Socket) {
 		const cookie = socket.handshake.headers.cookie;
 		const { Authentication: authenticationToken } = parse(cookie);
 		const user = await this.authenticationService.getUserFromAuthenticationToken(authenticationToken);
 		if (!user) {
-		  throw new WsException('Invalid credentials.');
+			throw new WsException('Invalid credentials.');
 		}
 		return user;
-	  }
+	}
 
 	getAllChats() {
 		return this.chatRepository.find({ relations: ['participates'] });
@@ -303,5 +303,5 @@ export class ChatService {
 		console.log("chat set to public");
 		return chat;
 	}
-	
+
 }

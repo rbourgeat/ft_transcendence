@@ -7,7 +7,7 @@ import { ChatGateway } from './chat.gateway';
 import { User } from 'src/user/entity/user.entity';
 import { Message } from 'src/chat/message/entity/message.entity';
 import { Participate } from 'src/participate/participate.entity';
-import { AuthService } from '../auth/auth.service';
+import { AuthService } from 'src/auth/auth.service';
 import { AuthModule } from 'src/auth/auth.module';
 import { UserModule } from 'src/user/user.module';
 import { JwtModule } from '@nestjs/jwt';

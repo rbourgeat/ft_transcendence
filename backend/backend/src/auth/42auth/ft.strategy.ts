@@ -1,11 +1,13 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Res } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy, Profile, VerifyCallback } from 'passport-42';
 import { UserService } from 'src/user/user.service';
+import { AuthService } from '../auth.service';
 
 @Injectable()
 export class FtStrategy extends PassportStrategy(Strategy, '42') {
-    constructor(private readonly userService: UserService) {
+    constructor(private readonly userService: UserService,
+        private readonly authenticationService: AuthService) {
         super({
             clientID: process.env.FORTYTWO_CLIENT_ID,
             clientSecret: process.env.FORTYTWO_CLIENT_SECRET,
@@ -20,6 +22,7 @@ export class FtStrategy extends PassportStrategy(Strategy, '42') {
         refreshToken: string,
         profile: Profile,
         cb: VerifyCallback,
+        //@Res() res
     ): Promise<any> {
         request.session.accessToken = accessToken;
         console.log('accessToken', accessToken, 'refreshToken', refreshToken);
@@ -31,6 +34,15 @@ export class FtStrategy extends PassportStrategy(Strategy, '42') {
             password: username,
         }
         this.userService.createUser42(user); //save the user in the db :)
+
+        /*
+        const currentUser = await this.userService.getUserByLogin(user.login);
+        console.log(currentUser.id);
+        const accessTokenCookie = this.authenticationService.getCookieWithJwtToken(currentUser.id);
+        */
+        //res.setHeader('Set-Cookie', accessTokenCookie);
+        console.log('end of login 42');
+
         return cb(null, profile);
     }
 }
