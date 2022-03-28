@@ -7,8 +7,10 @@ import { User } from 'src/user/entity/user.entity';
 import { Message } from 'src/chat/message/entity/message.entity'
 import { CreateMessageDto, SendMessageToChatDto } from './dto/message.dto';
 import { Participate, UserStatus } from 'src/participate/participate.entity';
-import { AuthService } from 'src/auth/auth.service';
-
+import { Socket } from 'socket.io';
+import { parse } from 'cookie';
+import { AuthService } from '../auth/auth.service';
+import { WsException } from '@nestjs/websockets';
 
 @Injectable()
 export class ChatService {
@@ -23,6 +25,31 @@ export class ChatService {
 		private participateRepository: Repository<Participate>,
 		private readonly authenticationService: AuthService
 	) { }
+
+	async saveMessage(content: string, author: User) {
+		const newMessage = await this.messageRepository.create({
+			content,
+			author
+		});
+		await this.messageRepository.save(newMessage);
+		return newMessage;
+	}
+
+	async getAllMessages() {
+		return this.messageRepository.find({
+			relations: ['author']
+		});
+	}
+
+	async getUserFromSocket(socket: Socket) {
+		const cookie = socket.handshake.headers.cookie;
+		const { Authentication: authenticationToken } = parse(cookie);
+		const user = await this.authenticationService.getUserFromAuthenticationToken(authenticationToken);
+		if (!user) {
+			throw new WsException('Invalid credentials.');
+		}
+		return user;
+	}
 
 	getAllChats() {
 		return this.chatRepository.find({ relations: ['participates'] });

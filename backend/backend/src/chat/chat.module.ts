@@ -34,6 +34,6 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     ],
     controllers: [ChatController],
     providers: [ChatService, ChatGateway, AuthService],
-    exports: [ChatService]
+    exports: [ChatService, AuthService]
 })
 export class ChatModule { }

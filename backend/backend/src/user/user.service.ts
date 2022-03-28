@@ -160,7 +160,7 @@ export class UserService {
 				return console.log('You have blocked that user, unblock it first');
 			if (inviteFromYou && (inviteFromYou.status == 'pending', inviteFromYou.status == 'accepted'))
 				return console.log('You have already sent a invite to that user or you are already friends');
-			//si demande de chaque coté, on update automatiquement la relation a accepted ?
+			//si demande de chaque coté, on update automatiquement la relation a accepted ? //
 		}
 		const newRelation = this.userRelationRepository.create(
 			{
