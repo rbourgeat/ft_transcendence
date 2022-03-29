@@ -24,6 +24,8 @@ async function bootstrap() {
 
   SwaggerModule.setup('api', app, document);
 
+  app.use('/upload', express.static(join(__dirname, '..', 'upload')));
+
   //42auth
   app.use(
     session({ resave: false, saveUninitialized: false, secret: '!Seoul' }),
