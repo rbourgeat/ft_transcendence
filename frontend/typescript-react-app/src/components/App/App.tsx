@@ -22,7 +22,7 @@ import Search from "../Search/Search";
 import Achievements from "../Achievements/Achievements";
 import GameRules from "../GameRules/GameRules";
 import CreateChan from "../Channels/CreateChan/CreateChan";
-//import { CookiesProvider } from "react-cookie";
+import { CookiesProvider } from "react-cookie";
 
 function App() {
 
@@ -33,20 +33,22 @@ function App() {
 
   return (
     <div id="main">
-        <UserContext.Provider value={value}>
-          <Routes>
-            <Route path="/" element={<Welcome />} />
-            <Route path="/welcome" element={<Welcome />} />
-            <Route path="/auth" element={<Auth />} />
-            <Route path="/dashboard" element={<Dashboard />}/>
-            <Route path="/user" element={<UserMain username="malatini" />} />
-            <Route path="/chat" element={<Channels username="malatini"/>} />
-            <Route path="/createchat" element={<CreateChan/>} />
-            <Route path="/search" element={<Search />}  />
-            <Route path="/achievements" element={<Achievements />}  />
-            <Route path="*" element={<NotFound />}  />
-          </Routes>
-        </UserContext.Provider>
+      <CookiesProvider>
+          <UserContext.Provider value={value}>
+            <Routes>
+              <Route path="/" element={<Welcome />} />
+              <Route path="/welcome" element={<Welcome />} />
+              <Route path="/auth" element={<Auth />} />
+              <Route path="/dashboard" element={<Dashboard />}/>
+              <Route path="/user" element={<UserMain username="malatini" />} />
+              <Route path="/chat" element={<Channels username="malatini"/>} />
+              <Route path="/createchat" element={<CreateChan/>} />
+              <Route path="/search" element={<Search />}  />
+              <Route path="/achievements" element={<Achievements />}  />
+              <Route path="*" element={<NotFound />}  />
+            </Routes>
+          </UserContext.Provider>
+        </CookiesProvider>
     </div>
   );
 }

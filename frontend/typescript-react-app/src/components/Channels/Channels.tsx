@@ -7,8 +7,9 @@ import React from "react";
 import MyAxios from '../Utils/Axios/Axios';
 import ToastAlerts from '../Utils/ToastAlerts/ToastAlerts';
 import { ToastContainer, toast } from 'react-toastify';
-import cookieClient from "react-cookie";
-import GetCookie from '../Utils/Hooks/getCookie';
+import { useCookies } from "react-cookie";
+import Cookies from 'universal-cookie';
+//import GetCookie from '../Utils/Hooks/getCookie';
 
 //import { Cookies } from "react-cookie"
 //import Cookie from 'js-cookie'
@@ -33,6 +34,9 @@ export interface ChatState {
 */
 
 export default function Channels(props: ChatProps) {
+
+    //const [cookies, setCookie] = useCookies();
+    const cookies = new Cookies();
     function createChat()
     {
         //Initialisation de notre classe MyAxios (sans prop)
@@ -40,17 +44,12 @@ export default function Channels(props: ChatProps) {
         //Retrieve chats
 
         let ax = new MyAxios(null);
+        //let cook = cookies.get('Authentication');
+        //console.log(cook);
+        //console.log(cookies.user);
+        //console.log("authentication is " + cookies.authentication);
 
         let res = ax.get_api_user_cookie_test();
-
-        //let cookie = cookieClient.load("Authentication");
-        //console.log(cookie);
-        //let res = ax.get_api_chat();
-        //let cookie = Cookie.get('Authentication');
-        //console.log("Cookie : " + cookie);
-
-        //let cookie = GetCookie("Authentication");
-        //console.log("cookie is " + cookie);
 
         //Creating chat
         //let res = ax.post_api_chat("pass!1717", true, "chat-6");
@@ -77,6 +76,7 @@ export default function Channels(props: ChatProps) {
                         <div className="col-7">
                             <h1 id="channels--tile">Channels</h1>
                             <button onClick={createChat}>Create chat</button>
+                            {/* <p>{this.cookies}</p> */}
                             <h2 id="websocket--tile">Websocket chat</h2>
                             <ListDiscussions />
                             <TypingMessage />
