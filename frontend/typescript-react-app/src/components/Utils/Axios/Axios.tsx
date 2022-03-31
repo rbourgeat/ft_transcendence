@@ -221,6 +221,9 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
             })
     }
 
+    /*
+    ** Singup / register
+    */
     signup() {
         const bod = {
             email: this.props.email,
@@ -248,4 +251,56 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
                 console.log("Catched error in signup function!");
             })
     }
+
+    /*
+    ** renderAvatar
+    */
+
+    getImage(imageCode: string)
+    {
+        //console.log(imageCode);
+        let imageName = "alt-photo";
+        let url = "http://localhost:3000/api/user/".concat(imageCode).concat("/avatar/");
+        console.log("The url is " + url);
+        let res = axios.get(url, {responseType: 'blob'})
+        .then(res => {
+            //console.log(res);
+            //console.log(res.data);
+            let myImage = document.querySelector('img');
+            var objectURL = URL.createObjectURL(res.data);
+            myImage.src = objectURL;
+            return (
+                <img src={myImage.src} alt={imageName} height="80" width="80" id="avatar-id"/>
+            )
+        })
+        .catch ((error) => {
+            console.log("Catched error during get/fileId/avatar");
+        })
+    }
+
+   render_avatar(login: string)
+   {
+        let imageCode = "https://42.fr/wp-content/uploads/2021/08/42.jpg";
+
+        let imageName = "alt-photo";
+        let url = "http://localhost:3000/api/user/".concat(login);
+        console.log(url);
+
+        let res = axios.get(url)
+        .then(res => {
+            //console.log(res);
+            imageCode = res.data.avatar;
+            console.log("Image is " + imageCode);
+            return (
+                this.getImage(imageCode)
+            );
+        })
+        .catch(error => {
+            console.log("Catched error getting avatar");
+        })
+        return (
+            <img src={imageCode} alt={imageName} height="80" width="80" id="avatar-id"/>
+        );
+    }
+
 }
