@@ -303,4 +303,37 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
         );
     }
 
+    post_avatar(login: string, file: any)
+    {
+        let url = "http://localhost:3000/api/user/avatar/".concat(login);
+
+        axios.defaults.baseURL = 'http://localhost:3000/api/';
+		axios.defaults.headers.post['Content-Type'] ='multipart/form-data';
+		axios.defaults.headers.post['Accept'] ='*/*';
+		axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+
+		const headers = {
+			'Content-Type': 'multipart/form-data'
+		};
+		const formData = new FormData();
+		formData.append('file', file);
+		formData.append('type', 'file');;
+
+        let res = axios.post(url, formData, {headers}).
+		then(res=>{
+			if (res.status == 201)
+			{
+				console.log("Yay ! Avatar updated");
+				//renderImage(props.username);
+                this.render_avatar(login);
+			}
+			else
+			{
+				console.log("Oops! Avatar not updated");
+			}
+		})
+		.catch((error) => {
+			console.log("Catched error !");}
+		)
+	}
 }

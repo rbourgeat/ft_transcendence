@@ -40,51 +40,24 @@ export default function User(props:UserfuncProps)
         })
 	  }
 
-	  const onChangePicture = (e: any) => {
+	//Upload d'un nouvel avatar
+	const onChangePicture = (e: any) => {
 		e.preventDefault();
 		if (e.target.files[0])
 		{
 		  const reader = new FileReader();
 		  reader.addEventListener("load", () => {
-				console.log("Load event listener");
-			});
+				//console.log("Load event listener");
+		});
 
-		  reader.readAsDataURL(e.target.files[0]);
-		  const file_name = e.target.files[0].name;
-		  const file = e.target.files[0];
+		reader.readAsDataURL(e.target.files[0]);
+		const file_name = e.target.files[0].name;
+		const file = e.target.files[0];
 
-		  	let username = props.username;
-			let url = "http://localhost:3000/api/user/avatar/".concat(username);
-
-			//POST de la nouvelle image
-			axios.defaults.baseURL = 'http://localhost:3000/api/';
-			axios.defaults.headers.post['Content-Type'] ='multipart/form-data';
-			axios.defaults.headers.post['Accept'] ='*/*';
-			axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
-
-			const headers = {
-				'Content-Type': 'multipart/form-data'
-			};
-
-			const formData = new FormData();
-			formData.append('file', file);
-			formData.append('type', 'file');;
-
-			let res = axios.post(url, formData, {headers}).then(res=>{
-				if (res.status == 201)
-				{
-					console.log("Yay ! Avatar updated");
-					renderImage(props.username);
-				}
-				else
-				{
-					console.log("Oops! Avatar not updated");
-				}
-			}).catch((error) => {
-				console.log("Catched error !");
-			})
-			}
-	  }
+		let ax = new MyAxios(null);
+		let ret = ax.post_avatar(props.username, file);
+		}
+	}
 
     return (
 		<div id="user--div">
@@ -103,7 +76,6 @@ export default function User(props:UserfuncProps)
 					<h2 id="user--data">{props.username}</h2>
 					<br/>
 					<div id="user--settings--div">
-						<p>
 							<h2 id="user--settings">Settings</h2>
 							<div id="change--avatar">
 								<label className="label-file">Change avatar</label>
@@ -115,12 +87,11 @@ export default function User(props:UserfuncProps)
 										onChange={onChangePicture}
 										className="input-file-upload"
 									/>
-							</div>
-						</p>
-						<p>
+					</div>
+						{/*<p>*/}
 							<h3 id="activate--2fa">2FA Enablement (to do)</h3>
 							<button className="btn btn-outline-danger" id="button--2fa" onClick={handle2FA}>ON / OFF</button>
-						</p>
+						{/*</p>*/}
 					</div>
 					</div>
 					{/*<div id="stats" className="col-9 mx-auto text-center">
