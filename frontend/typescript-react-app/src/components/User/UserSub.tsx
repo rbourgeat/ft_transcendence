@@ -1,10 +1,12 @@
-import React, { useState, useEffect, useReducer} from 'react';
+import React, { Component, useState} from 'react';
 import Nav from "../Nav/Nav";
 import './User.scss';
 import axios from 'axios';
 import MyAxios from '../Utils/Axios/Axios';
 import { ToastContainer, toast } from 'react-toastify';
 import ToastAlerts from '../Utils/ToastAlerts/ToastAlerts';
+import EditUsernameModal from "./editUsername/EditUsername";
+import {Modal, Button, Row, Col, Form} from "react-bootstrap";
 
 export interface UserfuncProps
 {
@@ -21,6 +23,7 @@ export interface UserfuncProps
 
 export default function User(props:UserfuncProps)
 {
+
 	//TODO: a reprendre
 	const handle2FA = (event: any) => {
 		event.preventDefault();
@@ -59,14 +62,15 @@ export default function User(props:UserfuncProps)
 		}
 	}
 
+	const [modalShowUsername, setModalShowUsername] = React.useState(false);
+
     return (
 		<div id="user--div">
 		<Nav />
 			<div className="container">
 			<div className="row d-flex justify-content-center text-center">
 				<div className="col-9" id="bonjour--user">
-				<h1>Bonjour <span></span></h1>
-				<br />
+				<br /><br />
 				<div className="user--stats">
 				{/* TO DO: cleaner le CSS */}
 				{renderImage(props.username)}
@@ -74,6 +78,13 @@ export default function User(props:UserfuncProps)
 					<br/>
 					<div className="col-9 mx-auto text-center" id="input-div">
 					<h2 id="user--data">{props.username}</h2>
+					<Button id="change--username" variant="ight" onClick={() => { console.log("clicked"); setModalShowUsername(true)}}>
+                        change username
+                    </Button>
+					<EditUsernameModal show={modalShowUsername} onHide={() => {
+						console.log("called");
+						setModalShowUsername(false)
+					}}/>
 					<br/>
 					<div id="user--settings--div">
 							<h2 id="user--settings">Settings</h2>
