@@ -18,6 +18,8 @@ footer {
   animation: my-animation 40s linear infinite;
   background-image: none;
   color: white !important;
+  font-family: variables.$big-font;
+  padding-bottom: 20px !important;
 }
 
 /* for Firefox */

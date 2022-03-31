@@ -26,9 +26,9 @@ export default function Welcome() {
     const navigate = useNavigate();
 
     const routeChange = (e: any) =>{
-	  e.preventDefault();
-      let path = `/auth`;
-      navigate(path);
+        e.preventDefault();
+        let path = `/auth`;
+        navigate(path);
     }
 
     const [cookies, setCookie] = useCookies(["name"]);
@@ -54,26 +54,14 @@ export default function Welcome() {
                     <li>malatini</li>
                     <li>darbib</li>
                     <li>macrespo</li>
-                    <button id="play-button-1" onClick={routeChange} className="detalii">Play !</button>
+                    <button id="play-button-1" onClick={routeChange} /*className="detalii"*/>Play !</button>
                     <br />
                     <br />
-
-                    {/*<pre>{JSON.stringify(user, null, 2).length > 4 ? JSON.stringify(user, null, 2) : ""}</pre>
-                    { user ? (<button onClick={ () => setUser(null)}>logout</button>) :
-                        (<button onClick={ async () =>
-                        {
-                            const user = await login();
-                            setUser(user);
-                        }
-                        }>)
-                        login
-                    </button>
-                        )}*/}
                 </ul>
             </div>
             <br></br>
                 <div  id="welcome--video-div">
-                    <video autoPlay loop muted src={video1} id="welcome--video-video" height="400px"/>
+                    <video autoPlay loop muted src={video1} id="welcome--video-video" height="200px"/>
                 </div>
             <Footer />
         </div>

@@ -1,1 +1,29 @@
 @use "../../../variables";
+
+#listChannels {
+	//background-color: white !important;
+	//color: black !important;
+	//border-radius: variables.$border-radius;
+	margin: 20px !important;
+}
+
+#list--channels--title {
+	//color: black !important;
+	color: white !important;
+	font-family: variables.$big-font;
+	margin-top: 10px !important;
+	margin-bottom: 15px !important;
+}
+
+#list--channels--ul > * {
+	//color: black !important;
+	color: white !important;
+	font-family: variables.$basic-font;
+	padding-bottom: 10px;
+	margin-left: 5% !important;
+}
+
+#channel--col {
+	//background-color: white !important;
+	border-radius: variables.$border-radius;
+}
