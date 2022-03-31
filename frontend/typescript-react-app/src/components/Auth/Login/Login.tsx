@@ -27,11 +27,11 @@ export default class Login extends React.Component<LoginProps, LoginState>
         constructor(props: LoginProps)
         {
             super(props);
+
             //Init state
             this.state = {
               email: "",
-              password: "",
-              //isLogged: false
+              password: ""
             }
         }
 
@@ -39,13 +39,13 @@ export default class Login extends React.Component<LoginProps, LoginState>
         submit=(event: any)=>
         {
 		        event.preventDefault();
-            let ax = new myAxios(
-            {
-              method: "GET",
-              ressource: "/user/:id",
-              email: this.state.email,
-              password: this.state.password
-            })
+            let ax = new myAxios(null);
+            //{
+            //  method: "GET",
+            //  ressource: "/user/:id",
+            //  email: this.state.email,
+            //  password: this.state.password
+            //})
             let res = ax.login();
         }
 
@@ -68,7 +68,6 @@ export default class Login extends React.Component<LoginProps, LoginState>
                     <input
                       className="form-control"
                       type="password"
-                      /*type={showPassBis ? "text" : "password"}*/
                       placeholder="********"
                       value={this.state.password}
                       onChange={(e)=>{this.setState({password: e.target.value})}}
@@ -77,7 +76,6 @@ export default class Login extends React.Component<LoginProps, LoginState>
                   </div>
                 </div>
               <p id="connect-p"></p>
-              {/*<hr className="my-4" id="me-connecter_hr"></hr>*/}
               <div id="formBasicConnexion">
               <button
                 type="submit"
