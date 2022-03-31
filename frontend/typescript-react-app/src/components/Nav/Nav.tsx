@@ -12,7 +12,7 @@ function Nav() {
     return (
         <div id="nav">
             <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-					<Link to="/" id="nav--title">Pong Game</Link>
+					<Link to="/" id="nav--title">PONG GAME</Link>
                 <button className="navbar-toggler" type="button">
                     <span className="navbar-toggler-icon"></span>
                 </button>

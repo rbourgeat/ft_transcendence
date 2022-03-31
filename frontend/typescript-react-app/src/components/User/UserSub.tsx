@@ -71,8 +71,8 @@ export default function User(props:UserfuncProps)
 			formData.append('type', 'file');;
 
 			let res = axios.post(url, formData, {headers}).then(res=>{
-				console.log(res.data);
-				console.log(res.status)
+				//console.log(res.data);
+				//console.log(res.status)
 				if (res.status == 201)
 				{
 					console.log("Yay ! Avatar updated");
@@ -97,39 +97,42 @@ export default function User(props:UserfuncProps)
 				<h1>Bonjour <span></span></h1>
 				<br />
 				<div className="user--stats">
+				{/* TO DO: cleaner le CSS */}
 				{renderImage(props.username)}
-				{/* <img
-					src={imgData}
-					//src={renderImage}
-					height="80"
-					width="80"
-					alt="avatar"
-					id="avatar-id"
-					/> */}
 					<br/>
 					<br/>
 					<div className="col-9 mx-auto text-center" id="input-div">
-					<h2 id="user--data">Hello {props.username}</h2>
-					<p>
-						{/*<label className="label-file">Upload avatar</label>*/}
-						<input
-							type="file"
-							name="image-upload"
-							id="input--upload"
-							accept="image/*"
-							onChange={onChangePicture}
-							className="input-file-upload"
-							//placeholder=""
-						/>
-					</p>
+					<h2 id="user--data">{props.username}</h2>
+					<br/>
+					<div id="user--settings--div">
+						<p>
+							<h2 id="user--settings">Settings</h2>
+							<div id="change--avatar">
+								<label className="label-file">Change avatar</label>
+									<input
+										type="file"
+										name="image-upload"
+										id="input--upload"
+										accept="image/*"
+										onChange={onChangePicture}
+										className="input-file-upload"
+									/>
+							</div>
+						</p>
+						<p>
+							<h3 id="activate--2fa">2FA Enablement (to do)</h3>
+							<button className="btn btn-outline-danger" id="button--2fa" onClick={handle2FA}>ON / OFF</button>
+						</p>
 					</div>
-					<div id="stats" className="col-9 mx-auto text-center">
+					</div>
+					{/*<div id="stats" className="col-9 mx-auto text-center">
+						<h4 id="stats--title">Your statistics</h4>
+						<br/>
 						<p>Total games : <span className="span--stats">{props.totalGames ? props.totalGames : 0}</span></p>
 						<p>Total wins : <span className="span--stats">{props.totalWins ? props.totalWins : 0}</span></p>
 						<p>Total loss : <span className="span--stats">{props.totalLoss ? props.totalLoss : 0}</span></p>
 						<p>Win/loss ratio : <span className="span--stats">{props.winLoss ? props.winLoss : 0}</span></p>
-						<p><button className="btn btn-outline-info" id="button--2fa" onClick={handle2FA}>Activate 2FA</button></p>
-					</div>
+					</div>*/}
 				</div>
 				<br />
 				<br />

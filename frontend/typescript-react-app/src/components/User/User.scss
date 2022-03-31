@@ -1,87 +1,108 @@
 @use "../../variables";
 
-
-#bonjour--user {
-  margin-top: 35px !important;
-}
-
 #avatar-id {
   border-radius: 50%;
   margin-top: 25px;
   border: 0.1rem solid black;
 }
 
-#user--div--info, #user--time {
-  color: white !important;
+.span--stats, #stats > *, #activate--2fa {
+  color: black !important;
+  font-size: 10px !important;
 }
 
-.span--stats {
-  color: black !important;
-}
 .user--stats {
   padding: 15px !important;
   background-color: white !important;
   border-radius: variables.$border-radius-big;
+  //width: 75%;
 }
 
-#input {
-  border: 0.1rem solid black !important;
-}
-
-#button--2fa {
+//A reprendre
+#button--2fa{
   font-size: 12px !important;
   margin-bottom: 10px;
 }
 
 .label-file {
-  color: #00b1ca;
+  color: black; //#00b1ca;
   font-weight: bold;
   font-size: 12px !important;
   margin-bottom: 15px !important;
+  text-align: center !important;
 }
 
-.label-file:hover {
-  color: #25a5c4;
-}
-
-#user--data {
+#user--data, #user--settings {
   font-size: 14px !important;
   text-align: center;
-}
-
-#stats > *
-{
-  color: black !important;
+  margin-top: 10px !important;
 }
 
 input {
-  margin-left: auto;margin: 10px !important;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px !important;
   margin-bottom: 25px !important;
+}
+
+#input--upload {
+  cursor: pointer;
+  //margin-left: 100px !important;
+  color: black !important;
+  margin-left: 25%;
+  margin-right: auto;
+  display: block;
 }
 
 button {
   margin-top: 15px !important;
 }
 
-//.input-file-upload {
-//  background-color: red !important;
-//  background: red !important;
-//}
-
-//.user--stats > * {
-//  color: black !important;
-//  text-align: left !important;
-//  font-family: variables.$basic-font;
-//  font-weight: variables.$bold;
-//}
-
-//p {
-//  color: black !important;
-//  text-align: center !important;
-//}
-
-#input--upload {
-  cursor: pointer;
-  margin-left: 100px !important;
-  color: black !important;
+#change--avatar {
+  //border: 0.1rem solid #25a5c4 !important;
+  //border-radius: variables.$border-radius-big;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  //width: 50% !important;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
+
+#user--settings--div {
+  border: 0.1rem solid black !important; //#00b1ca;
+  border-radius: variables.$border-radius-big;
+  margin: 20px;
+  width: 75%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-right: 10%;
+  padding-left: 10%;
+}
+
+#stats--title {
+  font-family: variables.$big-font;
+  font-size: variables.$mini-font-size;
+}
+
+
+#user--data {
+  font-size: 18px !important;
+}
+
+
+//#user--div--info, #user--time {
+//  color: white !important;
+//}
+
+//#bonjour--user {
+//  margin-top: 35px !important;
+//}
+
+//#input {
+//  border: 0.1rem solid black !important;
+//}
+
+//.label-file:hover {
+//  color: #25a5c4;
+//}
