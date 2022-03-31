@@ -422,27 +422,10 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     */
 
     /*
-    ** get api cookie test
-    */
+    ** get api cookie test - DEPRECATED
     get_api_user_cookie_test()
     {
-        const headers = {
-            //'Content-Type': 'application/json',
-            'Accept': '*/*'
-        };
         axios.defaults.baseURL = 'http://localhost:3000/api/';
-
-        /*
-        axios.interceptors.request.use(request => {
-            console.log('Starting Request', JSON.stringify(request, null, 2))
-            return request
-        })
-
-        axios.interceptors.response.use(response => {
-            console.log('Response:', JSON.stringify(response, null, 2))
-            return response
-        })
-        */
 
         let url = "http://localhost:3000/api/user/cookie/test";
         let res = axios.get(url)
@@ -453,21 +436,19 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
         })
         .catch((error) => {
             console.log("Catched error while getting cookies !");
-            console.log(error);
+            //console.log(error);
             if (error.response) {
-                // client received an error response (5xx, 4xx)
                 console.log(error.response)
             }
             else if (error.request) {
-                // client never received a response, or request never left
                 console.log("Error in request");
             }
             else {
-                // anything else
                 console.log("Other type of error");
             }
         })
-}
+    }
+    */
 
     /*
     ** User endpoint
@@ -475,19 +456,193 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     get_api_user(username: string) {
         axios.defaults.baseURL = 'http://localhost:3000/api/';
 
+
         let toast = new ToastAlerts(null);
         let url = "http://localhost:3000/api/user/".concat(username);
+
+        axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+        axios.defaults.withCredentials = true;
 
         let res = axios.get(url)
         .then( res => {
             console.log(res);
-            return (res);
+            console.log("Succesfully got user data");
         })
         .catch((error) => {
             console.log(error);
-            return (error);
+            console.log("Error while getting user data");
         })
     }
+
+    /*
+    ** Relation endpoint
+    */
+
+    //Send invitation
+    //TODO: a tester ! -> est-ce qu'on veut vraiment gérer ça ?
+    post_api_user_relation_sendInvation_id(id: number)
+    {
+        let url = "http://localhost:3000/api/user/relation/sendInvitation/".concat(id.toString());
+
+        const body = {
+            receiverId: id
+        }
+
+        axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+        axios.defaults.withCredentials = true;
+
+        let res = axios.post(url, body)
+        .then( res => {
+            console.log(res);
+            console.log("Succesfully sent invitation !");
+        })
+        .catch((error) => {
+            console.log(error);
+            console.log("Error while sending invitation");
+        })
+    }
+
+    //TODO: a tester ! -> est-ce qu'on veut vraiment gérer ça ?
+    post_api_user_relation_answerInvitation_id(id: number)
+    {
+        let url = "http://localhost:3000/api/user/relation/answerToInvitation/".concat(id.toString());
+
+        const body = {
+            receiverId: id
+        }
+
+        axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+        axios.defaults.withCredentials = true;
+
+        let res = axios.post(url, body)
+        .then( res => {
+            console.log(res);
+            console.log("Succesfully posting invitaton");
+        })
+        .catch((error) => {
+            console.log(error);
+            console.log("Error while posting invitation");
+        })
+    }
+
+    //TODO: received invitations
+    get_api_received_invitations(id: number)
+    {
+        let url = "http://localhost:3000/api/user/relation/answerToInvitation/".concat(id.toString());
+
+        axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+        axios.defaults.withCredentials = true;
+
+        axios.get(url)
+        .then( res => {
+            console.log("Succesfully retrieved received invitation");
+            console.log(res);
+        })
+        .catch((error) => {
+            console.log("Error while retrieving received invitation");
+            console.log(error);
+        })
+
+    }
+
+    //TODO: get all friends - a tester etc
+    get_api_me_allfriends()
+    {
+        let url = "http://localhost:3000/api/user/relation/me/allFriends/"
+
+        axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+        axios.defaults.withCredentials = true;
+
+        axios.get(url)
+        .then( res => {
+            console.log("Succesfully retrieved all friends");
+            console.log(res);
+        })
+        .catch((error) => {
+            console.log("Error while retrieving all friends");
+            console.log(error);
+        })
+    }
+
+    //TODO: a tester
+    delete_relation_id(id: number)
+    {
+        let url = "http://localhost:3000/api/user/relation/remove/".concat(id.toString());
+
+        axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+        axios.defaults.withCredentials = true;
+
+        axios.delete(url)
+        .then( res => {
+            console.log("Succesfully delete target friend");
+            console.log(res);
+        })
+        .catch((error) => {
+            console.log("Error while deleting target friend");
+            console.log(error);
+        })
+    }
+
+    //TODO: a tester
+    post_relation_block(id: number)
+    {
+        let url = "http://localhost:3000/api/user/relation/block/".concat(id.toString());
+
+        axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+        axios.defaults.withCredentials = true;
+
+        axios.post(url)
+        .then( res => {
+            console.log("Succesfully blocked target friend");
+            console.log(res);
+        })
+        .catch((error) => {
+            console.log("Error while blocking target friend");
+            console.log(error);
+        })
+    }
+
+    //TODO: a tester
+    delete_relation_unblock(id: number)
+    {
+        let url = "http://localhost:3000/api/user/relation/unblock/".concat(id.toString());
+
+        axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+        axios.defaults.withCredentials = true;
+
+        axios.delete(url)
+        .then( res => {
+            console.log("Succesfully blocked target friend");
+            console.log(res);
+        })
+        .catch((error) => {
+            console.log("Error while blocking target friend");
+            console.log(error);
+        })
+    }
+
+    //TODO: a tester
+    get_relation_allBlocked()
+    {
+        let url = "http://localhost:3000/api/user/relation/me/allBlocked/";
+
+        axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+        axios.defaults.withCredentials = true;
+
+        axios.post(url)
+        .then( res => {
+            console.log("Succesfully blocked target friend");
+            console.log(res);
+        })
+        .catch((error) => {
+            console.log("Error while blocking target friend");
+            console.log(error);
+        })
+    }
+
+    /*
+    ** AUTH ENDPOINT
+    */
 
     /*
     ** Auth - login
@@ -559,17 +714,13 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     /*
     ** renderAvatar
     */
-
     getImage(imageCode: string)
     {
-        //console.log(imageCode);
         let imageName = "alt-photo";
         let url = "http://localhost:3000/api/user/".concat(imageCode).concat("/avatar/");
         console.log("The url is " + url);
         let res = axios.get(url, {responseType: 'blob'})
         .then(res => {
-            //console.log(res);
-            //console.log(res.data);
             let myImage = document.querySelector('img');
             var objectURL = URL.createObjectURL(res.data);
             myImage.src = objectURL;
@@ -592,12 +743,9 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
 
         let res = axios.get(url)
         .then(res => {
-            //console.log(res);
             imageCode = res.data.avatar;
             console.log("Image is " + imageCode);
-            return (
-                this.getImage(imageCode)
-            );
+            return (this.getImage(imageCode));
         })
         .catch(error => {
             console.log("Catched error getting avatar");
@@ -628,7 +776,6 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
 			if (res.status == 201)
 			{
 				console.log("Yay ! Avatar updated");
-				//renderImage(props.username);
                 this.render_avatar(login);
 			}
 			else
