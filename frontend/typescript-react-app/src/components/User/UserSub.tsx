@@ -142,27 +142,64 @@ export default function User(props:UserfuncProps)
     );
  };
 
+function getImage(imageCode: string)
+{
+	console.log(imageCode);
+	let imageName = "alt-photo";
+
+	let url = "http://localhost:3000/api/user/".concat(imageCode).concat("/avatar/");
+	console.log("The url is " + url);
+	let res = axios.get(url, {responseType: 'blob'})
+	.then(res => {
+		console.log(res);
+		console.log(res.data);
+
+		//let imageBlob = res.blob();
+		//const imageBlob = new Blob(res, {type: 'img'});
+
+		//return (res.data);
+		let myImage = document.querySelector('img');
+		var objectURL = URL.createObjectURL(res.data);
+		//let myImage = URL.createObjectURL(res.data);
+		myImage.src = objectURL;
+		return (
+			<img src={myImage.src} alt={imageName} height="80" width="80" id="avatar-id"/>
+		)
+	})
+	.catch ((error) => {
+		console.log("Catched error during get/fileId/avatar");
+		//return ("https://42.fr/wp-content/uploads/2021/08/42.jpg");
+	})
+}
+
 //TODO: faire un get avec le "file id"
 function renderImage(login: string) {
-	let imageCode = "";
+	let imageCode = "https://42.fr/wp-content/uploads/2021/08/42.jpg";
 
 	let imageName = "alt-photo";
 	let url = "http://localhost:3000/api/user/".concat(login);
 	console.log(url);
+
+
 	let res = axios.get(url)
 	.then(res => {
 		console.log(res);
-		imageCode = JSON.stringify(res.data.avatar);
-		console.log(imageCode);
-		console.log("Image is " + JSON.stringify(res.data.avatar));
+		//imageCode = JSON.stringify(res.data.avatar);
+		imageCode = res.data.avatar;
+		//console.log(imageCode);
+		console.log("Image is " + imageCode);
+		//let data = getImage(imageCode);
+		//console.log(data);
 		return (
-			<img src={imageCode} alt={imageName} height="80" width="80" id="avatar-id"/>
+			getImage(imageCode)
 		);
 	})
 	.catch(error => {
 		console.log("Catched error getting avatar");
-		<img src="https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg" alt={imageName} height="80" width="80" id="avatar-id"/>
 	})
+	return (
+		<img src={imageCode} alt={imageName} height="80" width="80" id="avatar-id"/>
+	);
 }
 
 //TODO: a reprendre quand back ok
