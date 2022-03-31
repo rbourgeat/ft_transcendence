@@ -21,6 +21,7 @@ import Channels from "../Channels/Channels";
 import Search from "../Search/Search";
 import Achievements from "../Achievements/Achievements";
 import GameRules from "../GameRules/GameRules";
+//import Chat from "../Channels/Chat";
 import CreateChan from "../Channels/CreateChan/CreateChan";
 import { CookiesProvider } from "react-cookie";
 
@@ -40,9 +41,10 @@ function App() {
               <Route path="/welcome" element={<Welcome />} />
               <Route path="/auth" element={<Auth />} />
               <Route path="/dashboard" element={<Dashboard />}/>
-              <Route path="/user" element={<UserMain username="malatini" />} />
-              <Route path="/chat" element={<Channels username="malatini"/>} />
-              <Route path="/createchat" element={<CreateChan/>} />
+              <Route path="/user" element={<UserMain /*username="malatini" */ />} />
+              {/*<Route path="/chat" element={<Channels username="malatini"/>} />*/}
+              {/* Attention a voir comment mieux gérer les props pour chaque user une fois connecté */}
+              <Route path="/chat" element={<CreateChan login="malatini"/>} />
               <Route path="/search" element={<Search />}  />
               <Route path="/achievements" element={<Achievements />}  />
               <Route path="*" element={<NotFound />}  />

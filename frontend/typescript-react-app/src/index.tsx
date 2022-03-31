@@ -5,11 +5,6 @@ import App from './components/App/App';
 import { BrowserRouter } from 'react-router-dom';
 import { CookiesProvider } from "react-cookie";
 
-/**
- * @malatini
- * Fichier "racine" pour l'app frontend
- * Pour l'instant j'utilise useContext et useMemo comme "Cookies"
- */
 ReactDOM.render(
   <BrowserRouter>
     <CookiesProvider>

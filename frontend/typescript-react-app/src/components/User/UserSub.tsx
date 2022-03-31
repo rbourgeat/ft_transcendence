@@ -22,7 +22,7 @@ export interface UserfuncProps
 export default function User(props:UserfuncProps)
 {
 	//TODO: a reprendre
-	 const handle2FA = (event: any) => {
+	const handle2FA = (event: any) => {
 		event.preventDefault();
 		axios.defaults.baseURL = 'http://localhost:3000/api/';
 
@@ -38,15 +38,15 @@ export default function User(props:UserfuncProps)
         .catch((error) => {
             console.log(error);
         })
-	  }
+	}
 
 	//Upload d'un nouvel avatar
 	const onChangePicture = (e: any) => {
 		e.preventDefault();
 		if (e.target.files[0])
 		{
-		  const reader = new FileReader();
-		  reader.addEventListener("load", () => {
+			const reader = new FileReader();
+			reader.addEventListener("load", () => {
 				//console.log("Load event listener");
 		});
 
@@ -112,7 +112,7 @@ export default function User(props:UserfuncProps)
 			</div>
 		</div>
     );
- };
+};
 
 //function render2Fa(username: string)
 //{

@@ -14,13 +14,9 @@ interface AxiosProps {
 
 interface AxiosState {
     status?: number,
-    //rep?: Object,
     avatar?: string
 }
 
-/**
- * @malatini
- */
 export default class MyAxios extends React.Component<AxiosProps, AxiosState>
 {
     constructor(props: AxiosProps) {
@@ -38,17 +34,22 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     */
     get_api_chat()
     {
+        axios.defaults.withCredentials = true;
+
         let url = "http://localhost:3000/api/chat/";
         let res = axios.get(url)
         .then( res => {
             console.log("Get api chat successfully called.");
-            console.log(res);
-            return (res);
+            //ret = Object.assign({}, res);
+            //console.log(res);
+            //return (res);
         })
         .catch((error) => {
-            console.log(error);
-            return (error);
+            console.log("Error while getting all channels");
+           // console.log(error);
+           // return (error);
         })
+        //return (ret);
     }
 
     post_api_chat(channame: string, pub: boolean, pass: string)
@@ -70,11 +71,6 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
 		axios.defaults.headers.post['Accept'] ='*/*';
 		axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
         axios.defaults.withCredentials = true;
-
-        //Intercepteur pour voir la requete
-        //console.log(body);
-        //console.log(headers);
-        //console.log(url);
 
         axios.interceptors.request.use(request => {
             console.log('Starting Request', JSON.stringify(request, null, 2))
