@@ -55,34 +55,39 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     {
         let url = "http://localhost:3000/api/chat/";
         let headers = {
-            'Accept': '*/*',
+            //'Accept': '*/*',
             'Content-Type': 'application/json'
         }
 
-        let body = {
+        const body = {
             password: pass,
             public: pub,
             name: channame
         }
 
-        console.log(body);
-        console.log(headers);
-        console.log(url);
+        axios.defaults.baseURL = 'http://localhost:3000/api/';
+		axios.defaults.headers.post['Content-Type'] ='multipart/form-data';
+		axios.defaults.headers.post['Accept'] ='*/*';
+		axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+        axios.defaults.withCredentials = true;
 
         //Intercepteur pour voir la requete
+        //console.log(body);
+        //console.log(headers);
+        //console.log(url);
+
         axios.interceptors.request.use(request => {
             console.log('Starting Request', JSON.stringify(request, null, 2))
             return request
-          })
+        })
 
         axios.interceptors.response.use(response => {
             console.log('Response:', JSON.stringify(response, null, 2))
             return response
-          })
+        })
 
         let res = axios.post(url, body, { headers })
         .then( res => {
-            console.log(res);
             console.log("successfully posted a chat !");
             //return (res);
         })
@@ -93,11 +98,10 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
         })
     }
 
+    /* DEPRECATED, ne plus utiliser
     createchat(username: string) {
-        const bod = {
-            admin: {
-                login: username
-            }
+        let bod = {
+            password:
         }
 
         let toast = new ToastAlerts(null);
@@ -115,12 +119,13 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
             }
         })
     }
+    */
 
     /*
     ** get api cookie test
     */
-   get_api_user_cookie_test()
-   {
+    get_api_user_cookie_test()
+    {
         const headers = {
             //'Content-Type': 'application/json',
             'Accept': '*/*'
@@ -131,12 +136,12 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
         axios.interceptors.request.use(request => {
             console.log('Starting Request', JSON.stringify(request, null, 2))
             return request
-          })
+        })
 
         axios.interceptors.response.use(response => {
             console.log('Response:', JSON.stringify(response, null, 2))
             return response
-          })
+        })
         */
 
         let url = "http://localhost:3000/api/user/cookie/test";
@@ -152,15 +157,17 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
             if (error.response) {
                 // client received an error response (5xx, 4xx)
                 console.log(error.response)
-              } else if (error.request) {
+            }
+            else if (error.request) {
                 // client never received a response, or request never left
                 console.log("Error in request");
-              } else {
+            }
+            else {
                 // anything else
                 console.log("Other type of error");
-              }
+            }
         })
-   }
+}
 
     /*
     ** User endpoint
@@ -207,10 +214,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
         let res = axios.post('http://localhost:3000/api/auth/log-in/', bod, { headers })
             .then(res => {
                 if (res.status == 200 || res.status == 201) {
-                    console.log(res);
-                    //TODO: utiliser plutot useContext (attention avec la classe ca risque d etre plus compliquee qu'avec la version)
-                    //Solution trouvee apres maintes recherches pour rediriger depuis une classe et pas une fonction react
-                    //window.top.location = "/user/";
+                    //console.log(res);
                     window.top.location = "/chat/";
                     return;
                 }
@@ -278,8 +282,8 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
         })
     }
 
-   render_avatar(login: string)
-   {
+    render_avatar(login: string)
+    {
         let imageCode = "https://42.fr/wp-content/uploads/2021/08/42.jpg";
 
         let imageName = "alt-photo";

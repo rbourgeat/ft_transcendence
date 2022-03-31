@@ -4,7 +4,7 @@
   background-color: white !important;
   background-image: none !important;
   border-radius: variables.$border-radius;
-  padding: 25px !important;
+  padding-top: 5px !important;
 }
 
 #auth-btn-1,
@@ -25,12 +25,13 @@
 
 #se-connecter,
 #sinscrire, #jouer {
-  margin-top: 5px;
+  margin-top: 10px !important;
+  margin-bottom: 5px !important;
   color: black !important;
 }
 
 #auth-form-div {
   background-color: white !important;
   border-radius: variables.$border-radius;
-  margin-top: 10px !important;
+  margin-top: 5px !important;
 }
