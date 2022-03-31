@@ -8,7 +8,7 @@
 }
 
 #list--channels--title {
-	//color: black !important;
+	color: black !important;
 	color: white !important;
 	font-family: variables.$big-font;
 	margin-top: 10px !important;
@@ -21,9 +21,30 @@
 	font-family: variables.$basic-font;
 	padding-bottom: 10px;
 	margin-left: 5% !important;
+	//text-align: left;
 }
 
 #channel--col {
 	//background-color: white !important;
 	border-radius: variables.$border-radius;
+}
+
+#quick--actions {
+	//background-color: white !important;
+	background-color: variables.$grey;
+	padding: 20px !important;
+	padding-left: 100px !important;
+	padding-right: 100px !important;
+	padding-bottom: 40px !important;
+	border-radius: variables.$border-radius;
+}
+
+#quick--actions > * {
+	color: black !important;
+	font-family: variables.$basic-font;
+}
+
+.quick--actions {
+	font-family: variables.$basic-font;
+	font-size: 14px !important;
 }

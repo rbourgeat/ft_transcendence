@@ -1,0 +1,14 @@
+//@use "../../../../variables";
+
+//le style a pas l'air de s'appliquer dans un modal
+#create-new-channel {
+	color: black !important;
+}
+
+#modal--create--channel > * {
+	color: black !important;
+}
+
+.modal-body {
+	color: black !important;
+}

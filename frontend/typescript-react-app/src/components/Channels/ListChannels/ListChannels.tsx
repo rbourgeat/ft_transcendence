@@ -46,6 +46,7 @@ export default function ListChannels(props: ListChat) {
             {/*<div className="container">*/}
                 <div className="row">
                     {/*d-flex justify-content-center text-center*/}
+                    {/* Liste de toutes les channels */}
                     <div className="col-3" id="channel--col">
                         <p id="list--channels--title"> Public channels :</p>
                             <ul id="list--channels--ul">

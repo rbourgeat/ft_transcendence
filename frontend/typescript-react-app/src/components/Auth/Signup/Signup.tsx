@@ -39,12 +39,12 @@ class Signup extends React.Component<SignupProps, SignupState>
 
     //Utile pour vider le formulaire quand on a cliqué sur le bouton (a mettre dans utils)
     resetName = function() {
-      this.setState({
+    this.setState({
         email: '',
         username: '',
         password: '',
         password_conf: ''
-      });
+        });
     }
 
     submit=(event: any)=>
@@ -66,29 +66,29 @@ class Signup extends React.Component<SignupProps, SignupState>
     }
 
     render() {
-      return (
-        <div>
-             <div className="d-flex justify-content-center"></div>
+        return (
+            <div>
+                <div className="d-flex justify-content-center"></div>
                         <div className="forms" id="form--auth2">
                             <h3 id="sinscrire">S'inscrire</h3>
                             <div id="formSignupUsername">
                                 <label>Username</label>
                                 <input
-                                  className="form-control"
-                                  type="text"
-                                  placeholder="malatini"
-                                  value={this.state.username}
-                                  onChange={(e)=>{this.setState({username: e.target.value})}} />
+                                    className="form-control"
+                                    type="text"
+                                    placeholder="malatini"
+                                    value={this.state.username}
+                                    onChange={(e)=>{this.setState({username: e.target.value})}} />
                             </div>
 
                             <div id="formSignUpEmail">
                                 <label>Email</label>
                                 <input
-                                  className="form-control"
-                                  type="email"
-                                  placeholder="malatini@student.42.fr"
-                                  value={this.state.email}
-                                  onChange={(e)=>{this.setState({email: e.target.value})}} />
+                                    className="form-control"
+                                    type="email"
+                                    placeholder="malatini@student.42.fr"
+                                    value={this.state.email}
+                                    onChange={(e)=>{this.setState({email: e.target.value})}} />
                             </div>
                             <div id="password-form">
                                 <div id="sub-form">
@@ -99,7 +99,7 @@ class Signup extends React.Component<SignupProps, SignupState>
                                                 <input
                                                 className="form-control"
                                                // type={this.state.open ? "text" : "password"}
-                                               type="password"
+                                                type="password"
                                                 placeholder="********"
                                                 value={this.state.password}
                                                 onChange={(e)=>{this.setState({password: e.target.value})}} />
@@ -110,10 +110,10 @@ class Signup extends React.Component<SignupProps, SignupState>
                                                 <label>Confirmation mot de passe</label>
                                                 <input className="form-control"
                                                   //type={this.state.open2 ? "text" : "password"}
-                                                  type="password"
-                                                  placeholder="********"
-                                                  value={this.state.password_conf}
-                                                  onChange={(e)=>{this.setState({password_conf: e.target.value})}}/>
+                                                    type="password"
+                                                    placeholder="********"
+                                                    value={this.state.password_conf}
+                                                    onChange={(e)=>{this.setState({password_conf: e.target.value})}}/>
                                             </div>
                                             <div className="mt-2" style={{ textAlign: "right" }} >
                                             </div>
@@ -123,9 +123,9 @@ class Signup extends React.Component<SignupProps, SignupState>
                             </div>
                             {/*<hr className="my-4" id="signup-hr"></hr>*/}
                             <button
-                              onClick={this.submit}
-                              className="btn btn-light btn-block"
-                              id="signup"
+                                onClick={this.submit}
+                                className="btn btn-light btn-block"
+                                id="signup"
                             >
                                 M'inscrire
                             </button>
@@ -142,7 +142,6 @@ class Signup extends React.Component<SignupProps, SignupState>
                             />
                     </div>
         </div>
-
-    );
-     }
+        );
+    }
 } export default Signup;

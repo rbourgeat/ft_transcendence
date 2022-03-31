@@ -19,21 +19,31 @@ export default function CreateChan(props: UserChat)
     return (
         <div id="channels">
             <Nav />
-            <ListChannels />
             <div className="container">
                 <div className="row d-flex justify-content-center text-center">
                     <div className="col-7">
-                        <p>Create a channel</p>
-                        <Button variant="primary" onClick={() => setModalShow(true)}>
-                            Launch vertically centered modal
-                        </Button>
-                        <CreateChanModal
-                            show={modalShow}
-                            onHide={() => setModalShow(false)}
-                        />
+                        <div id="quick--actions">
+                            <h1>Quick actions</h1>
+                            <br />
+                            {/*<p>Create a new channel</p>*/}
+                            <div className="row">
+                                <Button className="quick--actions" variant="primary" onClick={() => setModalShow(true)} id="create--channel">
+                                    Create a new channel
+                                </Button>
+                                <Button className="quick--actions" variant="secondary" /*onClick={() => setModalShow(true)}*/ id="create--dm">
+                                    Send a DM
+                                </Button>
+                            </div>
+                            <CreateChanModal
+                            /* */
+                                show={modalShow}
+                                onHide={() => setModalShow(false)}
+                            />
+                        </div>
                         </div>
                     </div>
                 </div>
+                <ListChannels />
             </div>
         );
     }
