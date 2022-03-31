@@ -1,7 +1,8 @@
-import React from "react";
+import React, { cloneElement } from "react";
 import axios from "axios";
 import ToastAlerts from "../ToastAlerts/ToastAlerts"
 import cookie from 'react-cookie';
+import Login from "../../Auth/Login/Login";
 
 interface AxiosProps {
     method?: string,
@@ -40,23 +41,21 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
         let res = axios.get(url)
         .then( res => {
             console.log("Get api chat successfully called.");
-            //ret = Object.assign({}, res);
-            //console.log(res);
-            //return (res);
         })
         .catch((error) => {
             console.log("Error while getting all channels");
-           // console.log(error);
-           // return (error);
         })
-        //return (ret);
     }
 
+    /*
+    ** Create a channel with channel name, public boolean and password argument
+    */
     post_api_chat(channame: string, pub: boolean, pass: string)
     {
         let url = "http://localhost:3000/api/chat/";
+
+        //Pas sure que ce soit utile
         let headers = {
-            //'Accept': '*/*',
             'Content-Type': 'application/json'
         }
 
@@ -67,11 +66,13 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
         }
 
         axios.defaults.baseURL = 'http://localhost:3000/api/';
-		axios.defaults.headers.post['Content-Type'] ='multipart/form-data';
+		axios.defaults.headers.post['Content-Type'] ='application/json';
 		axios.defaults.headers.post['Accept'] ='*/*';
 		axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
         axios.defaults.withCredentials = true;
 
+        //Useful to debug request
+        /*
         axios.interceptors.request.use(request => {
             console.log('Starting Request', JSON.stringify(request, null, 2))
             return request
@@ -81,16 +82,319 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
             console.log('Response:', JSON.stringify(response, null, 2))
             return response
         })
+        */
 
         let res = axios.post(url, body, { headers })
         .then( res => {
             console.log("successfully posted a chat !");
-            //return (res);
         })
         .catch((error) => {
             console.log("Catched error on post api chat.");
-            console.log(error);
-            //return (error);
+            //console.log(error);
+        })
+    }
+
+    /*
+    ** post /api/chat/message -> attente endpoint à modifier ?
+    */
+   //TODO: attendre update
+
+    /*
+    ** post /api/chat/join
+    */
+    //TODO: à tester
+    post_api_chat_join(pass: string, pub: boolean, channame: string)
+    {
+        let url = "http://localhost:3000/api/chat/join";
+
+        const body = {
+            password: pass,
+            public: pub,
+            name: channame
+        }
+
+        axios.defaults.baseURL = 'http://localhost:3000/api/';
+		axios.defaults.headers.post['Content-Type'] ='application/json';
+		axios.defaults.headers.post['Accept'] ='*/*';
+		axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+        axios.defaults.withCredentials = true;
+
+        axios.post(url, body)
+        .then( res => {
+            console.log("Succesfully joined channel !");
+        })
+        .catch (res => {
+            console.log("Error while joining channel 😢");
+        })
+    }
+
+    /*
+    ** Sending a message in a channel
+    */
+    //TODO: a tester
+    post_api_chat_sendmessage(message: string, channame: string)
+    {
+        let url = "http://localhost:3000/api/chat/sendMessage/";
+
+        const body = {
+            content: message,
+            name: channame
+        }
+
+        axios.defaults.baseURL = 'http://localhost:3000/api/';
+		axios.defaults.headers.post['Content-Type'] ='application/json';
+		axios.defaults.headers.post['Accept'] ='*/*';
+
+        //Verifier si la ligne du dessous est vraiment utile
+		axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+        axios.defaults.withCredentials = true;
+
+        axios.post(url, body)
+        .then( res => {
+            console.log("Succesfully send message to channel !");
+        })
+        .catch (res => {
+            console.log("Error while sending message to channel 😢");
+        })
+    }
+
+    /*
+    ** Leaving a channel
+    */
+    //TODO: a tester
+    post_api_chat_quit(pass: string, pub: boolean, channame: string)
+    {
+        let url = "http://localhost:3000/api/chat/quit/";
+
+        const body = {
+            password: pass,
+            public: pub,
+            name: channame
+        }
+
+        axios.defaults.baseURL = 'http://localhost:3000/api/';
+		axios.defaults.headers.post['Content-Type'] ='application/json';
+		axios.defaults.headers.post['Accept'] ='*/*';
+
+        //Verifier si la ligne du dessous est vraiment utile
+		axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+        axios.defaults.withCredentials = true;
+
+        axios.post(url, body)
+        .then( res => {
+            console.log("Succesfully left channel !");
+        })
+        .catch (res => {
+            console.log("Error while leaving channel 😢 !");
+        })
+    }
+
+    /*
+    ** get /api/chat/id/messages
+    */
+    //TODO: faire un retour sur ce endpoint également + tester
+    get_api_id_messages(id: string)
+    {
+        let url = "http://localhost:3000/api/chat/".concat(id).concat("/messages/");
+
+        //voir quel body il faudrait ?
+        axios.defaults.baseURL = 'http://localhost:3000/api/';
+		axios.defaults.headers.post['Content-Type'] ='application/json';
+		axios.defaults.headers.post['Accept'] ='*/*';
+
+        //Verifier si la ligne du dessous est vraiment utile
+		axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+        axios.defaults.withCredentials = true;
+
+        axios.get(url)
+        .then(res => {
+            console.log("Successfully retrieved all messages");
+        })
+        .catch(res => {
+            console.log("Error while retrieving all messages");
+        })
+    }
+
+    /*
+    ** Setting an admin
+    */
+    //TODO: a tester
+    post_api_set_admin(id: number, username: string, datetime: string, pass: string)
+    {
+        let url = "http://localhost:3000/api/chat/setAdmin/";
+
+        const body = {
+            idChat: id,
+            user: username,
+            time: datetime,
+            password: pass,
+        }
+
+        axios.defaults.baseURL = 'http://localhost:3000/api/';
+		axios.defaults.headers.post['Content-Type'] ='application/json';
+		axios.defaults.headers.post['Accept'] ='*/*';
+
+        //Verifier si la ligne du dessous est vraiment utile
+		axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+        axios.defaults.withCredentials = true;
+
+        axios.post(url, body)
+        .then(res => {
+            console.log("Successfully made target an admin");
+        })
+        .catch(res => {
+            console.log("Error while making target admin");
+        })
+    }
+
+    //TODO: a tester
+    post_api_ban(id: number, username: string, datetime: string, pass: string)
+    {
+        let url = "http://localhost:3000/api/chat/ban/";
+
+        const body = {
+            idChat: id,
+            user: username,
+            time: datetime,
+            password: pass,
+        }
+
+        //Verifier si la ligne du dessous est vraiment utile
+		axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+        axios.defaults.withCredentials = true;
+
+        axios.post(url, body)
+        .then(res => {
+            console.log("Successfully banned target");
+        })
+        .catch(res => {
+            console.log("Error while banning target");
+        })
+    }
+
+    //TODO: a tester et variabiliser !
+    //A variabiliser pour économiser les lignes
+    post_api_unban(id: number, username: string, datetime: string, pass: string)
+    {
+        let url = "http://localhost:3000/api/chat/unban/";
+
+        const body = {
+            idChat: id,
+            user: username,
+            time: datetime,
+            password: pass,
+        }
+
+        //Verifier si la ligne du dessous est vraiment utile
+		axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+        axios.defaults.withCredentials = true;
+
+        axios.post(url, body)
+        .then(res => {
+            console.log("Successfully banned target");
+        })
+        .catch(res => {
+            console.log("Error while banning target");
+        })
+    }
+
+    //TODO: a tester et variabiliser !
+    post_api_mute(id: number, username: string, datetime: string, pass: string)
+    {
+        let url = "http://localhost:3000/api/chat/mute/";
+
+        const body = {
+            idChat: id,
+            user: username,
+            time: datetime,
+            password: pass,
+        }
+
+        //Verifier si la ligne du dessous est vraiment utile
+		axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+        axios.defaults.withCredentials = true;
+
+        axios.post(url, body)
+        .then(res => {
+            console.log("Successfully banned target");
+        })
+        .catch(res => {
+            console.log("Error while banning target");
+        })
+    }
+
+    //TODO: a tester et variabiliser !
+    post_api_password(id: number, username: string, datetime: string, pass: string)
+    {
+        let url = "http://localhost:3000/api/chat/password/";
+
+        const body = {
+            idChat: id,
+            user: username,
+            time: datetime,
+            password: pass,
+        }
+
+        //Verifier si la ligne du dessous est vraiment utile
+		axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+        axios.defaults.withCredentials = true;
+
+        axios.post(url, body)
+        .then(res => {
+            console.log("Successfully banned target");
+        })
+        .catch(res => {
+            console.log("Error while banning target");
+        })
+    }
+
+    //TODO: a tester et variabiliser !
+    post_api_setprivate(id: number, username: string, datetime: string, pass: string)
+    {
+        let url = "http://localhost:3000/api/chat/setPrivate/";
+
+        const body = {
+            idChat: id,
+            user: username,
+            time: datetime,
+            password: pass,
+        }
+
+        //Verifier si la ligne du dessous est vraiment utile
+		axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+        axios.defaults.withCredentials = true;
+
+        axios.post(url, body)
+        .then(res => {
+            console.log("Successfully banned target");
+        })
+        .catch(res => {
+            console.log("Error while banning target");
+        })
+    }
+
+    //TODO: a tester et variabiliser !
+    post_api_setpublic(id: number, username: string, datetime: string, pass: string)
+    {
+        let url = "http://localhost:3000/api/chat/setPublic/";
+
+        const body = {
+            idChat: id,
+            user: username,
+            time: datetime,
+            password: pass,
+        }
+
+        //Verifier si la ligne du dessous est vraiment utile
+		axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+        axios.defaults.withCredentials = true;
+
+        axios.post(url, body)
+        .then(res => {
+            console.log("Successfully banned target");
+        })
+        .catch(res => {
+            console.log("Error while banning target");
         })
     }
 
