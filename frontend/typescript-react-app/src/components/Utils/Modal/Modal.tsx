@@ -49,7 +49,7 @@ export default function CreateChanModal(props) {
 			<div id="modal--create--channel">
 				<Modal
 					{...props}
-					size="lg"
+					size="m"
 					aria-labelledby="contained-modal-title-vcenter"
 					centered
 				>
@@ -68,19 +68,25 @@ export default function CreateChanModal(props) {
 								/*value={this.state.email}*/
 								/*onChange={(e)=>{this.setState({email: e.target.value})}}*/
 							/>
-							<label className="modal--label">Choose public policy</label>
-							<select className="form-select" aria-label="Choose public policy">
-								<option value="">Select policy</option>
-								<option value="public">Public</option>
-								<option value="private">Private</option>
-								<option value="protected">Protected (public with password)</option>
-							</select>
+							<div id="public--policy">
+								{/*<label className="modal--label" id="policy--title">Choose public policy</label>*/}
+								{/*<br />*/}
+								{/*<p id="text">Choose protected if you want a public channel protected by a password</p>*/}
+								<select className="form-select form-select-sm" aria-label="form-select-sm" id="policy--select">
+									{/*<option value="">Select policy</option>*/}
+									<option value="public" selected>Public</option>
+									<option value="private">Private</option>
+									<option value="protected">Protected</option>
+								</select>
+							</div>
+							<br />
 							{/* Faire une condition si protected a été sélectionné */}
 							<label className="modal--label">Password</label>
 							<input
 								className="form-control"
 								type="text"
 								placeholder="Password"
+								disabled
 								/*value={this.state.email}*/
 								/*onChange={(e)=>{this.setState({email: e.target.value})}}*/
 							/>
