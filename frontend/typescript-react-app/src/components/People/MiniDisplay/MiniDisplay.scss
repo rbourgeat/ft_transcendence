@@ -1,0 +1,14 @@
+@use "../../../variables";
+
+#minidisplay--div {
+	//border: 0.1rem solid grey;
+	margin: 10px;
+	border-radius: variables.$border-radius;
+	//width: 100% !important;
+	//height: 100% !important;
+	//background-color: grey;
+}
+
+li, #minidisplay--div {
+	display: inline !important;
+}

@@ -2,8 +2,10 @@ import './All.scss';
 import React, {Component, useState, useEffect} from "react";
 import myAxios from "../../Utils/Axios/Axios";
 import axios from "axios";
+import MiniDisplay from '../MiniDisplay/MiniDisplay';
 
 export default function All() {
+	//TODO: attention a trouver quelque chose pour faire "une pause" tant que toutes les requetes n'ont pas été faites
 	const [users, setUsers] = React.useState([]);
     const [count, setCount] = useState(0);
 
@@ -37,6 +39,7 @@ export default function All() {
         })
     }
 
+	//Attention mon use effect est pas bon il recharge parfois des user
     useEffect(() => {
         renderUsers();
     }, []);
@@ -46,12 +49,20 @@ export default function All() {
             <div className="container" id="container--all">
 				<h1 className="text" id="displaying">USERS</h1>
 				<br/>
-				<ul id="list--users--ul">
-                    {users.map(user  =>
-						<li key={user}>{user}</li>
-						//console.log(user);
-					)}
-                </ul>
+				<div className="row" id="row--users">
+				<div id="ul--list" className="row">
+					<h2 id="registered--title">List of all registered users</h2>
+					<ul id="list--users--ul" className="list-group list-group-horizontal-lg">
+						{users.map(user  =>
+							//<li key={user}>{user}</li>
+							<MiniDisplay login={user} />
+							//TODO: grace au user je peux creer un petit composant avec toutes les infos
+							//console.log(user);
+						)}
+					</ul>
+				</div>
+				</div>
+				<br/>
 			</div>
         </div>
     );

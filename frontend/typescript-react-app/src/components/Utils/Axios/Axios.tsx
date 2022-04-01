@@ -751,7 +751,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
             console.log("Catched error getting avatar");
         })
         return (
-            <img src={imageCode} alt={imageName} height="80" width="80" id="avatar-id"/>
+            <img src={imageCode} alt={imageName} height="80" width="80" id="avatar-id" style={{marginBottom:"20px", border:"0.1rem solid grey"}}/>
         );
     }
 
