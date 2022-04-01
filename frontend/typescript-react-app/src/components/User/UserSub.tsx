@@ -7,6 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import ToastAlerts from '../Utils/ToastAlerts/ToastAlerts';
 import EditUsernameModal from "./editUsername/EditUsername";
 import {Modal, Button, Row, Col, Form} from "react-bootstrap";
+import { faCommentsDollar } from '@fortawesome/free-solid-svg-icons';
 
 export interface UserfuncProps
 {
@@ -27,20 +28,29 @@ export default function User(props:UserfuncProps)
 	//TODO: a reprendre
 	const handle2FA = (event: any) => {
 		event.preventDefault();
+
+		let ax = new MyAxios(null);
+		//TODO: vérifier si c'est pas déjà activé
+		ax.post_2fa_generate();
+		//ax.get_api_user(props.username);
+
 		axios.defaults.baseURL = 'http://localhost:3000/api/';
 
-        let toast = new ToastAlerts(null);
         let url = "http://localhost:3000/api/user/".concat(props.username);
 
-        let res = axios.get(url)
+		let secret = "";
+        axios.get(url)
         .then( res => {
             console.log(res);
-			let secret = res.data.twoFactorAuthenticationSecret;
-			console.log("secret is is " + secret);
+			secret = res.data.twoFactorAuthenticationSecret
+			console.log(secret);
         })
         .catch((error) => {
             console.log(error);
         })
+
+		//TODO: erreur 400 auth code
+		ax.post_2fa_turnOn(secret);
 	}
 
 	//Upload d'un nouvel avatar

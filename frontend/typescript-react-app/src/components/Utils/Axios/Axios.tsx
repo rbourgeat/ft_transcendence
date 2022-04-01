@@ -787,4 +787,72 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
 			console.log("Catched error !");}
 		)
 	}
+
+    /*
+    ** Gestion du 2FA
+    */
+    post_2fa_generate()
+    {
+        console.log("Generating 2fa");
+
+        let url = "http://localhost:3000/api/2fa/generate";
+
+        axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+        axios.defaults.withCredentials = true;
+
+        axios.post(url)
+        .then(res => {
+            console.log("Successfully banned target");
+            console.log(res);
+        })
+        .catch((error) => {
+            console.log("Error while banning target");
+            console.log(error);
+        })
+    }
+
+    post_2fa_turnOn(code: string)
+    {
+        console.log("Turning on 2fa");
+
+        let url = "http://localhost:3000/api/2fa/turn-on";
+
+        const body = {
+            twoFactorAuthenticationCode: code
+        }
+
+        axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+        axios.defaults.withCredentials = true;
+
+        axios.post(url, body)
+        .then(res => {
+            console.log("Successfully turn 2fa on");
+            console.log(res);
+        })
+        .catch((error) => {
+            console.log("Error while turning 2fa on");
+            console.log(error);
+        })
+    }
+
+    post_2fa_logIn()
+    {
+        console.log("Turning on 2fa");
+
+        let url = "http://localhost:3000/api/2fa/login";
+
+        axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+        axios.defaults.withCredentials = true;
+
+        axios.post(url)
+        .then(res => {
+            console.log("Successfully logging with 2fa");
+            console.log(res);
+        })
+        .catch((error) => {
+            console.log("Error while logging in with 2fa");
+            console.log(error);
+        })
+    }
+    //TODO: demander un endpoint pour le endpoint pour turn off (et log out ?)
 }
