@@ -1,0 +1,27 @@
+@use "../../../variables";
+
+.text, #displaying {
+	//color: white !important;
+	color: black !important;
+	//font-family: variables.$big-font;
+	//padding: 5px;
+}
+
+#displaying {
+	font-family: variables.$big-font;
+	text-align: center;
+	text-decoration: black wavy underline;
+}
+
+#container--all {
+	background-color: white !important;
+	border-radius: variables.$border-radius;
+	padding: 10px;
+}
+
+#list--users--ul > * {
+	color: black !important;
+	font-family: variables.$basic-font;
+	padding-left: 10px !important;
+	padding-right: 10px !important;
+}

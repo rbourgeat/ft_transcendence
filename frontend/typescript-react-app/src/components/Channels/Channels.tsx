@@ -22,7 +22,6 @@ export default function Channels(props: ChatProps) {
     function createChat()
     {
         let ax = new MyAxios(null);
-        //let res = ax.get_api_user_cookie_test();
         let res = ax.post_api_chat("channel1", true, "password");
     }
 
@@ -51,11 +50,9 @@ export default function Channels(props: ChatProps) {
                     <div className="row d-flex justify-content-center text-center">
                         <div className="col-7">
                             <h1 id="channels--tile">Channels</h1>
-                            {/* Pour test */}
                             <button className="chat-buttons" onClick={createChat}>Create chat</button>
                             <br></br>
                             <button className="chat-buttons" onClick={listChats}>list your chats</button>
-                            {/*<h2 id="websocket--tile">Websocket chat</h2>*/}
                             <ListDiscussions />
                             <TypingMessage />
                         </div>

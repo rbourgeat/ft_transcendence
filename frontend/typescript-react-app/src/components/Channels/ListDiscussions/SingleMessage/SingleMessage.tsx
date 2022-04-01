@@ -23,6 +23,5 @@ export default class ListChannels extends React.Component<MessageProps>
 			</p>
 		</div>
 		);
-        //null
 	};
 }

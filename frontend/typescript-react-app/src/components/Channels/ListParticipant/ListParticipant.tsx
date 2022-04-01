@@ -10,7 +10,6 @@ export interface ParticipantProps{
 }
 
 // export interface ParticipantState {
-
 // }
 
 export default function ListParticipant()
@@ -51,10 +50,7 @@ export default function ListParticipant()
                     <button id="bann-temp-button" className="btn btn-danger">Ban temporarily</button>
                     <button id="mute-temp-button" className="btn btn-warning">Mute temporalily</button>
                     {/*<MyTimer expiryTimestamp={time} />*/}
-
                 </div>
-                {/* Si je clique je dois pouvoir selectionner un minuteur */}
-
 
                 {/* <div id="roles">
                     <h3 id="roles--title">Roles</h3>
