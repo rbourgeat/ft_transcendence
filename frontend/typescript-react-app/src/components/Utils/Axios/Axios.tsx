@@ -746,7 +746,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
         let res = axios.get(url)
         .then(res => {
             imageCode = res.data.avatar;
-            //console.log("Image is " + imageCode);
+            console.log("Image is " + imageCode);
             return (this.getImage(imageCode));
         })
         .catch(error => {
@@ -772,6 +772,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
 		const formData = new FormData();
 		formData.append('file', file);
 		formData.append('type', 'file');;
+        //console.log(file);
 
         let res = axios.post(url, formData, {headers}).
 		then(res=>{

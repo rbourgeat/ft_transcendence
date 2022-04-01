@@ -13,7 +13,7 @@
 #container--all {
 	background-color: white !important;
 	border-radius: variables.$border-radius;
-	padding: 10px;
+	padding: 10px !important;
 }
 
 #list--users--ul > * {
@@ -32,10 +32,8 @@
 }
 
 #list--users--ul {
-	//border: 0.1rem solid grey;
 	border-radius: variables.$border-radius;
 	padding-bottom: 40px;
-	//margin-right: 20px;
 }
 
 #registered--title {

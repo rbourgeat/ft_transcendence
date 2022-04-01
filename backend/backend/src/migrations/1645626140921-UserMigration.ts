@@ -16,6 +16,7 @@ export class UserMigration1645626140921 implements MigrationInterface {
             queryRunner.manager.create<User>(User, {
                 login: 'dummy2',
                 status: 'online',
+                //avatar: '/upload/e48584dad3802c6592c5ee81f95f08b1--cook-gifs-4ec7.jpeg'
             }),
         );
         const dummy3 = await queryRunner.manager.save(

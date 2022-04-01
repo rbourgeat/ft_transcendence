@@ -3,6 +3,9 @@ import React, {Component, useState, useEffect} from "react";
 import myAxios from "../../Utils/Axios/Axios";
 import axios from "axios";
 import MiniDisplay from '../MiniDisplay/MiniDisplay';
+import Invitations from "../Invitations/Invitations";
+import Blocked from "../Blocked/Blocked";
+import Friends from "../Friends/Friends";
 
 export default function All() {
 	//TODO: attention a trouver quelque chose pour faire "une pause" tant que toutes les requetes n'ont pas été faites
@@ -16,7 +19,6 @@ export default function All() {
     function renderUsers()
     {
         axios.defaults.withCredentials = true;
-        /* */
         let url = "http://localhost:3000/api/user/";
         axios.get(url)
         .then( res => {
@@ -27,7 +29,6 @@ export default function All() {
 			let i = 0;
 			while (i < len)
 			{
-				//console.log(users[i]);
 				setUsers(prevArray => [...prevArray, users[i]])
 				i++;
 			}
@@ -37,7 +38,6 @@ export default function All() {
         })
     }
 
-	//Attention mon use effect est pas bon il recharge parfois des user
     useEffect(() => {
 		if (calledOnce.current) {
 			return;}
@@ -45,29 +45,25 @@ export default function All() {
     }, []);
 
     return (
-        <div id="people--div">
-            <div className="container" id="container--all">
-				<h1 className="text" id="displaying">USERS</h1>
-				<br/>
-				<div className="row" id="row--users">
-				<div id="ul--list" className="row">
-					<h2 id="registered--title">List of all registered users</h2>
-					<ul id="list--users--ul" className="list-group list-group-horizontal-lg">
-						{users.map(user  =>
-							//<li key={user}>{user}</li>
-							<MiniDisplay key={user.login} login={user.login} status={user.status}/>
-							//TODO: grace au user je peux creer un petit composant avec toutes les infos
-							//console.log(user);
-						)}
-					</ul>
+			<div id="people--div">
+				<div className="container" id="container--all">
+					<h1 className="text" id="displaying">USERS</h1>
+					<br/>
+					<div className="row" id="row--users">
+					<div id="ul--list" className="row">
+						<h2 id="registered--title">List of all registered users</h2>
+						<ul id="list--users--ul" className="list-group list-group-horizontal-lg">
+							{users.map(user  =>
+								//<li key={user}>{user}</li>
+								<MiniDisplay key={user.login} login={user.login} status={user.status}/>
+							)}
+						</ul>
+					</div>
+					</div>
+					<Friends />
+					<Invitations />
+					<Blocked />
 				</div>
-			{/*</div>*/}
-			<div className="container" id="invitations--all">
-				<h1 className="text" id="displaying">Invitations</h1>
-				</div>
-				</div>
-				<br/>
 			</div>
-        </div>
-    );
+			);
 }

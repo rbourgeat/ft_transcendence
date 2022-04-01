@@ -2,6 +2,8 @@ import './People.scss';
 import Nav from '../Nav/Nav';
 import Footer from "../Footer/Footer";
 import All from "./All/All";
+import Invitations from "./Invitations/Invitations";
+import Friends from "./Friends/Friends";
 
 /**
  * @malatini
@@ -29,10 +31,11 @@ export default function People() {
 				{/*<div className="d-flex justify-content-center text-center">*/}
 					<div id="all">
 						<div className="row">
-							{/*<h2 className="text" id="people--title">All</h2>*/}
-							{/*<p className="text">Lorem</p>*/}
 							<All />
 							<br />
+							<Invitations />
+							<br />
+							<Friends />
 						</div>
 					</div>
                 {/*</div>*/}
