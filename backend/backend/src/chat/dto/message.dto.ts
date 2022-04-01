@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsString, IsNotEmpty } from 'class-validator';
+import { User } from 'src/user/entity/user.entity';
 
 export class CreateMessageDto {
     @IsString()
@@ -15,6 +16,11 @@ export class SendMessageToChatDto {
     @IsNotEmpty()
     @ApiProperty({ example: 'Hello world !' })
     content: string;
+
+    // @IsString()
+    // @IsNotEmpty()
+    // @ApiProperty({ example: 'Hello world !' })
+    // author: User;
 
     @IsString()
     @IsNotEmpty()
