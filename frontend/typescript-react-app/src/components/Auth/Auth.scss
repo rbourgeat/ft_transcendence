@@ -26,7 +26,7 @@
 #se-connecter,
 #sinscrire, #jouer {
   margin-top: 10px !important;
-  margin-bottom: 5px !important;
+  //margin-bottom: 5px !important;
   color: black !important;
 }
 
@@ -35,3 +35,7 @@
   border-radius: variables.$border-radius;
   margin-top: 5px !important;
 }
+
+//#auth-container > label {
+//  text-align: left !important;
+//}
