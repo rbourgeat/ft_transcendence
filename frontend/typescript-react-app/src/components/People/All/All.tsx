@@ -24,13 +24,12 @@ export default function All() {
 			let len = users.length;
 			//setUsers(users.login);
 			console.log(users);
-			/**/
 			console.log(len);
 			let i = 0;
 			while (i < len)
 			{
-				console.log(users[i].login);
-				setUsers(prevArray => [...prevArray, users[i].login])
+				console.log(users[i]);
+				setUsers(prevArray => [...prevArray, users[i]])
 				i++;
 			}
         })
@@ -55,7 +54,7 @@ export default function All() {
 					<ul id="list--users--ul" className="list-group list-group-horizontal-lg">
 						{users.map(user  =>
 							//<li key={user}>{user}</li>
-							<MiniDisplay login={user} />
+							<MiniDisplay key={user.login} login={user.login} status={user.status}/>
 							//TODO: grace au user je peux creer un petit composant avec toutes les infos
 							//console.log(user);
 						)}

@@ -716,9 +716,13 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     */
     getImage(imageCode: string)
     {
+         //console.log("Should only be called if the image is not default image");
         let imageName = "alt-photo";
+        if (imageCode.startsWith("http"))
+            return ( <img src="https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg" alt={imageName} height="80" width="80" id="avatar-id"/>);
+
         let url = "http://localhost:3000/api/user/".concat(imageCode).concat("/avatar/");
-        console.log("The url is " + url);
+       // console.log("The url is " + url);
         let res = axios.get(url, {responseType: 'blob'})
         .then(res => {
             let myImage = document.querySelector('img');
@@ -739,12 +743,13 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
 
         let imageName = "alt-photo";
         let url = "http://localhost:3000/api/user/".concat(login);
-        console.log(url);
+        //console.log("Render avatar and login : " + login);
+        //console.log(url);
 
         let res = axios.get(url)
         .then(res => {
             imageCode = res.data.avatar;
-            console.log("Image is " + imageCode);
+            //console.log("Image is " + imageCode);
             return (this.getImage(imageCode));
         })
         .catch(error => {

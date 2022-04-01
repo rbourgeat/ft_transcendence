@@ -24,12 +24,12 @@ export default function ListChannels(props: ListChat) {
     {
         let body = {
             password: "test",
-            public: true,
+            pub: true,
             name: "test"
         }
 
         let ax = new myAxios(null);
-        ax.post_api_chat(body.name, body.public, body.pass);
+        ax.post_api_chat(body.name, body.pub, body.password);
     }
 
     function renderListChannels(login: string)
