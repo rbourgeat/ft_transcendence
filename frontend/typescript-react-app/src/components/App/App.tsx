@@ -23,11 +23,11 @@ import GameRules from "../GameRules/GameRules";
 import CreateChan from "../Channels/CreateChan/CreateChan";
 import { CookiesProvider } from "react-cookie";
 import Stats from "../Stats/Stats";//Stats équivalent Leaderboard ?
+import People from "../People/People";
+import Game from "../Game/Game";
 
 function App() {
-
   const [user, setUser] = useState(null);
-
   const value = useMemo( () =>
   ({user, setUser}), [user, setUser]);
 
@@ -45,6 +45,8 @@ function App() {
               <Route path="/search" element={<Search />}  />
               <Route path="/stats" element={<Stats />}  />
               <Route path="/achievements" element={<Achievements />}  />
+              <Route path="/people" element={<People />}  />
+              <Route path="/game" element={<Game />}  />
               <Route path="*" element={<NotFound />}  />
             </Routes>
           </UserContext.Provider>

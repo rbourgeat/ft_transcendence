@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
 import './Nav.scss';
-import { faUser, faComment, faTrophy, faMagnifyingGlass, faDashboard, faUserFriends } from "@fortawesome/free-solid-svg-icons";
+import { faUser, faComment, faTrophy, faMagnifyingGlass, faDashboard, faUserFriends, faGamepad } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 /**
  * @malatini
@@ -19,8 +19,8 @@ function Nav() {
                 <div className="collapse navbar-collapse" id="navbarNav">
                     <ul className="navbar-nav">
 						<li className="nav-item">
-								<Link to="/chat"className="nav-link">
-										<div className='nav-link-text'><p><FontAwesomeIcon icon={faComment} /></p> <p>Message</p></div>
+								<Link to="/game" className="nav-link">
+										<div className='nav-link-text'><p><FontAwesomeIcon icon={faGamepad} /></p><p>Game</p></div>
 								</Link>
 						</li>
 						<li className="nav-item">
@@ -28,16 +28,11 @@ function Nav() {
 										<div className='nav-link-text'><p><FontAwesomeIcon icon={faUserFriends} /></p><p>People</p></div>
 								</Link>
 						</li>
-						<li className="nav-item">
-								<Link to="/dashboard" className="nav-link">
-										<div className='nav-link-text'><p><FontAwesomeIcon icon={faDashboard} /></p><p>Dashboard</p></div>
-								</Link>
-						</li>
-						<li className="nav-item">
+						{/*<li className="nav-item">
 								<Link to="/stats" className="nav-link">
 										<div className='nav-link-text'><p><FontAwesomeIcon icon={faTrophy} /></p><p>Leaderboard</p></div>
 								</Link>
-						</li>
+						</li>*/}
 						<li className="nav-item">
 								<Link to="/search" className="nav-link">
 										<div className='nav-link-text'><p><FontAwesomeIcon icon={faMagnifyingGlass}/></p><p>Search [Deprecated]</p></div>
@@ -46,6 +41,16 @@ function Nav() {
 						<li className="nav-item">
 								<Link to="/achievements" className="nav-link">
 										<div className='nav-link-text'><p><FontAwesomeIcon icon={faTrophy}/></p><p>Achievements [Deprecated]</p></div>
+								</Link>
+						</li>
+						<li className="nav-item">
+								<Link to="/chat"className="nav-link">
+										<div className='nav-link-text'><p><FontAwesomeIcon icon={faComment} /></p> <p>Message</p></div>
+								</Link>
+						</li>
+						<li className="nav-item">
+								<Link to="/dashboard" className="nav-link">
+										<div className='nav-link-text'><p><FontAwesomeIcon icon={faDashboard} /></p><p>Dashboard</p></div>
 								</Link>
 						</li>
 						<li className="nav-item">
