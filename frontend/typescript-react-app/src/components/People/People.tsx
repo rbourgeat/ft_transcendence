@@ -38,7 +38,6 @@ export default function People() {
                 {/*</div>*/}
 			{/*//</div>*/}
         {/*</div>*/}
-		<Footer />
         </div>
     );
 }

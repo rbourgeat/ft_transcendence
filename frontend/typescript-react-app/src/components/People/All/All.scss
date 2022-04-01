@@ -1,10 +1,7 @@
 @use "../../../variables";
 
 .text, #displaying {
-	//color: white !important;
 	color: black !important;
-	//font-family: variables.$big-font;
-	//padding: 5px;
 }
 
 #displaying {
@@ -22,28 +19,17 @@
 #list--users--ul > * {
 	color: black !important;
 	font-family: variables.$basic-font;
-	//padding-left: 10px !important;
-	//padding-right: 10px !important;
-	//display: inline;
 }
 
 #list--users--ul
 {
 	overflow-y: scroll;
-	//margin-bottom: 30px !important;
 	width: 95%;
-	//margin-right: 25px !important;
 }
 
 #row--users {
-	//border: 0.1rem solid black;
-	//padding-right: 20px;
 	margin-left: 5%;
 }
-
-//#ul--list {
-//	border: 0.1rem solid red;
-//}
 
 #list--users--ul {
 	border: 0.1rem solid grey;
