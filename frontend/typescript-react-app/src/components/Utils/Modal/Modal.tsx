@@ -60,17 +60,35 @@ export default function CreateChanModal(props) {
 					</Modal.Header>
 					<Modal.Body>
 						<div id="create--channel--div">
-							<label>Channel name</label>
+							<label className="modal--label">Channel name</label>
 							<input
 								className="form-control"
 								type="text"
-								placeholder="choose a unique channel name"
+								placeholder="unique channel name"
 								/*value={this.state.email}*/
-								/*onChange={(e)=>{this.setState({email: e.target.value})}}*/ />
+								/*onChange={(e)=>{this.setState({email: e.target.value})}}*/
+							/>
+							<label className="modal--label">Choose public policy</label>
+							<select className="form-select" aria-label="Choose public policy">
+								<option value="">Select policy</option>
+								<option value="public">Public</option>
+								<option value="private">Private</option>
+								<option value="protected">Protected (public with password)</option>
+							</select>
+							{/* Faire une condition si protected a été sélectionné */}
+							<label className="modal--label">Password</label>
+							<input
+								className="form-control"
+								type="text"
+								placeholder="Password"
+								/*value={this.state.email}*/
+								/*onChange={(e)=>{this.setState({email: e.target.value})}}*/
+							/>
 						</div>
+						<Button variant="success"/*onClick={}*/>Create</Button>
 					</Modal.Body>
 					<Modal.Footer>
-						<Button onClick={props.onHide}>Close</Button>
+						<Button onClick={props.onHide} variant="light">Close</Button>
 					</Modal.Footer>
 				</Modal>
 			</div>)
