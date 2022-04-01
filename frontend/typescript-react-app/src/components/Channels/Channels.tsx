@@ -53,7 +53,7 @@ export default function Channels(props: ChatProps) {
                             <h1 id="channels--tile">Channels</h1>
                             <button className="chat-buttons" onClick={createChat}>Create chat</button>
                             <br></br>
-                            <button className="chat-buttons" onClick={listChats}>list your chats</button>
+                            {/*<button className="chat-buttons" onClick={listChats}>list your chats</button>*/}
                             <ListDiscussions />
                             <TypingMessage />
                         </div>

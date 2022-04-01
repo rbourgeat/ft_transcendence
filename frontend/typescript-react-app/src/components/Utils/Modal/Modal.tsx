@@ -55,7 +55,7 @@ export default function CreateChanModal(props) {
 				>
 				<Modal.Header closeButton>
 					<Modal.Title id="contained-modal-title-vcenter">
-						Create new channel
+						Create new channel (in progress)
 					</Modal.Title>
 					</Modal.Header>
 					<Modal.Body>
@@ -72,7 +72,7 @@ export default function CreateChanModal(props) {
 								{/*<label className="modal--label" id="policy--title">Choose public policy</label>*/}
 								{/*<br />*/}
 								{/*<p id="text">Choose protected if you want a public channel protected by a password</p>*/}
-								<select className="form-select form-select-sm" aria-label="form-select-sm" id="policy--select">
+								<select className="form-select form-select-sm" aria-label="form-select-sm" id="policy--select" disabled>
 									{/*<option value="">Select policy</option>*/}
 									<option value="public" selected>Public</option>
 									<option value="private">Private</option>
@@ -86,7 +86,6 @@ export default function CreateChanModal(props) {
 								className="form-control"
 								type="text"
 								placeholder="Password"
-								disabled
 								/*value={this.state.email}*/
 								/*onChange={(e)=>{this.setState({email: e.target.value})}}*/
 							/>

@@ -27,15 +27,26 @@ export default function CreateChan(props: UserChat)
                             <br />
                             {/*<p>Create a new channel</p>*/}
                             <div className="row">
-                                <Button className="quick--actions" variant="primary" onClick={() => setModalShow(true)} id="create--channel">
+                                <Button className="quick--actions" variant="primary" disabled /*onClick={() => setModalShow(true)}*/ >
                                     Create a new channel
                                 </Button>
-                                <Button className="quick--actions" variant="secondary" /*onClick={() => setModalShow(true)}*/ id="create--dm">
+                                <Button className="quick--actions" variant="light" disabled /*onClick={() => setModalShow(true)}*/>
                                     Send a DM
+                                </Button>
+                                <Button className="quick--actions" variant="light" disabled /*onClick={() => setModalShow(true)}*/>
+                                    Answer invitation(s)
+                                </Button>
+                                <Button className="quick--actions" variant="light" disabled /*onClick={() => setModalShow(true)}*/ >
+                                    Invite friend
+                                </Button>
+                                <Button className="quick--actions" variant="light" disabled /*onClick={() => setModalShow(true)}*/ >
+                                    Make admin
+                                </Button>
+                                <Button className="quick--actions" variant="light" disabled /*onClick={() => setModalShow(true)}*/>
+                                    Mute
                                 </Button>
                             </div>
                             <CreateChanModal
-                            /* */
                                 show={modalShow}
                                 onHide={() => setModalShow(false)}
                             />
