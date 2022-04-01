@@ -30,12 +30,12 @@ function Nav() {
                     </li>
 					<li className="nav-item">
 							<Link to="/search" className="nav-link">
-									<div className='nav-link-text'><p><FontAwesomeIcon icon={faMagnifyingGlass}/></p><p>Search</p></div>
+									<div className='nav-link-text'><p><FontAwesomeIcon icon={faMagnifyingGlass}/></p><p>Search [Deprecated]</p></div>
 							</Link>
 					</li>
 					<li className="nav-item">
 							<Link to="/achievements" className="nav-link">
-									<div className='nav-link-text'><p><FontAwesomeIcon icon={faTrophy}/></p><p>Achievements</p></div>
+									<div className='nav-link-text'><p><FontAwesomeIcon icon={faTrophy}/></p><p>Achievements [Deprecated]</p></div>
 							</Link>
 					</li>
                     </ul>

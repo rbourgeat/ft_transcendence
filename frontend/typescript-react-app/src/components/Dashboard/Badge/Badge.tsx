@@ -1,10 +1,7 @@
 import React from 'react';
 import './Badge.scss';
 
-//import { PieChart } from 'react-minimal-pie-chart';
-
 /**
- * @malatini : "Badge" correcpond à la section avec les stats principales du player
  * TODO: revoir le style, a continuer car trop simple
  */
 export default function Badge(props) {
@@ -38,8 +35,7 @@ export default function Badge(props) {
                             [
                                 { title: 'One', value: 75, color: '#469536' },
                                 { title: 'Two', value: 25, color: '#FF4040' },
-                             ]}
-
+                        ]}
                             />
                     </div>*/}
                 </div>
