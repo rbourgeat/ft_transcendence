@@ -18,7 +18,6 @@ interface ChatProps {
 }
 
 //TODO: a revoir
-
 export default function Channels(props: ChatProps) {
     function createChat()
     {

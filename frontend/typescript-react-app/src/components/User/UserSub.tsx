@@ -24,7 +24,6 @@ export interface UserfuncProps
 
 export default function User(props:UserfuncProps)
 {
-
 	//TODO: a reprendre
 	const handle2FA = (event: any) => {
 		event.preventDefault();
@@ -91,7 +90,7 @@ export default function User(props:UserfuncProps)
 					<Button id="change--username" variant="ight" onClick={() => { console.log("clicked"); setModalShowUsername(true)}}>
                         change username
                     </Button>
-					<EditUsernameModal show={modalShowUsername} onHide={() => {
+					<EditUsernameModal username={props.username} show={modalShowUsername} onHide={() => {
 						console.log("called");
 						setModalShowUsername(false)
 					}}/>

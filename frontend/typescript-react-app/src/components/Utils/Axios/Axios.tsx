@@ -789,6 +789,36 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
 	}
 
     /*
+    ** edit user data (for login)
+    */
+    //TODO: a implémenter test
+    patch_user(old_login: string, new_login: string)
+    {
+        let url = "http://localhost:3000/api/user/".concat(old_login);
+
+        axios.defaults.baseURL = 'http://localhost:3000/api/';
+		axios.defaults.headers.post['Content-Type'] ='application/json';
+		axios.defaults.headers.post['Accept'] ='*/*';
+		axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+
+        let body = {
+            login: new_login
+        }
+
+        let headers = {
+            login: new_login
+        }
+
+        let res = axios.patch(url, body, {headers})
+        .then(res=>{
+			console.log("Yay ! Successfully changed login");})
+		.catch((error) => {
+			console.log("Catched error !");}
+		)
+        //Attention j'ai bien réussi à changer le nom mais maintenant le component n'a plus la bonne props
+    }
+
+    /*
     ** Gestion du 2FA
     */
     post_2fa_generate()

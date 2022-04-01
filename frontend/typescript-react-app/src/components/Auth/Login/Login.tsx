@@ -38,14 +38,8 @@ export default class Login extends React.Component<LoginProps, LoginState>
         //Connexion ou tentative de connection en utilisant notre "utilitaire" myAxios
         submit=(event: any)=>
         {
-		        event.preventDefault();
+          event.preventDefault();
             let ax = new myAxios(null);
-            //{
-            //  method: "GET",
-            //  ressource: "/user/:id",
-            //  email: this.state.email,
-            //  password: this.state.password
-            //})
             let res = ax.login();
         }
 
