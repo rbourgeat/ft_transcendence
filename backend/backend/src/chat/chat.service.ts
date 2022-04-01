@@ -35,6 +35,17 @@ export class ChatService {
 		return newMessage;
 	}
 
+	async saveChatMessage(chatName: string, content: string, author: User) {
+		const channel = await this.getChatByName(chatName);
+		const newMessage = await this.messageRepository.create({
+			content,
+			author,
+			channel
+		});
+		await this.messageRepository.save(newMessage);
+		return newMessage;
+	}
+
 	async getAllMessages() {
 		return this.messageRepository.find({
 			relations: ['author']
