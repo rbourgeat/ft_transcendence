@@ -9,6 +9,8 @@ export default function All() {
 	const [users, setUsers] = React.useState([]);
     const [count, setCount] = useState(0);
 
+	const calledOnce = React.useRef(false);
+
 	//Récupération de tous les users et de leur statut
 	//TODO: faire un check pour savoir s'ils sont amis ?
     function renderUsers()
@@ -22,24 +24,23 @@ export default function All() {
             let users = res.data;
             //console.log(users);
 			let len = users.length;
-			//setUsers(users.login);
-			console.log(users);
-			console.log(len);
 			let i = 0;
 			while (i < len)
 			{
-				console.log(users[i]);
+				//console.log(users[i]);
 				setUsers(prevArray => [...prevArray, users[i]])
 				i++;
 			}
         })
         .catch((error) => {
-            console.log("Error while getting all users");
+            //console.log("Error while getting all users");
         })
     }
 
 	//Attention mon use effect est pas bon il recharge parfois des user
     useEffect(() => {
+		if (calledOnce.current) {
+			return;}
         renderUsers();
     }, []);
 
@@ -59,6 +60,10 @@ export default function All() {
 							//console.log(user);
 						)}
 					</ul>
+				</div>
+			{/*</div>*/}
+			<div className="container" id="invitations--all">
+				<h1 className="text" id="displaying">Invitations</h1>
 				</div>
 				</div>
 				<br/>

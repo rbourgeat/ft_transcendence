@@ -45,6 +45,12 @@ export default function CreateChan(props: UserChat)
                                 <Button className="quick--actions" variant="light" disabled /*onClick={() => setModalShow(true)}*/>
                                     Mute
                                 </Button>
+                                <Button className="quick--actions" variant="light" disabled /*onClick={() => setModalShow(true)}*/>
+                                    Invite to play
+                                </Button>
+                                <Button className="quick--actions" variant="light" disabled /*onClick={() => setModalShow(true)}*/>
+                                    Answer to play
+                                </Button>
                             </div>
                             <CreateChanModal
                                 show={modalShow}

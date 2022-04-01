@@ -465,11 +465,11 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
 
         let res = axios.get(url)
         .then( res => {
-            console.log(res);
+            //console.log(res);
             console.log("Succesfully got user data");
         })
         .catch((error) => {
-            console.log(error);
+            //console.log(error);
             console.log("Error while getting user data");
         })
     }
@@ -740,11 +740,8 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     render_avatar(login: string)
     {
         let imageCode = "https://42.fr/wp-content/uploads/2021/08/42.jpg";
-
         let imageName = "alt-photo";
         let url = "http://localhost:3000/api/user/".concat(login);
-        //console.log("Render avatar and login : " + login);
-        //console.log(url);
 
         let res = axios.get(url)
         .then(res => {
@@ -753,7 +750,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
             return (this.getImage(imageCode));
         })
         .catch(error => {
-            console.log("Catched error getting avatar");
+            //console.log("Catched error getting avatar");
         })
         return (
             <img src={imageCode} alt={imageName} height="80" width="80" id="avatar-id" style={{marginBottom:"20px", border:"0.1rem solid grey"}}/>
