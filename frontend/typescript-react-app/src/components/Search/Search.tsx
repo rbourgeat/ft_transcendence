@@ -25,7 +25,7 @@ export default class Search extends React.Component<SearchProps, SearchState>
 					<div className="container">
 						<div className="row d-flex justify-content-center text-center">
 							<div className="col-7">
-							<h1 id="search--title">Search</h1>
+							<h1 id="search--title">Search [deprecated]</h1>
 								<div id="searchbox--div">
 									<form className="form">
 										<input

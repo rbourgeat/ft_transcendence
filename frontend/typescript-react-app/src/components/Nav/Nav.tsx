@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
 import './Nav.scss';
-import { faUser, faComment, faTrophy, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { faUser, faComment, faTrophy, faMagnifyingGlass, faDashboard, faUserFriends } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 /**
  * @malatini
@@ -18,26 +18,41 @@ function Nav() {
                 </button>
                 <div className="collapse navbar-collapse" id="navbarNav">
                     <ul className="navbar-nav">
-                    <li className="nav-item">
-							<Link to="/chat"className="nav-link">
-									<div className='nav-link-text'><p><FontAwesomeIcon icon={faComment} /></p> <p>Message</p></div>
-							</Link>
-                    </li>
-                    <li className="nav-item">
-							<Link to="/user" className="nav-link">
-									<div className='nav-link-text'><p><FontAwesomeIcon icon={faUser} /></p><p>Account</p></div>
-							</Link>
-                    </li>
-					<li className="nav-item">
-							<Link to="/search" className="nav-link">
-									<div className='nav-link-text'><p><FontAwesomeIcon icon={faMagnifyingGlass}/></p><p>Search [Deprecated]</p></div>
-							</Link>
-					</li>
-					<li className="nav-item">
-							<Link to="/achievements" className="nav-link">
-									<div className='nav-link-text'><p><FontAwesomeIcon icon={faTrophy}/></p><p>Achievements [Deprecated]</p></div>
-							</Link>
-					</li>
+						<li className="nav-item">
+								<Link to="/chat"className="nav-link">
+										<div className='nav-link-text'><p><FontAwesomeIcon icon={faComment} /></p> <p>Message</p></div>
+								</Link>
+						</li>
+						<li className="nav-item">
+								<Link to="/people" className="nav-link">
+										<div className='nav-link-text'><p><FontAwesomeIcon icon={faUserFriends} /></p><p>People</p></div>
+								</Link>
+						</li>
+						<li className="nav-item">
+								<Link to="/dashboard" className="nav-link">
+										<div className='nav-link-text'><p><FontAwesomeIcon icon={faDashboard} /></p><p>Dashboard</p></div>
+								</Link>
+						</li>
+						<li className="nav-item">
+								<Link to="/stats" className="nav-link">
+										<div className='nav-link-text'><p><FontAwesomeIcon icon={faTrophy} /></p><p>Leaderboard</p></div>
+								</Link>
+						</li>
+						<li className="nav-item">
+								<Link to="/search" className="nav-link">
+										<div className='nav-link-text'><p><FontAwesomeIcon icon={faMagnifyingGlass}/></p><p>Search [Deprecated]</p></div>
+								</Link>
+						</li>
+						<li className="nav-item">
+								<Link to="/achievements" className="nav-link">
+										<div className='nav-link-text'><p><FontAwesomeIcon icon={faTrophy}/></p><p>Achievements [Deprecated]</p></div>
+								</Link>
+						</li>
+						<li className="nav-item">
+								<Link to="/user" className="nav-link">
+										<div className='nav-link-text'><p><FontAwesomeIcon icon={faUser} /></p><p>Settings</p></div>
+								</Link>
+						</li>
                     </ul>
                 </div>
                 </nav>

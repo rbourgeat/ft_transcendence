@@ -14,7 +14,6 @@ export default function MatchHistory() {
         <div  className="d-flex justify-content-center">
             <h3 id="matchhistory--title">Match history</h3>
         </div>
-        <br/>
         <div className="row" id="match--history">
             <div className="d-flex justify-content-center">
                 <ul>

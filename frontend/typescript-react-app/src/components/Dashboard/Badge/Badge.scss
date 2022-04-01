@@ -3,7 +3,7 @@
 #badge--div {
   border-radius: variables.$border-radius-big;
   padding: 40px;
-  color: white !important;
+  color: black !important;
 }
 
 #badge--div--sub {
@@ -13,9 +13,7 @@
   max-width: 900px;
   min-width: 800px;
   padding: 40px;
-  //   margin-left: 20px;
-  //   background-color: hsl(200, 4%, 17%) !important;
-  background: variables.$grey !important;
+  background: white !important;
 }
 
 #badge--graph {
@@ -27,35 +25,26 @@
 }
 
 #badge {
-  margin-bottom: 30px;
+  //margin-bottom: 30px;
   margin-top: 30px;
 }
 
-#graph-title {
-  color: white !important;
+#graph-title,  #badge--title, #p--wins, #badge--stats > *, .text {
+  color: black !important;
+  font-family: variables.$basic-font;
 }
 
 #badge--wins {
-  //   border: 0.5rem solid red !important;
-  //   background-color: red !important;
   border-radius: variables.$border-radius-big;
   max-width: 100px;
   margin-right: 75px;
   margin-top: 20px;
 }
 
-#p--wins {
-  color: black !important;
-  font-family: variables.$big-font;
-}
 
 #badge--graph {
   max-width: 250px;
   margin-left: 75px;
-}
-
-#badge--title {
-  color: white !important;
 }
 
 #badge-picture {
@@ -82,10 +71,6 @@
 }
 
 #badge {
-  border: 0.1rem solid white !important;
+  //border: 0.1rem solid white !important;
   border-radius: variables.$border-radius-big;
-}
-
-#badge--stats > * {
-  color: white !important;
 }

@@ -3,12 +3,7 @@ import Nav from '../Nav/Nav'
 import MatchHistory from '../MatchHistory/MatchHistory';
 import Badge from './Badge/Badge';
 import Footer from "../Footer/Footer"
-//import { PieChart } from 'react-minimal-pie-chart';
-//import Media from 'react-media'
 
-/**
- * @malatini page de Dashboard a améliorer
- */
 export default function Dashboard() {
     return (
         <div id="dashboard">
@@ -18,17 +13,9 @@ export default function Dashboard() {
                   className="row d-flex justify-content-center text-center"
                   id="dashboard-buttons"
                   >
+                    <h1 className="titles">Dashboard / Personnal stats</h1>
+                    <h2 className="titles">to do macrespo</h2>
                     <Badge />
-                    {/*<div className="col-4">
-                        <button
-                          id="match-history-button"
-                        >
-                          Match history
-                        </button>
-                    </div>*/}
-                    {/*<div className="col-4">
-                        <button id="friends-button">Friends</button>
-                    </div>*/}
                     <MatchHistory />
                     <Footer />
             </div>

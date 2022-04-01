@@ -8,6 +8,7 @@ import ToastAlerts from '../Utils/ToastAlerts/ToastAlerts';
 import EditUsernameModal from "./editUsername/EditUsername";
 import {Modal, Button, Row, Col, Form} from "react-bootstrap";
 import { faCommentsDollar } from '@fortawesome/free-solid-svg-icons';
+import Dashboard from '../Dashboard/Dashboard';
 
 export interface UserfuncProps
 {
@@ -123,10 +124,6 @@ export default function User(props:UserfuncProps)
 						<p>Win/loss ratio : <span className="span--stats">{props.winLoss ? props.winLoss : 0}</span></p>
 					</div>*/}
 				</div>
-				<br />
-				<br />
-				<br />
-				<br />
 				</div>
 				</div>
 			</div>

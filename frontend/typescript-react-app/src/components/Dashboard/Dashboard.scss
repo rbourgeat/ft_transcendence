@@ -1,11 +1,3 @@
-// #dashboard {
-//   background-image: url("../../../public/wallpapersden.com_frosty-blue-polygon_2560x1080.jpg") !important;
-//   background-repeat: repeat !important;
-//   background-color: #cccccc !important;
-//   background-size: auto 100% !important;
-//   background-position: left top;
-//   height: 100vh !important;
-// }
 
 #friends-button,
 #match-history-button {
@@ -18,6 +10,10 @@
 #dashboard-buttons {
   margin-top: 30px;
   margin-bottom: 30px;
+}
+
+.titles {
+  color: white !important;
 }
 
 // /* ----------- Non-Retina Screens ----------- */

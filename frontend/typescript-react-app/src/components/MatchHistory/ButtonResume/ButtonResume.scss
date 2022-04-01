@@ -5,12 +5,13 @@ span {
 }
 
 #buttonresume--result {
-  background: variables.$grey !important;
+  //background: variables.$grey !important;
+  background: white !important;
   border-radius: variables.$border-radius-big;
   width: 1200px !important;
   min-height: 50px;
   text-align: center !important;
-  padding-top: 15px;
+  //padding-top: 15px;
   color: black !important;
   font-weight: variables.$bold;
   z-index: 2;
@@ -25,6 +26,10 @@ span {
 }
 
 .score {
-  color: white !important;
+  color: black !important;
   font-size: 18px;
+}
+
+#buttonresume {
+  margin-top: 15px !important;
 }

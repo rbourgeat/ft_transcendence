@@ -8,22 +8,21 @@ import {
 } from "react-router-dom";
 
 //import io from "socket.io-client"
+import {UserContext} from './UserContext';
+import { useCookies, Cookies } from "react-cookie";
 
 import Auth from '../Auth/Auth';
 import Welcome from '../Welcome/Welcome';
 import NotFound from '../NotFound/NotFound';
-import Dashboard from '../Dashboard/Dashboard';
+import Dashboard from '../Dashboard/Dashboard';//affiche les statistique et un match history focus sur le user
 import UserMain from '../User/UserMain';
-// import UserSub from '../User/UserSub';
-import {UserContext} from './UserContext';
-import { useCookies, Cookies } from "react-cookie";
-import Channels from "../Channels/Channels";
+//import Channels from "../Channels/Channels";//channel -> chat
 import Search from "../Search/Search";
 import Achievements from "../Achievements/Achievements";
 import GameRules from "../GameRules/GameRules";
-//import Chat from "../Channels/Chat";
 import CreateChan from "../Channels/CreateChan/CreateChan";
 import { CookiesProvider } from "react-cookie";
+import Stats from "../Stats/Stats";//Stats équivalent Leaderboard ?
 
 function App() {
 
@@ -42,10 +41,9 @@ function App() {
               <Route path="/auth" element={<Auth />} />
               <Route path="/dashboard" element={<Dashboard />}/>
               <Route path="/user" element={<UserMain /*username="malatini" */ />} />
-              {/*<Route path="/chat" element={<Channels username="malatini"/>} />*/}
-              {/* Attention a voir comment mieux gérer les props pour chaque user une fois connecté */}
               <Route path="/chat" element={<CreateChan login="malatini"/>} />
               <Route path="/search" element={<Search />}  />
+              <Route path="/stats" element={<Stats />}  />
               <Route path="/achievements" element={<Achievements />}  />
               <Route path="*" element={<NotFound />}  />
             </Routes>
