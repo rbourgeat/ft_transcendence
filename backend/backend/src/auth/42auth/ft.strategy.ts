@@ -33,7 +33,7 @@ export class FtStrategy extends PassportStrategy(Strategy, '42') {
             email: profile['emails'][0]['value'],
             password: username,
         }
-        this.userService.createUser42(user); //save the user in the db :)
+        await this.userService.createUser42(user); //save the user in the db :)
         console.log('end of login 42');
 
         return cb(null, profile);
