@@ -1,4 +1,4 @@
-import { Injectable, Res } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy, Profile, VerifyCallback } from 'passport-42';
 import { UserService } from 'src/user/user.service';
@@ -22,8 +22,8 @@ export class FtStrategy extends PassportStrategy(Strategy, '42') {
         refreshToken: string,
         profile: Profile,
         cb: VerifyCallback,
-        //@Res() res
     ): Promise<any> {
+        console.log('start of login 42');
         request.session.accessToken = accessToken;
         console.log('accessToken', accessToken, 'refreshToken', refreshToken);
 
@@ -34,13 +34,6 @@ export class FtStrategy extends PassportStrategy(Strategy, '42') {
             password: username,
         }
         this.userService.createUser42(user); //save the user in the db :)
-
-        /*
-        const currentUser = await this.userService.getUserByLogin(user.login);
-        console.log(currentUser.id);
-        const accessTokenCookie = this.authenticationService.getCookieWithJwtToken(currentUser.id);
-        */
-        //res.setHeader('Set-Cookie', accessTokenCookie);
         console.log('end of login 42');
 
         return cb(null, profile);

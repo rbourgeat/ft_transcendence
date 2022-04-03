@@ -45,8 +45,8 @@ export class UserEvent {
 
     @OnEvent('achievement.friend')
     handleAchievementFriend(user: User) {
-        if (user.friends.length == 1)
-            this.saveAchievement(user, "AddFriend")
+        //if (user.friends.length == 1)
+        //   this.saveAchievement(user, "AddFriend")
     }
 
     @OnEvent('achievement.42')

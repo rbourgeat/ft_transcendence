@@ -10,6 +10,7 @@ import { AuthService } from 'src/auth/auth.service';
 import { UserModule } from 'src/user/user.module';
 import { TwoFactorAuthenticationController } from './twoFactorAuthentication.controller';
 import { TwoFactorAuthenticationService } from './twoFactorAuthentication.service';
+import { UsersRepository } from 'src/user/user.repository';
 
 @Module({
   imports: [
@@ -27,7 +28,7 @@ import { TwoFactorAuthenticationService } from './twoFactorAuthentication.servic
       }),
     }),
   ],
-  providers: [AuthService, LocalStrategy, JwtStrategy, TwoFactorAuthenticationService],
+  providers: [AuthService, LocalStrategy, JwtStrategy, TwoFactorAuthenticationService, UsersRepository],
   controllers: [AuthenticationController, TwoFactorAuthenticationController]
 })
 export class AuthModule { }

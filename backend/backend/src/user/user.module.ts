@@ -10,7 +10,6 @@ import { Message } from 'src/chat/message/entity/message.entity';
 import { Participate } from 'src/participate/participate.entity'
 import { UserRelation } from './entity/friend-request.entity';
 
-
 @Module({
   imports: [
     TypeOrmModule.forFeature([User, Message, Participate, UsersRepository, UserRelation]),
@@ -20,6 +19,6 @@ import { UserRelation } from './entity/friend-request.entity';
   ],
   controllers: [UserController],
   providers: [UserService, UserEvent],
-  exports: [UserService]
+  exports: [UserService, UserEvent]
 })
 export class UserModule { }

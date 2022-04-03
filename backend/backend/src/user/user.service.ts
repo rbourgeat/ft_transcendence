@@ -64,9 +64,9 @@ export class UserService {
 	async create(userData: CreateUserDtoViaRegistration) {
 		console.log('went by create in user service');
 		const newUser = await this.userRepository.create(userData);
-		newUser.friends = [];
-		const login = newUser.login;
-		this.userRepository.update({ login }, { friends: [] });
+		//newUser.friends = [];
+		//const login = newUser.login;
+		//this.userRepository.update({ login }, { friends: [] });
 		await this.userRepository.save(newUser);
 		this.userEvent.achievement42(newUser);
 		return newUser;

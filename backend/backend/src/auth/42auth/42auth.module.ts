@@ -9,6 +9,7 @@ import { AuthService } from '../auth.service';
 
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule } from '@nestjs/config';
+import { UsersRepository } from 'src/user/user.repository';
 
 @Module({
     imports: [
@@ -26,6 +27,6 @@ import { ConfigModule } from '@nestjs/config';
         }),
     ],
     controllers: [Auth42Controller],
-    providers: [ConfigService, FtStrategy, SessionSerializer, AuthService],
+    providers: [ConfigService, FtStrategy, SessionSerializer, AuthService, UsersRepository]
 })
 export class Auth42Module { }

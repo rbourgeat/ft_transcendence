@@ -1,8 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, CreateDateColumn, Column, Unique, ManyToOne, ManyToMany, JoinTable, OneToMany } from "typeorm";
-import { Game } from 'src/game/entity/game.entity'
+import { Entity, PrimaryGeneratedColumn, CreateDateColumn, Column, OneToMany } from "typeorm";
 import { Message } from 'src/chat/message/entity/message.entity'
 import { Participate } from 'src/participate/participate.entity'
-import { Achievement } from './achievements.entity';
+import { Achievement } from './achievement.entity';
 import { UserRelation } from 'src/user/entity/friend-request.entity';
 
 @Entity('user')
@@ -18,7 +17,7 @@ export class User {
 
     @CreateDateColumn({ nullable: true })
     updateAt?: Date;
-    s
+
     @Column({ unique: true })
     login: string;
 
@@ -29,7 +28,7 @@ export class User {
     avatar: string = "https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg";
 
     @Column({ nullable: true })
-    status: string = "Offline";
+    status: string = "offline";
 
     @Column({ nullable: true })
     password: string;
@@ -46,40 +45,6 @@ export class User {
     @Column({ nullable: true })
     win_loss_ration: number = 0;
 
-    // @Column("simple-array", { nullable: true })
-    // friends: string[];
-
-    // @JoinTable()
-    // @ManyToMany(() => User)
-    // friends: User[];
-
-    @Column("simple-array", { nullable: true })
-    friends: string[];
-
-    // @ManyToOne(type => Game, { nullable: true })
-    // games: Game[];
-
-    // @JoinTable()
-    // @ManyToMany(() => Game)
-    // games: Game[];
-
-    @Column("simple-array", { nullable: true })
-    games: number[];
-
-    @Column("simple-array", { nullable: true })
-    chats: number[];
-
-    @Column({ default: false })
-    is_ban: boolean;
-
-    @Column({ default: false })
-    is_admin: boolean;
-
-    @Column("simple-array", { nullable: true })
-    blocked_users: string[];
-
-    // @Column("simple-array", { nullable: true })
-    // achievements: string[];
     @OneToMany(() => Achievement, (achievement: Achievement) => achievement.id)
     public achievement: Achievement[];
 
@@ -100,5 +65,4 @@ export class User {
 
     @OneToMany(() => UserRelation, (userRelation) => userRelation.receiver)
     receivedFriendRequests: UserRelation[];
-
 }

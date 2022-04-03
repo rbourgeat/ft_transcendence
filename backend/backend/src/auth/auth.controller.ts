@@ -10,13 +10,18 @@ import { UserService } from 'src/user/user.service';
 import RegisterDto from 'src/auth/dto/register.dto';
 import LogInDto from 'src/auth/dto/logIn.dto';
 
+import { InjectRepository } from '@nestjs/typeorm';
+import { UsersRepository } from 'src/user/user.repository';
+
 @ApiTags('Auth')
 @ApiExtraModels(LogInDto) //force the dto to appear on Swagger
 @Controller('api/auth')
 export class AuthenticationController {
     constructor(
         private readonly authenticationService: AuthService,
-        private readonly userService: UserService
+        private readonly userService: UserService,
+        @InjectRepository(UsersRepository)
+        private usersRepository: UsersRepository,
     ) { }
 
     @ApiOperation({ summary: 'register new user' })
@@ -32,19 +37,12 @@ export class AuthenticationController {
     @HttpCode(200)
     @UseGuards(LocalAuthenticationGuard)
     @Post('log-in')
-    //async logIn(@Body() loginDto: LogInDto, @Req() request: RequestWithUser, @Res() response: Response) { //loginDto not used but mandatory to let know that params needs to be sent
     async logIn(@Body() loginDto: LogInDto, @Req() request: RequestWithUser) { //loginDto not used but mandatory to let know that params needs to be sent
         const { user } = request;
-        //const accessTokenCookie = this.authenticationService.getCookieWithJwtAccessToken(user.id);
         const accessTokenCookie = this.authenticationService.getCookieWithJwtToken(user.id);
-        /*
-         const {
-          cookie: refreshTokenCookie,
-          token: refreshToken
-        } = this.authenticationService.getCookieWithJwtRefreshToken(user.id);
 
-        await this.usersService.setCurrentRefreshToken(refreshToken, user.id);
-         */
+        this.userService.updateStatus(user.login, "online");
+
         request.res.setHeader('Set-Cookie', accessTokenCookie);
         console.log('end of login');
         if (user.isTwoFactorAuthenticationEnabled)
@@ -56,7 +54,11 @@ export class AuthenticationController {
     @ApiOkResponse({ description: 'You logged out' })
     @UseGuards(JwtAuthenticationGuard)
     @Post('log-out')
-    async logOut(@Res() response: Response) {
+    async logOut(@Res() response: Response, @Req() request: RequestWithUser) {
+
+        const { user } = request;
+        this.userService.updateStatus(user.login, "offline");
+
         console.log('went by logout in auth controller');
         response.setHeader('Set-Cookie', this.authenticationService.getCookieForLogOut());
         return response.sendStatus(200);

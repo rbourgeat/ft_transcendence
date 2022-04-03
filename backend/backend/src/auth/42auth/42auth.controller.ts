@@ -1,4 +1,6 @@
 import { Controller, Get, Redirect, UseGuards, Req, Res } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { UsersRepository } from 'src/user/user.repository';
 import { Response, Request } from 'express';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { FtOauthGuard } from './guard/ft-oauth.guard';
@@ -11,7 +13,9 @@ import { UserService } from 'src/user/user.service';
 export class Auth42Controller {
     constructor(
         private readonly authenticationService: AuthService,
-        private readonly userService: UserService
+        private readonly userService: UserService,
+        @InjectRepository(UsersRepository)
+        private usersRepository: UsersRepository,
     ) { }
 
     @ApiOperation({ summary: '[do not use in swagger, won\'t work]' })
@@ -26,17 +30,16 @@ export class Auth42Controller {
     @UseGuards(FtOauthGuard)
     @Redirect('http://localhost:3030/user')
     async ftAuthCallback(@Req() req) {
-        console.log(req.user);
+        console.log('test in redirect 42auth');
         const test = req.user;
-
-        console.log('id:' + test.id);
-        console.log('login:' + test.username);
-
         const currentUser = await this.userService.getUserByLogin(test.username);
+
+        console.log(currentUser.id);
+
+        this.userService.updateStatus(currentUser.login, "online");
 
         const accessTokenCookie = this.authenticationService.getCookieWithJwtToken(currentUser.id);
         req.res.setHeader('Set-Cookie', accessTokenCookie);
-        //console.log("coucou on est passe par la");
         return;
     }
 }

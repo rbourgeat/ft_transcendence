@@ -45,7 +45,8 @@ export class UserMigration1645626140921 implements MigrationInterface {
             .values({
                 login: "string",
                 email: "string@a.com",
-                password: "string2A"
+                password: "string2A",
+                status: 'playing'
             })
             .execute();
     }
