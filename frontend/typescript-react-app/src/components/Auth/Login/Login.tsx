@@ -40,7 +40,7 @@ export default class Login extends React.Component<LoginProps, LoginState>
         {
           event.preventDefault();
             let ax = new myAxios(null);
-            let res = ax.login();
+            let res = ax.login(this.state.email, this.state.password);
         }
 
         render()

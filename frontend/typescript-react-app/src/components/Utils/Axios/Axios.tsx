@@ -647,17 +647,17 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     /*
     ** Auth - login
     */
-    login() {
-        let toast = new ToastAlerts(null);
+    login(mail: string, pass: string) {
+        //let toast = new ToastAlerts(null);
 
-        if (!this.props.email || !this.props.password) {
-            toast.notifyDanger('Oops ! An error happened');
-            return;
-        }
+        //if (!this.props.email || !this.props.password) {
+        //    toast.notifyDanger('Oops ! An error happened');
+        //    return;
+        //}
 
         const bod = {
-            email: this.props.email,
-            password: this.props.password,
+            email: mail,
+            password: pass,
         }
 
         const headers = {
@@ -674,7 +674,8 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
                     return;
                 }
                 else {
-                    toast.notifyDanger('Oops ! An error happened, incorrect email or password.');
+                    //toast.notifyDanger('Oops ! An error happened, incorrect email or password.');
+                    console.log("Did not receive 200 when logging it.");
                     return;
                 }
             })
