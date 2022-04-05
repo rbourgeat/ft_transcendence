@@ -19,8 +19,8 @@ export default function Game() {
             <Nav />
             <div className="container">
             <div className="row d-flex justify-content-justify text-justify">
-                    <h1 id="title--game" className="text">GAME</h1>
-                    <h2 className="text">to do darbib</h2>
+                    {/*<h1 id="title--game" className="text">GAME</h1>*/}
+                    {/*<h2 className="text">to do darbib</h2>*/}
                     {/*<canvas></canvas>*/}
                     <GameRules />
                 </div>

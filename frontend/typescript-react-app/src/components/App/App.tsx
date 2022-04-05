@@ -25,6 +25,7 @@ import { CookiesProvider } from "react-cookie";
 import Stats from "../Stats/Stats";//Stats équivalent Leaderboard ?
 import People from "../People/People";
 import Game from "../Game/Game";
+import PlayWatch from "../Playwatch/Playwatch";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -39,14 +40,14 @@ function App() {
               <Route path="/" element={<Welcome />} />
               <Route path="/welcome" element={<Welcome />} />
               <Route path="/auth" element={<Auth />} />
-              <Route path="/dashboard" element={<Dashboard />}/>
-              <Route path="/user" element={<UserMain /*username="malatini" */ />} />
+              <Route path="/user" element={<UserMain />} />
               <Route path="/chat" element={<CreateChan login="malatini"/>} />
               <Route path="/search" element={<Search />}  />
               <Route path="/stats" element={<Stats />}  />
               <Route path="/achievements" element={<Achievements />}  />
               <Route path="/people" element={<People />}  />
               <Route path="/game" element={<Game />}  />
+              <Route path="/playwatch" element={<PlayWatch />}  />
               <Route path="*" element={<NotFound />}  />
             </Routes>
           </UserContext.Provider>

@@ -747,7 +747,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
         let res = axios.get(url)
         .then(res => {
             imageCode = res.data.avatar;
-            console.log("Image is " + imageCode);
+            //console.log("Image is " + imageCode);
             return (this.getImage(imageCode));
         })
         .catch(error => {

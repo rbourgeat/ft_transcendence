@@ -12,7 +12,7 @@ export default function Badge(props) {
                     <div id="badge--div--sub" className="row">
                         <div className="col">
                             {/* TODO: revoir les images */}
-                            <p className="text">Retrieve the picture by calling the get api user</p>
+                            {/*<p className="text">Retrieve the picture by calling the get api user</p>*/}
                             <img src="https://miro.medium.com/max/720/1*W35QUSvGpcLuxPo3SRTH4w.png" alt="default" id="badge-picture"/>
                         </div>
                         <div className="col" id="badge--stats">

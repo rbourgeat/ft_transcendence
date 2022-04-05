@@ -31,7 +31,7 @@ export default class Achievements extends React.Component<AchievementsProps, Ach
 					<div id="achievements">
 						<div className="container">
 							<div className="row d-flex justify-content-center text-center" id="row-cards">
-                                <h1 id="achievements--title">Achievements [deprecated]</h1>
+                                <h1 id="achievements--title">Achievements</h1>
                             </div>
                             {/* TODO: checker si les achivements ont ete atteint ou pas */}
                                         <div className="row" id="first-row">
@@ -40,8 +40,7 @@ export default class Achievements extends React.Component<AchievementsProps, Ach
                                                     <div className="card-body">
                                                         <h5 className="card-title">The challender</h5>
                                                         <p className="card-text">Reached the first position</p>
-                                                        {/* Attention ce CDN a l air buggy */}
-                                                        <img className="achievements--img" src="https://cdn.icon-icons.com/icons2/2534/PNG/512/trophy_winner_icon_152036.png" height="20px"></img>
+                                                        {/*<img className="achievements--img" src="https://cdn.icon-icons.com/icons2/2534/PNG/512/trophy_winner_icon_152036.png" height="20px"></img>*/}
                                                     </div>
                                                 </div>
 
@@ -49,7 +48,7 @@ export default class Achievements extends React.Component<AchievementsProps, Ach
                                                     <div className="card-body">
                                                         <h5 className="card-title">On fire</h5>
                                                         <p className="card-text">Win 5 games in a row</p>
-                                                        <img className="achievements--img" src="https://icon-library.com/images/fire-icon/fire-icon-22.jpg" height="20px"></img>
+                                                        {/*<img className="achievements--img" src="https://icon-library.com/images/fire-icon/fire-icon-22.jpg" height="20px"></img>*/}
                                                     </div>
                                                 </div>
 
@@ -57,7 +56,7 @@ export default class Achievements extends React.Component<AchievementsProps, Ach
                                                     <div className="card-body">
                                                         <h5 className="card-title">Finally i'm a g4m3r</h5>
                                                         <p className="card-text">Play more than a 1000 games</p>
-                                                        <img src="https://www.iconpacks.net/icons/1/free-keyboard-icon-1405-thumb.png" className="achievements--img" height="20px"></img>
+                                                        {/*<img src="https://www.iconpacks.net/icons/1/free-keyboard-icon-1405-thumb.png" className="achievements--img" height="20px"></img>*/}
                                                     </div>
                                                 </div>
                                             </div>
@@ -69,7 +68,7 @@ export default class Achievements extends React.Component<AchievementsProps, Ach
                                                     <div className="card-body">
                                                         <h5 className="card-title">This is how I met...</h5>
                                                         <p className="card-text">Had someone as your friend</p>
-                                                        <img src="https://static.thenounproject.com/png/355154-200.png" className="achievements--img" height="20px"></img>
+                                                        {/*<img src="https://static.thenounproject.com/png/355154-200.png" className="achievements--img" height="20px"></img>*/}
                                                     </div>
                                                 </div>
 
@@ -77,7 +76,7 @@ export default class Achievements extends React.Component<AchievementsProps, Ach
                                                     <div className="card-body">
                                                         <h5 className="card-title">I am not noob</h5>
                                                         <p className="card-text">Launch your first game</p>
-                                                        <img src="https://icons-for-free.com/iconfiles/png/512/off+power+reboot+restart+icon-1320086062721850594.png" className="achievements--img" height="20px"></img>
+                                                        {/*<img src="https://icons-for-free.com/iconfiles/png/512/off+power+reboot+restart+icon-1320086062721850594.png" className="achievements--img" height="20px"></img>*/}
                                                     </div>
                                                 </div>
 
@@ -85,7 +84,7 @@ export default class Achievements extends React.Component<AchievementsProps, Ach
                                                     <div className="card-body">
                                                         <h5 className="card-title">Stand together</h5>
                                                         <p className="card-text">Create or join guild</p>
-                                                        <img src="https://simpleicon.com/wp-content/uploads/flag.png" className="achievements--img" height="20px"></img>
+                                                        {/*<img src="https://simpleicon.com/wp-content/uploads/flag.png" className="achievements--img" height="20px"></img>*/}
                                                     </div>
                                                 </div>
                                             </div>

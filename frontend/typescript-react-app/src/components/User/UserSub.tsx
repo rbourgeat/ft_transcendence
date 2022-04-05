@@ -89,7 +89,7 @@ export default function User(props:UserfuncProps)
 					<div className="col-9 mx-auto text-center" id="input-div">
 					<h2 id="user--data">{props.username}</h2>
 					<Button id="change--username" variant="ight" onClick={() => { console.log("clicked"); setModalShowUsername(true)}}>
-                        change username (error)
+                        change username
                     </Button>
 					<EditUsernameModal username={props.username} show={modalShowUsername} onHide={() => {
 						console.log("called");

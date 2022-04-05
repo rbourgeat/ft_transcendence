@@ -1,5 +1,6 @@
 @use "../../../variables";
 
-p, h3 {
+p, h3, .text {
 	color: white !important;
+	font-family: variables.$big-font;
 }

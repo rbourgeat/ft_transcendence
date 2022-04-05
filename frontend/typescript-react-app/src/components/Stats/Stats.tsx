@@ -5,6 +5,7 @@ import axios from 'axios';
 import MyAxios from '../Utils/Axios/Axios';
 import { ToastContainer, toast } from 'react-toastify';
 import {Modal, Button, Row, Col, Form} from "react-bootstrap";
+import Dashboard from '../Dashboard/Dashboard';
 
 export default function Stats(props)
 {
@@ -15,8 +16,9 @@ export default function Stats(props)
 		<Nav />
 			<div className="container">
 				<div className="row d-flex justify-content-center text-center">
-					<h1 id="stats-title">Stats / Leaderboard</h1>
-					<h2 id="to-do">to do @macrespo</h2>s
+					<h1 id="stats-title">My stats</h1>
+					<h2 id="to-do">to do @macrespo : <br />reprendre match history,<br /> badge et autres</h2>
+					<Dashboard />
 				</div>
 			</div>
 		</div>
