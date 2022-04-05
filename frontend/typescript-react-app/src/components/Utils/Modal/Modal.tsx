@@ -1,47 +1,36 @@
-import React, {Component} from "react";
+import React, {Component, useState} from "react";
 import Nav from "../../Nav/Nav"
 import {Modal, ModalBody, ModalHeader, ModalTitle, ModalFooter, Button, Row, Col, Form} from "react-bootstrap"
+import Select from "react-select";
 
-/*
-interface CreateChanProps {
-}
-
-interface CreateChanState {
-	name?: string,
-	public?: boolean,
-	password?: string
-}
-*/
-
-//export default function CreateChanModal(props)
-//class CreateChanModal extends React.Component<CreateChanProps, CreateChanState>
+//interface CreateChanState {
+//}
 
 export default function CreateChanModal(props) {
-	//constructor(props: CreateChanProps)
-	//{
-	//	super(props);
+	const [channame, setChannname] = React.useState("");
+	//const [policy, setPolicy] = React.useState("Public");
+	const [isSelected, setIsSelected] = React.useState(true);
 
-	//	this.state = {
-	//		name: "",
-	//		password: "",
-	//		public: true
-	//	}
-	//}
+	const policies = ["Public", "Protected", "Private"];
 
-	//resetForm = function() {
-	//	this.setState({
-	//		name: '',
-	//		password: '',
-	//		public: true
-	//	})
-	//}
+	const [policy, setPolicy] = useState(["Public", "Protected", "Private"])
+	const [selectedPoli, setSelectPoli] = useState("Public");
+	const Pol = policy.map(Pol => Pol
+	)
+	const handlePol= (e) => {
+		//console.log("target is " + (policy[e.target.value]));
+		setSelectPoli((policy[e.target.value]));
+		//console.log("selected is " + selectedPoli);
+	}
 
-	//submit=(event: any) =>
-	//{
-	//	event.preventDefault();
-	//	console.log("Use the post method axios...");
-	//	//...
-	//	this.resetForm();
+	function handleCreate()
+	{
+		console.log("policy is " + policy);
+		console.log("chan is " + channame);
+	}
+
+	//function change(event){
+	//	setPolicy(value: event.target.value);
 	//}
 
 	//render() {
@@ -49,13 +38,13 @@ export default function CreateChanModal(props) {
 			<div id="modal--create--channel">
 				<Modal
 					{...props}
-					size="m"
+					size="l"
 					aria-labelledby="contained-modal-title-vcenter"
 					centered
 				>
 				<Modal.Header closeButton>
 					<Modal.Title id="contained-modal-title-vcenter">
-						Create new channel (in progress)
+						Create new channel
 					</Modal.Title>
 					</Modal.Header>
 					<Modal.Body>
@@ -65,32 +54,43 @@ export default function CreateChanModal(props) {
 								className="form-control"
 								type="text"
 								placeholder="unique channel name"
-								/*value={this.state.email}*/
-								/*onChange={(e)=>{this.setState({email: e.target.value})}}*/
+								onChange={(e)=>{this.setChanname({channame: e.target.value})}}
 							/>
 							<div id="public--policy">
-								{/*<label className="modal--label" id="policy--title">Choose public policy</label>*/}
-								{/*<br />*/}
-								{/*<p id="text">Choose protected if you want a public channel protected by a password</p>*/}
-								<select className="form-select form-select-sm" aria-label="form-select-sm" id="policy--select" disabled>
-									{/*<option value="">Select policy</option>*/}
-									<option value="public" selected>Public</option>
-									<option value="private">Private</option>
-									<option value="protected">Protected</option>
-								</select>
+							<label className="modal--label">Select policy</label>
+							{/*<select
+								className="form-select form-select-sm"
+								aria-label="form-select-sm" id="policy--select"
+								onChange={(e)=>{this.setPolicy({policy: e.target.value})}}
+							>
+								{policies.map(item => (
+									<option
+									value={item}
+									selected={isSelected}
+									>{item}</option>
+									))}
+							</select>*/}
+							<br />
+							< select
+								onChange={e => handlePol(e)}
+								className="form-select form-select-sm"
+								>
+								{
+									Pol.map((address, key) => <option key={key}value={key}>{address}</option>)
+								}
+							</select >
 							</div>
 							<br />
-							{/* Faire une condition si protected a été sélectionné */}
 							<label className="modal--label">Password</label>
 							<input
 								className="form-control"
 								type="text"
 								placeholder="Password"
-								/*value={this.state.email}*/
-								/*onChange={(e)=>{this.setState({email: e.target.value})}}*/
+								//disabled={isDisabled}
+								onChange={(e)=>{this.setPass({pass: e.target.value})}}
 							/>
 						</div>
-						<Button variant="success"/*onClick={}*/>Create</Button>
+						<Button variant="success"onClick={handleCreate}>Create</Button>
 					</Modal.Body>
 					<Modal.Footer>
 						<Button onClick={props.onHide} variant="light">Close</Button>

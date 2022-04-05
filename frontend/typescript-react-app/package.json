@@ -26,6 +26,7 @@
     "react-icons": "^4.3.1",
     "react-router-dom": "^6.2.2",
     "react-scripts": "^5.0.0",
+    "react-select": "^5.2.2",
     "react-testing-library": "^8.0.1",
     "react-time-picker": "^4.5.0",
     "react-timer-hook": "^3.0.5",

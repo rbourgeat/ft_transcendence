@@ -52,6 +52,8 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     */
     post_api_chat(channame: string, pub: boolean, pass: string)
     {
+        //TODO: a reprendre
+        return ;
         let url = "http://localhost:3000/api/chat/";
 
         //Pas sure que ce soit utile

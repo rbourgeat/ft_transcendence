@@ -39,9 +39,7 @@ export default function ListChannels(props: ListChat) {
         axios.get(url)
         .then( res => {
             let channels = res.data;
-            //console.log(channels);
             setChannels(channels);
-            //console.log(channels);
         })
         .catch((error) => {
             console.log("Error while getting all channels");
@@ -53,8 +51,6 @@ export default function ListChannels(props: ListChat) {
         renderListChannels(props.login);
     }, []);
 
-    //console.log(channels);
-
     return (
         <div id="listChannels">
                 <div className="row">
@@ -62,7 +58,7 @@ export default function ListChannels(props: ListChat) {
                         <p id="list--channels--title"> Public channels :</p>
                             <ul id="list--channels--ul">
                                 {channels.map(channel  =>
-                                    <li className="channel--list">{channel.name}</li>
+                                    <li key={channel.name} className="channel--list">{channel.name}</li>
                                 )}
                             </ul>
                         </div>

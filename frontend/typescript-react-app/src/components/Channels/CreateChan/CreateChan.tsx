@@ -24,10 +24,9 @@ export default function CreateChan(props: UserChat)
                 <div className="row d-flex justify-content-center text-center">
                     <div className="col-7">
                         <div id="quick--actions">
-                            <h1 className="text">Quick actions</h1>
-                            <br />
+                            {/*<h1 className="text" id="quick--actions--title">Quick actions</h1>*/}
                             <div className="row">
-                                <Button className="quick--actions" variant="primary" disabled >
+                                <Button className="quick--actions" variant="primary" onClick={() => setModalShow(true)}>
                                     Create a new channel
                                 </Button>
                                 {/*<Button className="quick--actions" variant="light" disabled>
