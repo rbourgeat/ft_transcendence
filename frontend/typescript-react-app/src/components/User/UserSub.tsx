@@ -30,14 +30,16 @@ export default function User(props:UserfuncProps)
 		event.preventDefault();
 
 		let ax = new MyAxios(null);
-		//TODO: vérifier si c'est pas déjà activé
-		ax.post_2fa_generate();
+		//TODO: vérifier si c'est pas déjà activé (on / off)
+		ax.post_2fa_turnOn();
+		//ax.post_2fa_generate();
 		//ax.get_api_user(props.username);
 
 		axios.defaults.baseURL = 'http://localhost:3000/api/';
 
         let url = "http://localhost:3000/api/user/".concat(props.username);
 
+		/*
 		let secret = "";
         axios.get(url)
         .then( res => {
@@ -48,9 +50,10 @@ export default function User(props:UserfuncProps)
         .catch((error) => {
             console.log(error);
         })
+		*/
 
 		//TODO: erreur 400 auth code
-		ax.post_2fa_turnOn(secret);
+		//ax.post_2fa_turnOn(secret);
 	}
 
 	//Upload d'un nouvel avatar
