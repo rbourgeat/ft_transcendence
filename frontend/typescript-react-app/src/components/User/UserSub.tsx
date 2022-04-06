@@ -39,23 +39,35 @@ export default function User(props:UserfuncProps)
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
         axios.defaults.withCredentials = true;
 
-        axios.post(url,  {responseType: 'blob'})
-        .then(res => {
-            console.log("Successfully generate 2fa target");
-			console.log(res);
-            console.log(res.data);
-			setqrCode(res.data);
-			//let imageblob = new Blob(res.data);
-			//let imageObjectURL = URL.createObjectURL(imageblob);
-			//let base64ImageString = Blob.from(res.data, 'binary').toString('base64');
-			//let srcValue = "data:image/png;base64,"+base64ImageString;
-			//setqrCode(imageObjectURL);
+        //axios.post(url,  {responseType: 'image/png'})
+        //.then(res => {
+        //    console.log("Successfully generate 2fa target");
+		//	console.log(res);
+        //    console.log(res.data);
+		//	setqrCode(res.data);
+		//	//let imageblob = new Blob(res.data);
+		//	//let imageObjectURL = URL.createObjectURL(imageblob);
+		//	//let base64ImageString = Blob.from(res.data, 'binary').toString('base64');
+		//	//let srcValue = "data:image/png;base64,"+base64ImageString;
+		//	//setqrCode(imageObjectURL);
 
-        })
-        .catch((error) => {
-            console.log("Error while generating 2fa target");
-			console.log(error);
-        })
+        //})
+        //.catch((error) => {
+        //    console.log("Error while generating 2fa target");
+		//	console.log(error);
+        //})
+
+		axios.post(url, { responseType: 'image/png' })
+		.then(response => {
+			console.log(typeof response);
+			let blob = new Blob(
+				[response.data],
+		{ type: response.headers['content-type']}
+			)
+			let image = URL.createObjectURL(blob);
+			setqrCode(image);
+			//return image
+			})
 
 		//return axios.post(url, { responseType: 'arraybuffer' })
 		//.then((response) => {
@@ -226,8 +238,9 @@ function renderQrCode(qrcode: any) {
 	//console.log("rendered QR code");
 	//var img = new Image();
 	//img.src = qrcode;
-
+	//<img src={URL.createObjectURL(`data:image/jpeg;base64,${this.state.image}`)} />
 	return (<img height="180" src={qrcode}></img>);
+	//return (<img height="180" src={objectURL}></img>);
+	//{{uri: base64ImageData}}
+	//return (<img height="180" src={base64data}></img>);
 }
-
-
