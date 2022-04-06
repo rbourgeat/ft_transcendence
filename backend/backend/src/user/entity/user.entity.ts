@@ -1,8 +1,9 @@
-import { Entity, PrimaryGeneratedColumn, CreateDateColumn, Column, OneToMany } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, CreateDateColumn, Column, OneToMany, ManyToMany, JoinTable } from "typeorm";
 import { Message } from 'src/chat/message/entity/message.entity'
 import { Participate } from 'src/participate/participate.entity'
 import { Achievement } from './achievement.entity';
 import { UserRelation } from 'src/user/entity/friend-request.entity';
+import { Game } from "src/game/entity/game.entity";
 
 @Entity('user')
 export class User {
@@ -50,6 +51,15 @@ export class User {
 
     @OneToMany(() => Participate, (participate: Participate) => participate.user, { eager: true })
     public participate: Participate[];
+
+    /*
+    @OneToMany(() => Game, (game: Game) => game.user, { eager: true })
+    public game: Participate[];
+    */
+
+    @ManyToMany(() => Game, (game) => game.players)
+    @JoinTable()
+    games: Game[]
 
     @Column({ nullable: true })
     public twoFactorAuthenticationSecret?: string;

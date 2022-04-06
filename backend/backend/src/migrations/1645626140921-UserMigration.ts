@@ -3,6 +3,7 @@ import { MigrationInterface, QueryRunner, getConnection } from "typeorm";
 import { Message } from "src/chat/message/entity/message.entity";
 import { Chat } from "src/chat/entity/chat.entity";
 import { Participate } from "src/participate/participate.entity";
+import { Game } from "src/game/entity/game.entity";
 
 export class UserMigration1645626140921 implements MigrationInterface {
     public async up(queryRunner: QueryRunner): Promise<void> {
@@ -89,6 +90,26 @@ export class UserMigration1645626140921 implements MigrationInterface {
                 content: "I wont spam mssg :v",
                 author: dummy2,
                 channel: channel1
+            }),
+        );
+
+        const game1 = await queryRunner.manager.save(
+            queryRunner.manager.create<Game>(Game, {
+                winner_score: 5,
+                loser_score: 3,
+                winner_login: "dummy1",
+                loser_login: "dummy2",
+                players: [dummy1, dummy2]
+            }),
+        );
+
+        const game2 = await queryRunner.manager.save(
+            queryRunner.manager.create<Game>(Game, {
+                winner_score: 5,
+                loser_score: 0,
+                winner_login: "dummy3",
+                loser_login: "dummy4",
+                players: [dummy3, dummy4]
             }),
         );
     }

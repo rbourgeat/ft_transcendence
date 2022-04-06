@@ -9,19 +9,18 @@ export class Game {
     @CreateDateColumn({ nullable: true })
     createdAt?: Date;
 
-    @JoinTable()
-    @ManyToMany(() => User, { nullable: false })
-    login1: User[];
+    @Column({ nullable: true })
+    winner_score: number;
 
-    @JoinTable()
-    @ManyToMany(() => User, { nullable: false })
-    login2: User[];
+    @Column({ nullable: true })
+    loser_score: number;
 
-    // @OneToMany(type => User, user => user.login, { nullable: true })
-    // login1?: User;
+    @Column({ nullable: true })
+    loser_login: string;
 
-    // @OneToMany(type => User, user => user.login, { nullable: true })
-    // login2?: User;
+    @Column({ nullable: true })
+    winner_login: string;
 
-    // winner, score, points, etc...
+    @ManyToMany(() => User, (user) => user.games)
+    players: User[]
 }
