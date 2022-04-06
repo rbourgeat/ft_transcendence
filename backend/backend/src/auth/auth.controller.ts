@@ -46,7 +46,7 @@ export class AuthenticationController {
         request.res.setHeader('Set-Cookie', accessTokenCookie);
         console.log('end of login');
         if (user.isTwoFactorAuthenticationEnabled)
-            return;
+            return user;
         return user;
     }
 
@@ -69,10 +69,7 @@ export class AuthenticationController {
     @UseGuards(JwtAuthenticationGuard)
     @Get()
     authenticate(@Req() request: RequestWithUser) {
-        console.log('went by authenticate in auth controller');
         const user = request.user;
-        user.password = undefined;
-        this.userService.updateStatus(user.login, "Online");
         return user;
     }
 }
