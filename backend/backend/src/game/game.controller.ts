@@ -4,15 +4,15 @@ import { Req, Body, Controller, Delete, Get, Param, Patch, Post, UseInterceptors
 import { GameService } from 'src/game/game.service';
 import { CreateGameDto } from 'src/game/dto/game.dto';
 
-@ApiTags('Games') //Create a category on swagger
+@ApiTags('Games')
 @Controller('api/game')
 export class GameController {
     constructor(
         private readonly gameService: GameService
     ) { }
 
-    @ApiOperation({ summary: 'Retrieve all games data' }) //endpoint summary on swaggerui
-    @ApiOkResponse({ description: 'Data received' }) //answer sent back
+    @ApiOperation({ summary: 'Retrieve all games data' })
+    @ApiOkResponse({ description: 'Data received' })
     @Get()
     getAllGames() {
         return this.gameService.getAllGames();
@@ -22,9 +22,9 @@ export class GameController {
     **  Save a new game to db
     **/
 
-    @ApiOperation({ summary: 'Create a new game' }) //endpoint summary on swaggerui
-    @ApiOkResponse({ description: 'Game creation suceed' }) //answer sent back
-    @ApiConflictResponse({ description: 'Game already exist' }) //not working atm
+    @ApiOperation({ summary: 'Create a new game' })
+    @ApiOkResponse({ description: 'Game creation suceed' })
+    @ApiConflictResponse({ description: 'Game already exist' })
     @Post()
     async createGame(@Body() game: CreateGameDto) {
         console.log('Create game: ' + game.login1 + 'vs' + game.login2)
