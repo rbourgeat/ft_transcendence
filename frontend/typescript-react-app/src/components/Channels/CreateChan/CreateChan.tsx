@@ -7,15 +7,34 @@ import myAxios from "../../Utils/Axios/Axios";
 import axios from "axios";
 import ListChannels from "../ListChannels/ListChannels";
 import Channels from "../../Channels/Channels";
+import io from "socket.io-client";
 
 interface UserChat
 {
 	login?: string
 }
 
+const ENDPOINT = "http://ws.localhost:3000/api/";
+
 export default function CreateChan(props: UserChat)
 {
     const [modalShow, setModalShow] = React.useState(false);
+    const [response, setResponse] = useState("");
+
+    useEffect(() => {
+       // let socket = io();
+       // console.log("socket is " + socket);
+
+        let socket2 = io("http://localhost:3000/");
+        console.log("socket2 is " + socket2);
+        socket2.on('connection', (socket) => {
+            console.log(`Connecté au client ${socket.id}`);
+        })
+
+        //socket2.on('disconnect', function() {
+        //    console.log('Disconnected');
+        //})
+    }, []);
 
     return (
         <div id="channels">
@@ -51,15 +70,15 @@ export default function CreateChan(props: UserChat)
                                     Answer to play
                                 </Button>*/}
                             </div>
-                            <CreateChanModal
+                            {/*<CreateChanModal
                                 show={modalShow}
                                 onHide={() => setModalShow(false)}
-                            />
+                            />*/}
                         </div>
                         </div>
                     </div>
                 </div>
-                <ListChannels />
+                {/*<ListChannels />*/}
             </div>
         );
     }

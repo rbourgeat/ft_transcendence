@@ -2,11 +2,16 @@ import { ConnectedSocket, MessageBody, OnGatewayConnection, SubscribeMessage, We
 import { Server, Socket } from 'socket.io';
 import { ChatService } from './chat.service';
 
-@WebSocketGateway({
-	cors: {
-	  origin: '*',
-	},
-  })
+//@WebSocketGateway(
+//	{
+//	//{
+//	//cors: {
+//	//	origin: '*',
+//	//},
+//})
+
+@WebSocketGateway({ cors: true })
+
 export class ChatGateway implements OnGatewayConnection {
 	@WebSocketServer()
 	server: Server;
@@ -22,7 +27,7 @@ export class ChatGateway implements OnGatewayConnection {
 
 		const author = await this.chatService.getUserFromSocket(socket);
 		const message = await this.chatService.saveMessage(content, author);
-	
+
 		this.server.sockets.emit('receive_message', message);
 	}
 
@@ -31,7 +36,7 @@ export class ChatGateway implements OnGatewayConnection {
 
 		const author = await this.chatService.getUserFromSocket(socket);
 		const message = await this.chatService.saveChatMessage(chat, content, author);
-	
+
 		this.server.sockets.emit('receive_message_chat', chat, message);
 	}
 

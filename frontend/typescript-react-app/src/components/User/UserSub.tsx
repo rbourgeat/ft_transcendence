@@ -112,9 +112,9 @@ export default function User(props:UserfuncProps)
 		let username = "";
 		axios.get(url)
 		.then (res => {
-			console.log("Successfully got api auth");
+			//console.log("Successfully got api auth");
 			username = res.data.login;
-			console.log("The username is " + username);
+			//console.log("The username is " + username);
 			setUsername(username);
 
 		})
