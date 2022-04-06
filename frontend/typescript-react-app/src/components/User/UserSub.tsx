@@ -1,4 +1,4 @@
-import React, { Component, useState} from 'react';
+import React, { Component, useState, useEffect} from 'react';
 import Nav from "../Nav/Nav";
 import './User.scss';
 import axios from 'axios';
@@ -31,13 +31,34 @@ export default function User(props:UserfuncProps)
 
 		let ax = new MyAxios(null);
 		//TODO: vérifier si c'est pas déjà activé (on / off)
-		ax.post_2fa_turnOn();
+		//Le genereate genere un QR code quíl va surement falloir recuperer comme l image via un blob
+		let url = "http://localhost:3000/api/2fa/generate";
+
+        axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+        axios.defaults.withCredentials = true;
+
+		let authCode = "";
+
+        axios.post(url)
+        .then(res => {
+            console.log("Successfully generate 2fa target");
+            console.log(res);
+			authCode = res.data.twoFactorAuthicationCode;
+			console.log("Auth code is " + authCode);
+        })
+        .catch((error) => {
+            console.log("Error while generating 2fa target");
+            console.log(error);
+        })
+
+		//On doit faire generate puis turnOn ?
+		ax.post_2fa_turnOn(authCode);
 		//ax.post_2fa_generate();
 		//ax.get_api_user(props.username);
 
 		axios.defaults.baseURL = 'http://localhost:3000/api/';
 
-        let url = "http://localhost:3000/api/user/".concat(props.username);
+        url = "http://localhost:3000/api/user/".concat(props.username);
 
 		/*
 		let secret = "";
@@ -76,6 +97,34 @@ export default function User(props:UserfuncProps)
 	}
 
 	const [modalShowUsername, setModalShowUsername] = React.useState(false);
+	const [username, setUsername] = React.useState("");
+
+	useEffect(() => {
+		//console.log(username);
+		let url = "http://localhost:3000/api/auth/";
+
+		axios.defaults.baseURL = 'http://localhost:3000/api/';
+		axios.defaults.headers.post['Content-Type'] ='application/json';
+		axios.defaults.headers.post['Accept'] ='*/*';
+		axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+        axios.defaults.withCredentials = true;
+
+		let username = "";
+		axios.get(url)
+		.then (res => {
+			console.log("Successfully got api auth");
+			username = res.data.login;
+			console.log("The username is " + username);
+			setUsername(username);
+
+		})
+		.catch((err) => {
+			console.log("Error while getting api auth");
+		})
+
+	});
+
+
 
     return (
 		<div id="user--div">
@@ -86,15 +135,15 @@ export default function User(props:UserfuncProps)
 				<br /><br />
 				<div className="user--stats">
 				{/* TO DO: cleaner le CSS */}
-				{renderImage(props.username)}
+				{renderImage(username)}
 					<br/>
 					<br/>
 					<div className="col-9 mx-auto text-center" id="input-div">
-					<h2 id="user--data">{props.username}</h2>
+					<h2 id="user--data">{username}</h2>
 					<Button id="change--username" variant="ight" onClick={() => { console.log("clicked"); setModalShowUsername(true)}}>
                         change username
                     </Button>
-					<EditUsernameModal username={props.username} show={modalShowUsername} onHide={() => {
+					<EditUsernameModal username={username} show={modalShowUsername} onHide={() => {
 						console.log("called");
 						setModalShowUsername(false)
 					}}/>

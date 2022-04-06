@@ -41,7 +41,7 @@ function App() {
               <Route path="/welcome" element={<Welcome />} />
               <Route path="/auth" element={<Auth />} />
               <Route path="/user" element={<UserMain />} />
-              <Route path="/chat" element={<CreateChan login="malatini"/>} />
+              <Route path="/chat" element={<CreateChan />} />
               <Route path="/search" element={<Search />}  />
               <Route path="/stats" element={<Stats />}  />
               <Route path="/achievements" element={<Achievements />}  />
