@@ -9,6 +9,7 @@ import EditUsernameModal from "./editUsername/EditUsername";
 import {Modal, Button, Row, Col, Form} from "react-bootstrap";
 import { faCommentsDollar } from '@fortawesome/free-solid-svg-icons';
 import Dashboard from '../Dashboard/Dashboard';
+import QRCode from 'qrcode.react';
 
 export interface UserfuncProps
 {
@@ -26,10 +27,12 @@ export interface UserfuncProps
 export default function User(props:UserfuncProps)
 {
 	//TODO: a reprendre
+	const [qrcode, setqrCode] = useState("");
+
 	const handle2FA = (event: any) => {
 		event.preventDefault();
 
-		let ax = new MyAxios(null);
+		//let ax = new MyAxios(null);
 		//TODO: vérifier si c'est pas déjà activé (on / off)
 		//Le genereate genere un QR code quíl va surement falloir recuperer comme l image via un blob
 		let url = "http://localhost:3000/api/2fa/generate";
@@ -37,22 +40,30 @@ export default function User(props:UserfuncProps)
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
         axios.defaults.withCredentials = true;
 
-		let authCode = "";
+		let QRcode;
+		//let imageName = "bloc QR";
 
-        axios.post(url)
+        axios.post(url,  {responseType: 'blob'})
         .then(res => {
             console.log("Successfully generate 2fa target");
-            console.log(res);
-			authCode = res.data.twoFactorAuthicationCode;
-			console.log("Auth code is " + authCode);
+            //console.log(res.data);
+			QRcode = res.data;
+
+			setqrCode(QRCode.toString());
+
+			//display
+			//let newDiv = document.createElement('div');
+			//let newContent = document.createTextNode('Clicked!');
+			//newDiv.appendChild(newContent);
+			//let currentDiv = document.getElementById('activate--2fa');
+			//newDiv.insertBefore(newDiv, currentDiv);
         })
         .catch((error) => {
             console.log("Error while generating 2fa target");
-            console.log(error);
         })
 
 		//On doit faire generate puis turnOn ?
-		ax.post_2fa_turnOn(authCode);
+		//ax.post_2fa_turnOn(authCode);
 		//ax.post_2fa_generate();
 		//ax.get_api_user(props.username);
 
@@ -112,16 +123,13 @@ export default function User(props:UserfuncProps)
 		let username = "";
 		axios.get(url)
 		.then (res => {
-			//console.log("Successfully got api auth");
 			username = res.data.login;
-			//console.log("The username is " + username);
 			setUsername(username);
 
 		})
 		.catch((err) => {
 			console.log("Error while getting api auth");
 		})
-
 	});
 
 
@@ -162,8 +170,20 @@ export default function User(props:UserfuncProps)
 									/>
 					</div>
 						{/*<p>*/}
+						<div id="2fa--div">
 							<h3 id="activate--2fa">2FA Enablement (to do)</h3>
+							<p className="warning-2fa">You will have to successfully authenticate to turn 2FA on</p>
 							<button className="btn btn-outline-danger" id="button--2fa" onClick={handle2FA}>ON / OFF</button>
+							<br />
+							{qrcode != "" ? <img height="180" src="https://www.qrcode-monkey.com/img/default-preview-qr.svg"></img> : <p className="black--text"></p>}
+							{qrcode != "" ? <p className="black--text">Please scan the QR Code with your Google Authenticator app.</p> : <p className="black--text"></p>}
+							{/*<br />*/}
+							{qrcode != "" ? <label className="black--text">Enter the code provided</label> : <p className="black--text"></p>}
+							{qrcode != "" ?<input className="form-control-sm" type="text" placeholder="422 022"></input> : <p className="black--text"></p>}
+							{/*<br />*/}
+							{/*<br />*/}
+							{/*<br />*/}
+						</div>
 						{/*</p>*/}
 					</div>
 					</div>
