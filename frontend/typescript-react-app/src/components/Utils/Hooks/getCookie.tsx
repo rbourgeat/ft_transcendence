@@ -1,6 +1,7 @@
-import Cookie from "js-cookie"
+//import Cookie from "js-cookie"
 
 const GetCookie = (cookiename) => {
-	return Cookie.get(cookiename);
+	//TODO: a supprimer
+	//return Cookie.get(cookiename);
 };
 export default GetCookie;

@@ -28,19 +28,19 @@ function Nav() {
 										<div className='nav-link-text'><p><FontAwesomeIcon icon={faUserFriends} /></p><p>People</p></div>
 								</Link>
 						</li>
-						{/*<li className="nav-item">
-								<Link to="/stats" className="nav-link">
-										<div className='nav-link-text'><p><FontAwesomeIcon icon={faTrophy} /></p><p>Leaderboard</p></div>
-								</Link>
-						</li>*/}
 						<li className="nav-item">
+								<Link to="/stats" className="nav-link">
+										<div className='nav-link-text'><p><FontAwesomeIcon icon={faTrophy} /></p><p>My Stats</p></div>
+								</Link>
+						</li>
+						{/*<li className="nav-item">
 								<Link to="/search" className="nav-link">
 										<div className='nav-link-text'><p><FontAwesomeIcon icon={faMagnifyingGlass}/></p><p>Search [Deprecated]</p></div>
 								</Link>
-						</li>
+						</li>*/}
 						<li className="nav-item">
 								<Link to="/achievements" className="nav-link">
-										<div className='nav-link-text'><p><FontAwesomeIcon icon={faTrophy}/></p><p>Achievements [Deprecated]</p></div>
+										<div className='nav-link-text'><p><FontAwesomeIcon icon={faTrophy}/></p><p>Achievements</p></div>
 								</Link>
 						</li>
 						<li className="nav-item">
@@ -49,8 +49,8 @@ function Nav() {
 								</Link>
 						</li>
 						<li className="nav-item">
-								<Link to="/dashboard" className="nav-link">
-										<div className='nav-link-text'><p><FontAwesomeIcon icon={faDashboard} /></p><p>Dashboard</p></div>
+								<Link to="/playwatch" className="nav-link">
+										<div className='nav-link-text'><p><FontAwesomeIcon icon={faDashboard} /></p><p>Play / Watch</p></div>
 								</Link>
 						</li>
 						<li className="nav-item">

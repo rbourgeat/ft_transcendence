@@ -52,6 +52,8 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     */
     post_api_chat(channame: string, pub: boolean, pass: string)
     {
+        //TODO: a reprendre
+        return ;
         let url = "http://localhost:3000/api/chat/";
 
         //Pas sure que ce soit utile
@@ -250,6 +252,8 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     //TODO: a tester
     post_api_ban(id: number, username: string, datetime: string, pass: string)
     {
+        console.log("Post api banned called");
+        //return ;
         let url = "http://localhost:3000/api/chat/ban/";
 
         const body = {
@@ -291,10 +295,10 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
 
         axios.post(url, body)
         .then(res => {
-            console.log("Successfully banned target");
+            console.log("Successfully unbanned target");
         })
         .catch(res => {
-            console.log("Error while banning target");
+            console.log("Error while unbanning target");
         })
     }
 
@@ -316,18 +320,19 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
 
         axios.post(url, body)
         .then(res => {
-            console.log("Successfully banned target");
+            console.log("Successfully muted target");
         })
         .catch(res => {
-            console.log("Error while banning target");
+            console.log("Error while muted target");
         })
     }
 
-    //TODO: a tester et variabiliser !
+
     post_api_password(id: number, username: string, datetime: string, pass: string)
     {
         let url = "http://localhost:3000/api/chat/password/";
 
+        console.log("post apo password called");
         const body = {
             idChat: id,
             user: username,
@@ -341,10 +346,10 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
 
         axios.post(url, body)
         .then(res => {
-            console.log("Successfully banned target");
+            console.log("Successfully posted password target");
         })
         .catch(res => {
-            console.log("Error while banning target");
+            console.log("Error while posted password target");
         })
     }
 
@@ -353,6 +358,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     {
         let url = "http://localhost:3000/api/chat/setPrivate/";
 
+        console.log("post api set private called");
         const body = {
             idChat: id,
             user: username,
@@ -366,10 +372,10 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
 
         axios.post(url, body)
         .then(res => {
-            console.log("Successfully banned target");
+            console.log("Successfully set private");
         })
         .catch(res => {
-            console.log("Error while banning target");
+            console.log("Error while set private target");
         })
     }
 
@@ -747,7 +753,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
         let res = axios.get(url)
         .then(res => {
             imageCode = res.data.avatar;
-            console.log("Image is " + imageCode);
+            //console.log("Image is " + imageCode);
             return (this.getImage(imageCode));
         })
         .catch(error => {
@@ -836,16 +842,16 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
 
         axios.post(url)
         .then(res => {
-            console.log("Successfully banned target");
+            console.log("Successfully generate 2fa target");
             console.log(res);
         })
         .catch((error) => {
-            console.log("Error while banning target");
+            console.log("Error while generating 2fa target");
             console.log(error);
         })
     }
 
-    post_2fa_turnOn(code: string)
+    post_2fa_turnOn(code?: string)
     {
         console.log("Turning on 2fa");
 
@@ -855,13 +861,15 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
             twoFactorAuthenticationCode: code
         }
 
+        console.log("Code is " + code);
+
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
         axios.defaults.withCredentials = true;
 
         axios.post(url, body)
         .then(res => {
             console.log("Successfully turn 2fa on");
-            console.log(res);
+            console.log("The res is " + res);
         })
         .catch((error) => {
             console.log("Error while turning 2fa on");

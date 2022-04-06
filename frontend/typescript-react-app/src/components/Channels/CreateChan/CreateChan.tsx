@@ -6,6 +6,7 @@ import CreateChanModal from "../../Utils/Modal/Modal";
 import myAxios from "../../Utils/Axios/Axios";
 import axios from "axios";
 import ListChannels from "../ListChannels/ListChannels";
+import Channels from "../../Channels/Channels";
 
 interface UserChat
 {
@@ -23,34 +24,32 @@ export default function CreateChan(props: UserChat)
                 <div className="row d-flex justify-content-center text-center">
                     <div className="col-7">
                         <div id="quick--actions">
-                            <h1>Quick actions</h1>
-                            <br />
-                            {/*<p>Create a new channel</p>*/}
+                            {/*<h1 className="text" id="quick--actions--title">Quick actions</h1>*/}
                             <div className="row">
-                                <Button className="quick--actions" variant="primary" disabled /*onClick={() => setModalShow(true)}*/ >
+                                <Button className="quick--actions" variant="primary" onClick={() => setModalShow(true)}>
                                     Create a new channel
                                 </Button>
-                                <Button className="quick--actions" variant="light" disabled /*onClick={() => setModalShow(true)}*/>
+                                {/*<Button className="quick--actions" variant="light" disabled>
                                     Send a DM
                                 </Button>
-                                <Button className="quick--actions" variant="light" disabled /*onClick={() => setModalShow(true)}*/>
+                                <Button className="quick--actions" variant="light" disabled>
                                     Answer invitation(s)
                                 </Button>
-                                <Button className="quick--actions" variant="light" disabled /*onClick={() => setModalShow(true)}*/ >
+                                <Button className="quick--actions" variant="light" disabled>
                                     Invite friend
                                 </Button>
-                                <Button className="quick--actions" variant="light" disabled /*onClick={() => setModalShow(true)}*/ >
+                                <Button className="quick--actions" variant="light" disabled>
                                     Make admin
                                 </Button>
-                                <Button className="quick--actions" variant="light" disabled /*onClick={() => setModalShow(true)}*/>
+                                <Button className="quick--actions" variant="light" disabled>
                                     Mute
                                 </Button>
-                                <Button className="quick--actions" variant="light" disabled /*onClick={() => setModalShow(true)}*/>
+                                <Button className="quick--actions" variant="light" disabled>
                                     Invite to play
                                 </Button>
-                                <Button className="quick--actions" variant="light" disabled /*onClick={() => setModalShow(true)}*/>
+                                <Button className="quick--actions" variant="light" disabled>
                                     Answer to play
-                                </Button>
+                                </Button>*/}
                             </div>
                             <CreateChanModal
                                 show={modalShow}

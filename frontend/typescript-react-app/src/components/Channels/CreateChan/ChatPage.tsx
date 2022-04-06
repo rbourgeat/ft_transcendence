@@ -9,12 +9,10 @@ interface ChatProps {
 }
 
 //TODO: a revoir
-
 export default function Chat(props: ChatProps) {
     function createChat()
     {
         let ax = new MyAxios(null);
-        //let res = ax.get_api_user_cookie_test();
         let res = ax.post_api_chat("channel1", true, "password");
     }
 

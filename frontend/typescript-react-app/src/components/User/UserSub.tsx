@@ -30,14 +30,16 @@ export default function User(props:UserfuncProps)
 		event.preventDefault();
 
 		let ax = new MyAxios(null);
-		//TODO: vérifier si c'est pas déjà activé
-		ax.post_2fa_generate();
+		//TODO: vérifier si c'est pas déjà activé (on / off)
+		ax.post_2fa_turnOn();
+		//ax.post_2fa_generate();
 		//ax.get_api_user(props.username);
 
 		axios.defaults.baseURL = 'http://localhost:3000/api/';
 
         let url = "http://localhost:3000/api/user/".concat(props.username);
 
+		/*
 		let secret = "";
         axios.get(url)
         .then( res => {
@@ -48,9 +50,10 @@ export default function User(props:UserfuncProps)
         .catch((error) => {
             console.log(error);
         })
+		*/
 
 		//TODO: erreur 400 auth code
-		ax.post_2fa_turnOn(secret);
+		//ax.post_2fa_turnOn(secret);
 	}
 
 	//Upload d'un nouvel avatar
@@ -89,7 +92,7 @@ export default function User(props:UserfuncProps)
 					<div className="col-9 mx-auto text-center" id="input-div">
 					<h2 id="user--data">{props.username}</h2>
 					<Button id="change--username" variant="ight" onClick={() => { console.log("clicked"); setModalShowUsername(true)}}>
-                        change username (error)
+                        change username
                     </Button>
 					<EditUsernameModal username={props.username} show={modalShowUsername} onHide={() => {
 						console.log("called");

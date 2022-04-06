@@ -1,5 +1,16 @@
 @use "../../../variables";
 
-p, h3 {
+p, h3, .text {
 	color: white !important;
+	font-family: variables.$big-font;
+}
+
+#quick--actions--title {
+	font-family: variables.$big-font !important;
+	color: white !important;
+}
+
+
+#quick--actions {
+	background-color: black !important;
 }
