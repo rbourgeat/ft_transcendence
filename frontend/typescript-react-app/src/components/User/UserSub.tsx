@@ -27,8 +27,7 @@ export interface UserfuncProps
 export default function User(props:UserfuncProps)
 {
 	//TODO: a reprendre
-	const [qrcode, setqrCode] = useState("");
-
+	const [qrcode, setqrCode] = useState("");//https://camo.githubusercontent.com/a20446c393106453751db5f1b2633763cd7213e81015f855432405f7ddedeca3/68747470733a2f2f63686172742e676f6f676c65617069732e636f6d2f63686172743f6368743d71722663686c3d48656c6c6f2532306d61746521266368733d313830783138302663686f653d5554462d382663686c643d4c7c32");
 	const handle2FA = (event: any) => {
 		event.preventDefault();
 
@@ -40,27 +39,35 @@ export default function User(props:UserfuncProps)
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
         axios.defaults.withCredentials = true;
 
-		let QRcode;
-		//let imageName = "bloc QR";
+        //axios.post(url,  {responseType: 'blob'})
+        //.then(res => {
+        //    console.log("Successfully generate 2fa target");
+        //    console.log(res.data);
+		//	let myImage = document.querySelector('img');
+        //    let objectURL = URL.createObjectURL(res.data);
+        //    //myImage.src = objectURL;
+		//	//setqrCode(myImage.src);
+		//	//var img = res.createObjectURL(res.data);
+		//	//setqrCode("https://camo.githubusercontent.com/a20446c393106453751db5f1b2633763cd7213e81015f855432405f7ddedeca3/68747470733a2f2f63686172742e676f6f676c65617069732e636f6d2f63686172743f6368743d71722663686c3d48656c6c6f2532306d61746521266368733d313830783138302663686f653d5554462d382663686c643d4c7c32");
+        //})
+        //.catch((error) => {
+        //    console.log("Error while generating 2fa target");
+		//	console.log(error);
+        //})
 
-        axios.post(url,  {responseType: 'blob'})
-        .then(res => {
-            console.log("Successfully generate 2fa target");
-            //console.log(res.data);
-			QRcode = res.data;
+		return axios.post(url, { responseType: 'arraybuffer' })
+		.then((response) => {
+			let image = btoa(
+			new Uint8Array(response.data)
+				.reduce((data, byte) => data + String.fromCharCode(byte), '')
+			);
+			setqrCode(`data:${response.headers['content-type'].toLowerCase()};base64,${image}`);
+			return `data:${response.headers['content-type'].toLowerCase()};base64,${image}`;
 
-			setqrCode(QRCode.toString());
+		});
 
-			//display
-			//let newDiv = document.createElement('div');
-			//let newContent = document.createTextNode('Clicked!');
-			//newDiv.appendChild(newContent);
-			//let currentDiv = document.getElementById('activate--2fa');
-			//newDiv.insertBefore(newDiv, currentDiv);
-        })
-        .catch((error) => {
-            console.log("Error while generating 2fa target");
-        })
+
+		//return (renderQrCode(qrcode));
 
 		//On doit faire generate puis turnOn ?
 		//ax.post_2fa_turnOn(authCode);
@@ -171,18 +178,16 @@ export default function User(props:UserfuncProps)
 					</div>
 						{/*<p>*/}
 						<div id="2fa--div">
-							<h3 id="activate--2fa">2FA Enablement (to do)</h3>
-							<p className="warning-2fa">You will have to successfully authenticate to turn 2FA on</p>
-							<button className="btn btn-outline-danger" id="button--2fa" onClick={handle2FA}>ON / OFF</button>
+							<h3 id="activate--2fa">2FA Enablement - in progress</h3>
+							{qrcode != "" ? <p className="warning-2fa">You will have to successfully authenticate to turn 2FA on</p> : <p></p>}
+							<button className="btn btn-outline-danger" id="button--2fa" onClick={handle2FA}>Activate 2FA</button>
 							<br />
-							{qrcode != "" ? <img height="180" src="https://www.qrcode-monkey.com/img/default-preview-qr.svg"></img> : <p className="black--text"></p>}
+							<img id="image"></img>
+							{renderQrCode(qrcode)}
 							{qrcode != "" ? <p className="black--text">Please scan the QR Code with your Google Authenticator app.</p> : <p className="black--text"></p>}
-							{/*<br />*/}
 							{qrcode != "" ? <label className="black--text">Enter the code provided</label> : <p className="black--text"></p>}
-							{qrcode != "" ?<input className="form-control-sm" type="text" placeholder="422 022"></input> : <p className="black--text"></p>}
-							{/*<br />*/}
-							{/*<br />*/}
-							{/*<br />*/}
+							{qrcode != "" ?<input className="form-control form-control-sm" type="text" placeholder="422 022"></input> : <p className="black--text"></p>}
+							{qrcode != "" ?<button className="btn btn-light" id="check--auth">Check code</button> : <p className="black--text"></p>}
 						</div>
 						{/*</p>*/}
 					</div>
@@ -209,8 +214,18 @@ export default function User(props:UserfuncProps)
 //}
 
 function renderImage(login: string) {
-
 	let ax = new MyAxios(null);
 	return (ax.render_avatar(login));
 }
+
+function renderQrCode(qrcode: any) {
+	//if (qrcode == null)
+	//	return ;
+	//console.log("rendered QR code");
+	//var img = new Image();
+	//img.src = qrcode;
+
+	return (<img height="180" src={qrcode}></img>);
+}
+
 
