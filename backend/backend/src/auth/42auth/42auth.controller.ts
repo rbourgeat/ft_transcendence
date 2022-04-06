@@ -36,9 +36,9 @@ export class Auth42Controller {
 
         console.log(currentUser.id);
 
-        this.userService.updateStatus(currentUser.login, "online");
+        await this.userService.updateStatus(currentUser.login, "online");
 
-        const accessTokenCookie = this.authenticationService.getCookieWithJwtToken(currentUser.id);
+        const accessTokenCookie = await this.authenticationService.getCookieWithJwtToken(currentUser.id);
         req.res.setHeader('Set-Cookie', accessTokenCookie);
         return;
     }
