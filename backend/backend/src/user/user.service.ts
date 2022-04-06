@@ -64,9 +64,6 @@ export class UserService {
 	async create(userData: CreateUserDtoViaRegistration) {
 		console.log('went by create in user service');
 		const newUser = await this.userRepository.create(userData);
-		//newUser.friends = [];
-		//const login = newUser.login;
-		//this.userRepository.update({ login }, { friends: [] });
 		await this.userRepository.save(newUser);
 		this.userEvent.achievement42(newUser);
 		return newUser;
@@ -106,6 +103,13 @@ export class UserService {
 		console.log('has set 2fa to true for user');
 		return this.usersRepository.update(userId, {
 			isTwoFactorAuthenticationEnabled: true
+		});
+	}
+
+	async turnOffTwoFactorAuthentication(userId: number) {
+		console.log('has set 2fa to false for user');
+		return this.usersRepository.update(userId, {
+			isTwoFactorAuthenticationEnabled: false
 		});
 	}
 

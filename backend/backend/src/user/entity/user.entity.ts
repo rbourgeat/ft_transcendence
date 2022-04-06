@@ -12,9 +12,6 @@ export class User {
     @CreateDateColumn({ nullable: true })
     createdAt?: Date;
 
-    @Column({ unique: true, nullable: true })
-    username: string;
-
     @CreateDateColumn({ nullable: true })
     updateAt?: Date;
 

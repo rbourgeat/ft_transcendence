@@ -29,6 +29,7 @@ export class TwoFactorAuthenticationController {
         return this.twoFactorAuthenticationService.pipeQrCodeStream(response, otpauthUrl);
     }
 
+
     @ApiOperation({ summary: 'turn-on 2FA [jwt-protected]' })
     @ApiOkResponse({ description: '2FA turned on' })
     @ApiConflictResponse({ description: 'Fail to turn-on 2FA' })
@@ -41,6 +42,18 @@ export class TwoFactorAuthenticationController {
         if (!isCodeValid)
             throw new UnauthorizedException('Wrong authentication code');
         await this.usersService.turnOnTwoFactorAuthentication(request.user.id);
+    }
+
+
+    @ApiOperation({ summary: 'turn-off 2FA [jwt-protected]' })
+    @ApiOkResponse({ description: '2FA turned off' })
+    @ApiConflictResponse({ description: 'Fail to turn-off 2FA' })
+    @Post('turn-off')
+    @HttpCode(200)
+    @UseGuards(JwtAuthenticationGuard)
+    async turnOffTwoFactorAuthentication(@Req() request: RequestWithUser) {
+        console.log('enter in turn-off 2fa');
+        await this.usersService.turnOffTwoFactorAuthentication(request.user.id);
     }
 
     @ApiOperation({ summary: 'authenticate with 2FA [jwt-protected]' })
