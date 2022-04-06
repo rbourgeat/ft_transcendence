@@ -39,32 +39,34 @@ export default function User(props:UserfuncProps)
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
         axios.defaults.withCredentials = true;
 
-        //axios.post(url,  {responseType: 'blob'})
-        //.then(res => {
-        //    console.log("Successfully generate 2fa target");
-        //    console.log(res.data);
-		//	let myImage = document.querySelector('img');
-        //    let objectURL = URL.createObjectURL(res.data);
-        //    //myImage.src = objectURL;
-		//	//setqrCode(myImage.src);
-		//	//var img = res.createObjectURL(res.data);
-		//	//setqrCode("https://camo.githubusercontent.com/a20446c393106453751db5f1b2633763cd7213e81015f855432405f7ddedeca3/68747470733a2f2f63686172742e676f6f676c65617069732e636f6d2f63686172743f6368743d71722663686c3d48656c6c6f2532306d61746521266368733d313830783138302663686f653d5554462d382663686c643d4c7c32");
-        //})
-        //.catch((error) => {
-        //    console.log("Error while generating 2fa target");
-		//	console.log(error);
-        //})
+        axios.post(url,  {responseType: 'blob'})
+        .then(res => {
+            console.log("Successfully generate 2fa target");
+			console.log(res);
+            console.log(res.data);
+			setqrCode(res.data);
+			//let imageblob = new Blob(res.data);
+			//let imageObjectURL = URL.createObjectURL(imageblob);
+			//let base64ImageString = Blob.from(res.data, 'binary').toString('base64');
+			//let srcValue = "data:image/png;base64,"+base64ImageString;
+			//setqrCode(imageObjectURL);
 
-		return axios.post(url, { responseType: 'arraybuffer' })
-		.then((response) => {
-			let image = btoa(
-			new Uint8Array(response.data)
-				.reduce((data, byte) => data + String.fromCharCode(byte), '')
-			);
-			setqrCode(`data:${response.headers['content-type'].toLowerCase()};base64,${image}`);
-			return `data:${response.headers['content-type'].toLowerCase()};base64,${image}`;
+        })
+        .catch((error) => {
+            console.log("Error while generating 2fa target");
+			console.log(error);
+        })
 
-		});
+		//return axios.post(url, { responseType: 'arraybuffer' })
+		//.then((response) => {
+		//	let image = btoa(
+		//	new Uint8Array(response.data)
+		//		.reduce((data, byte) => data + String.fromCharCode(byte), '')
+		//	);
+		//	setqrCode(`data:${response.headers['content-type'].toLowerCase()};base64,${image}`);
+		//	return `data:${response.headers['content-type'].toLowerCase()};base64,${image}`;
+
+		//});
 
 
 		//return (renderQrCode(qrcode));
