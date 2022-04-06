@@ -24,7 +24,7 @@ export default function UserMain(props: UserMainProps)
 	return (
 		<div>
 			{/* transmettre ses props au sous composant */}
-			<Usersub username="malatini"/>
+			<Usersub/>
 		</div>
 	);
 }

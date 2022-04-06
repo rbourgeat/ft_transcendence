@@ -33,6 +33,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     /*
     ** Chat endpoints
     */
+    //TODO: a revoir
     get_api_chat()
     {
         axios.defaults.withCredentials = true;
