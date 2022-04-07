@@ -10,6 +10,7 @@ import Friends from "../Friends/Friends";
 export default function All() {
 	//TODO: attention a trouver quelque chose pour faire "une pause" tant que toutes les requetes n'ont pas été faites
 	const [users, setUsers] = React.useState([]);
+	//let usersTab = [];
     const [count, setCount] = useState(0);
 
 	const calledOnce = React.useRef(false);
@@ -22,20 +23,26 @@ export default function All() {
         let url = "http://localhost:3000/api/user/";
         axios.get(url)
         .then( res => {
-            console.log("Get api chat successfully called.");
+            console.log("Get api users successfully called.");
             let users = res.data;
+			console.log(users);
             //console.log(users);
 			let len = users.length;
 			let i = 0;
 			while (i < len)
 			{
+				//usersTab.push(users[i]);
 				setUsers(prevArray => [...prevArray, users[i]])
+				//setTheArray([...theArray, `Entry ${theArray.length}`]);
+				//users.push(users[i]);
 				i++;
 			}
+			//console.log("users is " + usersTab);
         })
         .catch((error) => {
-            //console.log("Error while getting all users");
+            console.log("Error while getting all users");
         })
+
     }
 
     useEffect(() => {
@@ -53,9 +60,8 @@ export default function All() {
 					<div id="ul--list" className="row">
 						<h2 id="registered--title">List of all registered users</h2>
 						<ul id="list--users--ul" className="list-group list-group-horizontal-lg">
-							{users.map(user  =>
-								//<li key={user}>{user}</li>
-								<MiniDisplay key={user.login} login={user.login} status={user.status}/>
+							{users.map(users  =>
+								<MiniDisplay key={users.login} login={users.login} status={users.status} avatar={users.avatar} />
 							)}
 						</ul>
 					</div>

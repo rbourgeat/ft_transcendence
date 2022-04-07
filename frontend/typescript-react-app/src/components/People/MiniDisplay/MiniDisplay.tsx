@@ -5,7 +5,8 @@ import React, { Component, useState} from 'react';
 
 interface MiniDisplayProps {
 	login?: string,
-	status?: string
+	status?: string,
+	avatar?: string
 }
 
 /**
@@ -13,9 +14,9 @@ interface MiniDisplayProps {
  */
 export default function MiniDisplay(props: MiniDisplayProps) {
     return (
-		//<div id="minidisplay--container">
+		<div id="minidisplay--container">
 			<li id="minidisplay--div" className="list-group-item">
-				{renderImage(props.login)}
+				{/*{renderImage(props.login)}*/}
 				<div className="row d-flex justify-content-center text-center">
 					<span id="mini--login">{props.login}</span>
 					<span id="mini--status">{props.status}</span>
@@ -23,11 +24,12 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 				</div>
 
 			</li>
-		//</div>
+		</div>
     );
 }
 
 function renderImage(login: string) {
 	let ax = new MyAxios(null);
+	//console.log("login is " + login);
 	return (ax.render_avatar(login));
 }
