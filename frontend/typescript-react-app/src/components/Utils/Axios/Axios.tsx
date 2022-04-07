@@ -724,13 +724,10 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     */
     getImage(imageCode: string)
     {
-        console.log("The image code is " + imageCode);
          //console.log("Should only be called if the image is not default image");
         let imageName = "alt-photo";
-        if (imageCode.startsWith("http"))
-            //return ( <img src="https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg" alt={imageName} height="80" width="80" id="avatar-id"/>);
-            return ( <img src={imageCode} alt={imageName} height="80" width="80" id="avatar-id"/>);
-        else if (imageCode == "" || !imageCode)
+        console.log("imageCode is " + imageCode);
+        if (imageCode == null)
             return ( <img src="https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg" alt={imageName} height="80" width="80" id="avatar-id"/>);
 
         let url = "http://localhost:3000/api/user/".concat(imageCode).concat("/avatar/");
@@ -741,13 +738,14 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
             let myImage = document.querySelector('img');
             var objectURL = URL.createObjectURL(res.data);
             myImage.src = objectURL;
-            console.log("the image src is " + myImage.src);
+            //console.log("the image src is " + myImage.src);
             return (
-                <img src={myImage.src} alt={imageName} height="80" width="80" id="avatar-id"/>
+                <img src={myImage.src} alt={imageName} height="80" width="80" />
             )
         })
         .catch ((error) => {
             console.log("Catched error during get/fileId/avatar");
+            console.log(error);
         })
     }
 
@@ -755,7 +753,9 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     {
         let imageCode = "https://42.fr/wp-content/uploads/2021/08/42.jpg";
         let imageName = "alt-photo";
-        let url = "http://localhost:3000/api/user/".concat(login);
+        let url = "http://localhost:3000/api/user/".concat(login)
+
+        console.log("login is " + login);
 
         let res = axios.get(url)
         .then(res => {

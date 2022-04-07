@@ -87,19 +87,6 @@ export class UserMigration1645626140921 implements MigrationInterface {
         );
 
 
-        await getConnection()
-            .createQueryBuilder()
-            .insert()
-            .into(User)
-            .values({
-                login: "string",
-                email: "string@a.com",
-                password: "string2A",
-                status: 'playing'
-            })
-            .execute();
-
-
         const channel1 = await queryRunner.manager.save(
             queryRunner.manager.create<Chat>(Chat, {
                 name: "DummyChannel",

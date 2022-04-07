@@ -26,7 +26,7 @@ export default function All() {
         .then( res => {
             console.log("Get api users successfully called.");
             let users = res.data;
-			console.log(users);
+			//console.log(users);
             //console.log(users);
 			let len = users.length;
 			let i = 0;
