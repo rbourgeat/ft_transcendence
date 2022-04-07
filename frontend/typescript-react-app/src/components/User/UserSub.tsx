@@ -130,7 +130,7 @@ export default function User(props:UserfuncProps)
 		const file = e.target.files[0];
 
 		let ax = new MyAxios(null);
-		let ret = ax.post_avatar(props.username, file);
+		let ret = ax.post_avatar(username, file);
 		}
 	}
 

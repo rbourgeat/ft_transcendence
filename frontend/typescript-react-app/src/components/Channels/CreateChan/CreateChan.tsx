@@ -22,20 +22,23 @@ export default function CreateChan(props: UserChat)
     const [response, setResponse] = useState("");
 
     //React Hooks qui est appelée quand le component est mounté / la page est chargée
-    useEffect(() => {
-        let socket = io();
-        console.log("socket is " + socket);
+    //useEffect(() => {
+        //let socket = io();
+        //console.log("socket is " + socket);
 
-        let socket2 = io("http://localhost:3000/");
-        console.log("socket2 is " + socket2);
-        socket2.on('connection', (socket) => {
-            console.log(`Connecté au client ${socket.id}`);
-        })
+        //let socket2 = io("http://localhost:3000/", {
+        //    transports: ["polling", "websocket"]});
+        //console.log("socket2 is " + socket2);
 
-        socket2.on('disconnect', function() {
-            console.log('Disconnected');
-        })
-    }, []);
+
+        //socket2.on('connection', (socket) => {
+        //    console.log(`Connecté au client ${socket.id}`);
+        //})
+
+        //socket2.on('disconnect', function() {
+        //    console.log('Disconnected');
+        //})
+  //  }, []);
 
     return (
         <div id="channels">
