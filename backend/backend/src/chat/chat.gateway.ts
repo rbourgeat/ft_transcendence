@@ -43,8 +43,13 @@ export class ChatGateway implements OnGatewayConnection {
 	}
 
 	@SubscribeMessage('message')
-	messageMessage(@MessageBody() body: any) {
+	async messageMessage(@MessageBody() body: string) {
 		console.log(body);
+		const b = body.split(':');
+		const author = await this.userService.getUserByLogin(b[0]);
+		const message = await this.chatService.saveChatMessage(b[1], b[2], author);
+
+		this.server.sockets.emit('receive_message', message);
 	}
 
 
