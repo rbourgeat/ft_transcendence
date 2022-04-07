@@ -10,6 +10,7 @@ import Friends from "../Friends/Friends";
 export default function All() {
 	//TODO: attention a trouver quelque chose pour faire "une pause" tant que toutes les requetes n'ont pas été faites
 	const [users, setUsers] = React.useState([]);
+	const [load, setLoad] = React.useState(false);
 	//let usersTab = [];
     const [count, setCount] = useState(0);
 
@@ -17,15 +18,15 @@ export default function All() {
 
 	//Récupération de tous les users et de leur statut
 	//TODO: faire un check pour savoir s'ils sont amis ?
-    function renderUsers()
+    async function renderUsers()
     {
         axios.defaults.withCredentials = true;
         let url = "http://localhost:3000/api/user/";
-        axios.get(url)
+        await axios.get(url)
         .then( res => {
             console.log("Get api users successfully called.");
             let users = res.data;
-			console.log(users);
+			//console.log(users);
             //console.log(users);
 			let len = users.length;
 			let i = 0;
@@ -42,7 +43,7 @@ export default function All() {
         .catch((error) => {
             console.log("Error while getting all users");
         })
-
+		setLoad(true);
     }
 
     useEffect(() => {
@@ -50,6 +51,16 @@ export default function All() {
 			return;}
         renderUsers();
     }, []);
+
+	//function mapUsers()
+	//{
+	//	if (load == true)
+	//	{
+	//		return (users.map(users  => {
+	//			<MiniDisplay key={users.login} login={users.login} status={users.status} avatar={users.avatar} />;
+	//		}))
+	//	}
+	//}
 
     return (
 			<div id="people--div">
@@ -60,9 +71,11 @@ export default function All() {
 					<div id="ul--list" className="row">
 						<h2 id="registered--title">List of all registered users</h2>
 						<ul id="list--users--ul" className="list-group list-group-horizontal-lg">
-							{users.map(users  =>
-								<MiniDisplay key={users.login} login={users.login} status={users.status} avatar={users.avatar} />
-							)}
+							{load == true ? console.log("Mapping") : ""}
+							{/*{mapUsers()}*/}
+							{/*{load == true ? users.map(users => <MiniDisplay key={users.login} login={users.login} status={users.status} avatar={users.avatar} />) : ""}*/}
+							{load == true ? <MiniDisplay key={users[0].login} login={users[0].login} status={users[0].status} avatar={users[0].avatar} /> : ""}
+							{/*{load == true ? <MiniDisplay key={users[1].login} login={users[1].login} status={users[1].status} avatar={users[1].avatar} /> : ""}*/}
 						</ul>
 					</div>
 					</div>
