@@ -24,7 +24,9 @@ export default function Invitations() {
     return (
 		<div id="invitation-div">
 			<div id="container--invitations">
-				<h1 className="text" id="displaying">Invitations</h1>
+				<h2 className="text" id="displaying">Invitations sent</h2>
+				<br />
+				<h2 className="text" id="displaying">Invitations received</h2>
 				<br />
 				<div className="row" id="row--users">
 				</div>
