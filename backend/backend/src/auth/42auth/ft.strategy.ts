@@ -28,7 +28,7 @@ export class FtStrategy extends PassportStrategy(Strategy, '42') {
         console.log('accessToken', accessToken, 'refreshToken', refreshToken);
 
         const { username } = profile;
-        console.log(profile);
+        //console.log(profile);
         const user = {
             login42: username,
             login: username,

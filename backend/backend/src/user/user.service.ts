@@ -35,10 +35,11 @@ export class UserService {
 	}
 
 	async getUserByLogin42(login: string) {
+		console.log('getuserbylogin42:' + login);
 		const user = await this.userRepository.findOne({ login42: login });
 		if (user)
 			return user;
-		throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+		throw new HttpException('User not found by 42login', HttpStatus.NOT_FOUND);
 	}
 
 	async updateUser(login: string, user: UpdateUserDto) {

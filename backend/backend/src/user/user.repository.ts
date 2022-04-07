@@ -13,7 +13,7 @@ export class UsersRepository extends Repository<User> {
         user.email = userData.email;
         user.login42 = userData.login42
         user.avatar = userData.avatar
-        this.save(user)
+        await this.save(user)
         return user;
     }
 }
