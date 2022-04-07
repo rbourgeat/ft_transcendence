@@ -34,6 +34,13 @@ export class UserService {
 		throw new HttpException('User not found', HttpStatus.NOT_FOUND);
 	}
 
+	async getUserByLogin42(login: string) {
+		const user = await this.userRepository.findOne({ login42: login });
+		if (user)
+			return user;
+		throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+	}
+
 	async updateUser(login: string, user: UpdateUserDto) {
 		await this.userRepository.update({ login }, user);
 		const updatedUser = await this.userRepository.findOne({ login });
@@ -85,12 +92,14 @@ export class UserService {
 	}
 
 	async createUser42(userData: User42Dto)/*: Promise<User> */ {
+		console.log("enter in createUSer42 in user service");
 		const user = await this.userRepository.findOne({ email: userData.email });
 		if (user) {
 			console.log("that user already exists");
 			return;
 		}
-		return this.usersRepository.createUser42(userData)
+		console.log("that user didnt exists, gonna create it");
+		return await this.usersRepository.createUser42(userData)
 	}
 
 	async setTwoFactorAuthenticationSecret(secret: string, userId: number) {

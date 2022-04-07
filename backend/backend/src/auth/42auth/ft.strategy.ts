@@ -29,6 +29,7 @@ export class FtStrategy extends PassportStrategy(Strategy, '42') {
 
         const { username } = profile;
         const user = {
+            login42: username,
             login: username,
             email: profile['emails'][0]['value'],
             password: username,
