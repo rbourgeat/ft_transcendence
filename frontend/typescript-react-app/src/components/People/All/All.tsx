@@ -73,8 +73,8 @@ export default function All() {
 						<ul id="list--users--ul" className="list-group list-group-horizontal-lg">
 							{load == true ? console.log("Mapping") : ""}
 							{/*{mapUsers()}*/}
-							{/*{load == true ? users.map(users => <MiniDisplay key={users.login} login={users.login} status={users.status} avatar={users.avatar} />) : ""}*/}
-							{load == true ? <MiniDisplay key={users[0].login} login={users[0].login} status={users[0].status} avatar={users[0].avatar} /> : ""}
+							{load == true ? users.map(users => <MiniDisplay key={users.login} login={users.login} status={users.status} avatar={users.avatar} />) : ""}
+							{/*{load == true ? <MiniDisplay key={users[0].login} login={users[0].login} status={users[0].status} avatar={users[0].avatar} /> : ""}*/}
 							{/*{load == true ? <MiniDisplay key={users[1].login} login={users[1].login} status={users[1].status} avatar={users[1].avatar} /> : ""}*/}
 						</ul>
 					</div>
