@@ -1,7 +1,7 @@
 import './MiniDisplay.scss';
 import axios from 'axios';
 import MyAxios from '../../Utils/Axios/Axios';
-import React, { Component, useState, useEffect} from 'react';
+import React, { Component, useState, useEffect, useRef} from 'react';
 
 interface MiniDisplayProps {
 	login?: string,
@@ -35,12 +35,19 @@ export default function MiniDisplay(props: MiniDisplayProps) {
        // console.log("The url is " + url);
         let res = axios.get(url, {responseType: 'blob'})
         .then(res => {
-            let myImage = document.querySelector('img');
-            var objectURL = URL.createObjectURL(res.data);
-            myImage.src = objectURL;
+            let myImage: HTMLImageElement = document.querySelector("#".concat(props.login));
+			//console.log("my Image is " + myImage)
+			//var myImage = new Image(80, 80);
+			var objectURL = URL.createObjectURL(res.data);
+			myImage.src = objectURL;
+			//myImage.currentSrc = objectURL
+            // = objectURL;
             //console.log("the image src is " + myImage.src);
 			//ret = <img src={myImage.src} alt={imageName} height="80" width="80" />
-			return (<img src={myImage.src} alt={imageName} height="80" width="80" />);
+			//return (<img src={myImage.src} alt={imageName} height="80" width="80" />);
+			//return (myImage);
+			return (<img src={myImage.src} alt={imageName} id={props.login} height="80"  />);
+
 
         })
         .catch ((error) => {
@@ -54,11 +61,13 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 		setLoad(true);
 	}, []);
 
+	let inputEl = useRef();
+
     return (
 		<div id="minidisplay--container">
 			<li id="minidisplay--div" className="list-group-item">
 				<div /*className="row d-flex justify-content-center text-center"*/>
-					<img height="80"/>
+					<img height="80" id={props.login} width="80"/>
 					<br />
 					<span> {load == true ? renderImage(props.avatar) : ""}</span>
 					<br />
