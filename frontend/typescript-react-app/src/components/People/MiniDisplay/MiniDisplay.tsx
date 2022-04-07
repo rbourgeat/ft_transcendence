@@ -1,7 +1,7 @@
 import './MiniDisplay.scss';
 import axios from 'axios';
 import MyAxios from '../../Utils/Axios/Axios';
-import React, { Component, useState} from 'react';
+import React, { Component, useState, useEffect} from 'react';
 
 interface MiniDisplayProps {
 	login?: string,
@@ -9,13 +9,11 @@ interface MiniDisplayProps {
 	avatar?: string
 }
 
-
-
 /**
  * @malatini
  */
 export default function MiniDisplay(props: MiniDisplayProps) {
-	const [load, setLoad] = React.useState(true);
+	const [load, setLoad] = React.useState(false);
 
 	function renderImage(avatar: string)
 	{
@@ -50,15 +48,18 @@ export default function MiniDisplay(props: MiniDisplayProps) {
             console.log(error);
         })
 
-		//setLoad(true);
-		//return (ret);
 	}
+
+	useEffect(() => {
+		setLoad(true);
+	}, []);
 
     return (
 		<div id="minidisplay--container">
 			<li id="minidisplay--div" className="list-group-item">
 				<div /*className="row d-flex justify-content-center text-center"*/>
-					{/*<span><img height="80"/></span>*/}
+					<img height="80"/>
+					<br />
 					<span> {load == true ? renderImage(props.avatar) : ""}</span>
 					<br />
 					<span id="mini--login">{props.login}</span>

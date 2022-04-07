@@ -52,6 +52,16 @@ export default function All() {
         renderUsers();
     }, []);
 
+	//function mapUsers()
+	//{
+	//	if (load == true)
+	//	{
+	//		return (users.map(users  => {
+	//			<MiniDisplay key={users.login} login={users.login} status={users.status} avatar={users.avatar} />;
+	//		}))
+	//	}
+	//}
+
     return (
 			<div id="people--div">
 				<div className="container" id="container--all">
@@ -62,10 +72,10 @@ export default function All() {
 						<h2 id="registered--title">List of all registered users</h2>
 						<ul id="list--users--ul" className="list-group list-group-horizontal-lg">
 							{load == true ? console.log("Mapping") : ""}
-							{load == true ? users.map(users  =>
-								//console.log(users.login)
-								<MiniDisplay key={users.login} login={users.login} status={users.status} avatar={users.avatar} />
-							) : ""}
+							{/*{mapUsers()}*/}
+							{/*{load == true ? users.map(users => <MiniDisplay key={users.login} login={users.login} status={users.status} avatar={users.avatar} />) : ""}*/}
+							{load == true ? <MiniDisplay key={users[0].login} login={users[0].login} status={users[0].status} avatar={users[0].avatar} /> : ""}
+							{/*{load == true ? <MiniDisplay key={users[1].login} login={users[1].login} status={users[1].status} avatar={users[1].avatar} /> : ""}*/}
 						</ul>
 					</div>
 					</div>
