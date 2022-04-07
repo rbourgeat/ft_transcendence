@@ -26,15 +26,6 @@ export default function CreateChan(props: UserChat)
     const [username, setUsername] = React.useState("");
 
     useEffect(() => {
-        socket.on('connect', () => {
-            console.log(`Socket connectée !`);
-            socket.emit('status', username + ':online')
-        })
-
-        socket.on('disconnect', () => {
-            console.log(`Socket déconnectée !`);
-            socket.emit('status', username + ':offline')
-        })
 
         let url = "http://localhost:3000/api/auth/";
         let username = "";
@@ -51,34 +42,28 @@ export default function CreateChan(props: UserChat)
 
     }, []);
 
+    socket.on('connect', () => {
+        console.log(`Socket connectée !`);
+        socket.emit('status', username + ':online')
+    })
+
+    socket.on('disconnect', () => {
+        console.log(`Socket déconnectée !`);
+        // socket.emit('status', username + ':offline')
+    })
+
     function sendTest() {
         socket.emit('test', 'test ok !')
     }
 
-    function sendMessage(message: String) {
-        socket.emit('message', username + ": " + message)
+    let channel = "";
+
+    function sendMessage(channel: string, message: string) {
+        socket.emit('message', username + ":" + channel + ":" + message)
     }
 
-    //React Hooks qui est appelée quand le component est mounté / la page est chargée
-    //useEffect(() => {
-        //let socket = io();
-        //console.log("socket is " + socket);
-
-        //let socket2 = io("http://localhost:3000/", {
-        //    transports: ["polling", "websocket"]});
-        //console.log("socket2 is " + socket2);
-
-
-        //socket2.on('connection', (socket) => {
-        //    console.log(`Connecté au client ${socket.id}`);
-        //})
-
-        //socket2.on('disconnect', function() {
-        //    console.log('Disconnected');
-        //})
-  //  }, []);
-
     const [inputValue, setInputValue] = React.useState("");
+
     function handleInputChange(event) {
         setInputValue(event.target.value);
         socket.emit('status', "est en train d'écrire")
@@ -104,11 +89,11 @@ export default function CreateChan(props: UserChat)
                                 <input
                                 className="form-control"
                                 type="text"
-                                placeholder="choose your new username"
+                                placeholder="message"
                                 value={ inputValue }
                                 onChange={ handleInputChange }
                                 />
-                                <Button className="quick--actions" variant="primary" onClick={() => sendMessage(inputValue)}>
+                                <Button className="quick--actions" variant="primary" onClick={() => sendMessage("DummyChannel", inputValue)}>
                                     Envoyer
                                 </Button>
                                 {/*<Button className="quick--actions" variant="light" disabled>
