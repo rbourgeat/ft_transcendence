@@ -26,6 +26,7 @@ import Stats from "../Stats/Stats";//Stats équivalent Leaderboard ?
 import People from "../People/People";
 import Game from "../Game/Game";
 import PlayWatch from "../Playwatch/Playwatch";
+import Channels from "../Channels/Channels"
 
 function App() {
   const [user, setUser] = useState(null);
@@ -42,6 +43,7 @@ function App() {
               <Route path="/auth" element={<Auth />} />
               <Route path="/user" element={<UserMain />} />
               <Route path="/chat" element={<CreateChan />} />
+              <Route path="/channels" element={<Channels />} />
               <Route path="/search" element={<Search />}  />
               <Route path="/stats" element={<Stats />}  />
               <Route path="/achievements" element={<Achievements />}  />

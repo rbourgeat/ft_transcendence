@@ -51,7 +51,7 @@ export default function Channels(props: ChatProps) {
                     <div className="row d-flex justify-content-center text-center">
                         <div className="col-7">
                             <h1 id="channels--tile">Channels</h1>
-                            <button className="chat-buttons" onClick={createChat}>Create chat</button>
+                            {/*<button className="chat-buttons" onClick={createChat}>Create chat</button>*/}
                             <br></br>
                             {/*<button className="chat-buttons" onClick={listChats}>list your chats</button>*/}
                             <ListDiscussions />

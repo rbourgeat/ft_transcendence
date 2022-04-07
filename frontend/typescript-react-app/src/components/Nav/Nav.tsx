@@ -45,7 +45,12 @@ function Nav() {
 						</li>
 						<li className="nav-item">
 								<Link to="/chat"className="nav-link">
-										<div className='nav-link-text'><p><FontAwesomeIcon icon={faComment} /></p> <p>Messages</p></div>
+										<div className='nav-link-text'><p><FontAwesomeIcon icon={faComment} /></p> <p>Messages [socket]</p></div>
+								</Link>
+						</li>
+						<li className="nav-item">
+								<Link to="/channels" className="nav-link">
+										<div className='nav-link-text'><p><FontAwesomeIcon icon={faComment} /></p> <p>Channels</p></div>
 								</Link>
 						</li>
 						<li className="nav-item">
