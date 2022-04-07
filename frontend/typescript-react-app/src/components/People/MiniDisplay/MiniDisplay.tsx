@@ -16,7 +16,7 @@ export default function MiniDisplay(props: MiniDisplayProps) {
     return (
 		<div id="minidisplay--container">
 			<li id="minidisplay--div" className="list-group-item">
-				{/*{renderImage(props.login)}*/}
+				{renderImage(props.login)}
 				<div className="row d-flex justify-content-center text-center">
 					<span id="mini--login">{props.login}</span>
 					<span id="mini--status">{props.status}</span>
