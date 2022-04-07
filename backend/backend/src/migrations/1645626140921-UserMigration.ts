@@ -49,7 +49,7 @@ export class UserMigration1645626140921 implements MigrationInterface {
             queryRunner.manager.create<User>(User, {
                 login: 'malatini',
                 status: 'online',
-
+                email: 'malatini@student.42.fr'
             }),
         );
 
