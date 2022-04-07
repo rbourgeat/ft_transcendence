@@ -37,6 +37,7 @@ export default function EditUsernameModal(props) {
 		console.log("Old username is " + props.username);
 		console.log("New username is " + inputValue);
 		let res = ax.patch_user(props.username, inputValue);
+		window.top.location = "http://localhost:3030/user";
 	}
 
 		return (

@@ -10,6 +10,7 @@ import {Modal, Button, Row, Col, Form} from "react-bootstrap";
 import { faCommentsDollar } from '@fortawesome/free-solid-svg-icons';
 import Dashboard from '../Dashboard/Dashboard';
 import QRCode from 'qrcode.react';
+//import fs from 'fs';
 
 export interface UserfuncProps
 {
@@ -39,35 +40,40 @@ export default function User(props:UserfuncProps)
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
         axios.defaults.withCredentials = true;
 
-        //axios.post(url,  {responseType: 'image/png'})
-        //.then(res => {
-        //    console.log("Successfully generate 2fa target");
-		//	console.log(res);
-        //    console.log(res.data);
-		//	setqrCode(res.data);
-		//	//let imageblob = new Blob(res.data);
-		//	//let imageObjectURL = URL.createObjectURL(imageblob);
-		//	//let base64ImageString = Blob.from(res.data, 'binary').toString('base64');
-		//	//let srcValue = "data:image/png;base64,"+base64ImageString;
-		//	//setqrCode(imageObjectURL);
+        let rep = async() => await axios.post(url,  {responseType: 'arraybuffer'})
+        .then(res => {
+            console.log("Successfully generate 2fa target");
+			console.log(res);
+			console.log(res.data);
+			setqrCode(res.data);
+			//fs.writeFileSync('./qrcode.png', res.data);
+			//setqrCode("./qrcode.png");
 
-        //})
-        //.catch((error) => {
-        //    console.log("Error while generating 2fa target");
-		//	console.log(error);
-        //})
+			//let imageblob = new Blob(res.data);
+			//let imageObjectURL = URL.createObjectURL(imageblob);
+			//let base64ImageString = Blob.from(res.data, 'binary').toString('base64');
+			//let srcValue = "data:image/png;base64,"+base64ImageString;
+			//setqrCode(imageObjectURL);
 
-		axios.post(url, { responseType: 'image/png' })
-		.then(response => {
-			console.log(typeof response);
-			let blob = new Blob(
-				[response.data],
-		{ type: response.headers['content-type']}
-			)
-			let image = URL.createObjectURL(blob);
-			setqrCode(image);
-			//return image
-			})
+        })
+        .catch((error) => {
+            console.log("Error while generating 2fa target");
+			console.log(error);
+        })
+
+		//console.log(rep);
+
+		//axios.post(url, { responseType: 'image/png' })
+		//.then(response => {
+		//	console.log(typeof response);
+		//	let blob = new Blob(
+		//		[response.data],
+		//{ type: response.headers['content-type']}
+		//	)
+		//	let image = URL.createObjectURL(blob);
+		//	setqrCode(image);
+		//	//return image
+		//	})
 
 		//return axios.post(url, { responseType: 'arraybuffer' })
 		//.then((response) => {
@@ -151,7 +157,7 @@ export default function User(props:UserfuncProps)
 		.catch((err) => {
 			console.log("Error while getting api auth");
 		})
-	});
+	}, []);
 
 
 
