@@ -13,6 +13,8 @@ import { UserModule } from 'src/user/user.module';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UserService } from '../user/user.service';
+import { UsersRepository } from 'src/user/user.repository';
+import { UserRelation } from 'src/user/entity/friend-request.entity';
 
 @Module({
     imports: [
@@ -20,6 +22,8 @@ import { UserService } from '../user/user.service';
         TypeOrmModule.forFeature([Chat]),
         TypeOrmModule.forFeature([Message]),
         TypeOrmModule.forFeature([Participate]),
+        TypeOrmModule.forFeature([UsersRepository]),
+        TypeOrmModule.forFeature([UserRelation]),
         AuthModule,
         UserModule,
         JwtModule.registerAsync({
