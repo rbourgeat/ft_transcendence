@@ -12,28 +12,28 @@ export class UserMigration1645626140921 implements MigrationInterface {
             queryRunner.manager.create<User>(User, {
                 login: 'dummy1',
                 status: 'offline',
-                avatar: '/upload/avatar2.png'
+                avatar: 'avatar2.png'
             }),
         );
         const dummy2 = await queryRunner.manager.save(
             queryRunner.manager.create<User>(User, {
                 login: 'dummy2',
                 status: 'online',
-                avatar: '/upload/avatar1.png'
+                avatar: 'avatar1.png'
             }),
         );
         const dummy3 = await queryRunner.manager.save(
             queryRunner.manager.create<User>(User, {
                 login: 'dummy3',
                 status: 'online',
-                avatar: '/upload/avatar2.png'
+                avatar: 'avatar2.png'
             }),
         );
         const dummy4 = await queryRunner.manager.save(
             queryRunner.manager.create<User>(User, {
                 login: 'dummy4',
                 status: 'online',
-                avatar: '/upload/avatar2.png'
+                avatar: 'avatar2.png'
             }),
         );
 
@@ -41,7 +41,7 @@ export class UserMigration1645626140921 implements MigrationInterface {
             queryRunner.manager.create<User>(User, {
                 login: 'dummy5',
                 status: 'online',
-                avatar: '/upload/avatar1.png'
+                avatar: 'avatar1.png'
             }),
         );
 

@@ -28,11 +28,13 @@ export class FtStrategy extends PassportStrategy(Strategy, '42') {
         console.log('accessToken', accessToken, 'refreshToken', refreshToken);
 
         const { username } = profile;
+        console.log(profile);
         const user = {
             login42: username,
             login: username,
             email: profile['emails'][0]['value'],
             password: username,
+            avatar: profile['photos'][0]['value'] //image_url
         }
         await this.userService.createUser42(user); //save the user in the db :)
         console.log('end of login 42');

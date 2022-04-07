@@ -11,6 +11,8 @@ export class UsersRepository extends Repository<User> {
         user.password = userData.password;
         user.login = userData.login;
         user.email = userData.email;
+        user.login42 = userData.login42
+        user.avatar = userData.avatar
         this.save(user)
         return user;
     }

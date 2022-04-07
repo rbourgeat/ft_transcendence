@@ -69,4 +69,5 @@ export class User42Dto {
     login: string;
     email: string;
     password: string;
+    avatar: string;
 }
