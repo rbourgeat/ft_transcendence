@@ -4,6 +4,7 @@ import { Message } from "src/chat/message/entity/message.entity";
 import { Chat } from "src/chat/entity/chat.entity";
 import { Participate } from "src/participate/participate.entity";
 import { Game } from "src/game/entity/game.entity";
+import { UserRelation } from "src/user/entity/friend-request.entity";
 
 export class UserMigration1645626140921 implements MigrationInterface {
     public async up(queryRunner: QueryRunner): Promise<void> {
@@ -35,6 +36,7 @@ export class UserMigration1645626140921 implements MigrationInterface {
                 avatar: '/upload/avatar2.png'
             }),
         );
+
         const dummy5 = await queryRunner.manager.save(
             queryRunner.manager.create<User>(User, {
                 login: 'dummy5',
@@ -42,6 +44,47 @@ export class UserMigration1645626140921 implements MigrationInterface {
                 avatar: '/upload/avatar1.png'
             }),
         );
+
+        const malatini = await queryRunner.manager.save(
+            queryRunner.manager.create<User>(User, {
+                login: 'malatini',
+                status: 'online',
+
+            }),
+        );
+
+        const malatiniRelation1 = await queryRunner.manager.save(
+            queryRunner.manager.create<UserRelation>(UserRelation, {
+                creator: malatini,
+                receiver: dummy1,
+                status: 'accepted',
+            }),
+        );
+
+        const malatiniRelation2 = await queryRunner.manager.save(
+            queryRunner.manager.create<UserRelation>(UserRelation, {
+                creator: malatini,
+                receiver: dummy2,
+                status: 'accepted',
+            }),
+        );
+
+        const malatiniRelation3 = await queryRunner.manager.save(
+            queryRunner.manager.create<UserRelation>(UserRelation, {
+                creator: dummy3,
+                receiver: malatini,
+                status: 'pending',
+            }),
+        );
+
+        const malatiniRelation4 = await queryRunner.manager.save(
+            queryRunner.manager.create<UserRelation>(UserRelation, {
+                creator: malatini,
+                receiver: dummy4,
+                status: 'blocked',
+            }),
+        );
+
 
         await getConnection()
             .createQueryBuilder()
@@ -112,6 +155,7 @@ export class UserMigration1645626140921 implements MigrationInterface {
                 players: [dummy3, dummy4]
             }),
         );
+
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
