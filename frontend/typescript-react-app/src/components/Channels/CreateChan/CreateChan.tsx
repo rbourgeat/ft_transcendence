@@ -21,6 +21,44 @@ export default function CreateChan(props: UserChat)
     const [modalShow, setModalShow] = React.useState(false);
     const [response, setResponse] = useState("");
 
+    let socket = io("http://localhost:3000/");
+
+    const [username, setUsername] = React.useState("");
+
+    useEffect(() => {
+        socket.on('connect', () => {
+            console.log(`Socket connectée !`);
+            socket.emit('status', username + ':online')
+        })
+
+        socket.on('disconnect', () => {
+            console.log(`Socket déconnectée !`);
+            socket.emit('status', username + ':offline')
+        })
+
+        let url = "http://localhost:3000/api/auth/";
+        let username = "";
+        axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+        axios.defaults.withCredentials = true;
+		axios.get(url)
+		.then (res => {
+			username = res.data.login;
+            setUsername(username);
+		})
+		.catch((err) => {
+			console.log("Error while getting api auth");
+		})
+
+    }, []);
+
+    function sendTest() {
+        socket.emit('test', 'test ok !')
+    }
+
+    function sendMessage(message: String) {
+        socket.emit('message', username + ": " + message)
+    }
+
     //React Hooks qui est appelée quand le component est mounté / la page est chargée
     //useEffect(() => {
         //let socket = io();
@@ -40,6 +78,12 @@ export default function CreateChan(props: UserChat)
         //})
   //  }, []);
 
+    const [inputValue, setInputValue] = React.useState("");
+    function handleInputChange(event) {
+        setInputValue(event.target.value);
+        socket.emit('status', "est en train d'écrire")
+    }
+
     return (
         <div id="channels">
             <Nav />
@@ -51,6 +95,21 @@ export default function CreateChan(props: UserChat)
                             <div className="row">
                                 <Button className="quick--actions" variant="primary" onClick={() => setModalShow(true)}>
                                     Create a new channel
+                                </Button>
+
+                                <Button className="quick--actions" variant="primary" onClick={() => sendTest()}>
+                                    Test
+                                </Button>
+
+                                <input
+                                className="form-control"
+                                type="text"
+                                placeholder="choose your new username"
+                                value={ inputValue }
+                                onChange={ handleInputChange }
+                                />
+                                <Button className="quick--actions" variant="primary" onClick={() => sendMessage(inputValue)}>
+                                    Envoyer
                                 </Button>
                                 {/*<Button className="quick--actions" variant="light" disabled>
                                     Send a DM
