@@ -127,7 +127,7 @@ export class ChatService {
 		);
 		await this.participateRepository.save(newParticipate2);
 
-		let chatName = "direct_" + user1.id + "_" + user1.id;
+		let chatName = "direct_" + user1.id + "_" + user2.id;
 		const newChat = await this.chatRepository.create(
 			{
 				name: chatName,

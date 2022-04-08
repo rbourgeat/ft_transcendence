@@ -72,8 +72,8 @@ export class ChatController {
     @ApiOkResponse({ description: 'Direct message creation suceed' })
     @ApiConflictResponse({ description: 'Direct message already exist' })
     @UseGuards(JwtAuthenticationGuard)
-    @Post('direct')
-    async createDirectMessage(@Body() user: string, @Req() req: RequestWithUser) {
+    @Post('/:userLogin/direct')
+    async createDirectMessage(@Param('userLogin') user: string, @Req() req: RequestWithUser) {
         let user2 = await this.userService.getUserByLogin(user);
         return await this.chatService.createDirectMessage(req.user, user2);
     }
