@@ -24,7 +24,7 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 		let imageName = "alt-photo";
       	//console.log("imageCode is " + avatar);
 
-		if (avatar.startsWith("http"))
+		if (avatar.startsWith("https://cdn.intra.42.fr"))
 		{
 			console.log('should display 42');
 			let imageUser42 = "https://cdn.intra.42.fr/users/".concat(props.login).concat(".jpg");

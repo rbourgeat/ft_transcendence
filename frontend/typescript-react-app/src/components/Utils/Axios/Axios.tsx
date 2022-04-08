@@ -715,7 +715,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
         //bahaas add
         let imageUser42 = "https://cdn.intra.42.fr/users/".concat(login).concat(".jpg")
         console.log('imageUSer42: ' + imageUser42);
-        if (imageCode.startsWith("http")) {
+        if (imageCode.startsWith("https://cdn.intra.42.fr")) {
             console.log('should display 42');
             let myImage: HTMLImageElement = document.querySelector("#".concat(login));
            // var objectURL = URL.createObjectURL(imageUser42);
