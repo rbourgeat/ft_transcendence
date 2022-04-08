@@ -2,6 +2,8 @@ import './MiniDisplay.scss';
 import axios from 'axios';
 import MyAxios from '../../Utils/Axios/Axios';
 import React, { Component, useState, useEffect, useRef} from 'react';
+// IMPORTER CA 
+import io from "socket.io-client";
 
 interface MiniDisplayProps {
 	login?: string,
@@ -56,9 +58,38 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 
 	}
 
+	// REPRENDRE USER ICI
+	const [username, setUsername] = React.useState("");
+	async function getUser() {
+        let url = "http://localhost:3000/api/auth/";
+        let username = "";
+        axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+        axios.defaults.withCredentials = true;
+        await axios.get(url)
+            .then(res => {
+                username = res.data.login;
+                console.log(username + ' <-- result of get user')
+            })
+            .catch((err) => {
+                console.log("Error while getting api auth");
+            })
+    }
+
 	useEffect(() => {
+		getUser();
 		setLoad(true);
+		
 	}, []);
+
+	// LA SOCKET ICI
+	let socket = io("http://localhost:3000/chat", { query: { username: username } });
+	const [status, setStatus] = React.useState(props.status);
+	socket.on("updateStatus", (pseudo, statusUpdated) => {
+        if (pseudo) {
+            console.log("name: " + pseudo + " / " + "status: " + statusUpdated);
+			setStatus(statusUpdated);
+        }
+    });
 
 	let inputEl = useRef();
 
@@ -70,7 +101,7 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 					<br />
 					<span> {load == true ? renderImage(props.avatar) : ""}</span>
 					<p className="user--p" id="mini--login">{props.login}</p>
-					<p className="user--p" id="mini--status">{props.status}</p>
+					<p className="user--p" id="mini--status">{status}</p>
 					<a href="" className="profile--link">Profile [to do]</a>
 				</div>
 			</li>
