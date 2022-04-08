@@ -17,51 +17,46 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 
 	function renderImage(avatar: string)
 	{
-		console.log("here");
 		if (!avatar)
 			return ;
-		let ax = new MyAxios(null);
-		console.log("avatar is " + avatar);
-		let ret: any;
+		//console.log("avatar is " + avatar);
 
 		let imageName = "alt-photo";
-        console.log("imageCode is " + avatar);
+      	//console.log("imageCode is " + avatar);
 
 		if (avatar.startsWith("http"))
 		{
 			console.log('should display 42');
-            let myImage: HTMLImageElement = document.querySelector("#".concat(props.login));
-           // var objectURL = URL.createObjectURL(imageUser42);
-            myImage.src = avatar;
-            return (<img src={myImage.src} alt={imageName} height="80" width="80" id={props.login} />);
+			let imageUser42 = "https://cdn.intra.42.fr/users/".concat(props.login).concat(".jpg");
+            //let myImage: HTMLImageElement = document.querySelector("#".concat(props.login));
+			//var objectURL = avatar;
+            //myImage.src = objectURL;
+			var myImg = document.getElementById(props.login) as HTMLImageElement;
+			if (imageUser42)
+				myImg.src = imageUser42;
+			else
+				myImg.src = avatar;
+			console.log("Image.src is " + myImg.src);
+			return ;
+
+            //return (<img src={myImage.src} alt={imageName} id={props.login} height="80"/>);
 		}
        // if (avatar == null)
             //ret = <img src="https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg" alt={imageName} height="80" width="80" id="avatar-id"/>;
 		//		return (<img src="https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg" alt={imageName} height="80" width="80" id="avatar-id"/>);
 
         let url = "http://localhost:3000/api/user/".concat(avatar).concat("/avatar/");
-        console.log(url);
-       // console.log("The url is " + url);
+        //console.log(url);
         let res = axios.get(url, {responseType: 'blob'})
         .then(res => {
             let myImage: HTMLImageElement = document.querySelector("#".concat(props.login));
-			//console.log("my Image is " + myImage)
-			//var myImage = new Image(80, 80);
 			var objectURL = URL.createObjectURL(res.data);
 			myImage.src = objectURL;
-			//myImage.currentSrc = objectURL
-            // = objectURL;
-            //console.log("the image src is " + myImage.src);
-			//ret = <img src={myImage.src} alt={imageName} height="80" width="80" />
-			//return (<img src={myImage.src} alt={imageName} height="80" width="80" />);
-			//return (myImage);
-			return (<img src={myImage.src} alt={imageName} id={props.login} height="80"  />);
-
-
+			return (<img src={myImage.src} alt={imageName} id={props.login} height="80" />);
         })
         .catch ((error) => {
             console.log("Catched error during get/fileId/avatar");
-            console.log(error);
+            //console.log(error);
         })
 
 	}
@@ -76,7 +71,7 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 		<div id="minidisplay--container">
 			<li id="minidisplay--div" className="list-group-item">
 				<div /*className="row d-flex justify-content-center text-center"*/>
-					<img height="80" id={props.login} width="80"/>
+					<img id={props.login} src="" width="80" height="80"/>
 					<br />
 					<span> {load == true ? renderImage(props.avatar) : ""}</span>
 					<br />
