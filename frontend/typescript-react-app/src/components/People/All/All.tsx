@@ -7,6 +7,10 @@ import Invitations from "../Invitations/Invitations";
 import Blocked from "../Blocked/Blocked";
 import Friends from "../Friends/Friends";
 
+//interface InputWrapperProps {
+//	children?: React.ReactNode
+//}
+
 export default function All() {
 	//TODO: attention a trouver quelque chose pour faire "une pause" tant que toutes les requetes n'ont pas été faites
 	const [users, setUsers] = React.useState([]);
@@ -68,13 +72,13 @@ export default function All() {
 					<div className="row" id="row--users">
 					<div id="ul--list" className="row">
 						<h2 id="registered--title">List of all registered users</h2>
-						<ul id="list--users--ul" className="list-group list-group-horizontal-lg">
-							{load == true ? console.log("Mapping") : ""}
-							{/*{mapUsers()}*/}
-							{load == true ? users.map(user => <MiniDisplay key={user.login} login={user.login} status={user.status} avatar={user.avatar} />) : ""}
-							{/*{load == true ? <MiniDisplay key={users[0].login} login={users[0].login} status={users[0].status} avatar={users[0].avatar} /> : ""}*/}
-							{/*{load == true ? <MiniDisplay key={users[1].login} login={users[1].login} status={users[1].status} avatar={users[1].avatar} /> : ""}*/}
-						</ul>
+							<ul id="list--users--ul" className="list-group list-group-horizontal-lg">
+								{/*{load == true ? console.log("Mapping") : ""}*/}
+								{/*{mapUsers()}*/}
+								{load == true ? users.map(user => <MiniDisplay key={user.login} login={user.login} status={user.status} avatar={user.avatar} />): ""}
+								{/*{load == true ? <MiniDisplay key={users[0].login} login={users[0].login} status={users[0].status} avatar={users[0].avatar} /> : ""}*/}
+								{/*{load == true ? <MiniDisplay key={users[1].login} login={users[1].login} status={users[1].status} avatar={users[1].avatar} /> : ""}*/}
+							</ul>
 					</div>
 					</div>
 					<Friends />

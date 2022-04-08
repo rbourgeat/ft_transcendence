@@ -1,9 +1,7 @@
 import './Login.scss';
-
 import React, { useState, useEffect } from 'react';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import ToastAlerts from "../../Utils/ToastAlerts/ToastAlerts"
+import { ToastContainer } from 'react-toastify';
 import axios from "axios";
 import Dashboard from "../../Dashboard/Dashboard"
 import myAxios from "../../Utils/Axios/Axios"
@@ -17,25 +15,17 @@ interface LoginState
   isLogged?: boolean
 }
 
-/**
- * @malatini
- * Page Auth, permet de vérifier si les infos sont correctes, de connecter le user et d'être redirigé
- * TODO: devrait modifier le useContext pour qu'on puisse afficher les pages/composants si connectes
- */
 export default class Login extends React.Component<LoginProps, LoginState>
 {
         constructor(props: LoginProps)
         {
             super(props);
-
-            //Init state
             this.state = {
               email: "",
               password: ""
             }
         }
-
-        //Connexion ou tentative de connection en utilisant notre "utilitaire" myAxios
+        
         submit=(event: any)=>
         {
           event.preventDefault();

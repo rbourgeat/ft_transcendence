@@ -4,7 +4,7 @@ import './Stats.scss';
 import axios from 'axios';
 import MyAxios from '../Utils/Axios/Axios';
 import { ToastContainer, toast } from 'react-toastify';
-import {Modal, Button, Row, Col, Form} from "react-bootstrap";
+//import {Modal, Button, Row, Col, Form} from "react-bootstrap";
 import Dashboard from '../Dashboard/Dashboard';
 
 export default function Stats(props)

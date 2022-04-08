@@ -1,7 +1,6 @@
 import React, { cloneElement } from "react";
 import axios from "axios";
 import ToastAlerts from "../ToastAlerts/ToastAlerts"
-import cookie from 'react-cookie';
 import Login from "../../Auth/Login/Login";
 
 interface AxiosProps {
@@ -22,18 +21,12 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
 {
     constructor(props: AxiosProps) {
         super(props);
-
-        //Init state
         this.state =
         {
             status: 0,
         }
     }
 
-    /*
-    ** Chat endpoints
-    */
-    //TODO: a revoir
     get_api_chat() {
         axios.defaults.withCredentials = true;
 
@@ -55,7 +48,6 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
         return;
         let url = "http://localhost:3000/api/chat/";
 
-        //Pas sure que ce soit utile
         let headers = {
             'Content-Type': 'application/json'
         }
@@ -98,12 +90,10 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     /*
     ** post /api/chat/message -> attente endpoint à modifier ?
     */
-    //TODO: attendre update
 
     /*
     ** post /api/chat/join
     */
-    //TODO: à tester
     post_api_chat_join(pass: string, pub: boolean, channame: string) {
         let url = "http://localhost:3000/api/chat/join";
 

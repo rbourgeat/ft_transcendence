@@ -68,7 +68,10 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 				<div /*className="row d-flex justify-content-center text-center"*/>
 					<img className="profile--pic" id={props.login} src="" width="80" height="80"/>
 					<br />
-					<span> {load == true ? renderImage(props.avatar) : ""}</span>
+					<span>
+						{/*{load == true ? renderImage(props.avatar) : ""}*/}
+						renderImage(props.avatar)
+					</span>
 					<p className="user--p" id="mini--login">{props.login}</p>
 					<p className="user--p" id="mini--status">{props.status}</p>
 					<a href="" className="profile--link">Profile [to do]</a>

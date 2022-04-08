@@ -6,10 +6,7 @@ import MyAxios from '../Utils/Axios/Axios';
 import { ToastContainer, toast } from 'react-toastify';
 import ToastAlerts from '../Utils/ToastAlerts/ToastAlerts';
 import EditUsernameModal from "./editUsername/EditUsername";
-import { Modal, Button, Row, Col, Form } from "react-bootstrap";
-import { faCommentsDollar } from '@fortawesome/free-solid-svg-icons';
 import Dashboard from '../Dashboard/Dashboard';
-import QRCode from 'qrcode.react';
 
 export interface UserfuncProps {
 	username?: string,
@@ -199,15 +196,16 @@ export default function User(props: UserfuncProps) {
 				<div className="row d-flex justify-content-center text-center">
 					<div className="col-9" id="bonjour--user">
 						<br /><br />
-						<div className="user--stats">
-							<img id={username} className="profile--pic" height="80" width="80"></img>
+						<div className="user--stats" key={username}>
+							<>
+
+							<img id={username} className="profile--pic" height="80" width="80"/>
 							{renderImage(username)}
-							<br />
 							<br />
 							<div className="col-9 mx-auto text-center" id="input-div">
 								<h2 id="user--data">{username}</h2>
-								<Button id="change--username" variant="ight" onClick={() => { console.log("clicked"); setModalShowUsername(true) }}>
-									change username</Button>
+								<button id="change--username" className="btn btn-outline-info" onClick={() => { console.log("clicked"); setModalShowUsername(true) }}>
+									change username</button>
 								<EditUsernameModal username={username} show={modalShowUsername} onHide={() => {
 									//console.log("called");
 									setModalShowUsername(false)
@@ -266,6 +264,9 @@ export default function User(props: UserfuncProps) {
 						<p>Total loss : <span className="span--stats">{props.totalLoss ? props.totalLoss : 0}</span></p>
 						<p>Win/loss ratio : <span className="span--stats">{props.winLoss ? props.winLoss : 0}</span></p>
 					</div>*/}
+
+
+							</>
 						</div>
 					</div>
 				</div>
