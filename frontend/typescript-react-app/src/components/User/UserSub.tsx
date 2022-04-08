@@ -98,7 +98,8 @@ export default function User(props: UserfuncProps) {
 	}
 
 	function renderQrCode(qrcode: any) {
-		return (<img height="180" src={qrcode}></img>);
+		//return (<img height="180" width="180" src={qrcode}></img>);
+		//return (manageQR());
 	}
 
 	return (
@@ -118,7 +119,7 @@ export default function User(props: UserfuncProps) {
 								<Button id="change--username" variant="ight" onClick={() => { console.log("clicked"); setModalShowUsername(true) }}>
 									change username</Button>
 								<EditUsernameModal username={username} show={modalShowUsername} onHide={() => {
-									console.log("called");
+									//console.log("called");
 									setModalShowUsername(false)
 								}} />
 								<br />
@@ -141,8 +142,8 @@ export default function User(props: UserfuncProps) {
 										{qrcode != "" ? <p className="warning-2fa">You will have to successfully authenticate to turn 2FA on</p> : <p></p>}
 										<button className="btn btn-outline-danger" id="button--2fa" onClick={handle2FA}>Activate 2FA</button>
 										<br />
-										<img id="image"></img>
-										{renderQrCode(qrcode)}
+										<img id="image" src={qrcode}></img>
+										{/*{qrcode == "" ? renderQrCode(qrcode) : <p></p>}*/}
 										{qrcode != "" ? <p className="black--text">Please scan the QR Code with your Google Authenticator app.</p> : <p className="black--text"></p>}
 										{qrcode != "" ? <label className="black--text">Enter the code provided</label> : <p className="black--text"></p>}
 										{qrcode != "" ? <input className="form-control form-control-sm" type="text" placeholder="422 022"></input> : <p className="black--text"></p>}

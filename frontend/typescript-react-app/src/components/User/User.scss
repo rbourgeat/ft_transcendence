@@ -120,6 +120,10 @@ button {
 	border-radius: variables.$border-radius;
 }
 
+img[src=""] {
+  display: none;
+}
+
 
 //#user--div--info, #user--time {
 //  color: white !important;
