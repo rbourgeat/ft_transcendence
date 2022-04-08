@@ -109,7 +109,7 @@ export default function User(props: UserfuncProps) {
 					<div className="col-9" id="bonjour--user">
 						<br /><br />
 						<div className="user--stats">
-							<img id={username} height="80" width="80"></img>
+							<img id={username} className="profile--pic" height="80" width="80"></img>
 							{renderImage(username)}
 							<br />
 							<br />

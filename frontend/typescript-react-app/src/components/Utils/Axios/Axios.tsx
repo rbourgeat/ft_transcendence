@@ -715,15 +715,18 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
         //bahaas add
         let imageUser42 = "https://cdn.intra.42.fr/users/".concat(login).concat(".jpg")
         console.log('imageUSer42: ' + imageUser42);
-        if (imageCode.startsWith("https://cdn.intra.42.fr")) {
+        if (imageCode.startsWith("http")) {
             console.log('should display 42');
             let myImage: HTMLImageElement = document.querySelector("#".concat(login));
            // var objectURL = URL.createObjectURL(imageUser42);
             myImage.src = imageUser42;
-            return (<img src={myImage.src} alt={imageName} height="80" width="80" id={login} />);
+            return (<img className="profile--pic" src={myImage.src} alt={imageName} height="80" width="80" id={login} />);
         }
         else
+        {
             console.log('start with condition false, imageCode is :' + imageCode);
+        }
+
         //endof bahaas add
 
 
@@ -735,13 +738,13 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
                 let myImage = document.querySelector('img');
                 var objectURL = URL.createObjectURL(res.data);
                 myImage.src = objectURL;
-                //console.log("the image src is " + myImage.src);
                 return (
-                    <img src={myImage.src} alt={imageName} height="80" width="80" />
+                    <img className="profile--pic" src={myImage.src} alt={imageName} height="80" width="80" />
                 )
             })
             .catch((error) => {
                 console.log("Catched error during get/fileId/avatar");
+                return (<img className="profile--pic" src="https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg" alt={imageName} height="80" width="80" id={login}/>);
                 //console.log(error);
             })
     }

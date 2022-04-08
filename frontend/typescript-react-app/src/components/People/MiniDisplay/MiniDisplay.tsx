@@ -24,26 +24,20 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 		let imageName = "alt-photo";
       	//console.log("imageCode is " + avatar);
 
-		if (avatar.startsWith("https://cdn.intra.42.fr"))
+		if (avatar.startsWith("http"))
 		{
-			console.log('should display 42');
+			//console.log('should display 42');
 			let imageUser42 = "https://cdn.intra.42.fr/users/".concat(props.login).concat(".jpg");
-            //let myImage: HTMLImageElement = document.querySelector("#".concat(props.login));
-			//var objectURL = avatar;
-            //myImage.src = objectURL;
 			var myImg = document.getElementById(props.login) as HTMLImageElement;
 			if (imageUser42)
 				myImg.src = imageUser42;
 			else
 				myImg.src = avatar;
-			console.log("Image.src is " + myImg.src);
+			//console.log("Image.src is " + myImg.src);
 			return ;
-
-            //return (<img src={myImage.src} alt={imageName} id={props.login} height="80"/>);
 		}
-       // if (avatar == null)
-            //ret = <img src="https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg" alt={imageName} height="80" width="80" id="avatar-id"/>;
-		//		return (<img src="https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg" alt={imageName} height="80" width="80" id="avatar-id"/>);
+		//else
+		//	return (<img src="https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg" alt={imageName} height="80" width="80" id={props.login}/>);
 
         let url = "http://localhost:3000/api/user/".concat(avatar).concat("/avatar/");
         //console.log(url);
@@ -52,10 +46,11 @@ export default function MiniDisplay(props: MiniDisplayProps) {
             let myImage: HTMLImageElement = document.querySelector("#".concat(props.login));
 			var objectURL = URL.createObjectURL(res.data);
 			myImage.src = objectURL;
-			return (<img src={myImage.src} alt={imageName} id={props.login} height="80" />);
+			return (<img className="profile--pic" src={myImage.src} alt={imageName} id={props.login} height="80" />);
         })
         .catch ((error) => {
             console.log("Catched error during get/fileId/avatar");
+			return (<img className="profile--pic" src="https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg" alt={imageName} height="80" width="80" id={props.login}/>);
             //console.log(error);
         })
 
@@ -71,7 +66,7 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 		<div id="minidisplay--container">
 			<li id="minidisplay--div" className="list-group-item">
 				<div /*className="row d-flex justify-content-center text-center"*/>
-					<img id={props.login} src="" width="80" height="80"/>
+					<img className="profile--pic" id={props.login} src="" width="80" height="80"/>
 					<br />
 					<span> {load == true ? renderImage(props.avatar) : ""}</span>
 					<br />

@@ -114,6 +114,13 @@ button {
   margin-bottom: 20px !important;
 }
 
+.profile--pic {
+	border: 0.1rem solid #f9f9f9 !important;
+	padding: 5px !important;
+	border-radius: variables.$border-radius;
+}
+
+
 //#user--div--info, #user--time {
 //  color: white !important;
 //}
