@@ -1,9 +1,9 @@
 import './MiniDisplay.scss';
-import axios from 'axios';
 import MyAxios from '../../Utils/Axios/Axios';
 import React, { Component, useState, useEffect, useRef} from 'react';
 // IMPORTER CA 
 import io from "socket.io-client";
+import axios from 'axios';
 
 interface MiniDisplayProps {
 	login?: string,
