@@ -69,13 +69,9 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 					<img className="profile--pic" id={props.login} src="" width="80" height="80"/>
 					<br />
 					<span> {load == true ? renderImage(props.avatar) : ""}</span>
-					<br />
-					<span id="mini--login">{props.login}</span>
-					<br />
-					<span id="mini--status">{props.status}</span>
-					<br />
-					<a href="" className="profile--link">Go to profile</a>
-					<br />
+					<p className="user--p" id="mini--login">{props.login}</p>
+					<p className="user--p" id="mini--status">{props.status}</p>
+					<a href="" className="profile--link">Profile [to do]</a>
 				</div>
 			</li>
 		</div>

@@ -12,7 +12,7 @@ function Nav() {
     return (
         <div id="nav">
             <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-					<Link to="/" id="nav--title">PONG GAME</Link>
+					<Link to="/" id="nav--title">PONG</Link>
                 <button className="navbar-toggler" type="button">
                     <span className="navbar-toggler-icon"></span>
                 </button>
@@ -20,7 +20,7 @@ function Nav() {
                     <ul className="navbar-nav">
 						<li className="nav-item">
 								<Link to="/game" className="nav-link">
-										<div className='nav-link-text'><p><FontAwesomeIcon icon={faGamepad} /></p><p>Game</p></div>
+										<div className='nav-link-text'><p><FontAwesomeIcon icon={faGamepad} /></p><p>Rules</p></div>
 								</Link>
 						</li>
 						<li className="nav-item">
@@ -30,7 +30,7 @@ function Nav() {
 						</li>
 						<li className="nav-item">
 								<Link to="/stats" className="nav-link">
-										<div className='nav-link-text'><p><FontAwesomeIcon icon={faTrophy} /></p><p>My Stats</p></div>
+										<div className='nav-link-text'><p><FontAwesomeIcon icon={faTrophy} /></p><p>Stats</p></div>
 								</Link>
 						</li>
 						{/*<li className="nav-item">
@@ -45,17 +45,17 @@ function Nav() {
 						</li>
 						<li className="nav-item">
 								<Link to="/chat"className="nav-link">
-										<div className='nav-link-text'><p><FontAwesomeIcon icon={faComment} /></p> <p>Messages [socket]</p></div>
+										<div className='nav-link-text'><p><FontAwesomeIcon icon={faComment} /></p> <p>Sockets</p></div>
 								</Link>
 						</li>
 						<li className="nav-item">
 								<Link to="/channels" className="nav-link">
-										<div className='nav-link-text'><p><FontAwesomeIcon icon={faComment} /></p> <p>Channels</p></div>
+										<div className='nav-link-text'><p><FontAwesomeIcon icon={faComment} /></p> <p>Chat</p></div>
 								</Link>
 						</li>
 						<li className="nav-item">
 								<Link to="/playwatch" className="nav-link">
-										<div className='nav-link-text'><p><FontAwesomeIcon icon={faDashboard} /></p><p>Play / Watch</p></div>
+										<div className='nav-link-text'><p><FontAwesomeIcon icon={faDashboard} /></p><p>Watch</p></div>
 								</Link>
 						</li>
 						<li className="nav-item">

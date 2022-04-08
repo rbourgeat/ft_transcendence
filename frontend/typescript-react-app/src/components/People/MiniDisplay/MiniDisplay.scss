@@ -22,4 +22,18 @@
 	border: 0.1rem solid #f9f9f9 !important;
 	padding: 5px !important;
 	border-radius: variables.$border-radius;
+	margin-bottom: 15px;
+}
+
+.user--p, .profile--link {
+	text-align: center !important;
+	font-family: variables.$basic-font;
+	font-size: 12px;
+	line-height: 10pt;
+}
+
+#mini--login {
+	//font-weight: 1000 !important;
+	font-size: 14px;
+	//color: red !important;
 }

@@ -64,7 +64,6 @@ export default function All() {
     return (
 			<div id="people--div">
 				<div className="container" id="container--all">
-					<h1 className="text" id="displaying">USERS</h1>
 					<br/>
 					<div className="row" id="row--users">
 					<div id="ul--list" className="row">
