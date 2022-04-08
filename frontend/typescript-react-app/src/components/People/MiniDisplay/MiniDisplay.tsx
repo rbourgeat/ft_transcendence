@@ -3,26 +3,27 @@ import axios from 'axios';
 import MyAxios from '../../Utils/Axios/Axios';
 import React, { Component, useState, useEffect, useRef} from 'react';
 
-interface MiniDisplayProps {
+export interface MiniDisplayProps {
 	login?: string,
 	status?: string,
 	avatar?: string
+	//wrapperStyle?: React.CSSProperties;
+	//children?: JSX.Element|JSX.Element[];
+	//children?: React.ReactNode
+
+	children?: React.ReactNode | React.ReactChild | React.ReactChildren | React.ReactChild[] | React.ReactChildren[]
 }
 
-/**
- * @malatini
- */
 export default function MiniDisplay(props: MiniDisplayProps) {
 	const [load, setLoad] = React.useState(false);
+	const calledOnce = React.useRef(false);
 
 	function renderImage(avatar: string)
 	{
 		if (!avatar)
 			return ;
-		//console.log("avatar is " + avatar);
 
 		let imageName = "alt-photo";
-      	//console.log("imageCode is " + avatar);
 
 		if (avatar.startsWith("http"))
 		{
@@ -32,12 +33,9 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 			if (imageUser42)
 				myImg.src = imageUser42;
 			else
-				myImg.src = avatar;
-			//console.log("Image.src is " + myImg.src);
+				myImg.src = avatar;;
 			return ;
 		}
-		//else
-		//	return (<img src="https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg" alt={imageName} height="80" width="80" id={props.login}/>);
 
         let url = "http://localhost:3000/api/user/".concat(avatar).concat("/avatar/");
         //console.log(url);
@@ -51,33 +49,34 @@ export default function MiniDisplay(props: MiniDisplayProps) {
         .catch ((error) => {
             console.log("Catched error during get/fileId/avatar");
 			return (<img className="profile--pic" src="https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg" alt={imageName} height="80" width="80" id={props.login}/>);
-            //console.log(error);
         })
 
 	}
 
 	useEffect(() => {
+		if (calledOnce.current) {
+			return;}
 		setLoad(true);
+		calledOnce.current = true;
 	}, []);
 
-	let inputEl = useRef();
+	//let inputEl = useRef();
 
     return (
-		<div id="minidisplay--container">
-			<li id="minidisplay--div" className="list-group-item">
-				<div /*className="row d-flex justify-content-center text-center"*/>
+		//<div id="minidisplay--container">
+		<>
+			<li id="minidisplay--div" className="list-group-item" key={props.login}>
+				{/*<div id="minidisplay--container">*/}
 					<img className="profile--pic" id={props.login} src="" width="80" height="80"/>
+					{load == true ? renderImage(props.avatar) : console.log("test")}
 					<br />
-					<span>
-						{/*{load == true ? renderImage(props.avatar) : ""}*/}
-						renderImage(props.avatar)
-					</span>
+					{/*{load == true ? renderImage(props.avatar) : console.log("image not loaded")}*/}
 					<p className="user--p" id="mini--login">{props.login}</p>
 					<p className="user--p" id="mini--status">{props.status}</p>
 					<a href="" className="profile--link">Profile [to do]</a>
-				</div>
+				{/*</div>*/}
 			</li>
-		</div>
+		</>
     );
 }
 

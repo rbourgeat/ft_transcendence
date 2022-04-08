@@ -198,23 +198,21 @@ export default function User(props: UserfuncProps) {
 						<br /><br />
 						<div className="user--stats" key={username}>
 							<>
-
 							<img id={username} className="profile--pic" height="80" width="80"/>
 							{renderImage(username)}
 							<br />
 							<div className="col-9 mx-auto text-center" id="input-div">
 								<h2 id="user--data">{username}</h2>
-								<button id="change--username" className="btn btn-outline-info" onClick={() => { console.log("clicked"); setModalShowUsername(true) }}>
+								<button id="change--username" className="btn btn-outline-light" onClick={() => { console.log("clicked"); setModalShowUsername(true) }}>
 									change username</button>
 								<EditUsernameModal username={username} show={modalShowUsername} onHide={() => {
-									//console.log("called");
 									setModalShowUsername(false)
 								}} />
 								<br />
-								<div id="user--settings--div">
+								<div /*id="user--settings--div"*/>
 									<h2 id="user--settings">Settings</h2>
+									<label /*className="label-file"*/>Change avatar</label>
 									<div id="change--avatar">
-										<label className="label-file">Change avatar</label>
 										<input
 											type="file"
 											name="image-upload"
@@ -224,19 +222,15 @@ export default function User(props: UserfuncProps) {
 											className="input-file-upload"
 										/>
 									</div>
-									{/*<p>*/}
 									<div id="2fa--div">
 										<h3 id="activate--2fa">2 Factor Authentication</h3>
-										{/*{qrcode != "" && activated2fa == false ? <p className="warning-2fa">You will have to successfully authenticate (with QR and code) to turn 2FA on</p> : <p></p>}*/}
 										<button
 											className={activated2fa ? "btn btn-outline-danger" : "btn btn-outline-success"}
-											//{activated2fa ? className="btn btn-outline-danger" : className="btn btn-outline-success"}
 											id="button--2fa" onClick={handle2FA}>{activated2fa == true ? "Turn off 2FA" : "Turn on 2FA"}
 											</button>
 										<br />
 										{ qrcode != "" && activated2fa == false ? <img style={{marginBottom: "20ox"}} id="image" src={qrcode}></img> : <p></p>}
 										<br />
-										{/*{qrcode == "" ? renderQrCode(qrcode) : <p></p>}*/}
 										{qrcode != "" && activated2fa == false ?<p className="black--text" id="please">Please scan the QR Code with your Google Authenticator app.</p> : <p className="black--text"></p>}
 										{qrcode != "" && activated2fa == false ?<label className="black--text">Enter the code provided</label> : <p className="black--text"></p>}
 										{qrcode != "" && activated2fa == false ? <input className="form-control form-control-sm" type="text" placeholder="422 022" onChange={handleInputChange}></input> : <p className="black--text"></p>}
@@ -253,19 +247,8 @@ export default function User(props: UserfuncProps) {
 											pauseOnHover
 									/>
 									</div>
-									{/*</p>*/}
 								</div>
 							</div>
-							{/*<div id="stats" className="col-9 mx-auto text-center">
-						<h4 id="stats--title">Your statistics</h4>
-						<br/>
-						<p>Total games : <span className="span--stats">{props.totalGames ? props.totalGames : 0}</span></p>
-						<p>Total wins : <span className="span--stats">{props.totalWins ? props.totalWins : 0}</span></p>
-						<p>Total loss : <span className="span--stats">{props.totalLoss ? props.totalLoss : 0}</span></p>
-						<p>Win/loss ratio : <span className="span--stats">{props.winLoss ? props.winLoss : 0}</span></p>
-					</div>*/}
-
-
 							</>
 						</div>
 					</div>

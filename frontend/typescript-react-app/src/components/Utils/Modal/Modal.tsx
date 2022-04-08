@@ -3,7 +3,6 @@ import Nav from "../../Nav/Nav"
 
 export default function CreateChanModal(props) {
 	const [channame, setChannname] = React.useState("");
-	//const [policy, setPolicy] = React.useState("Public");
 	const [isSelected, setIsSelected] = React.useState(true);
 
 	const policies = ["Public", "Protected", "Private"];

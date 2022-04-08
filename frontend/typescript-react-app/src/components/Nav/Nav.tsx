@@ -81,10 +81,9 @@ function Nav() {
 											</p><p>Settings</p></div>
 								</Link>
 						</li>
-						<li className="nav-item">
-							<button className="btn btn-outline-info">Secondary</button>
-							{/*<div className='nav-link-text'><p><FontAwesomeIcon icon={faUser} /></p><p>Settings</p></div>*/}
-						</li>
+						{/*<li className="nav-item">
+							<button className="btn btn-outline-light">Secondary</button>
+						</li>*/}
                     </ul>
                 </div>
                 </nav>
