@@ -1,11 +1,9 @@
 import './GameRules.scss';
 import Nav from "../Nav/Nav";
-
 import io from "socket.io-client";
 import axios from "axios";
 import React, { Component, useState, useEffect } from "react";
 
-{/* Regles reprise au groupe de mli, on peut modifier ou ajouter des "bonus" */ }
 export default function GameRules() {
 
 	const [username, setUsername] = React.useState("");
@@ -49,7 +47,6 @@ export default function GameRules() {
 			<div id="game-rules" className="container">
 				<div className="row">
 					<div className="row d-flex justify-content-justify text-justify">
-						{/*<h1 id="game--rules" className="game--rules--title">Game rules</h1>*/}
 						<h1 className="game--rules--title">Presentation</h1>
 						<p>This is a classical Pong game :</p>
 						<br />

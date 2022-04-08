@@ -1,7 +1,7 @@
 import './CreateChan.scss';
 import React, { Component, useState, useEffect } from "react";
 import Nav from "../../Nav/Nav";
-import { Modal, Button, Row, Col, Form } from "react-bootstrap";
+//import { Modal, Button, Row, Col, Form } from "react-bootstrap";
 import CreateChanModal from "../../Utils/Modal/Modal";
 import myAxios from "../../Utils/Axios/Axios";
 import axios from "axios";
@@ -77,6 +77,7 @@ export default function CreateChan(props: UserChat) {
         socket.emit('status', "est en train d'écrire")
     }
 
+    //TODO: a reprendre sans react bootstrap, pb de dépendances
     return (
         <div id="channels">
             <Nav />
@@ -86,14 +87,15 @@ export default function CreateChan(props: UserChat) {
                         <div id="quick--actions">
                             {/*<h1 className="text" id="quick--actions--title">Quick actions</h1>*/}
                             <div className="row">
-                                <Button className="quick--actions" variant="primary" onClick={() => setModalShow(true)}>
+                                {/*<Button className="quick--actions" variant="primary" onClick={() => setModalShow(true)}>
                                     Create a new channel
                                 </Button>
 
+
                                 <Button className="quick--actions" variant="primary" onClick={() => sendTest()}>
                                     Test
-                                </Button>
-
+                                </Button>*/}
+                                {/*<button className"">Create a new channel</button>*/}
                                 <input
                                     className="form-control"
                                     type="text"
@@ -101,9 +103,10 @@ export default function CreateChan(props: UserChat) {
                                     value={inputValue}
                                     onChange={handleInputChange}
                                 />
-                                <Button className="quick--actions" variant="primary" onClick={() => sendMessage("DummyChannel", inputValue)}>
+                                {/*<Button className="quick--actions" variant="primary" onClick={() => sendMessage("DummyChannel", inputValue)}>
                                     Envoyer
-                                </Button>
+                                </Button>*/}
+
                                 {/*<Button className="quick--actions" variant="light" disabled>
                                     Send a DM
                                 </Button>

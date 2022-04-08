@@ -13,7 +13,7 @@ export default function Dashboard() {
                     id="dashboard-buttons"
                 >
                     <h1 className="titles">Dashboard / Personnal stats</h1>
-                    <h2 className="titles">to do macrespo</h2>
+                    <h2 className="titles">to do @malatini</h2>
                     <Badge />
                     <MatchHistory />
                     <Footer />

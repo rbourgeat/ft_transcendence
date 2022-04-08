@@ -10,10 +10,6 @@ import { ToastContainer, toast } from 'react-toastify';
 import { io } from "socket.io-client";
 
 
-/**
- * @malatini ou @macrespo
- * Page principale pour afficher les channels, voir les sous composants
-*/
 interface ChatProps {
     username?: string
 }

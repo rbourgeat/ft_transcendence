@@ -1,7 +1,6 @@
 import './ListChannels.scss';
 import React, {Component, useState, useEffect} from "react";
 import Nav from "../../Nav/Nav";
-import {Modal, Button, Row, Col, Form} from "react-bootstrap";
 import CreateChanModal from "../../Utils/Modal/Modal";
 import myAxios from "../../Utils/Axios/Axios";
 import axios from "axios";
@@ -16,7 +15,6 @@ interface ListChat
  * Pour la personne en charge du chat
  */
 export default function ListChannels(props: ListChat) {
-    //Toutes les channels
     const [channels, setChannels] = React.useState([]);
     const [count, setCount] = useState(0);
 
@@ -61,9 +59,8 @@ export default function ListChannels(props: ListChat) {
                                     <li key={channel.name} className="channel--list">{channel.name}</li>
                                 )}
                             </ul>
-                        </div>
-                    </div>
+                     </div>
                 </div>
-            //</div>
+        </div>
     );
 }

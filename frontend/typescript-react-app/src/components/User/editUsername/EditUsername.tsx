@@ -1,6 +1,6 @@
 import React, {Component, useState, useEffect} from "react";
 import Nav from "../../Nav/Nav"
-import {Modal, ModalBody, ModalHeader, ModalTitle, ModalFooter, Button, Row, Col, Form} from "react-bootstrap"
+//import {Modal, ModalBody, ModalHeader, ModalTitle, ModalFooter, Button, Row, Col, Form} from "react-bootstrap"
 import ToastAlerts from "../../Utils/ToastAlerts/ToastAlerts";
 import { ToastContainer, toast } from 'react-toastify';
 import myAxios from "../../Utils/Axios/Axios";
@@ -20,7 +20,7 @@ export default function EditUsernameModal(props) {
 		let url = "http://localhost:3000/api/user";
 
 		//ax.get_api_user();
-	});
+	}, []);
 
 	function clearInput() {
         setInputValue("");
@@ -40,9 +40,10 @@ export default function EditUsernameModal(props) {
 		window.top.location = "http://localhost:3030/user";
 	}
 
+		//TODO: a reprendre sans react bootstrap
 		return (
 			<div id="modal--create--channel">
-				<Modal
+				{/*<Modal
 					{...props}
 					size="lg"
 					aria-labelledby="contained-modal-title-vcenter"
@@ -69,7 +70,7 @@ export default function EditUsernameModal(props) {
 					<Modal.Footer>
 						<Button variant="light" onClick={props.onHide}>Close</Button>
 					</Modal.Footer>
-				</Modal>
+				</Modal>*/}
 				<ToastContainer
 					position="top-right"
 					autoClose={5000}
