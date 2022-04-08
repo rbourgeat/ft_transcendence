@@ -26,9 +26,18 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 
 		let imageName = "alt-photo";
         console.log("imageCode is " + avatar);
-        if (avatar == null)
+
+		if (avatar.startsWith("http"))
+		{
+			console.log('should display 42');
+            let myImage: HTMLImageElement = document.querySelector("#".concat(props.login));
+           // var objectURL = URL.createObjectURL(imageUser42);
+            myImage.src = avatar;
+            return (<img src={myImage.src} alt={imageName} height="80" width="80" id={props.login} />);
+		}
+       // if (avatar == null)
             //ret = <img src="https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg" alt={imageName} height="80" width="80" id="avatar-id"/>;
-			return (<img src="https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg" alt={imageName} height="80" width="80" id="avatar-id"/>);
+		//		return (<img src="https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg" alt={imageName} height="80" width="80" id="avatar-id"/>);
 
         let url = "http://localhost:3000/api/user/".concat(avatar).concat("/avatar/");
         console.log(url);

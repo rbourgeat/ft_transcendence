@@ -60,6 +60,8 @@ export default function User(props: UserfuncProps) {
 	const [modalShowUsername, setModalShowUsername] = React.useState(false);
 	const [username, setUsername] = React.useState("");
 
+	const calledOnce = React.useRef(false);
+
 
 	async function getUser() {
 		//console.log(username);
@@ -84,10 +86,20 @@ export default function User(props: UserfuncProps) {
 	}
 
 	useEffect(() => {
+		if (calledOnce.current) {
+			return;}
 		getUser();
+		calledOnce.current = true;
 	}, []);
 
+	function renderImage(login: string) {
+		let ax = new MyAxios(null);
+		return (ax.render_avatar(login));
+	}
 
+	function renderQrCode(qrcode: any) {
+		return (<img height="180" src={qrcode}></img>);
+	}
 
 	return (
 		<div id="user--div">
@@ -97,15 +109,14 @@ export default function User(props: UserfuncProps) {
 					<div className="col-9" id="bonjour--user">
 						<br /><br />
 						<div className="user--stats">
-							{/* TO DO: cleaner le CSS */}
+							<img id={username} height="80" width="80"></img>
 							{renderImage(username)}
 							<br />
 							<br />
 							<div className="col-9 mx-auto text-center" id="input-div">
 								<h2 id="user--data">{username}</h2>
 								<Button id="change--username" variant="ight" onClick={() => { console.log("clicked"); setModalShowUsername(true) }}>
-									change username
-                    </Button>
+									change username</Button>
 								<EditUsernameModal username={username} show={modalShowUsername} onHide={() => {
 									console.log("called");
 									setModalShowUsername(false)
@@ -155,12 +166,3 @@ export default function User(props: UserfuncProps) {
 		</div>
 	);
 };
-
-function renderImage(login: string) {
-	let ax = new MyAxios(null);
-	return (ax.render_avatar(login));
-}
-
-function renderQrCode(qrcode: any) {
-	return (<img height="180" src={qrcode}></img>);
-}

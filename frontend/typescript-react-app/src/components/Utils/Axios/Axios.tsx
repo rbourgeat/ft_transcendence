@@ -705,17 +705,22 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
         //console.log("Should only be called if the image is not default image");
         let imageName = "alt-photo";
         console.log("imageCode in getImage is " + imageCode);
-        if (imageCode == null) {
-            console.log('imageCode was null');
-            return (<img src="https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg" alt={imageName} height="80" width="80" id="avatar-id" />);
+        /*
+        if (imageCode == null || imageCode == "https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg") {
+            console.log('imageCode was null or default');
+            return (<img src="https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg" alt={imageName} height="80" width="80" id={login} />);
         }
+        */
 
         //bahaas add
         let imageUser42 = "https://cdn.intra.42.fr/users/".concat(login).concat(".jpg")
         console.log('imageUSer42: ' + imageUser42);
         if (imageCode.startsWith("http")) {
             console.log('should display 42');
-            return (<img src={imageUser42} alt={imageName} height="80" width="80" id="avatar - id" />);
+            let myImage: HTMLImageElement = document.querySelector("#".concat(login));
+           // var objectURL = URL.createObjectURL(imageUser42);
+            myImage.src = imageUser42;
+            return (<img src={myImage.src} alt={imageName} height="80" width="80" id={login} />);
         }
         else
             console.log('start with condition false, imageCode is :' + imageCode);
@@ -742,7 +747,12 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     }
 
     render_avatar(login: string) {
-        let imageCode = "https://42.fr/wp-content/uploads/2021/08/42.jpg";
+
+        if (!login)
+        {
+            return;
+        }
+        let imageCode = null;
         let imageName = "alt-photo";
         let url = "http://localhost:3000/api/user/".concat(login)
 
@@ -757,9 +767,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
             .catch(error => {
                 console.log("Catched error getting avatar");
             })
-        return (
-            <img src={imageCode} alt={imageName} height="80" width="80" id="avatar-id" style={{ marginBottom: "20px", border: "0.1rem solid grey" }} />
-        );
+        //return (<img alt={imageName} height="80" width="80"/>);
     }
 
     post_avatar(login: string, file: any) {
