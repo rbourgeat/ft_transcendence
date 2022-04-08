@@ -12,6 +12,8 @@ import { Logger } from "@nestjs/common";
 //	//},
 //})
 
+var clients = [];
+
 @WebSocketGateway({ namespace: 'chat', cors: true })
 
 export class ChatGateway implements OnGatewayConnection {
@@ -28,11 +30,22 @@ export class ChatGateway implements OnGatewayConnection {
 	async handleConnection(socket: Socket, ...args: any[]) {
 		this.logger.log("Client connected: " + socket.handshake.query.username + ' id: ' + socket.id + ')');
 		this.userService.updateStatus(String(socket.handshake.query.username), "online");
+		clients.push(socket);
+		clients.forEach(function(client) {
+			client.emit("updateStatus", String(socket.handshake.query.username), "online");
+		});
 	}
 
 	async handleDisconnect(socket: Socket, ...args: any[]) {
 		this.logger.log("Client disconnected: " + socket.handshake.query.username + ' id: ' + socket.id + ')');
 		this.userService.updateStatus(String(socket.handshake.query.username), "offline");
+		clients.forEach(function(client) {
+			client.emit("updateStatus", String(socket.handshake.query.username), "offline");
+		});
+		const index = clients.indexOf(socket);
+		if (index > -1) {
+			clients.splice(index, 1);
+		}
 	}
 
 	@SubscribeMessage('status')

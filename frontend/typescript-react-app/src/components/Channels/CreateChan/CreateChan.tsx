@@ -40,15 +40,15 @@ export default function CreateChan(props: UserChat) {
     useEffect(() => {
         getUser();
 
-        socket.on('connect', () => {
-            console.log(`Socket connectée !`);
-            // socket.emit('status', username + ':online')
-        })
+        // socket.on('connect', () => {
+        //     console.log(`Socket connectée !`);
+        //     // socket.emit('status', username + ':online')
+        // })
 
-        socket.on('disconnect', () => {
-            console.log(`Socket déconnectée !`);
-            // socket.emit('status', username + ':offline')
-        })
+        // socket.on('disconnect', () => {
+        //     console.log(`Socket déconnectée !`);
+        //     // socket.emit('status', username + ':offline')
+        // })
 
     }, []);
 
@@ -57,6 +57,12 @@ export default function CreateChan(props: UserChat) {
     function sendTest() {
         socket.emit('test', 'test ok !')
     }
+
+    // socket.on("updateStatus", (pseudo, status) => {
+    //     if (pseudo) {
+    //         console.log("name: " + pseudo + " / " + "status: " + status);
+    //     }
+    // });
 
     let channel = "";
 
