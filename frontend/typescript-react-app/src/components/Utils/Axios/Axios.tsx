@@ -704,62 +704,73 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     getImage(imageCode: string, login: string) {
         //console.log("Should only be called if the image is not default image");
         let imageName = "alt-photo";
-        console.log("imageCode in getImage is " + imageCode);
-        if (imageCode == null) {
-            console.log('imageCode was null');
-            return (<img src="https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg" alt={imageName} height="80" width="80" id="avatar-id" />);
+        //console.log("imageCode in getImage is " + imageCode);
+        /*
+        if (imageCode == null || imageCode == "https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg") {
+            console.log('imageCode was null or default');
+            return (<img src="https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg" alt={imageName} height="80" width="80" id={login} />);
         }
+        */
 
         //bahaas add
         let imageUser42 = "https://cdn.intra.42.fr/users/".concat(login).concat(".jpg")
-        console.log('imageUSer42: ' + imageUser42);
+        //console.log('imageUSer42: ' + imageUser42);
         if (imageCode.startsWith("http")) {
-            console.log('should display 42');
-            return (<img src={imageUser42} alt={imageName} height="80" width="80" id="avatar - id" />);
+            //console.log('should display 42');
+            let myImage: HTMLImageElement = document.querySelector("#".concat(login));
+           // var objectURL = URL.createObjectURL(imageUser42);
+            myImage.src = imageUser42;
+            return (<img className="profile--pic" src={myImage.src} alt={imageName} height="80" width="80" id={login} />);
         }
-        else
-            console.log('start with condition false, imageCode is :' + imageCode);
+        //else
+        //{
+        //    console.log('start with condition false, imageCode is :' + imageCode);
+        //}
+
         //endof bahaas add
 
 
         let url = "http://localhost:3000/api/user/".concat(imageCode).concat("/avatar/");
-        console.log('url:' + url);
+        //console.log('url:' + url);
 
         let res = axios.get(url, { responseType: 'blob' })
             .then(res => {
                 let myImage = document.querySelector('img');
                 var objectURL = URL.createObjectURL(res.data);
                 myImage.src = objectURL;
-                //console.log("the image src is " + myImage.src);
                 return (
-                    <img src={myImage.src} alt={imageName} height="80" width="80" />
+                    <img className="profile--pic" src={myImage.src} alt={imageName} height="80" width="80" />
                 )
             })
             .catch((error) => {
-                console.log("Catched error during get/fileId/avatar");
+                //console.log("Catched error during get/fileId/avatar");
+                return (<img className="profile--pic" src="https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg" alt={imageName} height="80" width="80" id={login}/>);
                 //console.log(error);
             })
     }
 
     render_avatar(login: string) {
-        let imageCode = "https://42.fr/wp-content/uploads/2021/08/42.jpg";
+
+        if (!login)
+        {
+            return;
+        }
+        let imageCode = null;
         let imageName = "alt-photo";
         let url = "http://localhost:3000/api/user/".concat(login)
 
-        console.log("login in render_avatar is " + login);
+        //console.log("login in render_avatar is " + login);
 
         let res = axios.get(url)
             .then(res => {
                 imageCode = res.data.avatar;
-                console.log("Image in render avatar is " + imageCode);
+                //console.log("Image in render avatar is " + imageCode);
                 return (this.getImage(imageCode, login));
             })
             .catch(error => {
                 console.log("Catched error getting avatar");
             })
-        return (
-            <img src={imageCode} alt={imageName} height="80" width="80" id="avatar-id" style={{ marginBottom: "20px", border: "0.1rem solid grey" }} />
-        );
+        //return (<img alt={imageName} height="80" width="80"/>);
     }
 
     post_avatar(login: string, file: any) {

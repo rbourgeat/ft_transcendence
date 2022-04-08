@@ -6,12 +6,17 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import RequestWithUser from 'src/auth/interface/requestWithUser.interface';
 import JwtAuthenticationGuard from 'src/auth/guard/jwt-authentication.guard';
 import { CreateMessageDto, SendMessageToChatDto } from './dto/message.dto';
+import { UserDto } from '../user/dto/user.dto';
+import { User } from 'src/user/entity/user.entity';
+import { Repository } from 'typeorm';
+import { UserService } from 'src/user/user.service';
 
 @ApiTags('Chats') //Create a category on swagger
 @Controller('api/chat')
 export class ChatController {
     constructor(
-        private readonly chatService: ChatService
+        private readonly chatService: ChatService,
+        private userService: UserService
     ) { }
 
     @ApiOperation({ summary: 'Retrieve all chats data' }) //endpoint summary on swaggerui
@@ -61,6 +66,16 @@ export class ChatController {
     @Post()
     async createChat(@Body() chat: CreateChatDto, @Req() req: RequestWithUser) {
         return this.chatService.createChat(chat, req.user);
+    }
+
+    @ApiOperation({ summary: 'Create a new direct message [jwt-protected]' })
+    @ApiOkResponse({ description: 'Direct message creation suceed' })
+    @ApiConflictResponse({ description: 'Direct message already exist' })
+    @UseGuards(JwtAuthenticationGuard)
+    @Post('direct')
+    async createDirectMessage(@Body() user: string, @Req() req: RequestWithUser) {
+        let user2 = await this.userService.getUserByLogin(user);
+        return await this.chatService.createDirectMessage(req.user, user2);
     }
 
     @ApiOperation({ summary: 'Retrieve message history' }) //endpoint summary on swaggerui

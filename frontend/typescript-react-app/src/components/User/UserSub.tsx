@@ -60,6 +60,8 @@ export default function User(props: UserfuncProps) {
 	const [modalShowUsername, setModalShowUsername] = React.useState(false);
 	const [username, setUsername] = React.useState("");
 
+	const calledOnce = React.useRef(false);
+
 
 	async function getUser() {
 		//console.log(username);
@@ -84,10 +86,21 @@ export default function User(props: UserfuncProps) {
 	}
 
 	useEffect(() => {
+		if (calledOnce.current) {
+			return;}
 		getUser();
+		calledOnce.current = true;
 	}, []);
 
+	function renderImage(login: string) {
+		let ax = new MyAxios(null);
+		return (ax.render_avatar(login));
+	}
 
+	function renderQrCode(qrcode: any) {
+		//return (<img height="180" width="180" src={qrcode}></img>);
+		//return (manageQR());
+	}
 
 	return (
 		<div id="user--div">
@@ -97,17 +110,16 @@ export default function User(props: UserfuncProps) {
 					<div className="col-9" id="bonjour--user">
 						<br /><br />
 						<div className="user--stats">
-							{/* TO DO: cleaner le CSS */}
+							<img id={username} className="profile--pic" height="80" width="80"></img>
 							{renderImage(username)}
 							<br />
 							<br />
 							<div className="col-9 mx-auto text-center" id="input-div">
 								<h2 id="user--data">{username}</h2>
 								<Button id="change--username" variant="ight" onClick={() => { console.log("clicked"); setModalShowUsername(true) }}>
-									change username
-                    </Button>
+									change username</Button>
 								<EditUsernameModal username={username} show={modalShowUsername} onHide={() => {
-									console.log("called");
+									//console.log("called");
 									setModalShowUsername(false)
 								}} />
 								<br />
@@ -130,8 +142,8 @@ export default function User(props: UserfuncProps) {
 										{qrcode != "" ? <p className="warning-2fa">You will have to successfully authenticate to turn 2FA on</p> : <p></p>}
 										<button className="btn btn-outline-danger" id="button--2fa" onClick={handle2FA}>Activate 2FA</button>
 										<br />
-										<img id="image"></img>
-										{renderQrCode(qrcode)}
+										<img id="image" src={qrcode}></img>
+										{/*{qrcode == "" ? renderQrCode(qrcode) : <p></p>}*/}
 										{qrcode != "" ? <p className="black--text">Please scan the QR Code with your Google Authenticator app.</p> : <p className="black--text"></p>}
 										{qrcode != "" ? <label className="black--text">Enter the code provided</label> : <p className="black--text"></p>}
 										{qrcode != "" ? <input className="form-control form-control-sm" type="text" placeholder="422 022"></input> : <p className="black--text"></p>}
@@ -155,12 +167,3 @@ export default function User(props: UserfuncProps) {
 		</div>
 	);
 };
-
-function renderImage(login: string) {
-	let ax = new MyAxios(null);
-	return (ax.render_avatar(login));
-}
-
-function renderQrCode(qrcode: any) {
-	return (<img height="180" src={qrcode}></img>);
-}

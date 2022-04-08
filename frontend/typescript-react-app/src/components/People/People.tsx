@@ -31,6 +31,8 @@ export default function People() {
 				{/*<div className="d-flex justify-content-center text-center">*/}
 					<div id="all">
 						<div className="row">
+							{/*<h1 className="text" id="displaying">USERS</h1>*/}
+							<br />
 							<All />
 							<br />
 							<Invitations />

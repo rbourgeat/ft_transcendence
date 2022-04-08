@@ -26,8 +26,6 @@ export default function All() {
         .then( res => {
             console.log("Get api users successfully called.");
             let users = res.data;
-			//console.log(users);
-            //console.log(users);
 			let len = users.length;
 			let i = 0;
 			while (i < len)
@@ -50,6 +48,7 @@ export default function All() {
 		if (calledOnce.current) {
 			return;}
         renderUsers();
+		calledOnce.current = true;
     }, []);
 
 	//function mapUsers()
@@ -65,7 +64,6 @@ export default function All() {
     return (
 			<div id="people--div">
 				<div className="container" id="container--all">
-					<h1 className="text" id="displaying">USERS</h1>
 					<br/>
 					<div className="row" id="row--users">
 					<div id="ul--list" className="row">

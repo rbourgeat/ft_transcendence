@@ -128,7 +128,7 @@ export default function CreateChan(props: UserChat) {
                     </div>
                 </div>
             </div>
-            {/*<ListChannels />*/}
+            <ListChannels />
         </div>
     );
 }

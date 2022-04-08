@@ -19,13 +19,12 @@ export default function Invitations() {
 		if (calledOnce.current) {
 			return;}
         renderInvitations();
+		calledOnce.current = true;
     }, []);
 
     return (
 		<div id="invitation-div">
 			<div id="container--invitations">
-				<h2 className="text" id="displaying">Invitations sent</h2>
-				<br />
 				<h2 className="text" id="displaying">Invitations received</h2>
 				<br />
 				<div className="row" id="row--users">
