@@ -109,6 +109,37 @@ export class ChatService {
 		return newChat;
 	}
 
+	async createDirectMessage(user1: User, user2: User) {
+		const newParticipate1 = await this.participateRepository.create(
+			{
+				user: user1,
+				admin: false,
+				owner: false
+			}
+		);
+		await this.participateRepository.save(newParticipate1);
+		const newParticipate2 = await this.participateRepository.create(
+			{
+				user: user2,
+				admin: false,
+				owner: false
+			}
+		);
+		await this.participateRepository.save(newParticipate2);
+
+		let chatName = "direct_" + user1.id + "_" + user1.id;
+		const newChat = await this.chatRepository.create(
+			{
+				name: chatName,
+				direct: true,
+				public: false,
+				participates: [newParticipate1, newParticipate2]
+			}
+		);
+		await this.chatRepository.save(newChat);
+		return newChat;
+	}
+
 	async createMessage(message: CreateMessageDto, user: User) {
 		const newMessage = await this.messageRepository.create({
 			...message,

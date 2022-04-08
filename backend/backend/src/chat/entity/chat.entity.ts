@@ -13,6 +13,9 @@ export class Chat {
     @OneToMany(() => Message, (message: Message) => message.channel, { eager: true })
     public message: Message[];
 
+    @Column({ nullable: true })
+    direct: boolean = false;
+
     @Column()
     public: boolean = true;
 
