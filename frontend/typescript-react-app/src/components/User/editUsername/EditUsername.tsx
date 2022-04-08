@@ -20,7 +20,7 @@ export default function EditUsernameModal(props) {
 		let url = "http://localhost:3000/api/user";
 
 		//ax.get_api_user();
-	});
+	}, []);
 
 	function clearInput() {
         setInputValue("");
