@@ -42,12 +42,12 @@ export default function CreateChan(props: UserChat) {
 
         socket.on('connect', () => {
             console.log(`Socket connectée !`);
-            socket.emit('status', username + ':online')
+            // socket.emit('status', username + ':online')
         })
 
         socket.on('disconnect', () => {
             console.log(`Socket déconnectée !`);
-            //socket.emit('status', username + ':offline')
+            // socket.emit('status', username + ':offline')
         })
 
     }, []);
