@@ -1,7 +1,7 @@
 import './CreateChan.scss';
-import React, {Component, useState, useEffect} from "react";
+import React, { Component, useState, useEffect } from "react";
 import Nav from "../../Nav/Nav";
-import {Modal, Button, Row, Col, Form} from "react-bootstrap";
+import { Modal, Button, Row, Col, Form } from "react-bootstrap";
 import CreateChanModal from "../../Utils/Modal/Modal";
 import myAxios from "../../Utils/Axios/Axios";
 import axios from "axios";
@@ -9,48 +9,50 @@ import ListChannels from "../ListChannels/ListChannels";
 import Channels from "../../Channels/Channels";
 import io from "socket.io-client";
 
-interface UserChat
-{
-	login?: string
+interface UserChat {
+    login?: string
 }
 
 const ENDPOINT = "http://ws.localhost:3000/api/";
 
-export default function CreateChan(props: UserChat)
-{
+export default function CreateChan(props: UserChat) {
     const [modalShow, setModalShow] = React.useState(false);
     const [response, setResponse] = useState("");
 
-    let socket = io("http://localhost:3000/");
-
     const [username, setUsername] = React.useState("");
 
-    useEffect(() => {
-
+    async function getUser() {
         let url = "http://localhost:3000/api/auth/";
         let username = "";
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
         axios.defaults.withCredentials = true;
-		axios.get(url)
-		.then (res => {
-			username = res.data.login;
-            setUsername(username);
-		})
-		.catch((err) => {
-			console.log("Error while getting api auth");
-		})
+        await axios.get(url)
+            .then(res => {
+                username = res.data.login;
+                console.log(username + ' <-- result of get user')
+                setUsername(username);
+            })
+            .catch((err) => {
+                console.log("Error while getting api auth");
+            })
+    }
+
+    useEffect(() => {
+        getUser();
+
+        socket.on('connect', () => {
+            console.log(`Socket connectée !`);
+            socket.emit('status', username + ':online')
+        })
+
+        socket.on('disconnect', () => {
+            console.log(`Socket déconnectée !`);
+            //socket.emit('status', username + ':offline')
+        })
 
     }, []);
 
-    socket.on('connect', () => {
-        console.log(`Socket connectée !`);
-        socket.emit('status', username + ':online')
-    })
-
-    socket.on('disconnect', () => {
-        console.log(`Socket déconnectée !`);
-        // socket.emit('status', username + ':offline')
-    })
+    let socket = io("http://localhost:3000/", { query: { username: username } });
 
     function sendTest() {
         socket.emit('test', 'test ok !')
@@ -87,11 +89,11 @@ export default function CreateChan(props: UserChat)
                                 </Button>
 
                                 <input
-                                className="form-control"
-                                type="text"
-                                placeholder="message"
-                                value={ inputValue }
-                                onChange={ handleInputChange }
+                                    className="form-control"
+                                    type="text"
+                                    placeholder="message"
+                                    value={inputValue}
+                                    onChange={handleInputChange}
                                 />
                                 <Button className="quick--actions" variant="primary" onClick={() => sendMessage("DummyChannel", inputValue)}>
                                     Envoyer
@@ -123,10 +125,10 @@ export default function CreateChan(props: UserChat)
                                 onHide={() => setModalShow(false)}
                             />*/}
                         </div>
-                        </div>
                     </div>
                 </div>
-                {/*<ListChannels />*/}
             </div>
-        );
-    }
+            {/*<ListChannels />*/}
+        </div>
+    );
+}

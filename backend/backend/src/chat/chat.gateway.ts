@@ -2,6 +2,7 @@ import { ConnectedSocket, MessageBody, OnGatewayConnection, SubscribeMessage, We
 import { Server, Socket } from 'socket.io';
 import { ChatService } from './chat.service';
 import { UserService } from 'src/user/user.service';
+import { Logger } from "@nestjs/common";
 
 //@WebSocketGateway(
 //	{
@@ -17,22 +18,24 @@ export class ChatGateway implements OnGatewayConnection {
 	@WebSocketServer()
 	server: Server;
 
+	private logger: Logger = new Logger("chatGateway");
+
 	constructor(
 		private readonly chatService: ChatService,
 		private readonly userService: UserService
 	) { }
 
 	async handleConnection(socket: Socket, ...args: any[]) {
-		console.log(socket.id + " connecté")
+		this.logger.log("Client connected: " + socket.handshake.query.username + ' id: ' + socket.id + ')');
 	}
 
-	async handleDisconnect(socket: Socket, ...args: any[]){
-		console.log(socket.id + " déconnecté")
+	async handleDisconnect(socket: Socket, ...args: any[]) {
+		this.logger.log("Client disconnected: " + socket.handshake.query.username + ' id: ' + socket.id + ')');
 	}
 
 	@SubscribeMessage('status')
 	statusMessage(@MessageBody() body: any) {
-		console.log(body);
+		this.logger.log('body in status event: ' + body)
 		const message = body.split(':');
 		this.userService.updateStatus(message[0], message[1]);
 	}
