@@ -66,8 +66,8 @@ export class ChatController {
     @ApiOperation({ summary: 'Retrieve message history' }) //endpoint summary on swaggerui
     @ApiOkResponse({ description: 'Messages load successfully' }) //answer sent back
     @ApiConflictResponse({ description: 'Fail' }) //not working atm
-    @Get(':id/messages')
-    async getMessages(@Body() id: number) {
+    @Get(':idChat/messages')
+    async getMessages(@Param('idChat') id: number) {
         console.log('Retrieve message history from chat: ' + id)
         return this.chatService.getMessages(id);
     }

@@ -1,10 +1,10 @@
-import { ConnectedSocket, MessageBody, OnGatewayConnection, SubscribeMessage, WebSocketGateway, WebSocketServer, } from '@nestjs/websockets';
+import { ConnectedSocket, MessageBody, OnGatewayConnection, OnGatewayDisconnect, SubscribeMessage, WebSocketGateway, WebSocketServer, } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 import { Logger } from "@nestjs/common";
 
-@WebSocketGateway({ cors: true })
+@WebSocketGateway({ namespace: 'game', cors: true })
 
-export class GameGateway {
+export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, OnGatewayDisconnect {
     @WebSocketServer()
     server: Server;
 
@@ -18,7 +18,7 @@ export class GameGateway {
     }
 
     async handleConnection(socket: Socket, ...args: any[]) {
-        this.logger.log("Client disconnected: " + socket.handshake.query.username + ' id: ' + socket.id + ')');
+        this.logger.log("Client connected: " + socket.handshake.query.username + ' id: ' + socket.id + ')');
     }
 
     async handleDisconnect(socket: Socket, ...args: any[]) {

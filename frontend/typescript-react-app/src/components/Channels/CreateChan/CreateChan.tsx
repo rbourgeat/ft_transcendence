@@ -52,7 +52,7 @@ export default function CreateChan(props: UserChat) {
 
     }, []);
 
-    let socket = io("http://localhost:3000/", { query: { username: username } });
+    let socket = io("http://localhost:3000/chat", { query: { username: username } });
 
     function sendTest() {
         socket.emit('test', 'test ok !')

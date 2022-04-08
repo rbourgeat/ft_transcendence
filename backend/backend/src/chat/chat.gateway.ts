@@ -12,7 +12,7 @@ import { Logger } from "@nestjs/common";
 //	//},
 //})
 
-@WebSocketGateway({ cors: true })
+@WebSocketGateway({ namespace: 'chat', cors: true })
 
 export class ChatGateway implements OnGatewayConnection {
 	@WebSocketServer()
