@@ -56,12 +56,13 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
 			}
 			this.server.emit('gameStart', adversaire); 
 		}
-	}
+	}  
 
 	@SubscribeMessage('gameEnd')
-	async gameEnd(@ConnectedSocket() socket: Socket, ...args: any[]) {
-		console.log("winner: ", args[0], "loser", args[1], "winner score: ", args[2], "loser score: ", args[3])
-		this.gameService.createGame(args[0], args[1], args[2], args[3]);
+	async gameEnd(@ConnectedSocket() socket: Socket, @MessageBody() body: string) {
+		const b = body.split(':');
+		console.log("winner: ", b[0], "loser", b[1], "winner score: ", b[2], "loser score: ", b[3])
+		this.gameService.createGame(b[0], b[1], Number(b[2]), Number(b[3]));
 	}
 
 

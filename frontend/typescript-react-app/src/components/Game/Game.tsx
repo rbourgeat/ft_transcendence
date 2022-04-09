@@ -15,6 +15,7 @@ export default function Game() {
 
 	// socket game
 	const [username, setUsername] = React.useState("");
+	let joueur = "unknown"
 	async function getUser() {
 		let url = "http://localhost:3000/api/auth/";
 		let username = "";
@@ -23,6 +24,7 @@ export default function Game() {
 		await axios.get(url)
 			.then(res => {
 				username = res.data.login;
+				joueur = username;
 				setUsername(username);
 			})
 			.catch((err) => {
@@ -32,12 +34,10 @@ export default function Game() {
 	var isSearching = false;
 	var SearchText = "Rechercher une partie"
 	let adversaire = "unknown"
-	let joueur = "unknown"
 
 	let socket = io("http://localhost:3000/game", { query: { username: username } });
 	function sendSearch() {
 		if (username) {
-			joueur = username;
 			isSearching = isSearching ? false : true;
 			if (isSearching)
 				SearchText = "Annuler la recherche"
@@ -197,6 +197,11 @@ export default function Game() {
 	}
 
 	function stop() {
+		console.log("username: ", joueur, "adversaire", adversaire, "score player 1: ", game.player.score, "score player 2: ", game.player.score)
+		if (game.player.score > game.player2.score)
+			socket.emit('gameEnd', joueur + ":" + adversaire + ":" + game.player.score + ":" + game.player2.score);
+		else
+			socket.emit('gameEnd', adversaire + ":" + joueur + ":" + game.player2.score + ":" + game.player.score);
 		cancelAnimationFrame(anim);
 		// Set ball and players to the center
 		game.ball.x = canvas.width / 2 - BALL_HEIGHT / 2;
@@ -207,11 +212,7 @@ export default function Game() {
 		game.ball.speed.x = 0;
 		game.ball.speed.y = 0;
 
-		draw();
-		if (game.player.score > game.player2.score)
-			socket.emit('gameEnd', username, adversaire, game.player.score, game.player2.score);
-		else
-			socket.emit('gameEnd', adversaire, username, game.player2.score, game.player.score);
+		// draw();
 	}
 
 	return (
@@ -223,7 +224,7 @@ export default function Game() {
 					{/*<canvas></canvas>*/}
 					<button type="button" className="btn btn-outline-dark" id="search-button" onClick={() => sendSearch()}>{SearchText}</button>
 					<main role="main">
-						<p>{username} : <em id="player-score">0</em> - <p id="adversaire">{adversaire}</p> : <em id="player2-score">0</em></p>
+						<p id="scores">{username} : <em id="player-score">0</em> - <em id="adversaire">{adversaire}</em> : <em id="player2-score">0</em></p>
 						<canvas id="canvas" width={size.width / 1.5} height={size.height / 1.25}></canvas>
 					</main>
 					<GameRules />
