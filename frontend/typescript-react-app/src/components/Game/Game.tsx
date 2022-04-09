@@ -119,7 +119,7 @@ export default function Game() {
 			game.ball.y = canvas.height / 2 - BALL_HEIGHT / 2;
 			game.player.y = canvas.height / 2 - PLAYER_HEIGHT / 2;
 			game.player2.y = canvas.height / 2 - PLAYER_HEIGHT / 2;
-			
+
 			// Reset speed
 			game.ball.speed.x = BALL_SPEED;
 			// Update score

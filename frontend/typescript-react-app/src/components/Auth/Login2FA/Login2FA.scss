@@ -1,0 +1,44 @@
+@use "../../../variables";
+
+.game--rules--title {
+	color: black !important;
+	font-weight: 900;
+	font-size: 28px !important;
+}
+
+#div--main--2fa {
+	background-color: variables.$lightgrey;
+	margin-top: 10px !important;
+	border-radius: variables.$border-radius;
+	padding: 30px !important;
+}
+
+#div--main--2fa > * {
+	font-family: variables.$basic-font;
+}
+
+#legend--code {
+	margin-top: 10px;
+}
+
+//#check--button {
+//	//align-items: flex-end !important;
+//	//text-align: right !important;
+//}
+
+//.code-input {
+//	height: 80px !important;
+//	caret-color: black;
+//	//caret-height: 100%;
+//	caret-shape: auto;
+//}
+
+//.content-area > *{
+//	height: 80px !important;
+//}
+
+
+#loading--title {
+	color: white !important;
+	margin-top: 50px;
+}
