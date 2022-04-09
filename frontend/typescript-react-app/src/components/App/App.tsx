@@ -20,6 +20,7 @@ import Stats from "../Stats/Stats";
 import People from "../People/People";
 import Game from "../Game/Game";
 import PlayWatch from "../Playwatch/Playwatch";
+import Login2FA from "../Auth/Login2FA/Login2FA"
 import Channels from "../Channels/Channels"
 import { io } from 'socket.io-client';
 import axios from 'axios';
@@ -75,6 +76,7 @@ function App() {
               <Route path="/" element={<Welcome />} />
               <Route path="/welcome" element={<Welcome />} />
               <Route path="/auth" element={<Auth />} />
+              <Route path="/2fa" element={<Login2FA />} />
               <Route path="/user" element={<UserMain />} />
               <Route path="/chat" element={<CreateChan />} />
               <Route path="/channels" element={<Channels />} />
