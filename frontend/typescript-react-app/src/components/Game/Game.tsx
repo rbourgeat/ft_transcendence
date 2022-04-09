@@ -7,9 +7,6 @@ import Nav from "../Nav/Nav";
 import Footer from "../Footer/Footer";
 import GameRules from "../GameRules/GameRules";
 
-/**
- * Attention à tout mettre en classe et pas en fonction
- */
 export default function Game() {
     //const { width, height } = useWindowSize();
     // let size = useWindowSize();
@@ -20,7 +17,6 @@ export default function Game() {
             <div className="container">
             <div className="row d-flex justify-content-justify text-justify">
                     {/*<h1 id="title--game" className="text">GAME</h1>*/}
-                    {/*<h2 className="text">to do darbib</h2>*/}
                     {/*<canvas></canvas>*/}
                     <GameRules />
                 </div>

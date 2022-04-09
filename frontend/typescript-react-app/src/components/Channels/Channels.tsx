@@ -11,10 +11,6 @@ import { io } from "socket.io-client";
 import axios from 'axios';
 
 
-/**
- * @malatini ou @macrespo
- * Page principale pour afficher les channels, voir les sous composants
-*/
 interface ChatProps {
     username?: string
 }

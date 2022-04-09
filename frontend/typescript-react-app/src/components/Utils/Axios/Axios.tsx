@@ -1,7 +1,6 @@
 import React, { cloneElement } from "react";
 import axios from "axios";
 import ToastAlerts from "../ToastAlerts/ToastAlerts"
-import cookie from 'react-cookie';
 import Login from "../../Auth/Login/Login";
 
 interface AxiosProps {
@@ -22,18 +21,12 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
 {
     constructor(props: AxiosProps) {
         super(props);
-
-        //Init state
         this.state =
         {
             status: 0,
         }
     }
 
-    /*
-    ** Chat endpoints
-    */
-    //TODO: a revoir
     get_api_chat() {
         axios.defaults.withCredentials = true;
 
@@ -55,7 +48,6 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
         return;
         let url = "http://localhost:3000/api/chat/";
 
-        //Pas sure que ce soit utile
         let headers = {
             'Content-Type': 'application/json'
         }
@@ -98,12 +90,10 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     /*
     ** post /api/chat/message -> attente endpoint à modifier ?
     */
-    //TODO: attendre update
 
     /*
     ** post /api/chat/join
     */
-    //TODO: à tester
     post_api_chat_join(pass: string, pub: boolean, channame: string) {
         let url = "http://localhost:3000/api/chat/join";
 
@@ -474,11 +464,11 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
 
     //Send invitation
     //TODO: a tester ! -> est-ce qu'on veut vraiment gérer ça ?
-    post_api_user_relation_sendInvation_id(id: number) {
-        let url = "http://localhost:3000/api/user/relation/sendInvitation/".concat(id.toString());
+    post_api_user_relation_sendInvation_id(login: string) {
+        let url = "http://localhost:3000/api/user/relation/sendInvitation/".concat(login);
 
         const body = {
-            receiverId: id
+            receiverLogin: login
         }
 
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
@@ -573,8 +563,8 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     }
 
     //TODO: a tester
-    post_relation_block(id: number) {
-        let url = "http://localhost:3000/api/user/relation/block/".concat(id.toString());
+    post_relation_block(login: string) {
+        let url = "http://localhost:3000/api/user/relation/block/".concat(login.toString());
 
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
         axios.defaults.withCredentials = true;
@@ -718,7 +708,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
         if (imageCode.startsWith("http")) {
             //console.log('should display 42');
             let myImage: HTMLImageElement = document.querySelector("#".concat(login));
-           // var objectURL = URL.createObjectURL(imageUser42);
+            // var objectURL = URL.createObjectURL(imageUser42);
             myImage.src = imageUser42;
             return (<img className="profile--pic" src={myImage.src} alt={imageName} height="80" width="80" id={login} />);
         }
@@ -744,15 +734,14 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
             })
             .catch((error) => {
                 //console.log("Catched error during get/fileId/avatar");
-                return (<img className="profile--pic" src="https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg" alt={imageName} height="80" width="80" id={login}/>);
+                return (<img className="profile--pic" src="https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg" alt={imageName} height="80" width="80" id={login} />);
                 //console.log(error);
             })
     }
 
     render_avatar(login: string) {
 
-        if (!login)
-        {
+        if (!login) {
             return;
         }
         let imageCode = null;

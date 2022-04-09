@@ -1,15 +1,12 @@
 import './Achievements.scss';
-import React from "react";
 import Nav from "../Nav/Nav";
 import Footer from "../Footer/Footer";
-
+import React from "react";
 
 export interface AchievementsProps{
-
 }
 
 export interface AchievementsState {
-
 }
 
 export default class Achievements extends React.Component<AchievementsProps, AchievementsState>
@@ -17,7 +14,6 @@ export default class Achievements extends React.Component<AchievementsProps, Ach
     constructor(props: AchievementsProps)
     {
         super(props);
-
         this.state = {}
     }
 
@@ -33,7 +29,6 @@ export default class Achievements extends React.Component<AchievementsProps, Ach
 							<div className="row d-flex justify-content-center text-center" id="row-cards">
                                 <h1 id="achievements--title">Achievements</h1>
                             </div>
-                            {/* TODO: checker si les achivements ont ete atteint ou pas */}
                                         <div className="row" id="first-row">
                                             <div className="card-group" id="group--one">
                                                 <div className="card" >
@@ -89,35 +84,6 @@ export default class Achievements extends React.Component<AchievementsProps, Ach
                                                 </div>
                                             </div>
                                         </div>
-
-                                        {/*<div className="row" id="third-row">
-                                            <div className="card-group">
-                                                <div className="card">
-                                                    <div className="card-body-disabled">
-                                                        <h5 className="card-title">Oh boy, you look good</h5>
-                                                        <p className="card-text">Upload your own avatar</p>
-                                                        <img src="https://cdn3.iconfinder.com/data/icons/glypho-travel/64/history-swords-crossed-512.png" className="achievements--img" height="20px"></img>
-                                                    </div>
-                                                </div>
-
-                                                <div className="card">
-                                                    <div className="card-body-disabled">
-                                                        <h5 className="card-title">???</h5>
-                                                        <p className="card-text">42 could the answer</p>
-                                                        <img src="https://cdn.onlinewebfonts.com/svg/img_183371.png" className="achievements--img" height="20px"></img>
-                                                    </div>
-                                                </div>
-
-                                                <div className="card">
-                                                    <div className="card-body-disabled">
-                                                        <h5 className="card-title">I want you to hit me</h5>
-                                                        <p className="card-text">Invite 10 people to a duel</p>
-                                                        <img src="https://icon-library.com/images/punch-icon/punch-icon-25.jpg" className="achievements--img" height="20px"></img>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>*/}
-
                                     </div>
                             </div>
             <Footer />

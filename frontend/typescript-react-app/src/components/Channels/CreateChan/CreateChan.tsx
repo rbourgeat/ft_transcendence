@@ -1,7 +1,6 @@
 import './CreateChan.scss';
 import React, { Component, useState, useEffect } from "react";
 import Nav from "../../Nav/Nav";
-import { Modal, Button, Row, Col, Form } from "react-bootstrap";
 import CreateChanModal from "../../Utils/Modal/Modal";
 import myAxios from "../../Utils/Axios/Axios";
 import axios from "axios";
@@ -18,7 +17,6 @@ const ENDPOINT = "http://ws.localhost:3000/api/";
 export default function CreateChan(props: UserChat) {
     const [modalShow, setModalShow] = React.useState(false);
     const [response, setResponse] = useState("");
-
     const [username, setUsername] = React.useState("");
 
     async function getUser() {
@@ -77,6 +75,7 @@ export default function CreateChan(props: UserChat) {
         socket.emit('status', "est en train d'écrire")
     }
 
+    //TODO: a reprendre sans react bootstrap, pb de dépendances
     return (
         <div id="channels">
             <Nav />
@@ -84,16 +83,13 @@ export default function CreateChan(props: UserChat) {
                 <div className="row d-flex justify-content-center text-center">
                     <div className="col-7">
                         <div id="quick--actions">
-                            {/*<h1 className="text" id="quick--actions--title">Quick actions</h1>*/}
                             <div className="row">
-                                <Button className="quick--actions" variant="primary" onClick={() => setModalShow(true)}>
-                                    Create a new channel
-                                </Button>
+                                {/*<button type="button" className="btn btn-outline-dark" onClick={() => setModalShow(true)}>Create a channel</button>*/}
+                                <button type="button" className="btn btn-outline-dark" data-toggle="modal" data-target="#exampleModal">
+                                    Create a channel
+                                </button>
 
-                                <Button className="quick--actions" variant="primary" onClick={() => sendTest()}>
-                                    Test
-                                </Button>
-
+                                <button type="button" className="btn btn-outline-dark" onClick={() => sendTest()}>Test</button>
                                 <input
                                     className="form-control"
                                     type="text"
@@ -101,35 +97,35 @@ export default function CreateChan(props: UserChat) {
                                     value={inputValue}
                                     onChange={handleInputChange}
                                 />
-                                <Button className="quick--actions" variant="primary" onClick={() => sendMessage("DummyChannel", inputValue)}>
-                                    Envoyer
-                                </Button>
-                                {/*<Button className="quick--actions" variant="light" disabled>
-                                    Send a DM
-                                </Button>
-                                <Button className="quick--actions" variant="light" disabled>
-                                    Answer invitation(s)
-                                </Button>
-                                <Button className="quick--actions" variant="light" disabled>
-                                    Invite friend
-                                </Button>
-                                <Button className="quick--actions" variant="light" disabled>
-                                    Make admin
-                                </Button>
-                                <Button className="quick--actions" variant="light" disabled>
-                                    Mute
-                                </Button>
-                                <Button className="quick--actions" variant="light" disabled>
-                                    Invite to play
-                                </Button>
-                                <Button className="quick--actions" variant="light" disabled>
-                                    Answer to play
-                                </Button>*/}
+                                <button type="button" className="btn btn-outline-dark" onClick={() => sendMessage("DummyChannel", inputValue)}>Envoyer</button>
+                                <button type="button" className="btn btn-outline-dark" disabled>Send a DM</button>
+                                <button type="button" className="btn btn-outline-dark" disabled>Invite to play</button>
+                                <button type="button" className="btn btn-outline-dark" disabled>Answer to play</button>
                             </div>
                             {/*<CreateChanModal
                                 show={modalShow}
                                 onHide={() => setModalShow(false)}
                             />*/}
+                            {/*TODO: a reprendre (ne pas faire de modal avec react bootstrap mais avec bootstrap) - reprendre le modal qui se trouve dans Utils/Modal*/}
+                            <div className="modal fade" id="exampleModal" tab-index="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div className="modal-dialog" role="document">
+                                    <div className="modal-content">
+                                    <div className="modal-header">
+                                        <h5 className="modal-title" id="exampleModalLabel">Modal title</h5>
+                                        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div className="modal-body">
+                                        ...
+                                    </div>
+                                    <div className="modal-footer">
+                                        <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="button" className="btn btn-primary">Save changes</button>
+                                    </div>
+                                    </div>
+                                </div>
+                                </div>
                         </div>
                     </div>
                 </div>

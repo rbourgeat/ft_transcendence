@@ -1,15 +1,10 @@
 import './Signup.scss';
 import React , { useState, useEffect} from 'react';
 import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import ToastAlerts from "../../Utils/ToastAlerts/ToastAlerts"
 import axios from "axios";
 import myAxios from "../../Utils/Axios/Axios"
 
-/**
- * @malatini
- * Page Auth, permet de register un user (ajout dans la bdd, permettra de se connecter si OK)
- */
 interface SignupProps {}
 
 interface SignupState {
@@ -17,10 +12,6 @@ interface SignupState {
     email?: string,
     password?: string,
     password_conf?: string
-    /* Pour les boutons afficher mot de pase
-    open: bool,
-    open2: bool
-    */
 }
 
 class Signup extends React.Component<SignupProps, SignupState>
@@ -37,7 +28,6 @@ class Signup extends React.Component<SignupProps, SignupState>
         }
     }
 
-    //Utile pour vider le formulaire quand on a cliqué sur le bouton (a mettre dans utils)
     resetName = function() {
     this.setState({
         email: '',
@@ -59,9 +49,7 @@ class Signup extends React.Component<SignupProps, SignupState>
             password: this.state.password,
             password_conf: this.state.password_conf
         })
-        //let res = ax.signup(this.state.username, this.state.email, this.state.password, this.state.password_conf);
         let res = ax.signup();
-        //console.log(res);
         this.resetName();
     }
 
@@ -98,7 +86,6 @@ class Signup extends React.Component<SignupProps, SignupState>
                                                 <label>Mot de passe</label>
                                                 <input
                                                 className="form-control"
-                                               // type={this.state.open ? "text" : "password"}
                                                 type="password"
                                                 placeholder="********"
                                                 value={this.state.password}
@@ -109,7 +96,6 @@ class Signup extends React.Component<SignupProps, SignupState>
                                             <div>
                                                 <label>Confirmation mot de passe</label>
                                                 <input className="form-control"
-                                                  //type={this.state.open2 ? "text" : "password"}
                                                     type="password"
                                                     placeholder="********"
                                                     value={this.state.password_conf}
@@ -121,7 +107,6 @@ class Signup extends React.Component<SignupProps, SignupState>
                                     </div>
                                 </div>
                             </div>
-                            {/*<hr className="my-4" id="signup-hr"></hr>*/}
                             <button
                                 onClick={this.submit}
                                 className="btn btn-light btn-block"
