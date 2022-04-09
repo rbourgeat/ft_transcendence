@@ -1,15 +1,62 @@
-import {useState,  useEffect, useLayoutEffect } from 'react';
+import React, {useState,  useEffect, useLayoutEffect } from 'react';
 import './Game.scss';
 import useWindowDimensions from "./useWindowDimensions"
 import Header from "../Header/Header";
 import Nav from "../Nav/Nav";
 import Footer from "../Footer/Footer";
 import GameRules from "../GameRules/GameRules";
+import io from "socket.io-client";
+import axios from "axios";
 
 export default function Game() {
 	//const { width, height } = useWindowSize();
 	// let size = useWindowSize();
 	let size = useWindowDimensions();
+
+	// socket game
+	const [username, setUsername] = React.useState("");
+	async function getUser() {
+		let url = "http://localhost:3000/api/auth/";
+		let username = "";
+		axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+		axios.defaults.withCredentials = true;
+		await axios.get(url)
+			.then(res => {
+				username = res.data.login;
+				setUsername(username);
+			})
+			.catch((err) => {
+				console.log("Error while getting api auth");
+			})
+	}
+	var isSearching = false;
+	var SearchText = "Rechercher une partie"
+	var adversaire = "unknown"
+
+	let socket = io("http://localhost:3000/game", { query: { username: username } });
+	function sendSearch() {
+		if (username) {
+			isSearching = isSearching ? false : true;
+			if (isSearching)
+				SearchText = "Annuler la recherche"
+			else
+				SearchText = "Rechercher une partie à nouveau"
+			document.querySelector('#search-button').textContent = SearchText;
+			socket.emit('search', isSearching);
+		}
+		else
+			document.querySelector('#search-button').textContent = "Impossible de te connecter !"
+    }
+
+	function sendScore(winner: string, loser: string, winner_point: number, loser_point:number) {
+        socket.emit('gameEnd', winner, loser, winner_point, loser_point);
+    }
+
+	socket.on("gameStart", (...args) => {
+		adversaire = args[0];
+		document.querySelector('#adversaire').textContent = adversaire;
+	});
+
 
 	// PONG CODE BELOW
 	var canvas;
@@ -44,6 +91,7 @@ export default function Game() {
 	}
 
 	useEffect(() => {
+		getUser();
 		canvas = document.getElementById('canvas');
 		game = {
 			player: {
@@ -64,8 +112,8 @@ export default function Game() {
 				}
 			}
 		}
-		draw();
-		play();
+		// draw();
+		// play();
 		canvas.addEventListener('mousemove', playerMove);
 		otherMove();
     }, []);
@@ -151,7 +199,6 @@ export default function Game() {
 	}
 
 	function stop() {
-		console.log("anim = " + anim)
 		cancelAnimationFrame(anim);
 		// Set ball and players to the center
 		game.ball.x = canvas.width / 2 - BALL_HEIGHT / 2;
@@ -167,9 +214,12 @@ export default function Game() {
 		// document.querySelector('#player2-score').textContent = game.player2.score;
 		// document.querySelector('#player-score').textContent = game.player.score;
 		draw();
+		if (game.player.score > game.player2.score)
+			sendScore(username, adversaire, game.player.score, game.player2.score);
+		else
+			sendScore(adversaire, username, game.player.score, game.player2.score);
 	}
 
-	console.log(size.width)
 	return (
 		<div id="game-root">
 			<Nav />
@@ -177,8 +227,9 @@ export default function Game() {
 			<div className="row d-flex justify-content-center text-center">
 					{/*<h1 id="title--game" className="text">GAME</h1>*/}
 					{/*<canvas></canvas>*/}
+					<button type="button" className="btn btn-outline-dark" id="search-button" onClick={() => sendSearch()}>{SearchText}</button>
 					<main role="main">
-						<p>Joueur 1 : <em id="player-score">0</em> - Joueur 2 : <em id="player2-score">0</em></p>
+						<p>{username} : <em id="player-score">0</em> - <p id="adversaire">{adversaire}</p> : <em id="player2-score">0</em></p>
 						<canvas id="canvas" width={size.width / 1.5} height={size.height / 1.25}></canvas>
 					</main>
 					<GameRules />
