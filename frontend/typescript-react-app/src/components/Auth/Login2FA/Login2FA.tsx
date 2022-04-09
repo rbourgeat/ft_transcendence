@@ -9,11 +9,10 @@ import {ToastContainer} from "react-toastify";
 
 
 export default function Login2fa() {
-
-	//const [username, setUsername] = React.useState("");
 	const [activated2fa, setActivated2fa] = React.useState(false);
 	const calledOnce = React.useRef(false);
 	const [code, setCode] = React.useState("");
+	const [load, setLoad] = React.useState(false);
 
 	async function getUser() {
 		let url = "http://localhost:3000/api/auth/";
@@ -32,7 +31,15 @@ export default function Login2fa() {
 				{
 					console.log("should redirect to user");
 					setActivated2fa(false);
-					window.top.location = "http://localhost:3030/user";
+					setInterval(() =>
+					{
+						console.log("Loading");
+						window.top.location = "http://localhost:3030/user";
+					}, 1000)
+
+					//.then(window.top.location = "http://localhost:3030/user")
+					//window.top.location = "http://localhost:3030/user";
+
 				}
 				else
 				{
@@ -43,6 +50,7 @@ export default function Login2fa() {
 			.catch((err) => {
 				console.log("Error while getting api auth");
 			})
+		setLoad(true);
 	}
 
 	useEffect(() => {
@@ -81,7 +89,12 @@ export default function Login2fa() {
 			console.log(res);
 			console.log(res.data);
 			setCode("");
-			window.top.location = "http://localhost:3030/user";
+			toast.notifySuccess("✅ Success ! Redirecting...")
+			setInterval(() => {
+				console.log("Loading");
+				window.top.location = "http://localhost:3030/user";
+			}, 2000)
+
 		})
 		.catch((error) => {
 			console.log("Catched error while logging in with 2fa");
@@ -91,39 +104,44 @@ export default function Login2fa() {
 	}
 
 	return (
-		<>
+		<div>
 			<div id="login--2FA" className="container">
-				{/*<div className="row">*/}
-					<div id="div--main--2fa"/* className="row d-flex justify-content-justify text-justify"*/>
-						<h1 className="game--rules--title">✨ 2 factor authentication</h1>
-						<br />
-						<div /*className='content-area'*/>
-							<AuthCode /*style={{height:"40"}}*/
-								allowedCharacters='numeric'
-								//containerClassName="height=40"
-								onChange={function (res: string): void {
-								//throw new Error('Function not implemented.');
-								//console.log("Filling in AuthCode");
-								setCode(res);
-								console.log("code is " + code);
-							} } />
-							{/*<br />*/}
-							<button type="submit" className="btn btn-outline-dark" value="Submit" id="check--button" onClick={checkcode}>Check code</button>
-							<ToastContainer
-								position="top-right"
-								autoClose={5000}
-								hideProgressBar={false}
-								newestOnTop={false}
-								closeOnClick
-								rtl={false}
-								pauseOnFocusLoss
-								draggable
-								pauseOnHover
-							/>
-					</div>
+					{/*<div id="div--main--2fa">*/}
+						{load == true && activated2fa == true ?
+						<div>
+							<h1 className="game--rules--title">✨ 2 factor authentication</h1>
+							<br />
+							<div>
+								<AuthCode
+									allowedCharacters='numeric'
+									onChange={function (res: string): void {
+									setCode(res);
+									console.log("code is " + code);
+								} } />
+								<button type="submit" className="btn btn-outline-dark" value="Submit" id="check--button" onClick={checkcode}>Check code</button>
+								<ToastContainer
+									position="top-right"
+									autoClose={5000}
+									hideProgressBar={false}
+									newestOnTop={false}
+									closeOnClick
+									rtl={false}
+									pauseOnFocusLoss
+									draggable
+									pauseOnHover
+								/>
+							</div>
+						</div> :
+						<div className="container">
+							<div className="row d-flex justify-content-center">
+								<h1 id="loading--title"> ⏱ Loading...</h1>
+								{/*{setInterval(() => console.log("Loading"), 4000)}*/}
+							</div>
+						</div>
+						}
+					{/*</div>*/}
 				</div>
-			</div>
-		{/*</div>*/}
-	</>
+			{/*</div>*/}
+		</div>
 	);
 }
