@@ -118,7 +118,7 @@ export default function Game() {
 			game.ball.y = canvas.height / 2;
 			game.player.y = canvas.height / 2 - PLAYER_HEIGHT / 2;
 			game.player2.y = canvas.height / 2 - PLAYER_HEIGHT / 2;
-			
+
 			// Reset speed
 			game.ball.speed.x = 2;
 		} else {
@@ -172,10 +172,10 @@ export default function Game() {
 					<main role="main">
 						<p>Joueur 1 : <em id="player-score">0</em> - Joueur 2 : <em id="player2-score">0</em></p>
 						<ul>
-							<li>
+							<li className="game--li">
 								<button id="start-game" onClick={() => play()}>Démarrer</button>
 							</li>
-							<li>
+							<li className="game--li">
 								<button id="stop-game" onClick={() => stop()}>Arrêter</button>
 							</li>
 						</ul>
