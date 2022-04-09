@@ -107,8 +107,8 @@ export default function Login2fa() {
 		<div>
 			<div id="login--2FA" className="container">
 					{/*<div id="div--main--2fa">*/}
-						{load == true && activated2fa == true ?
-						<div>
+						{load == true ?
+						<div id="div--main--2fa">
 							<h1 className="game--rules--title">✨ 2 factor authentication</h1>
 							<br />
 							<div>
