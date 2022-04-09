@@ -32,7 +32,7 @@ export class Auth42Controller {
     async ftAuthCallback(@Req() req) {
         console.log('test in redirect 42auth');
         const test = req.user;
-        //console.log(test);
+        console.log(test.username);
         const currentUser = await this.userService.getUserByLogin42(test.username);
         console.log(currentUser.id);
 

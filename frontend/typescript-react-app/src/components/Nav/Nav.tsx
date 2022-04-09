@@ -11,15 +11,9 @@ function Nav() {
 
 	function disconnect()
 	{
-		//axios.defaults.baseURL = 'http://localhost:3000/api/';
-        //axios.defaults.headers.post['Accept-Control-Allow-Origin'] = "http://localhost:3030/user";
-		//axios.defaults.headers.post['Access-Control-Allow-Credentials'] = true;
-		//axios.defaults.headers.post['Access-Control-Allow-Origin'] = true;
-        //axios.defaults.withCredentials = true;
-
-		let bod = {}
-
-		axios.post("http://localhost:3000/api/auth/log-out", bod)
+		axios.defaults.headers.post['Accept'] = '*/*';
+		axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+		axios.post("http://localhost:3000/api/auth/log-out")
 			.then((response) => {
 				console.log(response);
 				//Sauvegarde dans localStorage le fait qu'on est déconnecté
