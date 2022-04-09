@@ -1,7 +1,7 @@
 import './42Auth.scss';
 import React, { useState, useEffect } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
-import ToastAlerts from "../../Utils/ToastAlerts/ToastAlerts"
+//import ToastAlerts from "../../Utils/ToastAlerts/ToastAlerts"
 import myAxios from "../../Utils/Axios/Axios"
 
 interface FourtyTwoProps { }

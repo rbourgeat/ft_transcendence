@@ -32,6 +32,7 @@ clean	:
 
 # cleans and makes sure every volumes, networks and image are deleted
 fclean	:	clean
+			rm -rf database_data/
 			$(DOCKER) system prune --volumes --all --force
 			$(DOCKER) network prune --force
 			echo docker volume rm $(docker volume ls -q)
