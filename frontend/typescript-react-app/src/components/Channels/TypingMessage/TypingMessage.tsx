@@ -87,30 +87,28 @@ export default class TypingMessage extends React.Component<TypingProps, TypingSt
         this.resetText();
     }
 
-    render()
-    {
-        return (
-            <div id="typing--div">
-                <p id="typing--title">Typing message section</p>
-                <input
-                    placeholder="Type something..."
-                    /*className="typing--input"*/
-                    value={this.state.text}
-                    className="form-control"
-                    id="message"
-                    onChange={(e)=>{this.setState({text: e.target.value})}}
-                    />
-                <button
-                    id="send--button"
-                    type="submit"
-                    onClick={this.sendMessage}
-                >
-                    Send
-                </button>
-                <br/>
-                <br />
-            </div>
-        );
-    }
-
+	render()
+	{
+		return (
+			<div id="typing--div">
+				<p id="typing--title">Typing message section</p>
+				<section className="send-message-form">
+					<input
+						placeholder="Type something..."
+						value={this.state.text}
+						className="form-control typing--input"
+						id="message"
+						onChange={(e)=>{this.setState({text: e.target.value})}}
+					/>
+					<button
+						id="send--button"
+						type="submit"
+						onClick={this.sendMessage}
+					>
+						Send
+					</button>
+				</section>
+			</div>
+		);
+	}
 }

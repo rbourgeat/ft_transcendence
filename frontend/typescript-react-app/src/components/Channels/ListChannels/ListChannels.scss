@@ -1,54 +1,53 @@
 @use "../../../variables";
 
 #listChannels {
-	//background-color: white !important;
-	//color: black !important;
+	//background-color: white;
+	//color: black;
 	//border-radius: variables.$border-radius;
-	margin: 20px !important;
 }
 
 #channel--list {
-	color: white !important;
+	color: white;
 }
 
 #list--channels--title {
-	//color: black !important;
-	color: white !important;
+	//color: black;
+	color: white;
 	font-family: variables.$big-font;
-	margin-top: 10px !important;
-	margin-bottom: 15px !important;
+	margin-top: 10px;
+	margin-bottom: 15px;
 }
 
 #list--channels--ul > * {
-	//color: black !important;
-	color: white !important;
+	//color: black;
+	color: white;
 	font-family: variables.$basic-font;
 	padding-bottom: 10px;
-	margin-left: 5% !important;
+	margin-left: 5%;
 	//text-align: left;
 }
 
 #channel--col {
-	//background-color: white !important;
+	//background-color: white;
 	border-radius: variables.$border-radius;
 }
 
 #quick--actions {
-	//background-color: white !important;
+	//background-color: white;
 	background-color: variables.$grey;
-	padding: 20px !important;
-	padding-left: 100px !important;
-	padding-right: 100px !important;
-	padding-bottom: 40px !important;
+	padding: 20px;
+	padding-left: 100px;
+	padding-right: 100px;
+	padding-bottom: 40px;
 	border-radius: variables.$border-radius;
 }
 
 #quick--actions > * {
-	color: black !important;
+	color: black;
 	font-family: variables.$basic-font;
 }
 
 .quick--actions {
 	font-family: variables.$basic-font;
-	font-size: 14px !important;
+	font-size: 14px;
 }

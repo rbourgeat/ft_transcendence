@@ -1,17 +1,15 @@
 @use "../../../variables";
 
 #ListParticipant {
-	margin-top: 85px;
-	border: 0.1rem solid grey !important;
-	height: 700px;
+	border: 0.1rem solid grey;
 	padding: 30px;
 	border-radius: variables.$border-radius;
 	background-color: white;
-	color: black !important;
+	color: black;
 }
 
 #participant--title {
-	font-size: 12px !important;
+	font-size: 12px;
 }
 
 #sub--div {
@@ -20,7 +18,7 @@
 
 #roles--title {
 	margin-bottom: 20px;
-	font-size: 16px !important;
+	font-size: 16px;
 }
 
 #roles {
@@ -34,11 +32,11 @@
 }
 
 .p--participants {
-	font-size: 12px !important;
+	font-size: 12px;
 }
 
 #roles--title{
-	font-size: 12px !important;
+	font-size: 12px;
 }
 
 #bann-button, #mute-button, #bann-temp-button, #mute-temp-button {
@@ -48,6 +46,6 @@
 }
 
 #bann-button:hover, #mute-button:hover {
-	transition: 0.2s ease-in !important;
-	filter: brightness(80%) !important;
+	transition: 0.2s ease-in;
+	filter: brightness(80%);
 }

@@ -1,20 +1,43 @@
 @use "../../variables";
 
+* {
+	box-sizing: border-box;
+}
+
+#channels {
+	border: 2px solid red;
+	height: 100%;
+	position: relative;
+}
+
 #channels--tile {
-  color: white !important;
+  color: white;
   margin-top: 10px;
 }
 
 #websocket--tile {
-  color: white !important;
-  font-size: 12px !important;
+  color: white;
+  font-size: 12px;
   margin-top: 10px;
 }
 
 #chat--container > * {
-  color: black !important;
+  color: black;
 }
 
 .chat-buttons {
-  padding: 8.5px !important;
+  padding: 8.5px;
+}
+
+.chat-container {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: center;
+	align-items: start;
+}
+
+.chat--messages {
+	margin-top: -1.2rem;
+	margin-right: 2rem;
+	width: 65%;
 }
