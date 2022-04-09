@@ -1,39 +1,32 @@
 @use "../../variables";
 
 #nav > * {
-	margin-bottom: 20px;
-	font-family: variables.$big-font;
-	font-size: 12px;
-	color: variables.$white;
-	padding: 10px;
-	padding-left: 20px;
-}
-
-//#nav {
-//	background-color: black !important;
-//}
-
-.nav-link > *, .nav--text {
-	font-family: variables.$basic-font;
-	font-size: 20px;
-	//margin-right: 200px;
+  margin-bottom: 20px;
+  font-family: variables.$big-font;
+  font-size: 12px;
+  color: variables.$white;
+  padding: 10px;
+  padding-left: 20px;
+  //   opacity: 0.36 !important;
+	.disconnect-button {
+		padding: 1rem 0.5rem;
+		margin-right: 1rem;
+		margin-bottom: 0.7rem;
+	}
 }
 
 #nav--title {
-	padding-right: 15px;
-	padding-left: 5px !important;
-	font-size: 16px;
-	color: variables.$white;
-	text-decoration: none;
-	margin-right: 15%;
+  padding-right: 30px;
+  font-size: 28px;
+  color: variables.$white;
+  text-decoration: none;
 }
 
 .nav-link-text {
 	display: flex;
 	flex-flow: row nowrap;
 	justify-content: space-between;
-	//text-align: right;
-	//align-item: flex-end;
+	align-item: flex-end;
 
 	p {
 		margin: 0 1rem 0 0;
@@ -45,6 +38,3 @@
 	}
 }
 
-#navbar--main {
-	background-color: black !important;
-}
