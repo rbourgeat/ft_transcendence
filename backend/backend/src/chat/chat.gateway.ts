@@ -12,7 +12,9 @@ import { Logger } from "@nestjs/common";
 //	//},
 //})
 
-@WebSocketGateway({ cors: true })
+var clients = [];
+
+@WebSocketGateway({ namespace: 'chat', cors: true })
 
 export class ChatGateway implements OnGatewayConnection {
 	@WebSocketServer()
@@ -27,22 +29,23 @@ export class ChatGateway implements OnGatewayConnection {
 
 	async handleConnection(socket: Socket, ...args: any[]) {
 		this.logger.log("Client connected: " + socket.handshake.query.username + ' id: ' + socket.id + ')');
+		this.userService.updateStatus(String(socket.handshake.query.username), "online");
+		clients.push(socket);
+		clients.forEach(function(client) {
+			client.emit("updateStatus", String(socket.handshake.query.username), "online");
+		});
 	}
 
 	async handleDisconnect(socket: Socket, ...args: any[]) {
 		this.logger.log("Client disconnected: " + socket.handshake.query.username + ' id: ' + socket.id + ')');
-	}
-
-	@SubscribeMessage('status')
-	statusMessage(@MessageBody() body: any) {
-		this.logger.log('body in status event: ' + body)
-		const message = body.split(':');
-		this.userService.updateStatus(message[0], message[1]);
-	}
-
-	@SubscribeMessage('test')
-	testMessage(@MessageBody() body: any) {
-		console.log(body);
+		this.userService.updateStatus(String(socket.handshake.query.username), "offline");
+		clients.forEach(function(client) {
+			client.emit("updateStatus", String(socket.handshake.query.username), "offline");
+		});
+		const index = clients.indexOf(socket);
+		if (index > -1) {
+			clients.splice(index, 1);
+		}
 	}
 
 	@SubscribeMessage('message')
@@ -55,35 +58,13 @@ export class ChatGateway implements OnGatewayConnection {
 		this.server.sockets.emit('receive_message', message);
 	}
 
-
-
-	// async handleConnection(socket: Socket) {
-	// 	await this.chatService.getUserFromSocket(socket);
-	// }
-
-	@SubscribeMessage('send_message')
-	async listenForMessages(@MessageBody() content: string, @ConnectedSocket() socket: Socket) {
-
-		const author = await this.chatService.getUserFromSocket(socket);
-		const message = await this.chatService.saveMessage(content, author);
-
-		this.server.sockets.emit('receive_message', message);
-	}
-
-	@SubscribeMessage('send_message_chat')
-	async listenForChatMessages(@MessageBody() chat: string, @MessageBody() content: string, @ConnectedSocket() socket: Socket) {
-
-		const author = await this.chatService.getUserFromSocket(socket);
-		const message = await this.chatService.saveChatMessage(chat, content, author);
-
-		this.server.sockets.emit('receive_message_chat', chat, message);
-	}
-
-	@SubscribeMessage('request_all_messages')
-	async requestAllMessages(@ConnectedSocket() socket: Socket) {
-		await this.chatService.getUserFromSocket(socket);
-		const messages = await this.chatService.getAllMessages();
-
-		socket.emit('send_all_messages', messages);
+	@SubscribeMessage('requestAllMessages')
+	async requestAllMessages(@ConnectedSocket() socket: Socket, @MessageBody() body: number) {
+		// const messages = await this.chatService.getAllMessages();
+		const messages = await this.chatService.getMessages(body);
+		// messages.forEach(message => {
+		// 	console.log("messages: " + message.content)
+		// })
+		socket.emit('sendAllMessages', messages);
 	}
 }

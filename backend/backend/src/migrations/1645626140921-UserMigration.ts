@@ -12,36 +12,36 @@ export class UserMigration1645626140921 implements MigrationInterface {
             queryRunner.manager.create<User>(User, {
                 login: 'dummy1',
                 status: 'offline',
-                avatar: 'avatar2.png'
+                avatar: 'norminet.jpg'
             }),
         );
         const dummy2 = await queryRunner.manager.save(
             queryRunner.manager.create<User>(User, {
                 login: 'dummy2',
                 status: 'online',
-                avatar: 'avatar1.png'
+                avatar: 'grenouille.jpg'
             }),
         );
         const dummy3 = await queryRunner.manager.save(
             queryRunner.manager.create<User>(User, {
                 login: 'dummy3',
-                status: 'online',
-                avatar: 'avatar2.png'
+                status: 'offline',
+                avatar: 'lievre.jpg'
             }),
         );
         const dummy4 = await queryRunner.manager.save(
             queryRunner.manager.create<User>(User, {
                 login: 'dummy4',
                 status: 'online',
-                avatar: 'avatar2.png'
+                avatar: 'flowey.jpg'
             }),
         );
 
         const dummy5 = await queryRunner.manager.save(
             queryRunner.manager.create<User>(User, {
                 login: 'dummy5',
-                status: 'online',
-                avatar: 'avatar1.png'
+                status: 'ingame',
+                avatar: 'turtle.jpg'
             }),
         );
 
@@ -51,6 +51,39 @@ export class UserMigration1645626140921 implements MigrationInterface {
                 status: 'online',
                 email: 'malatini@student.42.fr',
                 login42: 'malatini'
+            }),
+        );
+
+        const bahaas = await queryRunner.manager.save(
+            queryRunner.manager.create<User>(User, {
+                login: 'bahaas',
+                status: 'offline',
+                email: 'bahaas@student.42.fr',
+                login42: 'bahaas'
+            }),
+        );
+
+        const bahaasRelation2 = await queryRunner.manager.save(
+            queryRunner.manager.create<UserRelation>(UserRelation, {
+                creator: bahaas,
+                receiver: dummy2,
+                status: 'accepted',
+            }),
+        );
+
+        const bahaasRelation3 = await queryRunner.manager.save(
+            queryRunner.manager.create<UserRelation>(UserRelation, {
+                creator: dummy3,
+                receiver: bahaas,
+                status: 'pending',
+            }),
+        );
+
+        const bahaasRelation4 = await queryRunner.manager.save(
+            queryRunner.manager.create<UserRelation>(UserRelation, {
+                creator: bahaas,
+                receiver: dummy4,
+                status: 'blocked',
             }),
         );
 

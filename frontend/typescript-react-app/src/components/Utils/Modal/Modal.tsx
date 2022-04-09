@@ -1,14 +1,8 @@
 import React, {Component, useState} from "react";
 import Nav from "../../Nav/Nav"
-import {Modal, ModalBody, ModalHeader, ModalTitle, ModalFooter, Button, Row, Col, Form} from "react-bootstrap"
-import Select from "react-select";
-
-//interface CreateChanState {
-//}
 
 export default function CreateChanModal(props) {
 	const [channame, setChannname] = React.useState("");
-	//const [policy, setPolicy] = React.useState("Public");
 	const [isSelected, setIsSelected] = React.useState(true);
 
 	const policies = ["Public", "Protected", "Private"];
@@ -18,9 +12,7 @@ export default function CreateChanModal(props) {
 	const Pol = policy.map(Pol => Pol
 	)
 	const handlePol= (e) => {
-		//console.log("target is " + (policy[e.target.value]));
 		setSelectPoli((policy[e.target.value]));
-		//console.log("selected is " + selectedPoli);
 	}
 
 	function handleCreate()
@@ -29,14 +21,9 @@ export default function CreateChanModal(props) {
 		console.log("chan is " + channame);
 	}
 
-	//function change(event){
-	//	setPolicy(value: event.target.value);
-	//}
-
-	//render() {
 		return (
 			<div id="modal--create--channel">
-				<Modal
+				{/*<Modal
 					{...props}
 					size="l"
 					aria-labelledby="contained-modal-title-vcenter"
@@ -58,7 +45,9 @@ export default function CreateChanModal(props) {
 							/>
 							<div id="public--policy">
 							<label className="modal--label">Select policy</label>
-							{/*<select
+
+
+							<select
 								className="form-select form-select-sm"
 								aria-label="form-select-sm" id="policy--select"
 								onChange={(e)=>{this.setPolicy({policy: e.target.value})}}
@@ -69,15 +58,13 @@ export default function CreateChanModal(props) {
 									selected={isSelected}
 									>{item}</option>
 									))}
-							</select>*/}
+							</select>
 							<br />
 							< select
 								onChange={e => handlePol(e)}
 								className="form-select form-select-sm"
 								>
-								{
-									Pol.map((address, key) => <option key={key}value={key}>{address}</option>)
-								}
+								//{Pol.map((address, key) => <option key={key}value={key}>{address}</option>)}
 							</select >
 							</div>
 							<br />
@@ -96,6 +83,7 @@ export default function CreateChanModal(props) {
 						<Button onClick={props.onHide} variant="light">Close</Button>
 					</Modal.Footer>
 				</Modal>
+				*/}
 			</div>)
 		//	);
 	//}

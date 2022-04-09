@@ -3,7 +3,7 @@ import React, {useState} from "react";
 import Participant from './Participant/Participant';
 import Footer from "../../Footer/Footer";
 //import TimePicker from "react-time-picker";
-import { useTimer } from 'react-timer-hook';
+//import { useTimer } from 'react-timer-hook';
 import MyTimer from "./MyTimer/MyTimer";
 
 export interface ParticipantProps{

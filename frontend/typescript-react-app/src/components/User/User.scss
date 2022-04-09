@@ -12,9 +12,10 @@
 }
 
 .user--stats {
-  padding: 15px !important;
+  //padding: 15px !important;
   background-color: white !important;
   border-radius: variables.$border-radius-big;
+  padding: 40px;
   //width: 75%;
 }
 
@@ -59,25 +60,23 @@ button {
 }
 
 #change--avatar {
-  //border: 0.1rem solid #25a5c4 !important;
-  //border-radius: variables.$border-radius-big;
   margin-top: 20px;
   margin-bottom: 20px;
-  //width: 50% !important;
-  display: block;
-  margin-left: auto;
+  //display: inline;
+  margin-left: 15%;
   margin-right: auto;
+  //text-align: center !important;
 }
 
 #user--settings--div {
-  border: 0.1rem solid black !important; //#00b1ca;
+  border: 0.1rem solid variables.$lightgrey !important; //#00b1ca;
   border-radius: variables.$border-radius-big;
-  margin: 20px;
+  //margin: 20px;
   width: 75%;
-  margin-left: auto;
-  margin-right: auto;
-  padding-right: 10%;
-  padding-left: 10%;
+  //margin-left: auto;
+  //margin-right: auto;
+  //padding-right: 10%;
+  //padding-left: 10%;
 }
 
 #stats--title {
@@ -95,6 +94,7 @@ button {
   padding: 10px !important;
   border: none;
   font-size: 10px !important;
+  color: black !important;
   //background-color: white !important;
 }
 
@@ -118,6 +118,14 @@ button {
 	border: 0.1rem solid #f9f9f9 !important;
 	padding: 5px !important;
 	border-radius: variables.$border-radius;
+}
+
+img[src=""] {
+  display: none;
+}
+
+#please {
+  margin-top: 20px !important;
 }
 
 

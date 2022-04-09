@@ -1,6 +1,6 @@
 import './TypingMessage.scss';
 import React from "react";
-import { w3cwebsocket} from "websocket";
+//import { w3cwebsocket} from "websocket";
 //import io from "socket.io-client";
 import SingleMessage from "../ListDiscussions/SingleMessage/SingleMessage"
 

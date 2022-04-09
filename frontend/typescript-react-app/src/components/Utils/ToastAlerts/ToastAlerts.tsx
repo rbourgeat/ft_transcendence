@@ -21,19 +21,17 @@ class ToastAlerts extends React.Component
         draggable: true,
         progress: undefined,
         });
-      };
+    };
 
-      notifySuccess(Param: string)
-      {
-          toast.success(Param, {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          });
-        };
-
+    notifySuccess(Param: string)
+    {
+        toast.success(Param, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        });};
 } export default ToastAlerts;

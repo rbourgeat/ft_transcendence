@@ -11,6 +11,7 @@ import { Socket } from 'socket.io';
 import { parse } from 'cookie';
 import { AuthService } from '../auth/auth.service';
 import { WsException } from '@nestjs/websockets';
+import { from } from 'rxjs';
 
 @Injectable()
 export class ChatService {
@@ -54,8 +55,7 @@ export class ChatService {
 
 	async getUserFromSocket(socket: Socket) {
 		const cookie = socket.handshake.headers.cookie;
-		if (cookie)
-		{
+		if (cookie) {
 			const { Authentication: authenticationToken } = parse(cookie);
 			const user = await this.authenticationService.getUserFromAuthenticationToken(authenticationToken);
 			if (!user) {
@@ -127,7 +127,7 @@ export class ChatService {
 		);
 		await this.participateRepository.save(newParticipate2);
 
-		let chatName = "direct_" + user1.id + "_" + user1.id;
+		let chatName = "direct_" + user1.id + "_" + user2.id;
 		const newChat = await this.chatRepository.create(
 			{
 				name: chatName,
@@ -212,17 +212,15 @@ export class ChatService {
 	}
 
 	async getMessages(id: number) {
+		console.log(id);
 		const chat = await this.chatRepository.findOne({ id });
 
-		const query = this.messageRepository
-			.createQueryBuilder('message')
-			.leftJoin('message.chat', 'chat')
-			.where('chat.id = :id', { id: chat.id })
-		//.orderBy(createdAt, DESC)
-		const messageFound: Message[] = await query.getMany();
+		console.log(chat.id);
 
+		const messages = chat.message;
+		//TODO clear message when u have a user blocked
 		let history: Message[] = [];
-		for (const message of messageFound) {
+		for (const message of messages) {
 			history.push(message);
 		}
 		return history;

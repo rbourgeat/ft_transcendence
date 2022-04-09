@@ -8,7 +8,7 @@ interface ChatProps {
     username?: string
 }
 
-//TODO: a revoir
+//TODO: a reprendre
 export default function Chat(props: ChatProps) {
     function createChat()
     {

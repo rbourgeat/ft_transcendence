@@ -6,12 +6,17 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import RequestWithUser from 'src/auth/interface/requestWithUser.interface';
 import JwtAuthenticationGuard from 'src/auth/guard/jwt-authentication.guard';
 import { CreateMessageDto, SendMessageToChatDto } from './dto/message.dto';
+import { UserDto } from '../user/dto/user.dto';
+import { User } from 'src/user/entity/user.entity';
+import { Repository } from 'typeorm';
+import { UserService } from 'src/user/user.service';
 
 @ApiTags('Chats') //Create a category on swagger
 @Controller('api/chat')
 export class ChatController {
     constructor(
-        private readonly chatService: ChatService
+        private readonly chatService: ChatService,
+        private userService: UserService
     ) { }
 
     @ApiOperation({ summary: 'Retrieve all chats data' }) //endpoint summary on swaggerui
@@ -63,11 +68,21 @@ export class ChatController {
         return this.chatService.createChat(chat, req.user);
     }
 
+    @ApiOperation({ summary: 'Create a new direct message [jwt-protected]' })
+    @ApiOkResponse({ description: 'Direct message creation suceed' })
+    @ApiConflictResponse({ description: 'Direct message already exist' })
+    @UseGuards(JwtAuthenticationGuard)
+    @Post('/:userLogin/direct')
+    async createDirectMessage(@Param('userLogin') user: string, @Req() req: RequestWithUser) {
+        let user2 = await this.userService.getUserByLogin(user);
+        return await this.chatService.createDirectMessage(req.user, user2);
+    }
+
     @ApiOperation({ summary: 'Retrieve message history' }) //endpoint summary on swaggerui
     @ApiOkResponse({ description: 'Messages load successfully' }) //answer sent back
     @ApiConflictResponse({ description: 'Fail' }) //not working atm
-    @Get(':id/messages')
-    async getMessages(@Body() id: number) {
+    @Get(':idChat/messages')
+    async getMessages(@Param('idChat') id: number) {
         console.log('Retrieve message history from chat: ' + id)
         return this.chatService.getMessages(id);
     }
