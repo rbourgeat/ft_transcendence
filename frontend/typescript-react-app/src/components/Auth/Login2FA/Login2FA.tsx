@@ -10,11 +10,34 @@ import {ToastContainer} from "react-toastify";
 
 export default function Login2fa() {
 	const [activated2fa, setActivated2fa] = React.useState(false);
+	const [loggedIn, setLoggedIn] = React.useState("false");
 	const calledOnce = React.useRef(false);
 	const [code, setCode] = React.useState("");
 	const [load, setLoad] = React.useState(false);
 
 	async function getUser() {
+
+		let check1 = localStorage.getItem("loggedIn");
+		console.log("check1 is " + check1);
+		if (check1 == "true")
+		{
+			console.log("Already logged in !");
+
+			axios.defaults.headers.post['Access'] = '*/*';
+			axios.defaults.withCredentials = true;
+
+			//axios.get("http://localhost:3000/api/42auth/redirect-user")
+			axios.get("http://localhost:3000/api/42auth/redirect-user")
+			.then(res => {console.log("Cool !")})
+			.catch((error) => {
+				console.log(error);
+				console.log("Error while being redirected !")
+			}
+				);
+			return ;
+			//window.top.location = "http://localhost:3030/user";
+		}
+
 		let url = "http://localhost:3000/api/auth/";
 		let username = "";
 		let activated = false;
@@ -22,9 +45,9 @@ export default function Login2fa() {
 		axios.defaults.withCredentials = true;
 		await axios.get(url)
 			.then(res => {
+				console.log(res);
+				console.log(res.data);
 				username = res.data.login;
-				console.log(username + ' <-- result of get user')
-				//setUsername(username);
 				activated = res.data.isTwoFactorAuthenticationEnabled;
 				console.log("2FA activated ? " + activated);
 				if (activated == false)
@@ -33,8 +56,13 @@ export default function Login2fa() {
 					setActivated2fa(false);
 					setInterval(() =>
 					{
-						console.log("Loading");
-						window.top.location = "http://localhost:3030/user";
+						//console.log("Loading");
+						//localStorage.setItem(loggedIn, JSON.stringify("true"));
+						//let check = localStorage.getItem("loggedIn");
+						//console.log("chek is " + check);
+						//window.top.location = "http://localhost:3030/user";
+						axios.get("http://localhost:3000/api/42auth/redirect-user")
+						.catch((error) => {console.log("Error while being redirected !")});
 					}, 1000)
 
 					//.then(window.top.location = "http://localhost:3030/user")
@@ -45,14 +73,14 @@ export default function Login2fa() {
 				{
 					console.log("should check the code before");
 					setActivated2fa(true);
+					setLoad(true);
 				}
 			})
 			.catch((err) => {
 				console.log("Error while getting api auth");
 			})
-		setLoad(true);
-	}
 
+	}
 	useEffect(() => {
 		if (calledOnce.current) {
 			return;}
@@ -92,8 +120,11 @@ export default function Login2fa() {
 			toast.notifySuccess("✅ Success ! Redirecting...")
 			setInterval(() => {
 				console.log("Loading");
-				window.top.location = "http://localhost:3030/user";
-			}, 2000)
+				localStorage.setItem('loggedIn', JSON.stringify("true"));
+				let check = localStorage.getItem("loggedIn");
+				console.log("chek is " + check);
+				//window.top.location = "http://localhost:3030/user";
+			}, 1000)
 
 		})
 		.catch((error) => {
@@ -107,7 +138,7 @@ export default function Login2fa() {
 		<div>
 			<div id="login--2FA" className="container">
 					{/*<div id="div--main--2fa">*/}
-						{load == true ?
+						{load == true && activated2fa == true ?
 						<div id="div--main--2fa">
 							<h1 className="game--rules--title">✨ 2 factor authentication</h1>
 							<br />

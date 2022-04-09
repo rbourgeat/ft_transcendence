@@ -53,7 +53,7 @@ export class AuthenticationController {
     @ApiOperation({ summary: 'log out user [jwt-protected]' })
     @ApiOkResponse({ description: 'You logged out' })
     @UseGuards(JwtAuthenticationGuard)
-    @Redirect('http://localhost:3030/2fa/')
+    @Redirect('http://localhost:3030/2fa')
     @Post('log-out')
     async logOut(@Res() response: Response, @Req() request: RequestWithUser) {
 
