@@ -1,20 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
 import './Nav.scss';
-//import { faUser, faComment, faTrophy, faMagnifyingGlass, faDashboard, faUserFriends, faGamepad } from "@fortawesome/free-solid-svg-icons";
-//import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-//import {Button} from "react-bootstrap"
 
-/**
- * @malatini
- * Notre navbar / menu, à continuer , à mettre en classe et pas en fonction, utilise window
- */
 
 function Nav() {
     return (
         <div id="nav">
-            <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-					<Link to="/" id="nav--title">PONG</Link>
+            <nav className="navbar navbar-expand-lg navbar-dark bg-dark" id="navbar--main">
+					<Link to="/" id="nav--title">FT_TRANSCENDENCE</Link>
                 <button className="navbar-toggler" type="button">
                     <span className="navbar-toggler-icon"></span>
                 </button>
@@ -22,23 +15,23 @@ function Nav() {
                     <ul className="navbar-nav">
 						<li className="nav-item">
 								<Link to="/game" className="nav-link">
-										<div className='nav-link-text'><p>
+										<div className='nav-link-text'>
 											{/*<FontAwesomeIcon icon={faGamepad}>*/}
-										</p><p>Rules</p></div>
+										<p className="nav--text">Rules</p></div>
 								</Link>
 						</li>
 						<li className="nav-item">
 								<Link to="/people" className="nav-link">
-										<div className='nav-link-text'><p>
+										<div className='nav-link-text'>
 											{/*<FontAwesomeIcon icon={faUserFriends} />*/}
-											</p><p>People</p></div>
+											<p className="nav--text">People</p></div>
 								</Link>
 						</li>
 						<li className="nav-item">
 								<Link to="/stats" className="nav-link">
-										<div className='nav-link-text'><p>
+										<div className='nav-link-text'>
 											{/*<FontAwesomeIcon icon={faTrophy} />*/}
-											</p><p>Stats</p></div>
+											<p className="nav--text">Stats</p></div>
 								</Link>
 						</li>
 						{/*<li className="nav-item">
@@ -48,37 +41,37 @@ function Nav() {
 						</li>*/}
 						<li className="nav-item">
 								<Link to="/achievements" className="nav-link">
-										<div className='nav-link-text'><p>
+										<div className='nav-link-text'>
 											{/*<FontAwesomeIcon icon={faTrophy}/>*/}
-											</p><p>Achievements</p></div>
+											<p className="nav--text">Achievements</p></div>
 								</Link>
 						</li>
 						<li className="nav-item">
 								<Link to="/chat"className="nav-link">
-										<div className='nav-link-text'><p>
+										<div className='nav-link-text'>
 											{/*<FontAwesomeIcon icon={faComment} />*/}
-											</p> <p>Sockets</p></div>
+											<p className="nav--text">Sockets</p></div>
 								</Link>
 						</li>
 						<li className="nav-item">
 								<Link to="/channels" className="nav-link">
-										<div className='nav-link-text'><p>
+										<div className='nav-link-text'>
 											{/*<FontAwesomeIcon icon={faComment} />*/}
-											</p> <p>Chat</p></div>
+											<p className="nav--text">Chat</p></div>
 								</Link>
 						</li>
 						<li className="nav-item">
 								<Link to="/playwatch" className="nav-link">
-										<div className='nav-link-text'><p>
+										<div className='nav-link-text'>
 											{/*<FontAwesomeIcon icon={faDashboard} />*/}
-											</p><p>Watch</p></div>
+											<p className="nav--text">Watch</p></div>
 								</Link>
 						</li>
 						<li className="nav-item">
 								<Link to="/user" className="nav-link">
-										<div className='nav-link-text'><p>
+										<div className='nav-link-text'>
 											{/*<FontAwesomeIcon icon={faUser} />*/}
-											</p><p>Settings</p></div>
+											<p className="nav--text">Settings</p></div>
 								</Link>
 						</li>
 						{/*<li className="nav-item">
