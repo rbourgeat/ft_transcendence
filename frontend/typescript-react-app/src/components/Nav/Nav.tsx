@@ -11,8 +11,17 @@ function Nav() {
 
 	function disconnect()
 	{
-		axios.post('http:localhost:3000/api/auth/log-out')
-			.then((response) => {console.log(response)})
+		axios.defaults.headers.post['Accept'] = '*/*';
+		axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+		axios.post("http://localhost:3000/api/auth/log-out")
+			.then((response) => {
+				console.log(response);
+				//Sauvegarde dans localStorage le fait qu'on est déconnecté
+				localStorage.setItem("loggedIn", JSON.stringify("false"));
+				console.log("Disconnecting");
+				let check = localStorage.getItem("loggedIn");
+				console.log("Check is " + check);
+			})
 			.catch((error) => {
 				if (error.response) {
 					console.log(error.response.data);

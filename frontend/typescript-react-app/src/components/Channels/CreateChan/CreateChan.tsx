@@ -3,10 +3,10 @@ import React, { Component, useState, useEffect } from "react";
 import Nav from "../../Nav/Nav";
 import CreateChanModal from "../../Utils/Modal/Modal";
 import myAxios from "../../Utils/Axios/Axios";
-import axios from "axios";
 import ListChannels from "../ListChannels/ListChannels";
 import Channels from "../../Channels/Channels";
 import io from "socket.io-client";
+import axios from "axios";
 
 interface UserChat {
     login?: string
@@ -27,7 +27,7 @@ export default function CreateChan(props: UserChat) {
         axios.get(url)
             .then(res => {
                 username = res.data.login;
-                console.log(username + ' <-- result of get user')
+                // console.log(username + ' <-- result of get user')
                 setUsername(username);
             })
             .catch((err) => {

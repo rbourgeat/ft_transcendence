@@ -22,13 +22,13 @@ export class GameController {
     **  Save a new game to db
     **/
 
-    @ApiOperation({ summary: 'Create a new game' })
-    @ApiOkResponse({ description: 'Game creation suceed' })
-    @ApiConflictResponse({ description: 'Game already exist' })
-    @Post()
-    async createGame(@Body() game: CreateGameDto) {
-        console.log('Create game: ' + game.login1 + 'vs' + game.login2)
-        return this.gameService.createGame(game);
-    }
+    // @ApiOperation({ summary: 'Create a new game' })
+    // @ApiOkResponse({ description: 'Game creation suceed' })
+    // @ApiConflictResponse({ description: 'Game already exist' })
+    // @Post()
+    // async createGame(@Body() game: CreateGameDto) {
+    //     console.log('Create game: ' + game.login1 + 'vs' + game.login2)
+    //     return this.gameService.createGame(game);
+    // }
 
 }
