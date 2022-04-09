@@ -31,11 +31,13 @@ export default function Game() {
 	}
 	var isSearching = false;
 	var SearchText = "Rechercher une partie"
-	var adversaire = "unknown"
+	let adversaire = "unknown"
+	let joueur = "unknown"
 
 	let socket = io("http://localhost:3000/game", { query: { username: username } });
 	function sendSearch() {
 		if (username) {
+			joueur = username;
 			isSearching = isSearching ? false : true;
 			if (isSearching)
 				SearchText = "Annuler la recherche"
@@ -48,13 +50,10 @@ export default function Game() {
 			document.querySelector('#search-button').textContent = "Impossible de te connecter !"
     }
 
-	function sendScore(winner: string, loser: string, winner_point: number, loser_point:number) {
-        socket.emit('gameEnd', winner, loser, winner_point, loser_point);
-    }
-
 	socket.on("gameStart", (...args) => {
 		adversaire = args[0];
 		document.querySelector('#adversaire').textContent = adversaire;
+		play();
 	});
 
 
@@ -112,14 +111,13 @@ export default function Game() {
 				}
 			}
 		}
-		// draw();
+		draw();
 		// play();
 		canvas.addEventListener('mousemove', playerMove);
 		otherMove();
     }, []);
  
 	function play() {
-
 		draw();
 		otherMove();
 		ballMove();
@@ -208,16 +206,12 @@ export default function Game() {
 		// Reset speed
 		game.ball.speed.x = 0;
 		game.ball.speed.y = 0;
-		// Init score
-		// game.player2.score = 0;
-		// game.player.score = 0;
-		// document.querySelector('#player2-score').textContent = game.player2.score;
-		// document.querySelector('#player-score').textContent = game.player.score;
+
 		draw();
 		if (game.player.score > game.player2.score)
-			sendScore(username, adversaire, game.player.score, game.player2.score);
+			socket.emit('gameEnd', username, adversaire, game.player.score, game.player2.score);
 		else
-			sendScore(adversaire, username, game.player.score, game.player2.score);
+			socket.emit('gameEnd', adversaire, username, game.player2.score, game.player.score);
 	}
 
 	return (

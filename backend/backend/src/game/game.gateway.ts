@@ -54,12 +54,13 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
 			if (index > -1) {
 				MatchMaking.splice(index, 1);
 			}
-			this.server.emit('gameStart', adversaire);
+			this.server.emit('gameStart', adversaire); 
 		}
 	}
 
 	@SubscribeMessage('gameEnd')
 	async gameEnd(@ConnectedSocket() socket: Socket, ...args: any[]) {
+		console.log("winner: ", args[0], "loser", args[1], "winner score: ", args[2], "loser score: ", args[3])
 		this.gameService.createGame(args[0], args[1], args[2], args[3]);
 	}
 
