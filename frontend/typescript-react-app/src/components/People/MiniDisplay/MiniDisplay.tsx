@@ -1,11 +1,8 @@
 import './MiniDisplay.scss';
 import MyAxios from '../../Utils/Axios/Axios';
 import React, { Component, useState, useEffect } from 'react';
-
 import { AiOutlineCloseCircle, AiFillPlusCircle } from "react-icons/ai";
 import { BsFillPersonPlusFill, BsFillPersonXFill } from "react-icons/bs";
-//import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-//import { faUser, faComment, faTrophy, faMagnifyingGlass, faDashboard, faUserFriends, faGamepad } from "@fortawesome/free-solid-svg-icons";
 
 // IMPORTER CA
 import io from "socket.io-client";
@@ -22,7 +19,6 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 	const [load, setLoad] = React.useState(false);
 	const calledOnce = React.useRef(false);
 	const [status, setStatus] = React.useState(props.status);
-
 	const [username, setUsername] = React.useState("");
 
 	function renderImage(avatar: string) {
@@ -54,7 +50,6 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 				console.log("Catched error during get/fileId/avatar");
 				return (<img className="profile--pic" src="https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg" alt={imageName} height="80" width="80" id={props.login} />);
 			})
-
 	}
 
 	// REPRENDRE USER ICI - SOCKET
