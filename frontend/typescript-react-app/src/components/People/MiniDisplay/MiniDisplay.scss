@@ -6,7 +6,7 @@
 	margin: 10px;
 	//width: 10% !important;
 	//display: inline !important;
-	width: 115px !important;
+	width: 140px !important;
 }
 
 #minidisplay--div > *, #mini--login, #mini--status {
@@ -20,9 +20,12 @@
 
 .profile--pic {
 	border: 0.1rem solid #f9f9f9 !important;
-	padding: 5px !important;
-	border-radius: variables.$border-radius;
-	margin-bottom: 15px;
+	//padding: 5px !important;
+	border-radius:50%;
+	display: block;
+  	margin-left: auto;
+  	margin-right: auto;
+	cursor: pointer;
 }
 
 .user--p, .profile--link {
@@ -30,6 +33,18 @@
 	font-family: variables.$basic-font;
 	font-size: 12px;
 	line-height: 10pt;
+}
+
+.log--color {
+	text-align: right !important;
+	margin-top: -50px;
+}
+
+.user--action {
+	text-align: center !important;
+	margin-left: 20px;
+	font-size: 25px;
+	cursor: pointer;
 }
 
 #mini--login {
