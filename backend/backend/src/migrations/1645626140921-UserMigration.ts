@@ -54,6 +54,39 @@ export class UserMigration1645626140921 implements MigrationInterface {
             }),
         );
 
+        const bahaas = await queryRunner.manager.save(
+            queryRunner.manager.create<User>(User, {
+                login: 'bahaas',
+                status: 'offline',
+                email: 'bahaas@student.42.fr',
+                login42: 'bahaas'
+            }),
+        );
+
+        const bahaasRelation2 = await queryRunner.manager.save(
+            queryRunner.manager.create<UserRelation>(UserRelation, {
+                creator: bahaas,
+                receiver: dummy2,
+                status: 'accepted',
+            }),
+        );
+
+        const bahaasRelation3 = await queryRunner.manager.save(
+            queryRunner.manager.create<UserRelation>(UserRelation, {
+                creator: dummy3,
+                receiver: bahaas,
+                status: 'pending',
+            }),
+        );
+
+        const bahaasRelation4 = await queryRunner.manager.save(
+            queryRunner.manager.create<UserRelation>(UserRelation, {
+                creator: bahaas,
+                receiver: dummy4,
+                status: 'blocked',
+            }),
+        );
+
         const malatiniRelation1 = await queryRunner.manager.save(
             queryRunner.manager.create<UserRelation>(UserRelation, {
                 creator: malatini,

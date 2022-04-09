@@ -116,9 +116,9 @@ export class UserController {
 
     @ApiOperation({ summary: 'Send invite to the targeted user [jwt-protected]' })
     @UseGuards(JwtAuthenticationGuard)
-    @Post('relation/sendInvitation/:receiverId')
-    sendInvitation(@Param('receiverId') receiverId: number, @Request() req) {
-        return this.userService.sendInvitation(receiverId, req.user);
+    @Post('relation/sendInvitation/:receiverLogin')
+    sendInvitation(@Param('receiverLogin') receiverLogin: string, @Request() req) {
+        return this.userService.sendInvitation(receiverLogin, req.user);
     }
 
     @ApiOperation({ summary: 'Answer to the invitation request (accepted/declined/blocked) [jwt-protected]' })
@@ -151,9 +151,9 @@ export class UserController {
 
     @ApiOperation({ summary: 'Block a user [jwt-protected]' })
     @UseGuards(JwtAuthenticationGuard)
-    @Post('relation/block/:receiverId')
-    blockUser(@Param('receiverId') receiverId: number, @Request() req) {
-        return this.userService.blockUser(receiverId, req.user);
+    @Post('relation/block/:receiverLogin')
+    blockUser(@Param('receiverLogin') receiverLogin: string, @Request() req) {
+        return this.userService.blockUser(receiverLogin, req.user);
     }
 
     @ApiOperation({ summary: 'Unblock a user [jwt-protected]' })

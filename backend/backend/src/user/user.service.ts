@@ -155,10 +155,10 @@ export class UserService {
 	* 3.check if no invite to him / request from him already exist
 	* 4.add new invitation
 	*/
-	async sendInvitation(receiverId: number, creator: User) {
-		if (receiverId == creator.id)
+	async sendInvitation(receiverLogin: string, creator: User) {
+		if (receiverLogin == creator.login)
 			return console.log('It is not possible to add yourself!');
-		const receiver = await this.findUserById(receiverId);
+		const receiver = await this.getUserByLogin(receiverLogin);
 		if (!receiver)
 			return console.log('user not found');
 		console.log(creator.login + ' try to invite ' + receiver.login);
@@ -278,10 +278,10 @@ export class UserService {
 	/**
 	* 1.block yourself / 2. user not existing / 3. user already blocked / 4. update if relation already existing
 	*/
-	async blockUser(receiverId: number, creator: User) {
-		if (receiverId === creator.id)
+	async blockUser(reiceverLogin: string, creator: User) {
+		if (reiceverLogin == creator.login)
 			return console.log('It is not possible to block yourself!');
-		const receiver = await this.findUserById(receiverId);
+		const receiver = await this.getUserByLogin(reiceverLogin);
 		if (!receiver)
 			return console.log('user not found');
 		const existing_invitation = await this.hasExistingRelation(creator, receiver)

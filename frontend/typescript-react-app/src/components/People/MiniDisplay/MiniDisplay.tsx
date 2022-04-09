@@ -37,7 +37,7 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 			if (imageUser42)
 				myImg.src = imageUser42;
 			else
-				myImg.src = avatar;;
+				myImg.src = avatar;
 			return;
 		}
 
@@ -108,23 +108,27 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 			console.log("Catched error during get/logind/user");
 		})
 
+	function addContact(login: string) {
+		let ax = new MyAxios(null);
+		return (ax.post_api_user_relation_sendInvation_id(login));
+	}
 
-	//demander à Mahaut comment faire appel à des fonctions situés dans d'autres fichiers (genre onclick = faire le addFrien)
-	function testing() {
-		console.log('click test');
+	function blockContact(login: string) {
+		let ax = new MyAxios(null);
+		return (ax.post_relation_block(login));
 	}
 
 	return (
 		<>
 			<li id="minidisplay--div" className="list-group-item" key={props.login}>
-				<img className="profile--pic" id={props.login} src="" width="100" height="100" onClick={testing} />
+				<img className="profile--pic" id={props.login} src="" width="100" height="100" />
 				{load == true ? renderImage(props.avatar) : console.log("test")}
 				<svg className="log--color" height="40" width="40"><circle cx="20" cy="20" r="15" fill={color} /></svg>
 				<br />
 				<p className="user--p" id="mini--login">{props.login}</p>
 				<p className="user--p" id="mini--status">{status}</p>
-				<i className="user--action" onClick={testing}>{<BsFillPersonPlusFill />}</i>
-				<i className="user--action" onClick={testing}>{<BsFillPersonXFill />}</i>
+				<i className="user--action" onClick={() => addContact(props.login)}>{<BsFillPersonPlusFill />}</i>
+				<i className="user--action" onClick={() => blockContact(props.login)}>{<BsFillPersonXFill />}</i>
 			</li>
 		</>
 	);
