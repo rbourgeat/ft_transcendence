@@ -1,5 +1,4 @@
 import './MiniDisplay.scss';
-import axios from 'axios';
 import MyAxios from '../../Utils/Axios/Axios';
 import React, { Component, useState, useEffect } from 'react';
 
@@ -10,6 +9,7 @@ import { BsFillPersonPlusFill, BsFillPersonXFill } from "react-icons/bs";
 
 // IMPORTER CA
 import io from "socket.io-client";
+import axios from 'axios';
 
 export interface MiniDisplayProps {
 	login?: string,
