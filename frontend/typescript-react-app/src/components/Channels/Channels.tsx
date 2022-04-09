@@ -55,9 +55,7 @@ export default function Channels(props: ChatProps) {
 						<ListDiscussions />
 						<TypingMessage />
 					</div>
-					<div className="test">
-						<ListParticipant />
-					</div>
+					<ListParticipant />
 				</div>
 			</div>
 		</div>
