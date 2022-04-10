@@ -25,15 +25,22 @@
 {
 	//overflow-y: scroll;
 	width: 95%;
+	border-radius: variables.$border-radius;
+	padding-bottom: 40px;
+
+		//display:grid;
+		 //grid-template-rows: 7;
+}
+
+.wrapper {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
 }
 
 #row--users {
+			display:grid;
+		 grid-template-rows: 7;
 	margin-left: 5%;
-}
-
-#list--users--ul {
-	border-radius: variables.$border-radius;
-	padding-bottom: 40px;
 }
 
 #registered--title {

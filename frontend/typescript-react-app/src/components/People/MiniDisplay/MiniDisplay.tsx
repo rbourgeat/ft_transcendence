@@ -43,14 +43,12 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 
 			let imageUser42 = "https://cdn.intra.42.fr/users/".concat(props.login).concat(".jpg");
 			var myImg = document.getElementById(props.login) as HTMLImageElement;
-			if (is42 == false)
-			{
+			if (is42 == false) {
 				myImg.src = "https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg";
-				return ;
+				return;
 				//return (<img className="profile--pic" src={myImg.src} alt={imageName} id={props.login} height="80" />);
 			}
-			else
-			{
+			else {
 				if (imageUser42)
 					myImg.src = imageUser42;
 				else
