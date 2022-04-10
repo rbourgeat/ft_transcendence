@@ -51,7 +51,14 @@ export default function Game() {
     }
 
 	socket.on("gameStart", (...args) => {
-		adversaire = args[0];
+		let joueur1 = args[0];
+		let joueur2 = args[1];
+		let adversaire = "";
+		if (joueur1 == username)
+			adversaire = joueur2;
+		if (joueur2 == username)
+			adversaire = joueur1;
+		console.log("joueur1 = " + joueur1 + " | joueur2 = " + joueur2 + " | username = " + username)
 		document.querySelector('#adversaire').textContent = adversaire;
 		play();
 	});
