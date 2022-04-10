@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom'
 import './Nav.scss';
 import axios from 'axios';
+import cookies from 'react-cookie';
 
 /**
  * @malatini
@@ -10,22 +11,16 @@ import axios from 'axios';
 function Nav() {
 
 	function disconnect() {
+		axios.defaults.baseURL = 'http://localhost:3000/api/';
 		axios.defaults.headers.post['Accept'] = '*/*';
 		axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 		axios.defaults.withCredentials = true;
 
-		let bod = {
-		}
-
-		const headers = {
-			'Content-Type': 'application/json',
-			'Accept': '*/*',
-		};
-
 		console.log("Logged in is : " + localStorage.getItem("loggedIn"));
 		console.log("---------------------");
 
-		axios.post("http://localhost:3000/api/auth/log-out", bod, { headers })
+
+		axios.post("http://localhost:3000/api/auth/log-out")
 			.then((response) => {
 				console.log(response);
 				console.log("Succesfully disconnected !");
@@ -35,6 +30,7 @@ function Nav() {
 				//console.log("Disconnecting");
 				let check = localStorage.getItem("loggedIn");
 				console.log("Check is " + check);
+				window.top.location = "/";
 			})
 			.catch((error) => {
 				console.log("Catched error while disconnecting");
@@ -50,6 +46,7 @@ function Nav() {
 				//else
 				//	console.log("Response", error.message);
 			});
+
 	}
 
 	return (
