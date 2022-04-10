@@ -96,17 +96,17 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 		if (calledOnce.current) {
 			return;
 		}
-		getUser();
+		//getUser();
 		setLoad(true);
 		calledOnce.current = true;
 
-		let socket = io("http://localhost:3000/chat", { query: { username: username } });
-		socket.on("updateStatus", (pseudo, statusUpdated) => {
-			if (pseudo) {
-				console.log("name: " + pseudo + " / " + "status: " + statusUpdated);
-				setStatus(statusUpdated);
-			}
-		})
+		//let socket = io("http://localhost:3000/chat", { query: { username: username } });
+		//socket.on("updateStatus", (pseudo, statusUpdated) => {
+		//	if (pseudo) {
+		//		console.log("name: " + pseudo + " / " + "status: " + statusUpdated);
+		//		setStatus(statusUpdated);
+		//	}
+		//})
 	}, []);
 
 
@@ -141,7 +141,7 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 			<li id="minidisplay--div" className="list-group-item" key={props.login}>
 				<img className="profile--pic" id={props.login} src="" width="100" height="100" />
 				{/*{load == true ? console.log(props.user) : console.log("test")}*/}
-				{load == true ? renderImage(props.avatar, props.login, props.ftlogin) : ""/*console.log("test")*/}
+				{load == true ? renderImage(props.avatar, props.login, props.ftlogin) : ""}
 				<svg className="log--color" height="40" width="40"><circle cx="20" cy="20" r="15" fill={color} /></svg>
 				<br />
 				<p className="user--p" id="mini--login">{props.login}</p>
