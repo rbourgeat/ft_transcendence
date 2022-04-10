@@ -61,8 +61,8 @@ export class AuthenticationController {
         this.userService.updateStatus(user.login, "offline");
 
         console.log('went by logout in auth controller');
-        response.setHeader('Set-Cookie', this.authenticationService.getCookieForLogOut());
-        //return response.sendStatus(200);
+        //response.setHeader('Set-Cookie', this.authenticationService.getCookieForLogOut());
+        return response.sendStatus(200);
     }
 
     @ApiOperation({ summary: 'Check user session with cookie [jwt-protected]' })

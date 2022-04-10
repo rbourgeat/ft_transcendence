@@ -12,27 +12,40 @@ function Nav() {
 	function disconnect()
 	{
 		axios.defaults.headers.post['Accept'] = '*/*';
-		axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
-		axios.post("http://localhost:3000/api/auth/log-out")
+		//axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+        axios.defaults.withCredentials = true;
+
+		let bod = {
+		}
+
+		const headers = {
+            'Content-Type': 'application/json',
+			'Accept': '*/*',
+        };
+
+		axios.post("http://localhost:3000/api/auth/log-out", bod, {headers})
 			.then((response) => {
 				console.log(response);
+				console.log("Succesfully disconnected !");
 				//Sauvegarde dans localStorage le fait qu'on est déconnecté
-				localStorage.setItem("loggedIn", JSON.stringify("false"));
-				console.log("Disconnecting");
-				let check = localStorage.getItem("loggedIn");
-				console.log("Check is " + check);
+				//localStorage.setItem("loggedIn", JSON.stringify("false"));
+				//console.log("Disconnecting");
+				//let check = localStorage.getItem("loggedIn");
+				//console.log("Check is " + check);
 			})
 			.catch((error) => {
-				if (error.response) {
-					console.log(error.response.data);
-					console.log(error.response.status);
-					console.log(error.response.headers);
-				}
-				else if (error.request) {
-					console.log(error.request)
-				}
-				else
-					console.log("Response", error.message);
+				console.log("Catched error while disconnecting");
+				console.log(error);
+				//if (error.response) {
+				//	console.log(error.response.data);
+				//	console.log(error.response.status);
+				//	console.log(error.response.headers);
+				//}
+				//else if (error.request) {
+				//	console.log(error.request)
+				//}
+				//else
+				//	console.log("Response", error.message);
 			});
 	}
 

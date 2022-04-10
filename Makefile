@@ -29,10 +29,10 @@ unpause:
 # down and make sure every containers are deleted
 clean	:
 			$(COMPOSE) down -v --rmi all --remove-orphans
+			rm -rf database-data/
 
 # cleans and makes sure every volumes, networks and image are deleted
 fclean	:	clean
-			rm -rf database_data
 			$(DOCKER) system prune --volumes --all --force
 			$(DOCKER) network prune --force
 			echo docker volume rm $(docker volume ls -q)
