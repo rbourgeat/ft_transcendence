@@ -16,10 +16,10 @@ export class Game {
     loser_score: number;
 
     @Column({ nullable: true })
-    loser_login: string;
+    loser: string;
 
     @Column({ nullable: true })
-    winner_login: string;
+    winner: string;
 
     @ManyToMany(() => User, (user) => user.games)
     players: User[]

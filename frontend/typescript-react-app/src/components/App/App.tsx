@@ -20,6 +20,7 @@ import Stats from "../Stats/Stats";
 import People from "../People/People";
 import Game from "../Game/Game";
 import PlayWatch from "../Playwatch/Playwatch";
+import Login2FA from "../Auth/Login2FA/Login2FA"
 import Channels from "../Channels/Channels"
 import { io } from 'socket.io-client';
 import axios from 'axios';

@@ -17,12 +17,12 @@
 h1, h2, h3 {
   font-family: variables.$big-font;
   font-size: variables.$big-font-size;
-  color: black !important;
-  opacity: 1 !important;
+  color: black;
+  opacity: 1;
 }
 
 .text {
-  color: black !important;
+  color: black;
 }
 
 ul {
@@ -40,8 +40,8 @@ input:hover {
 
 // input:hover:invalid {
 //   background-color: #b20a37;
-//   border: 1px solid #b20a37 !important;
-//   color: #fff !important;
+//   border: 1px solid #b20a37;
+//   color: #fff;
 // }
 
 //Style pour input valides
@@ -49,13 +49,13 @@ input:hover {
 // input:hover:valid {
 //   background-color: #8ae9b3;
 //   background-image: linear-gradient(315deg, #8ae9b3 0%, #c8d6e5 74%);
-//   border: 1px solid linear-gradient(315deg, #8ae9b3 0%, #c8d6e5 74%) !important;
+//   border: 1px solid linear-gradient(315deg, #8ae9b3 0%, #c8d6e5 74%);
 //   color: #fff;
 // }
 
 input{
   font-size: variables.$small-font-size;
-  margin-bottom: 10px !important;
+  margin-bottom: 10px;
 }
 
 label {
@@ -65,17 +65,17 @@ label {
 button {
   // transform: scale(1);
   transition-property: tranform;
-  border-radius: 0.5rem !important;
-  transition-duration: all 300ms !important;
+  border-radius: 0.5rem;
+  transition-duration: all 300ms;
   font-family: variables.$big-font;
   font-size: variables.$mini-font-size;
 }
 
 // button:hover {
 //   // background-color: #4d4855;
-//   // background-image: linear-gradient(147deg, #4d4855 0%, #000000 74%) !important;
-//   // border: 1px solid white !important;
-//   // color: white !important;
+//   // background-image: linear-gradient(147deg, #4d4855 0%, #000000 74%);
+//   // border: 1px solid white;
+//   // color: white;
 // }
 
 .App {
@@ -85,5 +85,5 @@ button {
 
 p {
   font-family: variables.$basic-font;
-  color: black !important;
+  color: black;
 }

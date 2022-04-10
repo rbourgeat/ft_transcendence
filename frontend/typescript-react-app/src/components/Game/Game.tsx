@@ -1,16 +1,61 @@
-import {useState,  useEffect, useLayoutEffect } from 'react';
+import React, {useState,  useEffect, useLayoutEffect } from 'react';
 import './Game.scss';
-import ReactDOM from 'react-dom';
 import useWindowDimensions from "./useWindowDimensions"
 import Header from "../Header/Header";
 import Nav from "../Nav/Nav";
 import Footer from "../Footer/Footer";
 import GameRules from "../GameRules/GameRules";
+import io from "socket.io-client";
+import axios from "axios";
 
 export default function Game() {
 	//const { width, height } = useWindowSize();
 	// let size = useWindowSize();
 	let size = useWindowDimensions();
+
+	// socket game
+	const [username, setUsername] = React.useState("");
+	let joueur = "unknown"
+	async function getUser() {
+		let url = "http://localhost:3000/api/auth/";
+		let username = "";
+		axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+		axios.defaults.withCredentials = true;
+		await axios.get(url)
+			.then(res => {
+				username = res.data.login;
+				joueur = username;
+				setUsername(username);
+			})
+			.catch((err) => {
+				console.log("Error while getting api auth");
+			})
+	}
+	var isSearching = false;
+	var SearchText = "Rechercher une partie"
+	let adversaire = "unknown"
+
+	let socket = io("http://localhost:3000/game", { query: { username: username } });
+	function sendSearch() {
+		if (username) {
+			isSearching = isSearching ? false : true;
+			if (isSearching)
+				SearchText = "Annuler la recherche"
+			else
+				SearchText = "Rechercher une partie à nouveau"
+			document.querySelector('#search-button').textContent = SearchText;
+			socket.emit('search', isSearching);
+		}
+		else
+			document.querySelector('#search-button').textContent = "Impossible de te connecter !"
+    }
+
+	socket.on("gameStart", (...args) => {
+		adversaire = args[0];
+		document.querySelector('#adversaire').textContent = adversaire;
+		play();
+	});
+
 
 	// PONG CODE BELOW
 	var canvas;
@@ -20,6 +65,7 @@ export default function Game() {
 	const PLAYER_HEIGHT = 50;
 	const PLAYER_WIDTH = 10;
 	const BALL_HEIGHT = 10;
+	const BALL_SPEED = 2;
 	function draw() {
 		var context = canvas.getContext('2d');
 		// Draw field
@@ -42,7 +88,9 @@ export default function Game() {
 		context.fillRect(game.ball.x, game.ball.y, BALL_HEIGHT, BALL_HEIGHT); // Si on veut la faire carré !
 		context.fill();
 	}
-	document.addEventListener('DOMContentLoaded', function () {
+
+	useEffect(() => {
+		getUser();
 		canvas = document.getElementById('canvas');
 		game = {
 			player: {
@@ -58,8 +106,8 @@ export default function Game() {
 				y: canvas.height / 2 - BALL_HEIGHT / 2,
 				r: 5,
 				speed: {
-					x: 2,
-					y: 2
+					x: BALL_SPEED,
+					y: BALL_SPEED
 				}
 			}
 		}
@@ -67,13 +115,12 @@ export default function Game() {
 		// play();
 		canvas.addEventListener('mousemove', playerMove);
 		otherMove();
-	});
-
+    }, []);
+ 
 	function play() {
 		draw();
 		otherMove();
 		ballMove();
-		requestAnimationFrame(play);
 		anim = requestAnimationFrame(play);
 	}
 
@@ -93,7 +140,7 @@ export default function Game() {
 	}
 
 	function otherMove() {
-		game.player2.y += game.ball.speed.y * 0.85;
+		game.player2.y += game.ball.speed.y;
 	}
 
 	function ballMove() {
@@ -114,25 +161,29 @@ export default function Game() {
 		// The player does not hit the ball
 		if (game.ball.y < player.y || game.ball.y > player.y + PLAYER_HEIGHT) {
 			// Set ball and players to the center
-			game.ball.x = canvas.width / 2;
-			game.ball.y = canvas.height / 2;
+			game.ball.x = canvas.width / 2 - BALL_HEIGHT / 2;
+			game.ball.y = canvas.height / 2 - BALL_HEIGHT / 2;
 			game.player.y = canvas.height / 2 - PLAYER_HEIGHT / 2;
 			game.player2.y = canvas.height / 2 - PLAYER_HEIGHT / 2;
-			
+
 			// Reset speed
-			game.ball.speed.x = 2;
+			game.ball.speed.x = BALL_SPEED;
+			// Update score
+			if (player == game.player) {
+				game.player2.score++;
+				document.querySelector('#player2-score').textContent = game.player2.score;
+				if (game.player2.score >= 5)
+					stop();
+			} else {
+				game.player.score++;
+				document.querySelector('#player-score').textContent = game.player.score;
+				if (game.player.score >= 5)
+					stop();
+			}
 		} else {
 			// Increase speed and change direction
 			game.ball.speed.x *= -1.2;
 			changeDirection(player.y);
-		}
-		// Update score
-		if (player == game.player) {
-			game.player2.score++;
-			document.querySelector('#player2-score').textContent = game.player2.score;
-		} else {
-			game.player.score++;
-			document.querySelector('#player-score').textContent = game.player.score;
 		}
 	}
 
@@ -140,46 +191,41 @@ export default function Game() {
 		var impact = game.ball.y - playerPosition - PLAYER_HEIGHT / 2;
 		var ratio = 100 / (PLAYER_HEIGHT / 2);
 		// Get a value between 0 and 10
-		game.ball.speed.y = Math.round(impact * ratio / 10);
+		// game.ball.speed.y = Math.round(impact * ratio / 10); // REBOND RAPIDE
+		// game.ball.speed.y = Math.round(impact * ratio / 10 / 2); // REBOND NORMAL
+		game.ball.speed.y = Math.round(impact * ratio / 10 / 4); // REBOND LENT
 	}
 
 	function stop() {
+		console.log("username: ", joueur, "adversaire", adversaire, "score player 1: ", game.player.score, "score player 2: ", game.player.score)
+		if (game.player.score > game.player2.score)
+			socket.emit('gameEnd', joueur + ":" + adversaire + ":" + game.player.score + ":" + game.player2.score);
+		else
+			socket.emit('gameEnd', adversaire + ":" + joueur + ":" + game.player2.score + ":" + game.player.score);
 		cancelAnimationFrame(anim);
 		// Set ball and players to the center
-		game.ball.x = canvas.width / 2;
-		game.ball.y = canvas.height / 2;
+		game.ball.x = canvas.width / 2 - BALL_HEIGHT / 2;
+		game.ball.y = canvas.height / 2 - BALL_HEIGHT / 2;
 		game.player.y = canvas.height / 2 - PLAYER_HEIGHT / 2;
 		game.player2.y = canvas.height / 2 - PLAYER_HEIGHT / 2;
 		// Reset speed
-		game.ball.speed.x = 2;
-		game.ball.speed.y = 2;
-		// Init score
-		game.player2.score = 0;
-		game.player.score = 0;
-		document.querySelector('#player2-score').textContent = game.player2.score;
-		document.querySelector('#player-score').textContent = game.player.score;
-		draw();
-	}
+		game.ball.speed.x = 0;
+		game.ball.speed.y = 0;
 
+		// draw();
+	}
 
 	return (
 		<div id="game-root">
 			<Nav />
 			<div className="container">
-			<div className="row d-flex justify-content-justify text-justify">
+			<div className="row d-flex justify-content-center text-center">
 					{/*<h1 id="title--game" className="text">GAME</h1>*/}
 					{/*<canvas></canvas>*/}
+					<button type="button" className="btn btn-outline-dark" id="search-button" onClick={() => sendSearch()}>{SearchText}</button>
 					<main role="main">
-						<p>Joueur 1 : <em id="player-score">0</em> - Joueur 2 : <em id="player2-score">0</em></p>
-						<ul>
-							<li>
-								<button id="start-game" onClick={() => play()}>Démarrer</button>
-							</li>
-							<li>
-								<button id="stop-game" onClick={() => stop()}>Arrêter</button>
-							</li>
-						</ul>
-						<canvas id="canvas" width="640" height="480"></canvas>
+						<p id="scores">{username} : <em id="player-score">0</em> - <em id="adversaire">{adversaire}</em> : <em id="player2-score">0</em></p>
+						<canvas id="canvas" width={size.width / 1.5} height={size.height / 1.25}></canvas>
 					</main>
 					<GameRules />
 				</div>

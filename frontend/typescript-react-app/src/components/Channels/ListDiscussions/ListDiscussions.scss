@@ -1,11 +1,11 @@
 @use "../../../variables";
 
 #ListDiscussions {
-	border: 0.1rem solid grey !important;
+	border: 0.1rem solid grey;
 	margin-top: 20px;
 	border-radius: variables.$border-radius;
-	background-color: white !important;
-	height: 500px;
+	background-color: white;
+	height: 30rem;
 }
 
 #ListDiscussions > * {
@@ -19,14 +19,13 @@
 
 #sub--div {
 	overflow-y: scroll;
-	height: 400px;
 	padding: 35px;
-	color: black !important
+	height: 38.3rem;
+	color: black !important;
 }
 
 #sub--div > * {
 	font-family: variables.$basic-font;
-	//color: black !important
 }
 
 #message {

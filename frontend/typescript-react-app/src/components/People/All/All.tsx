@@ -6,9 +6,11 @@ import MiniDisplay from '../MiniDisplay/MiniDisplay';
 import Invitations from "../Invitations/Invitations";
 import Blocked from "../Blocked/Blocked";
 import Friends from "../Friends/Friends";
+import { DetailedHTMLProps, HTMLAttributes } from 'react';
 
 export interface InputWrapperProps {
-	children?: React.ReactNode | React.ReactChild | React.ReactChildren | React.ReactChild[] | React.ReactChildren[]
+	//children?: React.ReactNode | React.ReactChild | React.ReactChildren | React.ReactChild[] | React.ReactChildren[]
+	//children?: DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>
 }
 
 

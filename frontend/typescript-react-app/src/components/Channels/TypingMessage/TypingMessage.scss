@@ -6,6 +6,7 @@
 	//background-color: white !important;
 	font-family: variables.$basic-font;
 	padding-top: 10px;
+	margin-bottom: 2.5rem;
 }
 
 #typing--div {
@@ -34,4 +35,14 @@
 //Nesting for children CSS selectors
 #typing--div > * {
 	color: black !important;
+}
+
+.send-message-form {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: center;
+	align-items: baseline;
+	button {
+		margin-left: 1rem;
+	}
 }

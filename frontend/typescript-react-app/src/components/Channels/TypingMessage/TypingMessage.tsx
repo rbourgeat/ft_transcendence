@@ -1,8 +1,9 @@
 import './TypingMessage.scss';
-import React from "react";
 //import { w3cwebsocket} from "websocket";
-//import io from "socket.io-client";
-import SingleMessage from "../ListDiscussions/SingleMessage/SingleMessage"
+import React, { Component, useState, useEffect } from "react";
+import io from "socket.io-client";
+import SingleMessage from "../ListDiscussions/SingleMessage/SingleMessage";
+import axios from 'axios';
 
 /**
  * @malatini ou @macrespo
@@ -16,101 +17,58 @@ export interface TypingState {
     text?: string
 }
 
-//const client = new w3cwebsocket("ws//127.0.0.1:8000");
-//const socket = io("http://localhost:3000/");
 const message = document.getElementById('message');
 const messages = document.getElementById('messages');
 
-export default class TypingMessage extends React.Component<TypingProps, TypingState>
+export default function TypingMessage() 
 {
-    constructor(props: TypingProps)
-    {
-        super(props);
+		const [text, updateText] = React.useState("");
+    const [username, setUsername] = React.useState("");
 
-        this.state = {
-            text: ""
-        }
+    function getUser() {
+        let url = "http://localhost:3000/api/auth/";
+        let username = "";
+        axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+        axios.defaults.withCredentials = true;
+        axios.get(url)
+            .then(res => {
+                username = res.data.login;
+                console.log(username + ' <-- result of get user')
+                setUsername(username);
+            })
+            .catch((err) => {
+                console.log("Error while getting api auth");
+            })
     }
 
-    resetText = function()
-    {
-        this.setState({
-          text: '',
-        });
+    useEffect(() => {
+        getUser();
+    }, []);
+	
+    let socket = io("http://localhost:3000/chat", { query: { username: username } });
+
+    function sendMessage(channel: string, message: string) {
+        socket.emit('message', username + ":" + channel + ":" + message)
     }
 
-    componentDidMount() {
-        //client.onopen = () => {
-        //    console.log('Websocket Client Connected')
-        //}
-
-        //client.onmessage = (message) => {
-        //    const dataFromServer = JSON.parse(message.data);
-        //    console.log("Got reply !");
-        //}
-
-        //socket.on('message', ({data}) => {
-        //    this.handleNewMessage(data);
-        //});
-
-     }
-
-     handleNewMessage = (message) => {
-        //messages.appendChild(this.buildNewMessage(message))
-        //console.log(message);
-        //let res = React.createElement(
-        //    'div', message,
-        //    {username: "malatini", text: message}, null
-        //  )
-        //console.log(res);
-        //return;
-    }
-
-    //buildNewMessage = (message) => {
-    //    const li = document.createElement("li");
-    //    li.appendChild(document.createTextNode(message));
-    //    return (li);
-    //}
-
-    sendMessage=(event: any)=>
-    {
-        event.preventDefault();
-        //client.send(JSON.stringify({
-        //    type: "message",
-        //    msg: event
-        //}))
-
-        //socket.emit('message', {data: this.state.text});
-        console.log(this.state.text);
-        this.handleNewMessage(this.state.text);
-
-        this.resetText();
-    }
-
-    render()
-    {
-        return (
-            <div id="typing--div">
-                <p id="typing--title">Typing message section</p>
-                <input
-                    placeholder="Type something..."
-                    /*className="typing--input"*/
-                    value={this.state.text}
-                    className="form-control"
-                    id="message"
-                    onChange={(e)=>{this.setState({text: e.target.value})}}
-                    />
-                <button
-                    id="send--button"
-                    type="submit"
-                    onClick={this.sendMessage}
-                >
-                    Send
-                </button>
-                <br/>
-                <br />
-            </div>
-        );
-    }
-
+		return (
+			<div id="typing--div">
+				<p id="typing--title">Typing message section</p>
+				<section className="send-message-form">
+					<input
+						placeholder="Type something..."
+						value={text}
+						className="form-control typing--input"
+						id="message"
+						onChange={e => updateText(e.target.value)}
+					/>
+					<button
+						id="send--button"
+						type="submit"
+						onClick={() => sendMessage("DummyChannel", text)}>
+						Send
+					</button>
+				</section>
+			</div>
+		);
 }
