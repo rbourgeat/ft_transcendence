@@ -183,8 +183,8 @@ export class UserMigration1645626140921 implements MigrationInterface {
             queryRunner.manager.create<Game>(Game, {
                 winner_score: 5,
                 loser_score: 0,
-                winner_login: "bahaas",
-                loser_login: "dummy4",
+                winner: "bahaas",
+                loser: "dummy4",
                 players: [bahaas, dummy4]
             }),
         );
@@ -193,8 +193,8 @@ export class UserMigration1645626140921 implements MigrationInterface {
             queryRunner.manager.create<Game>(Game, {
                 winner_score: 5,
                 loser_score: 3,
-                winner_login: "bahaas",
-                loser_login: "dummy2",
+                winner: "bahaas",
+                loser: "dummy2",
                 players: [dummy2, bahaas]
             }),
         );
@@ -203,8 +203,8 @@ export class UserMigration1645626140921 implements MigrationInterface {
             queryRunner.manager.create<Game>(Game, {
                 winner_score: 2,
                 loser_score: 5,
-                winner_login: "dummy3",
-                loser_login: "bahaas",
+                winner: "dummy3",
+                loser: "bahaas",
                 players: [dummy3, bahaas]
             }),
         );
@@ -213,8 +213,8 @@ export class UserMigration1645626140921 implements MigrationInterface {
             queryRunner.manager.create<Game>(Game, {
                 winner_score: 5,
                 loser_score: 1,
-                winner_login: "dummy1",
-                loser_login: "bahaas",
+                winner: "dummy1",
+                loser: "bahaas",
                 players: [dummy3, bahaas]
             }),
         );
@@ -223,8 +223,8 @@ export class UserMigration1645626140921 implements MigrationInterface {
             queryRunner.manager.create<Game>(Game, {
                 winner_score: 5,
                 loser_score: 4,
-                winner_login: "dummy3",
-                loser_login: "bahaas",
+                winner: "dummy3",
+                loser: "bahaas",
                 players: [dummy3, bahaas]
             }),
         );
