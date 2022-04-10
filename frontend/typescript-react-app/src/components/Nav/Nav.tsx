@@ -30,6 +30,11 @@ function Nav() {
 				//console.log("Disconnecting");
 				let check = localStorage.getItem("loggedIn");
 				console.log("Check is " + check);
+				let twofa = localStorage.getItem("2fa");
+				if (twofa == "true")
+				{
+					localStorage.setItem("2faverif", "false");
+				}
 				window.top.location = "/";
 			})
 			.catch((error) => {

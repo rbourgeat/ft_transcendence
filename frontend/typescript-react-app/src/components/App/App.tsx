@@ -25,7 +25,7 @@ import Channels from "../Channels/Channels"
 import { io } from 'socket.io-client';
 import axios from 'axios';
 import NotLogged from '../NotLogged/NotLogged';
-//import { responseSymbol } from 'next/dist/server/web/spec-compliant/fetch-event';
+import Login2fa from '../Auth/Login2FA/Login2FA';
 
 function App() {
 
@@ -47,10 +47,8 @@ function App() {
     axios.defaults.withCredentials = true;
     await axios.get(url)
       .then(res => {
-       //console.log("Status code is " + res.status);
         username = res.data.login;
         setUsername(username);
-        //setIsLoggedIn(true);
       })
       .catch((err) => {
         console.log("Error while getting api auth");
@@ -58,9 +56,6 @@ function App() {
   }
 
   useEffect(() => {
-    //console.log("coucou");
-    //console.log("Cookie check is" + cookieCheck);
-    //if (cookieCheck)
     getUser();
     if (username) {
       let socket = io("http://localhost:3000/chat", { query: { username: username } });
@@ -82,27 +77,62 @@ function App() {
   //  //console.log("cookie is " + cookieCheck);
   //}, [cookieCheck]);
 
+  useEffect(() => {
+    //console.log("Cookie was edited !");
+    if (localStorage.getItem("2fa") != "true" && localStorage.getItem("2fa") != "false")
+    {
+      localStorage.setItem("2fa", "false");
+    }
+  }, []);
+
 
   return (
     <div id="main">
       <Routes>
         <Route path="/" element={<Welcome />} />
         <Route path="/welcome" element={<Welcome />} />
-        <Route path="/auth" element={<Auth />} />
-        {localStorage.getItem("loggedIn") == "true" ?
-        <>
-          <Route path="/user" element={<UserMain />} />
-          <Route path="/chat" element={<CreateChan />} />
-          <Route path="/channels" element={<Channels />} />
-          <Route path="/search" element={<Search />} />
-          <Route path="/stats" element={<Stats login={username} />} />
-          <Route path="/achievements" element={<Achievements login={username} />} />
-          <Route path="/people" element={<People />} />
-          <Route path="/game" element={<Game />} />
-          <Route path="/2fa" element={<Login2FA />} />
-          <Route path="*" element={<NotFound />} />
-          </> : <Route path="*" element={<NotLogged />} />
-        }
+
+        {localStorage.getItem("loggedIn") == "false" ?  <Route path="/auth" element={<Auth />} /> : ""}
+
+        {localStorage.getItem("loggedIn") == "true" &&  localStorage.getItem("2fa") == "true" && localStorage.getItem("2faverif") == "false" ?
+          <Route path="*" element={<Login2fa/>} /> : ""}
+
+        {(localStorage.getItem("2fa") == "true" && localStorage.getItem("2faverif") == "false") ?
+              <Route path="*" element={<Login2FA />} />
+              :
+                <>
+                  <Route path="/user" element={<UserMain />} />
+                  <Route path="/auth" element={<UserMain />} />
+                  <Route path="/chat" element={<CreateChan />} />
+                  <Route path="/channels" element={<Channels />} />
+                  <Route path="/search" element={<Search />} />
+                  <Route path="/stats" element={<Stats login={username} />} />
+                  <Route path="/achievements" element={<Achievements login={username} />} />
+                  <Route path="/people" element={<People />} />
+                  <Route path="/game" element={<Game />} />
+                  <Route path="/2fa" element={<Login2FA />} />
+                  <Route path="*" element={<NotFound />} />
+                </>}
+
+        {/*<Route path="/auth" element={<Auth />} />*/}
+
+        {/*{localStorage.getItem("loggedIn") == "true" && ((localStorage.getItem("2fa") == "false" && localStorage.getItem("2faverif") == "false")
+        || (localStorage.getItem("2fa") == "true" || localStorage.getItem("2faverif") == "true")) ?
+          <>
+            <Route path="/user" element={<UserMain />} />
+            <Route path="/auth" element={<UserMain />} />
+            <Route path="/chat" element={<CreateChan />} />
+            <Route path="/channels" element={<Channels />} />
+            <Route path="/search" element={<Search />} />
+            <Route path="/stats" element={<Stats login={username} />} />
+            <Route path="/achievements" element={<Achievements login={username} />} />
+            <Route path="/people" element={<People />} />
+            <Route path="/game" element={<Game />} />
+            <Route path="/2fa" element={<Login2FA />} />
+            <Route path="*" element={<NotFound />} />
+            </> : <Route path="*" element={<NotLogged />} />
+          }*/}
+
         {/*<Route path="/2fa" element={<Login2FA />} />
         <Route path="*" element={<NotFound />} />*/}
       </Routes>

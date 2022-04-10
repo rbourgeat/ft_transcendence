@@ -13,7 +13,7 @@ export default function Login2fa() {
 	const [loggedIn, setLoggedIn] = React.useState("false");
 	const calledOnce = React.useRef(false);
 	const [code, setCode] = React.useState("");
-	const [load, setLoad] = React.useState(false);
+	//const [load, setLoad] = React.useState(false);
 
 	async function getUser() {
 
@@ -22,22 +22,20 @@ export default function Login2fa() {
 		if (check1 == "true")
 		{
 			console.log("Already logged in !");
-
 			axios.defaults.headers.post['Access'] = '*/*';
 			axios.defaults.withCredentials = true;
 
 			//axios.get("http://localhost:3000/api/42auth/redirect-user")
-			axios.get("http://localhost:3000/api/42auth/redirect-user")
-			.then(res => {console.log("Cool !")})
-			.catch((error) => {
-				console.log(error);
-				console.log("Error while being redirected !")
-			}
-				);
+			//.then(res => {console.log("Cool !")})
+			//.catch((error) => {
+			//	console.log(error);
+			//	console.log("Error while being redirected !")
+			//}
+			//	);
 			return ;
-			//window.top.location = "http://localhost:3030/user";
 		}
 
+		return ;//a revoir
 		let url = "http://localhost:3000/api/auth/";
 		let username = "";
 		let activated = false;
@@ -56,24 +54,15 @@ export default function Login2fa() {
 					setActivated2fa(false);
 					setInterval(() =>
 					{
-						//console.log("Loading");
-						//localStorage.setItem(loggedIn, JSON.stringify("true"));
-						//let check = localStorage.getItem("loggedIn");
-						//console.log("chek is " + check);
-						//window.top.location = "http://localhost:3030/user";
 						axios.get("http://localhost:3000/api/42auth/redirect-user")
 						.catch((error) => {console.log("Error while being redirected !")});
 					}, 1000)
-
-					//.then(window.top.location = "http://localhost:3030/user")
-					//window.top.location = "http://localhost:3030/user";
-
 				}
 				else
 				{
 					console.log("should check the code before");
 					setActivated2fa(true);
-					setLoad(true);
+					//setLoad(true);
 				}
 			})
 			.catch((err) => {
@@ -84,7 +73,7 @@ export default function Login2fa() {
 	useEffect(() => {
 		if (calledOnce.current) {
 			return;}
-		getUser();
+		//getUser();
 		calledOnce.current = true;
 	}, []);
 
@@ -110,21 +99,21 @@ export default function Login2fa() {
 			twoFactorAuthenticationCode: code
 		}
 
-		//TODO: a variabiliser
 		let res = axios.post(url, bod)
 		.then(res => {
 			console.log("Succesfully logged in with 2fa!");
 			console.log(res);
 			console.log(res.data);
-			setCode("");
-			toast.notifySuccess("✅ Success ! Redirecting...")
-			setInterval(() => {
-				console.log("Loading");
-				localStorage.setItem('loggedIn', JSON.stringify("true"));
-				let check = localStorage.getItem("loggedIn");
-				console.log("chek is " + check);
-				//window.top.location = "http://localhost:3030/user";
-			}, 1000)
+			localStorage.setItem("2faverif", "true");
+			window.top.location = "http://localhost:3030/user";
+			//setCode("");
+			//toast.notifySuccess("✅ Success ! Redirecting...")
+			//setInterval(() => {
+			//	console.log("Loading");
+			//	let check = localStorage.getItem("loggedIn");
+			//	localStorage.setItem("2faverif", "true");
+			//	console.log("chek is " + check);
+			//}, 1000)
 
 		})
 		.catch((error) => {
@@ -137,8 +126,6 @@ export default function Login2fa() {
 	return (
 		<div>
 			<div id="login--2FA" className="container">
-					{/*<div id="div--main--2fa">*/}
-						{load == true && activated2fa == true ?
 						<div id="div--main--2fa">
 							<h1 className="game--rules--title">✨ 2 factor authentication</h1>
 							<br />
@@ -162,17 +149,15 @@ export default function Login2fa() {
 									pauseOnHover
 								/>
 							</div>
-						</div> :
+						</div>
+						{/*:
 						<div className="container">
 							<div className="row d-flex justify-content-center">
 								<h1 id="loading--title"> ⏱ Loading...</h1>
-								{/*{setInterval(() => console.log("Loading"), 4000)}*/}
 							</div>
 						</div>
-						}
-					{/*</div>*/}
+						}*/}
 				</div>
-			{/*</div>*/}
 		</div>
 	);
 }

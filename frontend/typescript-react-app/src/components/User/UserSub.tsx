@@ -21,7 +21,8 @@ export interface UserfuncProps {
 }
 
 export default function User(props: UserfuncProps) {
-	const [qrcode, setqrCode] = useState("");//https://camo.githubusercontent.com/a20446c393106453751db5f1b2633763cd7213e81015f855432405f7ddedeca3/68747470733a2f2f63686172742e676f6f676c65617069732e636f6d2f63686172743f6368743d71722663686c3d48656c6c6f2532306d61746521266368733d313830783138302663686f653d5554462d382663686c643d4c7c32");
+	const [qrcode, setqrCode] = useState("");
+	//https://camo.githubusercontent.com/a20446c393106453751db5f1b2633763cd7213e81015f855432405f7ddedeca3/68747470733a2f2f63686172742e676f6f676c65617069732e636f6d2f63686172743f6368743d71722663686c3d48656c6c6f2532306d61746521266368733d313830783138302663686f653d5554462d382663686c643d4c7c32");
 	const [modalShowUsername, setModalShowUsername] = React.useState(false);
 	const [username, setUsername] = React.useState("");
 	const [verifCode, setverifCode] = React.useState("");
@@ -31,7 +32,6 @@ export default function User(props: UserfuncProps) {
 
 	const calledOnce = React.useRef(false);
 
-	//TODO: a variabiliser
 	function clearInput() {
         setverifCode("");
     }
@@ -61,6 +61,7 @@ export default function User(props: UserfuncProps) {
             .then(res => {
                 console.log("successfully turned on!");
 				toast.notifySuccess('😇 2FA successfully turned-off !');
+				localStorage.setItem("2fa", "false");
 				setActivated2fa(false);
             })
             .catch((error) => {
@@ -74,12 +75,6 @@ export default function User(props: UserfuncProps) {
 	const handle2FA = (event: any) => {
 		event.preventDefault();
 		console.log("Button clicked !");
-		/*
-		if (activated2fa == true)
-			setActivated2fa(false)
-		else
-			setActivated2fa(true);
-		*/
 		manageQR();
 		if (activated2fa == true)
 			turnoff2FA();
@@ -88,9 +83,6 @@ export default function User(props: UserfuncProps) {
 	//Va permettre d'envoyer le code noté pour confirmer la 2FA
 	const checkCode = (event: any) => {
 		event.preventDefault();
-		//manageQR();
-		//axios.post()
-		//let number =
 		let number = verifCode;
 		setverifCode("");
 
@@ -121,11 +113,12 @@ export default function User(props: UserfuncProps) {
             .then(res => {
                 console.log("successfully turned on!");
 				toast.notifySuccess('✨ 2FA successfully turned-on !');
+				localStorage.setItem("2fa", "true");
+				localStorage.setItem("2faverif", "true");
 				setActivated2fa(true);
             })
             .catch((error) => {
                 console.log("Catched error on post api chat.");
-                //console.log(error);
 				toast.notifyDanger('🥲 Error while turning on 2FA. Your verif code is wrong or the QR Code is outdated.');
             })
 		clearInput();
@@ -204,7 +197,6 @@ export default function User(props: UserfuncProps) {
 				<div className="row d-flex justify-content-center text-center">
 					<div className="col-9" id="bonjour--user">
 						<br />
-						{/* Debut */}
 						<div className="user--stats" key={username}>
 							<>
 							{logged == true ?
@@ -220,9 +212,9 @@ export default function User(props: UserfuncProps) {
 									setModalShowUsername(false)
 								}} />
 								<br />
-								<div /*id="user--settings--div"*/>
+								<div>
 									<h2 id="user--settings">Settings</h2>
-									<label /*className="label-file"*/>Change avatar</label>
+									<label>Change avatar</label>
 									<div id="change--avatar">
 										<input
 											type="file"
@@ -265,7 +257,6 @@ export default function User(props: UserfuncProps) {
 							}
 							</>
 						</div>
-						{/* Fin */}
 					</div>
 				</div>
 			</div>
