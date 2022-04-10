@@ -10,9 +10,10 @@ import { User } from 'src/user/entity/user.entity'
 import { UserEvent } from '../user/user.event';
 import { UserRelation } from '../user/entity/friend-request.entity';
 import { UsersRepository } from '../user/user.repository';
+import { Achievement } from 'src/user/entity/achievement.entity';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([Game]), TypeOrmModule.forFeature([User]), TypeOrmModule.forFeature([UserRelation])],
+    imports: [TypeOrmModule.forFeature([Game]), TypeOrmModule.forFeature([User]), TypeOrmModule.forFeature([UserRelation]), TypeOrmModule.forFeature([Achievement])],
     controllers: [GameController],
     providers: [GameService, GameGateway, UserService, UserEvent, UserRelation, UsersRepository],
     exports: [GameService]
