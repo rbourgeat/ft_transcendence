@@ -3,6 +3,7 @@ import './Profile.scss';
 import axios from "axios";
 import Nav from "../Nav/Nav";
 import { useParams } from 'react-router-dom'
+import NotFound from "../../components/NotFound/NotFound";
 
 //export interface ProfileProps {
 //	login?: string,
@@ -15,26 +16,29 @@ export default function Profile() {
 	const [userOK, setUserOk] = React.useState(false);
 	//const loginPram =  useState(params.username)
 
-	async function getUser() {
+	function getUserLogin(log: string) {
 		//let url = "http://localhost:3000/api/auth/";
 
-		//let username = "";
-		//await axios.get(url)
-		//	.then(res => {
-		//		username = res.data.login;
-		//		console.log(res);
-		//		setUserOk(true);
-		//	})
-		//	.catch((err) => {
-		//		console.log("Error while getting api auth");
-		//		console.log(err);
-		//	})
+		console.log("Login is " + log);
+
+		let url = "http://localhost:3000/api/user/".concat(login);
+
+
+		axios.get(url)
+		.then(res => {
+			console.log(res);
+			setUserOk(true);
+		})
+		.catch((err) => {
+			console.log("Error while getting api auth");
+			console.log(err);
+		})
 	}
 
 	useEffect(() => {
 	if (calledOnce.current) {
 		return;}
-	//getUser();
+	//getUserLogin({login});
 	calledOnce.current = true;
 }, []);
 
@@ -50,7 +54,18 @@ export default function Profile() {
 					<br />
 					<div className="col-9 mx-auto text-center">
 						<br />
-						<h2 id="profile-title">Profile of {login}</h2>
+
+						{getUserLogin(login)}
+						{userOK == true ?
+							<h2 id="profile-title">{login}'s profile</h2>
+						: <>
+							<h1><span id="oops">Oops...</span></h1>
+							<h2><span id="page-not-found">Page not found</span></h2>
+							<button type="button" className="btn btn-outline-dark"
+								onClick={(e) => {window.top.location = "http://localhost:3030/game"}}
+							>Go to game</button>
+						</>
+						}
 					</div>
 				</div>
 			</div>
