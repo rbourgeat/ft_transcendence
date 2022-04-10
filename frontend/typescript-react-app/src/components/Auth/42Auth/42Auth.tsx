@@ -24,7 +24,7 @@ export default class Login extends React.Component<FourtyTwoProps, FourtyTwoStat
 
   fourtytwo = (event: any) => {
     event.preventDefault();
-    localStorage.setItem("loggedIn", "true");
+    //localStorage.setItem("loggedIn", "true");
     window.top.location = "http://localhost:3000/api/42auth/redirect/";
   }
 
