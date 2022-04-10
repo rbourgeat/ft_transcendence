@@ -691,31 +691,25 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     /*
     ** renderAvatar
     */
-    getImage(imageCode: string, login: string) {
-        //console.log("Should only be called if the image is not default image");
+    getImage(imageCode: string, login: string, is42: boolean) {
         let imageName = "alt-photo";
-        //console.log("imageCode in getImage is " + imageCode);
-        /*
-        if (imageCode == null || imageCode == "https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg") {
-            console.log('imageCode was null or default');
-            return (<img src="https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg" alt={imageName} height="80" width="80" id={login} />);
-        }
-        */
 
         //bahaas add
         let imageUser42 = "https://cdn.intra.42.fr/users/".concat(login).concat(".jpg")
         //console.log('imageUSer42: ' + imageUser42);
         if (imageCode.startsWith("http")) {
+            console.log("image starts with http");
+            console.log("is logged in is " + is42);
             //console.log('should display 42');
             let myImage: HTMLImageElement = document.querySelector("#".concat(login));
             // var objectURL = URL.createObjectURL(imageUser42);
-            myImage.src = imageUser42;
+            if (is42)
+                myImage.src = imageUser42;
+            else
+                myImage.src = "https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg";
+
             return (<img className="profile--pic" src={myImage.src} alt={imageName} height="80" width="80" id={login} />);
         }
-        //else
-        //{
-        //    console.log('start with condition false, imageCode is :' + imageCode);
-        //}
 
         //endof bahaas add
 
@@ -753,8 +747,14 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
         let res = axios.get(url)
             .then(res => {
                 imageCode = res.data.avatar;
+                console.log(res);
+                let is42;
+                if (res.data.login42 == null)
+                    is42 = false;
+                else
+                    is42 = true;
                 //console.log("Image in render avatar is " + imageCode);
-                return (this.getImage(imageCode, login));
+                return (this.getImage(imageCode, login, is42));
             })
             .catch(error => {
                 console.log("Catched error getting avatar");

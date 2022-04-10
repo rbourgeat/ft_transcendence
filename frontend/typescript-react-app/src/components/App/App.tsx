@@ -83,7 +83,7 @@ function App() {
         <Route path="/achievements" element={<Achievements login={username} />} />
         <Route path="/people" element={<People />} />
         <Route path="/game" element={<Game />} />
-        <Route path="/playwatch" element={<PlayWatch />} />
+        {/*<Route path="/playwatch" element={<PlayWatch />} />*/}
         <Route path="/2fa" element={<Login2FA />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

@@ -11,7 +11,10 @@ import axios from 'axios';
 export interface MiniDisplayProps {
 	login?: string,
 	status?: string,
-	avatar?: string
+	avatar?: string,
+	isft?: boolean,
+	ftlogin?: string,
+	user?: any;
 	children?: React.ReactNode | React.ReactChild | React.ReactChildren | React.ReactChild[] | React.ReactChildren[]
 }
 
@@ -21,20 +24,39 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 	const [status, setStatus] = React.useState(props.status);
 	const [username, setUsername] = React.useState("");
 
-	function renderImage(avatar: string) {
+	function renderImage(avatar: string, login: string, ftlogin: string) {
 		if (!avatar)
 			return;
+		let is42 = false;
+		//console.log("login is");
+		//console.log("ftlogin is" + ftlogin);
+		if (ftlogin == null)
+			is42 = false;
+		else
+			is42 = true;
+
+		//console.log("is 42 is " + is42);
 
 		let imageName = "alt-photo";
 
 		if (avatar.startsWith("http")) {
+
 			let imageUser42 = "https://cdn.intra.42.fr/users/".concat(props.login).concat(".jpg");
 			var myImg = document.getElementById(props.login) as HTMLImageElement;
-			if (imageUser42)
-				myImg.src = imageUser42;
+			if (is42 == false)
+			{
+				myImg.src = "https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg";
+				return ;
+				//return (<img className="profile--pic" src={myImg.src} alt={imageName} id={props.login} height="80" />);
+			}
 			else
-				myImg.src = avatar;
-			return;
+			{
+				if (imageUser42)
+					myImg.src = imageUser42;
+				else
+					myImg.src = avatar;
+				return;
+			}
 		}
 
 		let url = "http://localhost:3000/api/user/".concat(avatar).concat("/avatar/");
@@ -115,9 +137,11 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 
 	return (
 		<>
+			{/*{console.log(props.user)}*/}
 			<li id="minidisplay--div" className="list-group-item" key={props.login}>
 				<img className="profile--pic" id={props.login} src="" width="100" height="100" />
-				{load == true ? renderImage(props.avatar) : console.log("test")}
+				{/*{load == true ? console.log(props.user) : console.log("test")}*/}
+				{load == true ? renderImage(props.avatar, props.login, props.ftlogin) : ""/*console.log("test")*/}
 				<svg className="log--color" height="40" width="40"><circle cx="20" cy="20" r="15" fill={color} /></svg>
 				<br />
 				<p className="user--p" id="mini--login">{props.login}</p>

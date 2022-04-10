@@ -26,21 +26,21 @@ export default class Login extends React.Component<FourtyTwoProps, FourtyTwoStat
   fourtytwo = (event: any) => {
     event.preventDefault();
     //localStorage.setItem("loggedIn", "true");
-    //window.top.location = "http://localhost:3000/api/42auth/redirect/";
+    window.top.location = "http://localhost:3000/api/42auth/redirect/";
 
 
-    axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
-    axios.defaults.withCredentials = true;
+    //axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+    //axios.defaults.withCredentials = true;
 
-    axios.get("http://localhost:3000/api/42auth/redirect/")
-    .then(res => {
-      console.log("42 redirect");
-      console.log(res);
-    })
-    .catch((error) => {
-      console.log(error);
-      console.log("Catched error while being redirected to 42auth");
-    })
+    //axios.get("http://localhost:3000/api/42auth/redirect/")
+    //.then(res => {
+    //  console.log("42 redirect");
+    //  console.log(res);
+    //})
+    //.catch((error) => {
+    //  console.log(error);
+    //  console.log("Catched error while being redirected to 42auth");
+    //})
   }
 
   render() {
