@@ -1,5 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.css';
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect} from 'react';
+import { useParams } from 'react-router-dom'
 import './App.scss';
 import {
   BrowserRouter as Router,
@@ -26,6 +27,9 @@ import { io } from 'socket.io-client';
 import axios from 'axios';
 import NotLogged from '../NotLogged/NotLogged';
 import Login2fa from '../Auth/Login2FA/Login2FA';
+import Profile from "../Profile/Profile";
+
+//const { login } = useParams()
 
 function App() {
 
@@ -71,20 +75,14 @@ function App() {
     }
   }, []);
 
-  //useEffect(() => {
-  //  console.log("Cookie was edited !");
-  //  //cookieCheck = document.cookie.match("Authentication");
-  //  //console.log("cookie is " + cookieCheck);
-  //}, [cookieCheck]);
-
   useEffect(() => {
-    //console.log("Cookie was edited !");
     if (localStorage.getItem("2fa") != "true" && localStorage.getItem("2fa") != "false")
     {
       localStorage.setItem("2fa", "false");
     }
   }, []);
 
+  //let login = useParams();
 
   return (
     <div id="main">
@@ -112,29 +110,8 @@ function App() {
                   <Route path="/game" element={<Game />} />
                   <Route path="/2fa" element={<Login2FA />} />
                   <Route path="*" element={<NotFound />} />
+                  <Route path="/profile/:login" element={<Profile /*login=""*//>}/>
                 </>}
-
-        {/*<Route path="/auth" element={<Auth />} />*/}
-
-        {/*{localStorage.getItem("loggedIn") == "true" && ((localStorage.getItem("2fa") == "false" && localStorage.getItem("2faverif") == "false")
-        || (localStorage.getItem("2fa") == "true" || localStorage.getItem("2faverif") == "true")) ?
-          <>
-            <Route path="/user" element={<UserMain />} />
-            <Route path="/auth" element={<UserMain />} />
-            <Route path="/chat" element={<CreateChan />} />
-            <Route path="/channels" element={<Channels />} />
-            <Route path="/search" element={<Search />} />
-            <Route path="/stats" element={<Stats login={username} />} />
-            <Route path="/achievements" element={<Achievements login={username} />} />
-            <Route path="/people" element={<People />} />
-            <Route path="/game" element={<Game />} />
-            <Route path="/2fa" element={<Login2FA />} />
-            <Route path="*" element={<NotFound />} />
-            </> : <Route path="*" element={<NotLogged />} />
-          }*/}
-
-        {/*<Route path="/2fa" element={<Login2FA />} />
-        <Route path="*" element={<NotFound />} />*/}
       </Routes>
     </div>
   );
