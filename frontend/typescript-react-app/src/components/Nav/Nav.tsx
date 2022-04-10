@@ -88,11 +88,11 @@ function Nav() {
 								<div className='nav-link-text'><p>Chat</p></div>
 							</Link>
 						</li>
-						<li className="nav-item">
+						{/*<li className="nav-item">
 							<Link to="/playwatch" className="nav-link">
 								<div className='nav-link-text'><p>Watch</p></div>
 							</Link>
-						</li>
+						</li>*/}
 						<li className="nav-item">
 							<Link to="/user" className="nav-link">
 								<div className='nav-link-text'><p>Settings</p></div>

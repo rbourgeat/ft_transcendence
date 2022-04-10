@@ -31,7 +31,7 @@ export default class Login extends React.Component<FourtyTwoProps, FourtyTwoStat
     /*
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
         axios.defaults.withCredentials = true;
-    
+
         axios.get("http://localhost:3000/api/42auth/redirect/")
         .then(res => {
           console.log("42 redirect");

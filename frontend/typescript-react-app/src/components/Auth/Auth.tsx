@@ -4,6 +4,7 @@ import Header from "../Header/Header";
 import Login from "./Login/Login"
 import Signup from "./Signup/Signup"
 import FourtyTwo from "./42Auth/42Auth";
+import { ToastContainer } from 'react-toastify';
 
 export default function Auth() {
 
@@ -20,6 +21,16 @@ export default function Auth() {
                                 <Signup />
                         </div>
                             <Login />
+                            <ToastContainer
+                                position="top-right"
+                                autoClose={5000}
+                                hideProgressBar={false}
+                                newestOnTop={false}
+                                closeOnClick
+                                rtl={false}
+                                pauseOnFocusLoss
+                                draggable
+                                pauseOnHover/>
                         </div>
                     </div>
                 </div>

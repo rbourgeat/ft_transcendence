@@ -57,7 +57,9 @@ export default function All(props: InputWrapperProps) {
 					<div id="ul--list" className="row">
 						<h2 id="registered--title">List of all registered users</h2>
 						<ul id="list--users--ul" className="wrapper list-group list-group-horizontal-lg">
-							{load == true ? users.map(user => <MiniDisplay key={user.login} login={user.login} status={user.status} avatar={user.avatar} />) : ""}
+							{load == true ?
+								users.map(user => <MiniDisplay key={user.login} login={user.login} status={user.status} avatar={user.avatar} ftlogin={user.login42} user={user} />)
+								: ""}
 						</ul>
 					</div>
 				</div>
