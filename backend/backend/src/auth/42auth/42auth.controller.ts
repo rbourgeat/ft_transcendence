@@ -28,7 +28,7 @@ export class Auth42Controller {
     @ApiOperation({ summary: '[do not use in swagger, won\'t work]' })
     @Get('redirect')
     @UseGuards(FtOauthGuard)
-    //@Redirect('http://localhost:3030/2fa')
+    @Redirect('http://localhost:3030/user')
     async ftAuthCallback(@Req() req) {
         console.log('test in redirect 42auth');
         const test = req.user;

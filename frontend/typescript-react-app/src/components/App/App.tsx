@@ -35,6 +35,8 @@ function App() {
 
   let socket = io("http://localhost:3000/chat", { query: { username: username } });
 
+  let cookieCheck = document.cookie.match("Authentication");
+
   async function getUser() {
     let url = "http://localhost:3000/api/auth/";
     let username = "";
@@ -43,8 +45,6 @@ function App() {
     await axios.get(url)
       .then(res => {
         username = res.data.login;
-        //console.log(username + ' <-- result of get user youhouuu')
-        //console.log(username + ' <-- result of get user')
         setUsername(username);
       })
       .catch((err) => {
@@ -53,7 +53,8 @@ function App() {
   }
 
   useEffect(() => {
-    getUser();
+    if (cookieCheck)
+      getUser();
     if (username) {
       let socket = io("http://localhost:3000/chat", { query: { username: username } });
       socket.on('connect', () => {

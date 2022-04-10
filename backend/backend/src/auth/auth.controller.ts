@@ -61,7 +61,7 @@ export class AuthenticationController {
         this.userService.updateStatus(user.login, "offline");
         console.log('went by logout in auth controller');
         response.setHeader('Set-Cookie', this.authenticationService.getCookieForLogOut());
-        //response.clearCookie('jwt');
+        //response.clearCookie('Authentication');
         //response.redirect('http://localhost:3030/');
         return user;
     }

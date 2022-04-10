@@ -21,10 +21,10 @@ export class AuthService {
 
     public async getUserFromAuthenticationToken(token: string) {
         const payload: TokenPayload = this.jwtService.verify(token, {
-          secret: this.configService.get('JWT_ACCESS_TOKEN_SECRET')
+            secret: this.configService.get('JWT_ACCESS_TOKEN_SECRET')
         });
         if (payload.userId) {
-          return this.usersService.getById(payload.userId);
+            return this.usersService.getById(payload.userId);
         }
     }
 
@@ -61,12 +61,12 @@ export class AuthService {
             secret: process.env.JWT_ACCESS_TOKEN_SECRET,
             expiresIn: `${process.env.JWT_ACCESS_TOKEN_EXPIRATION_TIME}s`
         });
-        return `Authentication=${token}; HttpOnly; Path=/; Max-Age=${process.env.JWT_ACCESS_TOKEN_EXPIRATION_TIME}`;
+        return `Authentication=${token}; HttpOnly; SameSite=Strict; Path=/; Max-Age=${process.env.JWT_ACCESS_TOKEN_EXPIRATION_TIME}`;
     }
 
     public getCookieForLogOut() {
         console.log('went by getcookieforlogout in auth service');
-        return `Authentication=; HttpOnly; Path=/; Max-Age=0`;
+        return `Authentication=; HttpOnly; SameSite=Strict; Path=/; Max-Age=0`;
     }
 
     public async getAuthenticatedUser(email: string, plainTextPassword: string) {
