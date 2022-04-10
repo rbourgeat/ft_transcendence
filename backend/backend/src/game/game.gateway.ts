@@ -54,7 +54,7 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
 			if (index > -1) {
 				MatchMaking.splice(index, 1);
 			}
-			this.server.emit('gameStart', adversaire); 
+			this.server.emit('gameStart', adversaire, socket.handshake.query.username);
 		}
 	}  
 
