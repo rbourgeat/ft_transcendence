@@ -104,7 +104,6 @@ function App() {
                   <Route path="/chat" element={<CreateChan />} />
                   <Route path="/channels" element={<Channels />} />
                   <Route path="/search" element={<Search />} />
-                  <Route path="/stats" element={<Stats login={username} />} />
                   <Route path="/achievements" element={<Achievements login={username} />} />
                   <Route path="/people" element={<People />} />
                   <Route path="/game" element={<Game />} />

@@ -14,8 +14,6 @@ let joueur1: string;
 let joueur2: string;
 
 export default function Game() {
-	//const { width, height } = useWindowSize();
-	// let size = useWindowSize();
 	let size = useWindowDimensions();
 
 	// socket game
@@ -133,7 +131,7 @@ export default function Game() {
 		canvas.addEventListener('mousemove', playerMove);
 		otherMove();
     }, []);
- 
+
 	function play() {
 		draw();
 		otherMove();
@@ -262,17 +260,15 @@ export default function Game() {
 			<Nav />
 			<div className="container">
 			<div className="row d-flex justify-content-center text-center">
-					{/*<h1 id="title--game" className="text">GAME</h1>*/}
-					{/*<canvas></canvas>*/}
 					<button type="button" className="btn btn-outline-dark" id="search-button" onClick={() => sendSearch()}>{SearchText}</button>
 					<main role="main">
 						<p id="scores"><em id="joueur1"></em> : <em id="player-score">0</em> - <em id="joueur2"></em> : <em id="player2-score">0</em></p>
 						<canvas id="canvas" width={size.width / 1.5} height={size.height / 1.25}></canvas>
 					</main>
-					<GameRules />
+					{/*<GameRules />*/}
 				</div>
 			</div>
-			<Footer />
+			{/*<Footer />*/}
 		</div>
 	);
 }

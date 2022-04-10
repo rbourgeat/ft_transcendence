@@ -1,6 +1,6 @@
 @use "../../../variables";
 
-.text, #displaying {
+#displaying {
 	color: black !important;
 }
 
@@ -33,13 +33,13 @@
 }
 
 .wrapper {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
+	display: grid;
+	grid-template-columns: repeat(6, 1fr);
 }
 
 #row--users {
-			display:grid;
-		 grid-template-rows: 7;
+	display:grid;
+	grid-template-rows: 7;
 	margin-left: 5%;
 }
 

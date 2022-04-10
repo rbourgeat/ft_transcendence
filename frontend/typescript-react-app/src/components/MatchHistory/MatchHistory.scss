@@ -8,8 +8,10 @@
 }
 
 #matchhistory--title {
-  text-decoration: underline;
-  color: white !important;
+  //text-decoration: underline;
+  //color: white !important;
+  font-family: variables.$basic-font;
+  color: black !important;
 }
 
 #matchhistory--div
@@ -20,3 +22,7 @@
 #matchhistory--title {
   margin-bottom: 10px !important;
 }
+
+//#col--matchhistory {
+//  border: 0.1rem solid #f9f9f9;
+//}

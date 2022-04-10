@@ -1,20 +1,23 @@
 @use "../../../variables";
 
-span {
-  color: white !important;
-}
+//span {
+// // color: white !important;
+//  //color: #f9f9f9;
+//  margin-top: 15px;
+//}
 
 #buttonresume--result {
-  //background: variables.$grey !important;
   background: white !important;
   border-radius: variables.$border-radius-big;
-  width: 1200px !important;
+  width: 800px !important;
   min-height: 50px;
   text-align: center !important;
-  //padding-top: 15px;
-  color: black !important;
   font-weight: variables.$bold;
   z-index: 2;
+  margin-top: 20px;
+  padding-top: 10px;
+  border: 0.1rem solid #f9f9f9;
+  box-shadow: 3px 3px #f9f9f9, -0.1em 0 .4em #f9f9f9;
 }
 
 .winner {
@@ -25,11 +28,12 @@ span {
   color: variables.$red;
 }
 
-.score {
+.score, .winner, .looser, #scores, .text {
   color: black !important;
   font-size: 18px;
 }
 
-#buttonresume {
-  margin-top: 15px !important;
-}
+//#buttonresume {
+//  margin-top: 15px !important;
+//  border: 0.1rem solid #f9f9f9;
+//}

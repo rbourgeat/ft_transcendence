@@ -7,6 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import ToastAlerts from '../Utils/ToastAlerts/ToastAlerts';
 import EditUsernameModal from "./editUsername/EditUsername";
 import Dashboard from '../Dashboard/Dashboard';
+import Badge from "../Dashboard/Badge/Badge"
 
 export interface UserfuncProps {
 	username?: string,
@@ -211,6 +212,8 @@ export default function User(props: UserfuncProps) {
 								<EditUsernameModal username={username} show={modalShowUsername} onHide={() => {
 									setModalShowUsername(false)
 								}} />
+								{/* TODO: a reprendre */}
+								{/*<Badge />*/}
 								<br />
 								<div>
 									<h2 id="user--settings">Settings</h2>

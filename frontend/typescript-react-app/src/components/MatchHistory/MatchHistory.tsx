@@ -16,10 +16,15 @@ export default function MatchHistory() {
         </div>
         <div className="row" id="match--history">
             <div className="d-flex justify-content-center">
-                <ul>
-                    <li><ButtonResume /></li>
-                    <li><ButtonResume /></li>
-                </ul>
+                <div className="col" id="col--matchhistory">
+                    <ul>
+                        <p>In progress..</p>
+                        
+                        {/*<li><ButtonResume winner="bahaas" looser="malatini" scoreWinner="3" scoreLooser="2"/></li>
+                        <li><ButtonResume winner="dummy5" looser="bahaas" scoreWinner="5" scoreLooser="1"/></li>*/}
+
+                    </ul>
+                </div>
             </div>
         </div>
         </div>

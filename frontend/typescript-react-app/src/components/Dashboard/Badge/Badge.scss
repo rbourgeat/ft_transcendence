@@ -2,18 +2,19 @@
 
 #badge--div {
   border-radius: variables.$border-radius-big;
-  padding: 40px;
+  //padding: 40px;
   color: black !important;
 }
 
 #badge--div--sub {
   border-radius: variables.$border-radius-big;
-  min-height: 300px;
-  max-height: 300px;
-  max-width: 900px;
-  min-width: 800px;
-  padding: 40px;
+  //min-height: 300px;
+  //max-height: 300px;
+  //max-width: 600px;
+  //min-width: 800px;
+  //padding: 40px;
   background: white !important;
+  border: 0.1rem solid black !important;
 }
 
 #badge--graph {
@@ -37,19 +38,13 @@
 #badge--wins {
   border-radius: variables.$border-radius-big;
   max-width: 100px;
-  margin-right: 75px;
-  margin-top: 20px;
-}
-
-
-#badge--graph {
-  max-width: 250px;
-  margin-left: 75px;
+  //margin-right: 75px;
+  //margin-top: 20px;
 }
 
 #badge-picture {
   border-radius: 50%;
-  height: 100px;
+  //height: 100px;
   margin-top: 25px;
 }
 
@@ -57,20 +52,25 @@
   font-family: variables.$big-font;
 }
 
-.player-img {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  margin-left: 10px;
-  margin-right: 10px;
-  margin-bottom: 10px;
-}
 
 #badge--wins > * {
   color: variables.$green;
 }
 
 #badge {
-  //border: 0.1rem solid white !important;
   border-radius: variables.$border-radius-big;
 }
+
+//#badge--graph {
+//  max-width: 250px;
+//  margin-left: 75px;
+//}
+
+//.player-img {
+//  width: 50px;
+//  height: 50px;
+//  border-radius: 50%;
+//  margin-left: 10px;
+//  margin-right: 10px;
+//  margin-bottom: 10px;
+//}

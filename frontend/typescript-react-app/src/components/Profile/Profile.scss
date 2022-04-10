@@ -1,5 +1,25 @@
 @use "../../variables";
 
 #profile-title {
-	color: white !important;
+	//color: white !important;
+	color: black !important;
+}
+
+//#profile--div {
+//	//background-color: white;
+//	border-radius: variables.$border-radius;
+//}
+
+#main--profile--div {
+	margin-top: 50px;
+	width: 1350px !important;
+	background-color: white;
+	border-radius: variables.$border-radius-big;
+	border: 0.1rem solid #f9f9f9;
+	padding: 45px;
+	//border: 0.1rem solid red;
+}
+
+#profile--pic {
+	border: 0.1rem solid #f9f9f9;
 }

@@ -65,7 +65,7 @@ function Nav() {
 					<ul className="navbar-nav">
 						<li className="nav-item">
 							<Link to="/game" className="nav-link">
-								<div className='nav-link-text'><p>Rules</p></div>
+								<div className='nav-link-text'><p>Game</p></div>
 							</Link>
 						</li>
 						<li className="nav-item">
@@ -73,11 +73,11 @@ function Nav() {
 								<div className='nav-link-text'><p>People</p></div>
 							</Link>
 						</li>
-						<li className="nav-item">
+						{/*<li className="nav-item">
 							<Link to="/stats" className="nav-link">
 								<div className='nav-link-text'><p>Stats</p></div>
 							</Link>
-						</li>
+						</li>*/}
 						<li className="nav-item">
 							<Link to="/achievements" className="nav-link">
 								<div className='nav-link-text'><p>Achievements</p></div>
@@ -85,7 +85,7 @@ function Nav() {
 						</li>
 						<li className="nav-item">
 							<Link to="/chat" className="nav-link">
-								<div className='nav-link-text'><p>Sockets</p></div>
+								<div className='nav-link-text'><p>Tests</p></div>
 							</Link>
 						</li>
 						<li className="nav-item">
@@ -100,7 +100,7 @@ function Nav() {
 						</li>*/}
 						<li className="nav-item">
 							<Link to="/user" className="nav-link">
-								<div className='nav-link-text'><p>Settings</p></div>
+								<div className='nav-link-text'><p>User</p></div>
 							</Link>
 						</li>
 					</ul>
