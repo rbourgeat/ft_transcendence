@@ -641,19 +641,26 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
         };
 
         console.log(bod);
+        let toast = new ToastAlerts(null);
 
         let res = axios.post('http://localhost:3000/api/auth/log-in/', bod, { headers })
             .then(res => {
                 if (res.status == 200 || res.status == 201) {
                     //console.log(res);
+                    localStorage.setItem("loggedIn", "true");
                     window.top.location = "/chat/";
                     return;
                 }
                 else {
                     //toast.notifyDanger('Oops ! An error happened, incorrect email or password.');
                     console.log("Did not receive 200 when logging it.");
+                    toast.notifyDanger("😢 Error while logging in !");
                     return;
                 }
+            })
+            .catch((error) => {
+                console.log("Error while logging in.");
+                toast.notifyDanger("😢 Error while logging in !");
             })
     }
 

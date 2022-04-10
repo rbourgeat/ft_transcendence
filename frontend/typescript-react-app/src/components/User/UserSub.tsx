@@ -261,7 +261,7 @@ export default function User(props: UserfuncProps) {
 								</div>
 								</div>
 							</div>
-							: <h1 className="test">You are not logged in.</h1>
+							: <p></p>
 							}
 							</>
 						</div>

@@ -24,11 +24,14 @@ import Login2FA from "../Auth/Login2FA/Login2FA"
 import Channels from "../Channels/Channels"
 import { io } from 'socket.io-client';
 import axios from 'axios';
+import NotLogged from '../NotLogged/NotLogged';
+//import { responseSymbol } from 'next/dist/server/web/spec-compliant/fetch-event';
 
 function App() {
 
   const [user, setUser] = useState(null);
   const [username, setUsername] = React.useState("");
+  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
 
   const value = useMemo(() =>
     ({ user, setUser }), [user, setUser]);
@@ -44,8 +47,10 @@ function App() {
     axios.defaults.withCredentials = true;
     await axios.get(url)
       .then(res => {
+       //console.log("Status code is " + res.status);
         username = res.data.login;
         setUsername(username);
+        //setIsLoggedIn(true);
       })
       .catch((err) => {
         console.log("Error while getting api auth");
@@ -53,8 +58,10 @@ function App() {
   }
 
   useEffect(() => {
-    if (cookieCheck)
-      getUser();
+    //console.log("coucou");
+    //console.log("Cookie check is" + cookieCheck);
+    //if (cookieCheck)
+    getUser();
     if (username) {
       let socket = io("http://localhost:3000/chat", { query: { username: username } });
       socket.on('connect', () => {
@@ -69,6 +76,12 @@ function App() {
     }
   }, []);
 
+  //useEffect(() => {
+  //  console.log("Cookie was edited !");
+  //  //cookieCheck = document.cookie.match("Authentication");
+  //  //console.log("cookie is " + cookieCheck);
+  //}, [cookieCheck]);
+
 
   return (
     <div id="main">
@@ -76,17 +89,22 @@ function App() {
         <Route path="/" element={<Welcome />} />
         <Route path="/welcome" element={<Welcome />} />
         <Route path="/auth" element={<Auth />} />
-        <Route path="/user" element={<UserMain />} />
-        <Route path="/chat" element={<CreateChan />} />
-        <Route path="/channels" element={<Channels />} />
-        <Route path="/search" element={<Search />} />
-        <Route path="/stats" element={<Stats login={username} />} />
-        <Route path="/achievements" element={<Achievements login={username} />} />
-        <Route path="/people" element={<People />} />
-        <Route path="/game" element={<Game />} />
-        {/*<Route path="/playwatch" element={<PlayWatch />} />*/}
-        <Route path="/2fa" element={<Login2FA />} />
-        <Route path="*" element={<NotFound />} />
+        {localStorage.getItem("loggedIn") == "true" ?
+        <>
+          <Route path="/user" element={<UserMain />} />
+          <Route path="/chat" element={<CreateChan />} />
+          <Route path="/channels" element={<Channels />} />
+          <Route path="/search" element={<Search />} />
+          <Route path="/stats" element={<Stats login={username} />} />
+          <Route path="/achievements" element={<Achievements login={username} />} />
+          <Route path="/people" element={<People />} />
+          <Route path="/game" element={<Game />} />
+          <Route path="/2fa" element={<Login2FA />} />
+          <Route path="*" element={<NotFound />} />
+          </> : <Route path="*" element={<NotLogged />} />
+        }
+        {/*<Route path="/2fa" element={<Login2FA />} />
+        <Route path="*" element={<NotFound />} />*/}
       </Routes>
     </div>
   );
