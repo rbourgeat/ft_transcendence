@@ -9,23 +9,23 @@ import axios from 'axios';
  */
 function Nav() {
 
-	function disconnect()
-	{
+	function disconnect() {
 		axios.defaults.headers.post['Accept'] = '*/*';
-        axios.defaults.withCredentials = true;
+		axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+		axios.defaults.withCredentials = true;
 
 		let bod = {
 		}
 
 		const headers = {
-            'Content-Type': 'application/json',
+			'Content-Type': 'application/json',
 			'Accept': '*/*',
-        };
+		};
 
 		console.log("Logged in is : " + localStorage.getItem("loggedIn"));
 		console.log("---------------------");
 
-		axios.post("http://localhost:3000/api/auth/log-out", bod, {headers})
+		axios.post("http://localhost:3000/api/auth/log-out", bod, { headers })
 			.then((response) => {
 				console.log(response);
 				console.log("Succesfully disconnected !");
@@ -82,7 +82,7 @@ function Nav() {
 							</Link>
 						</li>
 						<li className="nav-item">
-							<Link to="/chat"className="nav-link">
+							<Link to="/chat" className="nav-link">
 								<div className='nav-link-text'><p>Sockets</p></div>
 							</Link>
 						</li>

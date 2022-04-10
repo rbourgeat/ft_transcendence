@@ -84,6 +84,7 @@ function App() {
         <Route path="/people" element={<People />} />
         <Route path="/game" element={<Game />} />
         <Route path="/playwatch" element={<PlayWatch />} />
+        <Route path="/2fa" element={<PlayWatch />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>

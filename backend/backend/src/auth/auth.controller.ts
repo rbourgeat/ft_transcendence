@@ -53,10 +53,8 @@ export class AuthenticationController {
     @ApiOperation({ summary: 'log out user [jwt-protected]' })
     @ApiOkResponse({ description: 'You logged out' })
     @UseGuards(JwtAuthenticationGuard)
-    //@Redirect('http://localhost:3030/2fa')
-   // @HttpCode(200)
     @Post('log-out')
-    async logOut(@Res() response: Response, @Req() request: RequestWithUser) {
+    async logOut(@Res({ passthrough: true }) response: Response, @Req() request: RequestWithUser) {
 
         const { user } = request;
         this.userService.updateStatus(user.login, "offline");
@@ -65,6 +63,10 @@ export class AuthenticationController {
         //this.authenticationService.getCookieForLogOut();
         response.setHeader('Set-Cookie', this.authenticationService.getCookieForLogOut());
         //return response.sendStatus(200);
+        // response.setHeader('Set-Cookie', this.authenticationService.getCookieForLogOut());
+        response.clearCookie('jwt');
+        response.redirect('http://localhost:3030/');
+        // return response.sendStatus(200);
     }
 
     @ApiOperation({ summary: 'Check user session with cookie [jwt-protected]' })
