@@ -140,7 +140,7 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 				<img className="profile--pic" id={props.login} src="" width="100" height="100" />
 				{/*{load == true ? console.log(props.user) : console.log("test")}*/}
 				{load == true ? renderImage(props.avatar, props.login, props.ftlogin) : ""}
-				<svg className="log--color" height="40" width="40"><circle cx="20" cy="20" r="15" fill={color} /></svg>
+				<svg className="log--color" height="40" width="40"><circle cx="20" cy="20" r="15" fill={color} stroke="white" stroke-width="3" /></svg>
 				<br />
 				<p className="user--p" id="mini--login">{props.login}</p>
 				<p className="user--p" id="mini--status">{status}</p>
