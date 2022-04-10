@@ -145,7 +145,7 @@ export default function Achievement(props: AchievementsProps) {
                     </div>
                 </div>
             </div>
-            <Footer />
+            {/*<Footer />*/}
         </div >
     );
 }

@@ -133,11 +133,17 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 		return (ax.post_relation_block(login));
 	}
 
+	function gotoprofile()
+	{
+		let url = "http://localhost:3030/profile/".concat(props.login);
+		window.top.location = url;
+	}
+
 	return (
 		<>
 			{/*{console.log(props.user)}*/}
 			<li id="minidisplay--div" className="list-group-item" key={props.login}>
-				<img className="profile--pic" id={props.login} src="" width="100" height="100" />
+				<img className="profile--pic" id={props.login} src="" width="100" height="100" onClick={gotoprofile} />
 				{/*{load == true ? console.log(props.user) : console.log("test")}*/}
 				{load == true ? renderImage(props.avatar, props.login, props.ftlogin) : ""}
 				<svg className="log--color" height="40" width="40">
