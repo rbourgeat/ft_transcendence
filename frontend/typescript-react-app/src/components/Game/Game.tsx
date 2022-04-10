@@ -8,6 +8,11 @@ import GameRules from "../GameRules/GameRules";
 import io from "socket.io-client";
 import axios from "axios";
 
+var adversaire: string;
+var joueur: string;
+let joueur1: string;
+let joueur2: string;
+
 export default function Game() {
 	//const { width, height } = useWindowSize();
 	// let size = useWindowSize();
@@ -15,7 +20,6 @@ export default function Game() {
 
 	// socket game
 	const [username, setUsername] = React.useState("");
-	let joueur = "unknown"
 	async function getUser() {
 		let url = "http://localhost:3000/api/auth/";
 		let username = "";
@@ -33,7 +37,6 @@ export default function Game() {
 	}
 	var isSearching = false;
 	var SearchText = "Rechercher une partie"
-	let adversaire = "unknown"
 
 	let socket = io("http://localhost:3000/game", { query: { username: username } });
 	function sendSearch() {
@@ -51,16 +54,23 @@ export default function Game() {
     }
 
 	socket.on("gameStart", (...args) => {
-		let joueur1 = args[0];
-		let joueur2 = args[1];
-		let adversaire = "";
-		if (joueur1 == username)
+		joueur1 = args[0];
+		joueur2 = args[1];
+		console.log("joueur1 = " + joueur1 + " joueur2 = " + joueur2)
+		console.log("adversaire = " + adversaire + " joueur = " + joueur)
+		if (joueur1 != adversaire && joueur1 == joueur) {
 			adversaire = joueur2;
-		if (joueur2 == username)
+			document.querySelector('#joueur1').textContent = joueur1;
+			document.querySelector('#joueur2').textContent = joueur2;
+			play();
+		}
+		else if (joueur2 != adversaire && joueur2 == joueur) {
 			adversaire = joueur1;
-		console.log("joueur1 = " + joueur1 + " | joueur2 = " + joueur2 + " | username = " + username)
-		document.querySelector('#adversaire').textContent = adversaire;
-		play();
+			document.querySelector('#joueur1').textContent = joueur1;
+			document.querySelector('#joueur2').textContent = joueur2;
+			play();
+		}
+
 	});
 
 
@@ -69,8 +79,8 @@ export default function Game() {
 	var game;
 	var anim;
 	// On peut changer les dimensions de la balle et des joueurs, ex: autres modes de jeux
-	const PLAYER_HEIGHT = 50;
-	const PLAYER_WIDTH = 10;
+	const PLAYER_HEIGHT = 100;
+	const PLAYER_WIDTH = 20;
 	const BALL_HEIGHT = 10;
 	const BALL_SPEED = 2;
 	function draw() {
@@ -135,19 +145,44 @@ export default function Game() {
 		// Get the mouse location in the canvas
 		var canvasLocation = canvas.getBoundingClientRect();
 		var mouseLocation = event.clientY - canvasLocation.y;
-		game.player.y = mouseLocation - PLAYER_HEIGHT / 2;
 		// collision
-		if (mouseLocation < PLAYER_HEIGHT / 2) {
-			game.player.y = 0;
-		} else if (mouseLocation > canvas.height - PLAYER_HEIGHT / 2) {
-			game.player.y = canvas.height - PLAYER_HEIGHT;
-		} else {
+		if (joueur == joueur1) {
 			game.player.y = mouseLocation - PLAYER_HEIGHT / 2;
+			if (mouseLocation < PLAYER_HEIGHT / 2) {
+				game.player.y = 0;
+			} else if (mouseLocation > canvas.height - PLAYER_HEIGHT / 2) {
+				game.player.y = canvas.height - PLAYER_HEIGHT;
+			} else {
+				game.player.y = mouseLocation - PLAYER_HEIGHT / 2;
+			}
+			if (adversaire)
+				socket.emit('playerMove', joueur + ":" + game.player.y);
+		} else if (joueur == joueur2) {
+			game.player2.y = mouseLocation - PLAYER_HEIGHT / 2;
+			if (mouseLocation < PLAYER_HEIGHT / 2) {
+				game.player2.y = 0;
+			} else if (mouseLocation > canvas.height - PLAYER_HEIGHT / 2) {
+				game.player2.y = canvas.height - PLAYER_HEIGHT;
+			} else {
+				game.player2.y = mouseLocation - PLAYER_HEIGHT / 2;
+			}
+			if (adversaire)
+				socket.emit('playerMove', joueur + ":" + game.player2.y);
 		}
 	}
 
+	socket.on("playerMove", (body: string) => {
+		const b = body.split(':');
+		console.log("adversaire = " + b[0] + " | position = " + b[1] + " | socket = " + socket.id)
+		if (b[0] == joueur2) {
+			game.player2.y = b[1];
+		} else if (b[0] == joueur1) {
+			game.player.y = b[1];
+		}
+	});
+
 	function otherMove() {
-		game.player2.y += game.ball.speed.y;
+		// game.player2.y += game.ball.speed.y;
 	}
 
 	function ballMove() {
@@ -205,9 +240,9 @@ export default function Game() {
 
 	function stop() {
 		console.log("username: ", joueur, "adversaire", adversaire, "score player 1: ", game.player.score, "score player 2: ", game.player.score)
-		if (game.player.score > game.player2.score)
+		if (game.player.score > game.player2.score && joueur && adversaire)
 			socket.emit('gameEnd', joueur + ":" + adversaire + ":" + game.player.score + ":" + game.player2.score);
-		else
+		else if (joueur && adversaire)
 			socket.emit('gameEnd', adversaire + ":" + joueur + ":" + game.player2.score + ":" + game.player.score);
 		cancelAnimationFrame(anim);
 		// Set ball and players to the center
@@ -231,7 +266,7 @@ export default function Game() {
 					{/*<canvas></canvas>*/}
 					<button type="button" className="btn btn-outline-dark" id="search-button" onClick={() => sendSearch()}>{SearchText}</button>
 					<main role="main">
-						<p id="scores">{username} : <em id="player-score">0</em> - <em id="adversaire">{adversaire}</em> : <em id="player2-score">0</em></p>
+						<p id="scores"><em id="joueur1"></em> : <em id="player-score">0</em> - <em id="joueur2"></em> : <em id="player2-score">0</em></p>
 						<canvas id="canvas" width={size.width / 1.5} height={size.height / 1.25}></canvas>
 					</main>
 					<GameRules />
