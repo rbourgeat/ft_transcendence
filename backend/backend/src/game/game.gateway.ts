@@ -54,7 +54,8 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
 			if (index > -1) {
 				MatchMaking.splice(index, 1);
 			}
-			this.server.emit('gameStart', adversaire, socket.handshake.query.username);
+			this.server.emit('gameStart', socket.handshake.query.username, adversaire);
+			console.log("Une partie commence avec " + socket.handshake.query.username + " VS " + adversaire)
 		}
 	}  
 
@@ -62,8 +63,16 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
 	async gameEnd(@ConnectedSocket() socket: Socket, @MessageBody() body: string) {
 		const b = body.split(':');
 		console.log("winner: ", b[0], "loser", b[1], "winner score: ", b[2], "loser score: ", b[3])
-		this.gameService.createGame(b[0], b[1], Number(b[2]), Number(b[3]));
+		if (b[0] && b[1])
+			this.gameService.createGame(b[0], b[1], Number(b[2]), Number(b[3]));
 	}
+
+	@SubscribeMessage('playerMove')
+	async playerMove(@ConnectedSocket() socket: Socket, @MessageBody() body: string) {
+		const b = body.split(':');
+		this.server.emit('playerMove', body);
+		console.log("joueur: " + b[0] + ", position : " + b[1]);
+	}  
 
 
 }
