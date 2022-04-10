@@ -38,7 +38,7 @@ export default function Welcome() {
                     <li>malatini</li>
                     <li>darbib</li>
                     <li>macrespo</li>
-                    <button id="play-button-1" onClick={routeChange}>Play !</button>
+                    <button id="play-button-1" onClick={routeChange}>PLAY</button>
                     <br />
                     <br />
                 </ul>
@@ -47,7 +47,7 @@ export default function Welcome() {
                 <div  id="welcome--video-div">
                     <video autoPlay loop muted src={video1} id="welcome--video-video" height="200px"/>
                 </div>
-            <Footer />
+            {/*<Footer />*/}
         </div>
         </>
     )
