@@ -16,7 +16,7 @@ export default function GameRules() {
 		await axios.get(url)
 			.then(res => {
 				username = res.data.login;
-				console.log(username + ' <-- result of get user')
+				//console.log(username + ' <-- result of get user')
 				setUsername(username);
 			})
 			.catch((err) => {

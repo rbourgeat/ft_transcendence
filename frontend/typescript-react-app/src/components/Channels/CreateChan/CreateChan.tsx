@@ -14,10 +14,12 @@ interface UserChat {
 
 const ENDPOINT = "http://ws.localhost:3000/api/";
 
+
 export default function CreateChan(props: UserChat) {
     const [modalShow, setModalShow] = React.useState(false);
     const [response, setResponse] = useState("");
     const [username, setUsername] = React.useState("");
+    const calledOnce = React.useRef(false);
 
     function getUser() {
         let url = "http://localhost:3000/api/auth/";
@@ -27,16 +29,19 @@ export default function CreateChan(props: UserChat) {
         axios.get(url)
             .then(res => {
                 username = res.data.login;
-                // console.log(username + ' <-- result of get user')
                 setUsername(username);
             })
             .catch((err) => {
                 console.log("Error while getting api auth");
+                console.log(err);
             })
     }
 
     useEffect(() => {
+        if (calledOnce.current) {
+			return;}
         getUser();
+        calledOnce.current = true;
 
         // socket.on('connect', () => {
         //     console.log(`Socket connectée !`);

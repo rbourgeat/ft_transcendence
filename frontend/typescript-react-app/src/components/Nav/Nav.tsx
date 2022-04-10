@@ -2,17 +2,16 @@ import React from 'react';
 import { Link } from 'react-router-dom'
 import './Nav.scss';
 import axios from 'axios';
+
 /**
  * @malatini
  * Notre navbar / menu, à continuer , à mettre en classe et pas en fonction, utilise window
  */
-
 function Nav() {
 
 	function disconnect()
 	{
 		axios.defaults.headers.post['Accept'] = '*/*';
-		//axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
         axios.defaults.withCredentials = true;
 
 		let bod = {
@@ -23,15 +22,19 @@ function Nav() {
 			'Accept': '*/*',
         };
 
+		console.log("Logged in is : " + localStorage.getItem("loggedIn"));
+		console.log("---------------------");
+
 		axios.post("http://localhost:3000/api/auth/log-out", bod, {headers})
 			.then((response) => {
 				console.log(response);
 				console.log("Succesfully disconnected !");
+
 				//Sauvegarde dans localStorage le fait qu'on est déconnecté
-				//localStorage.setItem("loggedIn", JSON.stringify("false"));
+				localStorage.setItem("loggedIn", JSON.stringify(false));
 				//console.log("Disconnecting");
-				//let check = localStorage.getItem("loggedIn");
-				//console.log("Check is " + check);
+				let check = localStorage.getItem("loggedIn");
+				console.log("Check is " + check);
 			})
 			.catch((error) => {
 				console.log("Catched error while disconnecting");

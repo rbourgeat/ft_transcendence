@@ -61,7 +61,7 @@ export class AuthenticationController {
         this.userService.updateStatus(user.login, "offline");
 
         console.log('went by logout in auth controller');
-        //response.setHeader('Set-Cookie', this.authenticationService.getCookieForLogOut());
+        response.setHeader('Set-Cookie', this.authenticationService.getCookieForLogOut());
         return response.sendStatus(200);
     }
 

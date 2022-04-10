@@ -20,7 +20,7 @@ export interface TypingState {
 const message = document.getElementById('message');
 const messages = document.getElementById('messages');
 
-export default function TypingMessage() 
+export default function TypingMessage()
 {
 		const [text, updateText] = React.useState("");
     const [username, setUsername] = React.useState("");
@@ -33,7 +33,7 @@ export default function TypingMessage()
         axios.get(url)
             .then(res => {
                 username = res.data.login;
-                console.log(username + ' <-- result of get user')
+                //console.log(username + ' <-- result of get user')
                 setUsername(username);
             })
             .catch((err) => {
@@ -44,7 +44,7 @@ export default function TypingMessage()
     useEffect(() => {
         getUser();
     }, []);
-	
+
     let socket = io("http://localhost:3000/chat", { query: { username: username } });
 
     function sendMessage(channel: string, message: string) {

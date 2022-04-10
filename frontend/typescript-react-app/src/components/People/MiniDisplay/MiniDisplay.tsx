@@ -61,7 +61,7 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 		await axios.get(url)
 			.then(res => {
 				username = res.data.login;
-				console.log(username + ' <-- result of get user')
+				//console.log(username + ' <-- result of get user')
 			})
 			.catch((err) => {
 				console.log("Error while getting api auth");
@@ -69,12 +69,12 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 	}
 
 	useEffect(() => {
-		getUser();
-		setLoad(true);
-
+		//getUser();
+		//setLoad(true);
 		if (calledOnce.current) {
 			return;
 		}
+		getUser();
 		setLoad(true);
 		calledOnce.current = true;
 

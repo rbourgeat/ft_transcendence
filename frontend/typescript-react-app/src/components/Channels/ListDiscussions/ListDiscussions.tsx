@@ -10,7 +10,7 @@ export default function ListDiscussions() {
     const [username, setUsername] = React.useState("");
     const [messages, setMessages] = React.useState([]);
     useEffect(() => {
-		
+
 	async function getUser() {
         let url = "http://localhost:3000/api/auth/";
         let username = "";
@@ -19,7 +19,7 @@ export default function ListDiscussions() {
         await axios.get(url)
             .then(res => {
                 username = res.data.login;
-                console.log(username + ' <-- result of get user')
+                //console.log(username + ' <-- result of get user')
             })
             .catch((err) => {
                 console.log("Error while getting api auth");
@@ -35,7 +35,7 @@ export default function ListDiscussions() {
 			setMessages(messagesUpdated);
         }
     });
-		
+
 	}, []);
 
     return (

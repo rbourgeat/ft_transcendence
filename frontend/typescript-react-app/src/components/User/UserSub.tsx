@@ -22,12 +22,12 @@ export interface UserfuncProps {
 
 export default function User(props: UserfuncProps) {
 	const [qrcode, setqrCode] = useState("");//https://camo.githubusercontent.com/a20446c393106453751db5f1b2633763cd7213e81015f855432405f7ddedeca3/68747470733a2f2f63686172742e676f6f676c65617069732e636f6d2f63686172743f6368743d71722663686c3d48656c6c6f2532306d61746521266368733d313830783138302663686f653d5554462d382663686c643d4c7c32");
-
 	const [modalShowUsername, setModalShowUsername] = React.useState(false);
 	const [username, setUsername] = React.useState("");
-
 	const [verifCode, setverifCode] = React.useState("");
 	const [activated2fa, setActivated2fa] = React.useState(true);
+
+	const [logged, setLogged] = React.useState(false);
 
 	const calledOnce = React.useRef(false);
 
@@ -154,6 +154,14 @@ export default function User(props: UserfuncProps) {
     }
 
 	async function getUser() {
+
+		//Check si personne login
+		let log = localStorage.getItem("loggedIn");
+		console.log("Logged is " + log);
+		setLogged(log == "true" ? true : false);
+
+
+		//Check si 2fa activé
 		let url = "http://localhost:3000/api/auth/";
 
 		axios.defaults.baseURL = 'http://localhost:3000/api/';
@@ -195,9 +203,13 @@ export default function User(props: UserfuncProps) {
 			<div className="container">
 				<div className="row d-flex justify-content-center text-center">
 					<div className="col-9" id="bonjour--user">
-						<br /><br />
+						<br />
+						{/* Debut */}
 						<div className="user--stats" key={username}>
 							<>
+							{logged == true ?
+							<div>
+							<h1 className="test">You are logged in.</h1>
 							<img id={username} className="profile--pic" height="80" width="80"/>
 							{renderImage(username)}
 							<br />
@@ -248,9 +260,13 @@ export default function User(props: UserfuncProps) {
 									/>
 									</div>
 								</div>
+								</div>
 							</div>
+							: <h1 className="test">You are not logged in.</h1>
+							}
 							</>
 						</div>
+						{/* Fin */}
 					</div>
 				</div>
 			</div>
