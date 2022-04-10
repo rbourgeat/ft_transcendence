@@ -4,7 +4,8 @@
   background-color: white !important;
   background-image: none !important;
   border-radius: variables.$border-radius;
-  padding-top: 5px !important;
+  //padding-top: 5px !important;
+  padding: 50px !important;
 }
 
 #auth-btn-1,
@@ -34,6 +35,11 @@
   background-color: white !important;
   border-radius: variables.$border-radius;
   margin-top: 5px !important;
+}
+
+#jouer {
+  text-align: center !important;
+  margin-bottom: 12px !important;
 }
 
 //#auth-container > label {

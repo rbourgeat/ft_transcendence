@@ -209,7 +209,7 @@ export default function User(props: UserfuncProps) {
 							<>
 							{logged == true ?
 							<div>
-							<h1 className="test">You are logged in.</h1>
+							{/*<h1 className="test">You are logged in.</h1>*/}
 							<img id={username} className="profile--pic" height="80" width="80"/>
 							{renderImage(username)}
 							<br />
