@@ -13,6 +13,7 @@ import { Observable } from 'rxjs';
 import { RelationStatusClass, } from 'src/user/interface/friend-request.interface';
 import { User } from 'src/user/entity/user.entity';
 import { editFileName, imageFileFilter, myStorage } from './upload.utils'
+import { Achievement } from './entity/achievement.entity';
 
 @ApiTags('Users')
 @ApiExtraModels(CreateUserDtoViaRegistration) //force unused dto to show on swagger
@@ -39,13 +40,12 @@ export class UserController {
         //return (response.cookies);
     }
 
-
     @ApiOperation({ summary: 'Retrieve {login}\'s data' })
     @ApiOkResponse({ description: 'Data received' })
     @ApiConflictResponse({ description: '{login} does\'t exist' })
     @Get(':login')
     getUserByLogin(@Param('login') login: string) {
-        console.log('Get user ' + login + ' data')
+        console.log('Get user ' + login + ' data :v')
         return this.userService.getUserByLogin(String(login));
     }
 
@@ -124,8 +124,8 @@ export class UserController {
     @ApiOperation({ summary: 'Answer to the invitation request (accepted/declined/blocked) [jwt-protected]' })
     @UseGuards(JwtAuthenticationGuard)
     @Post('relation/answerToInvitation/:invitationId')
-    answerToInvitation(@Param('invitationId') invitationId: number, @Body() statusResponse: RelationStatusClass) {
-        return this.userService.answerToInvitation(statusResponse.status, invitationId);
+    answerToInvitation(@Param('invitationId') invitationId: number, @Body() statusResponse: RelationStatusClass, @Request() req) {
+        return this.userService.answerToInvitation(statusResponse.status, invitationId, req.user);
     }
 
     @ApiOperation({ summary: 'List all received invitation [jwt-protected]' })
@@ -168,5 +168,22 @@ export class UserController {
     @Get('relation/me/allBlocked')
     getBlockedUsers(@Request() req): Promise<User[]> {
         return this.userService.getBlockedUsers(req.user);
+    }
+
+    @ApiOperation({ summary: 'Returns list of achievements [jwt-protected]' })
+    @UseGuards(JwtAuthenticationGuard)
+    @Get('achievements/me')
+    getAchievements(@Request() req)/*: Observable<Achievement[]>*/ {
+        console.log("test back controller get achievements");
+        return this.userService.getAchievements(req.user);
+    }
+
+    @ApiOperation({ summary: 'Returns list of achievements [jwt-protected]' })
+    @UseGuards(JwtAuthenticationGuard)
+    @Get('achievements/ofeveryone')
+    getAllAchievements(@Request() req)/*: Observable<Achievement[]>*/ {
+        //console.log("test back controller get achievements");
+        console.log('in all' + req.user);
+        return this.userService.getAllAchievements();
     }
 }

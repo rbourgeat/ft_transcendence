@@ -6,11 +6,8 @@ export class Achievement {
     @PrimaryGeneratedColumn()
     id?: number;
 
-    @Column()
+    @Column({ nullable: true })
     title: string;
-
-    @Column()
-    description: string;
 
     @ManyToOne(() => User, (user: User) => user.achievement)
     user: User;

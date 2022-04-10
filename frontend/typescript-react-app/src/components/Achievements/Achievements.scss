@@ -4,13 +4,23 @@
     width: 18rem !important;
     margin: 20px !important;
     //border-radius: variables.$border-radius;
-    background-color: variables.$grey;
+    //background-color: variables.$grey;
+    background-color: grey;
 }
 
-//#group--one {
-//    background-color: variables.$grey;
-//    //border-radius: variables.$border-radius;
-//}
+.card--locked {
+    //width: 18rem !important;
+    //margin: 20px !important;
+    //border-radius: variables.$border-radius;
+    background-color: grey;
+}
+
+.card--unlocked {
+    //width: 18rem !important;
+    //margin: 20px !important;
+    //border-radius: variables.$border-radius;
+    background-color: white;
+}
 
 .card-text {
     color: black !important;
@@ -21,36 +31,49 @@
     background: white !important;
 }
 
-#achievements > *, .card, .card-group {
+#achievements > *, .card, .card-group, .card--locked, .card--unlocked {
     border-radius: variables.$border-radius !important;
-}
-
-.achievements--img {
-    margin: 10px !important;
 }
 
 .card-title {
     font-family: variables.$big-font;
     font-size: 16px;
-    text-align: center;
+    text-align: left;
     color: black !important;
     margin-top: 10px;
 }
 
-.card-disabled {
-    background-color: variables.$grey;
-}
-
 .card-text {
     font-family: variables.$basic-font;
-    text-align: center;
+    text-align: left;
     font-size: 20px;
 }
 
-.achievements--img {
-    display: flex;
-    float: right;
+
+.test-icon {
+	margin-left: 320px;
+	margin-top: 20px;
+     font-size: 60px;
+     color: black;
+         position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1;
 }
+
+.checkmark {
+	margin-left: 350px;
+	margin-top: 70px;
+     font-size: 60px;
+     color: rgb(32, 123, 114);
+     transform: rotate(5deg);
+
+     position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1;
+}
+
 
 #achievements--title {
     color: white !important;

@@ -1,94 +1,151 @@
 import './Achievements.scss';
 import Nav from "../Nav/Nav";
 import Footer from "../Footer/Footer";
-import React from "react";
+import React, { useEffect } from "react";
 
-export interface AchievementsProps{
+//icons
+import { MdLocalFireDepartment } from "react-icons/md";
+import { FaCat, FaUserFriends } from "react-icons/fa";
+import { GiPowerButton, GiPeaceDove } from "react-icons/gi";
+import { GrGamepad } from "react-icons/gr";
+import { BsCheckLg } from "react-icons/bs";
+//endof icons
+
+import axios from 'axios';
+import MyAxios from "../Utils/Axios/Axios";
+
+export interface AchievementsProps {
+    login?: string,
+    children?: React.ReactNode | React.ReactChild | React.ReactChildren | React.ReactChild[] | React.ReactChildren[]
 }
 
-export interface AchievementsState {
-}
+export default function Achievement(props: AchievementsProps) {
 
-export default class Achievements extends React.Component<AchievementsProps, AchievementsState>
-{
-    constructor(props: AchievementsProps)
-    {
-        super(props);
-        this.state = {}
+    const [myArray, setMyArray] = React.useState([]);
+
+    async function getAchievements() {
+        //demander a MAhaut pq cette methode marche pas
+        //let ax = new MyAxios(null);
+        //let arr = ax.get_api_achievements();
+        //setMyArray(arr);
+
+        let url = "http://localhost:3000/api/user/achievements/me";
+
+        axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+        axios.defaults.withCredentials = true;
+
+        axios.get(url)
+            .then(res => {
+                console.log("Successfully retrieve achievements");
+                console.log(res.data);
+                setMyArray(res.data.map(element => element.title))
+
+            })
+            .catch((error) => {
+                console.log("Error while retrieve achievements");
+                console.log(error);
+            })
     }
 
-    componentDidMount() {}
+    function CheckMark() {
+        return <svg className="checkmark"><BsCheckLg /></svg>;
+    }
 
-    render()
-    {
-        return (
-            <div id="Leaderboard">
-				<Nav />
-					<div id="achievements">
-						<div className="container">
-							<div className="row d-flex justify-content-center text-center" id="row-cards">
-                                <h1 id="achievements--title">Achievements</h1>
-                            </div>
-                                        <div className="row" id="first-row">
-                                            <div className="card-group" id="group--one">
-                                                <div className="card" >
-                                                    <div className="card-body">
-                                                        <h5 className="card-title">The challender</h5>
-                                                        <p className="card-text">Reached the first position</p>
-                                                        {/*<img className="achievements--img" src="https://cdn.icon-icons.com/icons2/2534/PNG/512/trophy_winner_icon_152036.png" height="20px"></img>*/}
-                                                    </div>
-                                                </div>
+    function isUnlocked(name: string) {
+        if (myArray.find(element => element == name))
+            return true;
+        return false;
+    }
 
-                                                <div className="card">
-                                                    <div className="card-body">
-                                                        <h5 className="card-title">On fire</h5>
-                                                        <p className="card-text">Win 5 games in a row</p>
-                                                        {/*<img className="achievements--img" src="https://icon-library.com/images/fire-icon/fire-icon-22.jpg" height="20px"></img>*/}
-                                                    </div>
-                                                </div>
+    useEffect(() => {
+        getAchievements()
+    }, []);
 
-                                                <div className="card">
-                                                    <div className="card-body">
-                                                        <h5 className="card-title">Finally i'm a g4m3r</h5>
-                                                        <p className="card-text">Play more than a 1000 games</p>
-                                                        {/*<img src="https://www.iconpacks.net/icons/1/free-keyboard-icon-1405-thumb.png" className="achievements--img" height="20px"></img>*/}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div className="row" id="second-row">
-                                            <div className="card-group">
-                                                <div className="card">
-                                                    <div className="card-body">
-                                                        <h5 className="card-title">This is how I met...</h5>
-                                                        <p className="card-text">Had someone as your friend</p>
-                                                        {/*<img src="https://static.thenounproject.com/png/355154-200.png" className="achievements--img" height="20px"></img>*/}
-                                                    </div>
-                                                </div>
-
-                                                <div className="card">
-                                                    <div className="card-body">
-                                                        <h5 className="card-title">I am not noob</h5>
-                                                        <p className="card-text">Launch your first game</p>
-                                                        {/*<img src="https://icons-for-free.com/iconfiles/png/512/off+power+reboot+restart+icon-1320086062721850594.png" className="achievements--img" height="20px"></img>*/}
-                                                    </div>
-                                                </div>
-
-                                                <div className="card">
-                                                    <div className="card-body">
-                                                        <h5 className="card-title">Stand together</h5>
-                                                        <p className="card-text">Create or join guild</p>
-                                                        {/*<img src="https://simpleicon.com/wp-content/uploads/flag.png" className="achievements--img" height="20px"></img>*/}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+    //render() {
+    return (
+        <div id="Leaderboard">
+            <Nav />
+            <div id="achievements">
+                <div className="container">
+                    <div className="row d-flex justify-content-center text-center" id="row-cards">
+                        <h1 id="achievements--title">Achievements</h1>
+                    </div>
+                    <div className="row" id="first-row">
+                        <div className="card-group" id="group--one">
+                            <div className="card" >
+                                <div className={isUnlocked("BeAdmin") ? "card--unlocked" : "card--locked"}>
+                                    {isUnlocked("BeAdmin") ? <CheckMark /> : ""}
+                                    <div className="card-body">
+                                        <h5 className="card-title">Let's negotiate</h5>
+                                        <p className="card-text">Be admin of a channel</p>
+                                        <svg className="test-icon">{<GiPeaceDove />}</svg>
                                     </div>
+                                </div>
                             </div>
-            <Footer />
-            </div>
-        );
-    }
 
+                            <div className="card">
+                                <div className={isUnlocked("5Row") ? "card--unlocked" : "card--locked"}>
+                                    {isUnlocked("5Row") ? <CheckMark /> : ""}
+                                    <div className="card-body">
+                                        <h5 className="card-title">On fire</h5>
+                                        <p className="card-text">Win 5 games in a row</p>
+                                        <svg className="test-icon">{<MdLocalFireDepartment />}</svg>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="card">
+                                <div className={isUnlocked("1000Game") ? "card--unlocked" : "card--locked"}></div>
+                                {isUnlocked("1000Game") ? <CheckMark /> : ""}
+                                <div className="card-body">
+                                    <h5 className="card-title">I'm a g4m3r</h5>
+                                    <p className="card-text">Play 1000 games</p>
+                                    <svg className="test-icon">{<GrGamepad />}</svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="row" id="second-row">
+                        <div className="card-group">
+                            <div className="card">
+                                <div className={isUnlocked("AddFriend") ? "card--unlocked" : "card--locked"}>
+                                    {isUnlocked("AddFriend") ? <CheckMark /> : ""}
+                                    <div className="card-body">
+                                        <h5 className="card-title">This is how I met</h5>
+                                        <p className="card-text">Have one friend</p>
+                                        <svg className="test-icon">{<FaUserFriends />}</svg>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="card">
+                                <div className={isUnlocked("FirstGame") ? "card--unlocked" : "card--locked"}>
+                                    {isUnlocked("FirstGame") ? <CheckMark /> : ""}
+                                    <div className="card-body">
+                                        <h5 className="card-title">I am not a noob</h5>
+                                        <p className="card-text">Launch your first game</p>
+                                        <svg className="test-icon">{<GiPowerButton />}</svg>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="card">
+                                <div className={isUnlocked("42") ? "card--unlocked" : "card--locked"}>
+                                    {isUnlocked("42") ? <CheckMark /> : ""}
+                                    <div className="card-body">
+                                        <h5 className="card-title">42</h5>
+                                        <p className="card-text">????????????????</p>
+                                        <svg className="test-icon">{<FaCat />}</svg>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <Footer />
+        </div >
+    );
 }

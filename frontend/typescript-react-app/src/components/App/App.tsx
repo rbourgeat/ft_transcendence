@@ -1,5 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.css';
-import React, { useState, useMemo, useEffect} from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import './App.scss';
 import {
   BrowserRouter as Router,
@@ -29,8 +29,8 @@ function App() {
   const [user, setUser] = useState(null);
   const [username, setUsername] = React.useState("");
 
-  const value = useMemo( () =>
-  ({user, setUser}), [user, setUser]);
+  const value = useMemo(() =>
+    ({ user, setUser }), [user, setUser]);
 
   let socket = io("http://localhost:3000/chat", { query: { username: username } });
 
@@ -40,52 +40,51 @@ function App() {
     axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
     axios.defaults.withCredentials = true;
     await axios.get(url)
-        .then(res => {
-            username = res.data.login;
-            console.log(username + ' <-- result of get user youhouuu')
-            console.log(username + ' <-- result of get user')
-            setUsername(username);
-        })
-        .catch((err) => {
-            console.log("Error while getting api auth");
-        })
-}
+      .then(res => {
+        username = res.data.login;
+        console.log(username + ' <-- result of get user youhouuu')
+        console.log(username + ' <-- result of get user')
+        setUsername(username);
+      })
+      .catch((err) => {
+        console.log("Error while getting api auth");
+      })
+  }
 
   useEffect(() => {
-      getUser();
-      if (username)
-      {
-        let socket = io("http://localhost:3000/chat", { query: { username: username } });
-        socket.on('connect', () => {
-            console.log(`online ` + username);
-            socket.emit('status', username + ':online')
-        })
+    getUser();
+    if (username) {
+      let socket = io("http://localhost:3000/chat", { query: { username: username } });
+      socket.on('connect', () => {
+        console.log(`online ` + username);
+        socket.emit('status', username + ':online')
+      })
 
-        socket.on('disconnect', () => {
-          console.log(`offline ` + username);
-            socket.emit('status', username + ':offline')
-        })
-      }
+      socket.on('disconnect', () => {
+        console.log(`offline ` + username);
+        socket.emit('status', username + ':offline')
+      })
+    }
   }, []);
 
 
   return (
     <div id="main">
-            <Routes>
-              <Route path="/" element={<Welcome />} />
-              <Route path="/welcome" element={<Welcome />} />
-              <Route path="/auth" element={<Auth />} />
-              <Route path="/user" element={<UserMain />} />
-              <Route path="/chat" element={<CreateChan />} />
-              <Route path="/channels" element={<Channels />} />
-              <Route path="/search" element={<Search />}  />
-              <Route path="/stats" element={<Stats />}  />
-              <Route path="/achievements" element={<Achievements />}  />
-              <Route path="/people" element={<People />}  />
-              <Route path="/game" element={<Game />}  />
-              <Route path="/playwatch" element={<PlayWatch />}  />
-              <Route path="*" element={<NotFound />}  />
-            </Routes>
+      <Routes>
+        <Route path="/" element={<Welcome />} />
+        <Route path="/welcome" element={<Welcome />} />
+        <Route path="/auth" element={<Auth />} />
+        <Route path="/user" element={<UserMain />} />
+        <Route path="/chat" element={<CreateChan />} />
+        <Route path="/channels" element={<Channels />} />
+        <Route path="/search" element={<Search />} />
+        <Route path="/stats" element={<Stats login={username} />} />
+        <Route path="/achievements" element={<Achievements login={username} />} />
+        <Route path="/people" element={<People />} />
+        <Route path="/game" element={<Game />} />
+        <Route path="/playwatch" element={<PlayWatch />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
     </div>
   );
 }

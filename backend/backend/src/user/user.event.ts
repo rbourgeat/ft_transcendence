@@ -4,55 +4,30 @@ import { Injectable } from "@nestjs/common";
 import { Repository } from 'typeorm';
 
 import { User } from 'src/user/entity/user.entity';
+import { Achievement } from "./entity/achievement.entity";
 
 @Injectable()
 export class UserEvent {
     constructor(private eventEmitter: EventEmitter2,
         @InjectRepository(User)
-        private userRepository: Repository<User>) { }
+        private userRepository: Repository<User>,
+        @InjectRepository(Achievement)
+        private readonly achievementRepository: Repository<Achievement>,
+    ) { }
 
     achievementFriend(user: User) {
+        console.log('emit event for achievementfriend');
         this.eventEmitter.emit('achievement.friend', user)
-    }
-
-    achievement1000Game(user: User) {
-        this.eventEmitter.emit('achievement.1000Game', user)
-    }
-
-    achievementFirstGame(user: User) {
-        this.eventEmitter.emit('achievement.firstGame', user)
-    }
-
-    achievementRankLadder(user: User) {
-        this.eventEmitter.emit('achievement.rankLadder', user)
-    }
-
-    achievementConsecutiveWins(user: User) {
-        this.eventEmitter.emit('achievement.consecutiveWins', user)
-    }
-
-    achievementDuellist(user: User) {
-        this.eventEmitter.emit('achievement.duellist', user)
-    }
-
-    achievementAvatarUpload(user: User) {
-        this.eventEmitter.emit('achievement.avatarUpload', user)
-    }
-
-    achievement42(user: User) {
-        this.eventEmitter.emit('achievement.42', user)
     }
 
     @OnEvent('achievement.friend')
     handleAchievementFriend(user: User) {
-        //if (user.friends.length == 1)
-        //   this.saveAchievement(user, "AddFriend")
+        console.log('go to save the achievement');
+        this.saveAchievement(user, "AddFriend")
     }
 
-    @OnEvent('achievement.42')
-    handleAchievement42(user: User) {
-        if (user.login == "norminet")
-            this.saveAchievement(user, "42")
+    achievement1000Game(user: User) {
+        this.eventEmitter.emit('achievement.1000Game', user)
     }
 
     @OnEvent('achievement.1000Game')
@@ -61,20 +36,8 @@ export class UserEvent {
             this.saveAchievement(user, "1000Game")
     }
 
-
-    @OnEvent('achievement.avatarUpload')
-    handleAchievementAvatarUpload(user: User) {
-        console.log('TODO achievement uploadavatar event');
-    }
-
-    @OnEvent('achievement.duellist')
-    handleAchievementDuellist(user: User) {
-        console.log('TODO achievement duellist event');
-    }
-
-    @OnEvent('achievement.rankLadder')
-    handleAchievementRankLadder(user: User) {
-        console.log('TODO achievement rankladder event');
+    achievementFirstGame(user: User) {
+        this.eventEmitter.emit('achievement.firstGame', user)
     }
 
     @OnEvent('achievement.firstGame')
@@ -83,12 +46,43 @@ export class UserEvent {
             this.saveAchievement(user, "FirstGame")
     }
 
-    saveAchievement(user: User, achievementTitle: string) {
-        // var login = user.login;
-        // user.achievements.push(achievementTitle);
-        // this.userRepository.update({ login }, {
-        //     achievements: user.achievements
-        // });
-        // console.log('User ' + login + ' unlocked the ' + achievementTitle + ' achievement');
+    achievementConsecutiveWins(user: User) {
+        this.eventEmitter.emit('achievement.5Row', user)
+    }
+
+    @OnEvent('achievement.5Row')
+    handleAchievement5Row(user: User) {
+        //TODO
+    }
+
+    achievement42(user: User) {
+        this.eventEmitter.emit('achievement.42', user)
+    }
+
+    @OnEvent('achievement.42')
+    handleAchievement42(user: User) {
+        if (user.login == "norminet")
+            this.saveAchievement(user, "42")
+    }
+
+    achievementBeAdmin(user: User) {
+        this.eventEmitter.emit('achievement.BeAdmin', user)
+    }
+
+    @OnEvent('achievement.BeAdmin')
+    handleAchievementBeAdmin(user: User) {
+        //TODO
+    }
+
+    async saveAchievement(user: User, achievementTitle: string) {
+
+        const newAchievement = await this.achievementRepository.create(
+            {
+                title: achievementTitle,
+                user: user,
+            }
+        );
+        await this.achievementRepository.save(newAchievement);
+        console.log('User ' + user.login + ' unlocked the ' + achievementTitle + ' achievement');
     }
 }

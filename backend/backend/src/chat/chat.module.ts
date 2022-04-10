@@ -15,6 +15,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UserService } from '../user/user.service';
 import { UsersRepository } from 'src/user/user.repository';
 import { UserRelation } from 'src/user/entity/friend-request.entity';
+import { Achievement } from 'src/user/entity/achievement.entity';
 
 @Module({
     imports: [
@@ -24,6 +25,7 @@ import { UserRelation } from 'src/user/entity/friend-request.entity';
         TypeOrmModule.forFeature([Participate]),
         TypeOrmModule.forFeature([UsersRepository]),
         TypeOrmModule.forFeature([UserRelation]),
+        TypeOrmModule.forFeature([Achievement]),
         AuthModule,
         UserModule,
         JwtModule.registerAsync({

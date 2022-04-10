@@ -1,16 +1,23 @@
-import React, { Component, useState} from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import Nav from "../Nav/Nav";
 import './Stats.scss';
 import axios from 'axios';
 import MyAxios from '../Utils/Axios/Axios';
-import { ToastContainer, toast } from 'react-toastify';
+
 import Dashboard from '../Dashboard/Dashboard';
 
-export default function Stats(props)
-{
-    return (
+export interface StatProps {
+	login?: string,
+	children?: React.ReactNode | React.ReactChild | React.ReactChildren | React.ReactChild[] | React.ReactChildren[]
+}
+
+export default function Stats(props: StatProps) {
+	useEffect(() => {
+	}, []);
+
+	return (
 		<div id="user--div">
-		<Nav />
+			<Nav />
 			<div className="container">
 				<div className="row d-flex justify-content-center text-center">
 					<h1 id="stats-title">My stats</h1>
@@ -19,5 +26,5 @@ export default function Stats(props)
 				</div>
 			</div>
 		</div>
-    );
+	);
 };

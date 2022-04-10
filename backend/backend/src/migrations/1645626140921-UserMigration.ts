@@ -4,6 +4,7 @@ import { Message } from "src/chat/message/entity/message.entity";
 import { Chat } from "src/chat/entity/chat.entity";
 import { Participate } from "src/participate/participate.entity";
 import { Game } from "src/game/entity/game.entity";
+import { Achievement } from "src/user/entity/achievement.entity";
 import { UserRelation } from "src/user/entity/friend-request.entity";
 
 export class UserMigration1645626140921 implements MigrationInterface {
@@ -174,6 +175,77 @@ export class UserMigration1645626140921 implements MigrationInterface {
                 winner_login: "dummy3",
                 loser_login: "dummy4",
                 players: [dummy3, dummy4]
+            }),
+        );
+
+        const bahaasgame1 = await queryRunner.manager.save(
+            queryRunner.manager.create<Game>(Game, {
+                winner_score: 5,
+                loser_score: 0,
+                winner_login: "bahaas",
+                loser_login: "dummy4",
+                players: [bahaas, dummy4]
+            }),
+        );
+
+        const bahaasgame2 = await queryRunner.manager.save(
+            queryRunner.manager.create<Game>(Game, {
+                winner_score: 5,
+                loser_score: 3,
+                winner_login: "bahaas",
+                loser_login: "dummy2",
+                players: [dummy2, bahaas]
+            }),
+        );
+
+        const bahaasgame3 = await queryRunner.manager.save(
+            queryRunner.manager.create<Game>(Game, {
+                winner_score: 2,
+                loser_score: 5,
+                winner_login: "dummy3",
+                loser_login: "bahaas",
+                players: [dummy3, bahaas]
+            }),
+        );
+
+        const bahaasgame4 = await queryRunner.manager.save(
+            queryRunner.manager.create<Game>(Game, {
+                winner_score: 5,
+                loser_score: 1,
+                winner_login: "dummy1",
+                loser_login: "bahaas",
+                players: [dummy3, bahaas]
+            }),
+        );
+
+        const bahaasgame5 = await queryRunner.manager.save(
+            queryRunner.manager.create<Game>(Game, {
+                winner_score: 5,
+                loser_score: 4,
+                winner_login: "dummy3",
+                loser_login: "bahaas",
+                players: [dummy3, bahaas]
+            }),
+        );
+
+        const malatiniachievement1 = await queryRunner.manager.save(
+            queryRunner.manager.create<Achievement>(Achievement, {
+                user: malatini,
+                title: "AddFriend"
+            }),
+        );
+
+        const bahaasachievement1 = await queryRunner.manager.save(
+            queryRunner.manager.create<Achievement>(Achievement, {
+                user: bahaas,
+                title: "AddFriend"
+            }),
+        );
+
+        const bahaasachievement2 = await queryRunner.manager.save(
+            queryRunner.manager.create<Achievement>(Achievement, {
+                user: bahaas,
+                title: "FirstGame"
             }),
         );
 

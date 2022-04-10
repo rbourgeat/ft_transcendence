@@ -9,10 +9,11 @@ import { UserEvent } from 'src/user/user.event';
 import { Message } from 'src/chat/message/entity/message.entity';
 import { Participate } from 'src/participate/participate.entity'
 import { UserRelation } from './entity/friend-request.entity';
+import { Achievement } from './entity/achievement.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User, Message, Participate, UsersRepository, UserRelation]),
+    TypeOrmModule.forFeature([User, Message, Participate, UsersRepository, UserRelation, Achievement]),
     MulterModule.register({
       dest: './upload',
     })

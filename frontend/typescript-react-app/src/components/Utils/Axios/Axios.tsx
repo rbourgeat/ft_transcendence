@@ -890,5 +890,28 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
                 console.log(error);
             })
     }
+
+
+    get_api_achievements() {
+        console.log("get achievement via axios request");
+
+        let url = "http://localhost:3000/api/user/achievements/me";
+
+        axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+        axios.defaults.withCredentials = true;
+
+
+        axios.get(url)
+            .then(res => {
+                console.log("Successfully retrieve achievements");
+                console.log(res.data);
+                let arr = res.data.map(element => element.title)
+                return arr;
+            })
+            .catch((error) => {
+                console.log("Error while retrieve achievements");
+                console.log(error);
+            })
+    }
     //TODO: demander un endpoint pour le endpoint pour turn off (et log out ?)
 }

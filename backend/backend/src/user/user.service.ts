@@ -9,17 +9,20 @@ import { UserRelation } from 'src/user/entity/friend-request.entity';
 import { RelationInvitation, RelationStatus } from 'src/user/interface/friend-request.interface';
 import { from, Observable } from 'rxjs';
 import { UserStatus } from 'src/participate/participate.entity';
+import { Achievement } from './entity/achievement.entity';
 
 @Injectable()
 export class UserService {
 	constructor(
 		private readonly userEvent: UserEvent,
 		@InjectRepository(User)
-		private userRepository: Repository<User>,
+		public userRepository: Repository<User>,
 		@InjectRepository(UsersRepository)
 		private usersRepository: UsersRepository,
 		@InjectRepository(UserRelation)
 		private readonly userRelationRepository: Repository<UserRelation>,
+		@InjectRepository(Achievement)
+		private achievementRepository: Repository<Achievement>,
 		//private readonly logger: Logger = new Logger('UserService')
 	) { }
 
@@ -190,11 +193,36 @@ export class UserService {
 		return this.userRelationRepository.findOne({ where: [{ id: invitationId }] });
 	}
 
+
 	/*
 	* update the status of the request only
 	*/
-	async answerToInvitation(statusResponse: RelationStatus, invitationId: number) {
+
+	async answerToInvitation(statusResponse: RelationStatus, invitationId: number, user: User) {
 		await this.userRelationRepository.update(invitationId, { status: statusResponse })
+
+		//achievement check:
+		if (statusResponse == "accepted") {
+			const friendsList = await this.getFriends(user);
+			console.log('my friend list has a length:' + friendsList.length);
+			if (friendsList.length == 1) {
+				console.log(user.login + " will unlocked friend achievement");
+				this.userEvent.achievementFriend(user); //add achievemnt for the user answering
+			}
+
+			const invitation = await this.userRelationRepository.findOne({
+				where: [{ id: invitationId }],
+				relations: ['creator']
+			});
+			console.log('hello');
+			const friend = await this.getUserByLogin(invitation.creator.login);
+			const otherfriendsList = await this.getFriends(friend);
+			console.log('his friend list has a length:' + friendsList.length);
+			if (otherfriendsList.length == 1) {
+				console.log(friend + " will also unlocked friend achievement");
+				this.userEvent.achievementFriend(friend)//add achievement for the user sending
+			}
+		}
 		const friendRequest = await this.getInvitationById(invitationId)
 		return friendRequest;
 	}
@@ -209,6 +237,22 @@ export class UserService {
 		}),
 		);
 	}
+
+
+	async getAchievements(currentUser: User)/*: Observable<Achievement[]>*/ {
+		const list = await this.achievementRepository.find({
+			where: [
+				{ user: currentUser }
+			],
+			relations: ['user']
+		});
+		return list;
+	}
+
+	getAllAchievements() {
+		return this.achievementRepository.find();
+	}
+
 
 	/**
 	 * 1.search for all elemtns of requestRepo where user is creator or receiver
@@ -293,7 +337,7 @@ export class UserService {
 				],
 			});
 			if (inviteFromYou && inviteFromYou.status != 'blocked') {
-				await this.answerToInvitation('blocked', inviteFromYou.id);
+				await this.answerToInvitation('blocked', inviteFromYou.id, creator);
 				return console.log('update the existing relation. you blocked the targeted user invite from you');
 			}
 			else if (inviteFromYou && inviteFromYou.status == 'blocked')
