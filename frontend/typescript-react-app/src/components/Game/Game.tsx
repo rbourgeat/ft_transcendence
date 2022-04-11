@@ -238,11 +238,11 @@ export default function Game() {
 
 	function stop() {
 		console.log("username: ", joueur, "adversaire", adversaire, "score player 1: ", game.player.score, "score player 2: ", game.player.score)
-		if (game.player.score > game.player2.score && joueur && adversaire)
-			socket.emit('gameEnd', joueur + ":" + adversaire + ":" + game.player.score + ":" + game.player2.score);
-		else if (joueur && adversaire)
-			socket.emit('gameEnd', adversaire + ":" + joueur + ":" + game.player2.score + ":" + game.player.score);
-		cancelAnimationFrame(anim);
+		if (game.player.score > game.player2.score && joueur1 && joueur2)
+			socket.emit('gameEnd', joueur1 + ":" + joueur2 + ":" + game.player.score + ":" + game.player2.score);
+		else if (joueur1 && joueur2)
+			socket.emit('gameEnd', joueur2 + ":" + joueur1 + ":" + game.player2.score + ":" + game.player.score);
+		cancelAnimationFrame(anim); 
 		// Set ball and players to the center
 		game.ball.x = canvas.width / 2 - BALL_HEIGHT / 2;
 		game.ball.y = canvas.height / 2 - BALL_HEIGHT / 2;
