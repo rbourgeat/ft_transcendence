@@ -11,6 +11,7 @@ import Badge from "../Dashboard/Badge/Badge"
 import Achievements from "../Achievements/Achievements";
 import {Modal} from "react-bootstrap"
 import Settings from "./Settings/Settings"
+import MatchHistory from '../MatchHistory/MatchHistory';
 
 //TODO: a cleaner ?
 export interface UserfuncProps {
@@ -73,7 +74,6 @@ export default function User(props: UserfuncProps) {
 	function renderImage(login: string) {
 		let ax = new MyAxios(null);
 		let log42 = localStorage.getItem("login42");
-		//console.log("log 42 is ", log42);
 		let haschanged = false;
 		if (login != log42)
 			haschanged = true;
@@ -98,9 +98,13 @@ export default function User(props: UserfuncProps) {
 							<h2 id="user--data">{username}</h2>
 							<div className="col-9 mx-auto text-center" id="input-div">
 								<br />
-								{/*<Achievements login={username}/>*/}
+								<Achievements login={username}/>
+								<br />
 								{/*<Badge />*/}
+								<MatchHistory/>
+								<br/>
 								<Settings username={username} login42={localStorage.getItem("login42")}/>
+								<br />
 								</div>
 							</div>
 							: <p></p>

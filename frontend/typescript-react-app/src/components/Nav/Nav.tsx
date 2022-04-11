@@ -56,7 +56,7 @@ function Nav() {
 
 	return (
 		<div id="nav">
-			<nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+			<nav className="navbar navbar-expand-lg bg-dark">
 				<Link to="/" id="nav--title">PONG</Link>
 				<button className="navbar-toggler" type="button">
 					<span className="navbar-toggler-icon"></span>
@@ -74,30 +74,15 @@ function Nav() {
 							</Link>
 						</li>
 						{/*<li className="nav-item">
-							<Link to="/stats" className="nav-link">
-								<div className='nav-link-text'><p>Stats</p></div>
-							</Link>
-						</li>*/}
-						{/*<li className="nav-item">
-							<Link to="/achievements" className="nav-link">
-								<div className='nav-link-text'><p>Achievements</p></div>
-							</Link>
-						</li>*/}
-						<li className="nav-item">
 							<Link to="/chat" className="nav-link">
 								<div className='nav-link-text'><p>Tests</p></div>
 							</Link>
-						</li>
+						</li>*/}
 						<li className="nav-item">
 							<Link to="/channels" className="nav-link">
 								<div className='nav-link-text'><p>Chat</p></div>
 							</Link>
 						</li>
-						{/*<li className="nav-item">
-							<Link to="/playwatch" className="nav-link">
-								<div className='nav-link-text'><p>Watch</p></div>
-							</Link>
-						</li>*/}
 						<li className="nav-item">
 							<Link to="/user" className="nav-link">
 								<div className='nav-link-text'><p>User</p></div>
@@ -105,7 +90,7 @@ function Nav() {
 						</li>
 					</ul>
 				</div>
-				<button id="logout--button"/*className="disconnect-button"*/type="button" className="btn btn-dark" onClick={disconnect}>Log Out</button>
+				<button id="logout--button" type="button" className="btn btn-dark" onClick={disconnect}>Log Out</button>
 			</nav>
 		</div>
 	);

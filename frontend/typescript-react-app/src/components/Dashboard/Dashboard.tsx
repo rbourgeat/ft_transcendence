@@ -4,6 +4,7 @@ import MatchHistory from '../MatchHistory/MatchHistory';
 import Badge from './Badge/Badge';
 import Footer from "../Footer/Footer"
 
+//TODO; Mahaut : à supprimer
 export default function Dashboard() {
     return (
         <div id="dashboard">

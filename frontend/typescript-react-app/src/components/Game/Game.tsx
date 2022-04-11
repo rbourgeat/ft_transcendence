@@ -7,14 +7,19 @@ import Footer from "../Footer/Footer";
 import GameRules from "../GameRules/GameRules";
 import io from "socket.io-client";
 import axios from "axios";
+import { Form } from 'react-bootstrap'
 
 var adversaire: string;
 var joueur: string;
 let joueur1: string;
 let joueur2: string;
+var isSearching = false;
+// let isActive = true;
 
 export default function Game() {
 	let size = useWindowDimensions();
+	const [isActive, setActive] = React.useState(true);
+	const [gameMode, chanScopeSet] = React.useState("original");
 
 	// socket game
 	const [username, setUsername] = React.useState("");
@@ -33,40 +38,48 @@ export default function Game() {
 				console.log("Error while getting api auth");
 			})
 	}
-	var isSearching = false;
 	var SearchText = "Rechercher une partie"
 
 	let socket = io("http://localhost:3000/game", { query: { username: username } });
+	
 	function sendSearch() {
-		if (username) {
+		if (joueur) {
 			isSearching = isSearching ? false : true;
-			if (isSearching)
+			if (isSearching) {
 				SearchText = "Annuler la recherche"
-			else
+				socket.emit('search', gameMode);
+			}
+			else {
 				SearchText = "Rechercher une partie à nouveau"
+				socket.emit('search', "STOPSEARCH");
+			}
 			document.querySelector('#search-button').textContent = SearchText;
-			socket.emit('search', isSearching);
 		}
 		else
 			document.querySelector('#search-button').textContent = "Impossible de te connecter !"
     }
 
 	socket.on("gameStart", (...args) => {
+		document.querySelector('#victoryMessage').textContent = "";
 		joueur1 = args[0];
 		joueur2 = args[1];
 		console.log("joueur1 = " + joueur1 + " joueur2 = " + joueur2)
 		console.log("adversaire = " + adversaire + " joueur = " + joueur)
 		if (joueur1 != adversaire && joueur1 == joueur) {
+			initParty();
 			adversaire = joueur2;
 			document.querySelector('#joueur1').textContent = joueur1;
 			document.querySelector('#joueur2').textContent = joueur2;
 			play();
+			setActive(false);
 		}
 		else if (joueur2 != adversaire && joueur2 == joueur) {
+			initParty();
 			adversaire = joueur1;
 			document.querySelector('#joueur1').textContent = joueur1;
 			document.querySelector('#joueur2').textContent = joueur2;
 			play();
+			setActive(false);
 		}
 
 	});
@@ -104,8 +117,8 @@ export default function Game() {
 		context.fill();
 	}
 
-	useEffect(() => {
-		getUser();
+	function initParty()
+	{
 		canvas = document.getElementById('canvas');
 		game = {
 			player: {
@@ -127,9 +140,13 @@ export default function Game() {
 			}
 		}
 		draw();
-		// play();
 		canvas.addEventListener('mousemove', playerMove);
 		otherMove();
+	}
+
+	useEffect(() => {
+		getUser();
+		initParty();
     }, []);
 
 	function play() {
@@ -212,13 +229,25 @@ export default function Game() {
 			if (player == game.player) {
 				game.player2.score++;
 				document.querySelector('#player2-score').textContent = game.player2.score;
-				if (game.player2.score >= 5)
+				if (game.player2.score >= 5) {
 					stop();
+					if (joueur1 == joueur)
+						document.querySelector('#victoryMessage').textContent = "Game Over";
+					else
+						document.querySelector('#victoryMessage').textContent = "Victory";
+					clearDataGame();
+				}
 			} else {
 				game.player.score++;
 				document.querySelector('#player-score').textContent = game.player.score;
-				if (game.player.score >= 5)
+				if (game.player.score >= 5) {
 					stop();
+					if (joueur1 == joueur)
+						document.querySelector('#victoryMessage').textContent = "Victory";
+					else
+						document.querySelector('#victoryMessage').textContent = "Game Over";
+					clearDataGame();
+				}
 			}
 		} else {
 			// Increase speed and change direction
@@ -238,9 +267,9 @@ export default function Game() {
 
 	function stop() {
 		console.log("username: ", joueur, "adversaire", adversaire, "score player 1: ", game.player.score, "score player 2: ", game.player.score)
-		if (game.player.score > game.player2.score && joueur1 && joueur2)
+		if (game.player.score > game.player2.score && joueur1 && joueur2 && joueur1 == joueur)
 			socket.emit('gameEnd', joueur1 + ":" + joueur2 + ":" + game.player.score + ":" + game.player2.score);
-		else if (joueur1 && joueur2)
+		if (game.player.score < game.player2.score && joueur1 && joueur2 && joueur2 == joueur)
 			socket.emit('gameEnd', joueur2 + ":" + joueur1 + ":" + game.player2.score + ":" + game.player.score);
 		cancelAnimationFrame(anim); 
 		// Set ball and players to the center
@@ -255,12 +284,36 @@ export default function Game() {
 		// draw();
 	}
 
+	function clearDataGame()
+	{
+		joueur1 = null;
+		joueur2 = null;
+		game = null;
+		adversaire = null;
+		anim = null;
+		isSearching = false;
+		setActive(true);
+		document.querySelector('#search-button').textContent = "Refaire une partie";
+	}
+
 	return (
 		<div id="game-root">
 			<Nav />
 			<div className="container">
 			<div className="row d-flex justify-content-center text-center">
-					<button type="button" className="btn btn-outline-dark" id="search-button" onClick={() => sendSearch()}>{SearchText}</button>
+					<Form>
+						<Form.Group>
+							<Form.Select aria-label="Modes de jeux:" onChange={e => chanScopeSet(e.target.value)}>
+									<option>Modes de jeux:</option>
+									<option selected={true} value="original">Original (1972)</option>
+									<option value="bigball">Big Ball (Facile)</option>
+									<option value="blitz">Blitz (Balle Rapide)</option>
+									<option value="slow">Slow (Balle Lente)</option>
+							</Form.Select>
+						</Form.Group>
+					</Form>
+					{isActive ? <button type="button" className="btn btn-outline-dark" id="search-button" onClick={() => sendSearch()}>{SearchText}</button> : ""}
+					<p className='text' id="victoryMessage"></p>
 					<main role="main">
 						<p className="canvas-score" id="scores">
 							<em className="canvas-score" id="joueur1"></em>

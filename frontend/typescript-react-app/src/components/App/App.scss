@@ -8,7 +8,6 @@
 .home,
 .reports,
 .products {
-  //display: flex;
   align-items: center;
   justify-content: center;
   font-size: 3rem;
@@ -20,10 +19,6 @@ h1, h2, h3 {
   color: black;
   opacity: 1;
 }
-
-//.text {
-//  color: black;
-//}
 
 ul {
   list-style: none;
@@ -53,6 +48,13 @@ input:hover {
 //   color: #fff;
 // }
 
+// button:hover {
+//   // background-color: #4d4855;
+//   // background-image: linear-gradient(147deg, #4d4855 0%, #000000 74%);
+//   // border: 1px solid white;
+//   // color: white;
+// }
+
 input{
   font-size: variables.$small-font-size;
   margin-bottom: 10px;
@@ -71,12 +73,6 @@ button {
   font-size: variables.$mini-font-size;
 }
 
-// button:hover {
-//   // background-color: #4d4855;
-//   // background-image: linear-gradient(147deg, #4d4855 0%, #000000 74%);
-//   // border: 1px solid white;
-//   // color: white;
-// }
 
 .App {
   width: 100%;

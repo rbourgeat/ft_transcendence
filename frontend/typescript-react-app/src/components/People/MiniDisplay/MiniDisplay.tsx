@@ -62,7 +62,6 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 		}
 
 		let url = "http://localhost:3000/api/user/".concat(avatar).concat("/avatar/");
-
 		let res = axios.get(url, { responseType: 'blob' })
 			.then(res => {
 				let myImage: HTMLImageElement = document.querySelector("#".concat(props.login));

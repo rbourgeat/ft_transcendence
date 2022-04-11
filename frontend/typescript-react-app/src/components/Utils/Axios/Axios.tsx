@@ -701,19 +701,19 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
 
         let login42 = localStorage.getItem("login42");
 
-        console.log("has changed is " + haschanged);
+        //console.log("has changed is " + haschanged);
         if (haschanged == false)
             imageUser42 = "https://cdn.intra.42.fr/users/".concat(login).concat(".jpg")
         else
             imageUser42 = "https://cdn.intra.42.fr/users/".concat(login42).concat(".jpg")
-        console.log("image is " + imageUser42);
-        if (imageCode.startsWith("http")) {
+        //console.log("image is " + imageUser42);
+        if (imageCode.startsWith("http"))
+        {
             let myImage: HTMLImageElement = document.querySelector("#".concat(login));
             if (is42)
                 myImage.src = imageUser42;
             else
                 myImage.src = "https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg";
-
             return (<img className="profile--pic" src={myImage.src} alt={imageName} height="80" width="80" id={login} />);
         }
 
@@ -750,8 +750,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
         //tests
         login42 != "" ? chosenLogin = login : chosenLogin = login;
         login42 != "" ? is42 = true : is42 = false;
-
-        console.log("login is " + login);
+        //console.log("login is " + login);
 
         let imageCode = null;
         let imageName = "alt-photo";
@@ -760,7 +759,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
         let res = axios.get(url)
             .then(res => {
                 imageCode = res.data.avatar;
-                console.log("chosenLogin is " + chosenLogin);
+                //console.log("chosenLogin is " + chosenLogin);
                 return (this.getImage(imageCode, chosenLogin, is42, haschanged));
             })
             .catch(error => {

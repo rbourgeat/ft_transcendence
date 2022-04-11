@@ -4,8 +4,10 @@
   background-color: white !important;
   background-image: none !important;
   border-radius: variables.$border-radius;
-  //padding-top: 5px !important;
-  padding: 50px !important;
+  padding-right: 50px !important;
+  padding-left: 50px !important;
+  padding-bottom: 50px !important;
+  padding-top: 10px !important;
 }
 
 #auth-btn-1,
@@ -26,8 +28,7 @@
 
 #se-connecter,
 #sinscrire, #jouer {
-  margin-top: 10px !important;
-  //margin-bottom: 5px !important;
+  margin-top: 30px !important;
   color: black !important;
 }
 
@@ -39,9 +40,5 @@
 
 #jouer {
   text-align: center !important;
-  margin-bottom: 12px !important;
+  margin-bottom: 5px !important;
 }
-
-//#auth-container > label {
-//  text-align: left !important;
-//}
