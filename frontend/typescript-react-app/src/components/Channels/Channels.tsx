@@ -10,6 +10,7 @@ import ToastAlerts from '../Utils/ToastAlerts/ToastAlerts';
 import { ToastContainer, toast } from 'react-toastify';
 import { io } from "socket.io-client";
 import ListChannels from './ListChannels/ListChannels';
+import ListPubChannels from './ListChannels/ListPubChannels';
 //import React, {useState, useEffect} from "react";
 
 
@@ -23,18 +24,6 @@ interface ChatProps {
 
 export default function Channels(props: ChatProps) {
 	const calledOnce = React.useRef(false);
-
-	function createChat()
-	{
-		let ax = new MyAxios(null);
-		let res = ax.post_api_chat("channel1", true, "password");
-	}
-
-	function listChats()
-	{
-		let ax = new MyAxios(null);
-		let res = ax.get_api_chat();
-	}
 
 	useEffect(() => {
         if (calledOnce.current) {
@@ -62,6 +51,7 @@ export default function Channels(props: ChatProps) {
 						<CreateChan endpoint="http://localhost:3000/api/chat" action="Create" />
 						<CreateChan endpoint="http://localhost:3000/api/chat/join" action="Join" />
 						<ListChannels />
+						<ListPubChannels />
 					</div>
 					<div className="chat--messages">
 						<ListDiscussions />
