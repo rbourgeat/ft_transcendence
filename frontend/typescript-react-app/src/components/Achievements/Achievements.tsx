@@ -31,8 +31,8 @@ export default function Achievement(props: AchievementsProps) {
 
         axios.get(url)
             .then(res => {
-                console.log("Successfully retrieve achievements");
-                console.log(res.data);
+                //console.log("Successfully retrieve achievements");
+                //console.log(res.data);
                 setMyArray(res.data.map(element => element.title))
 
             })

@@ -9,6 +9,8 @@ import EditUsernameModal from "./editUsername/EditUsername";
 import Dashboard from '../Dashboard/Dashboard';
 import Badge from "../Dashboard/Badge/Badge"
 import Achievements from "../Achievements/Achievements";
+//import {Modal} from "react-bootstrap"
+import Modal from "react-modal";
 
 export interface UserfuncProps {
 	username?: string,
@@ -24,7 +26,7 @@ export interface UserfuncProps {
 
 export default function User(props: UserfuncProps) {
 	const [qrcode, setqrCode] = useState("");
-	const [modalShowUsername, setModalShowUsername] = React.useState(false);
+	//const [modalShowUsername, setModalShowUsername] = React.useState(false);
 	const [username, setUsername] = React.useState("");
 	const [verifCode, setverifCode] = React.useState("");
 	const [activated2fa, setActivated2fa] = React.useState(true);
@@ -44,7 +46,7 @@ export default function User(props: UserfuncProps) {
 
 	function turnoff2FA()
 	{
-		console.log("Turning off 2FA");
+		//console.log("Turning off 2FA");
 
 		let url = "http://localhost:3000/api/2fa/turn-off";
 
@@ -58,13 +60,13 @@ export default function User(props: UserfuncProps) {
 
 		axios.post(url)
             .then(res => {
-                console.log("successfully turned on!");
+                //console.log("successfully turned on!");
 				toast.notifySuccess('😇 2FA successfully turned-off !');
 				localStorage.setItem("2fa", "false");
 				setActivated2fa(false);
             })
             .catch((error) => {
-                console.log("Catched error on post api chat.");
+                //console.log("Catched error on post api chat.");
                 //console.log(error);
 				toast.notifyDanger('🥲 Error while turnoff on 2FA.');
             })
@@ -73,7 +75,7 @@ export default function User(props: UserfuncProps) {
 	//TODO: modifier le nom pour que ce soit plus explicite ? activate 2fa ?
 	const handle2FA = (event: any) => {
 		event.preventDefault();
-		console.log("Button clicked !");
+		//console.log("Button clicked !");
 		manageQR();
 		if (activated2fa == true)
 			turnoff2FA();
@@ -94,30 +96,31 @@ export default function User(props: UserfuncProps) {
 		let bod = {
 			twoFactorAuthenticationCode: number
 		}
-		console.log("Verif code is " + verifCode);
-		console.log("number is " + number);
+
+		//console.log("Verif code is " + verifCode);
+		//console.log("number is " + number);
 		let toast = new ToastAlerts(null);
 
 		if (number == "")
 		{
-			console.log("Error, the verif code can't be true");
+			//console.log("Error, the verif code can't be true");
 			toast.notifyDanger('🥲 Error while turning on 2FA. Your verif code is wrong or the QR Code is outdated.');
 			return ;
 		}
 
 		let url = "http://localhost:3000/api/2fa/turn-on";
-		console.log("Verif code is " + number);
+		//console.log("Verif code is " + number);
 
 		axios.post(url, bod)
             .then(res => {
-                console.log("successfully turned on!");
+                //console.log("successfully turned on!");
 				toast.notifySuccess('✨ 2FA successfully turned-on !');
 				localStorage.setItem("2fa", "true");
 				localStorage.setItem("2faverif", "true");
 				setActivated2fa(true);
             })
             .catch((error) => {
-                console.log("Catched error on post api chat.");
+                //console.log("Catched error on post api chat.");
 				toast.notifyDanger('🥲 Error while turning on 2FA. Your verif code is wrong or the QR Code is outdated.');
             })
 		clearInput();
@@ -149,7 +152,7 @@ export default function User(props: UserfuncProps) {
 
 		//Check si personne login
 		let log = localStorage.getItem("loggedIn");
-		console.log("Logged is " + log);
+		//console.log("Logged is " + log);
 		setLogged(log == "true" ? true : false);
 
 
@@ -167,7 +170,7 @@ export default function User(props: UserfuncProps) {
 			.then(res => {
 				username = res.data.login;
 				setUsername(username);
-				console.log("2fa activated is (get) : " + res.data.isTwoFactorAuthenticationEnabled);
+				//console.log("2fa activated is (get) : " + res.data.isTwoFactorAuthenticationEnabled);
 				setActivated2fa(res.data.isTwoFactorAuthenticationEnabled)
 			})
 			.catch((err) => {
@@ -187,6 +190,44 @@ export default function User(props: UserfuncProps) {
 		return (ax.render_avatar(login));
 	}
 
+	//MODALS
+	//const [show, setShow] = useState(false);
+	//const handleClose = () => setShow(false);
+	//const handleShow = () => setShow(true);
+	const [modalIsOpen, setIsOpen] = React.useState(false);
+
+	//function changeUsername()
+	//{
+	//	console.log("Changing username");
+	//	handleShow();
+	//}
+
+	function openModal() {
+		setIsOpen(true);
+	}
+
+	//const customStyles = {
+	//	content: {
+	//	top: '50%',
+	//	left: '50%',
+	//	right: 'auto',
+	//	bottom: 'auto',
+	//	marginRight: '-50%',
+	//	transform: 'translate(-50%, -50%)',
+	//	},
+	//};
+
+	let subtitle;
+
+	function closeModal() {
+		setIsOpen(false);
+	}
+
+	function afterOpenModal() {
+		// references are now sync'd and can be accessed.
+		subtitle.style.color = '#f00';
+	}
+
 	return (
 		<div id="user--div">
 			<Nav />
@@ -202,12 +243,16 @@ export default function User(props: UserfuncProps) {
 							<br />
 							<div className="col-9 mx-auto text-center" id="input-div">
 								<h2 id="user--data">{username}</h2>
-								<button id="change--username" className="btn btn-outline-light" onClick={() => { console.log("clicked"); setModalShowUsername(true) }}>
+								<button id="change--username" className="btn btn-outline-light" onClick={openModal}>
 									change username</button>
-								<EditUsernameModal username={username} show={modalShowUsername} onHide={() => {
-									setModalShowUsername(false)
-								}} />
-								{/* TODO: a reprendre */}
+								{/*<EditUsernameModal username={username}/>*/}
+								<Modal
+									isOpen={modalIsOpen}
+									onAfterOpen={afterOpenModal}
+									onRequestClose={closeModal}
+									//style={customStyles}
+									contentLabel="Example Modal"
+								/>
 								<br />
 								<Achievements login={username}/>
 								<Badge />

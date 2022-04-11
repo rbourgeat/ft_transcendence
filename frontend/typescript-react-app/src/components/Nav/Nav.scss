@@ -8,25 +8,32 @@
   padding: 10px;
   padding-left: 20px;
   //   opacity: 0.36 !important;
-	.disconnect-button {
-		padding: 1rem 0.5rem;
-		margin-right: 1rem;
-		margin-bottom: 0.7rem;
-	}
+	//.disconnect-button {
+	//	padding: 1rem 0.5rem;
+	//	margin-right: 1rem;
+	//	margin-bottom: 0.7rem;
+	//}
+}
+
+#logout--button {
+	border: 0.1rem solid white !important;
+	margin-top: 0px !important;
+	font-family: variables.$basic-font;
+	font-size: 12px !important;
 }
 
 #nav--title {
-  padding-right: 30px;
-  font-size: 28px;
-  color: variables.$white;
-  text-decoration: none;
+	padding-right: 30px;
+	font-size: 28px;
+	color: variables.$white;
+	text-decoration: none;
 }
 
 .nav-link-text {
 	display: flex;
 	flex-flow: row nowrap;
 	justify-content: space-between;
-	align-item: flex-end;
+	//align-item: flex-end;
 
 	p {
 		margin: 0 1rem 0 0;

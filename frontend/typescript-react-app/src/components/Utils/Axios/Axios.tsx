@@ -705,8 +705,8 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
         let imageUser42 = "https://cdn.intra.42.fr/users/".concat(login).concat(".jpg")
         //console.log('imageUSer42: ' + imageUser42);
         if (imageCode.startsWith("http")) {
-            console.log("image starts with http");
-            console.log("is logged in is " + is42);
+            //console.log("image starts with http");
+            //console.log("is logged in is " + is42);
             //console.log('should display 42');
             let myImage: HTMLImageElement = document.querySelector("#".concat(login));
             // var objectURL = URL.createObjectURL(imageUser42);
@@ -754,7 +754,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
         let res = axios.get(url)
             .then(res => {
                 imageCode = res.data.avatar;
-                console.log(res);
+                //console.log(res);
                 let is42;
                 if (res.data.login42 == null)
                     is42 = false;

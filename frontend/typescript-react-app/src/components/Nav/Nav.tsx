@@ -105,7 +105,7 @@ function Nav() {
 						</li>
 					</ul>
 				</div>
-				<button className="disconnect-button" onClick={disconnect}>Disconnect</button>
+				<button id="logout--button"/*className="disconnect-button"*/type="button" className="btn btn-dark" onClick={disconnect}>Log Out</button>
 			</nav>
 		</div>
 	);
