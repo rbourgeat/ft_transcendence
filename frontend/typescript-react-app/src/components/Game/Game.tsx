@@ -262,7 +262,10 @@ export default function Game() {
 			<div className="row d-flex justify-content-center text-center">
 					<button type="button" className="btn btn-outline-dark" id="search-button" onClick={() => sendSearch()}>{SearchText}</button>
 					<main role="main">
-						<p id="scores"><em id="joueur1"></em> : <em id="player-score">0</em> - <em id="joueur2"></em> : <em id="player2-score">0</em></p>
+						<p className="canvas-score" id="scores">
+							<em className="canvas-score" id="joueur1"></em>
+							<span className="canvas-score">:</span>
+							<em className="canvas-score" id="player-score">0</em> - <em id="joueur2"></em><span>:</span><em className="canvas-score" id="player2-score">0</em></p>
 						<canvas id="canvas" width={size.width / 1.5} height={size.height / 1.25}></canvas>
 					</main>
 					{/*<GameRules />*/}
