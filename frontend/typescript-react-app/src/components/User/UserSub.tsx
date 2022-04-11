@@ -98,9 +98,11 @@ export default function User(props: UserfuncProps) {
 							<h2 id="user--data">{username}</h2>
 							<div className="col-9 mx-auto text-center" id="input-div">
 								<br />
-								{/*<Achievements login={username}/>*/}
+								<Achievements login={username}/>
+								<br />
 								{/*<Badge />*/}
 								<Settings username={username} login42={localStorage.getItem("login42")}/>
+								<br />
 								</div>
 							</div>
 							: <p></p>

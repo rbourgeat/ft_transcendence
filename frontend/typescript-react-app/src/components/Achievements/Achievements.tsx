@@ -3,7 +3,7 @@ import Nav from "../Nav/Nav";
 import Footer from "../Footer/Footer";
 import React, { useEffect } from "react";
 
-//icons
+//icons - bug avec les images ? elles ne s'affichent pas toujours !
 import { MdLocalFireDepartment } from "react-icons/md";
 import { FaCat, FaUserFriends } from "react-icons/fa";
 import { GiPowerButton, GiPeaceDove } from "react-icons/gi";
@@ -24,12 +24,11 @@ export default function Achievement(props: AchievementsProps) {
     const [myArray, setMyArray] = React.useState([]);
 
     async function getAchievements() {
-        let url = "http://localhost:3000/api/user/achievements/me";
+        let url = "http://localhost:3000/api/user/achievements/".concat(props.login);
 
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
         axios.defaults.withCredentials = true;
 
-        //TODO: corriger erreur achievements
         axios.get(url)
             .then(res => {
                 console.log("Succesfully retrieved achievements");
@@ -75,7 +74,7 @@ export default function Achievement(props: AchievementsProps) {
                                     <div className="card-body">
                                         <h5 className="card-title">Let's negotiate</h5>
                                         <p className="card-text">Admin of a channel</p>
-                                        <GiPeaceDove style={style} />
+                                        {/*<GiPeaceDove style={style} />*/}
                                     </div>
                                 </div>
                             </div>
@@ -87,7 +86,7 @@ export default function Achievement(props: AchievementsProps) {
                                         <h5 className="card-title">Good player</h5>
                                         <p className="card-text">Win 5 games</p>
                                         {/*<svg className="test-icon">{<MdLocalFireDepartment />}</svg>*/}
-                                        <MdLocalFireDepartment style={style} />
+                                        {/*<MdLocalFireDepartment style={style} />*/}
                                     </div>
                                 </div>
                             </div>
@@ -99,7 +98,7 @@ export default function Achievement(props: AchievementsProps) {
                                     <h5 className="card-title">I'm a g4m3r</h5>
                                     <p className="card-text">Play 1000 games</p>
                                     {/*<svg className="test-icon">{<GrGamepad />}</svg>*/}
-                                    <GrGamepad style={style} />
+                                    {/*<GrGamepad style={style} />*/}
                                 </div>
                             </div>
                             </div>
@@ -114,7 +113,7 @@ export default function Achievement(props: AchievementsProps) {
                                     <div className="card-body">
                                         <h5 className="card-title">This is how I met</h5>
                                         <p className="card-text">Have one friend</p>
-                                        <FaUserFriends style={style} />
+                                        {/*<FaUserFriends style={style} />*/}
                                     </div>
                                 </div>
                             </div>
@@ -126,7 +125,7 @@ export default function Achievement(props: AchievementsProps) {
                                         <h5 className="card-title">I am not a noob</h5>
                                         <p className="card-text">Play your first game</p>
                                         {/*<svg className="test-icon">{<GiPowerButton />}</svg>*/}
-                                        <GiPowerButton style={style} />
+                                        {/*<GiPowerButton style={style} />*/}
                                     </div>
                                 </div>
                             </div>
@@ -138,7 +137,7 @@ export default function Achievement(props: AchievementsProps) {
                                         <h5 className="card-title">Misterious reward</h5>
                                         <p className="card-text">????????????????</p>
                                         {/*<svg className="test-icon">{<FaCat />}</svg>*/}
-                                        <FaCat style={style} />
+                                        {/*<FaCat style={style} />*/}
                                     </div>
                                 </div>
                             </div>
