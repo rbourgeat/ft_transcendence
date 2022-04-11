@@ -17,6 +17,12 @@
 
 #chat--container > * {
 	color: black;
+	.chat-channel-menu {
+		background: white;	
+		margin-right: 2rem;
+		border-radius: variables.$border-radius;
+		width: 30%;
+	}
 }
 
 .chat-buttons {
