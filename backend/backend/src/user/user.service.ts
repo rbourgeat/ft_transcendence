@@ -249,8 +249,15 @@ export class UserService {
 		return list;
 	}
 
-	getAllAchievements() {
-		return this.achievementRepository.find();
+	async getAchievementsOf(login: string)/*: Observable<Achievement[]>*/ {
+		const user = await this.getUserByLogin(login);
+		const list = await this.achievementRepository.find({
+			where: [
+				{ user: user }
+			],
+			relations: ['user']
+		});
+		return list;
 	}
 
 

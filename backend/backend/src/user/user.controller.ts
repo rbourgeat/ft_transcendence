@@ -170,20 +170,22 @@ export class UserController {
         return this.userService.getBlockedUsers(req.user);
     }
 
+    /*
     @ApiOperation({ summary: 'Returns list of achievements [jwt-protected]' })
     @UseGuards(JwtAuthenticationGuard)
     @Get('achievements/me')
-    getAchievements(@Request() req)/*: Observable<Achievement[]>*/ {
+    getAchievements(@Request() req) {
         console.log("test back controller get achievements");
         return this.userService.getAchievements(req.user);
     }
+    */
 
-    @ApiOperation({ summary: 'Returns list of achievements [jwt-protected]' })
+    @ApiOperation({ summary: 'Returns list of achievements of a specific user [jwt-protected]' })
     @UseGuards(JwtAuthenticationGuard)
-    @Get('achievements/ofeveryone')
-    getAllAchievements(@Request() req)/*: Observable<Achievement[]>*/ {
+    @Get('achievements/:login')
+    getAchievementsOf(@Param('login') login: string)/*: Observable<Achievement[]>*/ {
         //console.log("test back controller get achievements");
-        console.log('in all' + req.user);
-        return this.userService.getAllAchievements();
+        console.log('get specific achievement of user' + login);
+        return this.userService.getAchievementsOf(login);
     }
 }
