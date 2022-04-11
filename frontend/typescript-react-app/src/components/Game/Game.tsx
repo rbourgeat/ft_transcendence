@@ -209,7 +209,7 @@ export default function Game() {
 				game.player.y = mouseLocation - PLAYER_HEIGHT / 2;
 			}
 			if (adversaire)
-				socket.emit('playerMove', joueur + ":" + game.player.y);
+				socket.emit('playerMove', joueur + ":" + game.player.y + ":" + adversaire);
 		} else if (joueur == joueur2) {
 			game.player2.y = mouseLocation - PLAYER_HEIGHT / 2;
 			if (mouseLocation < PLAYER_HEIGHT / 2) {
@@ -220,7 +220,7 @@ export default function Game() {
 				game.player2.y = mouseLocation - PLAYER_HEIGHT / 2;
 			}
 			if (adversaire)
-				socket.emit('playerMove', joueur + ":" + game.player2.y);
+				socket.emit('playerMove', joueur + ":" + game.player2.y + ":" + adversaire);
 		}
 	}
 

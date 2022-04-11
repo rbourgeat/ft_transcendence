@@ -69,6 +69,11 @@ function Nav() {
 							</Link>
 						</li>
 						<li className="nav-item">
+							<Link to="/live" className="nav-link">
+								<div className='nav-link-text'><p>Live</p></div>
+							</Link>
+						</li>
+						<li className="nav-item">
 							<Link to="/people" className="nav-link">
 								<div className='nav-link-text'><p>People</p></div>
 							</Link>
