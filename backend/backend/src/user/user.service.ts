@@ -317,7 +317,6 @@ export class UserService {
 	 * 3. return the research in userRepo with the friends id list
 	 */
 	async getFriends(currentUser: User) {
-		console.log('test');
 		let list = await this.userRelationRepository.find({
 			where: [
 				{ creator: currentUser, status: 'accepted' },

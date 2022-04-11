@@ -153,6 +153,27 @@ export class UserMigration1645626140921 implements MigrationInterface {
             }),
         );
 
+        const channel2 = await queryRunner.manager.save(
+            queryRunner.manager.create<Chat>(Chat, {
+                name: "NotDummyChannel",
+                public: true,
+            }),
+        );
+
+        const bahaasparticipate1 = await queryRunner.manager.save(
+            queryRunner.manager.create<Participate>(Participate, {
+                user: bahaas,
+                chat: channel1,
+            }),
+        );
+
+        const bahaasparticipate2 = await queryRunner.manager.save(
+            queryRunner.manager.create<Participate>(Participate, {
+                user: bahaas,
+                chat: channel2,
+            }),
+        );
+
         const participate1 = await queryRunner.manager.save(
             queryRunner.manager.create<Participate>(Participate, {
                 user: dummy1,

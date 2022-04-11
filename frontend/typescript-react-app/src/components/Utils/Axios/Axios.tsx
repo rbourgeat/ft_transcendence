@@ -467,6 +467,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     post_api_user_relation_sendInvation_id(login: string) {
         let url = "http://localhost:3000/api/user/relation/sendInvitation/".concat(login);
 
+        let toast = new ToastAlerts(null);
         const body = {
             receiverLogin: login
         }
@@ -476,10 +477,12 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
 
         let res = axios.post(url, body)
             .then(res => {
+                toast.notifySuccess("You invited that user")
                 console.log(res);
                 console.log("Succesfully sent invitation !");
             })
             .catch((error) => {
+                toast.notifyDanger("Your invite failed")
                 console.log(error);
                 console.log("Error while sending invitation");
             })
