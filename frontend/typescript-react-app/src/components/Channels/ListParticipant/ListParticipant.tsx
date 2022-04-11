@@ -24,19 +24,31 @@ export default function ListParticipant()
 	const [chanPassword, chanPasswordSet] = React.useState("");
 
 	const createChannel = () => {
-		axios.post('http://localhost:3000/api/chat', {
-			  "password": chanPassword,
+		if (chanScope === "public") {
+			axios.post('http://localhost:3000/api/chat', {
 				"public": chanScope === "public" ? true : false,
-			  "name": chanName 
-		})
-		.then(function (response) {
-			console.log(response);
-			handleClose;
-		})
-		.catch(function (error) {
-			console.log(error);
-		});
-		handleClose;
+				"name": chanName 
+			})
+				.then(function (response) {
+					console.log(response);
+				})
+				.catch(function (error) {
+					console.log(error);
+				});
+		}
+		else {
+			axios.post('http://localhost:3000/api/chat', {
+				"password": chanScope === "public" ? "" : chanPassword,
+				"public": chanScope === "public" ? true : false,
+				"name": chanName 
+			})
+				.then(function (response) {
+					console.log(response);
+				})
+				.catch(function (error) {
+					console.log(error);
+				});
+		}
 	}
 
 	return (
@@ -62,8 +74,7 @@ export default function ListParticipant()
 						<Modal.Body>
 							<Form>
 								<Form.Group>
-									<Form.Select aria-label="Channel visibility" onChange={e => chanScopeSet(e.target.value)}>
-										<option>Channel visibility</option>
+									<Form.Select aria-label="Channel visibility" onChange={e => chanScopeSet(e.target.value)} defaultValue="public">
 										<option value="public">public</option>
 										<option value="private">private</option>
 										<option value="protected">protected</option>
@@ -92,7 +103,7 @@ export default function ListParticipant()
 							<Button variant="secondary" onClick={handleClose}>
 								Close
 							</Button>
-							<Button variant="primary" type="submit" onClick={() => {handleClose; createChannel}}>
+							<Button variant="primary" type="submit" onClick={createChannel}>
 								Create 
 							</Button>
 						</Modal.Footer>
