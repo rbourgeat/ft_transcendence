@@ -1,6 +1,6 @@
 import { ApiBody, ApiConflictResponse, ApiConsumes, ApiOkResponse, ApiOperation, ApiParam, ApiQuery, ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger'
-import { Req, Body, Controller, Delete, Get, Param, Patch, Post, UseInterceptors, UploadedFile } from '@nestjs/common';
-
+import { Request, Req, Body, Controller, Delete, Get, Param, Patch, Post, UseInterceptors, UploadedFile, UseGuards } from '@nestjs/common';
+import JwtAuthenticationGuard from 'src/auth/guard/jwt-authentication.guard';
 import { GameService } from 'src/game/game.service';
 import { CreateGameDto } from 'src/game/dto/game.dto';
 
@@ -16,6 +16,14 @@ export class GameController {
     @Get()
     getAllGames() {
         return this.gameService.getAllGames();
+    }
+
+    @ApiOperation({ summary: 'Returns game history specific user [jwt-protected]' })
+    @UseGuards(JwtAuthenticationGuard)
+    @Get(':login')
+    getGames(@Param('login') login: string, @Request() reqq) {
+        console.log('get game history of user' + login);
+        return this.gameService.getGames(login);
     }
 
     /**

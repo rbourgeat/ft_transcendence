@@ -55,11 +55,6 @@ export class User {
     @OneToMany(() => Participate, (participate: Participate) => participate.user, { eager: true })
     public participate: Participate[];
 
-    /*
-    @OneToMany(() => Game, (game: Game) => game.user, { eager: true })
-    public game: Participate[];
-    */
-
     @ManyToMany(() => Game, (game) => game.players)
     @JoinTable()
     games: Game[]
