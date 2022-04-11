@@ -168,23 +168,23 @@ export class UserController {
 
     @ApiOperation({ summary: 'Remove someone as friend [jwt-protected]' })
     @UseGuards(JwtAuthenticationGuard)
-    @Delete('relation/remove/:receiverLogin')
-    removeFriend(@Param('receiverLogin') receiverLogin: string, @Request() req) {
-        return this.userService.removeFriend(receiverLogin, req.user);
+    @Delete('relation/remove/:login')
+    removeFriend(@Param('login') login: string, @Request() req) {
+        return this.userService.removeFriend(login, req.user);
     }
 
     @ApiOperation({ summary: 'Block a user [jwt-protected]' })
     @UseGuards(JwtAuthenticationGuard)
-    @Post('relation/block/:receiverLogin')
-    blockUser(@Param('receiverLogin') receiverLogin: string, @Request() req) {
-        return this.userService.blockUser(receiverLogin, req.user);
+    @Post('relation/block/:login')
+    blockUser(@Param('login') login: string, @Request() req) {
+        return this.userService.blockUser(login, req.user);
     }
 
     @ApiOperation({ summary: 'Unblock a user [jwt-protected]' })
     @UseGuards(JwtAuthenticationGuard)
-    @Delete('relation/unblock/:receiverId')
-    unblockUser(@Param('receiverId') receiverId: number, @Request() req) {
-        return this.userService.unblockUser(receiverId, req.user);
+    @Delete('relation/unblock/:login')
+    unblockUser(@Param('login') login: string, @Request() req) {
+        return this.userService.unblockUser(login, req.user);
     }
 
     @ApiOperation({ summary: 'Returns list of blocked users [jwt-protected]' })

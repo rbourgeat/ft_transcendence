@@ -368,8 +368,8 @@ export class UserService {
 		await this.userRelationRepository.delete({ receiver: userToRemove, creator: currentUser });
 	}
 */
-	async removeFriend(userToRemoveId: string, currentUser: User) {
-		const userToRemove = await this.getUserByLogin(userToRemoveId);
+	async removeFriend(login: string, currentUser: User) {
+		const userToRemove = await this.getUserByLogin(login);
 		await this.userRelationRepository.delete({ receiver: currentUser, creator: userToRemove });
 		await this.userRelationRepository.delete({ receiver: userToRemove, creator: currentUser });
 	}
@@ -377,19 +377,18 @@ export class UserService {
 	/**
 	 * compared to removeFriend, delete only the relation from the person requesting it.
 	 */
-	async unblockUser(userToRemoveId: number, currentUser: User) {
-		const userToRemove = await this.findUserById(userToRemoveId);
+	async unblockUser(login: string, currentUser: User) {
+		const userToRemove = await this.getUserByLogin(login);
 		await this.userRelationRepository.delete({ receiver: userToRemove, creator: currentUser, status: 'blocked' });
 	}
 
 	/**
 	* 1.block yourself / 2. user not existing / 3. user already blocked / 4. update if relation already existing
 	*/
-	async blockUser(reiceverLogin: string, creator: User) {
-		/*
-		if (reiceverLogin == creator.login)
+	async blockUser(login: string, creator: User) {
+		if (login == creator.login)
 			return console.log('It is not possible to block yourself!');
-		const receiver = await this.getUserByLogin(reiceverLogin);
+		const receiver = await this.getUserByLogin(login);
 		if (!receiver)
 			return console.log('user not found');
 		const existing_invitation = await this.hasExistingRelation(creator, receiver)
@@ -401,7 +400,8 @@ export class UserService {
 				],
 			});
 			if (inviteFromYou && inviteFromYou.status != 'blocked') {
-				await this.answerToInvitation('blocked', inviteFromYou.id, creator);
+				//await this.answerToInvitation('blocked', inviteFromYou.id, creator);
+				await this.answerToInvitation('blocked', creator.login, receiver);
 				return console.log('update the existing relation. you blocked the targeted user invite from you');
 			}
 			else if (inviteFromYou && inviteFromYou.status == 'blocked')
@@ -415,7 +415,7 @@ export class UserService {
 			}
 		);
 		this.userRelationRepository.save(newRelation);
-		*/
+
 	}
 
 }

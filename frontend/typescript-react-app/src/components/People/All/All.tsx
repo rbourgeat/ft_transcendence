@@ -17,7 +17,7 @@ export interface InputWrapperProps {
 
 export default function All(props: InputWrapperProps) {
 	const [users, setUsers] = React.useState([]);
-	const [load, setLoad] = React.useState(false);
+	const [load, setLoad] = React.useState(true);
 	const [count, setCount] = useState(0);
 
 	const calledOnce = React.useRef(false);
@@ -43,11 +43,13 @@ export default function All(props: InputWrapperProps) {
 	}
 
 	useEffect(() => {
+
 		if (calledOnce.current) {
 			return;
 		}
 		renderUsers();
 		calledOnce.current = true;
+
 	}, []);
 
 	return (
