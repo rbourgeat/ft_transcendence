@@ -238,11 +238,11 @@ export default function Game() {
 
 	function stop() {
 		console.log("username: ", joueur, "adversaire", adversaire, "score player 1: ", game.player.score, "score player 2: ", game.player.score)
-		if (game.player.score > game.player2.score && joueur && adversaire)
-			socket.emit('gameEnd', joueur + ":" + adversaire + ":" + game.player.score + ":" + game.player2.score);
-		else if (joueur && adversaire)
-			socket.emit('gameEnd', adversaire + ":" + joueur + ":" + game.player2.score + ":" + game.player.score);
-		cancelAnimationFrame(anim);
+		if (game.player.score > game.player2.score && joueur1 && joueur2)
+			socket.emit('gameEnd', joueur1 + ":" + joueur2 + ":" + game.player.score + ":" + game.player2.score);
+		else if (joueur1 && joueur2)
+			socket.emit('gameEnd', joueur2 + ":" + joueur1 + ":" + game.player2.score + ":" + game.player.score);
+		cancelAnimationFrame(anim); 
 		// Set ball and players to the center
 		game.ball.x = canvas.width / 2 - BALL_HEIGHT / 2;
 		game.ball.y = canvas.height / 2 - BALL_HEIGHT / 2;
@@ -262,7 +262,10 @@ export default function Game() {
 			<div className="row d-flex justify-content-center text-center">
 					<button type="button" className="btn btn-outline-dark" id="search-button" onClick={() => sendSearch()}>{SearchText}</button>
 					<main role="main">
-						<p id="scores"><em id="joueur1"></em> : <em id="player-score">0</em> - <em id="joueur2"></em> : <em id="player2-score">0</em></p>
+						<p className="canvas-score" id="scores">
+							<em className="canvas-score" id="joueur1"></em>
+							<span className="canvas-score">:</span>
+							<em className="canvas-score" id="player-score">0</em> - <em id="joueur2"></em><span>:</span><em className="canvas-score" id="player2-score">0</em></p>
 						<canvas id="canvas" width={size.width / 1.5} height={size.height / 1.25}></canvas>
 					</main>
 					{/*<GameRules />*/}

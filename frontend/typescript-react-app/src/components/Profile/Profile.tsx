@@ -7,21 +7,13 @@ import NotFound from "../../components/NotFound/NotFound";
 import MyAxios from '../Utils/Axios/Axios';
 import MatchHistory from '../MatchHistory/MatchHistory';
 
-//export interface ProfileProps {
-//	login?: string,
-//	//children?: React.ReactNode | React.ReactChild | React.ReactChildren | React.ReactChild[] | React.ReactChildren[]
-//}
-
 export default function Profile() {
 
 	const calledOnce = React.useRef(false);
 	const [userOK, setUserOk] = React.useState(false);
 	const [is42, setis42] = React.useState(false);
 
-	//const loginPram =  useState(params.username)
-
 	function getUserLogin(log: string) {
-		//console.log("Login is " + log);
 		let url = "http://localhost:3000/api/user/".concat(login);
 
 		axios.get(url)
@@ -42,52 +34,15 @@ export default function Profile() {
 }, []);
 
 	const {login} = useParams();
-	console.log("Param Login is " + {login});
-	console.log("Param Login is " + login);
-
-	//function renderImage(avatar: string, login: string, ftlogin: string) {
-	//	let is42 = false;
-	//	if (ftlogin == null)
-	//		is42 = false;
-	//	else
-	//		is42 = true;
-
-	//	let imageName = "alt-photo";
-
-	//	if (avatar.startsWith("http")) {
-
-	//		let imageUser42 = "https://cdn.intra.42.fr/users/".concat(login).concat(".jpg");
-	//		var myImg = document.getElementById(login) as HTMLImageElement;
-	//		if (is42 == false) {
-	//			myImg.src = "https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg";
-	//			return;
-	//		}
-	//		else {
-	//			if (imageUser42)
-	//				myImg.src = imageUser42;
-	//			else
-	//				myImg.src = avatar;
-	//			return;
-	//		}
-	//	}
-
-	//	let url = "http://localhost:3000/api/user/".concat(avatar).concat("/avatar/");
-	//	let res = axios.get(url, { responseType: 'blob' })
-	//		.then(res => {
-	//			let myImage: HTMLImageElement = document.querySelector("#".concat(login));
-	//			var objectURL = URL.createObjectURL(res.data);
-	//			myImage.src = objectURL;
-	//			return (<img className="profile--pic" src={myImage.src} alt={imageName} id={login} height="80" />);
-	//		})
-	//		.catch((error) => {
-	//			console.log("Catched error during get/fileId/avatar");
-	//			return (<img className="profile--pic" src="https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg" alt={imageName} height="80" width="80" id={props.login} />);
-	//		})
-	//}
 
 	function renderImage(login: string) {
 		let ax = new MyAxios(null);
-		return (ax.render_avatar(login));
+		//TODO: attention si le user a changé de nom ça risque de poser un pb
+		let log42 = localStorage.getItem("login42");
+		let haschanged = false;
+		if (log42 != login)
+			haschanged = true;
+		return (ax.render_avatar(login, "", haschanged));
 	}
 
     return (
@@ -122,9 +77,6 @@ export default function Profile() {
 				</div>
 			</div>
 		</div>
-				{/*<p id="profile--p">
-					Profile page
-				</p>*/}
     </div>
     )
 }

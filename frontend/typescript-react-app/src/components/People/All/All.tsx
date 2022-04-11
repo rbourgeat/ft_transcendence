@@ -1,18 +1,19 @@
 import './All.scss';
-import React, { Component, useState, useEffect } from "react";
+import React, { Component, useState, useEffect, Suspense, lazy } from "react";
 import myAxios from "../../Utils/Axios/Axios";
 import axios from "axios";
-import MiniDisplay from '../MiniDisplay/MiniDisplay';
 import Invitations from "../Invitations/Invitations";
 import Blocked from "../Blocked/Blocked";
 import Friends from "../Friends/Friends";
 import { DetailedHTMLProps, HTMLAttributes } from 'react';
+import { Oval, Hearts } from "react-loader-spinner";
+
+const MiniDisplay = lazy(() => import('../MiniDisplay/MiniDisplay'));
 
 export interface InputWrapperProps {
 	//children?: React.ReactNode | React.ReactChild | React.ReactChildren | React.ReactChild[] | React.ReactChildren[]
 	//children?: DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>
 }
-
 
 export default function All(props: InputWrapperProps) {
 	const [users, setUsers] = React.useState([]);
@@ -58,7 +59,13 @@ export default function All(props: InputWrapperProps) {
 						<h1 id="registered--title">List of all registered users</h1>
 						<ul id="list--users--ul" className="wrapper list-group list-group-horizontal-lg">
 							{load == true ?
-								users.map(user => <MiniDisplay key={user.login} login={user.login} status={user.status} avatar={user.avatar} ftlogin={user.login42} user={user} container="all" />)
+								users.map(user =>
+									<div key={user.login}>
+										<Suspense fallback={<Hearts color="#ffe4e1" height={100} width={100} key={user.login} />}>
+											<MiniDisplay key={user.login} login={user.login} status={user.status} avatar={user.avatar} ftlogin={user.login42} user={user} container="all" />
+										</Suspense>
+									</div>
+								)
 								: ""}
 						</ul>
 					</div>

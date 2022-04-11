@@ -84,13 +84,17 @@ button {
   color: black !important;
 }
 
+#change--username:hover {
+  color: white !important;
+}
+
 .warning-2fa {
   color: red !important;
   font-size: 10px !important;
   margin-top: 10px !important;
 }
 
-.black--text {
+.black--text, #change--avatar--label {
   color: black !important;
   font-size: 10px !important;
 }

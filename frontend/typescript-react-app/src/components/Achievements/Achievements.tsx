@@ -29,12 +29,11 @@ export default function Achievement(props: AchievementsProps) {
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
         axios.defaults.withCredentials = true;
 
+        //TODO: corriger erreur achievements
         axios.get(url)
             .then(res => {
-                //console.log("Successfully retrieve achievements");
-                //console.log(res.data);
+                console.log("Succesfully retrieved achievements");
                 setMyArray(res.data.map(element => element.title))
-
             })
             .catch((error) => {
                 console.log("Error while retrieve achievements");
@@ -58,6 +57,7 @@ export default function Achievement(props: AchievementsProps) {
     }, []);
 
 
+    //TODO: attention dans les achievements il y a une erreur si je change de username !
     const style = { height: "40", width: "40"}
     return (
         <div id="Leaderboard">
