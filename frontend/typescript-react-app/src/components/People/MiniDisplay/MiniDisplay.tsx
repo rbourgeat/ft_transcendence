@@ -1,12 +1,11 @@
 import './MiniDisplay.scss';
 import MyAxios from '../../Utils/Axios/Axios';
-import React, { Component, useState, useEffect } from 'react';
+import React, { Component, useState, useEffect, Suspense, lazy } from 'react';
 import { AiOutlineCloseCircle, AiFillPlusCircle } from "react-icons/ai";
 import { BsFillPersonPlusFill, BsFillPersonXFill } from "react-icons/bs";
-
-// IMPORTER CA
 import io from "socket.io-client";
 import axios from 'axios';
+import {Oval, Hearts} from "react-loader-spinner";
 
 export interface MiniDisplayProps {
 	login?: string,
@@ -15,7 +14,7 @@ export interface MiniDisplayProps {
 	isft?: boolean,
 	ftlogin?: string,
 	user?: any;
-	children?: React.ReactNode | React.ReactChild | React.ReactChildren | React.ReactChild[] | React.ReactChildren[]
+	//children?: React.ReactNode | React.ReactChild | React.ReactChildren | React.ReactChild[] | React.ReactChildren[]
 }
 
 export default function MiniDisplay(props: MiniDisplayProps) {
@@ -28,25 +27,28 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 		if (!avatar)
 			return;
 		let is42 = false;
-		//console.log("login is");
-		//console.log("ftlogin is" + ftlogin);
-		if (ftlogin == null)
-			is42 = false;
-		else
-			is42 = true;
 
-		//console.log("is 42 is " + is42);
+		ftlogin == null || ftlogin == undefined || ftlogin == "" ? is42 = false : is42 = true;
+
+		//console.log("ftlogin is " + ftlogin);
 
 		let imageName = "alt-photo";
 
-		if (avatar.startsWith("http")) {
+		let chosenLogin = "";
+		if (login != ftlogin && login != "" && login != null && login != undefined)
+			chosenLogin = ftlogin;
+		else
+			chosenLogin = login;
 
-			let imageUser42 = "https://cdn.intra.42.fr/users/".concat(props.login).concat(".jpg");
+		//console.log("chosen login is " + chosenLogin);
+
+		if (avatar.startsWith("http")) {
+			let imageUser42 = "https://cdn.intra.42.fr/users/".concat(chosenLogin).concat(".jpg");
 			var myImg = document.getElementById(props.login) as HTMLImageElement;
-			if (is42 == false) {
+			if (is42 == false)
+			{
 				myImg.src = "https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg";
 				return;
-				//return (<img className="profile--pic" src={myImg.src} alt={imageName} id={props.login} height="80" />);
 			}
 			else {
 				if (imageUser42)
@@ -81,7 +83,6 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 		await axios.get(url)
 			.then(res => {
 				username = res.data.login;
-				//console.log(username + ' <-- result of get user')
 			})
 			.catch((err) => {
 				console.log("Error while getting api auth");
@@ -89,22 +90,11 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 	}
 
 	useEffect(() => {
-		//getUser();
-		//setLoad(true);
 		if (calledOnce.current) {
 			return;
 		}
-		//getUser();
 		setLoad(true);
 		calledOnce.current = true;
-
-		//let socket = io("http://localhost:3000/chat", { query: { username: username } });
-		//socket.on("updateStatus", (pseudo, statusUpdated) => {
-		//	if (pseudo) {
-		//		console.log("name: " + pseudo + " / " + "status: " + statusUpdated);
-		//		setStatus(statusUpdated);
-		//	}
-		//})
 	}, []);
 
 
@@ -141,18 +131,18 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 
 	return (
 		<>
-			{/*{console.log(props.user)}*/}
 			<li id="minidisplay--div" className="list-group-item" key={props.login}>
-				<img className="profile--pic" id={props.login} src="" width="100" height="100" onClick={gotoprofile} />
-				{/*{load == true ? console.log(props.user) : console.log("test")}*/}
-				{load == true ? renderImage(props.avatar, props.login, props.ftlogin) : ""}
-				<svg className="log--color" height="40" width="40">
-					<circle cx="20" cy="20" r="15" fill={color} stroke="white" stroke-width="3" /></svg>
-				<br />
-				<p className="user--p" id="mini--login">{props.login}</p>
-				<p className="user--p" id="mini--status">{status}</p>
-				<i className="user--action" onClick={() => addContact(props.login)}>{<BsFillPersonPlusFill />}</i>
-				<i className="user--action" onClick={() => blockContact(props.login)}>{<BsFillPersonXFill />}</i>
+			<Suspense fallback={<Hearts color="#ffe4e1" height={100} width={100} key={props.login}/>}>
+					<img className="profile--pic" id={props.login} src="" width="100" height="100" onClick={gotoprofile} />
+					{load == true ? renderImage(props.avatar, props.login, props.ftlogin) : ""}
+					<svg className="log--color" height="40" width="40">
+						<circle cx="20" cy="20" r="15" fill={color} stroke="white" strokeWidth="3" /></svg>
+					<br />
+					<p className="user--p" id="mini--login">{props.login}</p>
+					<p className="user--p" id="mini--status">{status}</p>
+					<i className="user--action" onClick={() => addContact(props.login)}>{<BsFillPersonPlusFill />}</i>
+					<i className="user--action" onClick={() => blockContact(props.login)}>{<BsFillPersonXFill />}</i>
+			</Suspense>
 			</li>
 		</>
 	);

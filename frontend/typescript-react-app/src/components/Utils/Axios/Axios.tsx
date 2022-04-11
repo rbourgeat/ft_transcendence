@@ -702,7 +702,8 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
         if (haschanged == false)
             imageUser42 = "https://cdn.intra.42.fr/users/".concat(login).concat(".jpg")
         else
-        imageUser42 = "https://cdn.intra.42.fr/users/".concat(login42).concat(".jpg")
+            imageUser42 = "https://cdn.intra.42.fr/users/".concat(login42).concat(".jpg")
+        console.log("image is " + imageUser42);
         if (imageCode.startsWith("http")) {
             let myImage: HTMLImageElement = document.querySelector("#".concat(login));
             if (is42)

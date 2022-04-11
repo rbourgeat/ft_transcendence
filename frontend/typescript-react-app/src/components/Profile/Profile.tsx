@@ -35,7 +35,6 @@ export default function Profile() {
 
 	const {login} = useParams();
 
-
 	function renderImage(login: string) {
 		let ax = new MyAxios(null);
 		//TODO: attention si le user a changé de nom ça risque de poser un pb
@@ -78,9 +77,6 @@ export default function Profile() {
 				</div>
 			</div>
 		</div>
-				{/*<p id="profile--p">
-					Profile page
-				</p>*/}
     </div>
     )
 }

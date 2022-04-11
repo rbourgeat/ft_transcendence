@@ -73,7 +73,7 @@ export default function User(props: UserfuncProps) {
 	function renderImage(login: string) {
 		let ax = new MyAxios(null);
 		let log42 = localStorage.getItem("login42");
-		console.log("log 42 is ", log42);
+		//console.log("log 42 is ", log42);
 		let haschanged = false;
 		if (login != log42)
 			haschanged = true;
