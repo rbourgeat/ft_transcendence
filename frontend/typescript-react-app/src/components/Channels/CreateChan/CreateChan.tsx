@@ -28,7 +28,7 @@ export default function CreateChan({endpoint, action}) {
 		}
 		else {
 			axios.post(endpoint, {
-				"password": chanScope === "public" ? "" : chanPassword,
+				"password": chanPassword,
 				"public": chanScope === "public" ? true : false,
 				"name": chanName 
 			})

@@ -103,7 +103,6 @@ function App() {
                 <>
                   <Route path="/user" element={<UserMain />} />
                   <Route path="/auth" element={<UserMain />} />
-									<Route path="/chat" element={<CreateChan endpoint="" action="create" />} />
                   <Route path="/channels" element={<Channels />} />
                   <Route path="/people" element={<People />} />
                   <Route path="/game" element={<Game />} />
