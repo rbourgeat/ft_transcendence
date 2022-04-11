@@ -25,7 +25,7 @@ export default function Profile() {
 
 		axios.get(url)
 		.then(res => {
-			console.log(res);
+			//console.log(res);
 			setUserOk(true);
 		})
 		.catch((err) => {
@@ -56,7 +56,7 @@ export default function Profile() {
 	const {login} = useParams();
 
 	let isUser = (login == localStorage.getItem("login") ? true : false);
-	console.log("is User is " + isUser);
+	//console.log("is User is " + isUser);
     return (
         <div id="profile--div">
 			<Nav />
