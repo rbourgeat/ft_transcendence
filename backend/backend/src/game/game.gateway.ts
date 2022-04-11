@@ -3,7 +3,7 @@ import { Server, Socket } from 'socket.io';
 import { Logger } from "@nestjs/common";
 import { GameService } from './game.service';
 
-let MatchMaking = [[],[],[],[]];
+let MatchMaking = [[],[],[],[],[]];
 
 @WebSocketGateway({ namespace: 'game', cors: true })
 export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, OnGatewayDisconnect {
@@ -37,6 +37,8 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
 			gameMode = 2;
 		if (body == "slow")
 			gameMode = 3;
+		if (body == "reverse")
+			gameMode = 4;
 		if (body == "STOPSEARCH")
 			gameMode = -1;
 
@@ -64,7 +66,7 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
 			if (index > -1) {
 				MatchMaking[gameMode].splice(index, 1);
 			}
-			this.server.emit('gameStart', socket.handshake.query.username, adversaire);
+			this.server.emit('gameStart', socket.handshake.query.username, adversaire, gameMode);
 			console.log("Une partie commence avec " + socket.handshake.query.username + " VS " + adversaire)
 		}
 
