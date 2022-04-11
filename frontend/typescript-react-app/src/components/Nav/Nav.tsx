@@ -78,11 +78,11 @@ function Nav() {
 								<div className='nav-link-text'><p>Stats</p></div>
 							</Link>
 						</li>*/}
-						<li className="nav-item">
+						{/*<li className="nav-item">
 							<Link to="/achievements" className="nav-link">
 								<div className='nav-link-text'><p>Achievements</p></div>
 							</Link>
-						</li>
+						</li>*/}
 						<li className="nav-item">
 							<Link to="/chat" className="nav-link">
 								<div className='nav-link-text'><p>Tests</p></div>

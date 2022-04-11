@@ -1,9 +1,9 @@
 import React, {Component, useState, useEffect} from "react";
-import Nav from "../../Nav/Nav"
-//import {Modal, ModalBody, ModalHeader, ModalTitle, ModalFooter, Button, Row, Col, Form} from "react-bootstrap"
+//import Nav from "../../Nav/Nav"
 import ToastAlerts from "../../Utils/ToastAlerts/ToastAlerts";
 import { ToastContainer, toast } from 'react-toastify';
 import myAxios from "../../Utils/Axios/Axios";
+import "./editUsername.scss";
 
 export default function EditUsernameModal(props) {
 
@@ -18,8 +18,6 @@ export default function EditUsernameModal(props) {
 		// Met à jour le titre du document via l’API du navigateur
 		let ax = new myAxios(null);
 		let url = "http://localhost:3000/api/user";
-
-		//ax.get_api_user();
 	}, []);
 
 	function clearInput() {

@@ -1,26 +1,21 @@
 @use "../../variables";
 
-.card {
+.card, .card-lock, .card-unlocked {
     width: 18rem !important;
     margin: 20px !important;
-    //border-radius: variables.$border-radius;
-    //background-color: variables.$grey;
-    background-color: grey;
-}
-
-.card--locked {
-    //width: 18rem !important;
-    //margin: 20px !important;
-    //border-radius: variables.$border-radius;
-    background-color: grey;
-}
-
-.card--unlocked {
-    //width: 18rem !important;
-    //margin: 20px !important;
-    //border-radius: variables.$border-radius;
     background-color: white;
+    border: 0.1rem solid variables.$lightgrey;
+    filter: drop-shadow(0 0 0.2rem rgb(32, 123, 114));
 }
+
+//.card--locked {
+//    border: 0.1rem solid variables.$lightgrey;
+//    height: 100% important;
+//}
+
+//.card--unlocked {
+//    border: 0.1rem solid rgb(32, 123, 114);
+//}
 
 .card-text {
     color: black !important;
@@ -28,7 +23,6 @@
 
 #achievement {
     border-radius: variables.$border-radius;
-    background: white !important;
 }
 
 #achievements > *, .card, .card-group, .card--locked, .card--unlocked {
@@ -37,38 +31,39 @@
 
 .card-title {
     font-family: variables.$big-font;
-    font-size: 16px;
+    font-size: 14px;
     text-align: left;
     color: black !important;
-    margin-top: 10px;
+    //margin-top: 10px;
 }
 
 .card-text {
     font-family: variables.$basic-font;
-    text-align: left;
-    font-size: 20px;
+    text-align: center;
+    font-size: 14px;
 }
 
 
-.test-icon {
-	margin-left: 320px;
-	margin-top: 20px;
-     font-size: 60px;
-     color: black;
-         position: absolute;
-    left: 0;
-    top: 0;
-    z-index: 1;
-}
+//.test-icon {
+//	margin-left: 320px;
+//	margin-top: 20px;
+//    font-size: 60px;
+//    color: black;
+//    position: absolute;
+//    left: 0;
+//    top: 0;
+//    z-index: 1;
+//}
 
 .checkmark {
-	margin-left: 350px;
-	margin-top: 70px;
-     font-size: 60px;
-     color: rgb(32, 123, 114);
-     transform: rotate(5deg);
+	//margin-left: 350px;
+	//margin-top: 70px;
+    margin-left: 75%;
+    font-size: 60px;
+    color: rgb(32, 123, 114);
+    transform: rotate(5deg);
 
-     position: absolute;
+    position: absolute;
     left: 0;
     top: 0;
     z-index: 1;
@@ -76,7 +71,8 @@
 
 
 #achievements--title {
-    color: white !important;
-    margin-top: 25px;
-    margin-bottom: 25px;
+    color: black !important;
+    margin-top: 0px;
+    margin-bottom: 5px;
+    font-size: 14px;
 }

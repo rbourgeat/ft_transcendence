@@ -8,6 +8,7 @@ import ToastAlerts from '../Utils/ToastAlerts/ToastAlerts';
 import EditUsernameModal from "./editUsername/EditUsername";
 import Dashboard from '../Dashboard/Dashboard';
 import Badge from "../Dashboard/Badge/Badge"
+import Achievements from "../Achievements/Achievements";
 
 export interface UserfuncProps {
 	username?: string,
@@ -23,14 +24,11 @@ export interface UserfuncProps {
 
 export default function User(props: UserfuncProps) {
 	const [qrcode, setqrCode] = useState("");
-	//https://camo.githubusercontent.com/a20446c393106453751db5f1b2633763cd7213e81015f855432405f7ddedeca3/68747470733a2f2f63686172742e676f6f676c65617069732e636f6d2f63686172743f6368743d71722663686c3d48656c6c6f2532306d61746521266368733d313830783138302663686f653d5554462d382663686c643d4c7c32");
 	const [modalShowUsername, setModalShowUsername] = React.useState(false);
 	const [username, setUsername] = React.useState("");
 	const [verifCode, setverifCode] = React.useState("");
 	const [activated2fa, setActivated2fa] = React.useState(true);
-
 	const [logged, setLogged] = React.useState(false);
-
 	const calledOnce = React.useRef(false);
 
 	function clearInput() {
@@ -169,8 +167,6 @@ export default function User(props: UserfuncProps) {
 			.then(res => {
 				username = res.data.login;
 				setUsername(username);
-				//console.log("The res data is ");
-				//console.log(res.data);
 				console.log("2fa activated is (get) : " + res.data.isTwoFactorAuthenticationEnabled);
 				setActivated2fa(res.data.isTwoFactorAuthenticationEnabled)
 			})
@@ -197,7 +193,6 @@ export default function User(props: UserfuncProps) {
 			<div className="container">
 				<div className="row d-flex justify-content-center text-center">
 					<div className="col-9" id="bonjour--user">
-						<br />
 						<div className="user--stats" key={username}>
 							<>
 							{logged == true ?
@@ -213,8 +208,9 @@ export default function User(props: UserfuncProps) {
 									setModalShowUsername(false)
 								}} />
 								{/* TODO: a reprendre */}
-								{/*<Badge />*/}
 								<br />
+								<Achievements login={username}/>
+								<Badge />
 								<div>
 									<h2 id="user--settings">Settings</h2>
 									<label>Change avatar</label>
@@ -262,6 +258,7 @@ export default function User(props: UserfuncProps) {
 						</div>
 					</div>
 				</div>
+				<br />
 			</div>
 		</div>
 	);

@@ -104,12 +104,12 @@ function App() {
                   <Route path="/chat" element={<CreateChan />} />
                   <Route path="/channels" element={<Channels />} />
                   <Route path="/search" element={<Search />} />
-                  <Route path="/achievements" element={<Achievements login={username} />} />
+                  {/*<Route path="/achievements" element={<Achievements login={username} />} />*/}
                   <Route path="/people" element={<People />} />
                   <Route path="/game" element={<Game />} />
                   <Route path="/2fa" element={<Login2FA />} />
-                  <Route path="*" element={<NotFound />} />
                   <Route path="/profile/:login" element={<Profile /*login=""*//>}/>
+                  <Route path="*" element={<NotFound />} />
                 </>}
       </Routes>
     </div>

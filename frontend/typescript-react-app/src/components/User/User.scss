@@ -2,7 +2,7 @@
 
 #avatar-id {
   border-radius: 50%;
-  margin-top: 25px;
+  margin-top: 10px;
   border: 0.1rem solid black;
 }
 
@@ -19,14 +19,12 @@
 
 #button--2fa{
   font-size: 12px !important;
-  margin-bottom: 10px;
 }
 
 .label-file {
   color: black; //#00b1ca;
   font-weight: bold;
   font-size: 12px !important;
-  margin-bottom: 15px !important;
   text-align: center !important;
 }
 
@@ -40,7 +38,7 @@ input {
   margin-left: auto;
   margin-right: auto;
   margin-top: 10px !important;
-  margin-bottom: 25px !important;
+  margin-bottom: 10px !important;
 }
 
 #input--upload {
@@ -56,8 +54,8 @@ button {
 }
 
 #change--avatar {
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin-top: 5px;
+  margin-bottom: 5px;
   margin-left: 15%;
   margin-right: auto;
 }
@@ -65,12 +63,7 @@ button {
 #user--settings--div {
   border: 0.1rem solid variables.$lightgrey !important; //#00b1ca;
   border-radius: variables.$border-radius-big;
-  //margin: 20px;
   width: 75%;
-  //margin-left: auto;
-  //margin-right: auto;
-  //padding-right: 10%;
-  //padding-left: 10%;
 }
 
 #stats--title {
@@ -123,4 +116,9 @@ img[src=""] {
 
 .test {
   color: green !important;
+}
+
+.change--username {
+  margin-top: 5px !important;
+  margin-bottom: 5px !important;
 }
