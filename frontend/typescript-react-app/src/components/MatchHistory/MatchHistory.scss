@@ -3,12 +3,12 @@
 #matchhistory--div {
   border-radius: variables.$border-radius-big;
   padding: 20px;
-  //width: 50%;
-  //margin-left: 25%;
 }
 
 #matchhistory--title {
-  font-family: variables.$basic-font;
+  //font-family: variables.$basic-font;
+  font-family: variables.$big-font;
+  font-size: 14px;
   color: black !important;
 }
 
@@ -19,6 +19,10 @@
 
 #matchhistory--title {
   margin-bottom: 10px !important;
+}
+
+#no--game {
+  font-family: variables.$basic-font;
 }
 
 //.main--button--resume {

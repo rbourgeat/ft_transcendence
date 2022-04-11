@@ -14,6 +14,7 @@ export default function MatchHistory(props: MatchHistoryProps)
 {
     const calledOnce = React.useRef(false);
     const [resultsID, setResultsID] = React.useState([]);
+    const [len, setLen] = React.useState(0);
     const [load, setLoad] = React.useState(false);
 
     useEffect(() => {
@@ -39,25 +40,20 @@ export default function MatchHistory(props: MatchHistoryProps)
                 let results = res.data;
                 console.log(results);
 				let len = results.length;
-                //console.log("first elemn is " + results[0].id);
-                //console.log("len is " + len);
+                setLen(len);
 				let i = 0;
 				while (i < len)
                 {
 					setResultsID(prevArray => [...prevArray, results[i]]);
-                    //console.log("coucou");
 					i++;
 				}
                 setLoad(true);
-                //console.log(resultsID);
             }
         )
         .catch((error) => {
             console.log("Error while getting game info");
-            //console.log(error);
         })
         //setLoad(true);
-        //console.log("result is ");
     }
 
     return (
@@ -70,7 +66,7 @@ export default function MatchHistory(props: MatchHistoryProps)
                     <div>
                         <div id="col--matchhistory">
                             <ul>
-                                {load == true ?
+                                {load == true && len != 0 ?
                                     resultsID.map(result =>
                                     <div className="main--button--resume" key={result.id}>
                                         <ButtonResume
@@ -81,9 +77,7 @@ export default function MatchHistory(props: MatchHistoryProps)
                                         />
                                     </div>
                                 ) : ""}
-                                {/*<p>In progress..</p>*/}
-                                {/*<li><ButtonResume winner="bahaas" looser="malatini" scoreWinner="3" scoreLooser="2"/></li>
-                                <li><ButtonResume winner="dummy5" looser="bahaas" scoreWinner="5" scoreLooser="1"/></li>*/}
+                                {len == 0 ? <p id="no--game">You did not play any game yet.</p> : ""}
                             </ul>
                         </div>
                     </div>
