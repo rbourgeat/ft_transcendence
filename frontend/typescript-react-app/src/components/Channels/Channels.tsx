@@ -21,7 +21,6 @@ interface ChatProps {
 	username?: string
 }
 
-//TODO: a revoir
 export default function Channels(props: ChatProps) {
 	const calledOnce = React.useRef(false);
 
@@ -40,22 +39,9 @@ export default function Channels(props: ChatProps) {
 	useEffect(() => {
         if (calledOnce.current) {
 			return;}
-        //getUser();
         calledOnce.current = true;
+	}, []);
 
-        // socket.on('connect', () => {
-        //     console.log(`Socket connectée !`);
-        //     // socket.emit('status', username + ':online')
-        // })
-
-        // socket.on('disconnect', () => {
-        //     console.log(`Socket déconnectée !`);
-        //     // socket.emit('status', username + ':offline')
-        // })
-
-    }, []);
-
-	//TODO: changer la page
 	return (
 		<div id="channels">
 			<Nav />
@@ -72,8 +58,9 @@ export default function Channels(props: ChatProps) {
 			/>
 			<div className="container" id="chat--container">
 				<div className="chat-container text-center">
-					<div>
-						<CreateChan />
+					<div className="chat-channel-menu">
+						<CreateChan endpoint="http://localhost:3000/api/chat" action="Create" />
+						<CreateChan endpoint="http://localhost:3000/api/chat/join" action="Join" />
 						<ListChannels />
 					</div>
 					<div className="chat--messages">

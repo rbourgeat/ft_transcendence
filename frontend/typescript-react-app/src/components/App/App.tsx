@@ -25,8 +25,7 @@ import Login2FA from "../Auth/Login2FA/Login2FA"
 import Channels from "../Channels/Channels"
 import { io } from 'socket.io-client';
 import axios from 'axios';
-import NotLogged from '../NotLogged/NotLogged';
-import Login2fa from '../Auth/Login2FA/Login2FA';
+import NotLogged from '../NotLogged/NotLogged'; import Login2fa from '../Auth/Login2FA/Login2FA';
 import Profile from "../Profile/Profile";
 
 //const { login } = useParams()
@@ -105,7 +104,7 @@ function App() {
                 <>
                   <Route path="/user" element={<UserMain />} />
                   <Route path="/auth" element={<UserMain />} />
-                  <Route path="/chat" element={<CreateChan />} />
+									<Route path="/chat" element={<CreateChan endpoint="" action="create" />} />
                   <Route path="/channels" element={<Channels />} />
                   <Route path="/search" element={<Search />} />
                   {/*<Route path="/achievements" element={<Achievements login={username} />} />*/}

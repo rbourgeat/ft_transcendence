@@ -3,7 +3,7 @@ import axios from 'axios';
 import React, {useState} from "react";
 
 
-export default function CreateChan() {
+export default function CreateChan({endpoint, action}) {
 
 	const [show, setShow] = React.useState(false);
 	const handleClose = () => setShow(false);
@@ -15,7 +15,7 @@ export default function CreateChan() {
 
 	const createChannel = () => {
 		if (chanScope === "public") {
-			axios.post('http://localhost:3000/api/chat', {
+			axios.post(endpoint, {
 				"public": chanScope === "public" ? true : false,
 				"name": chanName 
 			})
@@ -43,11 +43,11 @@ export default function CreateChan() {
 
 	return (
 		<div>
-			<Button variant="secondary" onClick={handleShow}>Create channel</Button>
+			<Button variant="secondary" onClick={handleShow}>{action} channel</Button>
 
 			<Modal show={show} onHide={handleClose}>
 				<Modal.Header closeButton>
-					<Modal.Title>Create a new channel</Modal.Title>
+					<Modal.Title>{action} a new channel</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
 					<Form>
@@ -82,7 +82,7 @@ export default function CreateChan() {
 						Close
 					</Button>
 					<Button variant="primary" type="submit" onClick={createChannel}>
-						Create 
+						{action} 
 					</Button>
 				</Modal.Footer>
 			</Modal>
