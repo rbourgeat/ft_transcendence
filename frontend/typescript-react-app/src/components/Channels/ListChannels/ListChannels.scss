@@ -7,20 +7,19 @@
 }
 
 #channel--list {
-	color: white;
+	color: black;
 }
 
 #list--channels--title {
-	//color: black;
-	color: white;
+	color: black;
 	font-family: variables.$big-font;
 	margin-top: 10px;
 	margin-bottom: 15px;
+	text-align: justify;
 }
 
 #list--channels--ul > * {
-	//color: black;
-	color: white;
+	color: black;
 	font-family: variables.$basic-font;
 	padding-bottom: 10px;
 	margin-left: 5%;

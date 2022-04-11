@@ -1,34 +1,58 @@
 import './Friends.scss';
-import React, {Component, useState, useEffect} from "react";
+import React, { Component, useState, useEffect } from "react";
 import myAxios from "../../Utils/Axios/Axios";
 import axios from "axios";
+import MiniDisplay from '../MiniDisplay/MiniDisplay';
 
 export default function Friends() {
-	const [friends, setFriends] = React.useState([]);
-    const [count, setCount] = useState(0);
+	const [users, setUsers] = React.useState([]);
+	const [load, setLoad] = React.useState(false);
 
 	const calledOnce = React.useRef(false);
 
-    function renderFriends()
-    {
-        axios.defaults.withCredentials = true;
-    }
+	async function renderFriends() {
+		axios.defaults.withCredentials = true;
+		let url = "http://localhost:3000/api/user/relation/me/allFriends";
+		await axios.get(url)
+			.then(res => {
+				console.log("Get api me/allFriends successfully called.");
+				let users = res.data;
+				let len = users.length;
+				let i = 0;
+				while (i < len) {
+					setUsers(prevArray => [...prevArray, users[i]])
+					i++;
+				}
+			})
+			.catch((error) => {
+				console.log("Error while getting my friends");
+			})
+		setLoad(true);
+	}
 
-	//Attention mon use effect est pas bon il recharge parfois des user
-    useEffect(() => {
+	useEffect(() => {
 		if (calledOnce.current) {
-			return;}
-        renderFriends();
-    }, []);
+			return;
+		}
+		renderFriends();
+		calledOnce.current = true;
+	}, []);
 
-    return (
+	return (
 		<div id="invitation-div">
 			<div id="container--invitations">
 				<h1 className="text" id="displaying">Friends</h1>
 				<br />
 				<div className="row" id="row--users">
+					<div id="ul--list" className="row">
+						<ul id="list--users--ul" className="wrapper list-group list-group-horizontal-lg">
+							{load == true ?
+								users.map(user => <MiniDisplay key={user.login} login={user.login} status={user.status} avatar={user.avatar} ftlogin={user.login42} user={user} container="friends" />)
+								: ""}
+						</ul>
+					</div>
 				</div>
 			</div>
 		</div>
-		);
+	);
 }

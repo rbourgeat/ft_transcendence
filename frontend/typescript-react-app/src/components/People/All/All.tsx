@@ -1,12 +1,12 @@
 import './All.scss';
-import React, { Component, useState, useEffect, Suspense, lazy} from "react";
+import React, { Component, useState, useEffect, Suspense, lazy } from "react";
 import myAxios from "../../Utils/Axios/Axios";
 import axios from "axios";
 import Invitations from "../Invitations/Invitations";
 import Blocked from "../Blocked/Blocked";
 import Friends from "../Friends/Friends";
 import { DetailedHTMLProps, HTMLAttributes } from 'react';
-import {Oval, Hearts} from "react-loader-spinner";
+import { Oval, Hearts } from "react-loader-spinner";
 
 const MiniDisplay = lazy(() => import('../MiniDisplay/MiniDisplay'));
 
@@ -56,15 +56,15 @@ export default function All(props: InputWrapperProps) {
 				<br />
 				<div className="row" id="row--users">
 					<div id="ul--list" className="row">
-						<h2 id="registered--title">List of all registered users</h2>
+						<h1 id="registered--title">List of all registered users</h1>
 						<ul id="list--users--ul" className="wrapper list-group list-group-horizontal-lg">
 							{load == true ?
 								users.map(user =>
-								<div key={user.login}>
-									<Suspense fallback={<Hearts color="#ffe4e1" height={100} width={100} key={user.login}/>}>
-										<MiniDisplay key={user.login} login={user.login} status={user.status} avatar={user.avatar} ftlogin={user.login42} user={user} />
-									</Suspense>
-								</div>
+									<div key={user.login}>
+										<Suspense fallback={<Hearts color="#ffe4e1" height={100} width={100} key={user.login} />}>
+											<MiniDisplay key={user.login} login={user.login} status={user.status} avatar={user.avatar} ftlogin={user.login42} user={user} container="all" />
+										</Suspense>
+									</div>
 								)
 								: ""}
 						</ul>
