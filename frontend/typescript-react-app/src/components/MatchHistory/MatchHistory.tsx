@@ -3,8 +3,13 @@ import './MatchHistory.scss';
 import ButtonResume from "./ButtonResume/ButtonResume";
 
 
-export default function MatchHistory() {
+export interface MatchHistoryProps
+{
+    login?: string
+}
 
+
+export default function MatchHistory(props: MatchHistoryProps) {
     const calledOnce = React.useRef(false);
 
     useEffect(() => {
@@ -18,6 +23,7 @@ export default function MatchHistory() {
     function getHistory()
     {
         console.log("getting history");
+        let url = "http://localhost:3000/api/game/".concat(props.login)
     }
 
     return (

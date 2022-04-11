@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom'
 import NotFound from "../../components/NotFound/NotFound";
 import MyAxios from '../Utils/Axios/Axios';
 import MatchHistory from '../MatchHistory/MatchHistory';
+import Achievement from '../Achievements/Achievements';
 
 export interface ProfileProps
 {
@@ -33,12 +34,14 @@ export default function Profile() {
 		})
 	}
 
-	function renderImage(login: string) {
+	function renderImage(login: string, isUserProfile: boolean) {
 		let ax = new MyAxios(null);
 		let log42 = localStorage.getItem("login42");
 		let haschanged = false;
 		if (login != log42)
 			haschanged = true;
+		if (isUserProfile == false)
+			haschanged = false;
 		if (log42 != "" && log42 != null && log42 != undefined)
 			return (ax.render_avatar(login, log42, haschanged));
 		return (ax.render_avatar(login, "", haschanged));
@@ -52,6 +55,8 @@ export default function Profile() {
 
 	const {login} = useParams();
 
+	let isUser = (login == localStorage.getItem("login") ? true : false);
+	console.log("is User is " + isUser);
     return (
         <div id="profile--div">
 			<Nav />
@@ -66,11 +71,12 @@ export default function Profile() {
 							<div id="profile--div">
 								<img id={login} className="profile--pic" src="" width="100" height="100"/>
 								<br />
-								{renderImage(login)}
+								{renderImage(login, isUser)}
 								<br />
 								<h2 id="profile-title">{login.toUpperCase()}</h2>
+								<Achievement login={login} />
 								<br/>
-								<MatchHistory />
+								<MatchHistory login={login}/>
 								<br/>
 							</div>
 						: <>
