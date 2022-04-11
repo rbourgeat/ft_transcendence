@@ -6,19 +6,19 @@ import Invitations from "./Invitations/Invitations";
 import Friends from "./Friends/Friends";
 
 export default function People() {
-    return (
-        <div id="people--div">
-            <Nav />
-				<div id="all">
-					<div className="row">
-						<br />
-						<All />
-						<br />
-						<Invitations />
-						<br />
-						<Friends />
+	return (
+		<div id="people--div">
+			<Nav />
+			<div id="all">
+				<div className="row">
+					<br />
+					<All />
+					<br />
+					<Invitations />
+					<br />
+					<Friends />
 				</div>
 			</div>
-        </div>
-    );
+		</div>
+	);
 }
