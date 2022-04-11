@@ -14,6 +14,7 @@ var joueur: string;
 let joueur1: string;
 let joueur2: string;
 var isSearching = false;
+var gm = 0;
 // let isActive = true;
 
 export default function Game() {
@@ -63,6 +64,7 @@ export default function Game() {
 		document.querySelector('#victoryMessage').textContent = "";
 		joueur1 = args[0];
 		joueur2 = args[1];
+		gm = args[2];
 		console.log("joueur1 = " + joueur1 + " joueur2 = " + joueur2)
 		console.log("adversaire = " + adversaire + " joueur = " + joueur)
 		if (joueur1 != adversaire && joueur1 == joueur) {
@@ -72,6 +74,7 @@ export default function Game() {
 			document.querySelector('#joueur2').textContent = joueur2;
 			play();
 			setActive(false);
+			setGameMode(gm);
 		}
 		else if (joueur2 != adversaire && joueur2 == joueur) {
 			initParty();
@@ -80,9 +83,44 @@ export default function Game() {
 			document.querySelector('#joueur2').textContent = joueur2;
 			play();
 			setActive(false);
+			setGameMode(gm);
 		}
 
 	});
+
+	function setGameMode(gm: number) {
+		if (gm == 0)
+		{
+			PLAYER_HEIGHT = 100;
+			PLAYER_WIDTH = 20;
+			BALL_HEIGHT = 10;
+			BALL_SPEED = 2;
+		} else if (gm == 1)
+		{
+			PLAYER_HEIGHT = 100;
+			PLAYER_WIDTH = 20;
+			BALL_HEIGHT = 50;
+			BALL_SPEED = 2;
+		} else if (gm == 2)
+		{
+			PLAYER_HEIGHT = 100;
+			PLAYER_WIDTH = 20;
+			BALL_HEIGHT = 10;
+			BALL_SPEED = 4;
+		} else if (gm == 3)
+		{
+			PLAYER_HEIGHT = 100;
+			PLAYER_WIDTH = 20;
+			BALL_HEIGHT = 10;
+			BALL_SPEED = 0.5;
+		} else if (gm == 4)
+		{
+			PLAYER_HEIGHT = 20;
+			PLAYER_WIDTH = 100;
+			BALL_HEIGHT = 10;
+			BALL_SPEED = 0.5;
+		}
+	}
 
 
 	// PONG CODE BELOW
@@ -90,10 +128,10 @@ export default function Game() {
 	var game;
 	var anim;
 	// On peut changer les dimensions de la balle et des joueurs, ex: autres modes de jeux
-	const PLAYER_HEIGHT = 100;
-	const PLAYER_WIDTH = 20;
-	const BALL_HEIGHT = 10;
-	const BALL_SPEED = 2;
+	var PLAYER_HEIGHT = 100;
+	var PLAYER_WIDTH = 20;
+	var BALL_HEIGHT = 10;
+	var BALL_SPEED = 2;
 	function draw() {
 		var context = canvas.getContext('2d');
 		// Draw field
@@ -171,7 +209,7 @@ export default function Game() {
 				game.player.y = mouseLocation - PLAYER_HEIGHT / 2;
 			}
 			if (adversaire)
-				socket.emit('playerMove', joueur + ":" + game.player.y);
+				socket.emit('playerMove', joueur + ":" + game.player.y + ":" + adversaire);
 		} else if (joueur == joueur2) {
 			game.player2.y = mouseLocation - PLAYER_HEIGHT / 2;
 			if (mouseLocation < PLAYER_HEIGHT / 2) {
@@ -182,7 +220,7 @@ export default function Game() {
 				game.player2.y = mouseLocation - PLAYER_HEIGHT / 2;
 			}
 			if (adversaire)
-				socket.emit('playerMove', joueur + ":" + game.player2.y);
+				socket.emit('playerMove', joueur + ":" + game.player2.y + ":" + adversaire);
 		}
 	}
 
@@ -210,8 +248,10 @@ export default function Game() {
 		} else if (game.ball.x < PLAYER_WIDTH) {
 			collide(game.player);
 		}
-		game.ball.x += game.ball.speed.x;
-		game.ball.y += game.ball.speed.y;
+		if (gm != 3) {
+			game.ball.x += game.ball.speed.x;
+			game.ball.y += game.ball.speed.y;
+		}
 	}
 
 	function collide(player) {
@@ -301,17 +341,20 @@ export default function Game() {
 			<Nav />
 			<div className="container">
 			<div className="row d-flex justify-content-center text-center">
-					<Form>
-						<Form.Group>
-							<Form.Select aria-label="Modes de jeux:" onChange={e => chanScopeSet(e.target.value)}>
-									<option>Modes de jeux:</option>
-									<option selected={true} value="original">Original (1972)</option>
-									<option value="bigball">Big Ball (Facile)</option>
-									<option value="blitz">Blitz (Balle Rapide)</option>
-									<option value="slow">Slow (Balle Lente)</option>
-							</Form.Select>
-						</Form.Group>
-					</Form>
+					{isActive ?
+						<Form>
+							<Form.Group>
+								<Form.Select aria-label="Modes de jeux:" onChange={e => chanScopeSet(e.target.value)}>
+										<option>Modes de jeux:</option>
+										<option selected={true} value="original">Original (1972)</option>
+										<option value="bigball">Big Ball (Facile)</option>
+										<option value="blitz">Blitz (Balle Rapide)</option>
+										<option value="slow">Slow (Balle Lente)</option>
+										<option value="reverse">Reverse (Paddle Horizontal)</option>
+								</Form.Select>
+							</Form.Group>
+						</Form>
+					: ""}
 					{isActive ? <button type="button" className="btn btn-outline-dark" id="search-button" onClick={() => sendSearch()}>{SearchText}</button> : ""}
 					<p className='text' id="victoryMessage"></p>
 					<main role="main">
