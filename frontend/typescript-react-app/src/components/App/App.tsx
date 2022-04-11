@@ -23,8 +23,7 @@ import Game from "../Game/Game";
 import Login2FA from "../Auth/Login2FA/Login2FA"
 import Channels from "../Channels/Channels"
 import axios from 'axios';
-import NotLogged from '../NotLogged/NotLogged';
-import Login2fa from '../Auth/Login2FA/Login2FA';
+import NotLogged from '../NotLogged/NotLogged'; import Login2fa from '../Auth/Login2FA/Login2FA';
 import Profile from "../Profile/Profile";
 import Live from '../Live/Live';
 
@@ -106,6 +105,7 @@ function App() {
                   <Route path="/user" element={<UserMain />} />
                   <Route path="/live" element={<Live />} />
                   <Route path="/chat" element={<CreateChan />} />
+                  <Route path="/auth" element={<UserMain />} />
                   <Route path="/channels" element={<Channels />} />
                   <Route path="/people" element={<People />} />
                   <Route path="/game" element={<Game />} />
