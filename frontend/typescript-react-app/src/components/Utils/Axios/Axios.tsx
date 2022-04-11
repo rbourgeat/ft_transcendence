@@ -624,13 +624,6 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     ** Auth - login
     */
     login(mail: string, pass: string) {
-        //let toast = new ToastAlerts(null);
-
-        //if (!this.props.email || !this.props.password) {
-        //    toast.notifyDanger('Oops ! An error happened');
-        //    return;
-        //}
-
         const bod = {
             email: mail,
             password: pass,
@@ -648,6 +641,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
                 if (res.status == 200 || res.status == 201) {
                     //console.log(res);
                     localStorage.setItem("loggedIn", "true");
+                    //localStorage.setItem("login", login);
                     window.top.location = "/chat/";
                     return;
                 }
@@ -698,18 +692,19 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     /*
     ** renderAvatar
     */
-    getImage(imageCode: string, login: string, is42: boolean) {
+    getImage(imageCode: string, login: string, is42: boolean, haschanged: boolean) {
         let imageName = "alt-photo";
+        let imageUser42 = "";
 
-        //bahaas add
-        let imageUser42 = "https://cdn.intra.42.fr/users/".concat(login).concat(".jpg")
-        //console.log('imageUSer42: ' + imageUser42);
+        let login42 = localStorage.getItem("login42");
+
+        console.log("has changed is " + haschanged);
+        if (haschanged == false)
+            imageUser42 = "https://cdn.intra.42.fr/users/".concat(login).concat(".jpg")
+        else
+        imageUser42 = "https://cdn.intra.42.fr/users/".concat(login42).concat(".jpg")
         if (imageCode.startsWith("http")) {
-            //console.log("image starts with http");
-            //console.log("is logged in is " + is42);
-            //console.log('should display 42');
             let myImage: HTMLImageElement = document.querySelector("#".concat(login));
-            // var objectURL = URL.createObjectURL(imageUser42);
             if (is42)
                 myImage.src = imageUser42;
             else
@@ -740,16 +735,19 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
             })
     }
 
-    render_avatar(login: string, login42: string) {
-
+    render_avatar(login: string, login42: string, haschanged: boolean) {
         if (!login) {
             return;
         }
 
         let chosenLogin;
         let is42;
-        login42 != "" ? chosenLogin = login42 : chosenLogin = login;
+
+        //tests
+        login42 != "" ? chosenLogin = login : chosenLogin = login;
         login42 != "" ? is42 = true : is42 = false;
+
+        console.log("login is " + login);
 
         let imageCode = null;
         let imageName = "alt-photo";
@@ -758,7 +756,8 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
         let res = axios.get(url)
             .then(res => {
                 imageCode = res.data.avatar;
-                return (this.getImage(imageCode, chosenLogin, is42));
+                console.log("chosenLogin is " + chosenLogin);
+                return (this.getImage(imageCode, chosenLogin, is42, haschanged));
             })
             .catch(error => {
                 console.log("Catched error getting avatar");
@@ -785,7 +784,11 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
                 if (res.status == 201) {
                     console.log("Yay ! Avatar updated");
                     //TODO: attention voir si le user est user42 et si il a pas changé de nom
-                    this.render_avatar(login, "");
+                    //let log42 = localStorage.getItem("login42");
+                    let haschanged = false;
+                    if (res.data.login != res.data.login42)
+                        haschanged = true;
+                    this.render_avatar(login, "", haschanged);
                 }
                 else {
                     console.log("Oops! Avatar not updated");

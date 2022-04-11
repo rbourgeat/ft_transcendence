@@ -34,14 +34,16 @@ export default function Profile() {
 }, []);
 
 	const {login} = useParams();
-	console.log("Param Login is " + {login});
-	console.log("Param Login is " + login);
 
 
 	function renderImage(login: string) {
 		let ax = new MyAxios(null);
 		//TODO: attention si le user a changé de nom ça risque de poser un pb
-		return (ax.render_avatar(login, ""));
+		let log42 = localStorage.getItem("login42");
+		let haschanged = false;
+		if (log42 != login)
+			haschanged = true;
+		return (ax.render_avatar(login, "", haschanged));
 	}
 
     return (

@@ -53,6 +53,8 @@ export default function User(props: UserfuncProps) {
 				{
 					setis42(true);
 					setlogin42(res.data.login42);
+					localStorage.setItem("login", res.data.login);
+					localStorage.setItem("login42", res.data.login42);
 				}
 				setUsername(username);
 			})
@@ -70,10 +72,14 @@ export default function User(props: UserfuncProps) {
 
 	function renderImage(login: string) {
 		let ax = new MyAxios(null);
-		console.log("login42 is " + login42);
-		if (login42 != "")
-			return (ax.render_avatar(login, login42));
-		return (ax.render_avatar(login, ""));
+		let log42 = localStorage.getItem("login42");
+		console.log("log 42 is ", log42);
+		let haschanged = false;
+		if (login != log42)
+			haschanged = true;
+		if (log42 != "" && log42 != null && log42 != undefined)
+			return (ax.render_avatar(login, log42, haschanged));
+		return (ax.render_avatar(login, "", haschanged));
 	}
 
 	return (
@@ -91,16 +97,10 @@ export default function User(props: UserfuncProps) {
 							<br />
 							<h2 id="user--data">{username}</h2>
 							<div className="col-9 mx-auto text-center" id="input-div">
-
-								{/*<button id="change--username" className="btn btn-outline-light"
-									onClick={handleShow}
-								>
-									change username</button>
-								<EditUsernameModal username={username} show={show} onHide={handleClose}/>*/}
 								<br />
 								{/*<Achievements login={username}/>*/}
 								{/*<Badge />*/}
-								<Settings username={username}/>
+								<Settings username={username} login42={localStorage.getItem("login42")}/>
 								</div>
 							</div>
 							: <p></p>

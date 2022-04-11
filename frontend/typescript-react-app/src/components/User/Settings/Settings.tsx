@@ -9,6 +9,7 @@ import EditUsernameModal from '../editUsername/EditUsername';
 export interface SettingsProps
 {
 	username?: string
+	login42?: string
 }
 
 export default function Settings(props: SettingsProps) {
@@ -100,7 +101,6 @@ export default function Settings(props: SettingsProps) {
         setverifCode(event.target.value);
     }
 
-	//Upload d'un nouvel avatar
 	const onChangePicture = (e: any) => {
 		e.preventDefault();
 		if (e.target.files[0]) {
