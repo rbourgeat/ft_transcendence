@@ -1,142 +1,91 @@
-import './CreateChan.scss';
-import React, { Component, useState, useEffect } from "react";
-import Nav from "../../Nav/Nav";
-import CreateChanModal from "../../Utils/Modal/Modal";
-import myAxios from "../../Utils/Axios/Axios";
-import ListChannels from "../ListChannels/ListChannels";
-import Channels from "../../Channels/Channels";
-import io from "socket.io-client";
-import axios from "axios";
-
-interface UserChat {
-    login?: string
-}
-
-const ENDPOINT = "http://ws.localhost:3000/api/";
+import {Button, Modal, Form} from 'react-bootstrap';
+import axios from 'axios';
+import React, {useState} from "react";
 
 
-export default function CreateChan(props: UserChat) {
-    const [modalShow, setModalShow] = React.useState(false);
-    const [response, setResponse] = useState("");
-    const calledOnce = React.useRef(false);
+export default function CreateChan() {
 
-    // GET USER
-    const [username, setUsername] = React.useState("");
-    function getUser() {
-        let url = "http://localhost:3000/api/auth/";
-        let username = "";
-        axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
-        axios.defaults.withCredentials = true;
-        axios.get(url)
-            .then(res => {
-                username = res.data.login;
-                setUsername(username);
-            })
-            .catch((err) => {
-                console.log("Error while getting api auth");
-                console.log(err);
-            })
-    }
+	const [show, setShow] = React.useState(false);
+	const handleClose = () => setShow(false);
+	const handleShow = () => setShow(true);
 
-    useEffect(() => {
-        if (calledOnce.current) {
-			return;}
-        getUser();
-        calledOnce.current = true;
+	const [chanScope, chanScopeSet] = React.useState("public");
+	const [chanName, chanNameSet] = React.useState("");
+	const [chanPassword, chanPasswordSet] = React.useState("");
 
-        // socket.on('connect', () => {
-        //     console.log(`Socket connectée !`);
-        //     // socket.emit('status', username + ':online')
-        // })
+	const createChannel = () => {
+		if (chanScope === "public") {
+			axios.post('http://localhost:3000/api/chat', {
+				"public": chanScope === "public" ? true : false,
+				"name": chanName 
+			})
+				.then(function (response) {
+					console.log(response);
+				})
+				.catch(function (error) {
+					console.log(error);
+				});
+		}
+		else {
+			axios.post('http://localhost:3000/api/chat', {
+				"password": chanScope === "public" ? "" : chanPassword,
+				"public": chanScope === "public" ? true : false,
+				"name": chanName 
+			})
+				.then(function (response) {
+					console.log(response);
+				})
+				.catch(function (error) {
+					console.log(error);
+				});
+		}
+	}
 
-        // socket.on('disconnect', () => {
-        //     console.log(`Socket déconnectée !`);
-        //     // socket.emit('status', username + ':offline')
-        // })
+	return (
+		<div>
+			<Button variant="secondary" onClick={handleShow}>Create channel</Button>
 
-    }, []);
-
-    let socket = io("http://localhost:3000/chat", { query: { username: username } });
-
-    function sendTest() {
-        socket.emit('test', 'test ok !')
-    }
-
-    // socket.on("updateStatus", (pseudo, status) => {
-    //     if (pseudo) {
-    //         console.log("name: " + pseudo + " / " + "status: " + status);
-    //     }
-    // });
-
-    let channel = "";
-
-    function sendMessage(channel: string, message: string) {
-        socket.emit('message', username + ":" + channel + ":" + message)
-    }
-
-    const [inputValue, setInputValue] = React.useState("");
-
-    function handleInputChange(event) {
-        setInputValue(event.target.value);
-        socket.emit('status', "est en train d'écrire")
-    }
-
-    //TODO: a reprendre sans react bootstrap, pb de dépendances
-    return (
-        <div id="channels">
-            <Nav />
-            <div className="container">
-                <div className="row d-flex justify-content-center text-center">
-                    <div className="col-7">
-                        <div id="quick--actions">
-                            <div className="row">
-                                {/*<button type="button" className="btn btn-outline-dark" onClick={() => setModalShow(true)}>Create a channel</button>*/}
-                                <button type="button" className="btn btn-outline-dark" data-toggle="modal" data-target="#exampleModal">
-                                    Create a channel
-                                </button>
-
-                                <button type="button" className="btn btn-outline-dark" onClick={() => sendTest()}>Test</button>
-                                <input
-                                    className="form-control"
-                                    type="text"
-                                    placeholder="message"
-                                    value={inputValue}
-                                    onChange={handleInputChange}
-                                />
-                                <button type="button" className="btn btn-outline-dark" onClick={() => sendMessage("DummyChannel", inputValue)}>Envoyer</button>
-                                <button type="button" className="btn btn-outline-dark" disabled>Send a DM</button>
-                                <button type="button" className="btn btn-outline-dark" disabled>Invite to play</button>
-                                <button type="button" className="btn btn-outline-dark" disabled>Answer to play</button>
-                            </div>
-                            {/*<CreateChanModal
-                                show={modalShow}
-                                onHide={() => setModalShow(false)}
-                            />*/}
-                            {/*TODO: a reprendre (ne pas faire de modal avec react bootstrap mais avec bootstrap) - reprendre le modal qui se trouve dans Utils/Modal*/}
-                            <div className="modal fade" id="exampleModal" tab-index="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div className="modal-dialog" role="document">
-                                    <div className="modal-content">
-                                    <div className="modal-header">
-                                        <h5 className="modal-title" id="exampleModalLabel">Modal title</h5>
-                                        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div className="modal-body">
-                                        ...
-                                    </div>
-                                    <div className="modal-footer">
-                                        <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button type="button" className="btn btn-primary">Save changes</button>
-                                    </div>
-                                    </div>
-                                </div>
-                                </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <ListChannels />
-        </div>
-    );
+			<Modal show={show} onHide={handleClose}>
+				<Modal.Header closeButton>
+					<Modal.Title>Create a new channel</Modal.Title>
+				</Modal.Header>
+				<Modal.Body>
+					<Form>
+						<Form.Group>
+							<Form.Select aria-label="Channel visibility" onChange={e => chanScopeSet(e.target.value)} defaultValue="public">
+								<option value="public">public</option>
+								<option value="private">private</option>
+								<option value="protected">protected</option>
+							</Form.Select>
+						</Form.Group>
+						<Form.Group className="mb-3" controlId="channName">
+							<Form.Label>Channel name</Form.Label>
+							<Form.Control
+								type="text"
+								value={chanName}
+								onChange={e => {chanNameSet(e.target.value)}}
+								autoFocus
+							/>
+						</Form.Group>
+						<Form.Group className="mb-3" controlId="channPassword">
+							<Form.Label>Channel password</Form.Label>
+							<Form.Control
+								type="password"
+								value={chanPassword}
+								onChange={e => {chanPasswordSet(e.target.value)}}
+							/>
+						</Form.Group>
+					</Form>
+				</Modal.Body>
+				<Modal.Footer>
+					<Button variant="secondary" onClick={handleClose}>
+						Close
+					</Button>
+					<Button variant="primary" type="submit" onClick={createChannel}>
+						Create 
+					</Button>
+				</Modal.Footer>
+			</Modal>
+		</div>
+	);
 }

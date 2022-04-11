@@ -3,6 +3,7 @@ import Nav from '../Nav/Nav';
 import TypingMessage from "./TypingMessage/TypingMessage";
 import ListDiscussions from "./ListDiscussions/ListDiscussions";
 import ListParticipant from './ListParticipant/ListParticipant';
+import CreateChan from './CreateChan/CreateChan';
 import React, {useState, useEffect} from "react";
 import MyAxios from '../Utils/Axios/Axios';
 import ToastAlerts from '../Utils/ToastAlerts/ToastAlerts';
@@ -71,7 +72,10 @@ export default function Channels(props: ChatProps) {
 			/>
 			<div className="container" id="chat--container">
 				<div className="chat-container text-center">
-					<ListChannels />
+					<div>
+						<CreateChan />
+						<ListChannels />
+					</div>
 					<div className="chat--messages">
 						<ListDiscussions />
 						<TypingMessage />
