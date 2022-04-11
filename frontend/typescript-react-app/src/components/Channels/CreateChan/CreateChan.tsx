@@ -18,9 +18,10 @@ const ENDPOINT = "http://ws.localhost:3000/api/";
 export default function CreateChan(props: UserChat) {
     const [modalShow, setModalShow] = React.useState(false);
     const [response, setResponse] = useState("");
-    const [username, setUsername] = React.useState("");
     const calledOnce = React.useRef(false);
 
+    // GET USER
+    const [username, setUsername] = React.useState("");
     function getUser() {
         let url = "http://localhost:3000/api/auth/";
         let username = "";
