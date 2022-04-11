@@ -243,9 +243,37 @@ export class UserMigration1645626140921 implements MigrationInterface {
             }),
         );
 
+        const dummy2chievement1 = await queryRunner.manager.save(
+            queryRunner.manager.create<Achievement>(Achievement, {
+                user: dummy2,
+                title: "FirstGame"
+            }),
+        );
+
+        const dummy1chievement1 = await queryRunner.manager.save(
+            queryRunner.manager.create<Achievement>(Achievement, {
+                user: dummy2,
+                title: "FirstGame"
+            }),
+        );
+
         const bahaasachievement2 = await queryRunner.manager.save(
             queryRunner.manager.create<Achievement>(Achievement, {
                 user: bahaas,
+                title: "FirstGame"
+            }),
+        );
+
+        const dummy4achievement2 = await queryRunner.manager.save(
+            queryRunner.manager.create<Achievement>(Achievement, {
+                user: dummy4,
+                title: "FirstGame"
+            }),
+        );
+
+        const dummy3achievement2 = await queryRunner.manager.save(
+            queryRunner.manager.create<Achievement>(Achievement, {
+                user: dummy4,
                 title: "FirstGame"
             }),
         );

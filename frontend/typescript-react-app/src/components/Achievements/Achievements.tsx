@@ -105,7 +105,7 @@ export default function Achievement(props: AchievementsProps) {
                                 <div className={isUnlocked("AddFriend") ? "card--unlocked" : "card--locked"}>
                                     {isUnlocked("AddFriend") ? <CheckMark /> : ""}
                                     <div className="card-body">
-                                        <h5 className="card-title">This is how I met</h5>
+                                        <h5 className="card-title">How I met</h5>
                                         <p className="card-text">Have one friend</p>
                                         {/*<FaUserFriends style={style} />*/}
                                     </div>
@@ -128,7 +128,7 @@ export default function Achievement(props: AchievementsProps) {
                                 <div className={isUnlocked("42") ? "card--unlocked" : "card--locked"}>
                                     {isUnlocked("42") ? <CheckMark /> : ""}
                                     <div className="card-body">
-                                        <h5 className="card-title">Misterious reward</h5>
+                                        <h5 className="card-title">Mistery</h5>
                                         <p className="card-text">????????????????</p>
                                         {/*<svg className="test-icon">{<FaCat />}</svg>*/}
                                         {/*<FaCat style={style} />*/}
