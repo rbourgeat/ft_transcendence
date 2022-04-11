@@ -740,33 +740,29 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
             })
     }
 
-    render_avatar(login: string) {
+    render_avatar(login: string, login42: string) {
 
         if (!login) {
             return;
         }
+
+        let chosenLogin;
+        let is42;
+        login42 != "" ? chosenLogin = login42 : chosenLogin = login;
+        login42 != "" ? is42 = true : is42 = false;
+
         let imageCode = null;
         let imageName = "alt-photo";
-        let url = "http://localhost:3000/api/user/".concat(login)
-
-        //console.log("login in render_avatar is " + login);
+        let url = "http://localhost:3000/api/user/".concat(chosenLogin)
 
         let res = axios.get(url)
             .then(res => {
                 imageCode = res.data.avatar;
-                //console.log(res);
-                let is42;
-                if (res.data.login42 == null)
-                    is42 = false;
-                else
-                    is42 = true;
-                //console.log("Image in render avatar is " + imageCode);
-                return (this.getImage(imageCode, login, is42));
+                return (this.getImage(imageCode, chosenLogin, is42));
             })
             .catch(error => {
                 console.log("Catched error getting avatar");
             })
-        //return (<img alt={imageName} height="80" width="80"/>);
     }
 
     post_avatar(login: string, file: any) {
@@ -782,14 +778,14 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
         };
         const formData = new FormData();
         formData.append('file', file);
-        formData.append('type', 'file');;
-        //console.log(file);
+        formData.append('type', 'file');
 
         let res = axios.post(url, formData, { headers }).
             then(res => {
                 if (res.status == 201) {
                     console.log("Yay ! Avatar updated");
-                    this.render_avatar(login);
+                    //TODO: attention voir si le user est user42 et si il a pas changé de nom
+                    this.render_avatar(login, "");
                 }
                 else {
                     console.log("Oops! Avatar not updated");

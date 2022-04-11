@@ -10,7 +10,6 @@ import Dashboard from '../Dashboard/Dashboard';
 import Badge from "../Dashboard/Badge/Badge"
 import Achievements from "../Achievements/Achievements";
 import {Modal} from "react-bootstrap"
-//import Modal from "react-modal";
 
 export interface UserfuncProps {
 	username?: string,
@@ -30,6 +29,8 @@ export default function User(props: UserfuncProps) {
 	const [verifCode, setverifCode] = React.useState("");
 	const [activated2fa, setActivated2fa] = React.useState(true);
 	const [logged, setLogged] = React.useState(false);
+	const [is42, setis42] = React.useState(false);
+	const [login42, setlogin42] = React.useState("");
 	const calledOnce = React.useRef(false);
 
 	function clearInput() {
@@ -152,6 +153,12 @@ export default function User(props: UserfuncProps) {
 		await axios.get(url)
 			.then(res => {
 				username = res.data.login;
+				console.log(res);
+				if (res.data.login42 != null && res.data.login42 != undefined &&  res.data.login42 != "")
+				{
+					setis42(true);
+					setlogin42(res.data.login42);
+				}
 				setUsername(username);
 				setActivated2fa(res.data.isTwoFactorAuthenticationEnabled)
 			})
@@ -169,15 +176,16 @@ export default function User(props: UserfuncProps) {
 
 	function renderImage(login: string) {
 		let ax = new MyAxios(null);
-		return (ax.render_avatar(login));
+		console.log("login42 is " + login42);
+		if (login42 != "")
+			return (ax.render_avatar(login, login42));
+		return (ax.render_avatar(login, ""));
 	}
 
 	//MODALS
 	const [show, setShow] = useState(false);
-
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
-	//const [modalIsOpen, setIsOpen] = React.useState(false);
 
 	return (
 		<div id="user--div">
@@ -187,6 +195,7 @@ export default function User(props: UserfuncProps) {
 					<div className="col-9" id="bonjour--user">
 						<div className="user--stats" key={username}>
 							<>
+							{/*{logged == true ? console.log("username is " + username): ""}*/}
 							{logged == true ?
 							<div>
 							<img id={username} className="profile--pic" height="80" width="80"/>
@@ -196,17 +205,9 @@ export default function User(props: UserfuncProps) {
 								<h2 id="user--data">{username}</h2>
 								<button id="change--username" className="btn btn-outline-light"
 								onClick={handleShow}
-								/*onClick={openModal}*/
 								>
 									change username</button>
 								<EditUsernameModal username={username} show={show} onHide={handleClose}/>
-								{/*<Modal
-									isOpen={modalIsOpen}
-									onAfterOpen={afterOpenModal}
-									onRequestClose={closeModal}
-									//style={customStyles}
-									contentLabel="Example Modal"
-								/>*/}
 								<br />
 								<Achievements login={username}/>
 								<Badge />

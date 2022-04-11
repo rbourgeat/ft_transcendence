@@ -58,6 +58,7 @@ export default function Achievement(props: AchievementsProps) {
     }, []);
 
 
+    //TODO: attention dans les achievements il y a une erreur si je change de username !
     const style = { height: "40", width: "40"}
     return (
         <div id="Leaderboard">
