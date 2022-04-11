@@ -80,6 +80,10 @@ function App() {
     {
       localStorage.setItem("2fa", "false");
     }
+    if (localStorage.getItem("loggedIn") != "true" && localStorage.getItem("loggedIn") != "false")
+    {
+      localStorage.setItem("loggedIn", "false");
+    }
   }, []);
 
   //let login = useParams();
