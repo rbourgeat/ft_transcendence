@@ -4,9 +4,12 @@ import myAxios from "../../Utils/Axios/Axios";
 import axios from "axios";
 import MiniDisplay from '../MiniDisplay/MiniDisplay';
 
+
 export default function Blocked() {
+
 	const [users, setUsers] = React.useState([]);
 	const [load, setLoad] = React.useState(false);
+	const [reload, setReload] = React.useState(false);
 
 	const calledOnce = React.useRef(false);
 
@@ -31,11 +34,14 @@ export default function Blocked() {
 	}
 
 	useEffect(() => {
+		/*
 		if (calledOnce.current) {
 			return;
 		}
+		*/
+
 		renderBlocked();
-		calledOnce.current = true;
+		//calledOnce.current = true;
 	}, []);
 
 	return (

@@ -13,10 +13,6 @@ export default function People() {
 				<div className="row">
 					<br />
 					<All />
-					<br />
-					<Invitations />
-					<br />
-					<Friends />
 				</div>
 			</div>
 		</div>

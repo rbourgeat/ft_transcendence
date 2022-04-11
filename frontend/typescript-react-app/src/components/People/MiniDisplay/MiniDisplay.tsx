@@ -1,7 +1,7 @@
 import './MiniDisplay.scss';
 import MyAxios from '../../Utils/Axios/Axios';
 import React, { Component, useState, useEffect, Suspense, lazy } from 'react';
-import { AiOutlineCloseCircle, AiFillPlusCircle, AiFillCheckCircle } from "react-icons/ai";
+import { AiOutlineCloseCircle, AiFillPlusCircle, AiFillCheckCircle, AiFillUnlock } from "react-icons/ai";
 import { BsFillPersonPlusFill, BsFillPersonXFill } from "react-icons/bs";
 import io from "socket.io-client";
 import axios from 'axios';
@@ -130,14 +130,15 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 	}
 
 	function unblockContact(login: string) {
-
-		var x = document.getElementById("button-action");
-		if (x.style.display === "none") {
+		/*
+		var x = document.getElementById("testing");
+		if (x.style.display == "none") {
+			console.log("looooooooooool");
 			x.style.display = "block";
 		} else {
 			x.style.display = "none";
 		}
-
+	*/
 		let ax = new MyAxios(null);
 		return (ax.delete_relation_unblock(login));
 	}
@@ -171,7 +172,7 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 		else if (container == "blocked")
 			return (
 				<>
-					<i id="button-action" className="user--action" onClick={() => unblockContact(props.login)}>unblock</i>
+					<i id="button-action" className="user--action" onClick={() => unblockContact(props.login)}>{<AiFillUnlock />}</i>
 				</>
 			)
 	}
@@ -179,27 +180,29 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 	return (
 		<>
 			<li id="minidisplay--div" className="list-group-item" key={props.login}>
-				<Suspense fallback={<Hearts color="#ffe4e1" height={100} width={100} key={props.login} />}>
-					<img className="profile--pic" id={props.login} src="" width="100" height="100" onClick={gotoprofile} />
-					{load == true ? renderImage(props.avatar, props.login, props.ftlogin) : ""}
-					<svg className="log--color" height="40" width="40">
-						<circle cx="20" cy="20" r="15" fill={color} stroke="white" style={{ strokeWidth: '3' }} /></svg>
-					<br />
-					<p className="user--p" id="mini--login">{props.login}</p>
-					<p className="user--p" id="mini--status">{status}</p>
-					{buttonToDidsplay(props.container)}
-					<ToastContainer
-						position="top-right"
-						autoClose={5000}
-						hideProgressBar={false}
-						newestOnTop={false}
-						closeOnClick
-						rtl={false}
-						pauseOnFocusLoss
-						draggable
-						pauseOnHover
-					/>
-				</Suspense>
+				<div id="testing">
+					<Suspense fallback={<Hearts color="#ffe4e1" height={100} width={100} key={props.login} />}>
+						<img className="profile--pic" id={props.login} src="" width="100" height="100" onClick={gotoprofile} />
+						{load == true ? renderImage(props.avatar, props.login, props.ftlogin) : ""}
+						<svg className="log--color" height="40" width="40">
+							<circle cx="20" cy="20" r="15" fill={color} stroke="white" style={{ strokeWidth: '3' }} /></svg>
+						<br />
+						<p className="user--p" id="mini--login">{props.login}</p>
+						<p className="user--p" id="mini--status">{status}</p>
+						{buttonToDidsplay(props.container)}
+						<ToastContainer
+							position="top-right"
+							autoClose={5000}
+							hideProgressBar={false}
+							newestOnTop={false}
+							closeOnClick
+							rtl={false}
+							pauseOnFocusLoss
+							draggable
+							pauseOnHover
+						/>
+					</Suspense>
+				</div>
 			</li>
 		</>
 	);
