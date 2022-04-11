@@ -7,6 +7,7 @@ import Footer from "../Footer/Footer";
 import GameRules from "../GameRules/GameRules";
 import io from "socket.io-client";
 import axios from "axios";
+import { Form } from 'react-bootstrap'
 
 var adversaire: string;
 var joueur: string;
@@ -18,6 +19,7 @@ var isSearching = false;
 export default function Game() {
 	let size = useWindowDimensions();
 	const [isActive, setActive] = React.useState(true);
+	const [gameMode, chanScopeSet] = React.useState("original");
 
 	// socket game
 	const [username, setUsername] = React.useState("");
@@ -43,12 +45,15 @@ export default function Game() {
 	function sendSearch() {
 		if (joueur) {
 			isSearching = isSearching ? false : true;
-			if (isSearching)
+			if (isSearching) {
 				SearchText = "Annuler la recherche"
-			else
+				socket.emit('search', gameMode);
+			}
+			else {
 				SearchText = "Rechercher une partie à nouveau"
+				socket.emit('search', "STOPSEARCH");
+			}
 			document.querySelector('#search-button').textContent = SearchText;
-			socket.emit('search', isSearching);
 		}
 		else
 			document.querySelector('#search-button').textContent = "Impossible de te connecter !"
@@ -296,6 +301,17 @@ export default function Game() {
 			<Nav />
 			<div className="container">
 			<div className="row d-flex justify-content-center text-center">
+					<Form>
+						<Form.Group>
+							<Form.Select aria-label="Modes de jeux:" onChange={e => chanScopeSet(e.target.value)}>
+									<option>Modes de jeux:</option>
+									<option selected={true} value="original">Original (1972)</option>
+									<option value="bigball">Big Ball (Facile)</option>
+									<option value="blitz">Blitz (Balle Rapide)</option>
+									<option value="slow">Slow (Balle Lente)</option>
+							</Form.Select>
+						</Form.Group>
+					</Form>
 					{isActive ? <button type="button" className="btn btn-outline-dark" id="search-button" onClick={() => sendSearch()}>{SearchText}</button> : ""}
 					<p className='text' id="victoryMessage"></p>
 					<main role="main">
