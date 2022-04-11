@@ -121,11 +121,19 @@ export class UserController {
         return this.userService.sendInvitation(receiverLogin, req.user);
     }
 
+    /*
     @ApiOperation({ summary: 'Answer to the invitation request (accepted/declined/blocked) [jwt-protected]' })
     @UseGuards(JwtAuthenticationGuard)
     @Post('relation/answerToInvitation/:invitationId')
     answerToInvitation(@Param('invitationId') invitationId: number, @Body() statusResponse: RelationStatusClass, @Request() req) {
         return this.userService.answerToInvitation(statusResponse.status, invitationId, req.user);
+    }
+*/
+    @ApiOperation({ summary: 'Answer to the invitation request (accepted/declined/blocked) [jwt-protected]' })
+    @UseGuards(JwtAuthenticationGuard)
+    @Post('relation/answerToInvitation/:login')
+    answerToInvitation(@Param('login') login: string, @Body() statusResponse: RelationStatusClass, @Request() req) {
+        return this.userService.answerToInvitation(statusResponse.status, login, req.user);
     }
 
     @ApiOperation({ summary: 'List all received invitation [jwt-protected]' })
@@ -135,6 +143,13 @@ export class UserController {
         return this.userService.getReceivedInvitations(req.user);
     }
 
+    @ApiOperation({ summary: 'List all received invitation [jwt-protected]' })
+    @UseGuards(JwtAuthenticationGuard)
+    @Get('relation/me/pendingInvitations')
+    getPendingInvitations(@Request() req): Observable<RelationStatusClass[]> {
+        return this.userService.getPendingInvitations(req.user);
+    }
+
     @ApiOperation({ summary: 'Returns list of your friends [jwt-protected]' })
     @UseGuards(JwtAuthenticationGuard)
     @Get('relation/me/allFriends')
@@ -142,11 +157,20 @@ export class UserController {
         return this.userService.getFriends(req.user);
     }
 
+    /*
     @ApiOperation({ summary: 'Remove someone as friend [jwt-protected]' })
     @UseGuards(JwtAuthenticationGuard)
     @Delete('relation/remove/:receiverId')
     removeFriend(@Param('receiverId') receiverId: number, @Request() req) {
         return this.userService.removeFriend(receiverId, req.user);
+    }
+*/
+
+    @ApiOperation({ summary: 'Remove someone as friend [jwt-protected]' })
+    @UseGuards(JwtAuthenticationGuard)
+    @Delete('relation/remove/:receiverLogin')
+    removeFriend(@Param('receiverLogin') receiverLogin: string, @Request() req) {
+        return this.userService.removeFriend(receiverLogin, req.user);
     }
 
     @ApiOperation({ summary: 'Block a user [jwt-protected]' })

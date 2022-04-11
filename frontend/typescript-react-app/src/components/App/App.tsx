@@ -1,5 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import React, { useState, useMemo, useEffect} from 'react';
+import { io } from 'socket.io-client';
 import { useParams } from 'react-router-dom'
 import './App.scss';
 import {
@@ -17,18 +18,13 @@ import Search from "../Search/Search";
 import Achievements from "../Achievements/Achievements";
 import GameRules from "../GameRules/GameRules";
 import CreateChan from "../Channels/CreateChan/CreateChan";
-import Stats from "../Stats/Stats";
 import People from "../People/People";
 import Game from "../Game/Game";
-import PlayWatch from "../Playwatch/Playwatch";
 import Login2FA from "../Auth/Login2FA/Login2FA"
 import Channels from "../Channels/Channels"
-import { io } from 'socket.io-client';
 import axios from 'axios';
 import NotLogged from '../NotLogged/NotLogged'; import Login2fa from '../Auth/Login2FA/Login2FA';
 import Profile from "../Profile/Profile";
-
-//const { login } = useParams()
 
 function App() {
 
@@ -85,15 +81,18 @@ function App() {
     }
   }, []);
 
-  //let login = useParams();
-
   return (
     <div id="main">
       <Routes>
         <Route path="/" element={<Welcome />} />
         <Route path="/welcome" element={<Welcome />} />
-
-        {localStorage.getItem("loggedIn") == "false" ?  <Route path="/auth" element={<Auth />} /> : ""}
+        <Route path="/auth" element={<Auth />} />
+        {localStorage.getItem("loggedIn") == "false" ?
+          <>
+            <Route path="/auth" element={<Auth />} />
+            <Route path="*" element={<NotLogged />} />
+          </>
+          : ""}
 
         {localStorage.getItem("loggedIn") == "true" &&  localStorage.getItem("2fa") == "true" && localStorage.getItem("2faverif") == "false" ?
           <Route path="*" element={<Login2fa/>} /> : ""}
@@ -106,12 +105,10 @@ function App() {
                   <Route path="/auth" element={<UserMain />} />
 									<Route path="/chat" element={<CreateChan endpoint="" action="create" />} />
                   <Route path="/channels" element={<Channels />} />
-                  <Route path="/search" element={<Search />} />
-                  {/*<Route path="/achievements" element={<Achievements login={username} />} />*/}
                   <Route path="/people" element={<People />} />
                   <Route path="/game" element={<Game />} />
                   <Route path="/2fa" element={<Login2FA />} />
-                  <Route path="/profile/:login" element={<Profile /*login=""*//>}/>
+                  <Route path="/profile/:login" element={<Profile />}/>
                   <Route path="*" element={<NotFound />} />
                 </>}
       </Routes>

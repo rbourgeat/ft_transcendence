@@ -26,6 +26,15 @@ export class ChatController {
         return this.chatService.getAllChats();
     }
 
+    @ApiOperation({ summary: 'Retrieve all channels from a user [jwt-protected + for swagger test only]' })
+    @ApiOkResponse({ description: 'Suceed' })
+    @UseGuards(JwtAuthenticationGuard)
+    @Get('joinedChannels')
+    async getChatsFromUser(@Req() req: RequestWithUser) {
+        return this.chatService.getChatsFromUser(req.user);
+    }
+
+
     @ApiOperation({ summary: 'Create a new message [jwt-protected + for swagger test only]' })
     @ApiOkResponse({ description: 'Message creation suceed' })
     @UseGuards(JwtAuthenticationGuard)

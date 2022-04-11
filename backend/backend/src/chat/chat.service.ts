@@ -12,6 +12,7 @@ import { parse } from 'cookie';
 import { AuthService } from '../auth/auth.service';
 import { WsException } from '@nestjs/websockets';
 import { from } from 'rxjs';
+import { ChatInterface } from './test.interface';
 
 @Injectable()
 export class ChatService {
@@ -51,6 +52,21 @@ export class ChatService {
 		return this.messageRepository.find({
 			relations: ['author']
 		});
+	}
+
+	async getChatsFromUser(user: User) {
+		let listParticipateCard = await this.participateRepository.find({
+			where: [
+				{ user: user },
+			],
+			relations: ['user', 'chat'],
+		});
+
+		let channelsIds: number[] = [];
+		listParticipateCard.forEach((participate: Participate) => {
+			channelsIds.push(participate.chat.id);
+		});
+		return this.chatRepository.findByIds(channelsIds);
 	}
 
 	async getUserFromSocket(socket: Socket) {

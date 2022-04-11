@@ -467,6 +467,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     post_api_user_relation_sendInvation_id(login: string) {
         let url = "http://localhost:3000/api/user/relation/sendInvitation/".concat(login);
 
+        let toast = new ToastAlerts(null);
         const body = {
             receiverLogin: login
         }
@@ -476,21 +477,23 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
 
         let res = axios.post(url, body)
             .then(res => {
+                toast.notifySuccess("You invited that user")
                 console.log(res);
                 console.log("Succesfully sent invitation !");
             })
             .catch((error) => {
+                toast.notifyDanger("Your invite failed")
                 console.log(error);
                 console.log("Error while sending invitation");
             })
     }
 
     //TODO: a tester ! -> est-ce qu'on veut vraiment gérer ça ?
-    post_api_user_relation_answerInvitation_id(id: number) {
-        let url = "http://localhost:3000/api/user/relation/answerToInvitation/".concat(id.toString());
+    post_api_user_relation_answerInvitation_id(login: string, status: string) {
+        let url = "http://localhost:3000/api/user/relation/answerToInvitation/".concat(login);
 
         const body = {
-            receiverId: id
+            status: status
         }
 
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
@@ -545,8 +548,8 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     }
 
     //TODO: a tester
-    delete_relation_id(id: number) {
-        let url = "http://localhost:3000/api/user/relation/remove/".concat(id.toString());
+    delete_relation_id(login: string) {
+        let url = "http://localhost:3000/api/user/relation/remove/".concat(login);
 
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
         axios.defaults.withCredentials = true;
@@ -581,8 +584,8 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     }
 
     //TODO: a tester
-    delete_relation_unblock(id: number) {
-        let url = "http://localhost:3000/api/user/relation/unblock/".concat(id.toString());
+    delete_relation_unblock(login: string) {
+        let url = "http://localhost:3000/api/user/relation/unblock/".concat(login);
 
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
         axios.defaults.withCredentials = true;
@@ -698,19 +701,19 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
 
         let login42 = localStorage.getItem("login42");
 
-        console.log("has changed is " + haschanged);
+        //console.log("has changed is " + haschanged);
         if (haschanged == false)
             imageUser42 = "https://cdn.intra.42.fr/users/".concat(login).concat(".jpg")
         else
             imageUser42 = "https://cdn.intra.42.fr/users/".concat(login42).concat(".jpg")
-        console.log("image is " + imageUser42);
-        if (imageCode.startsWith("http")) {
+        //console.log("image is " + imageUser42);
+        if (imageCode.startsWith("http"))
+        {
             let myImage: HTMLImageElement = document.querySelector("#".concat(login));
             if (is42)
                 myImage.src = imageUser42;
             else
                 myImage.src = "https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg";
-
             return (<img className="profile--pic" src={myImage.src} alt={imageName} height="80" width="80" id={login} />);
         }
 
@@ -747,8 +750,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
         //tests
         login42 != "" ? chosenLogin = login : chosenLogin = login;
         login42 != "" ? is42 = true : is42 = false;
-
-        console.log("login is " + login);
+        //console.log("login is " + login);
 
         let imageCode = null;
         let imageName = "alt-photo";
@@ -757,7 +759,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
         let res = axios.get(url)
             .then(res => {
                 imageCode = res.data.avatar;
-                console.log("chosenLogin is " + chosenLogin);
+                //console.log("chosenLogin is " + chosenLogin);
                 return (this.getImage(imageCode, chosenLogin, is42, haschanged));
             })
             .catch(error => {

@@ -198,6 +198,7 @@ export class UserService {
 	* update the status of the request only
 	*/
 
+	/*
 	async answerToInvitation(statusResponse: RelationStatus, invitationId: number, user: User) {
 		await this.userRelationRepository.update(invitationId, { status: statusResponse })
 
@@ -226,13 +227,62 @@ export class UserService {
 		const friendRequest = await this.getInvitationById(invitationId)
 		return friendRequest;
 	}
+*/
 
+	async answerToInvitation(statusResponse: RelationStatus, creator: string, user: User) {
+
+		const creatorA = await this.getUserByLogin(creator);
+		const relation = await this.userRelationRepository.findOne({
+			where: [{ creator: creatorA, receiver: user, status: 'pending' }],
+			relations: ['creator', 'receiver']
+		})
+
+		const invitationId = relation.id;
+		console.log(relation);
+		console.log(relation.id);
+
+		await this.userRelationRepository.update(invitationId, { status: statusResponse })
+
+
+		//achievement check:
+		if (statusResponse == "accepted") {
+			const friendsList = await this.getFriends(user);
+			console.log('my friend list has a length:' + friendsList.length);
+			if (friendsList.length == 1) {
+				console.log(user.login + " will unlocked friend achievement");
+				this.userEvent.achievementFriend(user); //add achievemnt for the user answering
+			}
+
+			const invitation = await this.userRelationRepository.findOne({
+				where: [{ id: invitationId }],
+				relations: ['creator']
+			});
+			console.log('hello');
+			const friend = await this.getUserByLogin(invitation.creator.login);
+			const otherfriendsList = await this.getFriends(friend);
+			console.log('his friend list has a length:' + friendsList.length);
+			if (otherfriendsList.length == 1) {
+				console.log(friend + " will also unlocked friend achievement");
+				this.userEvent.achievementFriend(friend)//add achievement for the user sending
+			}
+		}
+		const friendRequest = await this.getInvitationById(invitationId)
+		return friendRequest;
+	}
 	/**
 	 * find all invite where receiver is user, relations:[] allows to send the user element details :)
 	 */
 	getReceivedInvitations(currentUser: User): Observable<RelationInvitation[]> {
 		return from(this.userRelationRepository.find({
 			where: [{ receiver: currentUser }],
+			relations: ['receiver', 'creator']
+		}),
+		);
+	}
+
+	getPendingInvitations(currentUser: User): Observable<RelationInvitation[]> {
+		return from(this.userRelationRepository.find({
+			where: [{ receiver: currentUser, status: 'pending' }],
 			relations: ['receiver', 'creator']
 		}),
 		);
@@ -267,7 +317,6 @@ export class UserService {
 	 * 3. return the research in userRepo with the friends id list
 	 */
 	async getFriends(currentUser: User) {
-		console.log('test');
 		let list = await this.userRelationRepository.find({
 			where: [
 				{ creator: currentUser, status: 'accepted' },
@@ -312,8 +361,15 @@ export class UserService {
 	* find user you want to unfriend, delete the relation either if it was the target or u that
 	* made the invitation
 	 */
+	/*
 	async removeFriend(userToRemoveId: number, currentUser: User) {
 		const userToRemove = await this.findUserById(userToRemoveId);
+		await this.userRelationRepository.delete({ receiver: currentUser, creator: userToRemove });
+		await this.userRelationRepository.delete({ receiver: userToRemove, creator: currentUser });
+	}
+*/
+	async removeFriend(userToRemoveId: string, currentUser: User) {
+		const userToRemove = await this.getUserByLogin(userToRemoveId);
 		await this.userRelationRepository.delete({ receiver: currentUser, creator: userToRemove });
 		await this.userRelationRepository.delete({ receiver: userToRemove, creator: currentUser });
 	}
@@ -330,6 +386,7 @@ export class UserService {
 	* 1.block yourself / 2. user not existing / 3. user already blocked / 4. update if relation already existing
 	*/
 	async blockUser(reiceverLogin: string, creator: User) {
+		/*
 		if (reiceverLogin == creator.login)
 			return console.log('It is not possible to block yourself!');
 		const receiver = await this.getUserByLogin(reiceverLogin);
@@ -349,18 +406,6 @@ export class UserService {
 			}
 			else if (inviteFromYou && inviteFromYou.status == 'blocked')
 				return console.log('You have already blocked that user');
-			/*
-		const inviteFromHim = await this.userRelationRepository.findOne({
-			where: [
-				{ creator, receiver },
-				{ creator: receiver, receiver: creator },
-			],
-		});
-		//if (invite.status == 'blocked')
-		//	return console.log('You have already blocked that user');
-		await this.answerToInvitation('blocked', inviteFromHim.id);
-		return console.log('update the existing relation. you blocked the targeted user');
-		*/
 		}
 		const newRelation = this.userRelationRepository.create(
 			{
@@ -370,7 +415,9 @@ export class UserService {
 			}
 		);
 		this.userRelationRepository.save(newRelation);
+		*/
 	}
+
 }
 
 export function fileMimetypeFilter(...mimetypes: string[]) {

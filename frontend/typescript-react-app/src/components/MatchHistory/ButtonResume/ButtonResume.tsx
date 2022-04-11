@@ -1,21 +1,24 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import './ButtonResume.scss';
 
 export interface MatchHistoryProps {
-    winner: string,
-    looser: string,
-    scoreWinner: string,
-    scoreLooser: string
+    winner?: string,
+    looser?: string,
+    scoreWinner?: string,
+    scoreLooser?: string
 }
 
 export default function MatchHistory(props: MatchHistoryProps) {
+
+    useEffect(() => {
+        console.log("button created");
+    }, []);
+
     return (
         <div id="buttonresume">
-        {/* On fera un map ensuite pour boucler proprement sur les matchs */}
             <div className="row">
                 <div id="scores">
                     <p id="buttonresume--result">
-                    {/*<br />*/}
                     {/*<img src="https://miro.medium.com/max/720/1*W35QUSvGpcLuxPo3SRTH4w.png" id="player-1-img" className="player-img" alt="player1"></img>*/}
                         <span id="player1" className="winner">{props.winner}</span>
                             <span className="text"> - </span>
