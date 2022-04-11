@@ -65,6 +65,14 @@ export class UserMigration1645626140921 implements MigrationInterface {
             }),
         );
 
+        const bahaasRelation1 = await queryRunner.manager.save(
+            queryRunner.manager.create<UserRelation>(UserRelation, {
+                creator: dummy1,
+                receiver: bahaas,
+                status: 'accepted',
+            }),
+        );
+
         const bahaasRelation2 = await queryRunner.manager.save(
             queryRunner.manager.create<UserRelation>(UserRelation, {
                 creator: bahaas,
@@ -81,10 +89,26 @@ export class UserMigration1645626140921 implements MigrationInterface {
             }),
         );
 
+        const bahaasRelation31 = await queryRunner.manager.save(
+            queryRunner.manager.create<UserRelation>(UserRelation, {
+                creator: malatini,
+                receiver: bahaas,
+                status: 'pending',
+            }),
+        );
+
         const bahaasRelation4 = await queryRunner.manager.save(
             queryRunner.manager.create<UserRelation>(UserRelation, {
                 creator: bahaas,
                 receiver: dummy4,
+                status: 'blocked',
+            }),
+        );
+
+        const bahaasRelation41 = await queryRunner.manager.save(
+            queryRunner.manager.create<UserRelation>(UserRelation, {
+                creator: dummy5,
+                receiver: bahaas,
                 status: 'blocked',
             }),
         );

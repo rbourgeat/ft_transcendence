@@ -1,12 +1,14 @@
 import './MiniDisplay.scss';
 import MyAxios from '../../Utils/Axios/Axios';
 import React, { Component, useState, useEffect } from 'react';
-import { AiOutlineCloseCircle, AiFillPlusCircle } from "react-icons/ai";
+import { AiOutlineCloseCircle, AiFillPlusCircle, AiFillCheckCircle } from "react-icons/ai";
 import { BsFillPersonPlusFill, BsFillPersonXFill } from "react-icons/bs";
 
 // IMPORTER CA
 import io from "socket.io-client";
 import axios from 'axios';
+import { MdCancel, MdCheck, MdBlock } from 'react-icons/md';
+import { FiUserMinus, FiUserPlus, FiUserX } from 'react-icons/fi';
 
 export interface MiniDisplayProps {
 	login?: string,
@@ -15,6 +17,8 @@ export interface MiniDisplayProps {
 	isft?: boolean,
 	ftlogin?: string,
 	user?: any;
+	container?: string;
+	relation?: string;
 	children?: React.ReactNode | React.ReactChild | React.ReactChildren | React.ReactChild[] | React.ReactChildren[]
 }
 
@@ -133,26 +137,73 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 		return (ax.post_relation_block(login));
 	}
 
-	function gotoprofile()
-	{
+	function acceptInvitation(login: string) {
+		let ax = new MyAxios(null);
+		return (ax.post_api_user_relation_answerInvitation_id(login, "accepted"));
+	}
+
+	function refuseInvitation(login: string) {
+		let ax = new MyAxios(null);
+		return (ax.post_api_user_relation_answerInvitation_id(login, "declined"));
+	}
+
+
+
+	function removeContact(login: string) {
+		let ax = new MyAxios(null);
+		return (ax.delete_relation_id(login));
+	}
+
+	function unblockContact(login: string) {
+		let ax = new MyAxios(null);
+		return (ax.delete_relation_unblock(login));
+	}
+
+	function gotoprofile() {
 		let url = "http://localhost:3030/profile/".concat(props.login);
 		window.top.location = url;
 	}
 
+	function buttonToDidsplay(container: string) {
+		if (container == "all")
+			return (
+				<>
+					<i className="user--action" onClick={() => addContact(props.login)}>{<FiUserPlus />}</i>
+					<i className="user--action" onClick={() => blockContact(props.login)}>{<FiUserX />}</i>
+				</>
+			)
+		else if (container == "friends")
+			return (
+				<>
+					<i className="user--action" onClick={() => removeContact(props.login)}>{<FiUserMinus />}</i>
+				</>
+			)
+		else if (container == "invitation")
+			return (
+				<>
+					<i className="user--action" onClick={() => acceptInvitation(props.login)}>{<AiFillCheckCircle />}</i>
+					<i className="user--action" onClick={() => refuseInvitation(props.login)}>{<MdCancel />}</i>
+				</>
+			)
+		else if (container == "blocked")
+			return (
+				<>
+					<i className="user--action" onClick={() => unblockContact(props.login)}>unblock button to do</i>
+				</>
+			)
+	}
+
 	return (
 		<>
-			{/*{console.log(props.user)}*/}
 			<li id="minidisplay--div" className="list-group-item" key={props.login}>
 				<img className="profile--pic" id={props.login} src="" width="100" height="100" onClick={gotoprofile} />
-				{/*{load == true ? console.log(props.user) : console.log("test")}*/}
 				{load == true ? renderImage(props.avatar, props.login, props.ftlogin) : ""}
 				<svg className="log--color" height="40" width="40">
 					<circle cx="20" cy="20" r="15" fill={color} stroke="white" stroke-width="3" /></svg>
 				<br />
 				<p className="user--p" id="mini--login">{props.login}</p>
 				<p className="user--p" id="mini--status">{status}</p>
-				<i className="user--action" onClick={() => addContact(props.login)}>{<BsFillPersonPlusFill />}</i>
-				<i className="user--action" onClick={() => blockContact(props.login)}>{<BsFillPersonXFill />}</i>
+				{buttonToDidsplay(props.container)}
 			</li>
 		</>
 	);
