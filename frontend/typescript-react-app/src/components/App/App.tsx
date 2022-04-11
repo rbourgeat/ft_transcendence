@@ -1,5 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import React, { useState, useMemo, useEffect} from 'react';
+import { io } from 'socket.io-client';
 import { useParams } from 'react-router-dom'
 import './App.scss';
 import {
@@ -17,13 +18,10 @@ import Search from "../Search/Search";
 import Achievements from "../Achievements/Achievements";
 import GameRules from "../GameRules/GameRules";
 import CreateChan from "../Channels/CreateChan/CreateChan";
-import Stats from "../Stats/Stats";
 import People from "../People/People";
 import Game from "../Game/Game";
-import PlayWatch from "../Playwatch/Playwatch";
 import Login2FA from "../Auth/Login2FA/Login2FA"
 import Channels from "../Channels/Channels"
-import { io } from 'socket.io-client';
 import axios from 'axios';
 import NotLogged from '../NotLogged/NotLogged';
 import Login2fa from '../Auth/Login2FA/Login2FA';
@@ -105,11 +103,8 @@ function App() {
               :
                 <>
                   <Route path="/user" element={<UserMain />} />
-                  {/*<Route path="/auth" element={<UserMain />} />*/}
                   <Route path="/chat" element={<CreateChan />} />
                   <Route path="/channels" element={<Channels />} />
-                  {/*<Route path="/search" element={<Search />} />*/}
-                  {/*<Route path="/achievements" element={<Achievements login={username} />} />*/}
                   <Route path="/people" element={<People />} />
                   <Route path="/game" element={<Game />} />
                   <Route path="/2fa" element={<Login2FA />} />

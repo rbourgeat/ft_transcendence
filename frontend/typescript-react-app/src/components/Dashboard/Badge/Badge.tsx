@@ -9,9 +9,6 @@ export default function Badge(props) {
                     <div id="badge--div--sub" className="row">
                         <div className="col" id="badge--stats">
                             <br />
-                            {/*<strong>
-                                <h2 id="badge--title">Your stats : </h2>
-                            </strong>*/}
                             <br/>
                             <p id="badge--rank" className="badge--stats-text">Rank: x</p>
                             <p id="badge--total-score" className="badge--stats-text">Total score : x</p>

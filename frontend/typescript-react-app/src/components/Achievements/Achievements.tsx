@@ -2,14 +2,11 @@ import './Achievements.scss';
 import Nav from "../Nav/Nav";
 import Footer from "../Footer/Footer";
 import React, { useEffect } from "react";
-
-//icons - bug avec les images ? elles ne s'affichent pas toujours !
 import { MdLocalFireDepartment } from "react-icons/md";
 import { FaCat, FaUserFriends } from "react-icons/fa";
 import { GiPowerButton, GiPeaceDove } from "react-icons/gi";
 import { GrGamepad } from "react-icons/gr";
 import { BsCheckLg } from "react-icons/bs";
-//endof icons
 
 import axios from 'axios';
 import MyAxios from "../Utils/Axios/Axios";
@@ -22,7 +19,6 @@ export interface AchievementsProps {
 export default function Achievement(props: AchievementsProps) {
 
     const [myArray, setMyArray] = React.useState([]);
-
     async function getAchievements() {
         let url = "http://localhost:3000/api/user/achievements/".concat(props.login);
 
@@ -60,9 +56,7 @@ export default function Achievement(props: AchievementsProps) {
     const style = { height: "40", width: "40"}
     return (
         <div id="Leaderboard">
-            {/*<Nav />*/}
             <div id="achievements">
-                {/*<div className="container">*/}
                     <div className="row d-flex justify-content-center text-center" id="row-cards">
                         <h1 id="achievements--title">Achievements</h1>
                     </div>
@@ -141,12 +135,9 @@ export default function Achievement(props: AchievementsProps) {
                                     </div>
                                 </div>
                             </div>
-
                         </div>
-                    {/*</div>*/}
                 </div>
             </div>
-            {/*<Footer />*/}
         </div >
     );
 }

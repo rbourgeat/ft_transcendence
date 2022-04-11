@@ -72,7 +72,8 @@ export default function Profile() {
 								<br />
 								{renderImage(login, isUser)}
 								<br />
-								<h2 id="profile-title">{login.toUpperCase()}</h2>
+								<h2 id="profile-title">{login}</h2>
+								<br />
 								<Achievement login={login} />
 								<br/>
 								<MatchHistory login={login}/>
