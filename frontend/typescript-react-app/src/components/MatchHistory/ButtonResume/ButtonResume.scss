@@ -1,15 +1,9 @@
 @use "../../../variables";
 
-//span {
-// // color: white !important;
-//  //color: #f9f9f9;
-//  margin-top: 15px;
-//}
-
 #buttonresume--result {
   background: white !important;
   border-radius: variables.$border-radius-big;
-  width: 800px !important;
+  width: 100% !important;
   min-height: 50px;
   text-align: center !important;
   font-weight: variables.$bold;
@@ -18,22 +12,30 @@
   padding-top: 10px;
   border: 0.1rem solid #f9f9f9;
   box-shadow: 3px 3px #f9f9f9, -0.1em 0 .4em #f9f9f9;
+  font-size: 12px !important;
+  font-family: variables.$basic-font !important;
+}
+
+.score, .buttonresume {
+  width: 100% !important;
 }
 
 .winner {
-  color: variables.$green;
+  color: variables.$green !important;
 }
 
 .looser {
-  color: variables.$red;
+  color: variables.$red !important;
 }
+
+#buttoresumee--result > .text {
+  font-family: variables.$basic-font !important;
+  color: white !important;
+}
+
 
 .score, .winner, .looser, #scores, .text {
-  color: black !important;
+  //color: black !important;
   font-size: 18px;
+  font-family: variables.$basic-font !important;
 }
-
-//#buttonresume {
-//  margin-top: 15px !important;
-//  border: 0.1rem solid #f9f9f9;
-//}

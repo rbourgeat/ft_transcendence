@@ -3,13 +3,11 @@
 #matchhistory--div {
   border-radius: variables.$border-radius-big;
   padding: 20px;
-  width: 50%;
-  margin-left: 25%;
+  //width: 50%;
+  //margin-left: 25%;
 }
 
 #matchhistory--title {
-  //text-decoration: underline;
-  //color: white !important;
   font-family: variables.$basic-font;
   color: black !important;
 }
@@ -23,6 +21,6 @@
   margin-bottom: 10px !important;
 }
 
-//#col--matchhistory {
-//  border: 0.1rem solid #f9f9f9;
+//.main--button--resume {
+//  width: 80% !important;
 //}

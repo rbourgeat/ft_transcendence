@@ -202,7 +202,7 @@ export class UserMigration1645626140921 implements MigrationInterface {
         const bahaasgame3 = await queryRunner.manager.save(
             queryRunner.manager.create<Game>(Game, {
                 winner_score: 2,
-                loser_score: 5,
+                loser_score: 1,
                 winner: "dummy3",
                 loser: "bahaas",
                 players: [dummy3, bahaas]

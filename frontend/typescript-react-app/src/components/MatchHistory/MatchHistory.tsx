@@ -14,11 +14,6 @@ export default function MatchHistory(props: MatchHistoryProps)
 {
     const calledOnce = React.useRef(false);
     const [resultsID, setResultsID] = React.useState([]);
-    //const [resultsWS, setResultsWS] = React.useState([]);
-    //const [resultsLS, setResultsLS] = React.useState([]);
-    //const [resultsW, setResultsW] = React.useState([]);
-    //const [resultsL, setResultsL] = React.useState([]);
-    //const [resultsP, setResultsP] = React.useState([]);
     const [load, setLoad] = React.useState(false);
 
     useEffect(() => {
@@ -66,35 +61,34 @@ export default function MatchHistory(props: MatchHistoryProps)
     }
 
     return (
-        <div id="matchhistory--div"className="container">
-        <div className="row">
-        <div  className="d-flex justify-content-center">
-            <h3 id="matchhistory--title">Match history</h3>
-        </div>
-        <div className="row" id="match--history">
-            <div className="d-flex justify-content-center">
-                <div className="col" id="col--matchhistory">
-                    <ul>
-                        {load == true ?
-                            resultsID.map(result =>
-                            <div key={result.id}>
-                                <ButtonResume
-                                    winner={result.winner}
-                                    looser={result.loser}
-                                    scoreWinner={result.winner_score}
-                                    scoreLooser={result.loser_score}
-                                />
-                                <p>coucou</p>
-                            </div>
-                        ) : ""}
-                        {/*<p>In progress..</p>*/}
-                        {/*<li><ButtonResume winner="bahaas" looser="malatini" scoreWinner="3" scoreLooser="2"/></li>
-                        <li><ButtonResume winner="dummy5" looser="bahaas" scoreWinner="5" scoreLooser="1"/></li>*/}
-                    </ul>
+        <div id="matchhistory--div" className="container">
+            <div >
+                <div >
+                    <h3 id="matchhistory--title">Match history</h3>
+                </div>
+                <div id="match--history">
+                    <div>
+                        <div id="col--matchhistory">
+                            <ul>
+                                {load == true ?
+                                    resultsID.map(result =>
+                                    <div className="main--button--resume" key={result.id}>
+                                        <ButtonResume
+                                            winner={result.winner}
+                                            looser={result.loser}
+                                            scoreWinner={result.winner_score}
+                                            scoreLooser={result.loser_score}
+                                        />
+                                    </div>
+                                ) : ""}
+                                {/*<p>In progress..</p>*/}
+                                {/*<li><ButtonResume winner="bahaas" looser="malatini" scoreWinner="3" scoreLooser="2"/></li>
+                                <li><ButtonResume winner="dummy5" looser="bahaas" scoreWinner="5" scoreLooser="1"/></li>*/}
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-        </div>
         </div>
     )
 }
