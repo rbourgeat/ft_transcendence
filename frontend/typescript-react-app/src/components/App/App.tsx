@@ -29,8 +29,6 @@ import NotLogged from '../NotLogged/NotLogged';
 import Login2fa from '../Auth/Login2FA/Login2FA';
 import Profile from "../Profile/Profile";
 
-//const { login } = useParams()
-
 function App() {
 
   const [user, setUser] = useState(null);
@@ -86,15 +84,18 @@ function App() {
     }
   }, []);
 
-  //let login = useParams();
-
   return (
     <div id="main">
       <Routes>
         <Route path="/" element={<Welcome />} />
         <Route path="/welcome" element={<Welcome />} />
-
-        {localStorage.getItem("loggedIn") == "false" ?  <Route path="/auth" element={<Auth />} /> : ""}
+        <Route path="/auth" element={<Auth />} />
+        {localStorage.getItem("loggedIn") == "false" ?
+          <>
+            <Route path="/auth" element={<Auth />} />
+            <Route path="*" element={<NotLogged />} />
+          </>
+          : ""}
 
         {localStorage.getItem("loggedIn") == "true" &&  localStorage.getItem("2fa") == "true" && localStorage.getItem("2faverif") == "false" ?
           <Route path="*" element={<Login2fa/>} /> : ""}
@@ -104,15 +105,15 @@ function App() {
               :
                 <>
                   <Route path="/user" element={<UserMain />} />
-                  <Route path="/auth" element={<UserMain />} />
+                  {/*<Route path="/auth" element={<UserMain />} />*/}
                   <Route path="/chat" element={<CreateChan />} />
                   <Route path="/channels" element={<Channels />} />
-                  <Route path="/search" element={<Search />} />
+                  {/*<Route path="/search" element={<Search />} />*/}
                   {/*<Route path="/achievements" element={<Achievements login={username} />} />*/}
                   <Route path="/people" element={<People />} />
                   <Route path="/game" element={<Game />} />
                   <Route path="/2fa" element={<Login2FA />} />
-                  <Route path="/profile/:login" element={<Profile /*login=""*//>}/>
+                  <Route path="/profile/:login" element={<Profile />}/>
                   <Route path="*" element={<NotFound />} />
                 </>}
       </Routes>

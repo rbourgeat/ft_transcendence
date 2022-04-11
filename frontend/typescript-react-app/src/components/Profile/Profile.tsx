@@ -6,6 +6,13 @@ import { useParams } from 'react-router-dom'
 import NotFound from "../../components/NotFound/NotFound";
 import MyAxios from '../Utils/Axios/Axios';
 import MatchHistory from '../MatchHistory/MatchHistory';
+import Achievement from '../Achievements/Achievements';
+
+export interface ProfileProps
+{
+	login?: string,
+	avatar?: any
+}
 
 export default function Profile() {
 
@@ -18,13 +25,26 @@ export default function Profile() {
 
 		axios.get(url)
 		.then(res => {
-			console.log(res);
+			//console.log(res);
 			setUserOk(true);
 		})
 		.catch((err) => {
 			console.log("Error while getting api auth");
 			console.log(err);
 		})
+	}
+
+	function renderImage(login: string, isUserProfile: boolean) {
+		let ax = new MyAxios(null);
+		let log42 = localStorage.getItem("login42");
+		let haschanged = false;
+		if (login != log42)
+			haschanged = true;
+		if (isUserProfile == false)
+			haschanged = false;
+		if (log42 != "" && log42 != null && log42 != undefined)
+			return (ax.render_avatar(login, log42, haschanged));
+		return (ax.render_avatar(login, "", haschanged));
 	}
 
 	useEffect(() => {
@@ -35,16 +55,7 @@ export default function Profile() {
 
 	const {login} = useParams();
 
-	function renderImage(login: string) {
-		let ax = new MyAxios(null);
-		//TODO: attention si le user a changé de nom ça risque de poser un pb
-		let log42 = localStorage.getItem("login42");
-		let haschanged = false;
-		if (log42 != login)
-			haschanged = true;
-		return (ax.render_avatar(login, "", haschanged));
-	}
-
+	let isUser = (login == localStorage.getItem("login") ? true : false);
     return (
         <div id="profile--div">
 			<Nav />
@@ -59,17 +70,21 @@ export default function Profile() {
 							<div id="profile--div">
 								<img id={login} className="profile--pic" src="" width="100" height="100"/>
 								<br />
-								{renderImage(login)}
+								{renderImage(login, isUser)}
+								<br />
 								<h2 id="profile-title">{login.toUpperCase()}</h2>
+								<Achievement login={login} />
 								<br/>
-								<MatchHistory />
+								<MatchHistory login={login}/>
 								<br/>
 							</div>
 						: <>
 							<h1><span id="oops">Oops...</span></h1>
 							<h2><span id="page-not-found">Page not found</span></h2>
 							<button type="button" className="btn btn-outline-dark"
-								onClick={(e) => {window.top.location = "http://localhost:3030/game"}}
+								onClick={(e) =>
+									{window.top.location = "http://localhost:3030/game"}
+								}
 							>Go to game</button>
 						</>
 						}
