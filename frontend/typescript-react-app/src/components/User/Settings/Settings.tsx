@@ -4,6 +4,7 @@ import { ToastContainer } from 'react-toastify';
 import ToastAlerts from '../../Utils/ToastAlerts/ToastAlerts';
 import axios from "axios";
 import MyAxios from '../../Utils/Axios/Axios';
+import EditUsernameModal from '../editUsername/EditUsername';
 
 export interface SettingsProps
 {
@@ -124,10 +125,16 @@ export default function Settings(props: SettingsProps) {
 		calledOnce.current = true;
 	}, []);
 
+	//MODALS
+	const [show, setShow] = useState(false);
+	const handleClose = () => setShow(false);
+	const handleShow = () => setShow(true);
+
     return (
         <div id="settings">
 			<div>
 				<h2 id="user--settings">Settings</h2>
+					<br />
 					<label id="change--avatar--label">Change avatar</label>
 					<div id="change--avatar">
 					<input
@@ -138,6 +145,13 @@ export default function Settings(props: SettingsProps) {
 						onChange={onChangePicture}
 						className="input-file-upload"
 					/>
+				</div>
+				<div id="change--username--div">
+					<button id="change--username"  type="button" className="btn btn-outline-dark"
+							onClick={handleShow}>change username
+						</button>
+						<EditUsernameModal username={props.username} show={show} onHide={handleClose}/>
+						<br />
 				</div>
 			<div id="2fa--div">
 				<h3 id="activate--2fa">2 Factor Authentication</h3>

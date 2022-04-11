@@ -76,11 +76,6 @@ export default function User(props: UserfuncProps) {
 		return (ax.render_avatar(login, ""));
 	}
 
-	//MODALS
-	const [show, setShow] = useState(false);
-	const handleClose = () => setShow(false);
-	const handleShow = () => setShow(true);
-
 	return (
 		<div id="user--div">
 			<Nav />
@@ -94,13 +89,14 @@ export default function User(props: UserfuncProps) {
 							<img id={username} className="profile--pic" height="80" width="80"/>
 							{renderImage(username)}
 							<br />
+							<h2 id="user--data">{username}</h2>
 							<div className="col-9 mx-auto text-center" id="input-div">
-								<h2 id="user--data">{username}</h2>
-								<button id="change--username" className="btn btn-outline-light"
-								onClick={handleShow}
+
+								{/*<button id="change--username" className="btn btn-outline-light"
+									onClick={handleShow}
 								>
 									change username</button>
-								<EditUsernameModal username={username} show={show} onHide={handleClose}/>
+								<EditUsernameModal username={username} show={show} onHide={handleClose}/>*/}
 								<br />
 								{/*<Achievements login={username}/>*/}
 								{/*<Badge />*/}
