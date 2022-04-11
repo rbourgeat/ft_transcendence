@@ -30,8 +30,6 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 
 		ftlogin == null || ftlogin == undefined || ftlogin == "" ? is42 = false : is42 = true;
 
-		//console.log("ftlogin is " + ftlogin);
-
 		let imageName = "alt-photo";
 
 		let chosenLogin = "";
@@ -39,8 +37,6 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 			chosenLogin = ftlogin;
 		else
 			chosenLogin = login;
-
-		//console.log("chosen login is " + chosenLogin);
 
 		if (avatar.startsWith("http")) {
 			let imageUser42 = "https://cdn.intra.42.fr/users/".concat(chosenLogin).concat(".jpg");
@@ -60,7 +56,6 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 		}
 
 		let url = "http://localhost:3000/api/user/".concat(avatar).concat("/avatar/");
-
 		let res = axios.get(url, { responseType: 'blob' })
 			.then(res => {
 				let myImage: HTMLImageElement = document.querySelector("#".concat(props.login));

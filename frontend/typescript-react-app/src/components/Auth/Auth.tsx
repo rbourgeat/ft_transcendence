@@ -33,7 +33,6 @@ export default function Auth() {
                             <div id="auth-form-div" className="col-8">
                                 <div id="auth--form1" >
                                     <div id="form--auth1" className="forms">
-
                                         <p id="jouer">Pour jouer, vous devez vous authentifier 🏓 </p>
                                         <FourtyTwo />
                                         <Signup />

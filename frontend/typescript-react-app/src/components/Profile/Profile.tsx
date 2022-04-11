@@ -7,6 +7,12 @@ import NotFound from "../../components/NotFound/NotFound";
 import MyAxios from '../Utils/Axios/Axios';
 import MatchHistory from '../MatchHistory/MatchHistory';
 
+export interface ProfileProps
+{
+	login?: string,
+	avatar?: any
+}
+
 export default function Profile() {
 
 	const calledOnce = React.useRef(false);
@@ -27,6 +33,17 @@ export default function Profile() {
 		})
 	}
 
+	function renderImage(login: string) {
+		let ax = new MyAxios(null);
+		let log42 = localStorage.getItem("login42");
+		let haschanged = false;
+		if (login != log42)
+			haschanged = true;
+		if (log42 != "" && log42 != null && log42 != undefined)
+			return (ax.render_avatar(login, log42, haschanged));
+		return (ax.render_avatar(login, "", haschanged));
+	}
+
 	useEffect(() => {
 	if (calledOnce.current) {
 		return;}
@@ -34,16 +51,6 @@ export default function Profile() {
 }, []);
 
 	const {login} = useParams();
-
-	function renderImage(login: string) {
-		let ax = new MyAxios(null);
-		//TODO: attention si le user a changé de nom ça risque de poser un pb
-		let log42 = localStorage.getItem("login42");
-		let haschanged = false;
-		if (log42 != login)
-			haschanged = true;
-		return (ax.render_avatar(login, "", haschanged));
-	}
 
     return (
         <div id="profile--div">
@@ -60,6 +67,7 @@ export default function Profile() {
 								<img id={login} className="profile--pic" src="" width="100" height="100"/>
 								<br />
 								{renderImage(login)}
+								<br />
 								<h2 id="profile-title">{login.toUpperCase()}</h2>
 								<br/>
 								<MatchHistory />
@@ -69,7 +77,9 @@ export default function Profile() {
 							<h1><span id="oops">Oops...</span></h1>
 							<h2><span id="page-not-found">Page not found</span></h2>
 							<button type="button" className="btn btn-outline-dark"
-								onClick={(e) => {window.top.location = "http://localhost:3030/game"}}
+								onClick={(e) =>
+									{window.top.location = "http://localhost:3030/game"}
+								}
 							>Go to game</button>
 						</>
 						}
