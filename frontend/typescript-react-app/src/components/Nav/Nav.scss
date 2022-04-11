@@ -1,18 +1,28 @@
 @use "../../variables";
 
 #nav > * {
-  margin-bottom: 20px;
-  font-family: variables.$big-font;
-  font-size: 12px;
-  color: variables.$white;
-  padding: 10px;
-  padding-left: 20px;
+	margin-bottom: 20px;
+	font-family: variables.$big-font;
+	font-size: 12px;
+	color: variables.$white;
+	padding: 10px;
+	padding-left: 20px;
+
   //   opacity: 0.36 !important;
 	//.disconnect-button {
 	//	padding: 1rem 0.5rem;
 	//	margin-right: 1rem;
 	//	margin-bottom: 0.7rem;
 	//}
+}
+
+@media only screen and (max-width : 768px) {
+	.navbar-header {
+		float: left;
+	}
+	.navbar-nav {
+		float: right;
+	}
 }
 
 #logout--button {
@@ -33,7 +43,6 @@
 	display: flex;
 	flex-flow: row nowrap;
 	justify-content: space-between;
-	//align-item: flex-end;
 
 	p {
 		margin: 0 1rem 0 0;

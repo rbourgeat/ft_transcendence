@@ -56,7 +56,9 @@ function Nav() {
 
 	return (
 		<div id="nav">
-			<nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+			{/*<nav className="navbar navbar-expand-lg navbar-dark bg-dark">*/}
+			<nav className="navbar navbar-expand-lg bg-dark">
+			{/*<nav className="navbar-dark bg-dark justify-content-between">*/}
 				<Link to="/" id="nav--title">PONG</Link>
 				<button className="navbar-toggler" type="button">
 					<span className="navbar-toggler-icon"></span>
