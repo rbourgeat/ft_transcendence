@@ -10,7 +10,9 @@ import Dashboard from '../Dashboard/Dashboard';
 import Badge from "../Dashboard/Badge/Badge"
 import Achievements from "../Achievements/Achievements";
 import {Modal} from "react-bootstrap"
+import Settings from "./Settings/Settings"
 
+//TODO: a cleaner ?
 export interface UserfuncProps {
 	username?: string,
 	email?: string,
@@ -24,123 +26,16 @@ export interface UserfuncProps {
 }
 
 export default function User(props: UserfuncProps) {
-	const [qrcode, setqrCode] = useState("");
 	const [username, setUsername] = React.useState("");
-	const [verifCode, setverifCode] = React.useState("");
-	const [activated2fa, setActivated2fa] = React.useState(true);
 	const [logged, setLogged] = React.useState(false);
 	const [is42, setis42] = React.useState(false);
 	const [login42, setlogin42] = React.useState("");
 	const calledOnce = React.useRef(false);
 
-	function clearInput() {
-        setverifCode("");
-    }
-
-	async function manageQR() {
-		const res = await fetch('http://localhost:3000/api/2fa/generate', { method: 'POST', credentials: 'include' });
-		const blob = await res.blob();
-		const imgUrl = URL.createObjectURL(blob);
-		setqrCode(imgUrl);
-	}
-
-	function turnoff2FA()
-	{
-		let url = "http://localhost:3000/api/2fa/turn-off";
-
-		axios.defaults.baseURL = 'http://localhost:3000/api/';
-        axios.defaults.headers.post['Content-Type'] = 'application/json';
-        axios.defaults.headers.post['Accept'] = '*/*';
-        axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
-        axios.defaults.withCredentials = true;
-
-		let toast = new ToastAlerts(null);
-
-		axios.post(url)
-            .then(res => {
-				toast.notifySuccess('😇 2FA successfully turned-off !');
-				localStorage.setItem("2fa", "false");
-				setActivated2fa(false);
-            })
-            .catch((error) => {
-				toast.notifyDanger('🥲 Error while turnoff on 2FA.');
-            })
-	}
-
-	//TODO: modifier le nom pour que ce soit plus explicite ? activate 2fa ?
-	const handle2FA = (event: any) => {
-		event.preventDefault();
-		manageQR();
-		if (activated2fa == true)
-			turnoff2FA();
-	}
-
-	const checkCode = (event: any) => {
-		event.preventDefault();
-		let number = verifCode;
-		setverifCode("");
-
-		axios.defaults.baseURL = 'http://localhost:3000/api/';
-        axios.defaults.headers.post['Content-Type'] = 'application/json';
-        axios.defaults.headers.post['Accept'] = '*/*';
-        axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
-        axios.defaults.withCredentials = true;
-
-		let bod = {
-			twoFactorAuthenticationCode: number
-		}
-
-		let toast = new ToastAlerts(null);
-
-		if (number == "")
-		{
-			toast.notifyDanger('🥲 Error while turning on 2FA. Your verif code is wrong or the QR Code is outdated.');
-			return ;
-		}
-
-		let url = "http://localhost:3000/api/2fa/turn-on";
-
-		axios.post(url, bod)
-            .then(res => {
-				toast.notifySuccess('✨ 2FA successfully turned-on !');
-				localStorage.setItem("2fa", "true");
-				localStorage.setItem("2faverif", "true");
-				setActivated2fa(true);
-            })
-            .catch((error) => {
-				toast.notifyDanger('🥲 Error while turning on 2FA. Your verif code is wrong or the QR Code is outdated.');
-            })
-		clearInput();
-	}
-
-	//Upload d'un nouvel avatar
-	const onChangePicture = (e: any) => {
-		e.preventDefault();
-		if (e.target.files[0]) {
-			const reader = new FileReader();
-			reader.addEventListener("load", () => {
-			});
-
-			reader.readAsDataURL(e.target.files[0]);
-			const file_name = e.target.files[0].name;
-			const file = e.target.files[0];
-
-			let ax = new MyAxios(null);
-			let ret = ax.post_avatar(username, file);
-		}
-	}
-
-	//verif code
-	function handleInputChange(event) {
-        setverifCode(event.target.value);
-    }
-
 	async function getUser() {
 		let log = localStorage.getItem("loggedIn");
 		setLogged(log == "true" ? true : false);
 
-
-		//Check si 2fa activé
 		let url = "http://localhost:3000/api/auth/";
 
 		axios.defaults.baseURL = 'http://localhost:3000/api/';
@@ -160,7 +55,6 @@ export default function User(props: UserfuncProps) {
 					setlogin42(res.data.login42);
 				}
 				setUsername(username);
-				setActivated2fa(res.data.isTwoFactorAuthenticationEnabled)
 			})
 			.catch((err) => {
 				console.log("Error while getting api auth");
@@ -195,7 +89,6 @@ export default function User(props: UserfuncProps) {
 					<div className="col-9" id="bonjour--user">
 						<div className="user--stats" key={username}>
 							<>
-							{/*{logged == true ? console.log("username is " + username): ""}*/}
 							{logged == true ?
 							<div>
 							<img id={username} className="profile--pic" height="80" width="80"/>
@@ -209,47 +102,9 @@ export default function User(props: UserfuncProps) {
 									change username</button>
 								<EditUsernameModal username={username} show={show} onHide={handleClose}/>
 								<br />
-								<Achievements login={username}/>
-								<Badge />
-								<div>
-									<h2 id="user--settings">Settings</h2>
-									<label>Change avatar</label>
-									<div id="change--avatar">
-										<input
-											type="file"
-											name="image-upload"
-											id="input--upload"
-											accept="image/*"
-											onChange={onChangePicture}
-											className="input-file-upload"
-										/>
-									</div>
-									<div id="2fa--div">
-										<h3 id="activate--2fa">2 Factor Authentication</h3>
-										<button
-											className={activated2fa ? "btn btn-outline-danger" : "btn btn-outline-success"}
-											id="button--2fa" onClick={handle2FA}>{activated2fa == true ? "Turn off 2FA" : "Turn on 2FA"}
-											</button>
-										<br />
-										{ qrcode != "" && activated2fa == false ? <img style={{marginBottom: "20ox"}} id="image" src={qrcode}></img> : <p></p>}
-										<br />
-										{qrcode != "" && activated2fa == false ?<p className="black--text" id="please">Please scan the QR Code with your Google Authenticator app.</p> : <p className="black--text"></p>}
-										{qrcode != "" && activated2fa == false ?<label className="black--text">Enter the code provided</label> : <p className="black--text"></p>}
-										{qrcode != "" && activated2fa == false ? <input className="form-control form-control-sm" type="text" placeholder="422 022" onChange={handleInputChange}></input> : <p className="black--text"></p>}
-										{qrcode != "" && activated2fa == false ? <button className="btn btn-light" id="check--auth" onClick={checkCode}>Check code</button> : <p className="black--text"></p>}
-										<ToastContainer
-											position="top-right"
-											autoClose={5000}
-											hideProgressBar={false}
-											newestOnTop={false}
-											closeOnClick
-											rtl={false}
-											pauseOnFocusLoss
-											draggable
-											pauseOnHover
-									/>
-									</div>
-								</div>
+								{/*<Achievements login={username}/>*/}
+								{/*<Badge />*/}
+								<Settings username={username}/>
 								</div>
 							</div>
 							: <p></p>
