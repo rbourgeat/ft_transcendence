@@ -33,9 +33,10 @@ export default function ListChannels(props: ListChat) {
 	function renderListChannels(login: string)
 	{
 		axios.defaults.withCredentials = true;
-		const url = "http://localhost:3000/api/chat/";
+		const url = "http://localhost:3000/api/chat/joinedChannels";
 		axios.get(url)
 			.then( res => {
+				console.log(res.data);
 				let channels = res.data;
 				setChannels(channels);
 			})
@@ -56,7 +57,7 @@ export default function ListChannels(props: ListChat) {
 					<p id="list--channels--title"> Public channels :</p>
 					<ul id="list--channels--ul">
 						{channels.map(channel  =>
-						<li key={channel.name} className="channel--list">{channel.name}</li>
+						<li key={channel.name} className="channel--list">{channel.name} {channel.public === true ? "public" : "private"}</li>
 						)}
 					</ul>
 				</div>
