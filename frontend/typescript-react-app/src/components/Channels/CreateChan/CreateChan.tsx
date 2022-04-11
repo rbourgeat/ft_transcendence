@@ -27,7 +27,7 @@ export default function CreateChan({endpoint, action}) {
 				});
 		}
 		else {
-			axios.post('http://localhost:3000/api/chat', {
+			axios.post(endpoint, {
 				"password": chanScope === "public" ? "" : chanPassword,
 				"public": chanScope === "public" ? true : false,
 				"name": chanName 
