@@ -5,7 +5,8 @@ import Footer from "../../Footer/Footer";
 //import TimePicker from "react-time-picker";
 //import { useTimer } from 'react-timer-hook';
 import MyTimer from "./MyTimer/MyTimer";
-import {Button, Modal} from 'react-bootstrap';
+import {Button, Modal, Form} from 'react-bootstrap';
+import axios from 'axios';
 
 export interface ParticipantProps{
 }
@@ -17,6 +18,26 @@ export default function ListParticipant()
 	const [show, setShow] = React.useState(false);
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
+
+	const [chanScope, chanScopeSet] = React.useState("public");
+	const [chanName, chanNameSet] = React.useState("");
+	const [chanPassword, chanPasswordSet] = React.useState("");
+
+	const createChannel = () => {
+		axios.post('http://localhost:3000/api/chat', {
+			  "password": chanPassword,
+				"public": chanScope === "public" ? true : false,
+			  "name": chanName 
+		})
+		.then(function (response) {
+			console.log(response);
+			handleClose;
+		})
+		.catch(function (error) {
+			console.log(error);
+		});
+		handleClose;
+	}
 
 	return (
 		<div id="ListParticipant">
@@ -33,17 +54,46 @@ export default function ListParticipant()
 					<button id="mute-temp-button" className="btn btn-warning">Mute temporalily</button>
 					<br/>
 					<Button variant="secondary" onClick={handleShow}>Create channel</Button>
+
 					<Modal show={show} onHide={handleClose}>
 						<Modal.Header closeButton>
-							<Modal.Title>Modal heading</Modal.Title>
+							<Modal.Title>Create a new channel</Modal.Title>
 						</Modal.Header>
-						<Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+						<Modal.Body>
+							<Form>
+								<Form.Group>
+									<Form.Select aria-label="Channel visibility" onChange={e => chanScopeSet(e.target.value)}>
+										<option>Channel visibility</option>
+										<option value="public">public</option>
+										<option value="private">private</option>
+										<option value="protected">protected</option>
+									</Form.Select>
+								</Form.Group>
+								<Form.Group className="mb-3" controlId="channName">
+									<Form.Label>Channel name</Form.Label>
+									<Form.Control
+										type="text"
+										value={chanName}
+										onChange={e => {chanNameSet(e.target.value)}}
+										autoFocus
+									/>
+								</Form.Group>
+								<Form.Group className="mb-3" controlId="channPassword">
+									<Form.Label>Channel password</Form.Label>
+									<Form.Control
+										type="password"
+										value={chanPassword}
+										onChange={e => {chanPasswordSet(e.target.value)}}
+									/>
+								</Form.Group>
+							</Form>
+						</Modal.Body>
 						<Modal.Footer>
 							<Button variant="secondary" onClick={handleClose}>
 								Close
 							</Button>
-							<Button variant="primary" onClick={handleClose}>
-								Save Changes
+							<Button variant="primary" type="submit" onClick={() => {handleClose; createChannel}}>
+								Create 
 							</Button>
 						</Modal.Footer>
 					</Modal>
