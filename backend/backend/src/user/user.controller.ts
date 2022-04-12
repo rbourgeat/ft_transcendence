@@ -187,4 +187,12 @@ export class UserController {
         console.log('get specific achievement of user' + login);
         return this.userService.getAchievementsOf(login);
     }
+
+    @ApiOperation({ summary: 'Returns list of achievements of a specific user [jwt-protected]' })
+    @UseGuards(JwtAuthenticationGuard)
+    @Get('stats/:login')
+    getStats(@Param('login') login: string)/*: Observable<Achievement[]>*/ {
+        console.log('get stats of user ' + login);
+        return this.userService.getStats(login);
+    }
 }

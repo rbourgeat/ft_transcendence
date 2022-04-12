@@ -20,7 +20,7 @@ export class GameController {
 
     @ApiOperation({ summary: 'Returns game history specific user [jwt-protected]' })
     @UseGuards(JwtAuthenticationGuard)
-    @Get(':login')
+    @Get(':login/history')
     getGames(@Param('login') login: string, @Request() reqq) {
         console.log('get game history of user' + login);
         return this.gameService.getGames(login);
