@@ -56,7 +56,7 @@ export default function Channels(props: ChatProps) {
 						<ListPubChannels />
 					</div>
 					<div className="chat--messages">
-						<ListDiscussions />
+						<ListDiscussions activeChannel={activeChannel}/>
 						<TypingMessage />
 					</div>
 					<ListParticipant />

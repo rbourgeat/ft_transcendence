@@ -52,7 +52,7 @@ export default function ListChannels({activeChannel, updateActiveChannel}) {
 					<p id="list--channels--title"> Public channels :</p>
 					<ul id="list--channels--ul">
 						{channels.map(channel  =>
-						<button key={channel.id} onClick={() => {updateActiveChannel(channel.id); console.log(activeChannel)}} className="channel--list">{channel.name} {channel.public === true ? "public" : "private"}</button>
+						<button key={channel.id} onClick={() => {updateActiveChannel(channel.id)}} className="channel--list">{channel.name} {channel.public === true ? "public" : "private"}</button>
 						)}
 					</ul>
 				</div>
