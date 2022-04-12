@@ -43,6 +43,11 @@ function App() {
   let cookieCheck = document.cookie.match("Authentication");
 
   async function getUser() {
+    if (localStorage.getItem("loggedIn") != "true")
+    {
+      console.log("You are not logged in.")
+        return ;
+    }
     let url = "http://localhost:3000/api/auth/";
     let username = "";
     axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
