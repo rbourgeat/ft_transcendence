@@ -44,7 +44,7 @@ export default function Channels(props: ChatProps) {
 				pauseOnHover
 			/>
 			<div className="container" id="chat--container">
-			{localStorage.getItem("loggedIn") != "true " ?
+			{localStorage.getItem("loggedIn") != "true" ?
 						<div className="row d-flex justify-content-center text-center">
 							<div className="col-9">
 								<div className="channels-not-logged">
