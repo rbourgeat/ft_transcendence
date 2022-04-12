@@ -60,7 +60,7 @@ export default function Channels(props: ChatProps) {
 						<ListDiscussions activeChannel={activeChannel}/>
 						<TypingMessage />
 					</div>
-					<ListParticipant chanUsers={chanUsers}/>
+					<ListParticipant activeChannel={activeChannel}/>
 				</div>
 			</div>
 		</div>
