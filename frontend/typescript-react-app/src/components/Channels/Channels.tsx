@@ -12,18 +12,13 @@ import { io } from "socket.io-client";
 import ListChannels from './ListChannels/ListChannels';
 import ListPubChannels from './ListChannels/ListPubChannels';
 
-
-/**
- * @malatini ou @macrespo
- * Page principale pour afficher les channels, voir les sous composants
- */
 interface ChatProps {
 	username?: string
 }
 
 export default function Channels(props: ChatProps) {
 	const calledOnce = React.useRef(false);
-	
+
 
 	useEffect(() => {
         if (calledOnce.current) {

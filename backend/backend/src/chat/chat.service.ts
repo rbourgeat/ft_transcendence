@@ -363,4 +363,37 @@ export class ChatService {
 		return chat;
 	}
 
+	/*
+	let listParticipateCard = await this.participateRepository.find({
+			where: [
+				{ user: user },
+			],
+			relations: ['user', 'chat'],
+		});
+
+		let channelsIds: number[] = [];
+		listParticipateCard.forEach((participate: Participate) => {
+			channelsIds.push(participate.chat.id);
+		});
+		return this.chatRepository.findByIds(channelsIds);
+		*/
+
+
+	async getUsersInChannel(channelId: number) {
+		const chat = await this.chatRepository.findOne({ id: channelId });
+
+		let listParticipateCard = await this.participateRepository.find({
+			where: [
+				{ chat: chat },
+			],
+			relations: ['user', 'chat'],
+		});
+
+		let usersIds: number[] = [];
+		listParticipateCard.forEach((participate: Participate) => {
+			usersIds.push(participate.user.id);
+		})
+		return this.userRepository.findByIds(usersIds)
+	}
+
 }

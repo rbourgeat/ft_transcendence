@@ -56,7 +56,7 @@ function Nav() {
 
 	return (
 		<div id="nav">
-			<nav className="navbar navbar-expand-lg bg-dark">
+			<nav className="navbar navbar-expand-lg bg-dark" id="nav-bar">
 				<Link to="/" id="nav--title">PONG</Link>
 				<button className="navbar-toggler" type="button">
 					<span className="navbar-toggler-icon"></span>
@@ -65,12 +65,17 @@ function Nav() {
 					<ul className="navbar-nav">
 						<li className="nav-item">
 							<Link to="/game" className="nav-link">
-								<div className='nav-link-text'><p>Game</p></div>
+								<div className='nav-link-text'><p className="navbar--title">Game</p></div>
+							</Link>
+						</li>
+						<li className="nav-item">
+							<Link to="/live" className="nav-link">
+								<div className='nav-link-text'><p className="navbar--title">Live</p></div>
 							</Link>
 						</li>
 						<li className="nav-item">
 							<Link to="/people" className="nav-link">
-								<div className='nav-link-text'><p>People</p></div>
+								<div className='nav-link-text'><p className="navbar--title">People</p></div>
 							</Link>
 						</li>
 						{/*<li className="nav-item">
@@ -80,12 +85,12 @@ function Nav() {
 						</li>*/}
 						<li className="nav-item">
 							<Link to="/channels" className="nav-link">
-								<div className='nav-link-text'><p>Chat</p></div>
+								<div className='nav-link-text'><p className="navbar--title">Chat</p></div>
 							</Link>
 						</li>
 						<li className="nav-item">
 							<Link to="/user" className="nav-link">
-								<div className='nav-link-text'><p>User</p></div>
+								<div className='nav-link-text'><p className="navbar--title">User</p></div>
 							</Link>
 						</li>
 					</ul>

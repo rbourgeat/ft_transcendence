@@ -1,0 +1,34 @@
+@use "../../variables";
+
+.box {
+    background-color: white;
+    color: black;
+    margin: 2vw;
+    padding: 2vw;
+    border-radius: 25px;
+    display: inline-block;
+}
+
+#content {
+    padding: 2vw;
+    display: block;
+}
+
+.watch {
+    padding: 5px;
+}
+
+#pong {
+   font-size: 8vw;
+}
+
+.vs {
+    font-size: 3vw;
+    font-weight: bold;
+ }
+
+#titre {
+    font-size: 5vw;
+    font-weight: bold;
+    margin-left: 20vw;
+}

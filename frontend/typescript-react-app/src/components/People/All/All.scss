@@ -7,7 +7,6 @@
 #displaying {
 	font-family: variables.$big-font;
 	text-align: center;
-	//text-decoration: black wavy underline;
 }
 
 #container--all {
@@ -23,13 +22,9 @@
 
 #list--users--ul
 {
-	//overflow-y: scroll;
 	width: 95%;
 	border-radius: variables.$border-radius;
 	padding-bottom: 40px;
-
-		//display:grid;
-		 //grid-template-rows: 7;
 }
 
 .wrapper {
@@ -37,7 +32,7 @@
 	grid-template-columns: repeat(6, 1fr);
 }
 
-#row--users {
+#row--users_all {
 	display:grid;
 	grid-template-rows: 7;
 	margin-left: 5%;

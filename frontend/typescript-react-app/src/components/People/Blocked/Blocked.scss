@@ -1,0 +1,19 @@
+@use "../../../variables";
+
+#container--blocked {
+	background-color: white !important;
+	border-radius: variables.$border-radius;
+	padding: 10px !important;
+	margin-top: 35px !important;
+}
+
+#displaying--blocked {
+	font-family: variables.$big-font !important;
+	font-size: 12px !important;
+}
+
+#row--users_blocked {
+	display:grid;
+	grid-template-rows: 7;
+	margin-left: 5%;
+}

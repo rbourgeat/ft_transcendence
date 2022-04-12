@@ -548,7 +548,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     }
 
     //TODO: a tester
-    delete_relation_id(login: string) {
+    delete_relation_id(login: string, extra: string) {
         let url = "http://localhost:3000/api/user/relation/remove/".concat(login);
 
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
@@ -558,6 +558,10 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
             .then(res => {
                 console.log("Succesfully delete target friend");
                 console.log(res);
+                let id = "minidisplay".concat("_" + login + "_" + extra);
+                console.log("id looked is " + id);
+                let elem = document.getElementById(id);
+                elem.parentNode.removeChild(elem);
             })
             .catch((error) => {
                 console.log("Error while deleting target friend");
@@ -567,7 +571,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
 
     //TODO: a tester
     post_relation_block(login: string) {
-        let url = "http://localhost:3000/api/user/relation/block/".concat(login.toString());
+        let url = "http://localhost:3000/api/user/relation/block/".concat(login);
 
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
         axios.defaults.withCredentials = true;
@@ -592,11 +596,11 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
 
         axios.delete(url)
             .then(res => {
-                console.log("Succesfully blocked target friend");
+                console.log("Succesfully unblocked target friend");
                 console.log(res);
             })
             .catch((error) => {
-                console.log("Error while blocking target friend");
+                console.log("Error while unblocking target friend");
                 console.log(error);
             })
     }
@@ -707,8 +711,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
         else
             imageUser42 = "https://cdn.intra.42.fr/users/".concat(login42).concat(".jpg")
         //console.log("image is " + imageUser42);
-        if (imageCode.startsWith("http"))
-        {
+        if (imageCode.startsWith("http")) {
             let myImage: HTMLImageElement = document.querySelector("#".concat(login));
             if (is42)
                 myImage.src = imageUser42;

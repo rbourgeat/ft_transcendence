@@ -1,7 +1,7 @@
 import './MiniDisplay.scss';
 import MyAxios from '../../Utils/Axios/Axios';
 import React, { Component, useState, useEffect, Suspense, lazy } from 'react';
-import { AiOutlineCloseCircle, AiFillPlusCircle, AiFillCheckCircle } from "react-icons/ai";
+import { AiOutlineCloseCircle, AiFillPlusCircle, AiFillCheckCircle, AiFillUnlock } from "react-icons/ai";
 import { BsFillPersonPlusFill, BsFillPersonXFill } from "react-icons/bs";
 import io from "socket.io-client";
 import axios from 'axios';
@@ -20,6 +20,7 @@ export interface MiniDisplayProps {
 	user?: any;
 	container?: string;
 	relation?: string;
+	extra?: string
 	//children?: React.ReactNode | React.ReactChild | React.ReactChildren | React.ReactChild[] | React.ReactChildren[]
 }
 
@@ -31,7 +32,7 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 	const [status, setStatus] = React.useState(props.status);
 	const [username, setUsername] = React.useState("");
 
-	function renderImage(avatar: string, login: string, ftlogin: string) {
+	function renderImage(avatar: string, login: string, ftlogin: string, extra: string) {
 		if (!avatar)
 			return;
 		let is42 = false;
@@ -47,7 +48,7 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 
 		if (avatar.startsWith("http")) {
 			let imageUser42 = "https://cdn.intra.42.fr/users/".concat(chosenLogin).concat(".jpg");
-			var myImg = document.getElementById(props.login) as HTMLImageElement;
+			var myImg = document.getElementById(props.login.concat("_" + props.extra)) as HTMLImageElement;
 			if (is42 == false) {
 				myImg.src = "https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg";
 				return;
@@ -61,32 +62,21 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 			}
 		}
 
+		console.log("getting avatar for " + login);
+
 		let url = "http://localhost:3000/api/user/".concat(avatar).concat("/avatar/");
 		let res = axios.get(url, { responseType: 'blob' })
 			.then(res => {
-				let myImage: HTMLImageElement = document.querySelector("#".concat(props.login));
+				let myImage: HTMLImageElement = document.querySelector("#".concat(login + "_" + extra));
 				var objectURL = URL.createObjectURL(res.data);
 				myImage.src = objectURL;
-
-				//				if (props.container == "friends")
-				//					console.log('get avatar of' + login + 'suceed');
-
-				return (<img className="profile--pic" src={myImage.src} alt={imageName} id={props.login} height="80" />);
+				return (<img className="profile--pic" src={myImage.src} alt={imageName} id={props.login.concat("_" + props.extra)} height="100" width="100"/>);
 			})
 			.catch((error) => {
 				console.log("Catched error during get/fileId/avatar");
-				return (<img className="profile--pic" src="https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg" alt={imageName} height="80" width="80" id={props.login} />);
+				return (<img className="profile--pic" src="https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg" alt={imageName} height="100" width="100" id={props.login.concat("_" + props.extra)} />);
 			})
 	}
-
-	useEffect(() => {
-		if (calledOnce.current) {
-			return;
-		}
-		setLoad(true);
-		calledOnce.current = true;
-	}, []);
-
 
 	const [color, setColor] = React.useState("");
 	let url = "http://localhost:3000/api/user/".concat(props.login);
@@ -126,18 +116,20 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 
 	function removeContact(login: string) {
 		let ax = new MyAxios(null);
-		return (ax.delete_relation_id(login));
+		//id={"minidisplay".concat("_" + props.login + "_" + props.extra)}
+		return (ax.delete_relation_id(login, props.extra));
 	}
 
 	function unblockContact(login: string) {
-
-		var x = document.getElementById("button-action");
-		if (x.style.display === "none") {
+		/*
+		var x = document.getElementById("testing");
+		if (x.style.display == "none") {
+			console.log("looooooooooool");
 			x.style.display = "block";
 		} else {
 			x.style.display = "none";
 		}
-
+	*/
 		let ax = new MyAxios(null);
 		return (ax.delete_relation_unblock(login));
 	}
@@ -171,36 +163,55 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 		else if (container == "blocked")
 			return (
 				<>
-					<i id="button-action" className="user--action" onClick={() => unblockContact(props.login)}>unblock</i>
+					<i id="button-action" className="user--action" onClick={() => unblockContact(props.login)}>{<AiFillUnlock />}</i>
 				</>
 			)
 	}
 
+	useEffect(() => {
+		if (calledOnce.current) {
+			return;
+		}
+		setLoad(true);
+		calledOnce.current = true;
+	}, []);
+
 	return (
-		<>
-			<li id="minidisplay--div" className="list-group-item" key={props.login}>
-				<Suspense fallback={<Hearts color="#ffe4e1" height={100} width={100} key={props.login} />}>
-					<img className="profile--pic" id={props.login} src="" width="100" height="100" onClick={gotoprofile} />
-					{load == true ? renderImage(props.avatar, props.login, props.ftlogin) : ""}
-					<svg className="log--color" height="40" width="40">
-						<circle cx="20" cy="20" r="15" fill={color} stroke="white" style={{ strokeWidth: '3' }} /></svg>
-					<br />
-					<p className="user--p" id="mini--login">{props.login}</p>
-					<p className="user--p" id="mini--status">{status}</p>
-					{buttonToDidsplay(props.container)}
-					<ToastContainer
-						position="top-right"
-						autoClose={5000}
-						hideProgressBar={false}
-						newestOnTop={false}
-						closeOnClick
-						rtl={false}
-						pauseOnFocusLoss
-						draggable
-						pauseOnHover
-					/>
-				</Suspense>
+		<div className="mini--display--div" id={"minidisplay".concat("_" + props.login + "_" + props.extra)}>
+			<li className="list-group-item" key={props.extra ? props.login.concat(props.extra) : props.login}>
+				<div className="mini-display-li">
+					<Suspense fallback={<Hearts color="#ffe4e1" height={100} width={100} key={props.login} />}>
+						{/*<img className="profile--pic" id={props.extra ? props.login.concat("_" + props.extra) : props.login} src="" width="100" height="100" onClick={gotoprofile} />*/}
+						<img
+							className="profile--pic"
+							id={props.login.concat("_" + props.extra)}
+							src="https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg"
+							width="100"
+							height="100"
+							onClick={gotoprofile}
+						/>
+						{load == true ? renderImage(props.avatar, props.login, props.ftlogin, props.extra) : ""}
+						<svg className="log--color" height="40" width="40">
+							<circle cx="20" cy="20" r="15" fill={color} stroke="white" style={{ strokeWidth: '3' }} />
+						</svg>
+						<br />
+						<p className="user--p" id="mini--login">{props.login}</p>
+						<p className="user--p" id="mini--status">{status}</p>
+						{buttonToDidsplay(props.container)}
+						<ToastContainer
+							position="top-right"
+							autoClose={5000}
+							hideProgressBar={false}
+							newestOnTop={false}
+							closeOnClick
+							rtl={false}
+							pauseOnFocusLoss
+							draggable
+							pauseOnHover
+						/>
+					</Suspense>
+				</div>
 			</li>
-		</>
+		</div>
 	);
 }

@@ -17,7 +17,6 @@ export default function Dashboard() {
                     <h2 className="titles">to do @malatini</h2>
                     <Badge />
                     <MatchHistory />
-                    <Footer />
             </div>
             </div>
         </div>

@@ -4,6 +4,7 @@ import Footer from "../Footer/Footer";
 import All from "./All/All";
 import Invitations from "./Invitations/Invitations";
 import Friends from "./Friends/Friends";
+import Blocked from "./Blocked/Blocked";
 
 export default function People() {
 	return (
@@ -14,9 +15,11 @@ export default function People() {
 					<br />
 					<All />
 					<br />
+					<Friends />
+					<br />
 					<Invitations />
 					<br />
-					<Friends />
+					<Blocked />
 				</div>
 			</div>
 		</div>

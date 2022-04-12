@@ -17,7 +17,6 @@ export default function NotFound() {
                     <h2><span id="page-not-found">Page not found</span></h2>
                 </div>
             </div>
-            <Footer />
         </div>
     );
 }

@@ -4,9 +4,12 @@ import myAxios from "../../Utils/Axios/Axios";
 import axios from "axios";
 import MiniDisplay from '../MiniDisplay/MiniDisplay';
 
+
 export default function Blocked() {
+
 	const [users, setUsers] = React.useState([]);
 	const [load, setLoad] = React.useState(false);
+	const [reload, setReload] = React.useState(false);
 
 	const calledOnce = React.useRef(false);
 
@@ -31,23 +34,27 @@ export default function Blocked() {
 	}
 
 	useEffect(() => {
+		/*
 		if (calledOnce.current) {
 			return;
 		}
+		*/
+
 		renderBlocked();
-		calledOnce.current = true;
+		//calledOnce.current = true;
 	}, []);
 
 	return (
 		<div id="blocked-div">
-			<div id="container--invitations">
-				<h1 className="text" id="displaying">Blocked</h1>
+			<div id="container--blocked" className="container">
 				<br />
-				<div className="row" id="row--users">
+				<div className="row" id="row--users_blocked">
 					<div id="ul--list" className="row">
+						<h1 className="text" id="displaying--blocked">Blocked</h1>
+						<br />
 						<ul id="list--users--ul" className="wrapper list-group list-group-horizontal-lg">
 							{load == true ?
-								users.map(user => <MiniDisplay key={user.login} login={user.login} status={user.status} avatar={user.avatar} ftlogin={user.login42} user={user} container="blocked" />)
+								users.map(user => <MiniDisplay key={user.login} login={user.login} status={user.status} avatar={user.avatar} ftlogin={user.login42} user={user} extra="blocked" container="blocked" />)
 								: ""}
 						</ul>
 					</div>

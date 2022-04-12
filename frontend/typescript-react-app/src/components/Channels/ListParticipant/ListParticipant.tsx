@@ -43,7 +43,6 @@ export default function ListParticipant({chanUsers})
 					<button id="bann-temp-button" className="btn btn-danger">Ban temporarily</button>
 					<button id="mute-temp-button" className="btn btn-warning">Mute temporalily</button>
 				</div>
-				<Footer />
 			</div>
 	);
 }

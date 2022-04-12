@@ -101,7 +101,7 @@ export default function User(props: UserfuncProps) {
 								<Achievements login={username}/>
 								<br />
 								{/*<Badge />*/}
-								<MatchHistory/>
+								<MatchHistory login={username}/>
 								<br/>
 								<Settings username={username} login42={localStorage.getItem("login42")}/>
 								<br />

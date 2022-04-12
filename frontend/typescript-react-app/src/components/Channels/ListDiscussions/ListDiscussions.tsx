@@ -25,7 +25,7 @@ export default function ListDiscussions({activeChannel}) {
 					console.log("Error while getting api auth");
 				})
 		}
-		getUser(); 
+		getUser();
 		// LA SOCKET ICI
 		let socket = io("http://localhost:3000/chat", { query: { username: username } });
 		socket.emit('requestAllMessages', activeChannel)
@@ -35,7 +35,6 @@ export default function ListDiscussions({activeChannel}) {
 				setMessages(messagesUpdated);
 			}
 		});
-
 	}, [activeChannel]);
 
 	return (

@@ -7,13 +7,10 @@
 	color: variables.$white;
 	padding: 10px;
 	padding-left: 20px;
+}
 
-  //   opacity: 0.36 !important;
-	//.disconnect-button {
-	//	padding: 1rem 0.5rem;
-	//	margin-right: 1rem;
-	//	margin-bottom: 0.7rem;
-	//}
+#nav-bar {
+	background-color: black !important;
 }
 
 @media only screen and (max-width : 768px) {
@@ -23,6 +20,10 @@
 	.navbar-nav {
 		float: right;
 	}
+}
+
+.navbar--title, .nav-item > * {
+	color: white !important;
 }
 
 #logout--button {

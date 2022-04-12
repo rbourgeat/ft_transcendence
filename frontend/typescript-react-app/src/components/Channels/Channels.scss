@@ -1,9 +1,5 @@
 @use "../../variables";
 
-//* {
-//	box-sizing: border-box;
-//}
-
 #channels--tile {
 	color: white;
 	margin-top: 10px;
@@ -18,7 +14,7 @@
 #chat--container > * {
 	color: black;
 	.chat-channel-menu {
-		background: white;	
+		background: white;
 		margin-right: 2rem;
 		border-radius: variables.$border-radius;
 		width: 30%;
@@ -33,7 +29,7 @@
 	display: flex;
 	flex-flow: row nowrap;
 	justify-content: center;
-	align-items: flex-start;//Attention start génère des warnings
+	align-items: flex-start;
 }
 
 .chat--messages {
