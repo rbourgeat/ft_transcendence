@@ -21,7 +21,6 @@ export default function People(props: PeopleProps) {
 			{localStorage.getItem("loggedIn") != "true" ?
 				<>
 					<Nav />
-					<button onClick={update}>update</button>
 					<div className="container">
 						<div className="row d-flex justify-content-center text-center">
 							<div className="col-9">
@@ -35,6 +34,7 @@ export default function People(props: PeopleProps) {
 				:
 				<div id="people--div">
 					<Nav />
+					<button onClick={update}>update</button>
 					<div id="all">
 						<div className="row">
 							<br />
