@@ -32,7 +32,7 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 	const [status, setStatus] = React.useState(props.status);
 	const [username, setUsername] = React.useState("");
 
-	function renderImage(avatar: string, login: string, ftlogin: string) {
+	function renderImage(avatar: string, login: string, ftlogin: string, extra: string) {
 		if (!avatar)
 			return;
 		let is42 = false;
@@ -62,10 +62,12 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 			}
 		}
 
+		console.log("getting avatar for " + login);
+
 		let url = "http://localhost:3000/api/user/".concat(avatar).concat("/avatar/");
 		let res = axios.get(url, { responseType: 'blob' })
 			.then(res => {
-				let myImage: HTMLImageElement = document.querySelector("#".concat(props.login));
+				let myImage: HTMLImageElement = document.querySelector("#".concat(login + "_" + extra));
 				var objectURL = URL.createObjectURL(res.data);
 				myImage.src = objectURL;
 				return (<img className="profile--pic" src={myImage.src} alt={imageName} id={props.login.concat("_" + props.extra)} height="100" width="100"/>);
@@ -187,7 +189,7 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 							height="100"
 							onClick={gotoprofile}
 						/>
-						{load == true ? renderImage(props.avatar, props.login, props.ftlogin) : ""}
+						{load == true ? renderImage(props.avatar, props.login, props.ftlogin, props.extra) : ""}
 						<svg className="log--color" height="40" width="40">
 							<circle cx="20" cy="20" r="15" fill={color} stroke="white" style={{ strokeWidth: '3' }} /></svg>
 						<br />
