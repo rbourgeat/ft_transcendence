@@ -169,4 +169,12 @@ export class ChatController {
         return this.chatService.setPublic(chat.idChat, req.user);
     }
 
+    @ApiOperation({ summary: 'get user of a channel' }) //endpoint summary on swaggerui
+    @ApiOkResponse({ description: 'Suceed' }) //answer sent back
+    @Get(':channelId/users')
+    async getUsersInChannel(@Param('channelId') channelId: number) {
+        console.log('chat id ' + channelId);
+        return this.chatService.getUsersInChannel(channelId);
+    }
+
 }
