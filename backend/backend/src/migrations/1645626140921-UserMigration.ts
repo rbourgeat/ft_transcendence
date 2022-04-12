@@ -15,7 +15,10 @@ export class UserMigration1645626140921 implements MigrationInterface {
                 password: 'dummy1',
                 email: 'dummy1@gmail.com',
                 status: 'offline',
-                avatar: 'norminet.jpg'
+                avatar: 'norminet.jpg',
+                rank: 1,
+                level: 42,
+                points: 10000
             }),
         );
         const dummy2 = await queryRunner.manager.save(
@@ -24,7 +27,10 @@ export class UserMigration1645626140921 implements MigrationInterface {
                 password: 'dummy2',
                 email: 'dummy2@gmail.com',
                 status: 'online',
-                avatar: 'grenouille.jpg'
+                avatar: 'grenouille.jpg',
+                rank: 2,
+                level: 21,
+                points: 9500
             }),
         );
         const dummy3 = await queryRunner.manager.save(
@@ -33,7 +39,10 @@ export class UserMigration1645626140921 implements MigrationInterface {
                 password: 'dummy3',
                 email: 'dummy3@gmail.com',
                 status: 'offline',
-                avatar: 'lievre.jpg'
+                avatar: 'lievre.jpg',
+                rank: 3,
+                level: 3,
+                points: 1500
             }),
         );
         const dummy4 = await queryRunner.manager.save(
@@ -42,7 +51,10 @@ export class UserMigration1645626140921 implements MigrationInterface {
                 password: 'dummy4',
                 email: 'dummy4@gmail.com',
                 status: 'online',
-                avatar: 'flowey.jpg'
+                avatar: 'flowey.jpg',
+                rank: 4,
+                level: 2,
+                points: 1050
             }),
         );
 
@@ -52,7 +64,10 @@ export class UserMigration1645626140921 implements MigrationInterface {
                 password: 'dummy5',
                 email: 'dummy5@gmail.com',
                 status: 'ingame',
-                avatar: 'turtle.jpg'
+                avatar: 'turtle.jpg',
+                rank: 5,
+                level: 4,
+                points: 900
             }),
         );
 
@@ -270,7 +285,7 @@ export class UserMigration1645626140921 implements MigrationInterface {
                 loser_score: 1,
                 winner: "dummy1",
                 loser: "bahaas",
-                players: [dummy3, bahaas]
+                players: [dummy1, bahaas]
             }),
         );
 

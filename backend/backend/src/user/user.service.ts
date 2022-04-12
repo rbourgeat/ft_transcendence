@@ -430,6 +430,21 @@ export class UserService {
 			return invite;
 		return;
 	}
+
+	async getStats(login: string) {
+
+		const query = await this.userRepository.createQueryBuilder('user')
+			.andWhere('user.login = :login', { login: login })
+			.select([
+				"user.rank",
+				"user.points",
+				"user.xp",
+				"user.percent_to_next_lvl",
+				"user.level",
+			]).getOne();
+		return query;
+	}
+
 }
 
 export function fileMimetypeFilter(...mimetypes: string[]) {
