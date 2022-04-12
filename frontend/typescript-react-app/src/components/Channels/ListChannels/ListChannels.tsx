@@ -5,16 +5,11 @@ import CreateChanModal from "../../Utils/Modal/Modal";
 import myAxios from "../../Utils/Axios/Axios";
 import axios from "axios";
 
-interface ListChat
-{
-	login?: string
-}
-
 /**
  * @malatini ou @macrespo ?
  * Pour la personne en charge du chat
  */
-export default function ListChannels(props: ListChat) {
+export default function ListChannels({activeChannel, updateActiveChannel}) {
     const [channels, setChannels] = React.useState([]);
     const [count, setCount] = useState(0);
 
@@ -30,7 +25,7 @@ export default function ListChannels(props: ListChat) {
 		ax.post_api_chat(body.name, body.pub, body.password);
 	}
 
-	function renderListChannels(login: string)
+	function renderListChannels()
 	{
 		axios.defaults.withCredentials = true;
 		const url = "http://localhost:3000/api/chat/joinedChannels";
@@ -47,7 +42,7 @@ export default function ListChannels(props: ListChat) {
 
 	useEffect(() => {
 		createChanneltest();
-		renderListChannels(props.login);
+		renderListChannels();
 	}, []);
 
 	return (
@@ -57,7 +52,7 @@ export default function ListChannels(props: ListChat) {
 					<p id="list--channels--title"> Public channels :</p>
 					<ul id="list--channels--ul">
 						{channels.map(channel  =>
-						<li key={channel.name} className="channel--list">{channel.name} {channel.public === true ? "public" : "private"}</li>
+						<button key={channel.id} onClick={() => {updateActiveChannel(channel.id)}} className="channel--list">{channel.name} {channel.public === true ? "public" : "private"}</button>
 						)}
 					</ul>
 				</div>
