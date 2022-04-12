@@ -548,7 +548,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     }
 
     //TODO: a tester
-    delete_relation_id(login: string) {
+    delete_relation_id(login: string, extra: string) {
         let url = "http://localhost:3000/api/user/relation/remove/".concat(login);
 
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
@@ -558,6 +558,10 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
             .then(res => {
                 console.log("Succesfully delete target friend");
                 console.log(res);
+                let id = "minidisplay".concat("_" + login + "_" + extra);
+                console.log("id looked is " + id);
+                let elem = document.getElementById(id);
+                elem.parentNode.removeChild(elem);
             })
             .catch((error) => {
                 console.log("Error while deleting target friend");

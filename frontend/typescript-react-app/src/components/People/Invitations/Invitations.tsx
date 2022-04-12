@@ -48,7 +48,7 @@ export default function Invitations() {
 					<div id="ul--list_invitations" className="row">
 						<ul id="list--users--ul_invitations" className="wrapper list-group list-group-horizontal-lg">
 							{load == true ?
-								users.map(user => <MiniDisplay key={user.login} login={user.login} status={user.status} avatar={user.avatar} ftlogin={user.login42} user={user} container="invitation" />)
+								users.map(user => <MiniDisplay key={user.login} login={user.login} status={user.status} avatar={user.avatar} ftlogin={user.login42} user={user} extra="invitations" container="invitation" />)
 								: ""}
 						</ul>
 					</div>

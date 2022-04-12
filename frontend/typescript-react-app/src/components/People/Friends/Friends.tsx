@@ -46,6 +46,7 @@ export default function Friends() {
 					<br />
 						<div id="ul--list" className="row">
 							<ul id="list--users--ul" className="wrapper list-group list-group-horizontal-lg">
+								{load == true && users.length == 0 ? <p className="no--contact">You have no friends 😢</p> : ""}
 								{load == true ?
 									users.map(user => <MiniDisplay key={user.login} login={user.login} status={user.status} avatar={user.avatar} ftlogin={user.login42} extra="friends" container="friends" />)
 									: ""}

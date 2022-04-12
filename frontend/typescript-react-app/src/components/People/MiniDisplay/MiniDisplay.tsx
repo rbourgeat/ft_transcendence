@@ -116,7 +116,8 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 
 	function removeContact(login: string) {
 		let ax = new MyAxios(null);
-		return (ax.delete_relation_id(login));
+		//id={"minidisplay".concat("_" + props.login + "_" + props.extra)}
+		return (ax.delete_relation_id(login, props.extra));
 	}
 
 	function unblockContact(login: string) {
@@ -176,7 +177,7 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 	}, []);
 
 	return (
-		<div className="mini--display--div">
+		<div className="mini--display--div" id={"minidisplay".concat("_" + props.login + "_" + props.extra)}>
 			<li className="list-group-item" key={props.extra ? props.login.concat(props.extra) : props.login}>
 				<div className="mini-display-li">
 					<Suspense fallback={<Hearts color="#ffe4e1" height={100} width={100} key={props.login} />}>
