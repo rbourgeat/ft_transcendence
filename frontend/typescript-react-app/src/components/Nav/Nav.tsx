@@ -37,7 +37,7 @@ function Nav() {
 				{
 					localStorage.setItem("2faverif", "false");
 				}
-				window.top.location = "http://localhost:3000/welcome/";
+				window.top.location = "http://localhost:3030/";
 			})
 			.catch((error) => {
 				console.log("Catched error while disconnecting");
