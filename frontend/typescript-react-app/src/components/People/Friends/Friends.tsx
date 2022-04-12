@@ -7,7 +7,6 @@ import MiniDisplay from '../MiniDisplay/MiniDisplay';
 export default function Friends() {
 	const [users, setUsers] = React.useState([]);
 	const [load, setLoad] = React.useState(false);
-
 	const calledOnce = React.useRef(false);
 
 	async function renderFriends() {
@@ -41,7 +40,6 @@ export default function Friends() {
 	return (
 		<div id="friends--div">
 			<div id="container--friends" className="container">
-				{/*<h1 className="text" id="displaying--friends">All my friends</h1>*/}
 				<br />
 				<div className="row" id="row--users_friends">
 					<h1 className="text" id="displaying--friends">All my friends</h1>
@@ -49,7 +47,7 @@ export default function Friends() {
 						<div id="ul--list" className="row">
 							<ul id="list--users--ul" className="wrapper list-group list-group-horizontal-lg">
 								{load == true ?
-									users.map(user => <MiniDisplay key={user.login} login={user.login} status={user.status} avatar={user.avatar} ftlogin={user.login42} user={user} container="friends" />)
+									users.map(user => <MiniDisplay key={user.login} login={user.login} status={user.status} avatar={user.avatar} ftlogin={user.login42} extra="friends" container="friends" />)
 									: ""}
 							</ul>
 						</div>

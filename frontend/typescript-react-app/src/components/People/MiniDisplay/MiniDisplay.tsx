@@ -20,6 +20,7 @@ export interface MiniDisplayProps {
 	user?: any;
 	container?: string;
 	relation?: string;
+	extra?: string
 	//children?: React.ReactNode | React.ReactChild | React.ReactChildren | React.ReactChild[] | React.ReactChildren[]
 }
 
@@ -47,7 +48,7 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 
 		if (avatar.startsWith("http")) {
 			let imageUser42 = "https://cdn.intra.42.fr/users/".concat(chosenLogin).concat(".jpg");
-			var myImg = document.getElementById(props.login) as HTMLImageElement;
+			var myImg = document.getElementById(props.login.concat("_" + props.extra)) as HTMLImageElement;
 			if (is42 == false) {
 				myImg.src = "https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg";
 				return;
@@ -67,26 +68,13 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 				let myImage: HTMLImageElement = document.querySelector("#".concat(props.login));
 				var objectURL = URL.createObjectURL(res.data);
 				myImage.src = objectURL;
-
-				//				if (props.container == "friends")
-				//					console.log('get avatar of' + login + 'suceed');
-
-				return (<img className="profile--pic" src={myImage.src} alt={imageName} id={props.login} height="80" />);
+				return (<img className="profile--pic" src={myImage.src} alt={imageName} id={props.login.concat("_" + props.extra)} height="100" width="100"/>);
 			})
 			.catch((error) => {
 				console.log("Catched error during get/fileId/avatar");
-				return (<img className="profile--pic" src="https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg" alt={imageName} height="80" width="80" id={props.login} />);
+				return (<img className="profile--pic" src="https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg" alt={imageName} height="100" width="100" id={props.login.concat("_" + props.extra)} />);
 			})
 	}
-
-	useEffect(() => {
-		if (calledOnce.current) {
-			return;
-		}
-		setLoad(true);
-		calledOnce.current = true;
-	}, []);
-
 
 	const [color, setColor] = React.useState("");
 	let url = "http://localhost:3000/api/user/".concat(props.login);
@@ -177,12 +165,28 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 			)
 	}
 
+	useEffect(() => {
+		if (calledOnce.current) {
+			return;
+		}
+		setLoad(true);
+		calledOnce.current = true;
+	}, []);
+
 	return (
-		<>
-			<li id="minidisplay--div" className="list-group-item" key={props.login}>
-				<div id="testing">
+		<div className="mini--display--div">
+			<li className="list-group-item" key={props.extra ? props.login.concat(props.extra) : props.login}>
+				<div className="mini-display-li">
 					<Suspense fallback={<Hearts color="#ffe4e1" height={100} width={100} key={props.login} />}>
-						<img className="profile--pic" id={props.login} src="" width="100" height="100" onClick={gotoprofile} />
+						{/*<img className="profile--pic" id={props.extra ? props.login.concat("_" + props.extra) : props.login} src="" width="100" height="100" onClick={gotoprofile} />*/}
+						<img
+							className="profile--pic"
+							id={props.login.concat("_" + props.extra)}
+							src="https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg"
+							width="100"
+							height="100"
+							onClick={gotoprofile}
+						/>
 						{load == true ? renderImage(props.avatar, props.login, props.ftlogin) : ""}
 						<svg className="log--color" height="40" width="40">
 							<circle cx="20" cy="20" r="15" fill={color} stroke="white" style={{ strokeWidth: '3' }} /></svg>
@@ -204,6 +208,6 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 					</Suspense>
 				</div>
 			</li>
-		</>
+		</div>
 	);
 }

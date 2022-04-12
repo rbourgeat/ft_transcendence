@@ -17,9 +17,9 @@ export default function People() {
 					<br />
 					<Friends />
 					<br />
-					<Invitations />
+					{/*<Invitations />*/}
 					<br />
-					<Blocked />
+					{/*<Blocked />*/}
 				</div>
 			</div>
 		</div>

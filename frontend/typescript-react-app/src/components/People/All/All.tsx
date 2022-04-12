@@ -64,7 +64,7 @@ export default function All(props: InputWrapperProps) {
 								users.map(user =>
 									<div key={user.login}>
 										<Suspense fallback={<Hearts color="#ffe4e1" height={100} width={100} key={user.login} />}>
-											<MiniDisplay key={user.login} login={user.login} status={user.status} avatar={user.avatar} ftlogin={user.login42} user={user} container="all" />
+											<MiniDisplay key={user.login} login={user.login} status={user.status} avatar={user.avatar} ftlogin={user.login42} extra="all" container="all" />
 										</Suspense>
 									</div>
 								)
