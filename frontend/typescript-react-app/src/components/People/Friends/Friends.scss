@@ -1,0 +1,19 @@
+@use "../../../variables";
+
+#displaying--friends {
+	font-family: variables.$big-font !important;
+	font-size: 12px !important;
+}
+
+#container--friends {
+	background-color: white !important;
+	border-radius: variables.$border-radius;
+	padding: 10px !important;
+	margin-top: 35px !important;
+}
+
+#row--users_friends {
+	display:grid;
+	grid-template-rows: 7;
+	margin-left: 5%;
+}

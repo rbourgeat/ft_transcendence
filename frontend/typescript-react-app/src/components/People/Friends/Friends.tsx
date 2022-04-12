@@ -39,19 +39,21 @@ export default function Friends() {
 	}, []);
 
 	return (
-		<div id="invitation-div">
-			<div id="container--invitations">
-				<h1 className="text" id="displaying">Friends</h1>
+		<div id="friends--div">
+			<div id="container--friends" className="container">
+				{/*<h1 className="text" id="displaying--friends">All my friends</h1>*/}
 				<br />
-				<div className="row" id="row--users">
-					<div id="ul--list" className="row">
-						<ul id="list--users--ul" className="wrapper list-group list-group-horizontal-lg">
-							{load == true ?
-								users.map(user => <MiniDisplay key={user.login} login={user.login} status={user.status} avatar={user.avatar} ftlogin={user.login42} user={user} container="friends" />)
-								: ""}
-						</ul>
+				<div className="row" id="row--users_friends">
+					<h1 className="text" id="displaying--friends">All my friends</h1>
+					<br />
+						<div id="ul--list" className="row">
+							<ul id="list--users--ul" className="wrapper list-group list-group-horizontal-lg">
+								{load == true ?
+									users.map(user => <MiniDisplay key={user.login} login={user.login} status={user.status} avatar={user.avatar} ftlogin={user.login42} user={user} container="friends" />)
+									: ""}
+							</ul>
+						</div>
 					</div>
-				</div>
 			</div>
 		</div>
 	);

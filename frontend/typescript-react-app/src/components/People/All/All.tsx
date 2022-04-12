@@ -56,8 +56,8 @@ export default function All(props: InputWrapperProps) {
 		<div id="people--div">
 			<div className="container" id="container--all">
 				<br />
-				<div className="row" id="row--users">
-					<div id="ul--list" className="row">
+				<div className="row" id="row--users_all">
+					<div id="ul--list">
 						<h1 id="registered--title">List of all registered users</h1>
 						<ul id="list--users--ul" className="wrapper list-group list-group-horizontal-lg">
 							{load == true ?
@@ -72,9 +72,6 @@ export default function All(props: InputWrapperProps) {
 						</ul>
 					</div>
 				</div>
-				<Friends />
-				<Invitations />
-				<Blocked />
 			</div>
 		</div>
 	);

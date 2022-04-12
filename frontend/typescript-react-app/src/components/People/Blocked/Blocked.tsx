@@ -46,11 +46,12 @@ export default function Blocked() {
 
 	return (
 		<div id="blocked-div">
-			<div id="container--invitations">
-				<h1 className="text" id="displaying">Blocked</h1>
+			<div id="container--blocked" className="container">
 				<br />
-				<div className="row" id="row--users">
+				<div className="row" id="row--users_blocked">
 					<div id="ul--list" className="row">
+						<h1 className="text" id="displaying--blocked">Blocked</h1>
+						<br />
 						<ul id="list--users--ul" className="wrapper list-group list-group-horizontal-lg">
 							{load == true ?
 								users.map(user => <MiniDisplay key={user.login} login={user.login} status={user.status} avatar={user.avatar} ftlogin={user.login42} user={user} container="blocked" />)

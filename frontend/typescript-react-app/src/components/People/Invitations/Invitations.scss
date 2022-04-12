@@ -1,1 +1,20 @@
 @use "../../../variables";
+
+#container--invitations {
+	background-color: white !important;
+	border-radius: variables.$border-radius;
+	padding: 10px !important;
+	margin-top: 35px !important;
+}
+
+#displaying--invitations {
+	font-family: variables.$big-font !important;
+	font-size: 12px !important;
+}
+
+
+#row--users_invitations {
+	display:grid;
+	grid-template-rows: 7;
+	margin-left: 5%;
+}
