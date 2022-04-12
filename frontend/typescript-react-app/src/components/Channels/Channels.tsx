@@ -26,7 +26,8 @@ export default function Channels(props: ChatProps) {
         calledOnce.current = true;
 	}, []);
 
-	const [activeChannel, updateActiveChannel] = React.useState(1);
+	const [activeChannel, updateActiveChannel] = React.useState(0);
+	const [chanUsers, updateChanUsers] = React.useState([]);
 
 	return (
 		<div id="channels">
@@ -47,14 +48,19 @@ export default function Channels(props: ChatProps) {
 					<div className="chat-channel-menu">
 						<CreateChan endpoint="http://localhost:3000/api/chat" action="Create" />
 						<CreateChan endpoint="http://localhost:3000/api/chat/join" action="Join" />
-						<ListChannels activeChannel={activeChannel} updateActiveChannel={updateActiveChannel}/>
+						<ListChannels 
+							activeChannel={activeChannel} 
+							updateActiveChannel={updateActiveChannel} 
+							chanUsers={chanUsers}
+							updateChanUsers={updateChanUsers}
+						/>
 						<ListPubChannels />
 					</div>
 					<div className="chat--messages">
 						<ListDiscussions activeChannel={activeChannel}/>
 						<TypingMessage />
 					</div>
-					<ListParticipant />
+					<ListParticipant activeChannel={activeChannel}/>
 				</div>
 			</div>
 		</div>
