@@ -50,9 +50,11 @@ export default function All(props: InputWrapperProps) {
 
 	useEffect(() => {
 
+		/*
 		if (calledOnce.current) {
 			return;
 		}
+		*/
 		renderUsers();
 		calledOnce.current = true;
 
