@@ -26,32 +26,34 @@ export default function Live() {
 		console.log("joueurs: " + joueurs);
 	});
 
+	useEffect(() => {
+		noGames();
+    }, []);
+
+	function noGames()
+	{
+		if (joueurs.length == 0 && adversaires.length == 0)
+			document.getElementById("content").innerHTML = `
+				<div id='box'>
+					<div id='vs'>😢 There is no live game at the moment.</div>
+				</div>
+				`;
+	}
+
 	function display()
 	{
 		document.getElementById("content").innerHTML = "<div></div>";
-		console.log("joueurs length is " + joueurs.length)
-		//TODO: condition pour faire un message si il n'y a pas de matchs
-		//if (joueurs.length == 0)
-		//{
-		//	document.getElementById("content").innerHTML += `
-		//	<div id='box'>
-		//		<div id='no-game'>😢 There is no live game at the moment. </div>
-		//	</div>`
-		//}
-		//else
-		//{
-			//Attention une id doit etre unique !
-			joueurs.map(joueur => {
-				adversaires.map(adversaire => {
-					document.getElementById("content").innerHTML += `
-					<div className='box'>
-						<div className='vs'>🏓 ` + joueur +` vs ` + adversaire +`</div>
-						<button className='watch'>Watch</button>
-					</div>
-					`;
-				})
-			});
-		//}
+		joueurs.map(joueur => {
+			adversaires.map(adversaire => {
+				document.getElementById("content").innerHTML += `
+				<div id='box'>
+					<div id='vs'>🏓 ` + joueur +` vs ` + adversaire +`</div>
+					<button id='watch'>Watch</button>
+				</div>
+				`;
+			})
+		});
+		noGames();
 	}
 
 	socket.on("stopGame", (...args) => {
@@ -75,27 +77,6 @@ export default function Live() {
 			<Nav/>
 			<div id="titre">📺 Liste des Lives</div>
 				<div id="content">
-					{/*{display()}*/}
-					{/* <div id='box'>
-						<div id='vs'>🏓 Joueur1 vs Joueur2</div>
-						<button id='watch'>Watch</button>
-					</div>
-					<div id='box'>
-						<div id='vs'>🏓 Joueur1 vs Joueur2</div>
-						<button id='watch'>Watch</button>
-					</div>
-					<div id='box'>
-						<div id='vs'>🏓 Joueur1 vs Joueur2</div>
-						<button id='watch'>Watch</button>
-					</div>
-					<div id='box'>
-						<div id='vs'>🏓 Joueur1 vs Joueur2</div>
-						<button id='watch'>Watch</button>
-					</div>
-					<div id='box'>
-						<div id='vs'>🏓 Joueur1 vs Joueur2</div>
-						<button id='watch'>Watch</button>
-					</div> */}
 				</div>
 		</div>
 	)
