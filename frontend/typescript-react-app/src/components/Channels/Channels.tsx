@@ -11,8 +11,6 @@ import { ToastContainer, toast } from 'react-toastify';
 import { io } from "socket.io-client";
 import ListChannels from './ListChannels/ListChannels';
 import ListPubChannels from './ListChannels/ListPubChannels';
-//import React, {useState, useEffect} from "react";
-
 
 /**
  * @malatini ou @macrespo

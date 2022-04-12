@@ -9,7 +9,6 @@ export interface MatchHistoryProps
     login?: string
 }
 
-
 export default function MatchHistory(props: MatchHistoryProps)
 {
     const calledOnce = React.useRef(false);
@@ -74,6 +73,7 @@ export default function MatchHistory(props: MatchHistoryProps)
                                             looser={result.loser}
                                             scoreWinner={result.winner_score}
                                             scoreLooser={result.loser_score}
+                                            login={props.login}
                                         />
                                     </div>
                                 ) : ""}

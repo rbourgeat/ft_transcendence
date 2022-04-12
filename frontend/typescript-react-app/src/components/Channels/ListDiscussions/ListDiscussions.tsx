@@ -19,13 +19,12 @@ export default function ListDiscussions() {
         await axios.get(url)
             .then(res => {
                 username = res.data.login;
-                //console.log(username + ' <-- result of get user')
             })
             .catch((err) => {
                 console.log("Error while getting api auth");
             })
     }
-    getUser(); 
+    getUser();
     // LA SOCKET ICI
 	let socket = io("http://localhost:3000/chat", { query: { username: username } });
     socket.emit('requestAllMessages', 1)

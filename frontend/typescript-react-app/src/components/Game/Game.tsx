@@ -42,7 +42,7 @@ export default function Game() {
 	var SearchText = "Rechercher une partie"
 
 	let socket = io("http://localhost:3000/game", { query: { username: username } });
-	
+
 	function sendSearch() {
 		if (joueur) {
 			isSearching = isSearching ? false : true;
@@ -311,7 +311,7 @@ export default function Game() {
 			socket.emit('gameEnd', joueur1 + ":" + joueur2 + ":" + game.player.score + ":" + game.player2.score);
 		if (game.player.score < game.player2.score && joueur1 && joueur2 && joueur2 == joueur)
 			socket.emit('gameEnd', joueur2 + ":" + joueur1 + ":" + game.player2.score + ":" + game.player.score);
-		cancelAnimationFrame(anim); 
+		cancelAnimationFrame(anim);
 		// Set ball and players to the center
 		game.ball.x = canvas.width / 2 - BALL_HEIGHT / 2;
 		game.ball.y = canvas.height / 2 - BALL_HEIGHT / 2;
@@ -367,7 +367,6 @@ export default function Game() {
 					{/*<GameRules />*/}
 				</div>
 			</div>
-			{/*<Footer />*/}
 		</div>
 	);
 }

@@ -1,31 +1,42 @@
 @use "../../../variables";
 
-#buttonresume--result {
+.score, .buttonresume {
+  width: 100% !important;
+}
+
+//TODO: changer des couleurs
+.result--score_winnner {
+  border: 0.1rem solid #469536 !important;
   background: white !important;
-  border-radius: variables.$border-radius-big;
+  border-radius: variables.$border-radius;
   width: 100% !important;
   min-height: 50px;
   text-align: center !important;
   font-weight: variables.$bold;
   z-index: 2;
-  margin-top: 20px;
-  padding-top: 10px;
-  border: 0.1rem solid #f9f9f9;
-  box-shadow: 3px 3px #f9f9f9, -0.1em 0 .4em #f9f9f9;
+  margin-top: 10px;
+  padding: 10px;
+  //border: 0.1rem solid #f9f9f9;
+  box-shadow: 0.1px 0.1px #f9f9f9, -0.1em 0 .4em #f9f9f9;
   font-size: 12px !important;
   font-family: variables.$basic-font !important;
 }
 
-.score, .buttonresume {
+.result--score_loser{
+  border: 0.1rem solid #ff4040 !important;
+  background: white !important;
+  border-radius: variables.$border-radius;
   width: 100% !important;
-}
-
-.winner {
-  color: variables.$green !important;
-}
-
-.looser {
-  color: variables.$red !important;
+  min-height: 50px;
+  text-align: center !important;
+  font-weight: variables.$bold;
+  z-index: 2;
+  margin-top: 10px;
+  padding: 10px;
+  //border: 0.1rem solid #f9f9f9;
+  box-shadow: 0.1px 0.1px #f9f9f9, -0.1em 0 .4em #f9f9f9;
+  font-size: 12px !important;
+  font-family: variables.$basic-font !important;
 }
 
 #buttoresumee--result > .text {
@@ -35,7 +46,35 @@
 
 
 .score, .winner, .looser, #scores, .text {
-  //color: black !important;
-  font-size: 18px;
+  font-size: 14px;
   font-family: variables.$basic-font !important;
 }
+
+.result--score {
+  font-size: 16px !important;
+}
+
+
+//.buttonresume--result {
+//  background: white !important;
+//  border-radius: variables.$border-radius;
+//  width: 100% !important;
+//  min-height: 50px;
+//  text-align: center !important;
+//  font-weight: variables.$bold;
+//  z-index: 2;
+//  margin-top: 10px;
+//  padding-top: 10px;
+//  border: 0.1rem solid #f9f9f9;
+//  box-shadow: 0.1px 0.1px #f9f9f9, -0.1em 0 .4em #f9f9f9;
+//  font-size: 12px !important;
+//  font-family: variables.$basic-font !important;
+//}
+
+//.winner {
+//  color: variables.$green !important;
+//}
+
+//.looser {
+//  color: variables.$red !important;
+//}

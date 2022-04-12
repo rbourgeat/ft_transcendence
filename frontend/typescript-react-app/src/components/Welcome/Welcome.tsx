@@ -47,7 +47,6 @@ export default function Welcome() {
                     {/*<div id="welcome--video-div">
                         <video autoPlay loop muted src={video1} id="welcome--video-video" height="200px" />
                     </div>*/}
-                    {/*<Footer />*/}
                 </div>
             </div>
         </>

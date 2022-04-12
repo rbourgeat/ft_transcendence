@@ -6,8 +6,10 @@ export interface MatchHistoryProps {
     looser?: string,
     scoreWinner?: string,
     scoreLooser?: string
+    login?: string
 }
 
+//TODO: renommer
 export default function MatchHistory(props: MatchHistoryProps) {
 
     useEffect(() => {
@@ -18,7 +20,9 @@ export default function MatchHistory(props: MatchHistoryProps) {
         <div id="buttonresume">
             <div className="row">
                 <div id="scores">
-                    <p id="buttonresume--result">
+                    <p /*className="buttonresume--result"*/ className={props.winner == props.login ? "result--score_winnner" : "result--score_loser"}>
+                    <p>
+                        {props.winner == props.login ? "You won ✨ !" ! : "You lost 🥲..."}</p>
                     {/*<img src="https://miro.medium.com/max/720/1*W35QUSvGpcLuxPo3SRTH4w.png" id="player-1-img" className="player-img" alt="player1"></img>*/}
                         <span id="player1" className="winner">{props.winner}</span>
                             <span className="text"> - </span>
