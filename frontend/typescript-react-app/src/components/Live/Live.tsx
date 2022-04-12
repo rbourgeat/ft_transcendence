@@ -30,20 +30,16 @@ export default function Live() {
 	{
 		document.getElementById("content").innerHTML = "<div></div>";
 		console.log("joueurs length is " + joueurs.length)
-		if (joueurs.length == 0)
-		{
-			document.getElementById("content").innerHTML += `
-			<div id='box'>
-				<div id='no-game'>😢 There is no live game at the moment. </div>
-			</div>`
-			//return (document.getElementById("content").innerHTML += `
-			//<div id='box'>
-			//	<div id='no-game'>😢 There is no live game at the moment. </div>
-			//</div>
-			//`);
-		}
-		else
-		{
+		//TODO: condition pour faire un message si il n'y a pas de matchs
+		//if (joueurs.length == 0)
+		//{
+		//	document.getElementById("content").innerHTML += `
+		//	<div id='box'>
+		//		<div id='no-game'>😢 There is no live game at the moment. </div>
+		//	</div>`
+		//}
+		//else
+		//{
 			//Attention une id doit etre unique !
 			joueurs.map(joueur => {
 				adversaires.map(adversaire => {
@@ -55,7 +51,7 @@ export default function Live() {
 					`;
 				})
 			});
-		}
+		//}
 	}
 
 	socket.on("stopGame", (...args) => {
@@ -79,7 +75,7 @@ export default function Live() {
 			<Nav/>
 			<div id="titre">📺 Liste des Lives</div>
 				<div id="content">
-					{display()}
+					{/*{display()}*/}
 					{/* <div id='box'>
 						<div id='vs'>🏓 Joueur1 vs Joueur2</div>
 						<button id='watch'>Watch</button>
