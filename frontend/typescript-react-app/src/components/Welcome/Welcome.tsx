@@ -31,8 +31,6 @@ export default function Welcome() {
                         wrapper="figcaption"
                         repeat={Infinity}
                     />*/}
-                            <br />
-                            <br />
                             <li>bahaas</li>
                             <li>rbourgea</li>
                             <li>malatini</li>
@@ -40,10 +38,8 @@ export default function Welcome() {
                             <li>macrespo</li>
                             <br />
                             <button id="play-button-1" onClick={routeChange}>PLAY</button>
-                            <br />
                         </ul>
                     </div>
-                    <br></br>
                     {/*<div id="welcome--video-div">
                         <video autoPlay loop muted src={video1} id="welcome--video-video" height="200px" />
                     </div>*/}

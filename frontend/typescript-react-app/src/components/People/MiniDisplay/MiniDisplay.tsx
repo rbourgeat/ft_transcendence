@@ -192,7 +192,8 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 						/>
 						{load == true ? renderImage(props.avatar, props.login, props.ftlogin, props.extra) : ""}
 						<svg className="log--color" height="40" width="40">
-							<circle cx="20" cy="20" r="15" fill={color} stroke="white" style={{ strokeWidth: '3' }} /></svg>
+							<circle cx="20" cy="20" r="15" fill={color} stroke="white" style={{ strokeWidth: '3' }} />
+						</svg>
 						<br />
 						<p className="user--p" id="mini--login">{props.login}</p>
 						<p className="user--p" id="mini--status">{status}</p>

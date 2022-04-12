@@ -16,6 +16,8 @@ export interface ProfileProps
 
 export default function Profile() {
 
+	const [color, setColor] = React.useState("");
+
 	const calledOnce = React.useRef(false);
 	const [userOK, setUserOk] = React.useState(false);
 	const [is42, setis42] = React.useState(false);
@@ -27,6 +29,12 @@ export default function Profile() {
 		.then(res => {
 			//console.log(res);
 			setUserOk(true);
+			if (res.data.status == "offline")
+				setColor("grey")
+			if (res.data.status == "online")
+				setColor("green")
+			if (res.data.status == "ingame")
+				setColor("purple")
 		})
 		.catch((err) => {
 			console.log("Error while getting api auth");
@@ -71,6 +79,10 @@ export default function Profile() {
 								<img id={login} className="profile--pic" src="" width="100" height="100"/>
 								<br />
 								{renderImage(login, isUser)}
+								<svg className="log--color" height="40" width="40">
+									<circle cx="20" cy="20" r="15" fill={color} stroke="white" style={{ strokeWidth: '3' }} />
+								</svg>
+								<p className="status-text"></p>
 								<br />
 								<h2 id="profile-title">{login}</h2>
 								<br />

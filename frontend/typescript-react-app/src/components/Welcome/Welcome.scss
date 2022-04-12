@@ -12,9 +12,13 @@ video {
 }
 
 #authors--ul {
-  margin-left: 5%;
-  margin-top: 5%;
+  //margin-left: 5%;
+  //margin-top: 5%;
   font-size: 25px;
+  //position: relative;
+  position: absolute;
+  top: 35%;
+  //transform: translateY(-50%);
 }
 
 #play-button-1 {
