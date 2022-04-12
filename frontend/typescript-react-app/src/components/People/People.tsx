@@ -38,7 +38,7 @@ export default function People(props: PeopleProps) {
 					<div id="all">
 						<div className="row">
 							<br />
-							<All />
+							<All/>
 							<br />
 							<Friends />
 							<br />
