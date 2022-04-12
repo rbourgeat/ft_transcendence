@@ -12,10 +12,6 @@ import { io } from "socket.io-client";
 import ListChannels from './ListChannels/ListChannels';
 import ListPubChannels from './ListChannels/ListPubChannels';
 
-/**
- * @malatini ou @macrespo
- * Page principale pour afficher les channels, voir les sous composants
- */
 interface ChatProps {
 	username?: string
 }
@@ -23,11 +19,14 @@ interface ChatProps {
 export default function Channels(props: ChatProps) {
 	const calledOnce = React.useRef(false);
 
+
 	useEffect(() => {
         if (calledOnce.current) {
 			return;}
         calledOnce.current = true;
 	}, []);
+
+	const [activeChannel, updateActiveChannel] = React.useState(1);
 
 	return (
 		<div id="channels">
@@ -48,11 +47,11 @@ export default function Channels(props: ChatProps) {
 					<div className="chat-channel-menu">
 						<CreateChan endpoint="http://localhost:3000/api/chat" action="Create" />
 						<CreateChan endpoint="http://localhost:3000/api/chat/join" action="Join" />
-						<ListChannels />
+						<ListChannels activeChannel={activeChannel} updateActiveChannel={updateActiveChannel}/>
 						<ListPubChannels />
 					</div>
 					<div className="chat--messages">
-						<ListDiscussions />
+						<ListDiscussions activeChannel={activeChannel}/>
 						<TypingMessage />
 					</div>
 					<ListParticipant />
