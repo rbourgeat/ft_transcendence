@@ -337,36 +337,54 @@ export default function Game() {
 	}
 
 	return (
-		<div id="game-root">
-			<Nav />
-			<div className="container">
-			<div className="row d-flex justify-content-center text-center">
-					{isActive ?
-						<Form>
-							<Form.Group>
-								<Form.Select aria-label="Modes de jeux:" onChange={e => chanScopeSet(e.target.value)}>
-										<option>Modes de jeux:</option>
-										<option selected={true} value="original">Original (1972)</option>
-										<option value="bigball">Big Ball (Facile)</option>
-										<option value="blitz">Blitz (Balle Rapide)</option>
-										<option value="slow">Slow (Balle Lente)</option>
-										<option value="reverse">Reverse (Paddle Horizontal)</option>
-								</Form.Select>
-							</Form.Group>
-						</Form>
-					: ""}
-					{isActive ? <button type="button" className="btn btn-outline-dark" id="search-button" onClick={() => sendSearch()}>{SearchText}</button> : ""}
-					<p className='text' id="victoryMessage"></p>
-					<main role="main">
-						<p className="canvas-score" id="scores">
-							<em className="canvas-score" id="joueur1"></em>
-							<span className="canvas-score">:</span>
-							<em className="canvas-score" id="player-score">0</em> - <em id="joueur2"></em><span>:</span><em className="canvas-score" id="player2-score">0</em></p>
-						<canvas id="canvas" width={size.width / 1.5} height={size.height / 1.25}></canvas>
-					</main>
-					{/*<GameRules />*/}
+		<>
+			{localStorage.getItem("loggedIn") != "true" ?
+				<>
+					<Nav />
+					<div className="container">
+						<div className="row d-flex justify-content-center text-center">
+							<div className="col-9">
+								<div className="channels-not-logged">
+									<p>You are not logged in.</p>
+								</div>
+								<canvas id="canvas" width="0" height="0"></canvas>
+							</div>
+						</div>
+					</div>
+				</>
+				:
+				<div id="game-root">
+					<Nav />
+					<div className="container">
+						<div className="row d-flex justify-content-center text-center">
+							{isActive ?
+								<Form>
+									<Form.Group>
+										<Form.Select aria-label="Modes de jeux:" onChange={e => chanScopeSet(e.target.value)}>
+												<option>Modes de jeux:</option>
+												<option selected={true} value="original">Original (1972)</option>
+												<option value="bigball">Big Ball (Facile)</option>
+												<option value="blitz">Blitz (Balle Rapide)</option>
+												<option value="slow">Slow (Balle Lente)</option>
+												<option value="reverse">Reverse (Paddle Horizontal)</option>
+										</Form.Select>
+									</Form.Group>
+								</Form>
+							: ""}
+							{isActive ? <button type="button" className="btn btn-outline-dark" id="search-button" onClick={() => sendSearch()}>{SearchText}</button> : ""}
+							<p className='text' id="victoryMessage"></p>
+							<main role="main">
+								<p className="canvas-score" id="scores">
+									<em className="canvas-score" id="joueur1"></em>
+									<span className="canvas-score">:</span>
+									<em className="canvas-score" id="player-score">0</em> - <em id="joueur2"></em><span>:</span><em className="canvas-score" id="player2-score">0</em></p>
+								<canvas id="canvas" width={size.width / 1.5} height={size.height / 1.25}></canvas>
+							</main>
+							{/*<GameRules />*/}
+						</div>
+					</div>
 				</div>
-			</div>
-		</div>
+			}
+		</>
 	);
 }

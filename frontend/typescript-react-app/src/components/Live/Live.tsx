@@ -13,6 +13,22 @@ var adversaires = [];
 
 export default function Live() {
 
+	if (localStorage.getItem("loggedIn") != "true")
+	{
+		console.log("you are not legged in !");
+		return (<>
+			<Nav />
+			<div className="container">
+				<div className="row d-flex justify-content-center text-center">
+					<div className="col-9">
+						<div className="channels-not-logged">
+							<p>You are not logged in.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</>)
+	}
 	let socket = io("http://localhost:3000/game");
 
 	socket.on("playerMove", (body: string) => {
@@ -32,6 +48,22 @@ export default function Live() {
 
 	function noGames()
 	{
+		if (localStorage.getItem("loggedIn") != "true")
+		{
+			console.log("you are not legged in !");
+			<>
+					<Nav />
+					<div className="container">
+						<div className="row d-flex justify-content-center text-center">
+							<div className="col-9">
+								<div className="channels-not-logged">
+									<p>You are not logged in.</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</>
+		}
 		if (joueurs.length == 0 && adversaires.length == 0)
 			document.getElementById("content").innerHTML = `
 				<div id='box'>
@@ -42,6 +74,11 @@ export default function Live() {
 
 	function display()
 	{
+		if (localStorage.getItem("loggedIn") != "true")
+		{
+			console.log("you are not legged in !");
+			return
+		}
 		document.getElementById("content").innerHTML = "<div></div>";
 		joueurs.map(joueur => {
 			adversaires.map(adversaire => {
@@ -57,6 +94,11 @@ export default function Live() {
 	}
 
 	socket.on("stopGame", (...args) => {
+		if (localStorage.getItem("loggedIn") != "true")
+		{
+			console.log("you are not legged in !");
+			return;
+		}
 		let i1 = joueurs.indexOf(args[0]);
 		let i2 = adversaires.indexOf(args[1]);
 		let i3 = adversaires.indexOf(args[0]);
@@ -73,12 +115,29 @@ export default function Live() {
 	});
 
 	return(
-		<div>
-			<Nav/>
-			<div id="titre">📺 Liste des Lives</div>
-				<div id="content">
+		<>
+		{localStorage.getItem("loggedIn") != "true" ?
+				<>
+					<Nav />
+					<div className="container">
+						<div className="row d-flex justify-content-center text-center">
+							<div className="col-9">
+								<div className="channels-not-logged">
+									<p>You are not logged in.</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</>
+				:
+				<div>
+					<Nav/>
+					<div id="titre">📺 Liste des Lives</div>
+						<div id="content">
+						</div>
 				</div>
-		</div>
+		}
+		</>
 	)
 
 }
