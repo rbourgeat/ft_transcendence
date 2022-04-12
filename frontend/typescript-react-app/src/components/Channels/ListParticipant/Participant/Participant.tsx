@@ -12,34 +12,16 @@ export interface ParticipantSState {
 
 }
 
-export default class Participant extends React.Component<ParticipantSProps, ParticipantSState>
+export default function Participant({username, status, owner, admin, updateSelectedUser})
 {
-    constructor(props: ParticipantSProps)
-    {
-        super(props);
-
-        this.state = {}
-    }
-
-    componentDidMount() {}
-
-    render()
-    {
-        return (
-				<>
-				{/* Attention pas responsive pour l instant */}
-				<p className="p--participant">
-					{this.props.username}
-					{this.props.status === "Online" ? <span className="online"></span> : <span></span>}
-					{this.props.status === "Offline" ? <span className="offline"></span> : <span></span>}
-					{this.props.admin == true ? <span className="admin"></span> : <span></span>}
-					{this.props.owner == true ? <span className="owner"></span> : <span></span>}
-				</p>
-
-				{/*<button>
-			</button>*/}
-		   </>
-        );
-    }
-
+	return (
+		<>
+			<p className="p--participant" onClick={() => updateSelectedUser("username")}>
+				{username}
+				{status === "Online" ? <span className="online"></span> : <span></span>}
+				{status === "Offline" ? <span className="offline"></span> : <span></span>}
+				{admin == true ? <span className="admin"></span> : <span></span>}
+				{owner == true ? <span className="owner"></span> : <span></span>}
+			</p>
+	 </>);
 }

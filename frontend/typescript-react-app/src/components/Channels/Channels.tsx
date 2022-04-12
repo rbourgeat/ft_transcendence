@@ -3,13 +3,13 @@ import Nav from '../Nav/Nav';
 import TypingMessage from "./TypingMessage/TypingMessage";
 import ListDiscussions from "./ListDiscussions/ListDiscussions";
 import ListParticipant from './ListParticipant/ListParticipant';
+import ListChannels from './ListChannels/ListChannels';
 import CreateChan from './CreateChan/CreateChan';
 import React, {useState, useEffect} from "react";
 import MyAxios from '../Utils/Axios/Axios';
 import ToastAlerts from '../Utils/ToastAlerts/ToastAlerts';
 import { ToastContainer, toast } from 'react-toastify';
 import { io } from "socket.io-client";
-import ListChannels from './ListChannels/ListChannels';
 import ListPubChannels from './ListChannels/ListPubChannels';
 
 interface ChatProps {
@@ -26,7 +26,8 @@ export default function Channels(props: ChatProps) {
         calledOnce.current = true;
 	}, []);
 
-	const [activeChannel, updateActiveChannel] = React.useState(1);
+	const [activeChannel, updateActiveChannel] = React.useState(0);
+	const [chanUsers, updateChanUsers] = React.useState([]);
 
 	return (
 		<div id="channels">
@@ -56,14 +57,15 @@ export default function Channels(props: ChatProps) {
 							<div className="chat-channel-menu">
 								<CreateChan endpoint="http://localhost:3000/api/chat" action="Create" />
 								<CreateChan endpoint="http://localhost:3000/api/chat/join" action="Join" />
-								<ListChannels activeChannel={activeChannel} updateActiveChannel={updateActiveChannel}/>
+								{/* PB DE MERGE ? */}
+								{/*<ListChannels activeChannel={activeChannel} updateActiveChannel={updateActiveChannel}/>*/}
 								<ListPubChannels />
 							</div>
 							<div className="chat--messages">
 								<ListDiscussions activeChannel={activeChannel}/>
 								<TypingMessage />
 							</div>
-						<ListParticipant />
+						{/*<ListParticipant />*/}
 					</div>
 				}
 			</div>
