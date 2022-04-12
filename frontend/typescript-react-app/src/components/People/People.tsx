@@ -17,21 +17,38 @@ export default function People(props: PeopleProps) {
 	}
 
 	return (
-		<div id="people--div">
-			<Nav />
-			<button onClick={update}>update</button>
-			<div id="all">
-				<div className="row">
-					<br />
-					<All login={props.login} />
-					<br />
-					<Friends />
-					<br />
-					<Invitations />
-					<br />
-					<Blocked />
+		<>
+			{localStorage.getItem("loggedIn") != "true" ?
+				<>
+					<Nav />
+					<button onClick={update}>update</button>
+					<div className="container">
+						<div className="row d-flex justify-content-center text-center">
+							<div className="col-9">
+								<div className="channels-not-logged">
+									<p>You are not logged in.</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</>
+				:
+				<div id="people--div">
+					<Nav />
+					<div id="all">
+						<div className="row">
+							<br />
+							<All />
+							<br />
+							<Friends />
+							<br />
+							<Invitations />
+							<br />
+							<Blocked />
+						</div>
+					</div>
 				</div>
-			</div>
-		</div>
+			}
+		</>
 	);
 }

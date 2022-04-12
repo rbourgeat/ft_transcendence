@@ -4,10 +4,12 @@ import './Footer.scss';
 export default function Footer() {
     return (
         <div id="footer">
-            <footer className="footer--div">
-                <p id="footer--p">
-                    FT_TRANSCENDENCE
-                </p>
+            <footer className="footer--footer">
+                <div className="footer--div">
+                    <p id="footer--p">
+                        FT_TRANSCENDENCE
+                    </p>
+                </div>
             </footer>
         </div>
     )
