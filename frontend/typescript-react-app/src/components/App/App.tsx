@@ -132,24 +132,24 @@ function App() {
           interactivity: {
             events: {
               onClick: {
-                enable: true,
+                enable: false,
                 mode: "push",
               },
               onHover: {
-                enable: true,
+                enable: false,
                 mode: "repulse",
               },
-              resize: true,
+              resize: false,
             },
             modes: {
               bubble: {
-                distance: 400,
-                duration: 2,
+                distance: 100,
+                duration: 5,
                 opacity: 0.8,
-                size: 40,
+                size: 20,
               },
               push: {
-                quantity: 4,
+                quantity: 20,
               },
               repulse: {
                 distance: 200,
@@ -164,7 +164,7 @@ function App() {
             links: {
               color: "#ffffff",
               distance: 150,
-              enable: true,
+              enable: false,
               opacity: 0.5,
               width: 1,
             },
@@ -172,32 +172,33 @@ function App() {
               enable: true,
             },
             move: {
-              direction: "none",
+              direction: "bottom",
               enable: true,
               outMode: "bounce",
-              random: false,
-              speed: 1,
+              random: true,
+              speed: 2,
               straight: false,
             },
             number: {
               density: {
                 enable: true,
-                area: 800,
+                area: 120,
               },
-              value: 80,
+              value: 10,
             },
             opacity: {
-              value: 0.5,
+              value: 0.3,
+              random: true,
             },
             shape: {
               type: "circle",
             },
             size: {
-              random: true,
-              value: 5,
+              random: false,
+              value: 40,
             },
           },
-          detectRetina: true,
+          detectRetina: false
         }}
       />
       <Routes>
