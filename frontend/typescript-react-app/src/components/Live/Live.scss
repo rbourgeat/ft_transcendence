@@ -1,6 +1,6 @@
 @use "../../variables";
 
-#box {
+.box {
     background-color: white;
     color: black;
     margin: 2vw;
@@ -14,7 +14,7 @@
     display: block;
 }
 
-#watch {
+.watch {
     padding: 5px;
 }
 
@@ -22,7 +22,7 @@
    font-size: 8vw;
 }
 
-#vs {
+.vs {
     font-size: 3vw;
     font-weight: bold;
  }

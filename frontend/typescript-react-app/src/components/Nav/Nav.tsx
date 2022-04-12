@@ -70,7 +70,7 @@ function Nav() {
 						</li>
 						<li className="nav-item">
 							<Link to="/live" className="nav-link">
-								<div className='nav-link-text'><p>Live</p></div>
+								<div className='nav-link-text'><p className="navbar--title">Live</p></div>
 							</Link>
 						</li>
 						<li className="nav-item">

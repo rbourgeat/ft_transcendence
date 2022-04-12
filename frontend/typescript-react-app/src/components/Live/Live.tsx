@@ -29,16 +29,33 @@ export default function Live() {
 	function display()
 	{
 		document.getElementById("content").innerHTML = "<div></div>";
-		joueurs.map(joueur => {
-			adversaires.map(adversaire => {
-				document.getElementById("content").innerHTML += `
-				<div id='box'>
-					<div id='vs'>🏓 ` + joueur +` vs ` + adversaire +`</div>
-					<button id='watch'>Watch</button>
-				</div>
-				`;
-			})
-		});
+		console.log("joueurs length is " + joueurs.length)
+		if (joueurs.length == 0)
+		{
+			document.getElementById("content").innerHTML += `
+			<div id='box'>
+				<div id='no-game'>😢 There is no live game at the moment. </div>
+			</div>`
+			//return (document.getElementById("content").innerHTML += `
+			//<div id='box'>
+			//	<div id='no-game'>😢 There is no live game at the moment. </div>
+			//</div>
+			//`);
+		}
+		else
+		{
+			//Attention une id doit etre unique !
+			joueurs.map(joueur => {
+				adversaires.map(adversaire => {
+					document.getElementById("content").innerHTML += `
+					<div className='box'>
+						<div className='vs'>🏓 ` + joueur +` vs ` + adversaire +`</div>
+						<button className='watch'>Watch</button>
+					</div>
+					`;
+				})
+			});
+		}
 	}
 
 	socket.on("stopGame", (...args) => {
@@ -61,30 +78,29 @@ export default function Live() {
 		<div>
 			<Nav/>
 			<div id="titre">📺 Liste des Lives</div>
-			<div id="content">
-				{/* <div id='box'>
-					<div id='vs'>🏓 Joueur1 vs Joueur2</div>
-					<button id='watch'>Watch</button>
+				<div id="content">
+					{display()}
+					{/* <div id='box'>
+						<div id='vs'>🏓 Joueur1 vs Joueur2</div>
+						<button id='watch'>Watch</button>
+					</div>
+					<div id='box'>
+						<div id='vs'>🏓 Joueur1 vs Joueur2</div>
+						<button id='watch'>Watch</button>
+					</div>
+					<div id='box'>
+						<div id='vs'>🏓 Joueur1 vs Joueur2</div>
+						<button id='watch'>Watch</button>
+					</div>
+					<div id='box'>
+						<div id='vs'>🏓 Joueur1 vs Joueur2</div>
+						<button id='watch'>Watch</button>
+					</div>
+					<div id='box'>
+						<div id='vs'>🏓 Joueur1 vs Joueur2</div>
+						<button id='watch'>Watch</button>
+					</div> */}
 				</div>
-				<div id='box'>
-					<div id='vs'>🏓 Joueur1 vs Joueur2</div>
-					<button id='watch'>Watch</button>
-				</div>
-				<div id='box'>
-					<div id='vs'>🏓 Joueur1 vs Joueur2</div>
-					<button id='watch'>Watch</button>
-				</div>
-				<div id='box'>
-					<div id='vs'>🏓 Joueur1 vs Joueur2</div>
-					<button id='watch'>Watch</button>
-				</div>
-				<div id='box'>
-					<div id='vs'>🏓 Joueur1 vs Joueur2</div>
-					<button id='watch'>Watch</button>
-				</div> */}
-				
-
-			</div> 
 		</div>
 	)
 
