@@ -682,16 +682,20 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
                     //console.log(res);
                     localStorage.setItem("loggedIn", "true");
                     //TODO: faire en sorte de récupérer le login pour l'enregistrer dans le localStorage
-                    //localStorage.setItem("login", login);
+                    localStorage.setItem("login", res.data.login);
+                    if (res.data.login42 != null || res.data.login42 != undefined || res.data.login42 != "")
+                        localStorage.setItem("login42", res.data.login42);
+                    else
+                        localStorage.setItem("login42", "");
                    // window.top.location = "/chat/";
                     window.top.location = "http://localhost:3030/user";
-                    return;
+                    //return;
                 }
                 else {
                     //toast.notifyDanger('Oops ! An error happened, incorrect email or password.');
                     console.log("Did not receive 200 when logging it.");
                     toast.notifyDanger("😢 Error while logging in !");
-                    return;
+                    //return;
                 }
             })
             .catch((error) => {

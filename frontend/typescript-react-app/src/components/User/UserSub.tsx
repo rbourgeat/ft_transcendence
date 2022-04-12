@@ -34,12 +34,19 @@ export default function User(props: UserfuncProps) {
 	const [login42, setlogin42] = React.useState("");
 	const calledOnce = React.useRef(false);
 	const [loaded, setLoaded] = React.useState(false);
+	const [authorized, setAuthorized] = React.useState(false);
 
 	async function getUser() {
 		let log = localStorage.getItem("loggedIn");
 		setLogged(log == "true" ? true : false);
 
 		let url = "http://localhost:3000/api/auth/";
+
+		if (log == "false")
+		{
+			console.log("Not logged !");
+			return ;
+		}
 
 		axios.defaults.baseURL = 'http://localhost:3000/api/';
 		axios.defaults.headers.post['Content-Type'] = 'application/json';
@@ -59,12 +66,15 @@ export default function User(props: UserfuncProps) {
 					localStorage.setItem("login", res.data.login);
 					localStorage.setItem("login42", res.data.login42);
 					setLoaded(true);
+					setAuthorized(true);
 				}
 				setUsername(username);
 			})
 			.catch((err) => {
-				console.log("Error while getting api auth - Maybe you are in incognito mode");
-				console.log(err);
+				console.log("Auth returned 400 -> missing cookie");
+				setAuthorized(false);
+				//console.log("Error while getting api auth - Maybe you are in incognito mode");
+				//console.log(err);
 			})
 	}
 
@@ -93,7 +103,12 @@ export default function User(props: UserfuncProps) {
 				<div className="row d-flex justify-content-center text-center">
 					<div className="col-9">
 						{
-							loaded ?
+							authorized == false?
+							<p className="not-authenticated">You are not properly authenticated.</p>
+							: ""
+						}
+						{
+							loaded && authorized == true?
 								<div className="user--stats" key={username}>
 								<>
 								{logged == true ?
