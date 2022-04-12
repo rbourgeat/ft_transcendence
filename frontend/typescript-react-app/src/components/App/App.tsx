@@ -40,8 +40,6 @@ function App() {
 
   let socket = io("http://localhost:3000/chat", { query: { username: username } });
 
-  let cookieCheck = document.cookie.match("Authentication");
-
   async function getUser() {
     if (localStorage.getItem("loggedIn") != "true")
     {
@@ -49,6 +47,13 @@ function App() {
         return ;
     }
     let url = "http://localhost:3000/api/auth/";
+
+    let cookieCheck = document.cookie.match("Authentication");
+    let cookieCheck2 = document.cookie.match("connected.sid");
+
+    console.log("Cookie 1 is " + cookieCheck);
+    console.log("Cookie 2 " + cookieCheck2);
+
     let username = "";
     axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
     axios.defaults.withCredentials = true;

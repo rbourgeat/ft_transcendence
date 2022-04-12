@@ -27,6 +27,8 @@ function Nav() {
 
 				//Sauvegarde dans localStorage le fait qu'on est déconnecté
 				localStorage.setItem("loggedIn", JSON.stringify(false));
+				localStorage.removeItem("login");
+				localStorage.removeItem("login42");
 				//console.log("Disconnecting");
 				let check = localStorage.getItem("loggedIn");
 				console.log("Check is " + check);
@@ -35,7 +37,7 @@ function Nav() {
 				{
 					localStorage.setItem("2faverif", "false");
 				}
-				window.top.location = "/";
+				window.top.location = "http://localhost:3000/welcome/";
 			})
 			.catch((error) => {
 				console.log("Catched error while disconnecting");

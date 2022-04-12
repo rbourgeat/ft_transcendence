@@ -132,8 +132,8 @@ export default function Live() {
 				:
 				<div>
 					<Nav/>
-					<div id="titre">📺 Liste des Lives</div>
-						<div id="content">
+					<div id="titre" className="list--lives">📺 Liste des Lives</div>
+						<div id="content" className="content-class">
 						</div>
 				</div>
 		}

@@ -34,7 +34,7 @@ export default function People(props: PeopleProps) {
 				:
 				<div id="people--div">
 					<Nav />
-					<button onClick={update}>update</button>
+					{/*<button onClick={update}>update</button>*/}
 					<div id="all">
 						<div className="row">
 							<br />

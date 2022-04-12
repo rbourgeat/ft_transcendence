@@ -33,6 +33,7 @@ export default function User(props: UserfuncProps) {
 	const [is42, setis42] = React.useState(false);
 	const [login42, setlogin42] = React.useState("");
 	const calledOnce = React.useRef(false);
+	const [loaded, setLoaded] = React.useState(false);
 
 	async function getUser() {
 		let log = localStorage.getItem("loggedIn");
@@ -57,11 +58,13 @@ export default function User(props: UserfuncProps) {
 					setlogin42(res.data.login42);
 					localStorage.setItem("login", res.data.login);
 					localStorage.setItem("login42", res.data.login42);
+					setLoaded(true);
 				}
 				setUsername(username);
 			})
 			.catch((err) => {
-				console.log("Error while getting api auth");
+				console.log("Error while getting api auth - Maybe you are in incognito mode");
+				console.log(err);
 			})
 	}
 
@@ -89,30 +92,35 @@ export default function User(props: UserfuncProps) {
 			<div className="container">
 				<div className="row d-flex justify-content-center text-center">
 					<div className="col-9">
-						<div className="user--stats" key={username}>
-							<>
-							{logged == true ?
-							<div>
-							<img id={username} className="profile--pic" height="80" width="80"/>
-							{renderImage(username)}
-							<br />
-							<h2 id="user--data">{username}</h2>
-							<div className="col-9 mx-auto text-center" id="input-div">
+						{
+							loaded ?
+								<div className="user--stats" key={username}>
+								<>
+								{logged == true ?
+								<div>
+								<img id={username} className="profile--pic" height="80" width="80"/>
+								{renderImage(username)}
 								<br />
-								<Achievements login={username}/>
-								<br />
-								{/*<Badge />*/}
-								<MatchHistory login={username}/>
-								<br/>
-								<Settings username={username} login42={localStorage.getItem("login42")}/>
-								<br />
+								<h2 id="user--data">{username}</h2>
+								<div className="col-9 mx-auto text-center" id="input-div">
+									<br />
+									<Achievements login={username}/>
+									<br />
+									{/*<Badge />*/}
+									<MatchHistory login={username}/>
+									<br/>
+									<Settings username={username} login42={localStorage.getItem("login42")}/>
+									<br />
+									</div>
 								</div>
+								: <p>You are not logged in.</p>
+								}
+								</>
 							</div>
-							: <p>You are not logged in.</p>
-							}
-							</>
-						</div>
+							: ""
+						}
 					</div>
+					{/* fin */}
 				</div>
 				<br />
 			</div>
