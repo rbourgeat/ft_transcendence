@@ -92,10 +92,6 @@ export class UserController {
         console.log(response);
         return this.userService.addAvatar(login, file.filename);
     }
-    // uploadAvatar(@Param('login') login: string, @UploadedFile() file: Express.Multer.File) {
-    //     console.log("login: " + login + ", upload: " + file.filename);
-    //     return this.userService.addAvatar(login, file.filename);
-    // }
 
     @ApiOperation({ summary: 'Get {fileId} avatar' }) //endpoint summary on swaggerui
     @ApiOkResponse({ description: '{fileId} avatar displayed' }) //answer sent back
@@ -121,14 +117,6 @@ export class UserController {
         return this.userService.sendInvitation(receiverLogin, req.user);
     }
 
-    /*
-    @ApiOperation({ summary: 'Answer to the invitation request (accepted/declined/blocked) [jwt-protected]' })
-    @UseGuards(JwtAuthenticationGuard)
-    @Post('relation/answerToInvitation/:invitationId')
-    answerToInvitation(@Param('invitationId') invitationId: number, @Body() statusResponse: RelationStatusClass, @Request() req) {
-        return this.userService.answerToInvitation(statusResponse.status, invitationId, req.user);
-    }
-*/
     @ApiOperation({ summary: 'Answer to the invitation request (accepted/declined/blocked) [jwt-protected]' })
     @UseGuards(JwtAuthenticationGuard)
     @Post('relation/answerToInvitation/:login')
@@ -157,15 +145,6 @@ export class UserController {
         return this.userService.getFriends(req.user);
     }
 
-    /*
-    @ApiOperation({ summary: 'Remove someone as friend [jwt-protected]' })
-    @UseGuards(JwtAuthenticationGuard)
-    @Delete('relation/remove/:receiverId')
-    removeFriend(@Param('receiverId') receiverId: number, @Request() req) {
-        return this.userService.removeFriend(receiverId, req.user);
-    }
-*/
-
     @ApiOperation({ summary: 'Remove someone as friend [jwt-protected]' })
     @UseGuards(JwtAuthenticationGuard)
     @Delete('relation/remove/:login')
@@ -178,6 +157,13 @@ export class UserController {
     @Post('relation/block/:login')
     blockUser(@Param('login') login: string, @Request() req) {
         return this.userService.blockUser(login, req.user);
+    }
+
+    @ApiOperation({ summary: 'Get relation with a user [jwt-protected]' })
+    @UseGuards(JwtAuthenticationGuard)
+    @Get('relation/relationStatusWith/:login')
+    async getRelation(@Param('login') login: string, @Request() req): Promise<any> {
+        return this.userService.getRelation(login, req.user);
     }
 
     @ApiOperation({ summary: 'Unblock a user [jwt-protected]' })
@@ -194,21 +180,10 @@ export class UserController {
         return this.userService.getBlockedUsers(req.user);
     }
 
-    /*
-    @ApiOperation({ summary: 'Returns list of achievements [jwt-protected]' })
-    @UseGuards(JwtAuthenticationGuard)
-    @Get('achievements/me')
-    getAchievements(@Request() req) {
-        console.log("test back controller get achievements");
-        return this.userService.getAchievements(req.user);
-    }
-    */
-
     @ApiOperation({ summary: 'Returns list of achievements of a specific user [jwt-protected]' })
     @UseGuards(JwtAuthenticationGuard)
     @Get('achievements/:login')
     getAchievementsOf(@Param('login') login: string)/*: Observable<Achievement[]>*/ {
-        //console.log("test back controller get achievements");
         console.log('get specific achievement of user' + login);
         return this.userService.getAchievementsOf(login);
     }

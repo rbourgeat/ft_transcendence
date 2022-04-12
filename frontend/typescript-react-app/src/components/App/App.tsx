@@ -1,5 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.css';
-import React, { useState, useMemo, useEffect} from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { io } from 'socket.io-client';
 import { useParams } from 'react-router-dom'
 import './App.scss';
@@ -74,12 +74,10 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (localStorage.getItem("2fa") != "true" && localStorage.getItem("2fa") != "false")
-    {
+    if (localStorage.getItem("2fa") != "true" && localStorage.getItem("2fa") != "false") {
       localStorage.setItem("2fa", "false");
     }
-    if (localStorage.getItem("loggedIn") != "true" && localStorage.getItem("loggedIn") != "false")
-    {
+    if (localStorage.getItem("loggedIn") != "true" && localStorage.getItem("loggedIn") != "false") {
       localStorage.setItem("loggedIn", "false");
     }
   }, []);
@@ -108,87 +106,87 @@ function App() {
 
 
       <Particles
-      id="tsparticles"
-      //init={particlesInit}
-      //loaded={particlesLoaded}
-      options={{
-        background: {
-          color: {
-            value: "#00000",
+        id="tsparticles"
+        //init={particlesInit}
+        //loaded={particlesLoaded}
+        options={{
+          background: {
+            color: {
+              value: "#00000",
+            },
           },
-        },
-        fpsLimit: 120,
-        interactivity: {
-          events: {
-            onClick: {
+          fpsLimit: 120,
+          interactivity: {
+            events: {
+              onClick: {
+                enable: true,
+                mode: "push",
+              },
+              onHover: {
+                enable: true,
+                mode: "repulse",
+              },
+              resize: true,
+            },
+            modes: {
+              bubble: {
+                distance: 400,
+                duration: 2,
+                opacity: 0.8,
+                size: 40,
+              },
+              push: {
+                quantity: 4,
+              },
+              repulse: {
+                distance: 200,
+                duration: 0.4,
+              },
+            },
+          },
+          particles: {
+            color: {
+              value: "#ffffff",
+            },
+            links: {
+              color: "#ffffff",
+              distance: 150,
               enable: true,
-              mode: "push",
+              opacity: 0.5,
+              width: 1,
             },
-            onHover: {
+            collisions: {
               enable: true,
-              mode: "repulse",
             },
-            resize: true,
-          },
-          modes: {
-            bubble: {
-              distance: 400,
-              duration: 2,
-              opacity: 0.8,
-              size: 40,
-            },
-            push: {
-              quantity: 4,
-            },
-            repulse: {
-              distance: 200,
-              duration: 0.4,
-            },
-          },
-        },
-        particles: {
-          color: {
-            value: "#ffffff",
-          },
-          links: {
-            color: "#ffffff",
-            distance: 150,
-            enable: true,
-            opacity: 0.5,
-            width: 1,
-          },
-          collisions: {
-            enable: true,
-          },
-          move: {
-            direction: "none",
-            enable: true,
-            outMode: "bounce",
-            random: false,
-            speed: 1,
-            straight: false,
-          },
-          number: {
-            density: {
+            move: {
+              direction: "none",
               enable: true,
-              area: 800,
+              outMode: "bounce",
+              random: false,
+              speed: 1,
+              straight: false,
             },
-            value: 80,
+            number: {
+              density: {
+                enable: true,
+                area: 800,
+              },
+              value: 80,
+            },
+            opacity: {
+              value: 0.5,
+            },
+            shape: {
+              type: "circle",
+            },
+            size: {
+              random: true,
+              value: 5,
+            },
           },
-          opacity: {
-            value: 0.5,
-          },
-          shape: {
-            type: "circle",
-          },
-          size: {
-            random: true,
-            value: 5,
-          },
-        },
-        detectRetina: true,
-      }}
-    />
+          detectRetina: true,
+        }}
+      />
       <Routes>
         <Route path="/" element={<Welcome />} />
         <Route path="/welcome" element={<Welcome />} />
@@ -200,24 +198,24 @@ function App() {
           </>
           : ""}
 
-        {localStorage.getItem("loggedIn") == "true" &&  localStorage.getItem("2fa") == "true" && localStorage.getItem("2faverif") == "false" ?
-          <Route path="*" element={<Login2fa/>} /> : ""}
+        {localStorage.getItem("loggedIn") == "true" && localStorage.getItem("2fa") == "true" && localStorage.getItem("2faverif") == "false" ?
+          <Route path="*" element={<Login2fa />} /> : ""}
 
         {(localStorage.getItem("2fa") == "true" && localStorage.getItem("2faverif") == "false") ?
-              <Route path="*" element={<Login2FA />} />
-              :
-                <>
-                  <Route path="/user" element={<UserMain />} />
-                  <Route path="/live" element={<Live />} />
-                  <Route path="/chat" element={<CreateChan endpoint={undefined} action={undefined} />} />
-                  <Route path="/auth" element={<UserMain />} />
-                  <Route path="/channels" element={<Channels />} />
-                  <Route path="/people" element={<People />} />
-                  <Route path="/game" element={<Game />} />
-                  <Route path="/2fa" element={<Login2FA />} />
-                  <Route path="/profile/:login" element={<Profile />}/>
-                  <Route path="*" element={<NotFound />} />
-                </>}
+          <Route path="*" element={<Login2FA />} />
+          :
+          <>
+            <Route path="/user" element={<UserMain />} />
+            <Route path="/live" element={<Live />} />
+            <Route path="/chat" element={<CreateChan endpoint={undefined} action={undefined} />} />
+            <Route path="/auth" element={<UserMain />} />
+            <Route path="/channels" element={<Channels />} />
+            <Route path="/people" element={<People login={username} />} />
+            <Route path="/game" element={<Game />} />
+            <Route path="/2fa" element={<Login2FA />} />
+            <Route path="/profile/:login" element={<Profile />} />
+            <Route path="*" element={<NotFound />} />
+          </>}
       </Routes>
     </div>
   );

@@ -6,14 +6,24 @@ import Invitations from "./Invitations/Invitations";
 import Friends from "./Friends/Friends";
 import Blocked from "./Blocked/Blocked";
 
-export default function People() {
+export interface PeopleProps {
+	login?: string
+}
+
+export default function People(props: PeopleProps) {
+
+	function update() {
+		window.top.location = "/people/";
+	}
+
 	return (
 		<div id="people--div">
 			<Nav />
+			<button onClick={update}>update</button>
 			<div id="all">
 				<div className="row">
 					<br />
-					<All />
+					<All login={props.login} />
 					<br />
 					<Friends />
 					<br />

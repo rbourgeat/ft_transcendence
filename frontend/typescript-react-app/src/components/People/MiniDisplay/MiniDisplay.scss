@@ -11,6 +11,10 @@
 	color: black !important;
 }
 
+.mini-display-li {
+	text-align: center;
+}
+
 .profile--link {
 	font-size: 10px;
 	text-decoration: none;
@@ -34,14 +38,13 @@
 
 .log--color {
 	text-align: right !important;
-	margin-top: -50px;
+	margin-top: -200px;
 }
 
 .user--action {
-	text-align: center !important;
-	margin-left: 20px;
 	font-size: 25px;
 	cursor: pointer;
+	padding: 10%;
 }
 
 #mini--login {
