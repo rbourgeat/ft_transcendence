@@ -12,6 +12,7 @@ import Achievements from "../Achievements/Achievements";
 import {Modal} from "react-bootstrap"
 import Settings from "./Settings/Settings"
 import MatchHistory from '../MatchHistory/MatchHistory';
+import Footer from "../Footer/Footer";
 
 //TODO: a cleaner ?
 export interface UserfuncProps {
@@ -87,7 +88,7 @@ export default function User(props: UserfuncProps) {
 			<Nav />
 			<div className="container">
 				<div className="row d-flex justify-content-center text-center">
-					<div className="col-9" id="bonjour--user">
+					<div className="col-9">
 						<div className="user--stats" key={username}>
 							<>
 							{logged == true ?
@@ -107,7 +108,7 @@ export default function User(props: UserfuncProps) {
 								<br />
 								</div>
 							</div>
-							: <p></p>
+							: <p>You are not logged in.</p>
 							}
 							</>
 						</div>
@@ -115,6 +116,7 @@ export default function User(props: UserfuncProps) {
 				</div>
 				<br />
 			</div>
-		</div>
+		{/*<Footer />*/}
+	</div>
 	);
 };
