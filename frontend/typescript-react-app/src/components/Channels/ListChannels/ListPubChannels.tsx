@@ -12,9 +12,7 @@ export default function ListPubChannels() {
 	useEffect(() => {
 		axios.get("http://localhost:3000/api/chat")
 			.then((response) => {
-				console.log("CHANNEL PUBLICS : ")
 				pubChanSet(response.data);
-				console.log(pubChan);
 			})
 			.catch((error) => {
 				console.log(error);

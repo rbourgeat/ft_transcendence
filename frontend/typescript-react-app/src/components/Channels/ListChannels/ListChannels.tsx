@@ -9,7 +9,7 @@ import axios from "axios";
  * @malatini ou @macrespo ?
  * Pour la personne en charge du chat
  */
-export default function ListChannels({activeChannel, updateActiveChannel}) {
+export default function ListChannels({activeChannel, updateActiveChannel, chanUsers, updateChanUsers}) {
     const [channels, setChannels] = React.useState([]);
     const [count, setCount] = useState(0);
 
@@ -52,7 +52,7 @@ export default function ListChannels({activeChannel, updateActiveChannel}) {
 					<p id="list--channels--title"> Public channels :</p>
 					<ul id="list--channels--ul">
 						{channels.map(channel  =>
-						<button key={channel.id} onClick={() => {updateActiveChannel(channel.id)}} className="channel--list">{channel.name} {channel.public === true ? "public" : "private"}</button>
+						<button key={channel.id} onClick={() => {updateActiveChannel(channel.id); updateChanUsers(channel.participates)}} className="channel--list">{channel.name} {channel.public === true ? "public" : "private"}</button>
 						)}
 					</ul>
 				</div>
