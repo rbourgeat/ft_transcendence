@@ -194,7 +194,7 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 		<div className="mini--display--div" id={"minidisplay".concat("_" + props.login + "_" + props.extra)}>
 			<li className="list-group-item" key={props.extra ? props.login.concat(props.extra) : props.login}>
 				<div className="mini-display-li">
-					<Suspense fallback={<Hearts color="#ffe4e1" height={100} width={100} key={props.login} />}>
+					{/*<Suspense fallback={<Hearts color="#ffe4e1" height={100} width={100} key={props.login} />}>*/}
 						<img
 							className="profile--pic"
 							id={props.login.concat("_" + props.extra)}
@@ -203,7 +203,18 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 							height="100"
 							onClick={gotoprofile}
 						/>
-						{load == true ? renderImage(props.avatar, props.login, props.ftlogin, props.extra) : ""}
+						{load == true ?
+						<>
+						{renderImage(props.avatar, props.login, props.ftlogin, props.extra)}
+						</>
+
+						:
+											<div className="d-flex justify-content-center">
+												<div className="spinner-border" role="status">
+													{/*<span className="sr-only">Loading...</span>*/}
+												</div>
+											</div>
+						}
 						<br />
 						<p className="user--p" id={"mini--login".concat("_"+ props.login)}>{props.login}</p>
 						{buttonToDidsplay()}
@@ -218,7 +229,7 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 							draggable
 							pauseOnHover
 						/>
-					</Suspense>
+					{/*</Suspense>*/}
 				</div>
 				<svg className="log--color" height="40" width="40">
 					<circle cx="20" cy="20" r="15" fill={color} stroke="white" style={{ strokeWidth: '3' }} />

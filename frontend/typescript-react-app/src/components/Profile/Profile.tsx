@@ -40,13 +40,14 @@ export default function Profile() {
 	const [xp, setXp] = React.useState(0);
 	const [level, setLevel] = React.useState(0);
 	const [nextlevel, setNextLevel] = React.useState(0);
+	const [pendingInvite, setPendingInvite] = React.useState(false);
 	//const [load, setLoad] = React.useState(false);
 
-	function getUserLogin(log: string) {
+	async function getUserLogin(log: string) {
 		let url = "http://localhost:3000/api/user/".concat(login);
 
 		console.log("getting user data");
-		axios.get(url)
+		await axios.get(url)
 		.then(res => {
 			console.log(res);
 			setUserOk(true);
@@ -78,6 +79,7 @@ export default function Profile() {
 			console.log("Error while getting api auth");
 			console.log(err);
 		})
+		setLoad(true);
 	}
 
 	function renderImage(login: string, isUserProfile: boolean) {
@@ -96,6 +98,7 @@ export default function Profile() {
 	useEffect(() => {
 	if (calledOnce.current) {
 		return;}
+	getUserLogin(login)
 	buttonToDisplay();
 	calledOnce.current = true;
 }, []);
@@ -133,10 +136,14 @@ export default function Profile() {
 					//document.getElementById("relationship").appendChild(<span className="badge bg-success">Friends</span>);
 					//parent.appendChild();
 				}
+				else if (relation.status == "pending" && relation.receiver == login)
+				{
+					console.log("You were invited by that user !");
+				}
 				else
 				{
 					setisFriend(false);
-					console.log("Somebody blocked the other.");
+					//console.log("Somebody blocked the other.");
 				}
 
 				//setRelationStatus(status);
@@ -169,7 +176,13 @@ export default function Profile() {
 					<div className="col-6" id="main--profile--div">
 						<div>
 						<br />
-						{getUserLogin(login)}
+						{load == false ?
+										<div className="spinner-border m-5" role="status">
+											<span className="sr-only">Loading...</span>
+										</div>
+
+										: ""}
+						{/*{load == false ? getUserLogin(login) : ""}*/}
 						{userOK == true ?
 							<div id="profile--div">
 								<h3 className="profile--type">{isFriend == true ? "Friend profile" : "Public profile"}</h3>
@@ -179,7 +192,7 @@ export default function Profile() {
 								<br />
 								<img id={login} className="profile--pic" src="" width="100" height="100"/>
 								{/*<br />*/}
-								{renderImage(login, isUser)}
+								{load == false ? renderImage(login, isUser) : ""}
 								<svg className="log--color" height="40" width="40">
 									<circle cx="20" cy="20" r="15" fill={color} stroke="white" style={{ strokeWidth: '3' }} />
 								</svg>

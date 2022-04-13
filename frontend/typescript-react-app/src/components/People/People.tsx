@@ -14,12 +14,13 @@ export interface PeopleProps {
 
 export default function People(props: PeopleProps) {
 
+	const [load, setLoad] = React.useState(false);
+	const [authorized, setAuthorized] = React.useState(false);
+	const calledOnce = React.useRef(false);
+
 	function update() {
 		window.top.location = "/people/";
 	}
-
-	const [authorized, setAuthorized] = React.useState(false);
-	const calledOnce = React.useRef(false);
 
 	async function getUser() {
 		let url = "http://localhost:3000/api/auth/";
@@ -31,7 +32,7 @@ export default function People(props: PeopleProps) {
 		axios.defaults.withCredentials = true;
 
 		let username = "";
-		axios.get(url)
+		await axios.get(url)
 			.then(res => {
 				username = res.data.login;
 				console.log(res);
@@ -43,6 +44,7 @@ export default function People(props: PeopleProps) {
 				console.log("Auth returned 400 -> missing cookie");
 				setAuthorized(false);
 			})
+		setLoad(true);
 	}
 
 	useEffect(() => {
@@ -56,37 +58,56 @@ export default function People(props: PeopleProps) {
 
 	return (
 		<>
-			{localStorage.getItem("loggedIn") != "true" || authorized == false ?
+			{/*{authorized == false ?
 				<>
+				<div id="people--div">
 					<Nav />
-					<div className="container">
-						<div className="row d-flex justify-content-center text-center">
-							<div className="col-9">
-								<div className="channels-not-logged">
-									<p>You are not logged in or properly authenticated (no cookie).</p>
+					<div id="all">
+						<div className="row">
+							<div className="container">
+								<div className="row d-flex justify-content-center text-center">
+									<div className="col-9">
+										<div className="channels-not-logged">
+											<p>You are not logged in or properly authenticated (no cookie).</p>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
+				</div>
 				</>
-				:
+				: ""}*/}
 				<div id="people--div">
 					<Nav />
 					{/*<button onClick={update}>update</button>*/}
 					<div id="all">
 						<div className="row">
 							<br />
-							<All login={props.login} />
-							<br />
-							<Friends />
-							<br />
-							<Invitations />
-							<br />
-							<Blocked />
+							{load == false ?
+								<div className="container">
+									<div className="row d-flex justify-content-center text-center">
+										<div className="mycontainer">
+											<div className="spinner-border m-5" role="status">
+												<span className="sr-only">Loading...</span>
+											</div>
+										</div>
+									</div>
+								</div>
+										:
+										<>
+											<All login={props.login} />
+											<br />
+											<Friends />
+											<br />
+											<Invitations />
+											<br />
+											<Blocked />
+										</>
+							}
 						</div>
 					</div>
 				</div>
-			}
 		</>
 	);
 }
