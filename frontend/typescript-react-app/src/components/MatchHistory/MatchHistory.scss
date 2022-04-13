@@ -26,5 +26,16 @@
 }
 
 //.main--button--resume {
-//  width: 80% !important;
+//  //min-height: 100px;
+
+//  //overlow-y: scroll;
 //}
+
+.col--matchhistory {
+  max-height: 200px;
+  min-height: 200px;
+  overflow-x: scroll;
+  padding-left: 30px !important;
+  padding-right: 30px !important;
+  //overflow-y: scroll;
+}

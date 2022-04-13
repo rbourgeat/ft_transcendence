@@ -94,7 +94,7 @@ export default function MatchHistory(props: MatchHistoryProps)
                 </div>
                 <div id="match--history">
                     <div>
-                        <div id="col--matchhistory">
+                        <div className="col--matchhistory">
                             <ul>
                             {load == true && resultsID.length > 0  ? resultsID.map(result =>
                                 <div className="main--button--resume" key={result.id}>
