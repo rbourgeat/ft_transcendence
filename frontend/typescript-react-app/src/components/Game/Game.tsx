@@ -61,6 +61,8 @@ export default function Game() {
     }
 
 	socket.on("gameStart", (...args) => {
+		document.querySelector('#player-score').textContent = "0";
+		document.querySelector('#player2-score').textContent = "0";
 		document.querySelector('#victoryMessage').textContent = "";
 		joueur1 = args[0];
 		joueur2 = args[1];
@@ -179,7 +181,6 @@ export default function Game() {
 		}
 		draw();
 		canvas.addEventListener('mousemove', playerMove);
-		otherMove();
 	}
 
 	useEffect(() => {
@@ -189,7 +190,6 @@ export default function Game() {
 
 	function play() {
 		draw();
-		otherMove();
 		ballMove();
 		anim = requestAnimationFrame(play);
 	}
@@ -234,10 +234,6 @@ export default function Game() {
 		}
 	});
 
-	function otherMove() {
-		// game.player2.y += game.ball.speed.y;
-	}
-
 	function ballMove() {
 		// Rebounds on top and bottom
 		if (game.ball.y > canvas.height || game.ball.y < 0) {
@@ -263,10 +259,10 @@ export default function Game() {
 			game.player.y = canvas.height / 2 - PLAYER_HEIGHT / 2;
 			game.player2.y = canvas.height / 2 - PLAYER_HEIGHT / 2;
 
-			// Reset speed
-			game.ball.speed.x = BALL_SPEED;
-			// Update score
 			if (player == game.player) {
+				// Change ball direction + reset speed
+				game.ball.speed.x = BALL_SPEED * -1;
+				// Update score
 				game.player2.score++;
 				document.querySelector('#player2-score').textContent = game.player2.score;
 				if (game.player2.score >= 5) {
@@ -274,6 +270,9 @@ export default function Game() {
 					clearDataGame();
 				}
 			} else {
+				// Change ball direction + reset speed
+				game.ball.speed.x = BALL_SPEED;
+				// Update score
 				game.player.score++;
 				document.querySelector('#player-score').textContent = game.player.score;
 				if (game.player.score >= 5) {
