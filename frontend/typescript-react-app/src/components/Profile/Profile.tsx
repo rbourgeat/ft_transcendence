@@ -17,7 +17,6 @@ export interface ProfileProps
 export default function Profile() {
 
 	const [color, setColor] = React.useState("");
-
 	const calledOnce = React.useRef(false);
 	const [userOK, setUserOk] = React.useState(false);
 	const [is42, setis42] = React.useState(false);

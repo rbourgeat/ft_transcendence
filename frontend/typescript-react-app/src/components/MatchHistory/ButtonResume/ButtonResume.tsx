@@ -7,6 +7,7 @@ export interface MatchHistoryProps {
     scoreWinner?: string,
     scoreLooser?: string
     login?: string
+    key?: string
 }
 
 //TODO: renommer
