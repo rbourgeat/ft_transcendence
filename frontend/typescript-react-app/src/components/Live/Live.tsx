@@ -11,6 +11,9 @@ import { Form } from 'react-bootstrap'
 var joueurs = [];
 var adversaires = [];
 
+// For resize elements from game canvas
+let resize = 4;
+
 export default function Live() {
 
 	if (localStorage.getItem("loggedIn") != "true")
@@ -33,7 +36,7 @@ export default function Live() {
 
 	socket.on("playerMove", (body: string) => {
 		const b = body.split(':');
-		console.log("joueur: " + b[0] + ", position : " + b[1] + ", adversaire : " + b[2]);
+		// console.log("joueur: " + b[0] + ", position : " + b[1] + ", adversaire : " + b[2]);
 		if (joueurs.indexOf(b[0]) == -1 && adversaires.indexOf(b[0]) == -1) {
 			joueurs.push(b[0]);
 			adversaires.push(b[2]);
@@ -73,11 +76,6 @@ export default function Live() {
 				`;
 	}
 
-	function gotoGame()
-	{
-		window.top.location = "http://localhost:3030/game";
-	}
-
 	function display()
 	{
 		if (localStorage.getItem("loggedIn") != "true")
@@ -92,12 +90,12 @@ export default function Live() {
 				<div id='box'>
 					<div id='vs'>🏓 ` + joueur +` vs ` + adversaire +`</div>
 					<div id='dark-canvas'>
-						<canvas id="canvas" width={size.width / 2} height={size.height / 2}></canvas>
+						<canvas id="canvas-` + adversaires.indexOf(adversaire) + `" width={size.width / 2} height={size.height / 2}></canvas>
 					</div>
 				</div>
 				`;
 				// init partie pour chaque joueur + adversaire
-				initParty()
+				initParty(adversaires.indexOf(adversaire))
 			})
 		});
 		noGames();
@@ -105,59 +103,60 @@ export default function Live() {
 
 	useEffect(() => {
 		// getUser();
-		initParty();
+		// initParty();
     }, []);
 
 	// PONG CODE BELOW
-	var canvas;
-	var game;
+	var canvas = [];
+	var game = [];
 	var anim;
 	// On peut changer les dimensions de la balle et des joueurs, ex: autres modes de jeux
-	var PLAYER_HEIGHT = 100;
-	var PLAYER_WIDTH = 20;
-	var BALL_HEIGHT = 10;
-	var BALL_SPEED = 2;
-	function draw() {
-		if (canvas) {
-			var context = canvas.getContext('2d');
+	var PLAYER_HEIGHT = 80 / resize;
+	var PLAYER_WIDTH = 10 / resize;
+	var BALL_HEIGHT = 10 / resize;
+	var BALL_SPEED = 2 / resize;
+	var BALL_ACCELERATE = true;
+	function draw(idGame: number) {
+		if (canvas.length != 0) {
+			var context = canvas[idGame].getContext('2d');
 			// Draw field
 			context.fillStyle = 'black';
-			context.fillRect(0, 0, canvas.width, canvas.height);
+			context.fillRect(0, 0, canvas[idGame].width, canvas[idGame].height);
 			// Draw middle line
 			context.strokeStyle = 'white';
 			context.beginPath();
-			context.moveTo(canvas.width / 2, 0);
-			context.lineTo(canvas.width / 2, canvas.height);
+			context.moveTo(canvas[idGame].width / 2, 0);
+			context.lineTo(canvas[idGame].width / 2, canvas[idGame].height);
 			context.stroke();
 			// Draw players
 			context.fillStyle = 'white';
-			context.fillRect(0, game.player.y, PLAYER_WIDTH, PLAYER_HEIGHT);
-			context.fillRect(canvas.width - PLAYER_WIDTH, game.player2.y, PLAYER_WIDTH, PLAYER_HEIGHT);
+			context.fillRect(0, game[idGame].player.y, PLAYER_WIDTH, PLAYER_HEIGHT);
+			context.fillRect(canvas[idGame].width - PLAYER_WIDTH, game[idGame].player2.y, PLAYER_WIDTH, PLAYER_HEIGHT);
 			// Draw ball
 			context.beginPath();
 			context.fillStyle = 'white';
 			// context.arc(game.ball.x, game.ball.y, game.ball.r, 0, Math.PI * 2, false); // Si on veut la faire ronde !
-			context.fillRect(game.ball.x, game.ball.y, BALL_HEIGHT, BALL_HEIGHT); // Si on veut la faire carré !
+			context.fillRect(game[idGame].ball.x, game[idGame].ball.y, BALL_HEIGHT, BALL_HEIGHT); // Si on veut la faire carré !
 			context.fill();
 		}
 	}
 
-	function initParty()
+	function initParty(idGame: number)
 	{
-		canvas = document.getElementById('canvas');
-		if (canvas) {
-			game = {
+		canvas[idGame] = document.getElementById('canvas-' + idGame);
+		if (canvas.length != 0) {
+			game[idGame] = {
 				player: {
-					y: canvas.height / 2 - PLAYER_HEIGHT / 2,
+					y: canvas[idGame].height / 2 - PLAYER_HEIGHT / 2,
 					score: 0
 				},
 				player2: {
-					y: canvas.height / 2 - PLAYER_HEIGHT / 2,
+					y: canvas[idGame].height / 2 - PLAYER_HEIGHT / 2,
 					score: 0
 				},
 				ball: {
-					x: canvas.width / 2 - BALL_HEIGHT / 2,
-					y: canvas.height / 2 - BALL_HEIGHT / 2,
+					x: canvas[idGame].width / 2 - BALL_HEIGHT / 2,
+					y: canvas[idGame].height / 2 - BALL_HEIGHT / 2,
 					r: 5,
 					speed: {
 						x: BALL_SPEED,
@@ -166,49 +165,69 @@ export default function Live() {
 				}
 			}
 		}
-		draw();
+		draw(idGame);
 		// canvas.addEventListener('mousemove', playerMove);
 	}
 
-	function play() {
-		draw();
-		anim = requestAnimationFrame(play);
-	}
+	// function play() {
+	// 	draw();
+	// 	anim = requestAnimationFrame(play);
+	// }
 
 	function setGameMode(gm: number) {
-		let resize = 4;
 		if (gm == 0)
 		{
-			PLAYER_HEIGHT = 100 / resize;
-			PLAYER_WIDTH = 20 / resize;
+			PLAYER_HEIGHT = 80 / resize;
+			PLAYER_WIDTH = 10 / resize;
 			BALL_HEIGHT = 10 / resize;
 			BALL_SPEED = 2 / resize;
+			BALL_ACCELERATE = true;
 		} else if (gm == 1)
 		{
-			PLAYER_HEIGHT = 100 / resize;
-			PLAYER_WIDTH = 20 / resize;
+			PLAYER_HEIGHT = 80 / resize;
+			PLAYER_WIDTH = 10 / resize;
 			BALL_HEIGHT = 50 / resize;
 			BALL_SPEED = 2 / resize;
+			BALL_ACCELERATE = true;
 		} else if (gm == 2)
 		{
-			PLAYER_HEIGHT = 100 / resize;
-			PLAYER_WIDTH = 20 / resize;
+			PLAYER_HEIGHT = 80 / resize;
+			PLAYER_WIDTH = 10 / resize;
 			BALL_HEIGHT = 10 / resize;
 			BALL_SPEED = 4 / resize;
+			BALL_ACCELERATE = true;
 		} else if (gm == 3)
 		{
-			PLAYER_HEIGHT = 100 / resize;
-			PLAYER_WIDTH = 20 / resize;
+			PLAYER_HEIGHT = 80 / resize;
+			PLAYER_WIDTH = 10 / resize;
 			BALL_HEIGHT = 10 / resize;
 			BALL_SPEED = 0.5 / resize;
+			BALL_ACCELERATE = false;
 		} else if (gm == 4)
 		{
-			PLAYER_HEIGHT = 20 / resize;
-			PLAYER_WIDTH = 100 / resize;
+			PLAYER_HEIGHT = 80 / resize;
+			PLAYER_WIDTH = 80 / resize;
 			BALL_HEIGHT = 10 / resize;
-			BALL_SPEED = 0.5 / resize;
+			BALL_SPEED = 2 / resize;
+			BALL_ACCELERATE = false;
 		}
 	}
+
+	socket.on("playerMove", (body: string) => {
+		// Update Paddle position in real time
+		const b = body.split(':');
+		// console.log("joueur = " + b[0] + " | position = " + b[1] + " | socket = " + socket.id)
+
+		if (b[2] == "gauche")
+			joueurs.map(joueur => {
+				if (joueur == b[0])
+					game[joueurs.indexOf(joueur)].player.y = b[1];
+			});
+		if (b[2] == "droit")
+			adversaires.map(adversaire => {
+				game[adversaires.indexOf(adversaire)].player2.y = b[1];
+			})
+	});
 
 
 	socket.on("stopGame", (...args) => {

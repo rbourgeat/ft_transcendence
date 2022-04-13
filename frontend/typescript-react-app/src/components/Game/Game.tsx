@@ -93,34 +93,39 @@ export default function Game() {
 	function setGameMode(gm: number) {
 		if (gm == 0)
 		{
-			PLAYER_HEIGHT = 100;
-			PLAYER_WIDTH = 20;
-			BALL_HEIGHT = 10;
+			PLAYER_HEIGHT = 80 * size.height / 600;
+			PLAYER_WIDTH = 10 * size.width / 600;
+			BALL_HEIGHT = 10 * size.width / 600;
 			BALL_SPEED = 2;
+			BALL_ACCELERATE = true;
 		} else if (gm == 1)
 		{
-			PLAYER_HEIGHT = 100;
-			PLAYER_WIDTH = 20;
+			PLAYER_HEIGHT = 80;
+			PLAYER_WIDTH = 10;
 			BALL_HEIGHT = 50;
 			BALL_SPEED = 2;
+			BALL_ACCELERATE = true;
 		} else if (gm == 2)
 		{
-			PLAYER_HEIGHT = 100;
-			PLAYER_WIDTH = 20;
+			PLAYER_HEIGHT = 80;
+			PLAYER_WIDTH = 10;
 			BALL_HEIGHT = 10;
 			BALL_SPEED = 4;
+			BALL_ACCELERATE = true;
 		} else if (gm == 3)
 		{
-			PLAYER_HEIGHT = 100;
-			PLAYER_WIDTH = 20;
+			PLAYER_HEIGHT = 80;
+			PLAYER_WIDTH = 10;
 			BALL_HEIGHT = 10;
 			BALL_SPEED = 0.5;
+			BALL_ACCELERATE = false;
 		} else if (gm == 4)
 		{
-			PLAYER_HEIGHT = 20;
-			PLAYER_WIDTH = 100;
+			PLAYER_HEIGHT = 80;
+			PLAYER_WIDTH = 80;
 			BALL_HEIGHT = 10;
-			BALL_SPEED = 0.5;
+			BALL_SPEED = 2;
+			BALL_ACCELERATE = false;
 		}
 	}
 
@@ -130,14 +135,15 @@ export default function Game() {
 	var game;
 	var anim;
 	// On peut changer les dimensions de la balle et des joueurs, ex: autres modes de jeux
-	var PLAYER_HEIGHT = 100;
-	var PLAYER_WIDTH = 20;
-	var BALL_HEIGHT = 10;
+	var PLAYER_HEIGHT = 80 * size.height / 600;
+	var PLAYER_WIDTH = 10 * size.width / 600;
+	var BALL_HEIGHT = 10 * size.width / 600;
 	var BALL_SPEED = 2;
+	var BALL_ACCELERATE = true;
 	function draw() {
 		var context = canvas.getContext('2d');
 		// Draw field
-		context.fillStyle = 'black';
+		context.fillStyle = 'blue';
 		context.fillRect(0, 0, canvas.width, canvas.height);
 		// Draw middle line
 		context.strokeStyle = 'white';
@@ -209,7 +215,7 @@ export default function Game() {
 				game.player.y = mouseLocation - PLAYER_HEIGHT / 2;
 			}
 			if (adversaire)
-				socket.emit('playerMove', joueur + ":" + game.player.y + ":" + adversaire);
+				socket.emit('playerMove', joueur + ":" + game.player.y + ":" + adversaire + ":" + "gauche");
 		} else if (joueur == joueur2) {
 			game.player2.y = mouseLocation - PLAYER_HEIGHT / 2;
 			if (mouseLocation < PLAYER_HEIGHT / 2) {
@@ -220,13 +226,14 @@ export default function Game() {
 				game.player2.y = mouseLocation - PLAYER_HEIGHT / 2;
 			}
 			if (adversaire)
-				socket.emit('playerMove', joueur + ":" + game.player2.y + ":" + adversaire);
+				socket.emit('playerMove', joueur + ":" + game.player2.y + ":" + adversaire+ ":" + "droit");
 		}
 	}
 
 	socket.on("playerMove", (body: string) => {
+		// Update Paddle position in real time
 		const b = body.split(':');
-		console.log("adversaire = " + b[0] + " | position = " + b[1] + " | socket = " + socket.id)
+		// console.log("joueur = " + b[0] + " | position = " + b[1] + " | socket = " + socket.id)
 		if (b[0] == joueur2) {
 			game.player2.y = b[1];
 		} else if (b[0] == joueur1) {
@@ -244,10 +251,8 @@ export default function Game() {
 		} else if (game.ball.x < PLAYER_WIDTH) {
 			collide(game.player);
 		}
-		if (gm != 3) {
-			game.ball.x += game.ball.speed.x;
-			game.ball.y += game.ball.speed.y;
-		}
+		game.ball.x += game.ball.speed.x;
+		game.ball.y += game.ball.speed.y;
 	}
 
 	function collide(player) {
@@ -256,8 +261,11 @@ export default function Game() {
 			// Set ball and players to the center
 			game.ball.x = canvas.width / 2 - BALL_HEIGHT / 2;
 			game.ball.y = canvas.height / 2 - BALL_HEIGHT / 2;
-			game.player.y = canvas.height / 2 - PLAYER_HEIGHT / 2;
-			game.player2.y = canvas.height / 2 - PLAYER_HEIGHT / 2;
+			game.ball.speed.y = BALL_SPEED;
+
+			// Set player to init postion
+			// game.player.y = canvas.height / 2 - PLAYER_HEIGHT / 2;
+			// game.player2.y = canvas.height / 2 - PLAYER_HEIGHT / 2;
 
 			if (player == game.player) {
 				// Change ball direction + reset speed
@@ -282,7 +290,10 @@ export default function Game() {
 			}
 		} else {
 			// Increase speed and change direction
-			game.ball.speed.x *= -1.2;
+			if (BALL_ACCELERATE)
+				game.ball.speed.x *= -1.2;
+			else
+				game.ball.speed.x *= -1;
 			changeDirection(player.y);
 		}
 	}
@@ -364,7 +375,7 @@ export default function Game() {
 												<option value="bigball">Big Ball (Facile)</option>
 												<option value="blitz">Blitz (Balle Rapide)</option>
 												<option value="slow">Slow (Balle Lente)</option>
-												<option value="reverse">Reverse (Paddle Horizontal)</option>
+												<option value="cube">Cube World (All is cubic)</option>
 										</Form.Select>
 									</Form.Group>
 								</Form>

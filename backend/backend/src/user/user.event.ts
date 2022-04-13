@@ -16,17 +16,17 @@ export class UserEvent {
     ) { }
 
     achievementFriend(user: User) {
-        console.log('emit event for achievementfriend');
+        console.log('emit event achievementfriend for ' + user.login);
         this.eventEmitter.emit('achievement.friend', user)
     }
 
     @OnEvent('achievement.friend')
     handleAchievementFriend(user: User) {
-        console.log('go to save the achievement');
         this.saveAchievement(user, "AddFriend")
     }
 
     achievement1000Game(user: User) {
+        console.log('emit event achievement1000Game for ' + user.login);
         this.eventEmitter.emit('achievement.1000Game', user)
     }
 
@@ -37,25 +37,50 @@ export class UserEvent {
     }
 
     achievementFirstGame(user: User) {
+        console.log('emit event achievementFirstGame for ' + user.login);
         this.eventEmitter.emit('achievement.firstGame', user)
     }
 
     @OnEvent('achievement.firstGame')
     handleAchievementFirstGame(user: User) {
+        console.log(user.total_games);
         if (user.total_games == 1)
             this.saveAchievement(user, "FirstGame")
     }
 
-    achievementConsecutiveWins(user: User) {
+    achievement5Row(user: User) {
+        console.log('emit event achievement5Row for ' + user.login);
         this.eventEmitter.emit('achievement.5Row', user)
     }
 
     @OnEvent('achievement.5Row')
-    handleAchievement5Row(user: User) {
-        //TODO
+    async handleAchievement5Row(user: User) {
+
+        const userdefined = await this.userRepository.findOne({
+            relations: ['games'],
+            where: { login: user.login }
+        });
+
+        //twice unlock
+        /*
+        const isUnlocked = await this.achievementRepository.findOne({
+            where: [
+                { user: user, title: '5Row' }
+            ],
+            relations: ['user']
+        });
+        */
+
+        const games = userdefined.games.reverse();
+        for (let i = 0; i < 5; i++) {
+            if (games[i].winner != user.login)
+                return;
+        }
+        this.saveAchievement(user, "5Row")
     }
 
     achievement42(user: User) {
+        console.log('emit event achievement42 for ' + user.login);
         this.eventEmitter.emit('achievement.42', user)
     }
 
@@ -66,6 +91,7 @@ export class UserEvent {
     }
 
     achievementBeAdmin(user: User) {
+        console.log('emit event achievementBeAdmin for ' + user.login);
         this.eventEmitter.emit('achievement.BeAdmin', user)
     }
 

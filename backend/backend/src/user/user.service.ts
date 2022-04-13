@@ -289,7 +289,7 @@ export class UserService {
 	}
 
 
-	async getAchievements(currentUser: User)/*: Observable<Achievement[]>*/ {
+	async getAchievements(currentUser: User) {
 		const list = await this.achievementRepository.find({
 			where: [
 				{ user: currentUser }
@@ -299,7 +299,7 @@ export class UserService {
 		return list;
 	}
 
-	async getAchievementsOf(login: string)/*: Observable<Achievement[]>*/ {
+	async getAchievementsOf(login: string) {
 		const user = await this.getUserByLogin(login);
 		const list = await this.achievementRepository.find({
 			where: [
@@ -427,11 +427,11 @@ export class UserService {
 		});
 		console.log(invite);
 		let struct = {
-            id: invite.id,
-            creator: user.login,
-            receiver: target.login,
-            status: invite.status
-        };
+			id: invite.id,
+			creator: user.login,
+			receiver: target.login,
+			status: invite.status
+		};
 		if (invite)
 			return struct;
 		return;

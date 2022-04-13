@@ -43,7 +43,7 @@ export class User {
     @Column({ nullable: true })
     total_loss: number = 0;
 
-    @Column({ nullable: true })
+    @Column({ nullable: true, type: 'decimal', precision: 5, scale: 2, default: 0 })
     win_loss_ration: number = 0;
 
     @Column({ nullable: true })
@@ -55,11 +55,11 @@ export class User {
     @Column({ nullable: true })
     xp: number = 0;
 
-    @Column({ nullable: true })
+    @Column({ nullable: true, type: 'decimal', precision: 5, scale: 2, default: 0 })
     percent_to_next_lvl: number = 0;
 
     @Column({ nullable: true })
-    level: number = 0;
+    level: number = 1;
 
     @OneToMany(() => Achievement, (achievement: Achievement) => achievement.id)
     public achievement: Achievement[];
