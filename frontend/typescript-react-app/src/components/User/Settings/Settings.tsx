@@ -19,6 +19,12 @@ export default function Settings(props: SettingsProps) {
 	const [activated2fa, setActivated2fa] = React.useState(false);
 	const [verifCode, setverifCode] = React.useState("");
 	const calledOnce = React.useRef(false);
+	const [load, setLoaded] = React.useState(false);
+
+	//MODALS
+	const [show, setShow] = useState(false);
+	const handleClose = () => setShow(false);
+	const handleShow = () => setShow(true);
 
 	function clearInput() {
         setverifCode("");
@@ -126,17 +132,12 @@ export default function Settings(props: SettingsProps) {
 		calledOnce.current = true;
 	}, []);
 
-	//MODALS
-	const [show, setShow] = useState(false);
-	const handleClose = () => setShow(false);
-	const handleShow = () => setShow(true);
-
     return (
 	<>
 		<Nav />
-		<div className="container">
+		<div className="container" id="settings_container">
 				<div className="row d-flex justify-content-center text-center">
-					<div className="col-7">
+					<div className="col-6">
 						<div id="settings">
 							<h2 id="user--settings">Settings</h2>
 								<br />
@@ -164,12 +165,12 @@ export default function Settings(props: SettingsProps) {
 									id="button--2fa" onClick={handle2FA}>{activated2fa == true ? "Turn off 2FA" : "Turn on 2FA"}
 							</button>
 							<br />
-							{qrcode != "" && activated2fa == false ? <img style={{marginBottom: "20ox"}} id="image" src={qrcode}></img> : <p></p>}
+							{qrcode != "" && activated2fa == false ? <img style={{marginBottom: "20ox"}} id="qrcode" src={qrcode}></img> : <p></p>}
 							<br />
 							{qrcode != "" && activated2fa == false ? <p className="black--text" id="please">Please scan the QR Code with your Google Authenticator app.</p> : <p className="black--text"></p>}
 							{qrcode != "" && activated2fa == false ? <label className="black--text">Enter the code provided</label> : <p className="black--text"></p>}
-							{qrcode != "" && activated2fa == false ? <input className="form-control form-control-sm" type="text" placeholder="422 022" onChange={handleInputChange}></input> : <p className="black--text"></p>}
-							{qrcode != "" && activated2fa == false ? <button className="btn btn-light" id="check--auth" onClick={checkCode}>Check code</button> : <p className="black--text"></p>}
+							{qrcode != "" && activated2fa == false ? <input className="form-control form-control-sm" id="check_code" type="text" placeholder="422 022" onChange={handleInputChange}></input> : <p className="black--text"></p>}
+							{qrcode != "" && activated2fa == false ? <button className="btn btn-outline-dark" type="button" id="check--auth" onClick={checkCode}>Check</button> : <p className="black--text"></p>}
 							<ToastContainer
 								position="top-right"
 								autoClose={5000}

@@ -33,7 +33,7 @@ export default function User(props: UserfuncProps) {
 	const [is42, setis42] = React.useState(false);
 	const [login42, setlogin42] = React.useState("");
 	const calledOnce = React.useRef(false);
-	const [loaded, setLoaded] = React.useState(true);
+	const [loaded, setLoaded] = React.useState(false);
 	const [authorized, setAuthorized] = React.useState(true);
 
 	//Badge
@@ -163,9 +163,17 @@ export default function User(props: UserfuncProps) {
 										</div>
 								</div>
 								</>
-								: <>
-									<p>You are not logged in.</p>
-									</>}
+								:
+								<div className="spinner-border text-dark" role="status">
+									{/*<span className="sr-only">Loading...</span>*/}
+								</div>
+								//<div className="spinner-border m-5" role="status">
+								//	<span className="sr-only">Loading...</span>
+								//</div>
+								//: <>
+								//	<p>You are not logged in.</p>
+								//	</>
+								}
 						</div>
 					</div>
 				</div>

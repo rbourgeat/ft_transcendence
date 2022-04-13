@@ -2,10 +2,26 @@
 
 #settings {
 	border: 0.1rem solid #f9f9f9;
+	//border: 0.1rem solid red;
 	border-radius: variables.$border-radius-big;
 	background-color: #f9f9f9;
 	position: sticky;
-	border: 0.1rem solid #A9A9A9;
+	//border: 0.1rem solid #A9A9A9;
 	padding: 15px !important;
 	//width: 60%;
+}
+
+#qrcode {
+	border-radius: 0px !important;
+}
+
+#check_code {
+	width: 30% !important;
+}
+
+#check--auth {
+	font-family: variables.$basic-font;
+	font-size: 16px !important;
+	border: 0.1rem solid grey !important;
+	width: 30% !important;
 }
