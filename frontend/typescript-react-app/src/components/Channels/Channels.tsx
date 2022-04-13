@@ -26,11 +26,7 @@ export default function Channels(props: ChatProps) {
 	const [authorized, setAuthorized] = React.useState(false);
 
 	async function getUser() {
-
-		//setLogged(log == "true" ? true : false);
-
 		let url = "http://localhost:3000/api/auth/";
-
 		axios.defaults.baseURL = 'http://localhost:3000/api/';
 		axios.defaults.headers.post['Content-Type'] = 'application/json';
 		axios.defaults.headers.post['Accept'] = '*/*';
@@ -97,17 +93,15 @@ export default function Channels(props: ChatProps) {
 							<div className="chat-channel-menu">
 								<CreateChan endpoint="http://localhost:3000/api/chat" action="Create" />
 								<CreateChan endpoint="http://localhost:3000/api/chat/join" action="Join" />
-								{/* PB DE MERGE ? */}
-								{/*<ListChannels activeChannel={activeChannel} updateActiveChannel={updateActiveChannel}/>*/}
+								<ListChannels activeChannel={activeChannel} updateActiveChannel={updateActiveChannel} chanUsers={chanUsers} updateChanUsers={updateChanUsers} />
 								<ListPubChannels />
 							</div>
 							<div className="chat--messages">
-								{/*<ListDiscussions activeChannel={activeChannel}/>*/}
-								{/* pb de compil */}
+								<ListDiscussions activeChannel={activeChannel}/>
 								<ListDiscussions activeChannel="0"/>
 								<TypingMessage />
 							</div>
-						{/*<ListParticipant />*/}
+						<ListParticipant activeChannel={activeChannel}/>
 					</div>
 			}
 
