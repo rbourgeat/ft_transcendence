@@ -27,6 +27,7 @@ import axios from 'axios';
 import NotLogged from '../NotLogged/NotLogged'; import Login2fa from '../Auth/Login2FA/Login2FA';
 import Profile from "../Profile/Profile";
 import Live from '../Live/Live';
+import Settings from "../User/Settings/Settings";
 
 function App() {
 
@@ -218,6 +219,7 @@ function App() {
           :
           <>
             <Route path="/user" element={<UserMain />} />
+            <Route path="/settings" element={<Settings />} />
             <Route path="/live" element={<Live />} />
             <Route path="/chat" element={<CreateChan endpoint={undefined} action={undefined} />} />
             <Route path="/auth" element={<UserMain />} />
