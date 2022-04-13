@@ -18,7 +18,8 @@ export class UserMigration1645626140921 implements MigrationInterface {
                 avatar: 'norminet.jpg',
                 rank: 1,
                 level: 42,
-                points: 10000
+                points: 10000,
+                xp: 0
             }),
         );
         const dummy2 = await queryRunner.manager.save(
@@ -30,7 +31,8 @@ export class UserMigration1645626140921 implements MigrationInterface {
                 avatar: 'grenouille.jpg',
                 rank: 2,
                 level: 21,
-                points: 9500
+                points: 9500,
+                xp: 0
             }),
         );
         const dummy3 = await queryRunner.manager.save(
@@ -86,7 +88,15 @@ export class UserMigration1645626140921 implements MigrationInterface {
                 login: 'bahaas',
                 status: 'offline',
                 email: 'bahaas@student.42.fr',
-                login42: 'bahaas'
+                login42: 'bahaas',
+                xp: 150,
+                points: 1050,
+                level: 2,
+                percent_to_next_lvl: 75,
+                win_loss_ration: 40,
+                total_loss: 3,
+                total_wins: 2,
+                total_games: 5
             }),
         );
 
@@ -229,13 +239,14 @@ export class UserMigration1645626140921 implements MigrationInterface {
             }),
         );
 
+
         const game1 = await queryRunner.manager.save(
             queryRunner.manager.create<Game>(Game, {
                 winner_score: 5,
                 loser_score: 3,
-                winner: "dummy1",
+                winner: "dummy4",
                 loser: "dummy2",
-                players: [dummy1, dummy2]
+                players: [dummy4, dummy2]
             }),
         );
 
@@ -283,9 +294,9 @@ export class UserMigration1645626140921 implements MigrationInterface {
             queryRunner.manager.create<Game>(Game, {
                 winner_score: 5,
                 loser_score: 1,
-                winner: "dummy1",
+                winner: "dummy5",
                 loser: "bahaas",
-                players: [dummy1, bahaas]
+                players: [dummy5, bahaas]
             }),
         );
 
@@ -298,6 +309,7 @@ export class UserMigration1645626140921 implements MigrationInterface {
                 players: [dummy3, bahaas]
             }),
         );
+
 
         const malatiniachievement1 = await queryRunner.manager.save(
             queryRunner.manager.create<Achievement>(Achievement, {

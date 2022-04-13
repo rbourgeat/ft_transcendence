@@ -1,8 +1,7 @@
-import { ApiBody, ApiConflictResponse, ApiConsumes, ApiOkResponse, ApiOperation, ApiParam, ApiQuery, ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger'
-import { Request, Req, Body, Controller, Delete, Get, Param, Patch, Post, UseInterceptors, UploadedFile, UseGuards } from '@nestjs/common';
+import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger'
+import { Request, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import JwtAuthenticationGuard from 'src/auth/guard/jwt-authentication.guard';
 import { GameService } from 'src/game/game.service';
-import { CreateGameDto } from 'src/game/dto/game.dto';
 
 @ApiTags('Games')
 @Controller('api/game')
@@ -26,17 +25,10 @@ export class GameController {
         return this.gameService.getGames(login);
     }
 
-    /**
-    **  Save a new game to db
-    **/
-
-    // @ApiOperation({ summary: 'Create a new game' })
-    // @ApiOkResponse({ description: 'Game creation suceed' })
-    // @ApiConflictResponse({ description: 'Game already exist' })
-    // @Post()
-    // async createGame(@Body() game: CreateGameDto) {
-    //     console.log('Create game: ' + game.login1 + 'vs' + game.login2)
-    //     return this.gameService.createGame(game);
-    // }
-
+    @ApiOperation({ summary: 'FOR TEST ONLY, TO DELETE LATE' })
+    @UseGuards(JwtAuthenticationGuard)
+    @Post('CreateCustomResult:login1/:login2')
+    createGame(@Param('login1') login: string, @Param('login2') login2: string, @Request() req) {
+        return this.gameService.createGame(login, login2, 5, 2);
+    }
 }

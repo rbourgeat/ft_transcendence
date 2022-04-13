@@ -37,13 +37,15 @@ export class AuthenticationController {
     @HttpCode(200)
     @UseGuards(LocalAuthenticationGuard)
     @Post('log-in')
-    async logIn(@Body() loginDto: LogInDto, @Req() request: RequestWithUser) { //loginDto not used but mandatory to let know that params needs to be sent
-        const { user } = request;
+    async logIn(@Body() loginDto: LogInDto, @Req() req) { //loginDto not used but mandatory to let know that params needs to be sent
+        const { user } = req;
         const accessTokenCookie = this.authenticationService.getCookieWithJwtToken(user.id);
 
+        console.log(user.login);
+        console.log(accessTokenCookie)
         this.userService.updateStatus(user.login, "online");
 
-        request.res.setHeader('Set-Cookie', accessTokenCookie);
+        req.res.setHeader('Set-Cookie', accessTokenCookie);
         console.log('end of login');
         if (user.isTwoFactorAuthenticationEnabled)
             return user;
@@ -53,7 +55,6 @@ export class AuthenticationController {
     @ApiOperation({ summary: 'log out user [jwt-protected]' })
     @ApiOkResponse({ description: 'You logged out' })
     @UseGuards(JwtAuthenticationGuard)
-    //@Redirect('http://localhost:3030/')
     @Post('log-out')
     async logOut(@Res({ passthrough: true }) response: Response, @Req() request: RequestWithUser) {
 
@@ -61,8 +62,6 @@ export class AuthenticationController {
         this.userService.updateStatus(user.login, "offline");
         console.log('went by logout in auth controller');
         response.setHeader('Set-Cookie', this.authenticationService.getCookieForLogOut());
-        //response.clearCookie('Authentication');
-        //response.redirect('http://localhost:3030/');
         return user;
     }
 
