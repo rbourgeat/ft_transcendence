@@ -2,6 +2,7 @@ import React, {useState, useEffect, useRef} from 'react';
 import './MatchHistory.scss';
 import ButtonResume from "./ButtonResume/ButtonResume";
 import axios from 'axios';
+import { renderMatches } from 'react-router-dom';
 
 
 export interface MatchHistoryProps
@@ -19,18 +20,43 @@ export default function MatchHistory(props: MatchHistoryProps)
     useEffect(() => {
     if (calledOnce.current) {
 		return;}
-    getHistory();
+        getHistory();
     calledOnce.current = true;
     }, []);
 
-    function getHistory()
+    //function renderMatches(length: number, res: any)
+    //{
+    //    console.log("Length is "+ length);
+    //    console.log("res is " + res);
+    //    if (length != 0)
+    //    {
+    //        return (
+    //        resultsID.map(result =>
+    //        <div className="main--button--resume" key={result.id}>
+    //                                <ButtonResume
+    //                                    winner={result.winner}
+    //                                    looser={result.loser}
+    //                                    scoreWinner={result.winner_score}
+    //                                    scoreLooser={result.loser_score}
+    //                                    login={props.login}
+    //                                    key={result.id}
+    //                                />
+    //                            </div>));
+    //    }
+    //    else
+    //    {
+    //        <p id="no--game">You did not play any game yet.</p>
+    //    }
+    //}
+
+    async function getHistory()
     {
         let url = "http://localhost:3000/api/game/".concat(props.login).concat("/history");
         let headers = {
             login: props.login
         }
 
-        axios.get(url, {headers})
+        await axios.get(url, {headers})
         .then( res =>
             {
                 console.log("Successfully retrived game info");
@@ -46,6 +72,7 @@ export default function MatchHistory(props: MatchHistoryProps)
 					i++;
 				}
                 setLoad(true);
+                setLen(len);
             }
         )
         .catch((error) => {
@@ -53,6 +80,9 @@ export default function MatchHistory(props: MatchHistoryProps)
             setLen(0);
             setLoad(true);
         })
+        //.then( res => {
+        //    renderMatches(len, resultsID);}
+        //)
         //setLoad(true);
     }
 
@@ -66,7 +96,7 @@ export default function MatchHistory(props: MatchHistoryProps)
                     <div>
                         <div id="col--matchhistory">
                             <ul>
-                            {load == true ? resultsID.map(result =>
+                            {load == true && resultsID.length > 0  ? resultsID.map(result =>
                                 <div className="main--button--resume" key={result.id}>
                                     <ButtonResume
                                         winner={result.winner}
@@ -76,10 +106,12 @@ export default function MatchHistory(props: MatchHistoryProps)
                                         login={props.login}
                                         key={result.id}
                                     />
-                                </div> ) : <p id="no--game">You did not play any game yet.</p>}
-                                {/*<p id="no--game">You did not play any game yet.</p>*/}
-                                {/* : <p id="no--game">You did not play any game yet.</p> */}
-                                {/*{len == 0 ? <p id="no--game">You did not play any game yet.</p> : ""}*/}
+                                </div> ) : ""}
+                                {
+                                    load == true && resultsID.length == 0 ?
+                                        <p id="no--game">You did not play any game yet.</p>
+                                    : ""
+                                }
                             </ul>
                         </div>
                     </div>
