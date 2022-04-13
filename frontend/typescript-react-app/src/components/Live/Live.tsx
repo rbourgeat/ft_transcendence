@@ -39,7 +39,8 @@ export default function Live() {
 			adversaires.push(b[2]);
 			display();
 		}
-		console.log("joueurs: " + joueurs);
+		
+		
 	});
 
 	useEffect(() => {
@@ -72,6 +73,11 @@ export default function Live() {
 				`;
 	}
 
+	function gotoGame()
+	{
+		window.top.location = "http://localhost:3030/game";
+	}
+
 	function display()
 	{
 		if (localStorage.getItem("loggedIn") != "true")
@@ -85,13 +91,125 @@ export default function Live() {
 				document.getElementById("content").innerHTML += `
 				<div id='box'>
 					<div id='vs'>🏓 ` + joueur +` vs ` + adversaire +`</div>
-					<button id='watch'>Watch</button>
+					<div id='dark-canvas'>
+						<canvas id="canvas" width={size.width / 2} height={size.height / 2}></canvas>
+					</div>
 				</div>
 				`;
+				// init partie pour chaque joueur + adversaire
+				initParty()
 			})
 		});
 		noGames();
 	}
+
+	useEffect(() => {
+		// getUser();
+		initParty();
+    }, []);
+
+	// PONG CODE BELOW
+	var canvas;
+	var game;
+	var anim;
+	// On peut changer les dimensions de la balle et des joueurs, ex: autres modes de jeux
+	var PLAYER_HEIGHT = 100;
+	var PLAYER_WIDTH = 20;
+	var BALL_HEIGHT = 10;
+	var BALL_SPEED = 2;
+	function draw() {
+		if (canvas) {
+			var context = canvas.getContext('2d');
+			// Draw field
+			context.fillStyle = 'black';
+			context.fillRect(0, 0, canvas.width, canvas.height);
+			// Draw middle line
+			context.strokeStyle = 'white';
+			context.beginPath();
+			context.moveTo(canvas.width / 2, 0);
+			context.lineTo(canvas.width / 2, canvas.height);
+			context.stroke();
+			// Draw players
+			context.fillStyle = 'white';
+			context.fillRect(0, game.player.y, PLAYER_WIDTH, PLAYER_HEIGHT);
+			context.fillRect(canvas.width - PLAYER_WIDTH, game.player2.y, PLAYER_WIDTH, PLAYER_HEIGHT);
+			// Draw ball
+			context.beginPath();
+			context.fillStyle = 'white';
+			// context.arc(game.ball.x, game.ball.y, game.ball.r, 0, Math.PI * 2, false); // Si on veut la faire ronde !
+			context.fillRect(game.ball.x, game.ball.y, BALL_HEIGHT, BALL_HEIGHT); // Si on veut la faire carré !
+			context.fill();
+		}
+	}
+
+	function initParty()
+	{
+		canvas = document.getElementById('canvas');
+		if (canvas) {
+			game = {
+				player: {
+					y: canvas.height / 2 - PLAYER_HEIGHT / 2,
+					score: 0
+				},
+				player2: {
+					y: canvas.height / 2 - PLAYER_HEIGHT / 2,
+					score: 0
+				},
+				ball: {
+					x: canvas.width / 2 - BALL_HEIGHT / 2,
+					y: canvas.height / 2 - BALL_HEIGHT / 2,
+					r: 5,
+					speed: {
+						x: BALL_SPEED,
+						y: BALL_SPEED
+					}
+				}
+			}
+		}
+		draw();
+		// canvas.addEventListener('mousemove', playerMove);
+	}
+
+	function play() {
+		draw();
+		anim = requestAnimationFrame(play);
+	}
+
+	function setGameMode(gm: number) {
+		let resize = 4;
+		if (gm == 0)
+		{
+			PLAYER_HEIGHT = 100 / resize;
+			PLAYER_WIDTH = 20 / resize;
+			BALL_HEIGHT = 10 / resize;
+			BALL_SPEED = 2 / resize;
+		} else if (gm == 1)
+		{
+			PLAYER_HEIGHT = 100 / resize;
+			PLAYER_WIDTH = 20 / resize;
+			BALL_HEIGHT = 50 / resize;
+			BALL_SPEED = 2 / resize;
+		} else if (gm == 2)
+		{
+			PLAYER_HEIGHT = 100 / resize;
+			PLAYER_WIDTH = 20 / resize;
+			BALL_HEIGHT = 10 / resize;
+			BALL_SPEED = 4 / resize;
+		} else if (gm == 3)
+		{
+			PLAYER_HEIGHT = 100 / resize;
+			PLAYER_WIDTH = 20 / resize;
+			BALL_HEIGHT = 10 / resize;
+			BALL_SPEED = 0.5 / resize;
+		} else if (gm == 4)
+		{
+			PLAYER_HEIGHT = 20 / resize;
+			PLAYER_WIDTH = 100 / resize;
+			BALL_HEIGHT = 10 / resize;
+			BALL_SPEED = 0.5 / resize;
+		}
+	}
+
 
 	socket.on("stopGame", (...args) => {
 		if (localStorage.getItem("loggedIn") != "true")
@@ -115,29 +233,35 @@ export default function Live() {
 	});
 
 	return(
-		<>
-		{localStorage.getItem("loggedIn") != "true" ?
-				<>
-					<Nav />
-					<div className="container">
-						<div className="row d-flex justify-content-center text-center">
-							<div className="col-9">
-								<div className="channels-not-logged">
-									<p>You are not logged in.</p>
-								</div>
-							</div>
-						</div>
-					</div>
-				</>
-				:
-				<div>
-					<Nav/>
-					<div id="titre" className="list--lives">📺 Liste des Lives</div>
-						<div id="content" className="content-class">
-						</div>
-				</div>
-		}
-		</>
+		<div>
+			<Nav/>
+			<div id="titre">📺 Liste des Lives</div>
+			{/* <button type='button' id='watch' onClick={() => gotoGame()}>Watch</button> */}
+				<div id="content"></div>
+		</div>
+		// <>
+		// {localStorage.getItem("loggedIn") != "true" ?
+		// 		<>
+		// 			<Nav />
+		// 			<div className="container">
+		// 				<div className="row d-flex justify-content-center text-center">
+		// 					<div className="col-9">
+		// 						<div className="channels-not-logged">
+		// 							<p>You are not logged in.</p>
+		// 						</div>
+		// 					</div>
+		// 				</div>
+		// 			</div>
+		// 		</>
+		// 		:
+		// 		<div>
+		// 			<Nav/>
+		// 			<div id="titre" className="list--lives">📺 Liste des Lives</div>
+		// 				<div id="content" className="content-class">
+		// 				</div>
+		// 		</div>
+		// }
+		// </>
 	)
 
 }

@@ -70,7 +70,7 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
 			console.log("Une partie commence avec " + socket.handshake.query.username + " VS " + adversaire)
 		}
 
-		console.log(MatchMaking)
+		// console.log(MatchMaking) 
 	}  
 
 	@SubscribeMessage('gameEnd')
