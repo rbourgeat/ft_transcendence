@@ -271,10 +271,6 @@ export default function Game() {
 				document.querySelector('#player2-score').textContent = game.player2.score;
 				if (game.player2.score >= 5) {
 					stop();
-					if (joueur1 == joueur)
-						document.querySelector('#victoryMessage').textContent = "Game Over";
-					else
-						document.querySelector('#victoryMessage').textContent = "Victory";
 					clearDataGame();
 				}
 			} else {
@@ -282,10 +278,6 @@ export default function Game() {
 				document.querySelector('#player-score').textContent = game.player.score;
 				if (game.player.score >= 5) {
 					stop();
-					if (joueur1 == joueur)
-						document.querySelector('#victoryMessage').textContent = "Victory";
-					else
-						document.querySelector('#victoryMessage').textContent = "Game Over";
 					clearDataGame();
 				}
 			}
@@ -306,11 +298,18 @@ export default function Game() {
 	}
 
 	function stop() {
+		// document.querySelector('#victoryMessage').textContent = "Game Over";
 		console.log("username: ", joueur, "adversaire", adversaire, "score player 1: ", game.player.score, "score player 2: ", game.player.score)
-		if (game.player.score > game.player2.score && joueur1 && joueur2 && joueur1 == joueur)
+		if (game.player.score > game.player2.score && joueur1 && joueur2 && joueur1 == joueur) {
 			socket.emit('gameEnd', joueur1 + ":" + joueur2 + ":" + game.player.score + ":" + game.player2.score);
-		if (game.player.score < game.player2.score && joueur1 && joueur2 && joueur2 == joueur)
+			document.querySelector('#victoryMessage').textContent = "Victory";
+		}
+		if (game.player.score < game.player2.score && joueur1 && joueur2 && joueur2 == joueur) {
 			socket.emit('gameEnd', joueur2 + ":" + joueur1 + ":" + game.player2.score + ":" + game.player.score);
+			document.querySelector('#victoryMessage').textContent = "Victory";
+		}
+		if (document.querySelector('#victoryMessage').textContent != "Victory")
+			document.querySelector('#victoryMessage').textContent = "Game Over";
 		cancelAnimationFrame(anim);
 		// Set ball and players to the center
 		game.ball.x = canvas.width / 2 - BALL_HEIGHT / 2;
@@ -372,7 +371,7 @@ export default function Game() {
 								</Form>
 							: ""}
 							{isActive ? <button type="button" className="btn btn-outline-dark" id="search-button" onClick={() => sendSearch()}>{SearchText}</button> : ""}
-							<p className='text' id="victoryMessage"></p>
+							<p id="victoryMessage"></p>
 							<main role="main">
 								<p className="canvas-score" id="scores">
 									<em className="canvas-score" id="joueur1"></em>
