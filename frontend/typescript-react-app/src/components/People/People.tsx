@@ -56,7 +56,7 @@ export default function People(props: PeopleProps) {
 
 	return (
 		<>
-			{localStorage.getItem("loggedIn") != "true" || authorized != false?
+			{localStorage.getItem("loggedIn") != "true" || authorized == false ?
 				<>
 					<Nav />
 					<div className="container">
