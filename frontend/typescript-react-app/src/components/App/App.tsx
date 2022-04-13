@@ -9,7 +9,6 @@ import {
   Routes
 } from "react-router-dom";
 
-//import myParticles from "../Particules/Particules/";
 import Particles from "react-tsparticles";
 import Auth from '../Auth/Auth';
 import Welcome from '../Welcome/Welcome';
@@ -42,36 +41,35 @@ function App() {
   //PK les sockets ici ??
   let socket = io("http://localhost:3000/chat", { query: { username: username } });
 
-  //async function getUser() {
-  //  if (localStorage.getItem("loggedIn") != "true")
-  //  {
-  //    console.log("You are not logged in.")
-  //      return ;
-  //  }
-  //  let url = "http://localhost:3000/api/auth/";
+  async function getUser() {
+    //if (localStorage.getItem("loggedIn") != "true")
+    //{
+    //  console.log("You are not logged in.")
+    //    return ;
+    //}
+    let url = "http://localhost:3000/api/auth/";
 
-  //  let cookieCheck = document.cookie.match("Authentication");
-  //  let cookieCheck2 = document.cookie.match("connected.sid");
+    let cookieCheck = document.cookie.match("Authentication");
+    let cookieCheck2 = document.cookie.match("connected.sid");
 
-  //  //console.log("Cookie 1 is " + cookieCheck);
-  //  //console.log("Cookie 2 " + cookieCheck2);
+    //console.log("Cookie 1 is " + cookieCheck);
+    //console.log("Cookie 2 " + cookieCheck2);
 
-  //  let username = "";
-  //  axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
-  //  axios.defaults.withCredentials = true;
-  //  await axios.get(url)
-  //    .then(res => {
-  //      username = res.data.login;
-  //      setUsername(username);
-  //    })
-  //    .catch((err) => {
-  //      console.log("Error while getting api auth");
-  //    })
-  //}
+    let username = "";
+    axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+    axios.defaults.withCredentials = true;
+    await axios.get(url)
+      .then(res => {
+        username = res.data.login;
+        setUsername(username);
+      })
+      .catch((err) => {
+        console.log("Error while getting api auth");
+      })
+  }
 
   useEffect(() => {
-    //pas sur cette page enfin !!
-    //getUser();
+    getUser();
     if (username) {
       let socket = io("http://localhost:3000/chat", { query: { username: username } });
       socket.on('connect', () => {

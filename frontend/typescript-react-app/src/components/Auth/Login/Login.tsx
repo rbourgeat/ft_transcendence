@@ -51,7 +51,7 @@ export default class Login extends React.Component<LoginProps, LoginState>
                     <label>Mot de passe</label>
                     <input
                       className="form-control"
-                      type="password"
+                      type="text"
                       placeholder="********"
                       value={this.state.password}
                       onChange={(e)=>{this.setState({password: e.target.value})}}
