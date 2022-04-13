@@ -28,7 +28,7 @@ export default function Auth() {
             <Header />
             <div className="container" id="auth-container">
                 <div className="row d-flex justify-content-center">
-                        {localStorage.getItem("loggedIn") == "false" ?
+                        {localStorage.getItem("loggedIn") != "true" ?
                             <>
                             <div id="auth-form-div" className="col-8">
                                 <div id="auth--form1" >
