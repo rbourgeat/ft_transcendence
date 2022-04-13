@@ -12,6 +12,7 @@ import Achievements from "../Achievements/Achievements";
 import {Modal} from "react-bootstrap"
 import Settings from "./Settings/Settings"
 import MatchHistory from '../MatchHistory/MatchHistory';
+import Footer from "../Footer/Footer";
 
 //TODO: a cleaner ?
 export interface UserfuncProps {
@@ -32,12 +33,20 @@ export default function User(props: UserfuncProps) {
 	const [is42, setis42] = React.useState(false);
 	const [login42, setlogin42] = React.useState("");
 	const calledOnce = React.useRef(false);
+	const [loaded, setLoaded] = React.useState(false);
+	const [authorized, setAuthorized] = React.useState(false);
 
 	async function getUser() {
 		let log = localStorage.getItem("loggedIn");
 		setLogged(log == "true" ? true : false);
 
 		let url = "http://localhost:3000/api/auth/";
+
+		if (log == "false")
+		{
+			console.log("Not logged !");
+			return ;
+		}
 
 		axios.defaults.baseURL = 'http://localhost:3000/api/';
 		axios.defaults.headers.post['Content-Type'] = 'application/json';
@@ -56,11 +65,16 @@ export default function User(props: UserfuncProps) {
 					setlogin42(res.data.login42);
 					localStorage.setItem("login", res.data.login);
 					localStorage.setItem("login42", res.data.login42);
+					setLoaded(true);
+					setAuthorized(true);
 				}
 				setUsername(username);
 			})
 			.catch((err) => {
-				console.log("Error while getting api auth");
+				console.log("Auth returned 400 -> missing cookie");
+				setAuthorized(false);
+				//console.log("Error while getting api auth - Maybe you are in incognito mode");
+				//console.log(err);
 			})
 	}
 
@@ -87,34 +101,45 @@ export default function User(props: UserfuncProps) {
 			<Nav />
 			<div className="container">
 				<div className="row d-flex justify-content-center text-center">
-					<div className="col-9" id="bonjour--user">
-						<div className="user--stats" key={username}>
-							<>
-							{logged == true ?
-							<div>
-							<img id={username} className="profile--pic" height="80" width="80"/>
-							{renderImage(username)}
-							<br />
-							<h2 id="user--data">{username}</h2>
-							<div className="col-9 mx-auto text-center" id="input-div">
+					<div className="col-9">
+						{
+							authorized == false?
+							<p className="not-authenticated">You are not properly authenticated.</p>
+							: ""
+						}
+						{
+							loaded && authorized == true?
+								<div className="user--stats" key={username}>
+								<>
+								{logged == true ?
+								<div>
+								<img id={username} className="profile--pic" height="80" width="80"/>
+								{renderImage(username)}
 								<br />
-								<Achievements login={username}/>
-								<br />
-								{/*<Badge />*/}
-								<MatchHistory login={username}/>
-								<br/>
-								<Settings username={username} login42={localStorage.getItem("login42")}/>
-								<br />
+								<h2 id="user--data">{username}</h2>
+								<div className="col-9 mx-auto text-center" id="input-div">
+									<br />
+									<Achievements login={username}/>
+									<br />
+									{/*<Badge />*/}
+									<MatchHistory login={username}/>
+									<br/>
+									<Settings username={username} login42={localStorage.getItem("login42")}/>
+									<br />
+									</div>
 								</div>
+								: <p>You are not logged in.</p>
+								}
+								</>
 							</div>
-							: <p></p>
-							}
-							</>
-						</div>
+							: ""
+						}
 					</div>
+					{/* fin */}
 				</div>
 				<br />
 			</div>
-		</div>
+		{/*<Footer />*/}
+	</div>
 	);
 };

@@ -1,5 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.css';
-import React, { useState, useMemo, useEffect} from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { io } from 'socket.io-client';
 import { useParams } from 'react-router-dom'
 import './App.scss';
@@ -38,27 +38,40 @@ function App() {
   const value = useMemo(() =>
     ({ user, setUser }), [user, setUser]);
 
+
+  //PK les sockets ici ??
   let socket = io("http://localhost:3000/chat", { query: { username: username } });
 
-  let cookieCheck = document.cookie.match("Authentication");
+  //async function getUser() {
+  //  if (localStorage.getItem("loggedIn") != "true")
+  //  {
+  //    console.log("You are not logged in.")
+  //      return ;
+  //  }
+  //  let url = "http://localhost:3000/api/auth/";
 
-  async function getUser() {
-    let url = "http://localhost:3000/api/auth/";
-    let username = "";
-    axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
-    axios.defaults.withCredentials = true;
-    await axios.get(url)
-      .then(res => {
-        username = res.data.login;
-        setUsername(username);
-      })
-      .catch((err) => {
-        console.log("Error while getting api auth");
-      })
-  }
+  //  let cookieCheck = document.cookie.match("Authentication");
+  //  let cookieCheck2 = document.cookie.match("connected.sid");
+
+  //  //console.log("Cookie 1 is " + cookieCheck);
+  //  //console.log("Cookie 2 " + cookieCheck2);
+
+  //  let username = "";
+  //  axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+  //  axios.defaults.withCredentials = true;
+  //  await axios.get(url)
+  //    .then(res => {
+  //      username = res.data.login;
+  //      setUsername(username);
+  //    })
+  //    .catch((err) => {
+  //      console.log("Error while getting api auth");
+  //    })
+  //}
 
   useEffect(() => {
-    getUser();
+    //pas sur cette page enfin !!
+    //getUser();
     if (username) {
       let socket = io("http://localhost:3000/chat", { query: { username: username } });
       socket.on('connect', () => {
@@ -74,12 +87,10 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (localStorage.getItem("2fa") != "true" && localStorage.getItem("2fa") != "false")
-    {
+    if (localStorage.getItem("2fa") != "true" && localStorage.getItem("2fa") != "false") {
       localStorage.setItem("2fa", "false");
     }
-    if (localStorage.getItem("loggedIn") != "true" && localStorage.getItem("loggedIn") != "false")
-    {
+    if (localStorage.getItem("loggedIn") != "true" && localStorage.getItem("loggedIn") != "false") {
       localStorage.setItem("loggedIn", "false");
     }
   }, []);
@@ -108,87 +119,88 @@ function App() {
 
 
       <Particles
-      id="tsparticles"
-      //init={particlesInit}
-      //loaded={particlesLoaded}
-      options={{
-        background: {
-          color: {
-            value: "#00000",
+        id="tsparticles"
+        //init={particlesInit}
+        //loaded={particlesLoaded}
+        options={{
+          background: {
+            color: {
+              value: "#00000",
+            },
           },
-        },
-        fpsLimit: 120,
-        interactivity: {
-          events: {
-            onClick: {
+          fpsLimit: 120,
+          interactivity: {
+            events: {
+              onClick: {
+                enable: false,
+                mode: "push",
+              },
+              onHover: {
+                enable: false,
+                mode: "repulse",
+              },
+              resize: false,
+            },
+            modes: {
+              bubble: {
+                distance: 100,
+                duration: 5,
+                opacity: 0.8,
+                size: 20,
+              },
+              push: {
+                quantity: 20,
+              },
+              repulse: {
+                distance: 200,
+                duration: 0.4,
+              },
+            },
+          },
+          particles: {
+            color: {
+              value: "#ffffff",
+            },
+            links: {
+              color: "#ffffff",
+              distance: 150,
+              enable: false,
+              opacity: 0.5,
+              width: 1,
+            },
+            collisions: {
               enable: true,
-              mode: "push",
             },
-            onHover: {
+            move: {
+              direction: "bottom",
               enable: true,
-              mode: "repulse",
+              outMode: "bounce",
+              random: true,
+              speed: 2,
+              straight: false,
             },
-            resize: true,
-          },
-          modes: {
-            bubble: {
-              distance: 400,
-              duration: 2,
-              opacity: 0.8,
-              size: 40,
+            number: {
+              density: {
+                enable: true,
+                area: 120,
+              },
+              value: 10,
             },
-            push: {
-              quantity: 4,
+            opacity: {
+              value: 0.3,
+              random: true,
             },
-            repulse: {
-              distance: 200,
-              duration: 0.4,
+            shape: {
+              type: "circle",
+            },
+            size: {
+              random: false,
+              value: 40,
             },
           },
-        },
-        particles: {
-          color: {
-            value: "#ffffff",
-          },
-          links: {
-            color: "#ffffff",
-            distance: 150,
-            enable: true,
-            opacity: 0.5,
-            width: 1,
-          },
-          collisions: {
-            enable: true,
-          },
-          move: {
-            direction: "none",
-            enable: true,
-            outMode: "bounce",
-            random: false,
-            speed: 1,
-            straight: false,
-          },
-          number: {
-            density: {
-              enable: true,
-              area: 800,
-            },
-            value: 80,
-          },
-          opacity: {
-            value: 0.5,
-          },
-          shape: {
-            type: "circle",
-          },
-          size: {
-            random: true,
-            value: 5,
-          },
-        },
-        detectRetina: true,
-      }}
-    />
+          detectRetina: false
+        }}
+      />
       <Routes>
         <Route path="/" element={<Welcome />} />
         <Route path="/welcome" element={<Welcome />} />
@@ -200,24 +212,24 @@ function App() {
           </>
           : ""}
 
-        {localStorage.getItem("loggedIn") == "true" &&  localStorage.getItem("2fa") == "true" && localStorage.getItem("2faverif") == "false" ?
-          <Route path="*" element={<Login2fa/>} /> : ""}
+        {localStorage.getItem("loggedIn") == "true" && localStorage.getItem("2fa") == "true" && localStorage.getItem("2faverif") == "false" ?
+          <Route path="*" element={<Login2fa />} /> : ""}
 
         {(localStorage.getItem("2fa") == "true" && localStorage.getItem("2faverif") == "false") ?
-              <Route path="*" element={<Login2FA />} />
-              :
-                <>
-                  <Route path="/user" element={<UserMain />} />
-                  <Route path="/live" element={<Live />} />
-                  <Route path="/chat" element={<CreateChan endpoint={undefined} action={undefined} />} />
-                  <Route path="/auth" element={<UserMain />} />
-                  <Route path="/channels" element={<Channels />} />
-                  <Route path="/people" element={<People />} />
-                  <Route path="/game" element={<Game />} />
-                  <Route path="/2fa" element={<Login2FA />} />
-                  <Route path="/profile/:login" element={<Profile />}/>
-                  <Route path="*" element={<NotFound />} />
-                </>}
+          <Route path="*" element={<Login2FA />} />
+          :
+          <>
+            <Route path="/user" element={<UserMain />} />
+            <Route path="/live" element={<Live />} />
+            <Route path="/chat" element={<CreateChan endpoint={undefined} action={undefined} />} />
+            <Route path="/auth" element={<UserMain />} />
+            <Route path="/channels" element={<Channels />} />
+            <Route path="/people" element={<People login={username} />} />
+            <Route path="/game" element={<Game />} />
+            <Route path="/2fa" element={<Login2FA />} />
+            <Route path="/profile/:login" element={<Profile />} />
+            <Route path="*" element={<NotFound />} />
+          </>}
       </Routes>
     </div>
   );

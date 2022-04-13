@@ -169,13 +169,13 @@ export class UserService {
 			const inviteFromHim = await this.userRelationRepository.findOne({ creator: receiver, receiver: creator });
 			if (inviteFromHim && inviteFromHim.status == 'blocked')
 				return console.log('You have been blocked by that user');
-			else if (inviteFromHim && inviteFromHim.status == 'pending')
+			else if (inviteFromHim && (inviteFromHim.status == 'pending' || inviteFromHim.status == 'accepted'))
 				return console.log('A friend request has already been (sent to/received from) that user');
 
 			const inviteFromYou = await this.userRelationRepository.findOne({ creator: creator, receiver: receiver });
 			if (inviteFromYou && inviteFromYou.status == 'blocked')
 				return console.log('You have blocked that user, unblock it first');
-			if (inviteFromYou && (inviteFromYou.status == 'pending', inviteFromYou.status == 'accepted'))
+			if (inviteFromYou && (inviteFromYou.status == 'pending' || inviteFromYou.status == 'accepted'))
 				return console.log('You have already sent a invite to that user or you are already friends');
 			//si demande de chaque coté, on update automatiquement la relation a accepted ? //
 		}
@@ -416,6 +416,33 @@ export class UserService {
 		);
 		this.userRelationRepository.save(newRelation);
 
+	}
+
+	async getRelation(login: string, user: User) {
+		const target = await this.getUserByLogin(login);
+		const invite = await this.userRelationRepository.findOne({
+			where: [
+				{ creator: user, receiver: target },
+			],
+		});
+		console.log(invite);
+		if (invite)
+			return invite;
+		return;
+	}
+
+	async getStats(login: string) {
+
+		const query = await this.userRepository.createQueryBuilder('user')
+			.andWhere('user.login = :login', { login: login })
+			.select([
+				"user.rank",
+				"user.points",
+				"user.xp",
+				"user.percent_to_next_lvl",
+				"user.level",
+			]).getOne();
+		return query;
 	}
 
 }

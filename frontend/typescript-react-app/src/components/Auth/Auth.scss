@@ -7,7 +7,7 @@
   padding-right: 50px !important;
   padding-left: 50px !important;
   padding-bottom: 50px !important;
-  padding-top: 10px !important;
+  padding-top: 5px !important;
 }
 
 #auth-btn-1,
@@ -27,7 +27,7 @@
 }
 
 #se-connecter,
-#sinscrire, #jouer {
+#sinscrire, #jouer, #auth-container > * {
   margin-top: 30px !important;
   color: black !important;
 }
@@ -35,10 +35,16 @@
 #auth-form-div {
   background-color: white !important;
   border-radius: variables.$border-radius;
-  margin-top: 5px !important;
+  margin-top: 1px !important;
 }
 
 #jouer {
   text-align: center !important;
   margin-bottom: 5px !important;
+  font-family: variables.$big-font;
+  font-size: 12px !important;
+}
+
+#auth-container > input {
+  padding: 0px !important;
 }

@@ -20,7 +20,8 @@ export interface MiniDisplayProps {
 	user?: any;
 	container?: string;
 	relation?: string;
-	extra?: string
+	extra?: string;
+	currentUser?: string;
 	//children?: React.ReactNode | React.ReactChild | React.ReactChildren | React.ReactChild[] | React.ReactChildren[]
 }
 
@@ -31,6 +32,8 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 	const calledOnce = React.useRef(false);
 	const [status, setStatus] = React.useState(props.status);
 	const [username, setUsername] = React.useState("");
+	const [color, setColor] = React.useState("");
+	const [relationStatus, setRelationStatus] = React.useState("");
 
 	function renderImage(avatar: string, login: string, ftlogin: string, extra: string) {
 		if (!avatar)
@@ -62,15 +65,13 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 			}
 		}
 
-		console.log("getting avatar for " + login);
-
 		let url = "http://localhost:3000/api/user/".concat(avatar).concat("/avatar/");
 		let res = axios.get(url, { responseType: 'blob' })
 			.then(res => {
 				let myImage: HTMLImageElement = document.querySelector("#".concat(login + "_" + extra));
 				var objectURL = URL.createObjectURL(res.data);
 				myImage.src = objectURL;
-				return (<img className="profile--pic" src={myImage.src} alt={imageName} id={props.login.concat("_" + props.extra)} height="100" width="100"/>);
+				return (<img className="profile--pic" src={myImage.src} alt={imageName} id={props.login.concat("_" + props.extra)} height="100" width="100" />);
 			})
 			.catch((error) => {
 				console.log("Catched error during get/fileId/avatar");
@@ -78,20 +79,14 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 			})
 	}
 
-	const [color, setColor] = React.useState("");
-	let url = "http://localhost:3000/api/user/".concat(props.login);
-	let res = axios.get(url)
-		.then(res => {
-			if (res.data.status == "offline")
-				setColor("grey")
-			if (res.data.status == "online")
-				setColor("green")
-			if (res.data.status == "ingame")
-				setColor("purple")
-		})
-		.catch((error) => {
-			console.log("Catched error during get/logind/user");
-		})
+	function selectColor() {
+		if (props.status == "offline")
+			setColor("grey")
+		if (props.status == "online")
+			setColor("green")
+		if (props.status == "ingame")
+			setColor("purple")
+	}
 
 	function addContact(login: string) {
 		let ax = new MyAxios(null);
@@ -106,32 +101,22 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 
 	function acceptInvitation(login: string) {
 		let ax = new MyAxios(null);
-		return (ax.post_api_user_relation_answerInvitation_id(login, "accepted"));
+		return (ax.post_api_user_relation_answerInvitation_id(login, "accepted", props.extra));
 	}
 
 	function refuseInvitation(login: string) {
 		let ax = new MyAxios(null);
-		return (ax.post_api_user_relation_answerInvitation_id(login, "declined"));
+		return (ax.post_api_user_relation_answerInvitation_id(login, "declined", props.extra));
 	}
 
 	function removeContact(login: string) {
 		let ax = new MyAxios(null);
-		//id={"minidisplay".concat("_" + props.login + "_" + props.extra)}
 		return (ax.delete_relation_id(login, props.extra));
 	}
 
 	function unblockContact(login: string) {
-		/*
-		var x = document.getElementById("testing");
-		if (x.style.display == "none") {
-			console.log("looooooooooool");
-			x.style.display = "block";
-		} else {
-			x.style.display = "none";
-		}
-	*/
 		let ax = new MyAxios(null);
-		return (ax.delete_relation_unblock(login));
+		return (ax.delete_relation_unblock(login, props.extra));
 	}
 
 	function gotoprofile() {
@@ -139,28 +124,56 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 		window.top.location = url;
 	}
 
-	function buttonToDidsplay(container: string) {
-		if (container == "all")
+	function buttonToDidsplay() {
+		//NOT WORKING CUZ OF THE EXECUTION ORDER
+		if (props.container == "all") {
+
+			let notBlocked: boolean = true;
+			let notFriend: boolean = true;
+
+
+			let url = "http://localhost:3000/api/user/relation/relationStatusWith/".concat(props.login);
+
+			axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+			axios.defaults.withCredentials = true;
+
+			axios.get(url)
+				.then(res => {
+					let relation = res.data;
+					let status = relation.status;
+					setRelationStatus(status);
+				})
+				.catch((error) => {
+					console.log(error);
+				})
+
+			console.log("as " + props.currentUser + "my relation with" + props.login + "is " + relationStatus);
+			if (relationStatus == "accepted" || relationStatus == "pending")
+				notFriend = true;
+			else if (relationStatus == "blocked")
+				notBlocked = true;
+
 			return (
 				<>
-					<i className="user--action" onClick={() => addContact(props.login)}>{<FiUserPlus />}</i>
-					<i className="user--action" onClick={() => blockContact(props.login)}>{<FiUserX />}</i>
+					{notFriend ? <i className="user--action" onClick={() => addContact(props.login)}>{<FiUserPlus />}</i> : ""}
+					{notBlocked ? <i className="user--action" onClick={() => blockContact(props.login)}>{<FiUserX />}</i> : ""}
 				</>
 			)
-		else if (container == "friends")
+		}
+		else if (props.container == "friends")
 			return (
 				<>
 					<i className="user--action" onClick={() => removeContact(props.login)}>{<FiUserMinus />}</i>
 				</>
 			)
-		else if (container == "invitation")
+		else if (props.container == "invitation")
 			return (
 				<>
 					<i className="user--action" onClick={() => acceptInvitation(props.login)}>{<AiFillCheckCircle />}</i>
 					<i className="user--action" onClick={() => refuseInvitation(props.login)}>{<MdCancel />}</i>
 				</>
 			)
-		else if (container == "blocked")
+		else if (props.container == "blocked")
 			return (
 				<>
 					<i id="button-action" className="user--action" onClick={() => unblockContact(props.login)}>{<AiFillUnlock />}</i>
@@ -173,6 +186,7 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 			return;
 		}
 		setLoad(true);
+		selectColor();
 		calledOnce.current = true;
 	}, []);
 
@@ -181,7 +195,6 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 			<li className="list-group-item" key={props.extra ? props.login.concat(props.extra) : props.login}>
 				<div className="mini-display-li">
 					<Suspense fallback={<Hearts color="#ffe4e1" height={100} width={100} key={props.login} />}>
-						{/*<img className="profile--pic" id={props.extra ? props.login.concat("_" + props.extra) : props.login} src="" width="100" height="100" onClick={gotoprofile} />*/}
 						<img
 							className="profile--pic"
 							id={props.login.concat("_" + props.extra)}
@@ -191,13 +204,9 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 							onClick={gotoprofile}
 						/>
 						{load == true ? renderImage(props.avatar, props.login, props.ftlogin, props.extra) : ""}
-						<svg className="log--color" height="40" width="40">
-							<circle cx="20" cy="20" r="15" fill={color} stroke="white" style={{ strokeWidth: '3' }} />
-						</svg>
 						<br />
 						<p className="user--p" id="mini--login">{props.login}</p>
-						<p className="user--p" id="mini--status">{status}</p>
-						{buttonToDidsplay(props.container)}
+						{buttonToDidsplay()}
 						<ToastContainer
 							position="top-right"
 							autoClose={5000}
@@ -211,6 +220,9 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 						/>
 					</Suspense>
 				</div>
+				<svg className="log--color" height="40" width="40">
+					<circle cx="20" cy="20" r="15" fill={color} stroke="white" style={{ strokeWidth: '3' }} />
+				</svg>
 			</li>
 		</div>
 	);

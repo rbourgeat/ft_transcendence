@@ -489,7 +489,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     }
 
     //TODO: a tester ! -> est-ce qu'on veut vraiment gérer ça ?
-    post_api_user_relation_answerInvitation_id(login: string, status: string) {
+    post_api_user_relation_answerInvitation_id(login: string, status: string, extra: string) {
         let url = "http://localhost:3000/api/user/relation/answerToInvitation/".concat(login);
 
         const body = {
@@ -503,6 +503,10 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
             .then(res => {
                 console.log(res);
                 console.log("Succesfully posting invitaton");
+                let id = "minidisplay".concat("_" + login + "_" + extra);
+                console.log("id looked is " + id);
+                let elem = document.getElementById(id);
+                elem.parentNode.removeChild(elem);
             })
             .catch((error) => {
                 console.log(error);
@@ -588,7 +592,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     }
 
     //TODO: a tester
-    delete_relation_unblock(login: string) {
+    delete_relation_unblock(login: string, extra: string) {
         let url = "http://localhost:3000/api/user/relation/unblock/".concat(login);
 
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
@@ -598,11 +602,40 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
             .then(res => {
                 console.log("Succesfully unblocked target friend");
                 console.log(res);
+                let id = "minidisplay".concat("_" + login + "_" + extra);
+                console.log("id looked is " + id);
+                let elem = document.getElementById(id);
+                elem.parentNode.removeChild(elem);
             })
             .catch((error) => {
                 console.log("Error while unblocking target friend");
                 console.log(error);
             })
+    }
+
+    //TODO: a tester
+    async get_relation_status(login: string) {
+
+        console.log("get relation with" + login);
+        let url = "http://localhost:3000/api/user/relation/relationStatusWith/".concat(login);
+
+        axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+        axios.defaults.withCredentials = true;
+
+        let status = "";
+        axios.get(url)
+            .then(res => {
+                console.log("Succesfully get relation status with" + login);
+                console.log(res);
+                let relation = res.data;
+                console.log(relation.status);
+                status = relation.status;
+            })
+            .catch((error) => {
+                console.log("Error while get relation status with" + login);
+                console.log(error);
+            })
+        return status;
     }
 
     //TODO: a tester
@@ -648,15 +681,21 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
                 if (res.status == 200 || res.status == 201) {
                     //console.log(res);
                     localStorage.setItem("loggedIn", "true");
-                    //localStorage.setItem("login", login);
-                    window.top.location = "/chat/";
-                    return;
+                    //TODO: faire en sorte de récupérer le login pour l'enregistrer dans le localStorage
+                    localStorage.setItem("login", res.data.login);
+                    if (res.data.login42 != null || res.data.login42 != undefined || res.data.login42 != "")
+                        localStorage.setItem("login42", res.data.login42);
+                    else
+                        localStorage.setItem("login42", "");
+                   // window.top.location = "/chat/";
+                    window.top.location = "http://localhost:3030/user";
+                    //return;
                 }
                 else {
                     //toast.notifyDanger('Oops ! An error happened, incorrect email or password.');
                     console.log("Did not receive 200 when logging it.");
                     toast.notifyDanger("😢 Error while logging in !");
-                    return;
+                    //return;
                 }
             })
             .catch((error) => {

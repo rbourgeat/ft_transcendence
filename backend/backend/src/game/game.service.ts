@@ -47,6 +47,10 @@ export class GameService {
 			where: { login: login }
 		});
 		const games = user.games;
-		return games;
+
+		const reverse = games.reverse();
+		console.log("games of " + login);
+		console.log(reverse);
+		return reverse;
 	}
 }

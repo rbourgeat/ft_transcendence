@@ -1,58 +1,12 @@
 @use '../../variables';
 
-//footer {
-//  position: fixed;
-//  bottom: 0;
-//  padding-top: 15px;
-//  width: 100%;
-//  text-align: center;
-//  font-family: variables.$big-font;
-//}
-
-#footer--div {
-  background-color: white !important;
-}
-#footer--p {
-  -moz-transform: translateX(100%);
-  -webkit-transform: translateX(100%);
-  transform: translateX(100%);
-  -moz-animation: my-animation 40s linear infinite;
-  -webkit-animation: my-animation 40s linear infinite;
-  animation: my-animation 40s linear infinite;
-
-  background-image: none;
-  color: black !important;
+.footer--div, #footer--p, .footer--footer{
+  background-color: black !important;
+  //background: black !important;
+  color: white !important;
   font-family: variables.$big-font;
-  padding-bottom: 20px !important;
+  //padding: 10px;
+  margin-top: 25px;
+  text-align: right;
+  //opacity: 1 !important;
 }
-
-//@-moz-keyframes my-animation {
-//  from {
-//    -moz-transform: translateX(100%);
-//  }
-//  to {
-//    -moz-transform: translateX(-100%);
-//  }
-//}
-
-//@-webkit-keyframes my-animation {
-//  from {
-//    -webkit-transform: translateX(100%);
-//  }
-//  to {
-//    -webkit-transform: translateX(-100%);
-//  }
-//}
-
-//@keyframes my-animation {
-//  from {
-//    -moz-transform: translateX(100%);
-//    -webkit-transform: translateX(100%);
-//    transform: translateX(100%);
-//  }
-//  to {
-//    -moz-transform: translateX(-100%);
-//    -webkit-transform: translateX(-100%);
-//    transform: translateX(-100%);
-//  }
-//}

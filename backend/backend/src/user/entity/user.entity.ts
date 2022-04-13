@@ -46,6 +46,21 @@ export class User {
     @Column({ nullable: true })
     win_loss_ration: number = 0;
 
+    @Column({ nullable: true })
+    rank: number;
+
+    @Column({ nullable: true })
+    points: number = 1000;
+
+    @Column({ nullable: true })
+    xp: number = 0;
+
+    @Column({ nullable: true })
+    percent_to_next_lvl: number = 0;
+
+    @Column({ nullable: true })
+    level: number = 0;
+
     @OneToMany(() => Achievement, (achievement: Achievement) => achievement.id)
     public achievement: Achievement[];
 

@@ -7,10 +7,13 @@ import Blocked from "../Blocked/Blocked";
 import Friends from "../Friends/Friends";
 import { DetailedHTMLProps, HTMLAttributes } from 'react';
 import { Oval, Hearts } from "react-loader-spinner";
+//import { useHistory } from 'react-router-dom';
 
 const MiniDisplay = lazy(() => import('../MiniDisplay/MiniDisplay'));
 
+
 export interface InputWrapperProps {
+	login?: string
 	//children?: React.ReactNode | React.ReactChild | React.ReactChildren | React.ReactChild[] | React.ReactChildren[]
 	//children?: DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>
 }
@@ -19,20 +22,29 @@ export default function All(props: InputWrapperProps) {
 	const [users, setUsers] = React.useState([]);
 	const [load, setLoad] = React.useState(true);
 	const [count, setCount] = useState(0);
+	const [stateLogin, setStateLogin] = React.useState(props.login);
 
 	const calledOnce = React.useRef(false);
 
 	async function renderUsers() {
+
 		axios.defaults.withCredentials = true;
+		//console.log("Connected as" + stateLogin);
+		//console.log("Connected as" + props.login);
+		let log = localStorage.getItem("login");
+		console.log("My login is " + log);
 		let url = "http://localhost:3000/api/user/";
 		await axios.get(url)
 			.then(res => {
+				//console.log("Connected as" + stateLogin);
 				console.log("Get api users successfully called.");
 				let users = res.data;
 				let len = users.length;
 				let i = 0;
 				while (i < len) {
-					setUsers(prevArray => [...prevArray, users[i]])
+					console.log(users[i].login + " has been find");
+					if (users[i].login != log)
+						setUsers(prevArray => [...prevArray, users[i]])
 					i++;
 				}
 			})
@@ -44,17 +56,19 @@ export default function All(props: InputWrapperProps) {
 
 	useEffect(() => {
 
+		/*
 		if (calledOnce.current) {
 			return;
 		}
+		*/
 		renderUsers();
-		calledOnce.current = true;
+		//calledOnce.current = true;
 
 	}, []);
 
 	return (
 		<div id="people--div">
-			<div className="container" id="container--all">
+			<div id="container--all" className="container">
 				<br />
 				<div className="row" id="row--users_all">
 					<div id="ul--list">
@@ -64,7 +78,7 @@ export default function All(props: InputWrapperProps) {
 								users.map(user =>
 									<div key={user.login}>
 										<Suspense fallback={<Hearts color="#ffe4e1" height={100} width={100} key={user.login} />}>
-											<MiniDisplay key={user.login} login={user.login} status={user.status} avatar={user.avatar} ftlogin={user.login42} extra="all" container="all" />
+											<MiniDisplay key={user.login} login={user.login} status={user.status} avatar={user.avatar} ftlogin={user.login42} extra="all" container="all" currentUser={props.login} />
 										</Suspense>
 									</div>
 								)
