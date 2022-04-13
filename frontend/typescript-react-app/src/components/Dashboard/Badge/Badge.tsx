@@ -5,9 +5,9 @@ export default function Badge(props) {
     return (
         <div id="badge">
             <div className="container">
-                <div className="row" id="badge--div">
+                {/*<div className="row" id="badge--div">*/}
                     <div id="badge--div--sub" className="row">
-                        <div className="col" id="badge--stats">
+                        <div className="col-9" id="badge--stats">
                             <br />
                             <h2 className="stats--h2">Statistics</h2>
                             <br/>
@@ -18,7 +18,7 @@ export default function Badge(props) {
                             <br />
                         </div>
                     </div>
-                </div>
+                {/*</div>*/}
             </div>
         </div>
     )

@@ -122,10 +122,10 @@ export default function User(props: UserfuncProps) {
 											<Achievements login={username}/>
 											<br />
 											{/*<Badge />*/}
-											<MatchHistory login={username}/>
-											<br/>
 											<Badge />
 											<br />
+											<MatchHistory login={username}/>
+											<br/>
 											<Settings username={username} login42={localStorage.getItem("login42")}/>
 											<br />
 										</div>

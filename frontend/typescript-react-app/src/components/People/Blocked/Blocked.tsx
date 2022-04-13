@@ -50,7 +50,7 @@ export default function Blocked() {
 				<br />
 				<div className="row" id="row--users_blocked">
 					<div id="ul--list" className="row">
-						<h1 className="text" id="displaying--blocked">Blocked</h1>
+						<h1 className="text-people" id="displaying--blocked">Blocked</h1>
 						<br />
 						<ul id="list--users--ul" className="wrapper list-group list-group-horizontal-lg">
 							{load == true ?

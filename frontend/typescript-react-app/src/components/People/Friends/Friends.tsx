@@ -42,7 +42,7 @@ export default function Friends() {
 			<div id="container--friends" className="container">
 				<br />
 				<div className="row" id="row--users_friends">
-					<h1 className="text" id="displaying--friends">All my friends</h1>
+					<h1 className="text-people" id="displaying--friends">All my friends</h1>
 					<br />
 						<div id="ul--list" className="row">
 							<ul id="list--users--ul" className="wrapper list-group list-group-horizontal-lg">
