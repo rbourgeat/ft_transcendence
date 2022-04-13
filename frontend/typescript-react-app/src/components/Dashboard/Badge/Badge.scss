@@ -46,6 +46,8 @@
 
 #badge {
   border-radius: variables.$border-radius-big;
+  position: sticky;
+  //position:absolute !important; //IDEE ne se superpose plus avec les bulles
 }
 
 .stats--h2 {
@@ -53,4 +55,3 @@
   font-size: 12px;
   color: black !important;
 }
-
