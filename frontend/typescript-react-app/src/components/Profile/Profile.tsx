@@ -8,6 +8,7 @@ import MyAxios from '../Utils/Axios/Axios';
 import MatchHistory from '../MatchHistory/MatchHistory';
 import Achievement from '../Achievements/Achievements';
 import Badge from "../Dashboard/Badge/Badge";
+import Footer from "../Footer/Footer";
 
 export interface ProfileProps
 {
@@ -24,15 +25,38 @@ export default function Profile() {
 	const [is42, setis42] = React.useState(false);
 	const {login} = useParams();
 	const [isFriend, setisFriend] = React.useState(false);
+	//Badge
+	const [load, setLoad] = React.useState(false);
+	const [points, setPoints] = React.useState(0);
+	const [rank, setRank] = React.useState(0);
+	const [totalGames, setTotalGames] = React.useState(0);
+	const [loss, setLoss] = React.useState(0);
+	const [wins, setWins] = React.useState(0);
+	const [ratio, setRatio] = React.useState(0);
+	const [xp, setXp] = React.useState(0);
+	const [level, setLevel] = React.useState(0);
+	const [nextlevel, setNextLevel] = React.useState(0);
 	//const [load, setLoad] = React.useState(false);
 
 	function getUserLogin(log: string) {
 		let url = "http://localhost:3000/api/user/".concat(login);
 
+		console.log("getting user data");
 		axios.get(url)
 		.then(res => {
-			//console.log(res);
+			console.log(res);
 			setUserOk(true);
+			setisFriend(true);
+			setLevel(res.data.percent_to_next_lvl);
+			setNextLevel(res.data.level);
+			setPoints(res.data.points);
+			//setRank(res.data.rank);
+			setTotalGames(res.data.total_games);
+			setLoss(res.data.total_loss);
+			setWins(res.data.wins);
+			setRatio(res.data.win_loss_ration);
+			setXp(res.data.xp);
+			//setLoad(true);
 			if (res.data.status == "offline")
 				setColor("grey")
 			if (res.data.status == "online")
@@ -45,7 +69,7 @@ export default function Profile() {
 				setColor("purple");
 				setStatus("ingame")
 			}
-
+			setLoad(true);
 		})
 		.catch((err) => {
 			console.log("Error while getting api auth");
@@ -97,7 +121,6 @@ export default function Profile() {
 				{
 					console.log("You are friends !");
 					friends = true;
-					setisFriend(true);
 					//let parent = document.getElementById("relationship").nodeValue;
 					let message = "You are friends !";
 					//let child = document.createElement("p");
@@ -120,6 +143,7 @@ export default function Profile() {
 
 	let isUser = (login == localStorage.getItem("login") ? true : false);
     return (
+	<>
         <div id="profile--div">
 			<Nav />
 			<div className="container">
@@ -140,7 +164,15 @@ export default function Profile() {
 								<br />
 								<h2 id="profile-title">{login}</h2>
 								<p className="status-text">{status}</p>
-								{buttonToDisplay()}
+								<br />
+								<div className="row" id="relations">
+									<div>{isFriend == true ? "You are not friends" : ""}</div>
+									<div>not friends</div>
+									{/*<div>block</div>
+									<div>send dm</div>
+									<div>invite to play</div>*/}
+								</div>
+								{/*{buttonToDisplay()}*/}
 								<div id="relationship">
 									{/*<span className="badge bg-success">Friends</span>*/}
 								</div>
@@ -149,7 +181,17 @@ export default function Profile() {
 								<br/>
 								<MatchHistory login={login}/>
 								<br/>
-								<Badge login={login}/>
+								{load == true ? <Badge
+													login={login}
+													total_wins={wins}
+													total_loss={loss}
+													total_games={totalGames}
+													win_loss_ratio={ratio}
+													xp={xp}
+													points={points}
+													to_next={nextlevel}
+													/> : ""}
+
 							</div>
 						: <>
 							<h1><span id="oops">Oops...</span></h1>
@@ -166,5 +208,7 @@ export default function Profile() {
 			</div>
 		</div>
     </div>
+	{/*<Footer />*/}
+	</>
     )
 }

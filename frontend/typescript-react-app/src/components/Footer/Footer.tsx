@@ -7,7 +7,7 @@ export default function Footer() {
             <footer className="footer--footer">
                 <div className="footer--div">
                     <p id="footer--p">
-                        FT_TRANSCENDENCE
+                        FT_TRANSCENDENCE @bahaas, @rbourgea, @malatini
                     </p>
                 </div>
             </footer>

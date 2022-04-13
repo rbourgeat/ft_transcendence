@@ -25,17 +25,9 @@ export default function Welcome() {
                 <div id="welcome--video-div-main">
                     <div id="authors" className="row d-flex justify-content-center text-center">
                         <ul id="authors--ul">
-                            {/*<TypeAnimation
-                        cursor={true}
-                        sequence={['Authors :', 5000, '']}
-                        wrapper="figcaption"
-                        repeat={Infinity}
-                    />*/}
                             <li>bahaas</li>
                             <li>rbourgea</li>
                             <li>malatini</li>
-                            <li>darbib</li>
-                            <li>macrespo</li>
                             <br />
                             <button id="play-button-1" onClick={routeChange}>PLAY</button>
                         </ul>
