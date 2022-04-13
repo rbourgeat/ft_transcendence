@@ -7,6 +7,7 @@ export interface MatchHistoryProps {
     scoreWinner?: string,
     scoreLooser?: string
     login?: string
+    key?: string
 }
 
 //TODO: renommer
@@ -17,7 +18,7 @@ export default function MatchHistory(props: MatchHistoryProps) {
     }, []);
 
     return (
-        <div id="buttonresume">
+        <div className="buttonresume">
             <div className="row">
                 <div id="scores">
                     <p /*className="buttonresume--result"*/ className={props.winner == props.login ? "result--score_winnner" : "result--score_loser"}>

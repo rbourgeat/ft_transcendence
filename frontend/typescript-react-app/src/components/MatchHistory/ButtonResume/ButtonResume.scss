@@ -1,8 +1,13 @@
 @use "../../../variables";
 
-.score, .buttonresume {
-  width: 100% !important;
-}
+//.score, .buttonresume {
+//  width: 100% !important;
+//}
+
+//.buttonresume {
+//  margin-top: 5px !important;
+//  max-height: 5px !important;
+//}
 
 //TODO: changer des couleurs
 .result--score_winnner {
@@ -20,6 +25,7 @@
   box-shadow: 0.1px 0.1px #f9f9f9, -0.1em 0 .4em #f9f9f9;
   font-size: 12px !important;
   font-family: variables.$basic-font !important;
+  height: 20px;
 }
 
 .result--score_loser{
@@ -37,6 +43,7 @@
   box-shadow: 0.1px 0.1px #f9f9f9, -0.1em 0 .4em #f9f9f9;
   font-size: 12px !important;
   font-family: variables.$basic-font !important;
+  height: 20px;
 }
 
 #buttoresumee--result > .text {

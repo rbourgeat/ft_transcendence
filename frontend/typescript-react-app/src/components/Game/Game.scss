@@ -27,10 +27,10 @@
 //  padding: 10px;
 //}
 
-#game-root > .text {
- color: white !important;
- font-size: 5vh !important;
-}
+// #game-root > .text {
+//  color: white !important;
+//  font-size: 5vh !important;
+// }
 
 // PONG CSS BELOW:
 
@@ -41,4 +41,10 @@ ul {
 
 .game--li {
   display: inline-block;
+}
+
+#victoryMessage {
+  color: white !important;
+  font-size: 8vh !important;
+  font-weight: bold;
 }

@@ -2,6 +2,7 @@ import { ConnectedSocket, MessageBody, OnGatewayConnection, OnGatewayDisconnect,
 import { Server, Socket } from 'socket.io';
 import { Logger } from "@nestjs/common";
 import { GameService } from './game.service';
+import { UserService } from '../user/user.service';
 
 let MatchMaking = [[],[],[],[],[]];
 
@@ -13,7 +14,8 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
 	private logger: Logger = new Logger("GameGateway");
 
 	constructor(
-		private readonly gameService: GameService
+		private readonly gameService: GameService,
+		private readonly userService: UserService
 	) { }
 
 	afterInit(server: Server) {
@@ -29,7 +31,7 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
 	}
 
 	@SubscribeMessage('search')
-	async messageMessage(@ConnectedSocket() socket: Socket, @MessageBody() body: string) {
+	async searchMessage(@ConnectedSocket() socket: Socket, @MessageBody() body: string) {
 		let gameMode = 0;
 		if (body == "bigball")
 			gameMode = 1;
@@ -80,6 +82,8 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
 		if (b[0] && b[1]) {
 			this.gameService.createGame(b[0], b[1], Number(b[2]), Number(b[3]));
 			this.server.emit('stopGame', b[0], b[1]);
+			this.userService.updateStatus(String(b[0]), "online");
+			this.userService.updateStatus(String(b[1]), "online");
 		}
 		
 	}
@@ -88,6 +92,7 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
 	async playerMove(@ConnectedSocket() socket: Socket, @MessageBody() body: string) {
 		const b = body.split(':');
 		this.server.emit('playerMove', body);
+		this.userService.updateStatus(String(socket.handshake.query.username), "ingame");
 		console.log("joueur: " + b[0] + ", position : " + b[1] + ", adversaire : " + b[2]);
 	}  
 

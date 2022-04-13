@@ -427,11 +427,19 @@ export class UserService {
 		});
 		console.log(invite);
 		let struct = {
+<<<<<<< HEAD
 			id: invite.id,
 			creator: user.login,
 			receiver: target.login,
 			status: invite.status
 		};
+=======
+            id: invite.id,
+            creator: user.login,
+            receiver: target.login,
+            status: invite.status
+        };
+>>>>>>> 8179dfb3404061349223ad735a18805e2e396c28
 		if (invite)
 			return struct;
 		return;
