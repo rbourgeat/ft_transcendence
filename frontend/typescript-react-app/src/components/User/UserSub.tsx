@@ -36,6 +36,19 @@ export default function User(props: UserfuncProps) {
 	const [loaded, setLoaded] = React.useState(true);
 	const [authorized, setAuthorized] = React.useState(true);
 
+	//Badge
+	const [load, setLoad] = React.useState(false);
+	const [points, setPoints] = React.useState(0);
+	const [rank, setRank] = React.useState(0);
+	const [totalGames, setTotalGames] = React.useState(0);
+	const [loss, setLoss] = React.useState(0);
+	const [wins, setWins] = React.useState(0);
+	const [ratio, setRatio] = React.useState(0);
+	const [xp, setXp] = React.useState(0);
+	const [level, setLevel] = React.useState(0);
+	const [nextlevel, setNextLevel] = React.useState(0);
+	const [pendingInvite, setPendingInvite] = React.useState(false);
+
 	async function getUser() {
 		//TODO: revoir plus tard pour affichage conditionnel
 		/*
@@ -67,7 +80,16 @@ export default function User(props: UserfuncProps) {
 					setlogin42(res.data.login42);
 					localStorage.setItem("login", res.data.login);
 					localStorage.setItem("login42", res.data.login42);
-					setLoaded(true);
+					setLevel(res.data.percent_to_next_lvl);
+					setNextLevel(res.data.level);
+					setPoints(res.data.points);
+					//setRank(res.data.rank);
+					setTotalGames(res.data.total_games);
+					setLoss(res.data.total_loss);
+					setWins(res.data.wins);
+					setRatio(res.data.win_loss_ration);
+					setXp(res.data.xp);
+
 					//setAuthorized(true);
 				}
 				setUsername(username);
@@ -78,6 +100,7 @@ export default function User(props: UserfuncProps) {
 				//console.log("Error while getting api auth - Maybe you are in incognito mode");
 				//console.log(err);
 			})
+		setLoaded(true);
 	}
 
 	useEffect(() => {
@@ -122,7 +145,16 @@ export default function User(props: UserfuncProps) {
 											<Achievements login={username}/>
 											<br />
 											{/*<Badge />*/}
-											<Badge />
+											<Badge
+													//login={props.login}
+													total_wins={wins}
+													total_loss={loss}
+													total_games={totalGames}
+													win_loss_ratio={ratio}
+													xp={xp}
+													points={points}
+													to_next={nextlevel}
+													/>
 											<br />
 											<MatchHistory login={username}/>
 											<br/>
