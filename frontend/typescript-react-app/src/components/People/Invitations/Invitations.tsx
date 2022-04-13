@@ -43,7 +43,7 @@ export default function Invitations() {
 			<div id="container--invitations" className="container">
 				<br />
 				<div className="row" id="row--users_invitations">
-					<h2 className="text" id="displaying--invitations">Invitations received</h2>
+					<h2 className="text-people" id="displaying--invitations">Invitations received</h2>
 					<br />
 					<div id="ul--list_invitations" className="row">
 						<ul id="list--users--ul_invitations" className="wrapper list-group list-group-horizontal-lg">

@@ -80,11 +80,6 @@ function Nav() {
 								<div className='nav-link-text'><p className="navbar--title">People</p></div>
 							</Link>
 						</li>
-						{/*<li className="nav-item">
-							<Link to="/chat" className="nav-link">
-								<div className='nav-link-text'><p>Tests</p></div>
-							</Link>
-						</li>*/}
 						<li className="nav-item">
 							<Link to="/channels" className="nav-link">
 								<div className='nav-link-text'><p className="navbar--title">Chat</p></div>
@@ -93,6 +88,11 @@ function Nav() {
 						<li className="nav-item">
 							<Link to="/user" className="nav-link">
 								<div className='nav-link-text'><p className="navbar--title">User</p></div>
+							</Link>
+						</li>
+						<li className="nav-item">
+							<Link to="/settings" className="nav-link">
+								<div className='nav-link-text'><p className="navbar--title">Settings</p></div>
 							</Link>
 						</li>
 					</ul>

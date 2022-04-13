@@ -27,6 +27,7 @@ import axios from 'axios';
 import NotLogged from '../NotLogged/NotLogged'; import Login2fa from '../Auth/Login2FA/Login2FA';
 import Profile from "../Profile/Profile";
 import Live from '../Live/Live';
+import Settings from "../User/Settings/Settings";
 
 function App() {
 
@@ -38,9 +39,15 @@ function App() {
     ({ user, setUser }), [user, setUser]);
 
 
+  //PK les sockets ici ??
   let socket = io("http://localhost:3000/chat", { query: { username: username } });
 
   async function getUser() {
+    //if (localStorage.getItem("loggedIn") != "true")
+    //{
+    //  console.log("You are not logged in.")
+    //    return ;
+    //}
     let url = "http://localhost:3000/api/auth/";
 
     let cookieCheck = document.cookie.match("Authentication");
@@ -212,6 +219,7 @@ function App() {
           :
           <>
             <Route path="/user" element={<UserMain />} />
+            <Route path="/settings" element={<Settings />} />
             <Route path="/live" element={<Live />} />
             <Route path="/chat" element={<CreateChan endpoint={undefined} action={undefined} />} />
             <Route path="/auth" element={<UserMain />} />

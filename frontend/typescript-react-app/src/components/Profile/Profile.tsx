@@ -24,6 +24,7 @@ export default function Profile() {
 	const [is42, setis42] = React.useState(false);
 	const {login} = useParams();
 	const [isFriend, setisFriend] = React.useState(false);
+	//const [load, setLoad] = React.useState(false);
 
 	function getUserLogin(log: string) {
 		let url = "http://localhost:3000/api/user/".concat(login);
@@ -99,10 +100,10 @@ export default function Profile() {
 					setisFriend(true);
 					//let parent = document.getElementById("relationship").nodeValue;
 					let message = "You are friends !";
-					let child = document.createElement("p");
-					child.appendChild(document.createTextNode(message));
-					document.getElementById("relationship").appendChild(child);
-					//document.querySelector("#relationship").innerHTML(<span className="badge bg-success">Friend</span>);
+					//let child = document.createElement("p");
+					//child.appendChild(document.createTextNode(message));
+					//document.getElementById("relationship").appendChild(child);
+					//document.getElementById("relationship").appendChild(<span className="badge bg-success">Friends</span>);
 					//parent.appendChild();
 				}
 
@@ -139,9 +140,9 @@ export default function Profile() {
 								<br />
 								<h2 id="profile-title">{login}</h2>
 								<p className="status-text">{status}</p>
-								{/*{buttonToDisplay()}*/}
+								{buttonToDisplay()}
 								<div id="relationship">
-									<span className="badge bg-success">Friends</span>
+									{/*<span className="badge bg-success">Friends</span>*/}
 								</div>
 								<br />
 								<Achievement login={login} />

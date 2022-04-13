@@ -1,22 +1,22 @@
 @use "../../../variables";
 
-#badge--div {
-  //border-radius: variables.$border-radius-big;
-  //color: black !important;
-  //background-color: #333333;
-  //border-radius: black !important;
-}
+//#badge--div {
+//  //border-radius: variables.$border-radius-big;
+//  //color: black !important;
+//  //background-color: #333333;
+//  //border-radius: black !important;
+//}
 
 #badge--div--sub {
   border-radius: variables.$border-radius-big;
   border: 0.1rem solid black !important;
-  background-color: #333333;
+  background-color: black;
+  position: sticky;
 }
 
-
-#badge {
-  margin-top: 10px;
-}
+//#badge {
+//  margin-top: 10px;
+//}
 
 #graph-title,  #badge--title, #p--wins, #badge--stats > *, .text {
   color: white !important;
