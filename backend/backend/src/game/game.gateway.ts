@@ -39,7 +39,7 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
 			gameMode = 2;
 		if (body == "slow")
 			gameMode = 3;
-		if (body == "reverse")
+		if (body == "cube")
 			gameMode = 4;
 		if (body == "STOPSEARCH")
 			gameMode = -1;
@@ -93,7 +93,7 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
 		const b = body.split(':');
 		this.server.emit('playerMove', body);
 		this.userService.updateStatus(String(socket.handshake.query.username), "ingame");
-		console.log("joueur: " + b[0] + ", position : " + b[1] + ", adversaire : " + b[2]);
+		console.log("joueur: " + b[0] + ", position : " + b[1] + ", adversaire : " + b[2] + ", coté : " + b[3]);
 	}  
 
 
