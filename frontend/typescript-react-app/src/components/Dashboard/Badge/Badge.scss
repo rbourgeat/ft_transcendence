@@ -1,28 +1,29 @@
 @use "../../../variables";
 
 #badge--div {
-  border-radius: variables.$border-radius-big;
-  color: black !important;
+  //border-radius: variables.$border-radius-big;
+  //color: black !important;
+  //background-color: #333333;
+  //border-radius: black !important;
 }
 
 #badge--div--sub {
   border-radius: variables.$border-radius-big;
-  background: white !important;
   border: 0.1rem solid black !important;
-}
-
-#badge--graph, #badge--wins {
-  padding: 20px;
+  background-color: #333333;
 }
 
 
 #badge {
-  margin-top: 30px;
+  margin-top: 10px;
 }
 
 #graph-title,  #badge--title, #p--wins, #badge--stats > *, .text {
-  color: black !important;
+  color: white !important;
   font-family: variables.$basic-font;
+  font-size: 12px;
+  text-align: left;
+  //background-color: #333333;
 }
 
 #badge--wins {
@@ -40,9 +41,16 @@
 }
 
 #badge--wins > * {
-  color: variables.$green;
+  color: green;
 }
 
 #badge {
   border-radius: variables.$border-radius-big;
 }
+
+.stats--h2 {
+  font-family: variables.$big-font !important;
+  font-size: 12px;
+  color: black !important;
+}
+

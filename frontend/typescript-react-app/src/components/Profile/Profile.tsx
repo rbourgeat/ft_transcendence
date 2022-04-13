@@ -7,6 +7,7 @@ import NotFound from "../../components/NotFound/NotFound";
 import MyAxios from '../Utils/Axios/Axios';
 import MatchHistory from '../MatchHistory/MatchHistory';
 import Achievement from '../Achievements/Achievements';
+import Badge from "../Dashboard/Badge/Badge";
 
 export interface ProfileProps
 {
@@ -17,9 +18,12 @@ export interface ProfileProps
 export default function Profile() {
 
 	const [color, setColor] = React.useState("");
+	const [status, setStatus] = React.useState("offline");
 	const calledOnce = React.useRef(false);
 	const [userOK, setUserOk] = React.useState(false);
 	const [is42, setis42] = React.useState(false);
+	const {login} = useParams();
+	const [isFriend, setisFriend] = React.useState(false);
 
 	function getUserLogin(log: string) {
 		let url = "http://localhost:3000/api/user/".concat(login);
@@ -31,9 +35,16 @@ export default function Profile() {
 			if (res.data.status == "offline")
 				setColor("grey")
 			if (res.data.status == "online")
-				setColor("green")
+			{
+				setColor("green");
+				setStatus("online");
+			}
 			if (res.data.status == "ingame")
-				setColor("purple")
+			{
+				setColor("purple");
+				setStatus("ingame")
+			}
+
 		})
 		.catch((err) => {
 			console.log("Error while getting api auth");
@@ -57,10 +68,54 @@ export default function Profile() {
 	useEffect(() => {
 	if (calledOnce.current) {
 		return;}
+	buttonToDisplay();
 	calledOnce.current = true;
 }, []);
 
-	const {login} = useParams();
+	function buttonToDisplay()
+	{
+		//let notBlocked: boolean = true;
+		//let notFriend: boolean = true;
+
+		let friends: boolean;
+
+
+		let url = "http://localhost:3000/api/user/relation/relationStatusWith/".concat(login);
+
+		axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+		axios.defaults.withCredentials = true;
+
+		axios.get(url)
+			.then(res => {
+				console.log("sucessfully retrived relationship data");
+				console.log(res);
+				let relation = res.data;
+				//console.log(relation);
+				let status = relation.status;
+				if (relation.status == "accepted")
+				{
+					console.log("You are friends !");
+					friends = true;
+					setisFriend(true);
+					//let parent = document.getElementById("relationship").nodeValue;
+					let message = "You are friends !";
+					let child = document.createElement("p");
+					child.appendChild(document.createTextNode(message));
+					document.getElementById("relationship").appendChild(child);
+					//document.querySelector("#relationship").innerHTML(<span className="badge bg-success">Friend</span>);
+					//parent.appendChild();
+				}
+
+				//setRelationStatus(status);
+			})
+			.catch((error) => {
+				console.log("Error while getting relation data");
+				console.log(error);
+				friends = false;
+			})
+
+		//return (<span className="badge bg-success">Friend</span>);
+	}
 
 	let isUser = (login == localStorage.getItem("login") ? true : false);
     return (
@@ -76,19 +131,24 @@ export default function Profile() {
 						{userOK == true ?
 							<div id="profile--div">
 								<img id={login} className="profile--pic" src="" width="100" height="100"/>
-								<br />
+								{/*<br />*/}
 								{renderImage(login, isUser)}
 								<svg className="log--color" height="40" width="40">
 									<circle cx="20" cy="20" r="15" fill={color} stroke="white" style={{ strokeWidth: '3' }} />
 								</svg>
-								<p className="status-text"></p>
 								<br />
 								<h2 id="profile-title">{login}</h2>
+								<p className="status-text">{status}</p>
+								{/*{buttonToDisplay()}*/}
+								<div id="relationship">
+									<span className="badge bg-success">Friends</span>
+								</div>
 								<br />
 								<Achievement login={login} />
 								<br/>
 								<MatchHistory login={login}/>
 								<br/>
+								<Badge login={login}/>
 							</div>
 						: <>
 							<h1><span id="oops">Oops...</span></h1>

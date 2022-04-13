@@ -205,7 +205,7 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 						/>
 						{load == true ? renderImage(props.avatar, props.login, props.ftlogin, props.extra) : ""}
 						<br />
-						<p className="user--p" id="mini--login">{props.login}</p>
+						<p className="user--p" id={"mini--login".concat("_"+ props.login)}>{props.login}</p>
 						{buttonToDidsplay()}
 						<ToastContainer
 							position="top-right"

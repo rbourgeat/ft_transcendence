@@ -426,8 +426,14 @@ export class UserService {
 			],
 		});
 		console.log(invite);
+		let struct = {
+            id: invite.id,
+            creator: user.login,
+            receiver: target.login,
+            status: invite.status
+        };
 		if (invite)
-			return invite;
+			return struct;
 		return;
 	}
 
