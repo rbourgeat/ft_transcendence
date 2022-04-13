@@ -24,7 +24,11 @@ export default function Profile() {
 	const [userOK, setUserOk] = React.useState(false);
 	const [is42, setis42] = React.useState(false);
 	const {login} = useParams();
+
+	//relation
 	const [isFriend, setisFriend] = React.useState(false);
+	const [isBlocked, setisBlocked] = React.useState(false);
+
 	//Badge
 	const [load, setLoad] = React.useState(false);
 	const [points, setPoints] = React.useState(0);
@@ -46,7 +50,7 @@ export default function Profile() {
 		.then(res => {
 			console.log(res);
 			setUserOk(true);
-			setisFriend(true);
+			//setisFriend(true);
 			setLevel(res.data.percent_to_next_lvl);
 			setNextLevel(res.data.level);
 			setPoints(res.data.points);
@@ -69,7 +73,6 @@ export default function Profile() {
 				setColor("purple");
 				setStatus("ingame")
 			}
-			setLoad(true);
 		})
 		.catch((err) => {
 			console.log("Error while getting api auth");
@@ -121,6 +124,7 @@ export default function Profile() {
 				{
 					console.log("You are friends !");
 					friends = true;
+					setisFriend(true);
 					//let parent = document.getElementById("relationship").nodeValue;
 					let message = "You are friends !";
 					//let child = document.createElement("p");
@@ -128,6 +132,11 @@ export default function Profile() {
 					//document.getElementById("relationship").appendChild(child);
 					//document.getElementById("relationship").appendChild(<span className="badge bg-success">Friends</span>);
 					//parent.appendChild();
+				}
+				else
+				{
+					setisFriend(false);
+					console.log("Somebody blocked the other.");
 				}
 
 				//setRelationStatus(status);
@@ -139,6 +148,14 @@ export default function Profile() {
 			})
 
 		//return (<span className="badge bg-success">Friend</span>);
+	}
+
+	function inviteFriend() {
+		console.log("We have to invite friend.");
+	}
+
+	function block() {
+		console.log("We have to block.");
 	}
 
 	let isUser = (login == localStorage.getItem("login") ? true : false);
@@ -155,33 +172,39 @@ export default function Profile() {
 						{getUserLogin(login)}
 						{userOK == true ?
 							<div id="profile--div">
+								<h3 className="profile--type">{isFriend == true ? "Friend profile" : "Public profile"}</h3>
+								<br />
+								<div /*className="col-4"*/ id="text-type">{isFriend == true ? "You are able to see a detailed profile because you are friends 🥰 !"
+								: "You are not able to see a detailed profile because you are not friends 😢 !"}</div>
+								<br />
 								<img id={login} className="profile--pic" src="" width="100" height="100"/>
 								{/*<br />*/}
 								{renderImage(login, isUser)}
 								<svg className="log--color" height="40" width="40">
 									<circle cx="20" cy="20" r="15" fill={color} stroke="white" style={{ strokeWidth: '3' }} />
 								</svg>
-								<br />
+								{/*<br />*/}
 								<h2 id="profile-title">{login}</h2>
 								<p className="status-text">{status}</p>
-								<br />
-								<div className="row" id="relations">
-									<div>{isFriend == true ? "You are not friends" : ""}</div>
-									<div>not friends</div>
-									{/*<div>block</div>
-									<div>send dm</div>
-									<div>invite to play</div>*/}
+								{/*<br />*/}
+								<div className="row d-flex justify-content-center text-center" id="relations">
+									{/*<div className="col-3">*/}
+										{isFriend == false ? <button type="button" className="btn btn-outline-dark" onClick={inviteFriend}>Invite</button>: ""}
+									{/*</div>*/}
+									{/*<div className="col-5">*/}
+										{isFriend == false ? <button type="button" className="btn btn-outline-dark" onClick={block}>Block</button>: ""}
+									{/*</div>*/}
 								</div>
 								{/*{buttonToDisplay()}*/}
 								<div id="relationship">
 									{/*<span className="badge bg-success">Friends</span>*/}
 								</div>
 								<br />
-								<Achievement login={login} />
+								{isFriend == true ? <Achievement login={login} /> : ""}
 								<br/>
-								<MatchHistory login={login}/>
+								{isFriend == true ? <MatchHistory login={login}/> : ""}
 								<br/>
-								{load == true ? <Badge
+								{isFriend == true ? <Badge
 													login={login}
 													total_wins={wins}
 													total_loss={loss}

@@ -36,3 +36,18 @@
 	color: black !important;
 	font-family: variables.$basic-font;
 }
+
+.profile--type {
+	font-size: 14px !important;
+}
+
+#text-type {
+	font-family: variables.$basic-font;
+	color: black !important;
+}
+
+#relations > button {
+	font-size: 12px !important;
+	font-family: variables.$basic-font !important;
+	width: 100px !important;
+}
