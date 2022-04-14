@@ -47,7 +47,7 @@ export default function Invitations() {
 					<br />
 					<div id="ul--list_invitations" className="row">
 						<ul id="list--users--ul_invitations" className="wrapper list-group list-group-horizontal-lg">
-						{load == true && users.length == 0 ? <p className="no--contact">You have no invitation received ❌</p> : ""}
+						{load == true && users.length == 0 ? <p className="no--contact">No invitation received ❌</p> : ""}
 							{load == true ?
 								users.map(user => <MiniDisplay key={user.login} login={user.login} status={user.status} avatar={user.avatar} ftlogin={user.login42} user={user} extra="invitations" container="invitation" />)
 								: ""}

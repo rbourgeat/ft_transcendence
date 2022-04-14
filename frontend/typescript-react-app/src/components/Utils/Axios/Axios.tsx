@@ -529,7 +529,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
                     console.log("id looked is " + id);
                     let elem = document.getElementById(id);
                     elem.parentNode.removeChild(elem);
-                    window.top.location = "http://localhost:3000/profile/".concat(login);
+                    window.top.location = "http://localhost:3030/profile/".concat(login);
                 }
             })
             .catch((error) => {
@@ -648,7 +648,8 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
         }
 
         const headers = {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            
         };
 
         console.log(bod);
@@ -669,16 +670,18 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
                     window.top.location = "http://localhost:3030/user";
                     //return;
                 }
-                else {
-                    //toast.notifyDanger('Oops ! An error happened, incorrect email or password.');
-                    console.log("Did not receive 200 when logging it.");
-                    toast.notifyDanger("😢 Error while logging in !");
-                    //return;
-                }
+                //else {
+                //    //toast.notifyDanger('Oops ! An error happened, incorrect email or password.');
+                //    console.log("Did not receive 200 when logging it.");
+                //    toast.notifyDanger("😢 Error while logging in !");
+                //    //console.log()
+                //    //return;
+                //}
             })
             .catch((error) => {
                 console.log("Error while logging in.");
                 toast.notifyDanger("😢 Error while logging in !");
+                console.log(error);
             })
     }
 
