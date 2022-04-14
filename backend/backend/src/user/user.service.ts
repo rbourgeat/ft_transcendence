@@ -125,9 +125,7 @@ export class UserService {
 				{ creator: receiver, receiver: creator },
 			],
 		});
-		if (invite)
-			return true;
-		return false;
+		return (invite ? true : false);
 	}
 
 	/**
@@ -194,7 +192,7 @@ export class UserService {
 
 	getSentInvitations(currentUser: User): Observable<RelationInvitation[]> {
 		return from(this.userRelationRepository.find({
-			where: [{ creator: currentUser }],
+			where: [{ creator: currentUser, status: 'pending' }],
 			relations: ['receiver', 'creator']
 		}),
 		);
@@ -216,26 +214,14 @@ export class UserService {
 		);
 	}
 
-
-	async getAchievements(currentUser: User) {
-		const list = await this.achievementRepository.find({
-			where: [
-				{ user: currentUser }
-			],
-			relations: ['user']
-		});
-		return list;
-	}
-
 	async getAchievementsOf(login: string) {
 		const user = await this.getUserByLogin(login);
-		const list = await this.achievementRepository.find({
-			where: [
-				{ user: user }
-			],
+		const achievements = await this.achievementRepository.find({
+			where: [{ user: user }],
 			relations: ['user']
 		});
-		return list;
+		if (achievements)
+			return achievements;
 	}
 
 
@@ -244,21 +230,21 @@ export class UserService {
 	 * 2. for each of them, store the id of the friend in a list
 	 * 3. return the research in userRepo with the friends id list
 	 */
-	async getFriends(currentUser: User) {
+	async getFriends(user: User) {
 		let list = await this.userRelationRepository.find({
 			where: [
-				{ creator: currentUser, status: 'accepted' },
-				{ receiver: currentUser, status: 'accepted' },
+				{ creator: user, status: 'accepted' },
+				{ receiver: user, status: 'accepted' },
 			],
 			relations: ['creator', 'receiver'],
 		});
 
 		let userIds: number[] = [];
-		list.forEach((friend: RelationInvitation) => {
-			if (friend.creator.id === currentUser.id) {
-				userIds.push(friend.receiver.id);
-			} else if (friend.receiver.id === currentUser.id) {
-				userIds.push(friend.creator.id);
+		list.forEach((relation: RelationInvitation) => {
+			if (relation.creator.id === user.id) {
+				userIds.push(relation.receiver.id);
+			} else if (relation.receiver.id === user.id) {
+				userIds.push(relation.creator.id);
 			}
 		});
 		return this.userRepository.findByIds(userIds);
@@ -269,45 +255,39 @@ export class UserService {
  * 2. for each of them, store the id of the friend in a list
  * 3. return the research in userRepo with the friends id list
  */
-	async getBlockedUsers(currentUser: User) {
+	async getBlockedUsers(user: User) {
 		let list = await this.userRelationRepository.find({
-			where: [
-				{ creator: currentUser, status: 'blocked' },
-			],
+			where: [{ creator: user, status: 'blocked' }],
 			relations: ['creator', 'receiver'],
 		});
 
 		let userIds: number[] = [];
-		list.forEach((friend: RelationInvitation) => {
-			if (friend.creator.id === currentUser.id)
-				userIds.push(friend.receiver.id);
+		list.forEach((relation: RelationInvitation) => {
+			if (relation.creator.id === user.id)
+				userIds.push(relation.receiver.id);
 		});
 		return this.userRepository.findByIds(userIds);
 	}
 
-	/*
-	* find user you want to unfriend, delete the relation either if it was the target or u that
-	* made the invitation
+	/**
+	 * 	Delete your relation with $login
+	 * @param login
+	 * @param user
 	 */
-	/*
-	async removeFriend(userToRemoveId: number, currentUser: User) {
-		const userToRemove = await this.findUserById(userToRemoveId);
-		await this.userRelationRepository.delete({ receiver: currentUser, creator: userToRemove });
-		await this.userRelationRepository.delete({ receiver: userToRemove, creator: currentUser });
-	}
-*/
-	async removeFriend(login: string, currentUser: User) {
-		const userToRemove = await this.getUserByLogin(login);
-		await this.userRelationRepository.delete({ receiver: currentUser, creator: userToRemove });
-		await this.userRelationRepository.delete({ receiver: userToRemove, creator: currentUser });
+	async removeFriend(login: string, user: User) {
+		const target = await this.getUserByLogin(login);
+		await this.userRelationRepository.delete({ receiver: user, creator: target });
+		await this.userRelationRepository.delete({ receiver: target, creator: user });
 	}
 
 	/**
-	 * compared to removeFriend, delete only the relation from the person requesting it.
+	 * Unblock $login only from your side of the relation
+	 * @param login
+	 * @param user
 	 */
-	async unblockUser(login: string, currentUser: User) {
-		const userToRemove = await this.getUserByLogin(login);
-		await this.userRelationRepository.delete({ receiver: userToRemove, creator: currentUser, status: 'blocked' });
+	async unblockUser(login: string, user: User) {
+		const target = await this.getUserByLogin(login);
+		await this.userRelationRepository.delete({ receiver: target, creator: user, status: 'blocked' });
 	}
 
 	/**
