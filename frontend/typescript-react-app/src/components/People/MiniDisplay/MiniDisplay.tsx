@@ -173,6 +173,14 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 					<i className="user--action" onClick={() => refuseInvitation(props.login)}>{<MdCancel />}</i>
 				</>
 			)
+		else if (props.container == "sent")
+			return (
+				<>
+				{/*<br />*/}
+					<p className="waiting">Waiting for {props.login} to answer</p>
+					{/*<i className="user--action" onClick={() => refuseInvitation(props.login)}>{<MdCancel />}</i>*/}
+				</>
+			)
 		else if (props.container == "blocked")
 			return (
 				<>
