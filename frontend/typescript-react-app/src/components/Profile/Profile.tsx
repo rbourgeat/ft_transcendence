@@ -213,6 +213,21 @@ export default function Profile() {
 		toast.notifyDanger("Not implemented yet");
 	}
 
+	function sendDM()
+	{
+		let toast = new ToastAlerts(null);
+		toast.notifyDanger("Not implemented yet");
+	}
+
+	function remove()
+	{
+		//let toast = new ToastAlerts(null);
+		//toast.notifyDanger("Not implemented yet");
+		console.log("Removing friend");
+		let ax = new MyAxios(null);
+		ax.delete_relation_id(login, "");
+	}
+
 	let isUser = (login == localStorage.getItem("login") ? true : false);
     return (
 	<>
@@ -283,11 +298,16 @@ export default function Profile() {
 									</div>
 									{/*<br />*/}
 								{/*<br />*/}
+								<div className="row d-flex justify-content-center text-center" id="friends--related">
+										<button type="button" className="btn btn-outline-danger" id="block--buton" onClick={block}>Block</button>
+										{isFriend  == true ? <button type="button" className="btn btn-outline-danger" id="remove--buton" onClick={remove}>Remove</button>: ""}
+								</div>
 								<div className="row d-flex justify-content-center text-center" id="games--related">
-										{isFriend == false ? <button type="button" className="btn btn-outline-danger" id="block--buton"onClick={block}>Block</button>: ""}
 										{status == "ingame" ? <p className="profile_text">{login} is playing ! You can watch the game.</p>: ""}
 										{status == "ingame" ? <button type="button" className="btn btn-outline-dark" id="watch--buton" onClick={watchPlaying}>Watch</button>: ""}
 										{status == "online" ? <button type="button" className="btn btn-outline-dark" id="play--buton" onClick={askToPlay}> Ask to Play</button>: ""}
+										<button type="button" className="btn btn-outline-dark" id="dm--buton" onClick={sendDM}>Send DM</button>
+										<br />
 								</div>
 								<div id="relationship">
 									{/*<span className="badge bg-success">Friends</span>*/}

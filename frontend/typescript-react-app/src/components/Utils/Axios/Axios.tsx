@@ -514,18 +514,26 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
         axios.defaults.withCredentials = true;
 
+        let toast = new ToastAlerts(null);
+
         axios.delete(url)
             .then(res => {
                 console.log("Succesfully delete target friend");
                 console.log(res);
-                let id = "minidisplay".concat("_" + login + "_" + extra);
-                console.log("id looked is " + id);
-                let elem = document.getElementById(id);
-                elem.parentNode.removeChild(elem);
+                toast.notifySuccess("Successfully removed friend.");
+                if (extra != "")
+                {
+                    let id = "minidisplay".concat("_" + login + "_" + extra);
+                    console.log("id looked is " + id);
+                    let elem = document.getElementById(id);
+                    elem.parentNode.removeChild(elem);
+                    window.top.location = "http://localhost:3000/profile/".concat(login);
+                }
             })
             .catch((error) => {
                 console.log("Error while deleting target friend");
                 console.log(error);
+                toast.notifyDanger("Error while removing friend.");
             })
     }
 
