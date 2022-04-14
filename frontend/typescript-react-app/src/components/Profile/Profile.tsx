@@ -165,6 +165,10 @@ export default function Profile() {
 		console.log("We have to block.");
 	}
 
+	function watchPlaying() {
+		console.log("We have to watch playing.");
+	}
+
 	let isUser = (login == localStorage.getItem("login") ? true : false);
     return (
 	<>
@@ -201,14 +205,15 @@ export default function Profile() {
 								<p className="status-text">{status}</p>
 								{/*<br />*/}
 								<div className="row d-flex justify-content-center text-center" id="relations">
-									{/*<div className="col-3">*/}
-										{isFriend == false ? <button type="button" className="btn btn-outline-dark" onClick={inviteFriend}>Invite</button>: ""}
-									{/*</div>*/}
-									{/*<div className="col-5">*/}
-										{isFriend == false ? <button type="button" className="btn btn-outline-dark" onClick={block}>Block</button>: ""}
-									{/*</div>*/}
+										{isFriend == false ? <button type="button" className="btn btn-outline-dark" id="invite--buton" onClick={inviteFriend}>Invite</button>: ""}
+										{isFriend == false ? <button type="button" className="btn btn-outline-dark" id="block--buton"onClick={block}>Block</button>: ""}
 								</div>
-								{/*{buttonToDisplay()}*/}
+								<br />
+								<div className="row d-flex justify-content-center text-center" id="games--related">
+										{status == "ingame" ? <p className="profile_text">{login} is playing ! You can watch the game.</p>: ""}
+										{status == "ingame" ? <button type="button" className="btn btn-outline-dark" id="watch--buton" onClick={watchPlaying}>Watch</button>: ""}
+										{status == "online"  ? <button type="button" className="btn btn-outline-dark" id="play--buton" /*onClick={block}*/>Play</button>: ""}
+								</div>
 								<div id="relationship">
 									{/*<span className="badge bg-success">Friends</span>*/}
 								</div>
