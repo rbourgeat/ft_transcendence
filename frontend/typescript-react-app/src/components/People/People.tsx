@@ -5,6 +5,8 @@ import All from "./All/All";
 import Invitations from "./Invitations/Invitations";
 import Friends from "./Friends/Friends";
 import Blocked from "./Blocked/Blocked";
+import SentInvitations from "./SentInvitations/SentInvitations";
+
 import React, {useState, useEffect} from "react";
 import axios from "axios";
 
@@ -102,7 +104,10 @@ export default function People(props: PeopleProps) {
 											<br />
 											<Invitations />
 											<br />
+											<SentInvitations />
+											<br />
 											<Blocked />
+											<br />
 										</>
 							}
 						</div>

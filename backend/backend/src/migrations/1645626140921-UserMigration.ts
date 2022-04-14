@@ -125,13 +125,13 @@ export class UserMigration1645626140921 implements MigrationInterface {
             }),
         );
 
-        const bahaasRelation31 = await queryRunner.manager.save(
-            queryRunner.manager.create<UserRelation>(UserRelation, {
-                creator: bahaas,
-                receiver: malatini,
-                status: 'blocked',
-            }),
-        );
+        //const bahaasRelation31 = await queryRunner.manager.save(
+        //    queryRunner.manager.create<UserRelation>(UserRelation, {
+        //        creator: bahaas,
+        //        receiver: malatini,
+        //        status: 'blocked',
+        //    }),
+        //);
 
         const bahaasRelation4 = await queryRunner.manager.save(
             queryRunner.manager.create<UserRelation>(UserRelation, {
@@ -189,11 +189,19 @@ export class UserMigration1645626140921 implements MigrationInterface {
             }),
         );
 
+        //const malatiniRelation6 = await queryRunner.manager.save(
+        //    queryRunner.manager.create<UserRelation>(UserRelation, {
+        //        creator: bahaas,
+        //        receiver: malatini,
+        //        status: 'blocked',
+        //    }),
+        //);
+
         const malatiniRelation6 = await queryRunner.manager.save(
             queryRunner.manager.create<UserRelation>(UserRelation, {
-                creator: bahaas,
-                receiver: malatini,
-                status: 'blocked',
+                creator: malatini,
+                receiver: bahaas,
+                status: 'pending',
             }),
         );
 
