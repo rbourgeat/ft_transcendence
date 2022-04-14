@@ -837,7 +837,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     ** edit user data (for login)
     */
     patch_user(old_login: string, new_login: string) {
-        let url = "http://localhost:3000/api/user/".concat(old_login);
+        let url = "http://localhost:3000/api/user/".concat(new_login);
 
         axios.defaults.baseURL = 'http://localhost:3000/api/';
         axios.defaults.headers.post['Content-Type'] = 'application/json';

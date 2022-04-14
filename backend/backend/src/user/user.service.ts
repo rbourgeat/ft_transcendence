@@ -43,13 +43,20 @@ export class UserService {
 		throw new HttpException('User not found by 42login', HttpStatus.NOT_FOUND);
 	}
 
-	async updateUser(login: string, user: UpdateUserDto) {
-		await this.userRepository.update({ login }, user);
-		const updatedUser = await this.userRepository.findOne({ login });
-		if (updatedUser)
-			return updatedUser;
-		throw new HttpException('User not found', HttpStatus.NOT_FOUND);
-	}
+	//async updateUser(login: string, user: UpdateUserDto) {
+	//	await this.userRepository.update({ login }, user);
+	//	const updatedUser = await this.userRepository.findOne({ login });
+	//	if (updatedUser)
+	//		return updatedUser;
+	//	throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+	//}
+
+	async updateUser(user: User, newlogin: string) {
+		user.login = newlogin;
+        const updatedUser = await this.userRepository.save(user);
+        if (updatedUser)
+            return updatedUser;
+    }
 
 	async updateStatus(login: string, s: string) {
 		return this.userRepository.update({ login }, {
