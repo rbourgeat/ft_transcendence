@@ -6,7 +6,7 @@ import MyAxios from '../Utils/Axios/Axios';
 import { ToastContainer, toast } from 'react-toastify';
 import ToastAlerts from '../Utils/ToastAlerts/ToastAlerts';
 import EditUsernameModal from "./editUsername/EditUsername";
-import Badge from "../Dashboard/Badge/Badge"
+import Badge from "../Badge/Badge"
 import Achievements from "../Achievements/Achievements";
 import { Modal } from "react-bootstrap"
 import Settings from "./Settings/Settings"
@@ -77,7 +77,7 @@ export default function User(props: UserfuncProps) {
 					setNextLevel(res.data.percent_to_next_lvl);
 					setLevel(res.data.level);
 					setPoints(res.data.points);
-					//setRank(res.data.rank);
+					setRank(res.data.rank);
 					setTotalGames(res.data.total_games);
 					setLoss(res.data.total_loss);
 					setWins(res.data.total_wins);
@@ -107,7 +107,8 @@ export default function User(props: UserfuncProps) {
 
 	useEffect(() => {
 		if (calledOnce.current) {
-			return;}
+			return;
+		}
 		getUser();
 		calledOnce.current = true;
 	}, []);
