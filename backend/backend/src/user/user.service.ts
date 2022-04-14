@@ -313,7 +313,7 @@ export class UserService {
 				return console.log('You have already blocked that user');
 
 			const inviteFromHim = await this.userRelationRepository.findOne({ creator: target, receiver: user });
-			if (inviteFromHim && (inviteFromHim.status != 'blocked' && inviteFromHim.status != 'pending'))
+			if (inviteFromHim && (inviteFromHim.status != 'blocked'))
 				await this.removeRelation(target, user);
 		}
 
