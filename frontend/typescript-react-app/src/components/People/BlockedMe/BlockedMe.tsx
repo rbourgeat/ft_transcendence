@@ -4,8 +4,8 @@ import myAxios from "../../Utils/Axios/Axios";
 import axios from "axios";
 import MiniDisplay from '../MiniDisplay/MiniDisplay';
 
-
-export default function Blocked() {
+//TODO: a faire
+export default function BlockedMe() {
 
 	const [users, setUsers] = React.useState([]);
 	const [load, setLoad] = React.useState(false);
@@ -19,7 +19,6 @@ export default function Blocked() {
 		await axios.get(url)
 			.then(res => {
 				console.log("Get api me/allBlocked successfully called.");
-				console.log(res);
 				let users = res.data;
 				let len = users.length;
 				let i = 0;
