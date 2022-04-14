@@ -13,7 +13,6 @@ import Particles from "react-tsparticles";
 import Auth from '../Auth/Auth';
 import Welcome from '../Welcome/Welcome';
 import NotFound from '../NotFound/NotFound';
-import Dashboard from '../Dashboard/Dashboard';
 import UserMain from '../User/UserMain';
 import Search from "../Search/Search";
 import Achievements from "../Achievements/Achievements";

@@ -6,10 +6,9 @@ import MyAxios from '../Utils/Axios/Axios';
 import { ToastContainer, toast } from 'react-toastify';
 import ToastAlerts from '../Utils/ToastAlerts/ToastAlerts';
 import EditUsernameModal from "./editUsername/EditUsername";
-import Dashboard from '../Dashboard/Dashboard';
 import Badge from "../Dashboard/Badge/Badge"
 import Achievements from "../Achievements/Achievements";
-import {Modal} from "react-bootstrap"
+import { Modal } from "react-bootstrap"
 import Settings from "./Settings/Settings"
 import MatchHistory from '../MatchHistory/MatchHistory';
 import Footer from "../Footer/Footer";
@@ -70,8 +69,7 @@ export default function User(props: UserfuncProps) {
 			.then(res => {
 				username = res.data.login;
 				console.log(res);
-				if (res.data.login42 != null && res.data.login42 != undefined &&  res.data.login42 != "")
-				{
+				if (res.data.login42 != null && res.data.login42 != undefined && res.data.login42 != "") {
 					setis42(true);
 					setlogin42(res.data.login42);
 					localStorage.setItem("login", res.data.login);
@@ -87,20 +85,18 @@ export default function User(props: UserfuncProps) {
 					setXp(res.data.xp);
 					if (res.data.status == "offline")
 						setColor("grey")
-					if (res.data.status == "online")
-					{
+					if (res.data.status == "online") {
 						setColor("green");
 						setStatus("online");
 					}
-					if (res.data.status == "ingame")
-					{
+					if (res.data.status == "ingame") {
 						setColor("purple");
 						setStatus("ingame")
 					}
 					renderImage(res.data.login);
 				}
 				setUsername(username);
-				})
+			})
 			.catch((err) => {
 				console.log("Auth returned 400 -> missing cookie");
 			})
@@ -109,8 +105,6 @@ export default function User(props: UserfuncProps) {
 	}
 
 	useEffect(() => {
-		//if (calledOnce.current) {
-		//	return;}
 		getUser();
 		//calledOnce.current = true;
 	});
