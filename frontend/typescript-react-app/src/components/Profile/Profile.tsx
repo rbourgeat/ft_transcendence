@@ -177,16 +177,26 @@ export default function Profile() {
 		ax.post_api_user_relation_sendInvation_id(login);
 	}
 
-	function answerFriend() {
+	function acceptFriend() {
 		console.log("We have to answer !");
 		let ax = new MyAxios(null);
 		ax.post_api_user_relation_answerInvitation_id(login, "accepted", "");
+		window.top.location = "http://localhost:3000/user/".concat(login);
+	}
+
+	function declineFriend() {
+		console.log("We have to answer !");
+		let ax = new MyAxios(null);
+		ax.post_api_user_relation_answerInvitation_id(login, "declined", "");
+		//TODO: voir un moyen de refresh la page plus proprement
+		window.top.location = "http://localhost:3000/user/".concat(login);
 	}
 
 	function block() {
 		console.log("We have to block.");
 		let toast = new ToastAlerts(null);
 		toast.notifyDanger("Not implemented yet");
+		//window.top.location = "http://localhost:3000/user/".concat(login);
 	}
 
 	//Besoin rbourgea
@@ -194,6 +204,7 @@ export default function Profile() {
 		console.log("We have to watch playing.");
 		let toast = new ToastAlerts(null);
 		toast.notifyDanger("To do @rbourgea");
+		//window.top.location = "http://localhost:3000/user/".concat(login);
 	}
 
 	function askToPlay()
@@ -240,29 +251,40 @@ export default function Profile() {
 								<div className="row d-flex justify-content-center text-center" id="relations">
 										{isFriend == false && pendingInvite == false ? <button type="button" className="btn btn-outline-success" id="invite--buton" onClick={inviteFriend}>Invite</button>: ""}
 										{isFriend == false && pendingInvite == true && receivedInvitation == true ?
-										<>
-											<button type="button" className="btn btn-outline-success" id="invite--buton" onClick={answerFriend}>
-												Answer
-											</button>
-										</>
-										: ""}
-										{isFriend == false && pendingInvite == true && sentInvitation == true ? <button type="button" className="btn btn-outline-info" id="invite--buton" disabled /*onClick={inviteFriend}*/>Sent Invitation</button>: ""}
-										{isFriend == false ? <button type="button" className="btn btn-outline-danger" id="block--buton"onClick={block}>Block</button>: ""}
-										{isFriend == false && pendingInvite == true && receivedInvitation == true ?
 											<>
+											<br />
+											<br />
 												<p className="profile_text">{login} wants to be your friend ! </p>
-												<br/>
+											<br/>
 											</>
 										: ""}
+										{isFriend == false && pendingInvite == true && receivedInvitation == true ?
+										<>
+											<button type="button" className="btn btn-outline-success" id="invite--buton" onClick={acceptFriend}>
+												Accept
+											</button>
+											<button type="button" className="btn btn-outline-danger" id="invite--buton" onClick={declineFriend}>
+												Decline
+											</button>
+										{/*<br />*/}
+										</>
+										: ""}
+									{/*<br />*/}
+									{/* TODO: changer id /scss */}
+									<div className="row d-flex justify-content-center text-center" id="relations">
+										{isFriend == false && pendingInvite == true && sentInvitation == true ? <button type="button" className="btn btn-outline-info" id="invite--buton" disabled /*onClick={inviteFriend}*/>Sent Invitation</button>: ""}
+									</div>
 										{isFriend == false && pendingInvite == true && sentInvitation == true ?
 											<>
 												<p className="profile_text"> Waiting for {login} to answer to your invitation !</p>
 												<br/>
 											</>
 										: ""}
-								</div>
+									</div>
+									{/*<br />*/}
 								{/*<br />*/}
 								<div className="row d-flex justify-content-center text-center" id="games--related">
+										{isFriend == false ? <button type="button" className="btn btn-outline-danger" id="block--buton"onClick={block}>Block</button>: ""}
 										{status == "ingame" ? <p className="profile_text">{login} is playing ! You can watch the game.</p>: ""}
 										{status == "ingame" ? <button type="button" className="btn btn-outline-dark" id="watch--buton" onClick={watchPlaying}>Watch</button>: ""}
 										{status == "online" ? <button type="button" className="btn btn-outline-dark" id="play--buton" onClick={askToPlay}> Ask to Play</button>: ""}

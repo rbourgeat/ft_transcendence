@@ -351,9 +351,9 @@ export class UserService {
 		const invite = await this.userRelationRepository.findOne({
 			where: [
 				{ creator: user, receiver: target },
+				{ creator: target, receiver: user }
 			],
 		});
-
 		if (invite) {
 			let struct = {
 				id: invite.id,
