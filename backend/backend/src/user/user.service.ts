@@ -72,6 +72,12 @@ export class UserService {
 	*/
 
 	async updateUser(login: string, s: string) {
+		const alreadyTaken = await this.userRepository.findOne({ login: login });
+		if (alreadyTaken) {
+			throw new HttpException('Login already taken', HttpStatus.UNAUTHORIZED);
+			return console.log("name already taken");
+		}
+
 		return this.userRepository.update({ login }, {
 			login: s
 		});
