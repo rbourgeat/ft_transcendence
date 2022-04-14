@@ -154,6 +154,16 @@ export default function Profile() {
 					setSentInvitation(true);
 					setPendingInvite(true);
 				}
+				else if (relation.status == "blocked" && relation.receiver == login)
+				{
+					console.log("You blocked this contact");
+					setisBlocked(true);
+				}
+				else if (relation.status == "blocked" && relation.creator == login)
+				{
+					console.log("You are blocked by this contact");
+					//setisBlocked(true);
+				}
 				else
 				{
 					setisFriend(false);
@@ -194,8 +204,11 @@ export default function Profile() {
 
 	function block() {
 		console.log("We have to block.");
-		let toast = new ToastAlerts(null);
-		toast.notifyDanger("Not implemented yet");
+		//let toast = new ToastAlerts(null);
+		//toast.notifyDanger("Not implemented yet");
+
+		let ax = new MyAxios(null);
+		ax.post_relation_block(login);
 		//window.top.location = "http://localhost:3000/user/".concat(login);
 	}
 
@@ -214,6 +227,12 @@ export default function Profile() {
 	}
 
 	function sendDM()
+	{
+		let toast = new ToastAlerts(null);
+		toast.notifyDanger("Not implemented yet");
+	}
+
+	function unblock()
 	{
 		let toast = new ToastAlerts(null);
 		toast.notifyDanger("Not implemented yet");
@@ -264,8 +283,8 @@ export default function Profile() {
 								<p className="status-text">{status}</p>
 								{/*<br />*/}
 								<div className="row d-flex justify-content-center text-center" id="relations">
-										{isFriend == false && pendingInvite == false ? <button type="button" className="btn btn-outline-success" id="invite--buton" onClick={inviteFriend}>Invite</button>: ""}
-										{isFriend == false && pendingInvite == true && receivedInvitation == true ?
+										{isFriend == false && pendingInvite == false  && isBlocked == false ? <button type="button" className="btn btn-outline-success" id="invite--buton" onClick={inviteFriend}>Invite</button>: ""}
+										{isFriend == false && pendingInvite == true && receivedInvitation == true && isBlocked == false?
 											<>
 											<br />
 											<br />
@@ -273,7 +292,7 @@ export default function Profile() {
 											<br/>
 											</>
 										: ""}
-										{isFriend == false && pendingInvite == true && receivedInvitation == true ?
+										{isFriend == false && pendingInvite == true && receivedInvitation == true && isBlocked == false?
 										<>
 											<button type="button" className="btn btn-outline-success" id="invite--buton" onClick={acceptFriend}>
 												Accept
@@ -287,9 +306,9 @@ export default function Profile() {
 									{/*<br />*/}
 									{/* TODO: changer id /scss */}
 									<div className="row d-flex justify-content-center text-center" id="relations">
-										{isFriend == false && pendingInvite == true && sentInvitation == true ? <button type="button" className="btn btn-outline-info" id="invite--buton" disabled /*onClick={inviteFriend}*/>Sent Invitation</button>: ""}
+										{isFriend == false && pendingInvite == true && sentInvitation == true  && isBlocked == false? <button type="button" className="btn btn-outline-info" id="invite--buton" disabled /*onClick={inviteFriend}*/>Sent Invitation</button>: ""}
 									</div>
-										{isFriend == false && pendingInvite == true && sentInvitation == true ?
+										{isFriend == false && pendingInvite == true && sentInvitation == true && isBlocked == false ?
 											<>
 												<p className="profile_text"> Waiting for {login} to answer to your invitation !</p>
 												<br/>
@@ -299,14 +318,21 @@ export default function Profile() {
 									{/*<br />*/}
 								{/*<br />*/}
 								<div className="row d-flex justify-content-center text-center" id="friends--related">
-										<button type="button" className="btn btn-outline-danger" id="block--buton" onClick={block}>Block</button>
+										{isBlocked != true ? <button type="button" className="btn btn-outline-danger" id="block--buton" onClick={block}>Block</button> : ""}
 										{isFriend  == true ? <button type="button" className="btn btn-outline-danger" id="remove--buton" onClick={remove}>Remove</button>: ""}
 								</div>
 								<div className="row d-flex justify-content-center text-center" id="games--related">
-										{status == "ingame" ? <p className="profile_text">{login} is playing ! You can watch the game.</p>: ""}
-										{status == "ingame" ? <button type="button" className="btn btn-outline-dark" id="watch--buton" onClick={watchPlaying}>Watch</button>: ""}
-										{status == "online" ? <button type="button" className="btn btn-outline-dark" id="play--buton" onClick={askToPlay}> Ask to Play</button>: ""}
-										<button type="button" className="btn btn-outline-dark" id="dm--buton" onClick={sendDM}>Send DM</button>
+										{status == "ingame" && isBlocked == false ? <p className="profile_text">{login} is playing ! You can watch the game.</p>: ""}
+										{status == "ingame" && isBlocked == false ? <button type="button" className="btn btn-outline-dark" id="watch--buton" onClick={watchPlaying}>Watch</button>: ""}
+										{status == "online" && isBlocked == false ? <button type="button" className="btn btn-outline-dark" id="play--buton" onClick={askToPlay}> Ask to Play</button>: ""}
+										{isBlocked == false ? <button type="button" className="btn btn-outline-dark" id="dm--buton" onClick={sendDM}>Send DM</button> : ""}
+										{isBlocked == true ?
+										<>
+										<br />
+											<p className="block-warning">You blocked this user !</p>
+											<button type="button" className="btn btn-outline-danger" id="unblock--buton" onClick={unblock}>Unblock</button>
+										</>
+										: ""}
 										<br />
 								</div>
 								<div id="relationship">

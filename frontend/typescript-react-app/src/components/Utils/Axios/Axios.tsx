@@ -426,14 +426,16 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
 
         let res = axios.post(url, body)
             .then(res => {
-                toast.notifySuccess("Successfully sent invitation !");
+                //toast.notifySuccess("Successfully sent invitation !");
                 console.log(res);
                 console.log("Succesfully sent invitation !");
+                window.top.location = "http://localhost:3030/profile/".concat(login);
             })
             .catch((error) => {
                 toast.notifyDanger("Your invite failed")
                 console.log(error);
                 console.log("Error while sending invitation");
+                //window.top.location = "http://localhost:3030/profile/".concat(login);
             })
     }
 
@@ -544,14 +546,20 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
         axios.defaults.withCredentials = true;
 
+        let toast = new ToastAlerts(null);
+
         axios.post(url)
             .then(res => {
                 console.log("Succesfully blocked target friend");
                 console.log(res);
+                toast.notifySuccess("Successfully blocked user");
+                window.top.location = "http://localhost:3030/profile/".concat(login);
             })
             .catch((error) => {
                 console.log("Error while blocking target friend");
                 console.log(error);
+                toast.notifyDanger("Error while blocking contact");
+                window.top.location = "http://localhost:3030/profile/".concat(login);
             })
     }
 
@@ -765,7 +773,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
 
         let imageCode = null;
         let imageName = "alt-photo";
-        console.log("should render api image");
+        //console.log("should render api image");
         let url = "http://localhost:3000/api/user/".concat(chosenLogin)
 
         let res = axios.get(url)
