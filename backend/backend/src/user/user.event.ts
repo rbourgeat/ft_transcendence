@@ -15,6 +15,7 @@ export class UserEvent {
         private readonly achievementRepository: Repository<Achievement>,
     ) { }
 
+    /*
     achievementFriend(user: User) {
         console.log('emit event achievementfriend for ' + user.login);
         this.eventEmitter.emit('achievement.friend', user)
@@ -24,7 +25,7 @@ export class UserEvent {
     handleAchievementFriend(user: User) {
         this.saveAchievement(user, "AddFriend")
     }
-
+*/
     achievement1000Game(user: User) {
         console.log('emit event achievement1000Game for ' + user.login);
         this.eventEmitter.emit('achievement.1000Game', user)
