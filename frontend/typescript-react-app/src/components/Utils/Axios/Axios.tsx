@@ -723,6 +723,11 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
             return (<img className="profile--pic" src={myImage.src} alt={imageName} height="80" width="80" id={login} />);
         }
 
+        //if (imageCode == "" || imageCode == null)
+        //{
+        //    return (<img className="profile--pic" src="https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg" alt={imageName} height="80" width="80" id={login} />);
+        //}
+
         //endof bahaas add
 
 
@@ -760,6 +765,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
 
         let imageCode = null;
         let imageName = "alt-photo";
+        console.log("should render api image");
         let url = "http://localhost:3000/api/user/".concat(chosenLogin)
 
         let res = axios.get(url)
@@ -798,6 +804,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
                     if (res.data.login != res.data.login42)
                         haschanged = true;
                     this.render_avatar(login, "", haschanged);
+                    window.top.location = "http://localhost:3030/settings";
                 }
                 else {
                     console.log("Oops! Avatar not updated");
