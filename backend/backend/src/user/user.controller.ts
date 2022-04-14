@@ -49,6 +49,14 @@ export class UserController {
         return this.userService.updateUser(oldlogin, newlogin);
     }
 
+    /*
+        @ApiOperation({ summary: 'Update {login}\'s data' })
+        @ApiOkResponse({ description: 'Data updated' })
+        @Patch(':login')
+        async updateUser(@Param('login') login: string, @Req() req) {
+            return this.userService.updateUser(req.user, login);
+        }
+    */
     @ApiOperation({ summary: 'Upload {login} avatar' })
     @ApiOkResponse({ description: '{login} avatar uploaded' })
     @ApiConflictResponse({ description: '{login} avatar conflict' })

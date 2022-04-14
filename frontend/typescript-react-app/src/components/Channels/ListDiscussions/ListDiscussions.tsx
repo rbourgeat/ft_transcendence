@@ -1,10 +1,11 @@
 import './ListDiscussions.scss';
 import SingleMessage from "./SingleMessage/SingleMessage";
-import React, {Component, useState, useEffect} from "react";
+import React, { Component, useState, useEffect } from "react";
 import myAxios from "../../Utils/Axios/Axios";
 import { io } from "socket.io-client";
 import axios from 'axios';
-
+import TypingMessage from "../TypingMessage/TypingMessage";
+/*
 export default function ListDiscussions({activeChannel}) {
 
 	const [username, setUsername] = React.useState("");
@@ -50,6 +51,44 @@ export default function ListDiscussions({activeChannel}) {
 							</li>
 							<br/>
 						</div>
+						)
+					}
+				</ul>
+			</div>
+		</div>
+	);
+}
+*/
+
+export default function ListDiscussions({ activeChannel, username }) {
+
+	const [messages, setMessages] = React.useState([]);
+	useEffect(() => {
+
+		// LA SOCKET ICI
+		let socket = io("http://localhost:3000/chat", { query: { username: username } });
+		socket.emit('requestAllMessages', activeChannel)
+		socket.on("sendAllMessages", (messagesUpdated) => {
+			if (messagesUpdated) {
+				console.log("messages: " + messagesUpdated);
+				setMessages(messagesUpdated);
+			}
+		});
+	}, [activeChannel, messages]);
+
+	return (
+		<div id="ListDiscussions">
+			<p id="discussions--title">channelId: {activeChannel}</p>
+			<div className="overflow-auto" id="sub--div">
+				<ul id="messages" className='text'>
+					{
+						messages.map(message =>
+							<div key={message.id}>
+								<li id="message" key={message.id}>
+									{message.content}
+								</li>
+								<br />
+							</div>
 						)
 					}
 				</ul>

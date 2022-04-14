@@ -77,6 +77,17 @@ export class UserService {
 		});
 	}
 
+	/*
+	async updateUser(user: User, newlogin: string) {
+		console.log(user);
+		user.login = newlogin;
+		const updatedUser = await this.userRepository.save(user);
+		if (updatedUser)
+			return updatedUser;
+		//throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+	}
+*/
+
 	async updateStatus(login: string, s: string) {
 		return this.userRepository.update({ login }, {
 			status: s

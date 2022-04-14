@@ -3,60 +3,44 @@ import Nav from '../Nav/Nav';
 import TypingMessage from "./TypingMessage/TypingMessage";
 import ListDiscussions from "./ListDiscussions/ListDiscussions";
 import ListParticipant from './ListParticipant/ListParticipant';
-import ListChannels from './ListChannels/ListChannels';
 import CreateChan from './CreateChan/CreateChan';
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import MyAxios from '../Utils/Axios/Axios';
 import ToastAlerts from '../Utils/ToastAlerts/ToastAlerts';
 import { ToastContainer, toast } from 'react-toastify';
 import { io } from "socket.io-client";
-import ListPubChannels from './ListChannels/ListPubChannels';
-import axios from "axios";
-
+import ListChannels from './ListChannels/ListChannels'; import ListPubChannels from './ListChannels/ListPubChannels'; import axios from 'axios';
 interface ChatProps {
 	username?: string
 }
 
 export default function Channels(props: ChatProps) {
 	const calledOnce = React.useRef(false);
-	let log = localStorage.getItem("loggedIn");
-	const [loaded, setLoaded] = React.useState(false);
-	const [activeChannel, updateActiveChannel] = React.useState(0);
-	const [chanUsers, updateChanUsers] = React.useState([]);
-	const [authorized, setAuthorized] = React.useState(false);
-
-	async function getUser() {
-		let url = "http://localhost:3000/api/auth/";
-		axios.defaults.baseURL = 'http://localhost:3000/api/';
-		axios.defaults.headers.post['Content-Type'] = 'application/json';
-		axios.defaults.headers.post['Accept'] = '*/*';
-		axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
-		axios.defaults.withCredentials = true;
-
-		let username = "";
-		axios.get(url)
-			.then(res => {
-				username = res.data.login;
-				console.log(res);
-				setAuthorized(true);
-				setLoaded(true);
-				//setUsername(username);
-			})
-			.catch((err) => {
-				console.log("Auth returned 400 -> missing cookie");
-				setAuthorized(false);
-			})
-	}
-
+	const [username, setUsername] = React.useState("");
 
 	useEffect(() => {
-        if (calledOnce.current) {
-			return;}
+		async function getUser() {
+			let url = "http://localhost:3000/api/auth/";
+			let username = "";
+			axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+			axios.defaults.withCredentials = true;
+			await axios.get(url)
+				.then(res => {
+					username = res.data.login;
+				})
+				.catch((err) => {
+					console.log("Error while getting api auth");
+				})
+		}
 		getUser();
-        calledOnce.current = true;
+		if (calledOnce.current) {
+			return;
+		}
+		calledOnce.current = true;
 	}, []);
 
-
+	const [activeChannel, updateActiveChannel] = React.useState(0);
+	const [chanUsers, updateChanUsers] = React.useState([]);
 
 	return (
 		<div id="channels">
@@ -73,39 +57,24 @@ export default function Channels(props: ChatProps) {
 				pauseOnHover
 			/>
 			<div className="container" id="chat--container">
-			{
-				authorized == false ?
-				<>
-					{/* TODO: ajouter un spinner pour que ca ne s'affiche pas quand la page load */}
-					<p className="not-authenticated">You are not properly authenticated.</p>
-				</>
-				:
-				localStorage.getItem("loggedIn") != "true" && authorized == true?
-						<div className="row d-flex justify-content-center text-center">
-							<div className="col-9">
-								<div className="channels-not-logged">
-									<p>You are either not logged in or properly authenticated (cookie).</p>
-								</div>
-							</div>
-						</div>
-						:
-						<div className="chat-container text-center">
-							<div className="chat-channel-menu">
-								<p className="wait">A reprendre joliment quand le reste sera terminé</p>
-								{/*<CreateChan endpoint="http://localhost:3000/api/chat" action="Create" />*/}
-								{/*<CreateChan endpoint="http://localhost:3000/api/chat/join" action="Join" />*/}
-								{/*<ListChannels activeChannel={activeChannel} updateActiveChannel={updateActiveChannel} chanUsers={chanUsers} updateChanUsers={updateChanUsers} />*/}
-								{/*<ListPubChannels />*/}
-							</div>
-							<div className="chat--messages">
-								<ListDiscussions activeChannel={activeChannel}/>
-								{/*<ListDiscussions activeChannel="0"/>*/}
-								<TypingMessage />
-							</div>
-						<ListParticipant activeChannel={activeChannel}/>
+				<div className="chat-container text-center">
+					<div className="chat-channel-menu">
+						<CreateChan endpoint="http://localhost:3000/api/chat" action="Create" />
+						<CreateChan endpoint="http://localhost:3000/api/chat/join" action="Join" />
+						<ListChannels
+							activeChannel={activeChannel}
+							updateActiveChannel={updateActiveChannel}
+							chanUsers={chanUsers}
+							updateChanUsers={updateChanUsers}
+						/>
+						<ListPubChannels />
 					</div>
-			}
-
+					<div className="chat--messages">
+						<ListDiscussions activeChannel={activeChannel} username={username} />
+						<TypingMessage />
+					</div>
+					<ListParticipant activeChannel={activeChannel} />
+				</div>
 			</div>
 		</div>
 	);
