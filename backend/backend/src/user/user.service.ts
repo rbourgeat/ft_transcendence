@@ -51,12 +51,31 @@ export class UserService {
 	//	throw new HttpException('User not found', HttpStatus.NOT_FOUND);
 	//}
 
+	/*
 	async updateUser(user: User, newlogin: string) {
+		console.log(user);
 		user.login = newlogin;
-        const updatedUser = await this.userRepository.save(user);
-        if (updatedUser)
-            return updatedUser;
-    }
+		const updatedUser = await this.userRepository.save(user);
+		if (updatedUser)
+			return updatedUser;
+	}
+*/
+	/*
+		async updateUser(old: string, newlogin: string) {
+			const user = await this.userRepository.findOne({ login: old });
+			console.log(user);
+			user.login = newlogin;
+			const updatedUser = await this.userRepository.save(user);
+			if (updatedUser)
+				return updatedUser;
+		}
+	*/
+
+	async updateUser(login: string, s: string) {
+		return this.userRepository.update({ login }, {
+			login: s
+		});
+	}
 
 	async updateStatus(login: string, s: string) {
 		return this.userRepository.update({ login }, {

@@ -457,8 +457,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
                 console.log("Succesfully answer invitation");
                 toast.notifySuccess("Succesfully answered to invitation !");
                 //TODO: a revoir
-                if (extra != "")
-                {
+                if (extra != "") {
                     let id = "minidisplay".concat("_" + login + "_" + extra);
                     console.log("id looked is " + id);
                     let elem = document.getElementById(id);
@@ -523,8 +522,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
                 console.log("Succesfully delete target friend");
                 console.log(res);
                 toast.notifySuccess("Successfully removed friend.");
-                if (extra != "")
-                {
+                if (extra != "") {
                     let id = "minidisplay".concat("_" + login + "_" + extra);
                     console.log("id looked is " + id);
                     let elem = document.getElementById(id);
@@ -575,8 +573,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
             .then(res => {
                 console.log("Succesfully unblocked target friend");
                 console.log(res);
-                if (extra != "")
-                {
+                if (extra != "") {
                     let id = "minidisplay".concat("_" + login + "_" + extra);
                     console.log("id looked is " + id);
                     let elem = document.getElementById(id);
@@ -666,7 +663,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
                         localStorage.setItem("login42", res.data.login42);
                     else
                         localStorage.setItem("login42", "");
-                   // window.top.location = "/chat/";
+                    // window.top.location = "/chat/";
                     window.top.location = "http://localhost:3030/user";
                     //return;
                 }
@@ -837,13 +834,19 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     ** edit user data (for login)
     */
     patch_user(old_login: string, new_login: string) {
+        /*
         let url = "http://localhost:3000/api/user/".concat(new_login);
+         let url = "http://localhost:3000/api/user/".concat(new_login);
+        */
 
+        let url = "http://localhost:3000/api/user/".concat(old_login).concat("/changeto/").concat(new_login);
+        //@Post(':oldlogin/changeto/:newlogin')
         axios.defaults.baseURL = 'http://localhost:3000/api/';
         axios.defaults.headers.post['Content-Type'] = 'application/json';
         axios.defaults.headers.post['Accept'] = '*/*';
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 
+        /*
         let body = {
             login: new_login
         }
@@ -851,12 +854,12 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
         let headers = {
             login: new_login
         }
-
+*/
         console.log("old login is " + old_login);
         console.log("new login is " + new_login);
         console.log("url is " + url);
 
-        let res = axios.patch(url, body, { headers })
+        let res = axios.patch(url)
             .then(res => {
                 console.log("Yay ! Successfully changed login");
                 console.log(res);
