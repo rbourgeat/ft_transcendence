@@ -20,6 +20,13 @@ export default function Settings(props: SettingsProps) {
 	const [verifCode, setverifCode] = React.useState("");
 	const calledOnce = React.useRef(false);
 	const [load, setLoaded] = React.useState(false);
+	const [is42, setis42] = React.useState(false);
+	const [login42, setlogin42] = React.useState("");
+	const [username, setUsername] = React.useState("");
+
+	//status, realtime variable (a reprendre avec les sockets)
+	const [status, setStatus] = React.useState("offline");
+	const [color, setColor] = React.useState("");
 
 	//MODALS
 	const [show, setShow] = useState(false);
@@ -96,7 +103,7 @@ export default function Settings(props: SettingsProps) {
 		clearInput();
 	}
 
-	//TODO: modifier le nom pour que ce soit plus explicite ? activate 2fa ?
+
 	const handle2FA = (event: any) => {
 		event.preventDefault();
 		manageQR();
@@ -124,11 +131,64 @@ export default function Settings(props: SettingsProps) {
 		}
 	}
 
+	async function getUser() {
+		let url = "http://localhost:3000/api/auth/";
+
+		axios.defaults.baseURL = 'http://localhost:3000/api/';
+		axios.defaults.headers.post['Content-Type'] = 'application/json';
+		axios.defaults.headers.post['Accept'] = '*/*';
+		axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+		axios.defaults.withCredentials = true;
+
+		let username = "";
+		await axios.get(url)
+			.then(res => {
+				username = res.data.login;
+				console.log(res);
+				if (res.data.login42 != null && res.data.login42 != undefined &&  res.data.login42 != "")
+				{
+					setis42(true);
+					setlogin42(res.data.login42);
+					localStorage.setItem("login", res.data.login);
+					localStorage.setItem("login42", res.data.login42);
+					if (res.data.status == "offline")
+						setColor("grey")
+					if (res.data.status == "online")
+					{
+						setColor("green");
+						setStatus("online");
+					}
+					if (res.data.status == "ingame")
+					{
+						setColor("purple");
+						setStatus("ingame")
+					}
+				}
+				setUsername(username);
+			})
+			.catch((err) => {
+				console.log("Auth returned 400 -> missing cookie");
+			})
+		setLoaded(true);
+	}
+
+	function renderImage(login: string) {
+		let ax = new MyAxios(null);
+		let log42 = localStorage.getItem("login42");
+		let haschanged = false;
+		if (login != log42)
+			haschanged = true;
+		if (log42 != "" && log42 != null && log42 != undefined)
+			return (ax.render_avatar(login, log42, haschanged));
+		return (ax.render_avatar(login, "", haschanged));
+	}
+
 	useEffect(() => {
 		if (calledOnce.current) {
 			return;}
 		if (localStorage.getItem("2fa") == "true")
 			setActivated2fa(true);
+		getUser();
 		calledOnce.current = true;
 	}, []);
 
@@ -140,7 +200,15 @@ export default function Settings(props: SettingsProps) {
 					<div className="col-6">
 						<div id="settings">
 							<h2 id="user--settings">Settings</h2>
-								<br />
+							<br />
+							<img id={username} className="profile--pic" height="80" width="80"/>
+									{renderImage(username)}
+									{/*<br />*/}
+									<svg className="log--color_profile" height="40" width="40">
+										<circle cx="20" cy="20" r="15" fill={color} stroke="white" style={{ strokeWidth: '3' }} />
+									</svg>
+								<p className="status-text">{status}</p>
+								{/*<br />*/}
 								<label id="change--avatar--label">Change avatar</label>
 								<div id="change--avatar">
 								<input

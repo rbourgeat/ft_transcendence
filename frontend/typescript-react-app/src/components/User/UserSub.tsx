@@ -14,7 +14,6 @@ import Settings from "./Settings/Settings"
 import MatchHistory from '../MatchHistory/MatchHistory';
 import Footer from "../Footer/Footer";
 
-//TODO: a cleaner ?
 export interface UserfuncProps {
 	username?: string,
 	email?: string,
@@ -28,6 +27,7 @@ export interface UserfuncProps {
 }
 
 export default function User(props: UserfuncProps) {
+	//User et check
 	const [username, setUsername] = React.useState("");
 	const [logged, setLogged] = React.useState(true);
 	const [is42, setis42] = React.useState(false);
@@ -49,17 +49,11 @@ export default function User(props: UserfuncProps) {
 	const [nextlevel, setNextLevel] = React.useState(0);
 	const [pendingInvite, setPendingInvite] = React.useState(false);
 
-	async function getUser() {
-		//TODO: revoir plus tard pour affichage conditionnel
-		/*
-		let log = localStorage.getItem("loggedIn");
-		setLogged(log == "true" ? true : false);
+	//Status socket
+	const [color, setColor] = React.useState("");
+	const [status, setStatus] = React.useState("offline");
 
-		if (log == "false")
-		{
-			console.log("Not logged !");
-			return ;
-		}*/
+	async function getUser() {
 
 		let url = "http://localhost:3000/api/auth/";
 
@@ -89,16 +83,23 @@ export default function User(props: UserfuncProps) {
 					setWins(res.data.wins);
 					setRatio(res.data.win_loss_ration);
 					setXp(res.data.xp);
-
-					//setAuthorized(true);
+					if (res.data.status == "offline")
+						setColor("grey")
+					if (res.data.status == "online")
+					{
+						setColor("green");
+						setStatus("online");
+					}
+					if (res.data.status == "ingame")
+					{
+						setColor("purple");
+						setStatus("ingame")
+					}
 				}
 				setUsername(username);
-			})
+				})
 			.catch((err) => {
 				console.log("Auth returned 400 -> missing cookie");
-				//setAuthorized(false);
-				//console.log("Error while getting api auth - Maybe you are in incognito mode");
-				//console.log(err);
 			})
 		setLoaded(true);
 	}
@@ -136,15 +137,21 @@ export default function User(props: UserfuncProps) {
 							loaded ?
 								<>
 								<div className="user--stats" key={username}>
+									<h2 className="own-profile">My profile</h2>
+									<br />
 									<img id={username} className="profile--pic" height="80" width="80"/>
 									{renderImage(username)}
-									<br />
+									{/*<br />*/}
+									<svg className="log--color_profile" height="40" width="40">
+										<circle cx="20" cy="20" r="15" fill={color} stroke="white" style={{ strokeWidth: '3' }} />
+									</svg>
+									<p className="status-text">{status}</p>
+									{/*<br />*/}
 									<h2 id="user--data">{username}</h2>
 										<div className="col-9 mx-auto text-center" id="input-div">
 											<br />
 											<Achievements login={username}/>
 											<br />
-											{/*<Badge />*/}
 											<Badge
 													//login={props.login}
 													total_wins={wins}

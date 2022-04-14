@@ -28,7 +28,7 @@ export class Auth42Controller {
     @ApiOperation({ summary: '[do not use in swagger, won\'t work]' })
     @Get('redirect')
     @UseGuards(FtOauthGuard)
-    @Redirect('http://localhost:3030/user')
+    @Redirect('http://localhost:3030/settings')
     async ftAuthCallback(@Req() req) {
         console.log('test in redirect 42auth');
         const test = req.user;
@@ -46,7 +46,7 @@ export class Auth42Controller {
     @ApiOperation({ summary: '[To be redirected]' })
     @Get('redirect-user')
     //@UseGuards(FtOauthGuard)
-    @Redirect('http://localhost:3030/user')
+    @Redirect('http://localhost:3030/settings')
     async ftRedirectUser() {
         //console.log("redirecting user");
         //return ;

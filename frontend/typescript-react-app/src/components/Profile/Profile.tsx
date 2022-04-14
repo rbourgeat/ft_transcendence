@@ -17,7 +17,7 @@ export interface ProfileProps
 }
 
 export default function Profile() {
-
+	//Check user et status
 	const [color, setColor] = React.useState("");
 	const [status, setStatus] = React.useState("offline");
 	const calledOnce = React.useRef(false);

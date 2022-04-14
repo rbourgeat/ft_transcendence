@@ -382,57 +382,6 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
             })
     }
 
-    /* DEPRECATED, ne plus utiliser
-    createchat(username: string) {
-        let bod = {
-            password:
-        }
-
-        let toast = new ToastAlerts(null);
-        const headers = {
-            'Content-Type': 'application/json'
-        };
-
-        let res = axios.post('http://localhost:3000/api/chat', bod, { headers }).then(res => {
-            console.log(res.status)
-            if (res.status == 201) {
-                toast.notifySuccess('💬  Chat created !');
-            }
-            else {
-                toast.notifyDanger('Oops ! An creating chat.');
-            }
-        })
-    }
-    */
-
-    /*
-    ** get api cookie test - DEPRECATED
-    get_api_user_cookie_test()
-    {
-        axios.defaults.baseURL = 'http://localhost:3000/api/';
-
-        let url = "http://localhost:3000/api/user/cookie/test";
-        let res = axios.get(url)
-        .then (res => {
-            console.log("Successfully got cookies");
-            console.log(res);
-            console.log(res.data);
-        })
-        .catch((error) => {
-            console.log("Catched error while getting cookies !");
-            //console.log(error);
-            if (error.response) {
-                console.log(error.response)
-            }
-            else if (error.request) {
-                console.log("Error in request");
-            }
-            else {
-                console.log("Other type of error");
-            }
-        })
-    }
-    */
 
     /*
     ** User endpoint

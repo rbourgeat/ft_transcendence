@@ -29,7 +29,7 @@
 }
 
 #user--data, #user--settings {
-  font-size: 14px !important;
+  font-size: 16px !important;
   text-align: center;
   margin-top: 10px !important;
 }
@@ -125,4 +125,15 @@ img[src=""] {
 .change--username {
   margin-top: 5px !important;
   margin-bottom: 5px !important;
+}
+
+.own-profile {
+  font-size: 18px !important;
+  font-family: variables.$basic-font;
+  font-weight: 900 !important;
+}
+
+.log--color_profile {
+  margin-left: -6.5%;
+	margin-top: -6.5%;
 }
