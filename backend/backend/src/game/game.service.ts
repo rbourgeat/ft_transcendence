@@ -1,13 +1,9 @@
-import { HttpException, HttpStatus, Injectable, UnsupportedMediaTypeException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, createQueryBuilder, getConnection } from 'typeorm';
-
-import { CreateGameDto } from 'src/game/dto/game.dto';
+import { Repository } from 'typeorm';
 import { Game } from 'src/game/entity/game.entity';
 import { UserService } from '../user/user.service';
-import { UsersRepository } from 'src/user/user.repository';
 import { User } from 'src/user/entity/user.entity';
-import { UserEvent } from 'src/user/user.event';
 
 
 @Injectable()
@@ -18,7 +14,6 @@ export class GameService {
 		@InjectRepository(User)
 		private userRepository: Repository<User>,
 		private userService: UserService,
-		private readonly userEvent: UserEvent,
 	) { }
 
 	getAllGames() {
@@ -48,15 +43,37 @@ export class GameService {
 		});
 	}
 
+	async triggerTotalGamesAchievement(user: User, total: number) {
+		if (user.total_games == total)
+			await this.userService.saveAchievement(user, "FirstGame")
+		else if (user.total_games == total)
+			await this.userService.saveAchievement(user, "1000Game")
+	}
+
+	async trigger5RowAchievement(user: User) {
+
+		const userWithGamesDefined = await this.userRepository.findOne({
+			relations: ['games'],
+			where: { login: user.login }
+		});
+
+		const games = userWithGamesDefined.games.reverse();
+		for (let i = 0; i < 5; i++) {
+			if (games[i].winner != user.login)
+				return;
+		}
+		await this.userService.saveAchievement(user, "5Row")
+	}
+
 	async triggerGameAchievement(winner: User, loser: User) {
-		await this.userEvent.achievementFirstGame(winner);
-		await this.userEvent.achievementFirstGame(loser);
+		await this.triggerTotalGamesAchievement(winner, 1);
+		await this.triggerTotalGamesAchievement(loser, 1);
 
-		await this.userEvent.achievement1000Game(winner);
-		await this.userEvent.achievement1000Game(loser);
+		await this.trigger5RowAchievement(winner);
+		await this.trigger5RowAchievement(loser);
 
-		await this.userEvent.achievement5Row(winner);
-		await this.userEvent.achievement5Row(loser);
+		await this.triggerTotalGamesAchievement(winner, 1000);
+		await this.triggerTotalGamesAchievement(loser, 1000);
 	}
 
 	async createGame(winner_login: string, loser_login: string, winner_points: number, loser_points: number) {

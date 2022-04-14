@@ -6,14 +6,11 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiImageFile } from 'src/user/utils/api-file.decorator';
 import { ParseFile } from 'src/user/utils/parse-file.pipe';
 import { diskStorage } from 'multer';
-import { extname } from 'path';
-import { FtOauthGuard } from 'src/auth/42auth/guard/ft-oauth.guard';
 import JwtAuthenticationGuard from 'src/auth/guard/jwt-authentication.guard';
 import { Observable } from 'rxjs';
 import { RelationStatusClass, } from 'src/user/interface/friend-request.interface';
 import { User } from 'src/user/entity/user.entity';
 import { editFileName, imageFileFilter, myStorage } from './upload.utils'
-import { Achievement } from './entity/achievement.entity';
 
 @ApiTags('Users')
 @ApiExtraModels(CreateUserDtoViaRegistration) //force unused dto to show on swagger
