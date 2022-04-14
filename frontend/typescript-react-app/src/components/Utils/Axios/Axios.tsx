@@ -426,14 +426,16 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
 
         let res = axios.post(url, body)
             .then(res => {
-                toast.notifySuccess("Successfully sent invitation !");
+                //toast.notifySuccess("Successfully sent invitation !");
                 console.log(res);
                 console.log("Succesfully sent invitation !");
+                window.top.location = "http://localhost:3030/profile/".concat(login);
             })
             .catch((error) => {
                 toast.notifyDanger("Your invite failed")
                 console.log(error);
                 console.log("Error while sending invitation");
+                //window.top.location = "http://localhost:3030/profile/".concat(login);
             })
     }
 
@@ -544,36 +546,48 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
         axios.defaults.withCredentials = true;
 
+        let toast = new ToastAlerts(null);
+
         axios.post(url)
             .then(res => {
                 console.log("Succesfully blocked target friend");
                 console.log(res);
+                toast.notifySuccess("Successfully blocked user");
+                window.top.location = "http://localhost:3030/profile/".concat(login);
             })
             .catch((error) => {
                 console.log("Error while blocking target friend");
                 console.log(error);
+                toast.notifyDanger("Error while blocking contact");
+                window.top.location = "http://localhost:3030/profile/".concat(login);
             })
     }
 
-    //TODO: a tester
     delete_relation_unblock(login: string, extra: string) {
         let url = "http://localhost:3000/api/user/relation/unblock/".concat(login);
 
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
         axios.defaults.withCredentials = true;
 
+        let toast = new ToastAlerts(null);
+
         axios.delete(url)
             .then(res => {
                 console.log("Succesfully unblocked target friend");
                 console.log(res);
-                let id = "minidisplay".concat("_" + login + "_" + extra);
-                console.log("id looked is " + id);
-                let elem = document.getElementById(id);
-                elem.parentNode.removeChild(elem);
+                if (extra != "")
+                {
+                    let id = "minidisplay".concat("_" + login + "_" + extra);
+                    console.log("id looked is " + id);
+                    let elem = document.getElementById(id);
+                    elem.parentNode.removeChild(elem);
+                }
+                window.top.location = "http://localhost:3030/profile/".concat(login);
             })
             .catch((error) => {
                 console.log("Error while unblocking target friend");
                 console.log(error);
+                toast.notifyDanger("Error while unblocking contact !");
             })
     }
 
@@ -765,7 +779,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
 
         let imageCode = null;
         let imageName = "alt-photo";
-        console.log("should render api image");
+        //console.log("should render api image");
         let url = "http://localhost:3000/api/user/".concat(chosenLogin)
 
         let res = axios.get(url)
