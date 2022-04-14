@@ -25,8 +25,8 @@ export default function Settings(props: SettingsProps) {
 	const [username, setUsername] = React.useState("");
 
 	//status, realtime variable (a reprendre avec les sockets)
-	const [status, setStatus] = React.useState("offline");
-	const [color, setColor] = React.useState("grey");
+	const [status, setStatus] = React.useState("online");
+	const [color, setColor] = React.useState("green");
 
 	//MODALS
 	const [show, setShow] = useState(false);
@@ -145,6 +145,7 @@ export default function Settings(props: SettingsProps) {
 			.then(res => {
 				username = res.data.login;
 				console.log(res);
+				console.log("Successful api auth!");
 				if (res.data.login42 != null && res.data.login42 != undefined &&  res.data.login42 != "")
 				{
 					setis42(true);
@@ -152,11 +153,11 @@ export default function Settings(props: SettingsProps) {
 					localStorage.setItem("login", res.data.login);
 					localStorage.setItem("login42", res.data.login42);
 					console.log(res.data);
-					if (res.data.status == "offline")
-					{
-						setColor("grey")
-						setStatus("offline");
-					}
+					//if (res.data.status == "offline")
+					//{
+					//	setColor("grey")
+					//	setStatus("offline");
+					//}
 					if (res.data.status == "online")
 					{
 						setColor("green");
@@ -168,14 +169,15 @@ export default function Settings(props: SettingsProps) {
 						setStatus("ingame")
 					}
 				}
+				setLoaded(true);
 				setUsername(username);
-				//renderImage(username);
+				renderImage(username);
 			})
 			.catch((err) => {
 				console.log("Auth returned 400 -> missing cookie");
 			})
-		setLoaded(true);
-		renderImage(username);
+
+		//renderImage(username);
 	}
 
 	async function renderImage(login: string) {
@@ -184,7 +186,7 @@ export default function Settings(props: SettingsProps) {
 		let haschanged = false;
 		if (login != log42)
 			haschanged = true;
-		if (log42 != "" && log42 != null && log42 != undefined)
+		if (log42 != "" && log42 != null && log42 != "null" && log42 != undefined)
 			return (await ax.render_avatar(login, log42, haschanged));
 		return (await ax.render_avatar(login, "", haschanged));
 	}
