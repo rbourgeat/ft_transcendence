@@ -4,6 +4,8 @@ import Participant from './Participant/Participant';
 import Footer from "../../Footer/Footer";
 import MyTimer from "./MyTimer/MyTimer";
 import axios from "axios";
+import { ToastContainer } from 'react-toastify';
+import ToastAlerts from '../../Utils/ToastAlerts/ToastAlerts';
 
 export interface ParticipantProps{
 }
@@ -19,7 +21,7 @@ export default function ListParticipant({activeChannel})
 		axios.defaults.withCredentials = true;
 		axios.get(`http://localhost:3000/api/chat/${activeChannel}/users`)
 			.then(response => {
-				updateParticipates(response.data);	
+				updateParticipates(response.data);
 			})
 			.catch(error => {
 				console.log("error");
@@ -30,32 +32,52 @@ export default function ListParticipant({activeChannel})
 	time.setSeconds(time.getSeconds() + 600);
 
 	const muteUser = () => {
+
+		let toast = new ToastAlerts(null);
+
+		if (selectedUser == "")
+		{
+			toast.notifyDanger("No user where selected.");
+			return ;
+		}
 		const url = 'http://localhost:3000/api/chat/mute';
 		axios.post(url, {
-		  "idChat": activeChannel,
-		  "user": selectedUser,
-		  "time": time,
-		  "password": "string"})
+		"idChat": activeChannel,
+		"user": selectedUser,
+		"time": time,
+		"password": "string"})
 			.then(response => {
 				console.log(response);
 			})
 			.catch(error => {
-				console.log(error);	
+				console.log(error);
 			})
 	}
 
 	const banUser = () => {
 		const url = 'http://localhost:3000/api/chat/ban';
+
+		let toast = new ToastAlerts(null);
+
+		console.log("selectedUser is " + selectedUser);
+
+		if (selectedUser == "")
+		{
+			toast.notifyDanger("No user where selected.");
+			return ;
+		}
 		axios.post(url, {
-		  "idChat": activeChannel,
-		  "user": selectedUser,
-		  "time": time,
-		  "password": "string"})
+		"idChat": activeChannel,
+		"user": selectedUser,
+		"time": time,
+		"password": "string"})
 			.then(response => {
 				console.log(response);
+				toast.notifySuccess("Successfully banned");
 			})
 			.catch(error => {
-				console.log(error);	
+				console.log(error);
+				toast.notifyDanger("Error while banned user");
 			})
 	}
 
@@ -64,7 +86,7 @@ export default function ListParticipant({activeChannel})
 			<h2 id="participant--title">Participants</h2>
 			<div id="sub--div" className="overflow-auto">
 				<div id="participants--div">
-					{participates.map(user => 
+					{participates.map(user =>
 					<Participant
 						key={user.id}
 						username={user.login}
@@ -76,6 +98,16 @@ export default function ListParticipant({activeChannel})
 				</div>
 					<button id="bann-temp-button" className="btn btn-danger" onClick={banUser}>Ban temporarily</button>
 					<button id="mute-temp-button" className="btn btn-warning" onClick={muteUser}>Mute temporalily</button>
+					<ToastContainer
+                        position="top-right"
+                        autoClose={5000}
+						hideProgressBar={false}
+                        newestOnTop={false}
+						closeOnClick
+                        rtl={false}
+                        pauseOnFocusLoss
+                        draggable
+                        pauseOnHover/>
 				</div>
 			</div>
 	);
