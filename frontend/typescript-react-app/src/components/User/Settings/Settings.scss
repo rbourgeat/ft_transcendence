@@ -2,13 +2,15 @@
 
 #settings {
 	border: 0.1rem solid #f9f9f9;
-	//border: 0.1rem solid red;
 	border-radius: variables.$border-radius-big;
 	background-color: #f9f9f9;
 	position: sticky;
-	//border: 0.1rem solid #A9A9A9;
 	padding: 15px !important;
-	//width: 60%;
+	//margin-top: auto;
+	//margin-bottom: auto;
+	//Pour centrer la div blanche
+	//position: absolute;
+	//top: 35%;
 }
 
 #qrcode {

@@ -12,6 +12,8 @@ import { Modal } from "react-bootstrap"
 import Settings from "./Settings/Settings"
 import MatchHistory from '../MatchHistory/MatchHistory';
 import Footer from "../Footer/Footer";
+import { render } from '@testing-library/react';
+import Login from '../Auth/Login/Login';
 
 export interface UserfuncProps {
 	username?: string,
@@ -93,22 +95,21 @@ export default function User(props: UserfuncProps) {
 						setColor("purple");
 						setStatus("ingame")
 					}
+					renderImage(res.data.login);
 				}
 				setUsername(username);
 			})
 			.catch((err) => {
 				console.log("Auth returned 400 -> missing cookie");
 			})
+
 		setLoaded(true);
 	}
 
 	useEffect(() => {
-		if (calledOnce.current) {
-			return;
-		}
 		getUser();
-		calledOnce.current = true;
-	}, []);
+		//calledOnce.current = true;
+	});
 
 	function renderImage(login: string) {
 		let ax = new MyAxios(null);
@@ -127,59 +128,48 @@ export default function User(props: UserfuncProps) {
 			<div className="container">
 				<div className="row d-flex justify-content-center text-center">
 					<div className="col-9">
-						{/*{
-							authorized == false?
-							<p className="not-authenticated">You are not properly authenticated.</p>
-							: ""
-						}*/}
-						{
-							loaded ?
+						<div className="user--stats" key={username}>
+							{loaded == false ?
+								<div className="spinner-border m-5" role="status">
+									<span className="sr-only">Loading...</span>
+								</div>
+								:
 								<>
-									<div className="user--stats" key={username}>
-										<h2 className="own-profile">My profile</h2>
+									<h2 className="own-profile">My profile</h2>
+									<br />
+									<img id={username} className="profile--pic" height="80" width="80" />
+									{/*{renderImage(username)}*/}
+									{/*<br />*/}
+									<svg className="log--color_profile" height="40" width="40">
+										<circle cx="20" cy="20" r="15" fill={color} stroke="white" style={{ strokeWidth: '3' }} />
+									</svg>
+									<p className="status-text">{status}</p>
+									{/*<br />*/}
+									<h2 id="user--data">{username}</h2>
+									<div className="col-9 mx-auto text-center" id="input-div">
 										<br />
-										<img id={username} className="profile--pic" height="80" width="80" />
-										{renderImage(username)}
+										<Achievements login={username} />
+										<br />
+										<Badge
+											//login={props.login}
+											total_wins={wins}
+											total_loss={loss}
+											total_games={totalGames}
+											win_loss_ratio={ratio}
+											xp={xp}
+											points={points}
+											to_next={nextlevel}
+											level={level}
+										/>
+										<br />
+										<MatchHistory login={username} />
+										<br />
 										{/*<br />*/}
-										<svg className="log--color_profile" height="40" width="40">
-											<circle cx="20" cy="20" r="15" fill={color} stroke="white" style={{ strokeWidth: '3' }} />
-										</svg>
-										<p className="status-text">{status}</p>
-										{/*<br />*/}
-										<h2 id="user--data">{username}</h2>
-										<div className="col-9 mx-auto text-center" id="input-div">
-											<br />
-											<Achievements login={username} />
-											<br />
-											<Badge
-												total_wins={wins}
-												total_loss={loss}
-												total_games={totalGames}
-												win_loss_ratio={ratio}
-												xp={xp}
-												points={points}
-												to_next={nextlevel}
-												level={level}
-											/>
-											<br />
-											<MatchHistory login={username} />
-											<br />
-											{/*<Settings username={username} login42={localStorage.getItem("login42")}/>*/}
-											<br />
-										</div>
 									</div>
 								</>
-								:
-								<div className="spinner-border text-dark" role="status">
-									{/*<span className="sr-only">Loading...</span>*/}
-								</div>
-							//<div className="spinner-border m-5" role="status">
-							//	<span className="sr-only">Loading...</span>
-							//</div>
-							//: <>
-							//	<p>You are not logged in.</p>
-							//	</>
-						}
+
+							}
+						</div>
 					</div>
 				</div>
 			</div>

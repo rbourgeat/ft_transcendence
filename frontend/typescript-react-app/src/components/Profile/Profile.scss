@@ -46,7 +46,7 @@
 	color: black !important;
 }
 
-#relations > button {
+#relations > button, #games--related > button {
 	font-size: 12px !important;
 	font-family: variables.$basic-font !important;
 	width: 100px !important;
@@ -54,4 +54,12 @@
 
 .sr-only {
 	color: black !important;
+}
+
+//#invite--buton, #block--button {
+//	//position: fixed;
+//}
+
+.profile_text {
+	font-size: 12px !important;
 }

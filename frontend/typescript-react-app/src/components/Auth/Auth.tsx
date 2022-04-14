@@ -14,7 +14,7 @@ export default function Auth() {
 		if (localStorage.getItem("loggedIn") == "true")
         {
             console.log("You are already logged in");
-            window.top.location = "http://localhost:3030/user";
+            window.top.location = "http://localhost:3030/settings";
         }
 	}, []);
 
