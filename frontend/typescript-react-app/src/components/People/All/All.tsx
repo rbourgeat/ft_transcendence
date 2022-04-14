@@ -42,7 +42,7 @@ export default function All(props: InputWrapperProps) {
 				let len = users.length;
 				let i = 0;
 				while (i < len) {
-					console.log(users[i].login + " has been find");
+					//console.log(users[i].login + " has been find");
 					if (users[i].login != log)
 						setUsers(prevArray => [...prevArray, users[i]])
 					i++;

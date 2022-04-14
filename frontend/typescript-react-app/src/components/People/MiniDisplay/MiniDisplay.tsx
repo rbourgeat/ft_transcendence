@@ -147,7 +147,7 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 					console.log(error);
 				})
 
-			console.log("as " + props.currentUser + "my relation with" + props.login + "is " + relationStatus);
+			//console.log("as " + props.currentUser + "my relation with" + props.login + "is " + relationStatus);
 			if (relationStatus == "accepted" || relationStatus == "pending")
 				notFriend = true;
 			else if (relationStatus == "blocked")
