@@ -1,6 +1,8 @@
 import React, {useState, useEffect, useRef, useContext} from 'react';
 import './Profile.scss';
 import axios from "axios";
+import { ToastContainer } from 'react-toastify';
+import ToastAlerts from '../Utils/ToastAlerts/ToastAlerts';
 import Nav from "../Nav/Nav";
 import { useParams } from 'react-router-dom'
 import NotFound from "../../components/NotFound/NotFound";
@@ -9,6 +11,7 @@ import MatchHistory from '../MatchHistory/MatchHistory';
 import Achievement from '../Achievements/Achievements';
 import Badge from "../Dashboard/Badge/Badge";
 import Footer from "../Footer/Footer";
+//import MyAxios from '../Utils/Axios/Axios';
 
 export interface ProfileProps
 {
@@ -28,6 +31,9 @@ export default function Profile() {
 	//relation
 	const [isFriend, setisFriend] = React.useState(false);
 	const [isBlocked, setisBlocked] = React.useState(false);
+
+	const [receivedInvitation, setReceivedInvitation] = React.useState(false);
+	const [sentInvitation, setSentInvitation] = React.useState(false);
 
 	//Badge
 	const [load, setLoad] = React.useState(false);
@@ -139,6 +145,14 @@ export default function Profile() {
 				else if (relation.status == "pending" && relation.receiver == login)
 				{
 					console.log("You were invited by that user !");
+					setReceivedInvitation(true);
+					setPendingInvite(true);
+				}
+				else if (relation.status == "pending" && relation.sender == login)
+				{
+					console.log("You sent an invitation !");
+					setSentInvitation(true);
+					setPendingInvite(true);
 				}
 				else
 				{
@@ -159,6 +173,8 @@ export default function Profile() {
 
 	function inviteFriend() {
 		console.log("We have to invite friend.");
+		let ax = new MyAxios(null);
+		ax.post_api_user_relation_sendInvation_id(login);
 	}
 
 	function block() {
@@ -205,8 +221,22 @@ export default function Profile() {
 								<p className="status-text">{status}</p>
 								{/*<br />*/}
 								<div className="row d-flex justify-content-center text-center" id="relations">
-										{isFriend == false ? <button type="button" className="btn btn-outline-dark" id="invite--buton" onClick={inviteFriend}>Invite</button>: ""}
-										{isFriend == false ? <button type="button" className="btn btn-outline-dark" id="block--buton"onClick={block}>Block</button>: ""}
+										{isFriend == false && pendingInvite == false ? <button type="button" className="btn btn-outline-success" id="invite--buton" onClick={inviteFriend}>Invite</button>: ""}
+										{isFriend == false && pendingInvite == true && receivedInvitation == true ?
+										<>
+											<button type="button" className="btn btn-outline-success" id="invite--buton" /*onClick={inviteFriend}*/>
+												Answer
+											</button>
+										</>
+										: ""}
+										{isFriend == false && pendingInvite == true && sentInvitation == true ? <button type="button" className="btn btn-outline-info" id="invite--buton" disabled /*onClick={inviteFriend}*/>Sent Invitation</button>: ""}
+										{isFriend == false ? <button type="button" className="btn btn-outline-danger" id="block--buton"onClick={block}>Block</button>: ""}
+										{isFriend == false && pendingInvite == true && receivedInvitation == true ?
+											<>
+												<p className="profile_text">{login} wants to be your friend ! </p>
+												<br/>
+											</>
+										: ""}
 								</div>
 								<br />
 								<div className="row d-flex justify-content-center text-center" id="games--related">
@@ -222,6 +252,17 @@ export default function Profile() {
 								<br/>
 								{isFriend == true ? <MatchHistory login={login}/> : ""}
 								<br/>
+								<ToastContainer
+									position="top-right"
+									autoClose={5000}
+									hideProgressBar={false}
+									newestOnTop={false}
+									closeOnClick
+									rtl={false}
+									pauseOnFocusLoss
+									draggable
+									pauseOnHover
+								/>
 								{isFriend == true ? <Badge
 													login={login}
 													total_wins={wins}

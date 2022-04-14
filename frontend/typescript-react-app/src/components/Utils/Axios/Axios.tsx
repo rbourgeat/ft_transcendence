@@ -426,7 +426,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
 
         let res = axios.post(url, body)
             .then(res => {
-                toast.notifySuccess("You invited that user")
+                toast.notifySuccess("Successfully sent invitation !");
                 console.log(res);
                 console.log("Succesfully sent invitation !");
             })
