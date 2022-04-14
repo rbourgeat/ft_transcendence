@@ -447,19 +447,26 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
 
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
         axios.defaults.withCredentials = true;
+        let toast = new ToastAlerts(null);
 
         let res = axios.post(url, body)
             .then(res => {
                 console.log(res);
-                console.log("Succesfully posting invitaton");
-                let id = "minidisplay".concat("_" + login + "_" + extra);
-                console.log("id looked is " + id);
-                let elem = document.getElementById(id);
-                elem.parentNode.removeChild(elem);
+                console.log("Succesfully answer invitation");
+                toast.notifySuccess("Succesfully answered to invitation !");
+                //TODO: a revoir
+                if (extra != "")
+                {
+                    let id = "minidisplay".concat("_" + login + "_" + extra);
+                    console.log("id looked is " + id);
+                    let elem = document.getElementById(id);
+                    elem.parentNode.removeChild(elem);
+                }
             })
             .catch((error) => {
                 console.log(error);
                 console.log("Error while posting invitation");
+                toast.notifyDanger("Error while answering invitation");
             })
     }
 

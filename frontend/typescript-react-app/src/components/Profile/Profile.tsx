@@ -177,12 +177,29 @@ export default function Profile() {
 		ax.post_api_user_relation_sendInvation_id(login);
 	}
 
-	function block() {
-		console.log("We have to block.");
+	function answerFriend() {
+		console.log("We have to answer !");
+		let ax = new MyAxios(null);
+		ax.post_api_user_relation_answerInvitation_id(login, "accepted", "");
 	}
 
+	function block() {
+		console.log("We have to block.");
+		let toast = new ToastAlerts(null);
+		toast.notifyDanger("Not implemented yet");
+	}
+
+	//Besoin rbourgea
 	function watchPlaying() {
 		console.log("We have to watch playing.");
+		let toast = new ToastAlerts(null);
+		toast.notifyDanger("To do @rbourgea");
+	}
+
+	function askToPlay()
+	{
+		let toast = new ToastAlerts(null);
+		toast.notifyDanger("Not implemented yet");
 	}
 
 	let isUser = (login == localStorage.getItem("login") ? true : false);
@@ -224,7 +241,7 @@ export default function Profile() {
 										{isFriend == false && pendingInvite == false ? <button type="button" className="btn btn-outline-success" id="invite--buton" onClick={inviteFriend}>Invite</button>: ""}
 										{isFriend == false && pendingInvite == true && receivedInvitation == true ?
 										<>
-											<button type="button" className="btn btn-outline-success" id="invite--buton" /*onClick={inviteFriend}*/>
+											<button type="button" className="btn btn-outline-success" id="invite--buton" onClick={answerFriend}>
 												Answer
 											</button>
 										</>
@@ -237,12 +254,18 @@ export default function Profile() {
 												<br/>
 											</>
 										: ""}
+										{isFriend == false && pendingInvite == true && sentInvitation == true ?
+											<>
+												<p className="profile_text"> Waiting for {login} to answer to your invitation !</p>
+												<br/>
+											</>
+										: ""}
 								</div>
-								<br />
+								{/*<br />*/}
 								<div className="row d-flex justify-content-center text-center" id="games--related">
 										{status == "ingame" ? <p className="profile_text">{login} is playing ! You can watch the game.</p>: ""}
 										{status == "ingame" ? <button type="button" className="btn btn-outline-dark" id="watch--buton" onClick={watchPlaying}>Watch</button>: ""}
-										{status == "online"  ? <button type="button" className="btn btn-outline-dark" id="play--buton" /*onClick={block}*/>Play</button>: ""}
+										{status == "online" ? <button type="button" className="btn btn-outline-dark" id="play--buton" onClick={askToPlay}> Ask to Play</button>: ""}
 								</div>
 								<div id="relationship">
 									{/*<span className="badge bg-success">Friends</span>*/}
