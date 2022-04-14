@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef, useContext} from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import './Profile.scss';
 import axios from "axios";
 import { ToastContainer } from 'react-toastify';
@@ -9,12 +9,11 @@ import NotFound from "../../components/NotFound/NotFound";
 import MyAxios from '../Utils/Axios/Axios';
 import MatchHistory from '../MatchHistory/MatchHistory';
 import Achievement from '../Achievements/Achievements';
-import Badge from "../Dashboard/Badge/Badge";
+import Badge from "../Badge/Badge";
 import Footer from "../Footer/Footer";
 //import MyAxios from '../Utils/Axios/Axios';
 
-export interface ProfileProps
-{
+export interface ProfileProps {
 	login?: string,
 	avatar?: any
 }
@@ -26,7 +25,7 @@ export default function Profile() {
 	const calledOnce = React.useRef(false);
 	const [userOK, setUserOk] = React.useState(false);
 	const [is42, setis42] = React.useState(false);
-	const {login} = useParams();
+	const { login } = useParams();
 
 	//relation
 	const [isFriend, setisFriend] = React.useState(false);
@@ -54,37 +53,35 @@ export default function Profile() {
 
 		console.log("getting user data");
 		await axios.get(url)
-		.then(res => {
-			console.log(res);
-			setUserOk(true);
-			//setisFriend(true);
-			setLevel(res.data.percent_to_next_lvl);
-			setNextLevel(res.data.level);
-			setPoints(res.data.points);
-			//setRank(res.data.rank);
-			setTotalGames(res.data.total_games);
-			setLoss(res.data.total_loss);
-			setWins(res.data.wins);
-			setRatio(res.data.win_loss_ration);
-			setXp(res.data.xp);
-			//setLoad(true);
-			if (res.data.status == "offline")
-				setColor("grey")
-			if (res.data.status == "online")
-			{
-				setColor("green");
-				setStatus("online");
-			}
-			if (res.data.status == "ingame")
-			{
-				setColor("purple");
-				setStatus("ingame")
-			}
-		})
-		.catch((err) => {
-			console.log("Error while getting api auth");
-			console.log(err);
-		})
+			.then(res => {
+				console.log(res);
+				setUserOk(true);
+				//setisFriend(true);
+				setLevel(res.data.percent_to_next_lvl);
+				setNextLevel(res.data.level);
+				setPoints(res.data.points);
+				//setRank(res.data.rank);
+				setTotalGames(res.data.total_games);
+				setLoss(res.data.total_loss);
+				setWins(res.data.wins);
+				setRatio(res.data.win_loss_ration);
+				setXp(res.data.xp);
+				//setLoad(true);
+				if (res.data.status == "offline")
+					setColor("grey")
+				if (res.data.status == "online") {
+					setColor("green");
+					setStatus("online");
+				}
+				if (res.data.status == "ingame") {
+					setColor("purple");
+					setStatus("ingame")
+				}
+			})
+			.catch((err) => {
+				console.log("Error while getting api auth");
+				console.log(err);
+			})
 		setLoad(true);
 	}
 
@@ -102,15 +99,15 @@ export default function Profile() {
 	}
 
 	useEffect(() => {
-	if (calledOnce.current) {
-		return;}
-	getUserLogin(login)
-	buttonToDisplay();
-	calledOnce.current = true;
-}, []);
+		if (calledOnce.current) {
+			return;
+		}
+		getUserLogin(login)
+		buttonToDisplay();
+		calledOnce.current = true;
+	}, []);
 
-	function buttonToDisplay()
-	{
+	function buttonToDisplay() {
 		//let notBlocked: boolean = true;
 		//let notFriend: boolean = true;
 
@@ -129,8 +126,7 @@ export default function Profile() {
 				let relation = res.data;
 				//console.log(relation);
 				let status = relation.status;
-				if (relation.status == "accepted")
-				{
+				if (relation.status == "accepted") {
 					console.log("You are friends !");
 					friends = true;
 					setisFriend(true);
@@ -142,31 +138,26 @@ export default function Profile() {
 					//document.getElementById("relationship").appendChild(<span className="badge bg-success">Friends</span>);
 					//parent.appendChild();
 				}
-				else if (relation.status == "pending" && relation.receiver == login)
-				{
+				else if (relation.status == "pending" && relation.receiver == login) {
 					console.log("You invited that user");
 					//setReceivedInvitation(true);
 					setSentInvitation(true);
 					setPendingInvite(true);
 				}
-				else if (relation.status == "pending" && relation.sender == login)
-				{
+				else if (relation.status == "pending" && relation.sender == login) {
 					console.log("This user invited you");
 					setReceivedInvitation(true);
 					setPendingInvite(true);
 				}
-				else if (relation.status == "blocked" && relation.receiver == login)
-				{
+				else if (relation.status == "blocked" && relation.receiver == login) {
 					console.log("You blocked this contact");
 					setisBlocked(true);
 				}
-				else if (relation.status == "blocked" && relation.creator == login)
-				{
+				else if (relation.status == "blocked" && relation.creator == login) {
 					console.log("You are blocked by this contact");
 					//setisBlocked(true);
 				}
-				else
-				{
+				else {
 					setisFriend(false);
 					//console.log("Somebody blocked the other.");
 				}
@@ -221,20 +212,17 @@ export default function Profile() {
 		//window.top.location = "http://localhost:3000/user/".concat(login);
 	}
 
-	function askToPlay()
-	{
+	function askToPlay() {
 		let toast = new ToastAlerts(null);
 		toast.notifyDanger("Not implemented yet");
 	}
 
-	function sendDM()
-	{
+	function sendDM() {
 		let toast = new ToastAlerts(null);
 		toast.notifyDanger("Not implemented yet");
 	}
 
-	function unblock()
-	{
+	function unblock() {
 		//let toast = new ToastAlerts(null);
 		//toast.notifyDanger("Not implemented yet");
 
@@ -242,8 +230,7 @@ export default function Profile() {
 		ax.delete_relation_unblock(login, "");
 	}
 
-	function remove()
-	{
+	function remove() {
 		//let toast = new ToastAlerts(null);
 		//toast.notifyDanger("Not implemented yet");
 		console.log("Removing friend");
@@ -252,140 +239,139 @@ export default function Profile() {
 	}
 
 	let isUser = (login == localStorage.getItem("login") ? true : false);
-    return (
-	<>
-        <div id="profile--div">
-			<Nav />
-			<div className="container">
-				<div className="row d-flex justify-content-center text-center">
-					<br />
-					<div className="col-6" id="main--profile--div">
-						<div>
+	return (
+		<>
+			<div id="profile--div">
+				<Nav />
+				<div className="container">
+					<div className="row d-flex justify-content-center text-center">
 						<br />
-						{load == false ?
-										<div className="spinner-border m-5" role="status">
-											<span className="sr-only">Loading...</span>
-										</div>
+						<div className="col-6" id="main--profile--div">
+							<div>
+								<br />
+								{load == false ?
+									<div className="spinner-border m-5" role="status">
+										<span className="sr-only">Loading...</span>
+									</div>
 
-										: ""}
-						{/*{load == false ? getUserLogin(login) : ""}*/}
-						{userOK == true ?
-							<div id="profile--div">
-								<h3 className="profile--type">{isFriend == true ? "Friend profile" : "Public profile"}</h3>
-								<br />
-								<div /*className="col-4"*/ id="text-type">{isFriend == true ? "You are able to see a detailed profile because you are friends 🥰 !"
-								: "You are not able to see a detailed profile because you are not friends 😢 !"}</div>
-								<br />
-								<img id={login} className="profile--pic" src="" width="100" height="100"/>
-								{/*<br />*/}
-								{load == false ? renderImage(login, isUser) : ""}
-								<svg className="log--color" height="40" width="40">
-									<circle cx="20" cy="20" r="15" fill={color} stroke="white" style={{ strokeWidth: '3' }} />
-								</svg>
-								{/*<br />*/}
-								<h2 id="profile-title">{login}</h2>
-								<p className="status-text">{status}</p>
-								{/*<br />*/}
-								<div className="row d-flex justify-content-center text-center" id="relations">
-										{isFriend == false && pendingInvite == false  && isBlocked == false ? <button type="button" className="btn btn-outline-success" id="invite--buton" onClick={inviteFriend}>Invite</button>: ""}
-										{isFriend == false && pendingInvite == true && receivedInvitation == true && isBlocked == false?
-											<>
-											<br />
-											<br />
-												<p className="profile_text">{login} wants to be your friend ! </p>
-											<br/>
-											</>
-										: ""}
-										{isFriend == false && pendingInvite == true && receivedInvitation == true && isBlocked == false?
-										<>
-											<button type="button" className="btn btn-outline-success" id="invite--buton" onClick={acceptFriend}>
-												Accept
-											</button>
-											<button type="button" className="btn btn-outline-danger" id="invite--buton" onClick={declineFriend}>
-												Decline
-											</button>
+									: ""}
+								{/*{load == false ? getUserLogin(login) : ""}*/}
+								{userOK == true ?
+									<div id="profile--div">
+										<h3 className="profile--type">{isFriend == true ? "Friend profile" : "Public profile"}</h3>
+										<br />
+										<div /*className="col-4"*/ id="text-type">{isFriend == true ? "You are able to see a detailed profile because you are friends 🥰 !"
+											: "You are not able to see a detailed profile because you are not friends 😢 !"}</div>
+										<br />
+										<img id={login} className="profile--pic" src="" width="100" height="100" />
 										{/*<br />*/}
-										</>
-										: ""}
-									{/*<br />*/}
-									{/* TODO: changer id /scss */}
-									<div className="row d-flex justify-content-center text-center" id="relations">
-										{isFriend == false && pendingInvite == true && sentInvitation == true  && isBlocked == false? <button type="button" className="btn btn-outline-info" id="invite--buton" disabled /*onClick={inviteFriend}*/>Sent Invitation</button>: ""}
-									</div>
-										{isFriend == false && pendingInvite == true && sentInvitation == true && isBlocked == false ?
-											<>
-												<p className="profile_text"> Waiting for {login} to answer to your invitation !</p>
-												<br/>
-											</>
-										: ""}
-									</div>
-									{/*<br />*/}
-								{/*<br />*/}
-								<div className="row d-flex justify-content-center text-center" id="friends--related">
-										{isBlocked != true ? <button type="button" className="btn btn-outline-danger" id="block--buton" onClick={block}>Block</button> : ""}
-										{isFriend  == true ? <button type="button" className="btn btn-outline-danger" id="remove--buton" onClick={remove}>Remove</button>: ""}
-								</div>
-								<div className="row d-flex justify-content-center text-center" id="games--related">
-										{status == "ingame" && isBlocked == false ? <p className="profile_text">{login} is playing ! You can watch the game.</p>: ""}
-										{status == "ingame" && isBlocked == false ? <button type="button" className="btn btn-outline-dark" id="watch--buton" onClick={watchPlaying}>Watch</button>: ""}
-										{status == "online" && isBlocked == false ? <button type="button" className="btn btn-outline-dark" id="play--buton" onClick={askToPlay}> Ask to Play</button>: ""}
-										{isBlocked == false ? <button type="button" className="btn btn-outline-dark" id="dm--buton" onClick={sendDM}>Send DM</button> : ""}
-										{isBlocked == true ?
-										<>
+										{load == false ? renderImage(login, isUser) : ""}
+										<svg className="log--color" height="40" width="40">
+											<circle cx="20" cy="20" r="15" fill={color} stroke="white" style={{ strokeWidth: '3' }} />
+										</svg>
+										{/*<br />*/}
+										<h2 id="profile-title">{login}</h2>
+										<p className="status-text">{status}</p>
+										{/*<br />*/}
+										<div className="row d-flex justify-content-center text-center" id="relations">
+											{isFriend == false && pendingInvite == false && isBlocked == false ? <button type="button" className="btn btn-outline-success" id="invite--buton" onClick={inviteFriend}>Invite</button> : ""}
+											{isFriend == false && pendingInvite == true && receivedInvitation == true && isBlocked == false ?
+												<>
+													<br />
+													<br />
+													<p className="profile_text">{login} wants to be your friend ! </p>
+													<br />
+												</>
+												: ""}
+											{isFriend == false && pendingInvite == true && receivedInvitation == true && isBlocked == false ?
+												<>
+													<button type="button" className="btn btn-outline-success" id="invite--buton" onClick={acceptFriend}>
+														Accept
+											</button>
+													<button type="button" className="btn btn-outline-danger" id="invite--buton" onClick={declineFriend}>
+														Decline
+											</button>
+													{/*<br />*/}
+												</>
+												: ""}
+											{/*<br />*/}
+											{/* TODO: changer id /scss */}
+											<div className="row d-flex justify-content-center text-center" id="relations">
+												{isFriend == false && pendingInvite == true && sentInvitation == true && isBlocked == false ? <button type="button" className="btn btn-outline-info" id="invite--buton" disabled /*onClick={inviteFriend}*/>Sent Invitation</button> : ""}
+											</div>
+											{isFriend == false && pendingInvite == true && sentInvitation == true && isBlocked == false ?
+												<>
+													<p className="profile_text"> Waiting for {login} to answer to your invitation !</p>
+													<br />
+												</>
+												: ""}
+										</div>
+										{/*<br />*/}
+										{/*<br />*/}
+										<div className="row d-flex justify-content-center text-center" id="friends--related">
+											{isBlocked != true ? <button type="button" className="btn btn-outline-danger" id="block--buton" onClick={block}>Block</button> : ""}
+											{isFriend == true ? <button type="button" className="btn btn-outline-danger" id="remove--buton" onClick={remove}>Remove</button> : ""}
+										</div>
+										<div className="row d-flex justify-content-center text-center" id="games--related">
+											{status == "ingame" && isBlocked == false ? <p className="profile_text">{login} is playing ! You can watch the game.</p> : ""}
+											{status == "ingame" && isBlocked == false ? <button type="button" className="btn btn-outline-dark" id="watch--buton" onClick={watchPlaying}>Watch</button> : ""}
+											{status == "online" && isBlocked == false ? <button type="button" className="btn btn-outline-dark" id="play--buton" onClick={askToPlay}> Ask to Play</button> : ""}
+											{isBlocked == false ? <button type="button" className="btn btn-outline-dark" id="dm--buton" onClick={sendDM}>Send DM</button> : ""}
+											{isBlocked == true ?
+												<>
+													<br />
+													<p className="block-warning">You blocked this user !</p>
+													<button type="button" className="btn btn-outline-danger" id="unblock--buton" onClick={unblock}>Unblock</button>
+												</>
+												: ""}
+											<br />
+										</div>
+										<div id="relationship">
+											{/*<span className="badge bg-success">Friends</span>*/}
+										</div>
 										<br />
-											<p className="block-warning">You blocked this user !</p>
-											<button type="button" className="btn btn-outline-danger" id="unblock--buton" onClick={unblock}>Unblock</button>
-										</>
-										: ""}
+										{isFriend == true ? <Achievement login={login} /> : ""}
 										<br />
-								</div>
-								<div id="relationship">
-									{/*<span className="badge bg-success">Friends</span>*/}
-								</div>
-								<br />
-								{isFriend == true ? <Achievement login={login} /> : ""}
-								<br/>
-								{isFriend == true ? <MatchHistory login={login}/> : ""}
-								<br/>
-								<ToastContainer
-									position="top-right"
-									autoClose={5000}
-									hideProgressBar={false}
-									newestOnTop={false}
-									closeOnClick
-									rtl={false}
-									pauseOnFocusLoss
-									draggable
-									pauseOnHover
-								/>
-								{isFriend == true ? <Badge
-													login={login}
-													total_wins={wins}
-													total_loss={loss}
-													total_games={totalGames}
-													win_loss_ratio={ratio}
-													xp={xp}
-													points={points}
-													to_next={nextlevel}
-													/> : ""}
+										{isFriend == true ? <MatchHistory login={login} /> : ""}
+										<br />
+										<ToastContainer
+											position="top-right"
+											autoClose={5000}
+											hideProgressBar={false}
+											newestOnTop={false}
+											closeOnClick
+											rtl={false}
+											pauseOnFocusLoss
+											draggable
+											pauseOnHover
+										/>
+										{isFriend == true ? <Badge
+											login={login}
+											total_wins={wins}
+											total_loss={loss}
+											total_games={totalGames}
+											win_loss_ratio={ratio}
+											xp={xp}
+											points={points}
+											to_next={nextlevel}
+										/> : ""}
 
-							</div>
-						: <>
-							<h1><span id="oops">Oops...</span></h1>
-							<h2><span id="page-not-found">Page not found</span></h2>
-							<button type="button" className="btn btn-outline-dark"
-								onClick={(e) =>
-									{window.top.location = "http://localhost:3030/game"}
+									</div>
+									: <>
+										<h1><span id="oops">Oops...</span></h1>
+										<h2><span id="page-not-found">Page not found</span></h2>
+										<button type="button" className="btn btn-outline-dark"
+											onClick={(e) => { window.top.location = "http://localhost:3030/game" }
+											}
+										>Go to game</button>
+									</>
 								}
-							>Go to game</button>
-						</>
-						}
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-    </div>
-	{/*<Footer />*/}
-	</>
-    )
+			{/*<Footer />*/}
+		</>
+	)
 }
