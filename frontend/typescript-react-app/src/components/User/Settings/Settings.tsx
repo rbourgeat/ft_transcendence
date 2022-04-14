@@ -127,7 +127,7 @@ export default function Settings(props: SettingsProps) {
 			const file = e.target.files[0];
 
 			let ax = new MyAxios(null);
-			let ret = ax.post_avatar(props.username, file);
+			let ret = ax.post_avatar(username, file);
 		}
 	}
 
@@ -218,24 +218,25 @@ export default function Settings(props: SettingsProps) {
 													<circle cx="20" cy="20" r="15" fill={color} stroke="white" style={{ strokeWidth: '3' }} />
 												</svg>
 											{/*{status == "" ? getUser() : ""}*/}
+											<p className="username-text">{username}</p>
 											<p className="status-text">{status}</p>
 											{/*<br />*/}
 											<label id="change--avatar--label">Change avatar</label>
 											<div id="change--avatar">
-											<input
-												type="file"
-												name="image-upload"
-												id="input--upload"
-												accept="image/*"
-												onChange={onChangePicture}
-												className="input-file-upload"
-											/>
+												<input
+													type="file"
+													name="image-upload"
+													id="input--upload"
+													accept="image/*"
+													onChange={onChangePicture}
+													className="input-file-upload"
+												/>
 										</div>
 									<div id="change--username--div">
 										<button id="change--username"  type="button" className="btn btn-outline-dark"
 												onClick={handleShow}>change username
 										</button>
-										<EditUsernameModal username={props.username} show={show} onHide={handleClose}/>
+										<EditUsernameModal username={username} show={show} onHide={handleClose}/>
 										<br />
 									</div>
 									<div id="2fa--div">

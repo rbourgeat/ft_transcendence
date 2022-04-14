@@ -27,3 +27,16 @@
 	border: 0.1rem solid grey !important;
 	width: 30% !important;
 }
+
+.username-text {
+	font-family: variables.$big-font;
+	font-size: 12px !important;
+}
+
+#change--avatar > * {
+	margin-top: 5px;
+	margin-bottom: 5px;
+	margin-left: 40% !important;
+	//border: 0.1rem solid red !important;
+	//margin-right: auto;
+}

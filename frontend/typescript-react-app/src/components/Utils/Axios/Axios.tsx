@@ -649,7 +649,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
 
         const headers = {
             'Content-Type': 'application/json',
-            
+
         };
 
         console.log(bod);
@@ -836,7 +836,6 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     /*
     ** edit user data (for login)
     */
-    //TODO: a implémenter test
     patch_user(old_login: string, new_login: string) {
         let url = "http://localhost:3000/api/user/".concat(old_login);
 
@@ -853,12 +852,18 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
             login: new_login
         }
 
+        console.log("old login is " + old_login);
+        console.log("new login is " + new_login);
+        console.log("url is " + url);
+
         let res = axios.patch(url, body, { headers })
             .then(res => {
                 console.log("Yay ! Successfully changed login");
+                console.log(res);
             })
             .catch((error) => {
                 console.log("Catched error !");
+                console.log(error);
             }
             )
         //Attention j'ai bien réussi à changer le nom mais maintenant le component n'a plus la bonne props
