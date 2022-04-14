@@ -13,7 +13,7 @@ import { UsersRepository } from '../user/user.repository';
 import { Achievement } from 'src/user/entity/achievement.entity';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([Game]), TypeOrmModule.forFeature([User]), TypeOrmModule.forFeature([UserRelation]), TypeOrmModule.forFeature([Achievement])],
+    imports: [TypeOrmModule.forFeature([Game, User, UserRelation, Achievement])],
     controllers: [GameController],
     providers: [GameService, GameGateway, UserService, UserEvent, UserRelation, UsersRepository],
     exports: [GameService]

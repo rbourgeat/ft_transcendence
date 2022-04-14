@@ -19,13 +19,7 @@ import { Achievement } from 'src/user/entity/achievement.entity';
 
 @Module({
     imports: [
-        TypeOrmModule.forFeature([User]),
-        TypeOrmModule.forFeature([Chat]),
-        TypeOrmModule.forFeature([Message]),
-        TypeOrmModule.forFeature([Participate]),
-        TypeOrmModule.forFeature([UsersRepository]),
-        TypeOrmModule.forFeature([UserRelation]),
-        TypeOrmModule.forFeature([Achievement]),
+        TypeOrmModule.forFeature([User, Chat, Message, Participate, UsersRepository, UserRelation, Achievement]),
         AuthModule,
         UserModule,
         JwtModule.registerAsync({
