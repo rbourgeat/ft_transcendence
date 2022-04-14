@@ -5,9 +5,9 @@ import { Match } from 'src/user/utils/match.decorator';
 @ApiTags('Users')
 export class UpdateUserDto {
     @IsOptional()
-    //@IsEmail()
+    @IsEmail()
     @ApiProperty()
-    login: string;
+    email: string;
 
     //@IsOptional()
     //@MinLength(8)

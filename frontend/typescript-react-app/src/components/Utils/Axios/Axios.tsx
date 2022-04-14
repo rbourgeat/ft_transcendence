@@ -834,10 +834,14 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     ** edit user data (for login)
     */
     patch_user(old_login: string, new_login: string) {
+<<<<<<< Updated upstream
         /*
         let url = "http://localhost:3000/api/user/".concat(new_login);
          let url = "http://localhost:3000/api/user/".concat(new_login);
         */
+=======
+        let url = "http://localhost:3000/api/user/".concat(old_login);
+>>>>>>> Stashed changes
 
         let url = "http://localhost:3000/api/user/".concat(old_login).concat("/changeto/").concat(new_login);
         //@Post(':oldlogin/changeto/:newlogin')
@@ -846,10 +850,16 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
         axios.defaults.headers.post['Accept'] = '*/*';
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 
+<<<<<<< Updated upstream
         /*
         let body = {
             login: new_login
         }
+=======
+        //let body = {
+        //    login: new_login
+        //}
+>>>>>>> Stashed changes
 
         let headers = {
             login: new_login
@@ -859,7 +869,11 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
         console.log("new login is " + new_login);
         console.log("url is " + url);
 
+<<<<<<< Updated upstream
         let res = axios.patch(url)
+=======
+        let res = axios.patch(url, { headers })
+>>>>>>> Stashed changes
             .then(res => {
                 console.log("Yay ! Successfully changed login");
                 console.log(res);
