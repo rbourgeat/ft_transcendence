@@ -1,6 +1,6 @@
-import { HttpException, HttpStatus, Injectable, UnsupportedMediaTypeException, Logger } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, UnsupportedMediaTypeException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Relation, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { User } from 'src/user/entity/user.entity';
 import { UpdateUserDto, CreateUserDtoViaRegistration, User42Dto } from 'src/user/dto/user.dto';
 import { UserEvent } from 'src/user/user.event';
@@ -63,10 +63,22 @@ export class UserService {
 		});
 	}
 
+	async giveRankOnCreation(user: User) {
+		const allUsers = await this.getAllUsers();
+		user.rank = allUsers.length + 1;
+		await this.userRepository.save(user);
+	}
+
+	async triggerAchievement42(user: User) {
+		if (user.login == "norminet")
+			this.saveAchievement(user, "42")
+	}
+
 	async create(userData: CreateUserDtoViaRegistration) {
 		const newUser = await this.userRepository.create(userData);
 		await this.userRepository.save(newUser);
-		this.userEvent.achievement42(newUser);
+		await this.giveRankOnCreation(newUser);
+		await this.triggerAchievement42(newUser);
 		return newUser;
 	}
 
@@ -86,12 +98,13 @@ export class UserService {
 
 	async createUser42(userData: User42Dto) {
 		const user = await this.userRepository.findOne({ email: userData.email });
-		if (user) {
-			console.log("that user already exists");
-			return;
-		}
+		if (user)
+			return console.log("that user already exists");
 		console.log("that user didnt exists, gonna create it");
-		return await this.usersRepository.createUser42(userData)
+		const newUser = await this.usersRepository.createUser42(userData);
+		await this.giveRankOnCreation(newUser);
+		await this.triggerAchievement42(newUser);
+		return newUser;
 	}
 
 	async setTwoFactorAuthenticationSecret(secret: string, userId: number) {
