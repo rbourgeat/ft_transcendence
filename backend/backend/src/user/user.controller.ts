@@ -30,48 +30,24 @@ export class UserController {
         return this.userService.getAllUsers();
     }
 
-    @ApiOperation({ summary: 'Retrieve all users data' })
-    @ApiOkResponse({ description: 'Data received' })
-    @Get('cookie/test')
-    //@UseGuards(JwtAuthenticationGuard)
-    getCookie(@Req() request) {
-        console.log(request.cookies);
-        return request.cookies;
-        //return (response.cookies);
-    }
-
     @ApiOperation({ summary: 'Retrieve {login}\'s data' })
     @ApiOkResponse({ description: 'Data received' })
     @ApiConflictResponse({ description: '{login} does\'t exist' })
     @Get(':login')
     getUserByLogin(@Param('login') login: string) {
-        console.log('Get user ' + login + ' data :v')
-        return this.userService.getUserByLogin(String(login));
+        return this.userService.getUserByLogin(login);
     }
 
     @ApiOperation({ summary: 'Update {login}\'s data' })
     @ApiOkResponse({ description: 'Data updated' })
     @Patch(':login')
     async updateUser(@Param('login') login: string, @Body() user: UpdateUserDto) {
-        console.log('Update user ' + login)
-        return this.userService.updateUser(String(login), user);
+        return this.userService.updateUser(login, user);
     }
 
-    @ApiOperation({ summary: 'Delete {login} profile' })
-    @ApiOkResponse({ description: '{login} deleted' })
-    @Delete(':login')
-    async deleteUser(@Param('login') login: string) {
-        console.log('Delete user ' + login)
-        return this.userService.deleteUser(String(login));
-    }
-
-    /**
-    **  Upload user avatar
-    **/
-
-    @ApiOperation({ summary: 'Upload {login} avatar' }) //endpoint summary on swaggerui
-    @ApiOkResponse({ description: '{login} avatar uploaded' }) //answer sent back
-    @ApiConflictResponse({ description: '{login} avatar conflict' }) //not working atm
+    @ApiOperation({ summary: 'Upload {login} avatar' })
+    @ApiOkResponse({ description: '{login} avatar uploaded' })
+    @ApiConflictResponse({ description: '{login} avatar conflict' })
     @Post('avatar/:login')
     @ApiImageFile('file', true)
     @UseInterceptors(
@@ -84,18 +60,12 @@ export class UserController {
         }),
     )
     async uploadedFile(@Param('login') login: string, @UploadedFile() file) {
-        const response = {
-            login: login,
-            originalname: file.originalname,
-            filename: file.filename,
-        };
-        console.log(response);
         return this.userService.addAvatar(login, file.filename);
     }
 
-    @ApiOperation({ summary: 'Get {fileId} avatar' }) //endpoint summary on swaggerui
-    @ApiOkResponse({ description: '{fileId} avatar displayed' }) //answer sent back
-    @ApiConflictResponse({ description: '{fileId} avatar conflict' }) //not working atm
+    @ApiOperation({ summary: 'Get {fileId} avatar' })
+    @ApiOkResponse({ description: '{fileId} avatar displayed' })
+    @ApiConflictResponse({ description: '{fileId} avatar conflict' })
     @Get(':fileId/avatar')
     async serveAvatar(@Param('fileId') fileId, @Res() res): Promise<any> {
         res.sendFile(fileId, { root: 'upload' });
@@ -106,7 +76,6 @@ export class UserController {
     @ApiConflictResponse({ description: '{status} conflict with {login}' })
     @Post(':login/status/:status')
     async updateStatus(@Param('login') login: string, @Param('status') status: string) {
-        console.log('Update status')
         return this.userService.updateStatus(String(login), String(status));
     }
 
@@ -129,6 +98,13 @@ export class UserController {
     @Get('relation/me/receivedInvitations')
     getReceivedInvitations(@Request() req): Observable<RelationStatusClass[]> {
         return this.userService.getReceivedInvitations(req.user);
+    }
+
+    @ApiOperation({ summary: 'List all received invitation [jwt-protected]' })
+    @UseGuards(JwtAuthenticationGuard)
+    @Get('relation/me/sentInvitations')
+    getSentInvitations(@Request() req): Observable<RelationStatusClass[]> {
+        return this.userService.getSentInvitations(req.user);
     }
 
     @ApiOperation({ summary: 'List all received invitation [jwt-protected]' })
@@ -183,16 +159,14 @@ export class UserController {
     @ApiOperation({ summary: 'Returns list of achievements of a specific user [jwt-protected]' })
     @UseGuards(JwtAuthenticationGuard)
     @Get('achievements/:login')
-    getAchievementsOf(@Param('login') login: string)/*: Observable<Achievement[]>*/ {
-        console.log('get specific achievement of user' + login);
+    getAchievementsOf(@Param('login') login: string) {
         return this.userService.getAchievementsOf(login);
     }
 
     @ApiOperation({ summary: 'Returns list of achievements of a specific user [jwt-protected]' })
     @UseGuards(JwtAuthenticationGuard)
     @Get('stats/:login')
-    getStats(@Param('login') login: string)/*: Observable<Achievement[]>*/ {
-        console.log('get stats of user ' + login);
+    getStats(@Param('login') login: string) {
         return this.userService.getStats(login);
     }
 }

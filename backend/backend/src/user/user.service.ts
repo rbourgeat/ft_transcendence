@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable, UnsupportedMediaTypeException, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Relation, Repository } from 'typeorm';
 import { User } from 'src/user/entity/user.entity';
 import { UpdateUserDto, CreateUserDtoViaRegistration, User42Dto } from 'src/user/dto/user.dto';
 import { UserEvent } from 'src/user/user.event';
@@ -23,7 +23,6 @@ export class UserService {
 		private readonly userRelationRepository: Repository<UserRelation>,
 		@InjectRepository(Achievement)
 		private achievementRepository: Repository<Achievement>,
-		//private readonly logger: Logger = new Logger('UserService')
 	) { }
 
 	getAllUsers() {
@@ -38,7 +37,6 @@ export class UserService {
 	}
 
 	async getUserByLogin42(login: string) {
-		console.log('getuserbylogin42:' + login);
 		const user = await this.userRepository.findOne({ login42: login });
 		if (user)
 			return user;
@@ -51,13 +49,6 @@ export class UserService {
 		if (updatedUser)
 			return updatedUser;
 		throw new HttpException('User not found', HttpStatus.NOT_FOUND);
-	}
-
-	async deleteUser(login: string) {
-		const deleteResponse = await this.userRepository.delete(login);
-		if (!deleteResponse.affected) {
-			throw new HttpException('Post not found', HttpStatus.NOT_FOUND);
-		}
 	}
 
 	async updateStatus(login: string, s: string) {
@@ -73,7 +64,6 @@ export class UserService {
 	}
 
 	async create(userData: CreateUserDtoViaRegistration) {
-		console.log('went by create in user service');
 		const newUser = await this.userRepository.create(userData);
 		await this.userRepository.save(newUser);
 		this.userEvent.achievement42(newUser);
@@ -88,15 +78,13 @@ export class UserService {
 	}
 
 	async getById(id: number) {
-		console.log(id);
 		const user = await this.userRepository.findOne({ id });
 		if (user)
 			return user;
 		throw new HttpException('User with this id does not exist', HttpStatus.NOT_FOUND);
 	}
 
-	async createUser42(userData: User42Dto)/*: Promise<User> */ {
-		console.log("enter in createUSer42 in user service");
+	async createUser42(userData: User42Dto) {
 		const user = await this.userRepository.findOne({ email: userData.email });
 		if (user) {
 			console.log("that user already exists");
@@ -113,32 +101,22 @@ export class UserService {
 	}
 
 	async turnOnTwoFactorAuthentication(userId: number) {
-		console.log('has set 2fa to true for user');
 		return this.usersRepository.update(userId, {
 			isTwoFactorAuthenticationEnabled: true
 		});
 	}
 
 	async turnOffTwoFactorAuthentication(userId: number) {
-		console.log('has set 2fa to false for user');
 		return this.usersRepository.update(userId, {
 			isTwoFactorAuthenticationEnabled: false
 		});
 	}
 
-	async findUserById(id: number) {
-		console.log('we search for user: ' + id);
-		const user = await this.userRepository.findOne({ id: id });
-		if (user)
-			return user;
-		else {
-			console.log(user + ' not found');
-			return;
-		}
-	}
-
 	/**
-	 * check in db if we find an invitation already exist with the 2 user
+	 * Check if there is a relation saved in the db between 2 users
+	 * @param creator
+	 * @param receiver
+	 * @returns true/false
 	 */
 	async hasExistingRelation(creator: User, receiver: User) {
 		const invite = await this.userRelationRepository.findOne({
@@ -152,19 +130,16 @@ export class UserService {
 		return false;
 	}
 
-	/*
-	* 1.check self invite
-	* 2.check if receiver exists
-	* 3.check if no invite to him / request from him already exist
-	* 4.add new invitation
-	*/
+	/**
+	 * Send a relation invitation to someone.
+	 * @param receiverLogin
+	 * @param creator
+	 * @returns
+	 */
 	async sendInvitation(receiverLogin: string, creator: User) {
-		if (receiverLogin == creator.login)
-			return console.log('It is not possible to add yourself!');
 		const receiver = await this.getUserByLogin(receiverLogin);
-		if (!receiver)
-			return console.log('user not found');
-		console.log(creator.login + ' try to invite ' + receiver.login);
+		if (!receiver || receiverLogin == creator.login)
+			return;
 		if (await this.hasExistingRelation(creator, receiver)) {
 			const inviteFromHim = await this.userRelationRepository.findOne({ creator: receiver, receiver: creator });
 			if (inviteFromHim && inviteFromHim.status == 'blocked')
@@ -189,89 +164,42 @@ export class UserService {
 		this.userRelationRepository.save(newRelation);
 	}
 
-	getInvitationById(invitationId: number) {
-		return this.userRelationRepository.findOne({ where: [{ id: invitationId }] });
-	}
-
-
-	/*
-	* update the status of the request only
-	*/
-
-	/*
-	async answerToInvitation(statusResponse: RelationStatus, invitationId: number, user: User) {
-		await this.userRelationRepository.update(invitationId, { status: statusResponse })
-
-		//achievement check:
-		if (statusResponse == "accepted") {
-			const friendsList = await this.getFriends(user);
-			console.log('my friend list has a length:' + friendsList.length);
-			if (friendsList.length == 1) {
-				console.log(user.login + " will unlocked friend achievement");
-				this.userEvent.achievementFriend(user); //add achievemnt for the user answering
-			}
-
-			const invitation = await this.userRelationRepository.findOne({
-				where: [{ id: invitationId }],
-				relations: ['creator']
-			});
-			console.log('hello');
-			const friend = await this.getUserByLogin(invitation.creator.login);
-			const otherfriendsList = await this.getFriends(friend);
-			console.log('his friend list has a length:' + friendsList.length);
-			if (otherfriendsList.length == 1) {
-				console.log(friend + " will also unlocked friend achievement");
-				this.userEvent.achievementFriend(friend)//add achievement for the user sending
-			}
+	async triggerFriendAchievement(user: User) {
+		const friendsList = await this.getFriends(user);
+		console.log('Friend list of' + user.login + ' has a length:' + friendsList.length);
+		if (friendsList.length == 1) {
+			console.log(user.login + " will unlocked friend achievement");
+			this.userEvent.achievementFriend(user);
 		}
-		const friendRequest = await this.getInvitationById(invitationId)
-		return friendRequest;
 	}
-*/
 
-	async answerToInvitation(statusResponse: RelationStatus, creator: string, user: User) {
+	async answerToInvitation(statusResponse: RelationStatus, creatorLogin: string, user: User) {
 
-		const creatorA = await this.getUserByLogin(creator);
+		const creator = await this.getUserByLogin(creatorLogin);
 		const relation = await this.userRelationRepository.findOne({
-			where: [{ creator: creatorA, receiver: user, status: 'pending' }],
+			where: [{ creator: creator, receiver: user, status: 'pending' }],
 			relations: ['creator', 'receiver']
 		})
 
-		const invitationId = relation.id;
-		console.log(relation);
-		console.log(relation.id);
-
-		await this.userRelationRepository.update(invitationId, { status: statusResponse })
-
-
-		//achievement check:
-		if (statusResponse == "accepted") {
-			const friendsList = await this.getFriends(user);
-			console.log('my friend list has a length:' + friendsList.length);
-			if (friendsList.length == 1) {
-				console.log(user.login + " will unlocked friend achievement");
-				this.userEvent.achievementFriend(user); //add achievemnt for the user answering
-			}
-
-			const invitation = await this.userRelationRepository.findOne({
-				where: [{ id: invitationId }],
-				relations: ['creator']
-			});
-			console.log('hello');
-			const friend = await this.getUserByLogin(invitation.creator.login);
-			const otherfriendsList = await this.getFriends(friend);
-			console.log('his friend list has a length:' + friendsList.length);
-			if (otherfriendsList.length == 1) {
-				console.log(friend + " will also unlocked friend achievement");
-				this.userEvent.achievementFriend(friend)//add achievement for the user sending
+		if (relation) {
+			relation.status = statusResponse;
+			await this.userRelationRepository.save(relation);
+			if (statusResponse == "accepted") {
+				await this.triggerFriendAchievement(relation.creator);
+				await this.triggerFriendAchievement(relation.receiver);
 			}
 		}
-		const friendRequest = await this.getInvitationById(invitationId)
-		return friendRequest;
+		return relation;
 	}
-	/**
-	 * find all invite where receiver is user, relations:[] allows to send the user element details :)
-	 */
+
+	getSentInvitations(currentUser: User): Observable<RelationInvitation[]> {
+		return from(this.userRelationRepository.find({
+			where: [{ creator: currentUser }],
+			relations: ['receiver', 'creator']
+		}),
+		);
+	}
+
 	getReceivedInvitations(currentUser: User): Observable<RelationInvitation[]> {
 		return from(this.userRelationRepository.find({
 			where: [{ receiver: currentUser }],
