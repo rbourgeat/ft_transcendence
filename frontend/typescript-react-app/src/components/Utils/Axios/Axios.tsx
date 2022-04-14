@@ -563,25 +563,31 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
             })
     }
 
-    //TODO: a tester
     delete_relation_unblock(login: string, extra: string) {
         let url = "http://localhost:3000/api/user/relation/unblock/".concat(login);
 
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
         axios.defaults.withCredentials = true;
 
+        let toast = new ToastAlerts(null);
+
         axios.delete(url)
             .then(res => {
                 console.log("Succesfully unblocked target friend");
                 console.log(res);
-                let id = "minidisplay".concat("_" + login + "_" + extra);
-                console.log("id looked is " + id);
-                let elem = document.getElementById(id);
-                elem.parentNode.removeChild(elem);
+                if (extra != "")
+                {
+                    let id = "minidisplay".concat("_" + login + "_" + extra);
+                    console.log("id looked is " + id);
+                    let elem = document.getElementById(id);
+                    elem.parentNode.removeChild(elem);
+                }
+                window.top.location = "http://localhost:3030/profile/".concat(login);
             })
             .catch((error) => {
                 console.log("Error while unblocking target friend");
                 console.log(error);
+                toast.notifyDanger("Error while unblocking contact !");
             })
     }
 

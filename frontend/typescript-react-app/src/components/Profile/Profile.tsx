@@ -144,14 +144,15 @@ export default function Profile() {
 				}
 				else if (relation.status == "pending" && relation.receiver == login)
 				{
-					console.log("You were invited by that user !");
-					setReceivedInvitation(true);
+					console.log("You invited that user");
+					//setReceivedInvitation(true);
+					setSentInvitation(true);
 					setPendingInvite(true);
 				}
 				else if (relation.status == "pending" && relation.sender == login)
 				{
-					console.log("You sent an invitation !");
-					setSentInvitation(true);
+					console.log("This user invited you");
+					setReceivedInvitation(true);
 					setPendingInvite(true);
 				}
 				else if (relation.status == "blocked" && relation.receiver == login)
@@ -234,8 +235,11 @@ export default function Profile() {
 
 	function unblock()
 	{
-		let toast = new ToastAlerts(null);
-		toast.notifyDanger("Not implemented yet");
+		//let toast = new ToastAlerts(null);
+		//toast.notifyDanger("Not implemented yet");
+
+		let ax = new MyAxios(null);
+		ax.delete_relation_unblock(login, "");
 	}
 
 	function remove()
