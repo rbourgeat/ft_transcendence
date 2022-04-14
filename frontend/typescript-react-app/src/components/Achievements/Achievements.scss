@@ -1,21 +1,17 @@
 @use "../../variables";
 
-.card, .card-lock, .card-unlocked {
+.card, .card--locked, .card--unlocked {
     width: 18rem !important;
     margin: 20px !important;
     background-color: white;
     border: 0.1rem solid variables.$lightgrey;
-    filter: drop-shadow(0 0 0.2rem rgb(32, 123, 114));
+    filter: drop-shadow(0 0 0.3rem rgb(0, 0, 0));
+    //position:sticky;
 }
 
-//.card--locked {
-//    border: 0.1rem solid variables.$lightgrey;
-//    height: 100% important;
-//}
-
-//.card--unlocked {
-//    border: 0.1rem solid rgb(32, 123, 114);
-//}
+.card--unlocked {
+ filter: drop-shadow(0 0 0.6rem rgb(32, 123, 114)) !important;
+}
 
 .card-text {
     color: black !important;
@@ -39,7 +35,7 @@
 
 .card-text {
     font-family: variables.$basic-font;
-    text-align: center;
+    text-align: left;
     font-size: 14px;
 }
 
@@ -57,12 +53,12 @@
 
 .checkmark {
 	//margin-left: 350px;
-	//margin-top: 70px;
-    margin-left: 75%;
+	margin-top: 15%;
+    margin-left: 80%;
     font-size: 60px;
     color: rgb(32, 123, 114);
-    transform: rotate(5deg);
-
+    transform: rotate(-5deg);
+    filter: drop-shadow(0px 0px 10px rgb(84, 207, 232));
     position: absolute;
     left: 0;
     top: 0;

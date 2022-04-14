@@ -72,15 +72,17 @@ export default function User(props: UserfuncProps) {
 					setlogin42(res.data.login42);
 					localStorage.setItem("login", res.data.login);
 					localStorage.setItem("login42", res.data.login42);
-					setLevel(res.data.percent_to_next_lvl);
-					setNextLevel(res.data.level);
+
+					setNextLevel(res.data.percent_to_next_lvl);
+					setLevel(res.data.level);
 					setPoints(res.data.points);
 					//setRank(res.data.rank);
 					setTotalGames(res.data.total_games);
 					setLoss(res.data.total_loss);
-					setWins(res.data.wins);
+					setWins(res.data.total_wins);
 					setRatio(res.data.win_loss_ration);
 					setXp(res.data.xp);
+
 					if (res.data.status == "offline")
 						setColor("grey")
 					if (res.data.status == "online") {
@@ -150,7 +152,6 @@ export default function User(props: UserfuncProps) {
 											<Achievements login={username} />
 											<br />
 											<Badge
-												//login={props.login}
 												total_wins={wins}
 												total_loss={loss}
 												total_games={totalGames}
@@ -158,6 +159,7 @@ export default function User(props: UserfuncProps) {
 												xp={xp}
 												points={points}
 												to_next={nextlevel}
+												level={level}
 											/>
 											<br />
 											<MatchHistory login={username} />
