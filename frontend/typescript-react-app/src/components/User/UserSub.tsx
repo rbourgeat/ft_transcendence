@@ -74,15 +74,17 @@ export default function User(props: UserfuncProps) {
 					setlogin42(res.data.login42);
 					localStorage.setItem("login", res.data.login);
 					localStorage.setItem("login42", res.data.login42);
-					setLevel(res.data.percent_to_next_lvl);
-					setNextLevel(res.data.level);
+
+					setNextLevel(res.data.percent_to_next_lvl);
+					setLevel(res.data.level);
 					setPoints(res.data.points);
 					//setRank(res.data.rank);
 					setTotalGames(res.data.total_games);
 					setLoss(res.data.total_loss);
-					setWins(res.data.wins);
+					setWins(res.data.total_wins);
 					setRatio(res.data.win_loss_ration);
 					setXp(res.data.xp);
+
 					if (res.data.status == "offline")
 						setColor("grey")
 					if (res.data.status == "online") {
@@ -127,49 +129,50 @@ export default function User(props: UserfuncProps) {
 				<div className="row d-flex justify-content-center text-center">
 					<div className="col-9">
 						<div className="user--stats" key={username}>
-						{loaded == false ?
-										<div className="spinner-border m-5" role="status">
-											<span className="sr-only">Loading...</span>
-										</div>
-										:
-							<>
-								<h2 className="own-profile">My profile</h2>
-								<br />
-								<img id={username} className="profile--pic" height="80" width="80"/>
-								{/*{renderImage(username)}*/}
-								{/*<br />*/}
-								<svg className="log--color_profile" height="40" width="40">
-									<circle cx="20" cy="20" r="15" fill={color} stroke="white" style={{ strokeWidth: '3' }} />
-								</svg>
-								<p className="status-text">{status}</p>
-								{/*<br />*/}
-								<h2 id="user--data">{username}</h2>
-								<div className="col-9 mx-auto text-center" id="input-div">
+							{loaded == false ?
+								<div className="spinner-border m-5" role="status">
+									<span className="sr-only">Loading...</span>
+								</div>
+								:
+								<>
+									<h2 className="own-profile">My profile</h2>
 									<br />
-									<Achievements login={username}/>
-									<br />
-									<Badge
-										//login={props.login}
-										total_wins={wins}
-										total_loss={loss}
-										total_games={totalGames}
-										win_loss_ratio={ratio}
-										xp={xp}
-										points={points}
-										to_next={nextlevel}
-										/>
-									<br />
-									<MatchHistory login={username}/>
-									<br/>
+									<img id={username} className="profile--pic" height="80" width="80" />
+									{/*{renderImage(username)}*/}
 									{/*<br />*/}
+									<svg className="log--color_profile" height="40" width="40">
+										<circle cx="20" cy="20" r="15" fill={color} stroke="white" style={{ strokeWidth: '3' }} />
+									</svg>
+									<p className="status-text">{status}</p>
+									{/*<br />*/}
+									<h2 id="user--data">{username}</h2>
+									<div className="col-9 mx-auto text-center" id="input-div">
+										<br />
+										<Achievements login={username} />
+										<br />
+										<Badge
+											//login={props.login}
+											total_wins={wins}
+											total_loss={loss}
+											total_games={totalGames}
+											win_loss_ratio={ratio}
+											xp={xp}
+											points={points}
+											to_next={nextlevel}
+											level={level}
+										/>
+										<br />
+										<MatchHistory login={username} />
+										<br />
+										{/*<br />*/}
 									</div>
 								</>
 
-						}
-							</div>
+							}
 						</div>
 					</div>
 				</div>
 			</div>
+		</div>
 	);
 };

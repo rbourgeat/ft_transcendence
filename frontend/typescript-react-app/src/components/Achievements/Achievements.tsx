@@ -53,89 +53,77 @@ export default function Achievement(props: AchievementsProps) {
 
 
     //TODO: attention dans les achievements il y a une erreur si je change de username !
-    const style = { height: "40", width: "40"}
+    const style = { height: "40", width: "40" }
     return (
         <div id="Leaderboard">
             <div id="achievements">
-                    <div className="row d-flex justify-content-center text-center" id="row-cards">
-                        <h1 id="achievements--title">Achievements</h1>
-                    </div>
-                    <div className="row" id="first-row">
-                        <div className="card-group" id="group--one">
-                            <div className="card" >
-                                <div className={isUnlocked("BeAdmin") ? "card--unlocked" : "card--locked"}>
-                                    {isUnlocked("BeAdmin") ? <CheckMark /> : ""}
-                                    <div className="card-body">
-                                        <h5 className="card-title">Let's negotiate</h5>
-                                        <p className="card-text">Admin of a channel</p>
-                                        {/*<GiPeaceDove style={style} />*/}
-                                    </div>
-                                </div>
+                <div className="row d-flex justify-content-center text-center" id="row-cards">
+                    <h1 id="achievements--title">Achievements</h1>
+                </div>
+                <div className="row" id="first-row">
+                    <div className="card-group" id="group--one">
+                        <div className={isUnlocked("BeAdmin") ? "card card--unlocked" : "card card--locked"}>
+                            {isUnlocked("BeAdmin") ? <CheckMark /> : ""}
+                            <div className="card-body">
+                                <h5 className="card-title">Let's talk</h5>
+                                <p className="card-text">Admin of a channel</p>
+                                {/*<GiPeaceDove style={style} />*/}
                             </div>
+                        </div>
 
-                            <div className="card">
-                                <div className={isUnlocked("5Row") ? "card--unlocked" : "card--locked"}>
-                                    {isUnlocked("5Row") ? <CheckMark /> : ""}
-                                    <div className="card-body">
-                                        <h5 className="card-title">Good player</h5>
-                                        <p className="card-text">Win 5 games</p>
-                                        {/*<svg className="test-icon">{<MdLocalFireDepartment />}</svg>*/}
-                                        {/*<MdLocalFireDepartment style={style} />*/}
-                                    </div>
-                                </div>
+                        <div className={isUnlocked("5Row") ? "card card--unlocked" : "card card--locked"}>
+                            {isUnlocked("5Row") ? <CheckMark /> : ""}
+                            <div className="card-body">
+                                <h5 className="card-title">On fire</h5>
+                                <p className="card-text">Win 5 games</p>
+                                {/*<svg className="test-icon">{<MdLocalFireDepartment />}</svg>*/}
+                                {/*<MdLocalFireDepartment style={style} />*/}
                             </div>
+                        </div>
 
-                            <div className="card">
-                                <div className={isUnlocked("1000Game") ? "card--unlocked" : "card--locked"}>
-                                {isUnlocked("1000Game") ? <CheckMark /> : ""}
-                                <div className="card-body">
-                                    <h5 className="card-title">I'm a g4m3r</h5>
-                                    <p className="card-text">Play 1000 games</p>
-                                    {/*<svg className="test-icon">{<GrGamepad />}</svg>*/}
-                                    {/*<GrGamepad style={style} />*/}
-                                </div>
-                            </div>
+                        <div className={isUnlocked("1000Game") ? "card card--unlocked" : "card card--locked"}>
+                            {isUnlocked("1000Game") ? <CheckMark /> : ""}
+                            <div className="card-body">
+                                <h5 className="card-title">True g4m3r</h5>
+                                <p className="card-text">Play 1000 games</p>
+                                {/*<svg className="test-icon">{<GrGamepad />}</svg>*/}
+                                {/*<GrGamepad style={style} />*/}
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <div className="row" id="second-row">
-                        <div className="card-group">
-                            <div className="card">
-                                <div className={isUnlocked("AddFriend") ? "card--unlocked" : "card--locked"}>
-                                    {isUnlocked("AddFriend") ? <CheckMark /> : ""}
-                                    <div className="card-body">
-                                        <h5 className="card-title">How I met</h5>
-                                        <p className="card-text">Have one friend</p>
-                                        {/*<FaUserFriends style={style} />*/}
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="card">
-                                <div className={isUnlocked("FirstGame") ? "card--unlocked" : "card--locked"}>
-                                    {isUnlocked("FirstGame") ? <CheckMark /> : ""}
-                                    <div className="card-body">
-                                        <h5 className="card-title">I am not a noob</h5>
-                                        <p className="card-text">Play your first game</p>
-                                        {/*<svg className="test-icon">{<GiPowerButton />}</svg>*/}
-                                        {/*<GiPowerButton style={style} />*/}
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="card">
-                                <div className={isUnlocked("42") ? "card--unlocked" : "card--locked"}>
-                                    {isUnlocked("42") ? <CheckMark /> : ""}
-                                    <div className="card-body">
-                                        <h5 className="card-title">Mistery</h5>
-                                        <p className="card-text">????????????????</p>
-                                        {/*<svg className="test-icon">{<FaCat />}</svg>*/}
-                                        {/*<FaCat style={style} />*/}
-                                    </div>
-                                </div>
+                <div className="row" id="second-row">
+                    <div className="card-group">
+                        <div className={isUnlocked("AddFriend") ? "card card--unlocked" : "card card--locked"}>
+                            {isUnlocked("AddFriend") ? <CheckMark /> : ""}
+                            <div className="card-body">
+                                <h5 className="card-title">How I met</h5>
+                                <p className="card-text">Have one friend</p>
+                                {/*<FaUserFriends style={style} />*/}
                             </div>
                         </div>
+
+                        <div className={isUnlocked("FirstGame") ? "card card--unlocked" : "card card--locked"}>
+                            {isUnlocked("FirstGame") ? <CheckMark /> : ""}
+                            <div className="card-body">
+                                <h5 className="card-title">The Pong</h5>
+                                <p className="card-text">Play your first game</p>
+                                {/*<svg className="test-icon">{<GiPowerButton />}</svg>*/}
+                                {/*<GiPowerButton style={style} />*/}
+                            </div>
+                        </div>
+
+                        <div className={isUnlocked("42") ? "card card--unlocked" : "card card--locked"}>
+                            {isUnlocked("42") ? <CheckMark /> : ""}
+                            <div className="card-body">
+                                <h5 className="card-title">Mistery</h5>
+                                <p className="card-text">????????????????</p>
+                                {/*<svg className="test-icon">{<FaCat />}</svg>*/}
+                                {/*<FaCat style={style} />*/}
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div >
