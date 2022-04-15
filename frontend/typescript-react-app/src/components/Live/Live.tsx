@@ -42,8 +42,8 @@ export default function Live() {
 			adversaires.push(b[2]);
 			display();
 		}
-		
-		
+
+
 	});
 
 	useEffect(() => {
@@ -251,12 +251,22 @@ export default function Live() {
 		}
 	});
 
+	//Attention sur les autres pages ont a le texte en anglais
 	return(
-		<div>
+		<div id="live-page">
 			<Nav/>
-			<div id="titre">📺 Liste des Lives</div>
-			{/* <button type='button' id='watch' onClick={() => gotoGame()}>Watch</button> */}
-				<div id="content"></div>
+			<div className="container">
+				<div className="row d-flex justify-content-center text-center">
+					<div className="col-9">
+						<div className="live--div">
+
+							<p id="titre">📺 Live watch</p>
+							{/* <button type='button' id='watch' onClick={() => gotoGame()}>Watch</button> */}
+							<div id="content"></div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 		// <>
 		// {localStorage.getItem("loggedIn") != "true" ?

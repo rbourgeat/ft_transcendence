@@ -1,7 +1,6 @@
 @use "../../variables";
 
 #box {
-    background-color: white;
     color: black;
     margin: 2vw;
     padding: 2vw;
@@ -9,28 +8,40 @@
     display: inline-block;
 }
 
-#content {
-    padding: 2vw;
-    display: block;
-}
+//#content {
+//    padding: 0.5vw;
+//    display: block;
+//}
 
 #watch {
     padding: 5px;
 }
 
 #pong {
-   font-size: 8vw;
+    font-size: 8vw;
 }
 
 #vs {
-    font-size: 3vw;
+    //font-size: 1vw;
+    font-size: 16px;
     font-weight: bold;
- }
+    border: grey !important;
+}
+
+.live--div {
+    background: white !important;
+    border-radius: variables.$border-radius-big;
+    border: 0.1rem solid #f9f9f9;
+    padding: 30px;
+}
 
 #titre {
-    font-size: 5vw;
-    font-weight: bold;
-    margin-left: 20vw;
+    //font-size: 1vw;
+    font-size: 18px;
+    color: black;
+    //font-weight: bold;
+    font-family: variables.$big-font
+    //margin-left: 20vw;
 }
 
 #dark-canvas {
