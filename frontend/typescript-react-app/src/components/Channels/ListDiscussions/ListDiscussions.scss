@@ -1,11 +1,8 @@
 @use "../../../variables";
 
 #ListDiscussions {
-	border: 0.1rem solid grey;
-	margin-top: 20px;
 	border-radius: variables.$border-radius;
 	background-color: white;
-	height: 30rem;
 }
 
 #ListDiscussions > * {
@@ -14,15 +11,15 @@
 
 #discussions--title {
 	font-family: variables.$basic-font;
-	margin-top: 15px;
+	//margin-top: 15px;
 }
 
 #sub--div {
-	overflow-y: scroll;
-	overflow-x: scroll;
+	//overflow-y: scroll;
+	//overflow-x: scroll;
 
 	padding: 35px;
-	height: 38.3rem;
+	//height: 38.3rem;
 	color: black !important;
 }
 

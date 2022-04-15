@@ -17,8 +17,14 @@ interface ChatProps {
 export default function Channels(props: ChatProps) {
 	const calledOnce = React.useRef(false);
 	const [username, setUsername] = React.useState("");
+	const [socket, setSocket] = React.useState(io("http://localhost:3000/chat", { query: { username: username } }));
 
+	/*
+	let socket = io("http://localhost:3000/chat", { query: { username: username } });
+	setSocket(socket);
+*/
 	useEffect(() => {
+
 		async function getUser() {
 			let url = "http://localhost:3000/api/auth/";
 			let username = "";
@@ -39,7 +45,7 @@ export default function Channels(props: ChatProps) {
 		calledOnce.current = true;
 	}, []);
 
-	const [activeChannel, updateActiveChannel] = React.useState(0);
+	const [activeChannel, updateActiveChannel] = React.useState(1);
 	const [chanUsers, updateChanUsers] = React.useState([]);
 
 	return (
@@ -56,8 +62,8 @@ export default function Channels(props: ChatProps) {
 				draggable
 				pauseOnHover
 			/>
-			<div className="container" id="chat--container">
-				<div className="chat-container text-center">
+			<div className="container">
+				<div className="chat-container">
 					<div className="chat-channel-menu">
 						<CreateChan endpoint="http://localhost:3000/api/chat" action="Create" />
 						<CreateChan endpoint="http://localhost:3000/api/chat/join" action="Join" />
@@ -70,12 +76,13 @@ export default function Channels(props: ChatProps) {
 						<ListPubChannels />
 					</div>
 					<div className="chat--messages">
-						<ListDiscussions activeChannel={activeChannel} username={username} />
-						<TypingMessage />
+						<ListDiscussions activeChannel={activeChannel} username={username} socket={socket} />
 					</div>
-					<ListParticipant activeChannel={activeChannel} />
+
 				</div>
 			</div>
 		</div>
 	);
 }
+
+//<ListParticipant activeChannel={activeChannel} />

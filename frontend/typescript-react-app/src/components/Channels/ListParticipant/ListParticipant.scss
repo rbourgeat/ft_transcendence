@@ -1,8 +1,9 @@
 @use "../../../variables";
 
 #ListParticipant {
+	width: 20%;
 	border: 0.1rem solid grey;
-	padding: 30px;
+	//padding: 30px;
 	border-radius: variables.$border-radius;
 	background-color: white;
 	color: black;
@@ -11,6 +12,7 @@
 #participant--title {
 	font-size: 12px;
 }
+
 
 #sub--div {
 	overflow-y: scroll;
