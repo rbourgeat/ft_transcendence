@@ -15,13 +15,71 @@
 }
 
 #participant--title {
-	font-size: 12px;
+	font-size: 14px;
+	background: #f9f9f9;
+	border: 0.1rem solid #f9f9f9;
+	height: 40px;
+	text-align: center;
+	padding-top: 15px;
+	padding-bottom: 35px;
+	//position: fixed;
 }
 
 
 #sub--div {
 	overflow-y: scroll;
+	max-height: 70%;
+	min-height: 70%;
+	//padding: 0px;
+	//margin: 0px;
+	border: 0.1rem solid #f9f9f9;
 }
+
+#invite--button, #admin--buton {
+	width: 100%;
+	position: sticky;
+	border-radius: 0px !important;
+	margin: 0.1px !important;
+	//margin-right: 0.2px !important;
+	//margin-left: 0.2px !important;
+	color: white !important;
+	//padding: 2px !important;
+	//margin: 0px !important;
+	//padding: 2px !important;
+	//position: fixed;
+}
+
+#row--buttons_chat, #row--buttons_chat > *, #row--buttons_danger, #row--buttons_danger > *, #row--buttons_invite, #row--buttons_invite > *,  #row--buttons_admin, #row--buttons_admin > * {
+	border-radius: 0px !important;
+	margin: 0.1px !important;
+	padding: 2px !important;
+	//width: 100% !important;
+	//margin: 0px !important;
+	//width: 100% !important;
+}
+
+//#invite--button {
+//	color: white !important;
+//}
+
+#players-channel-button, #players-dm-button
+{
+	//border: 0.1rem solid red;
+	width: 100% !important;
+	margin: 0.1px !important;
+	border-radius: 0px !important;
+	//position: absolute;
+	position: sticky;
+}
+
+//.buttons_div {
+//	margin: 0.1px !important;
+//}
+
+//.buttons_div > button {
+//	position: fixed;
+//	width: 100%;
+//}
 
 #roles--title {
 	margin-bottom: 20px;
