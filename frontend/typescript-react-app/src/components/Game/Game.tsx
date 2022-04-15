@@ -130,9 +130,9 @@ export default function Game() {
 	var game;
 	var anim;
 	// On peut changer les dimensions de la balle et des joueurs, ex: autres modes de jeux
-	var PLAYER_HEIGHT = 80 * size.height / 600;
-	var PLAYER_WIDTH = 10 * size.width / 600;
-	var BALL_HEIGHT = 10 * size.width / 600;
+	var PLAYER_HEIGHT = 80;
+	var PLAYER_WIDTH = 10;
+	var BALL_HEIGHT = 10;
 	var BALL_SPEED = 2;
 	var BALL_ACCELERATE = true;
 	function draw() {
@@ -362,13 +362,13 @@ export default function Game() {
 							{isActive ?
 								<Form>
 									<Form.Group>
-										<Form.Select aria-label="Modes de jeux:" onChange={e => chanScopeSet(e.target.value)}>
-											<option>Modes de jeux:</option>
-											<option selected={true} value="original">Original (1972)</option>
-											<option value="bigball">Big Ball (Facile)</option>
-											<option value="blitz">Blitz (Balle Rapide)</option>
-											<option value="slow">Slow (Balle Lente)</option>
-											<option value="cube">Cube World (All is cubic)</option>
+										<Form.Select aria-label="Modes de jeux:" defaultValue="original" onChange={e => chanScopeSet(e.target.value)}>
+												<option>Modes de jeux:</option>
+												<option value="original">Original (1972)</option>
+												<option value="bigball">Big Ball (Facile)</option>
+												<option value="blitz">Blitz (Balle Rapide)</option>
+												<option value="slow">Slow (Balle Lente)</option>
+												<option value="cube">Cube World (All is cubic)</option>
 										</Form.Select>
 									</Form.Group>
 								</Form>
