@@ -1,13 +1,93 @@
 @use "../../../variables";
 
 #listChannels {
-	//background-color: white;
-	//color: black;
-	//border-radius: variables.$border-radius;
+	border-radius: 0px !important;
+	background: white !important;
+	position: sticky;
+	border: 0.1rem solid #f9f9f9 !important;
+	padding: 0px !important;
+	margin: 0px !important;
+	//min-width: 300px;
+	//max-width: 300px;
 }
 
-#channel--list {
+#channel--col {
+	border-radius: 0px !important;
+	//min-height: 700px !important;
+	//max-height: 700px !important;
+	padding: 0px !important;
+	margin: 0px !important;
+	border: 0.1rem solid #f9f9f9 !important;
+	text-align: center;
+}
+
+.quick--actions {
+	font-family: variables.$basic-font;
+	font-size: 14px;
+}
+
+.title--channel--col {
+	border: 0.1rem solid grey;
+	padding: 0px !important;
+	margin: 0px !important;
+	border: 0.1rem solid #f9f9f9 !important;
+	position: sticky;
+	background-color: #f9f9f9 !important;
 	color: black;
+}
+
+.add-channel-a {
+	min-height: 40px !important;
+	background-color: #f9f9f9 !important;
+	border-radius: #f9f9f9 !important;
+}
+
+#createchannel-button {
+	width: 100% !important;
+	height: 100% !important;
+	border: 0.1rem solid #f9f9f9;
+	position: sticky;
+	border-radius: 0px;
+	margin: 0px !important;
+	position: sticky;
+}
+
+.channels-title {
+	font-family: variables.$big-font;
+	padding-top: 10px;
+	height: 45px;
+	padding-right: 10px;
+	padding-left: 10px;
+	font-size: 12px;
+	border-radius: 0px !important;
+	margin: 0px;
+	font-weight: 900 !important;
+}
+
+.send--dm_div {
+	width: 100% !important;
+	height: 100% !important;
+	border-radius: 0px;
+	bottom: 0 !important;
+	border: #f9f9f9 !important;
+}
+
+#send--dm , #display--channels {
+	width: 100% !important;
+	height: 100% !important;
+	background-color: #025d93 !important;
+	position: sticky;
+	margin: 0px !important;
+	font-family: variables.$basic-font;
+	color: white;
+	border: 0.1rem solid #f9f9f9 !important;
+	border-radius: 0px;
+}
+
+.displaying-div {
+	border: 0.1rem solid #f9f9f9 !important;
+	min-height: 580px !important;
+	max-height: 580px !important;
 }
 
 #list--channels--title {
@@ -18,35 +98,20 @@
 	text-align: justify;
 }
 
-#list--channels--ul > * {
-	color: black;
-	font-family: variables.$basic-font;
-	padding-bottom: 10px;
-	//margin-left: 5%;
-	//text-align: left;
-}
+//#list--channels--ul > * {
+//	color: black;
+//	font-family: variables.$basic-font;
+//}
 
-#channel--col {
-	//background-color: white;
-	border-radius: variables.$border-radius;
-}
+//#quick--actions {
+//	background-color: variables.$grey;
+//	padding: 20px;
+//	padding-left: 100px;
+//	padding-right: 100px;
+//	padding-bottom: 40px;
+//	border-radius: variables.$border-radius;
+//}
 
-#quick--actions {
-	//background-color: white;
-	background-color: variables.$grey;
-	padding: 20px;
-	padding-left: 100px;
-	padding-right: 100px;
-	padding-bottom: 40px;
-	border-radius: variables.$border-radius;
-}
-
-#quick--actions > * {
-	color: black;
-	font-family: variables.$basic-font;
-}
-
-.quick--actions {
-	font-family: variables.$basic-font;
-	font-size: 14px;
-}
+//#channel--list {
+//	color: black;
+//}

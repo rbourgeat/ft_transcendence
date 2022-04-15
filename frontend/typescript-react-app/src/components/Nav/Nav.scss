@@ -64,11 +64,17 @@
 	//border: white !important;
 }
 
-#dropdownMenuButton1 {
+#dropdownMenuButton1 , #logout--button {
 	border: 0.1rem solid white !important;
-	margin-top: 0px !important;
+	//margin-top: 0px !important;
 	font-size: 12px !important;
+	padding: 5px !important;
+	margin: 5px !important;
 }
+
+//#logout--button {
+//	padding
+//}
 
 //#menu {
 //	width: 20px !important;

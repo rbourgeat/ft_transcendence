@@ -1,9 +1,6 @@
 @use "../../../variables";
 
-//TODO: faire des regles plus generiques pour le texte
 #typing--title {
-	//color: white !important;
-	//background-color: white !important;
 	font-family: variables.$basic-font;
 	padding-top: 10px;
 	margin-bottom: 2.5rem;
@@ -11,19 +8,12 @@
 
 #typing--div {
 	border: 0.1rem solid white;
-	//margin-top: 20px;
-	//padding-left: 40px;
-	//padding-right: 40px;
-	//padding-top: 10px;
-	//padding-bottom: 20px;
 	border-radius: variables.$border-radius;
 	background-color: white !important;
 }
 
 .typing--input {
 	border-radius: variables.$border-radius;
-	//cursor: pointer;
-	//border: 0.1rem solid white !important;
 }
 
 #send--button {
@@ -31,10 +21,11 @@
 	float: right;
 }
 
-
-//Nesting for children CSS selectors
 #typing--div > * {
 	color: black !important;
+	padding-left: 20px;
+	padding-right: 20px;
+	padding-top: 20px;
 }
 
 .send-message-form {

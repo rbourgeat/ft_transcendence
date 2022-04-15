@@ -134,11 +134,11 @@ export default function Login2fa() {
 							<br />
 							<h1 className="game--rules--title">✨ 2 factor authentication</h1>
 							<br />
-							<div>
+							<div id="authcode-2fa">
 								<AuthCode
 									allowedCharacters='numeric'
 									ref={AuthInputRef}
-									inputClassName="auth--code"
+									inputClassName="auth--code_2fa"
 									//id="auth--code"
 									onChange={function (res: string): void {
 									setCode(res);
