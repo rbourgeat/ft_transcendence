@@ -18,14 +18,16 @@ export default function Badge(props: ProfileProps) {
     return (
         <div id="badge">
             <div className="container">
-                <div id="badge--div--sub" className="row">
+                <div id="badge--div--sub" className="row d-flex justify-content-center">
                     <div id="badge--stats">
                         <br />
                         <h2 className="stats--h2">Statistics</h2>
                         <br />
                         <p id="badge--rank" className="badge--stats-text">Rank: {props.rank}</p>
                         <p id="badge--ratio" className="badge--stats-text">Level: {props.level}</p>
-                        <ProgressBar animated={true} now={props.to_next} /*label={`${props.to_next}%`}*/ variant="success"></ProgressBar>
+                        <div className="row d-flex justify-content-center">
+                            <ProgressBar animated now={props.to_next} label={`${props.to_next}%`} variant="info" id="progress-bar"/>
+                        </div>
                         <br />
                     </div>
                     <div className="col" id="badge--stats-2">
