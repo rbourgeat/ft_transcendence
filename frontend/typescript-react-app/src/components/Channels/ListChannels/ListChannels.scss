@@ -3,21 +3,19 @@
 #listChannels {
 	border-radius: 0px !important;
 	background: white !important;
-	//border: 0.1rem solid orange !important;
 	border: 0.1rem solid #f9f9f9 !important;
 	padding: 0px !important;
 	margin: 0px !important;
+	//min-width: 300px;
+	//max-width: 300px;
 }
 
 #channel--col {
 	border-radius: 0px !important;
-	min-height: 750px !important;
-	max-height: 750px !important;
-	min-width: 300px;
-	max-width: 300px;
+	min-height: 700px !important;
+	max-height: 700px !important;
 	padding: 0px !important;
 	margin: 0px !important;
-	//border: 0.1rem solid red !important;
 	border: 0.1rem solid #f9f9f9 !important;
 	text-align: center;
 }
@@ -31,7 +29,6 @@
 	border: 0.1rem solid grey;
 	padding: 0px !important;
 	margin: 0px !important;
-	//border: 0.1rem solid green !important;
 	border: 0.1rem solid #f9f9f9 !important;
 	background-color: #f9f9f9 !important;
 	color: black;
@@ -39,9 +36,6 @@
 
 .add-channel-a {
 	min-height: 40px !important;
-	min-width: 40px !important;
-	//background-color: #009000;
-	//border-radius: #009000;
 	background-color: #f9f9f9 !important;
 	border-radius: #f9f9f9 !important;
 }
@@ -49,52 +43,62 @@
 #createchannel-button {
 	width: 100% !important;
 	height: 100% !important;
+	border: 0.1rem solid #f9f9f9;
 	border-radius: 0px;
-	//border: 0.1rem solid
+	margin: 0px !important;
+	position: sticky;
 }
 
 .channels-title {
 	font-family: variables.$big-font;
 	padding-top: 10px;
+	height: 45px;
 	padding-right: 10px;
 	padding-left: 10px;
 	font-size: 12px;
 	border-radius: 0px !important;
 	margin: 0px;
 	font-weight: 900 !important;
-	//border: 0.1rem solid purple !important;
 }
 
 .send--dm_div {
 	width: 100% !important;
 	height: 100% !important;
-	//padding: 0px !important;
 	border-radius: 0px;
 	bottom: 0 !important;
 	border: #f9f9f9 !important;
-	//background: #f9f9f9;
-	//padding-bottom: 15px;
-	//vertical-align: text-top;
 }
 
 #send--dm , #display--channels {
 	width: 100% !important;
 	height: 100% !important;
 	background-color: #025d93 !important;
+	position: sticky;
 	margin: 0px !important;
 	font-family: variables.$basic-font;
 	color: white;
 	border: 0.1rem solid #f9f9f9 !important;
 	border-radius: 0px;
-	//font-weight: 100;
-	//font-size: 14px;
 }
 
 .displaying-div {
 	border: 0.1rem solid #f9f9f9 !important;
-	min-height: 585px !important;
-	max-height: 585px !important;
+	min-height: 580px !important;
+	max-height: 580px !important;
 }
+
+#list--channels--title {
+	color: black;
+	font-family: variables.$big-font;
+	margin-top: 10px;
+	margin-bottom: 15px;
+	text-align: justify;
+}
+
+//#list--channels--ul > * {
+//	color: black;
+//	font-family: variables.$basic-font;
+//}
 
 //#quick--actions {
 //	background-color: variables.$grey;
@@ -107,17 +111,4 @@
 
 //#channel--list {
 //	color: black;
-//}
-
-//#list--channels--title {
-//	color: black;
-//	font-family: variables.$big-font;
-//	margin-top: 10px;
-//	margin-bottom: 15px;
-//	text-align: justify;
-//}
-
-//#list--channels--ul > * {
-//	color: black;
-//	font-family: variables.$basic-font;
 //}

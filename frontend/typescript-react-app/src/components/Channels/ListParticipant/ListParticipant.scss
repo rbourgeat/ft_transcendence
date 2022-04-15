@@ -1,12 +1,17 @@
 @use "../../../variables";
 
 #ListParticipant {
-	width: 20%;
-	border: 0.1rem solid grey;
-	//padding: 30px;
-	border-radius: variables.$border-radius;
-	background-color: white;
+	//width: 20%;
+	//border: 0.1rem solid grey;
+	//border-radius: variables.$border-radius;
+	background: white;
 	color: black;
+	//max-width: 225px;
+	//min-width: 225px;
+	//border: 0.1rem solid red;
+	//min-height: 760px;
+	//max-height: 760px;
+	border: 0.1rem solid #f9f9f9;
 }
 
 #participant--title {
@@ -21,11 +26,6 @@
 #roles--title {
 	margin-bottom: 20px;
 	font-size: 16px;
-}
-
-#roles {
-	height: 200px;
-	margin-top: 25px;
 }
 
 #roles > *:not(h3) {
@@ -47,7 +47,12 @@
 	padding-bottom: 5px;
 }
 
-#bann-button:hover, #mute-button:hover {
-	transition: 0.2s ease-in;
-	filter: brightness(80%);
-}
+//#bann-button:hover, #mute-button:hover {
+//	transition: 0.2s ease-in;
+//	filter: brightness(80%);
+//}
+
+//#roles {
+//	height: 200px;
+//	margin-top: 25px;
+//}

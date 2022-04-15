@@ -82,8 +82,8 @@ export default function ListDiscussions(props: ListDiscussionsProps) {
 	//}, [activeChannel, messages]);
 
 	return (
-		<div>
-			<div id="ListDiscussions">
+		//<div>
+			<div id="ListDiscussions" className="col-5">
 				<div className="title_chat_div">
 					<p className="chat--title">Chat</p>
 				</div>
@@ -106,6 +106,6 @@ export default function ListDiscussions(props: ListDiscussionsProps) {
 					</ul>*/}
 				{/*</div>*/}
 			</div>
-		</div >
+		//</div >
 	);
 }

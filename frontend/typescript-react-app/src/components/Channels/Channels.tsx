@@ -7,6 +7,7 @@ import CreateChan from './CreateChan/CreateChan';
 import React, { useState, useEffect } from "react";
 import MyAxios from '../Utils/Axios/Axios';
 import ToastAlerts from '../Utils/ToastAlerts/ToastAlerts';
+//import ListParticipant from './ListParticipant/ListParticipant';
 import { ToastContainer, toast } from 'react-toastify';
 import { io } from "socket.io-client";
 import ListChannels from './ListChannels/ListChannels'; import ListPubChannels from './ListChannels/ListPubChannels'; import axios from 'axios';
@@ -63,29 +64,38 @@ export default function Channels(props: ChatProps) {
 				pauseOnHover
 			/>
 			<div className="container">
-				<div className="chat-container">
-					<div className="chat-channel-menu">
-						{/*TODO: A reprendre */}
-						{/*<CreateChan endpoint="http://localhost:3000/api/chat" action="Create" />*/}
-						{/*<CreateChan endpoint="http://localhost:3000/api/chat/join" action="Join" />*/}
-						{/*<ListChannels
-							activeChannel={activeChannel}
-							updateActiveChannel={updateActiveChannel}
-							chanUsers={chanUsers}
-							updateChanUsers={updateChanUsers}
-						/>*/}
-						<ListChannels />
-						{/* Devrait pourvoir lister tous les channels dont on fait partie */}
-						{/*<ListPubChannels />*/}
-					</div>
-					<div className="chat--messages">
-						{/*<ListDiscussions activeChannel={activeChannel} username={username} socket={socket} />*/}
-						<ListDiscussions />
-					</div>
-
-				</div>
-			</div>
+				<div className="row" id="row_chat">
+					{/*<div>*/}
+						{/*<div className="chat-channel-menu">*/}
+							{/*TODO: A reprendre */}
+							{/*<CreateChan endpoint="http://localhost:3000/api/chat" action="Create" />*/}
+							{/*<CreateChan endpoint="http://localhost:3000/api/chat/join" action="Join" />*/}
+							{/*<ListChannels
+								activeChannel={activeChannel}
+								updateActiveChannel={updateActiveChannel}
+								chanUsers={chanUsers}
+								updateChanUsers={updateChanUsers}
+							/>*/}
+								<ListChannels />
+							{/* Devrait pourvoir lister tous les channels dont on fait partie */}
+							{/*<ListPubChannels />*/}
+						{/*</div>*/}
+								{/*<div className="chat--messages">*/}
+							{/*<ListDiscussions activeChannel={activeChannel} username={username} socket={socket} />*/}
+								<ListDiscussions />
+							{/*</div>*/}
+							{/*<div className="players">*/}
+								<ListParticipant />
+							{/*</div>*/}
+						{/*</div>*/}
+					{/*</div>*/}
+				{/*</div>*/}
+			{/*</div>*/}
+		{/*</div>*/}
+	{/*</div>*/}
 		</div>
+	</div>
+</div>
 	);
 }
 

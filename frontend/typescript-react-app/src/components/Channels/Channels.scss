@@ -16,29 +16,19 @@
 	position: sticky;
 }
 
-	//.chat-channel-menu {
-	//	background: white;
-	//	border-radius: variables.$border-radius;
-	//	//width: 20%;
-	//	//padding: 20px !important;
-	//}
-
 .chat-buttons {
 	padding: 8.5px;
 }
 
 .chat-container {
 	display: flex;
-	//flex-flow: row nowrap;
-	//justify-content: center;
-	//align-items: flex-start;
 	position: sticky;
 }
 
 .chat--messages {
 	margin-left: 2rem;
 	margin-right: 2rem;
-	width: 70%;
+	//width: 70%;
 }
 
 .channels-not-logged {
@@ -46,3 +36,15 @@
 	border-radius: variables.$border-radius-big;
 	padding: 40px;
 }
+
+#row_chat {
+	margin-top: 5%;
+}
+
+
+//.chat-channel-menu {
+//	background: white;
+//	border-radius: variables.$border-radius;
+//	//width: 20%;
+//	//padding: 20px !important;
+//}

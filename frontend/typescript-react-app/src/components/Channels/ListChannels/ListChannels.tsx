@@ -84,9 +84,9 @@ export default function ListChannels(props: ListChannelsProps) {
 	}
 
 	return (
-		<div id="listChannels">
+		<div id="listChannels" className="col-3" >
 			{/*<div className="row">*/}
-				<div className="col-3" id="channel--col">
+				<div id="channel--col">
 					<div className="title--channel--col">
 						<p className="channels-title">Channels</p>
 					</div>

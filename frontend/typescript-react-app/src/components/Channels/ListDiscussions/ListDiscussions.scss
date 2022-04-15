@@ -1,13 +1,12 @@
 @use "../../../variables";
 
 #ListDiscussions {
-	//border-radius: variables.$border-radius;
 	background-color: white;
-	min-height: 755px !important;
+	min-height: 750px !important;
 	max-height: 750px !important;
 	border: 0.1rem solid #f9f9f9 !important;
-	min-width: 750px !important;
-	max-width: 750px !important;
+	margin-right: 2% !important;
+	margin-left: 2% !important;
 }
 
 #ListDiscussions > * {
@@ -18,10 +17,10 @@
 	font-family: variables.$basic-font;
 }
 
-#sub--div {
-	padding: 35px;
-	color: black !important;
-}
+//#sub--div {
+//	padding: 35px;
+//	color: black !important;
+//}
 
 #sub--div > * {
 	font-family: variables.$basic-font;

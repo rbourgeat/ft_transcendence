@@ -18,12 +18,7 @@ body, code {
 
 img {
   border-radius: 50% !important;
-  //position: sticky;
 }
-
-//circle {
-//  position: sticky;
-//}
 
 #particles-js {
   position: absolute;
@@ -36,11 +31,6 @@ img {
 	color: black !important;
 }
 
-//svg {
-//  margin-left: -8.5%;
-//	margin-top: -6.5%;
-//}
-
 #menu > * {
   font-family: variables.$basic-font;
   font-size: 12px !important;
@@ -50,3 +40,12 @@ img {
 	color: black;
 	font-family: variables.$basic-font;
 }
+
+//svg {
+//  margin-left: -8.5%;
+//	margin-top: -6.5%;
+//}
+
+//circle {
+//  position: sticky;
+//}
