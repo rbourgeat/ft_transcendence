@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import './Settings.scss';
 import { ToastContainer } from 'react-toastify';
 import ToastAlerts from '../../Utils/ToastAlerts/ToastAlerts';
@@ -6,6 +6,7 @@ import axios from "axios";
 import MyAxios from '../../Utils/Axios/Axios';
 import EditUsernameModal from '../editUsername/EditUsername';
 import Nav from "../../Nav/Nav";
+import AuthCode, { AuthCodeRef }  from 'react-auth-code-input';
 
 export interface SettingsProps
 {
@@ -32,6 +33,10 @@ export default function Settings(props: SettingsProps) {
 	const [show, setShow] = useState(false);
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
+
+	//Style pour le authcode
+	const AuthInputRef = useRef<AuthCodeRef>(null);
+	const [code, setCode] = React.useState("");
 
 	function clearInput() {
         setverifCode("");
@@ -265,9 +270,29 @@ export default function Settings(props: SettingsProps) {
 													{qrcode != "" && activated2fa == false ? <img style={{marginBottom: "20ox"}} id="qrcode" src={qrcode}></img> : <p></p>}
 													<br />
 													{qrcode != "" && activated2fa == false ? <p className="black--text" id="please">Please scan the QR Code with your Google Authenticator app.</p> : <p className="black--text"></p>}
-													{qrcode != "" && activated2fa == false ? <label className="black--text">Enter the code provided</label> : <p className="black--text"></p>}
-													{qrcode != "" && activated2fa == false ? <input className="form-control form-control-sm" id="check_code" type="text" placeholder="422 022" onChange={handleInputChange}></input> : <p className="black--text"></p>}
-													{qrcode != "" && activated2fa == false ? <button className="btn btn-outline-dark" type="button" id="check--auth" onClick={checkCode}>Check</button> : <p className="black--text"></p>}
+													{qrcode != "" && activated2fa == false ?
+													<>
+														<br />
+														<label className="black--text">Enter the code provided</label>
+													</>
+													: <p className="black--text"></p>}
+													{/*<br />*/}
+													{/*{qrcode != "" && activated2fa == false ? <input className="form-control form-control-sm" id="check_code" type="text" placeholder="422 022" onChange={handleInputChange}></input> : ""}*/}
+													{qrcode != "" && activated2fa == false ?
+														<AuthCode
+														allowedCharacters='numeric'
+														ref={AuthInputRef}
+														inputClassName="auth--code_settings"
+														onChange={function (res: string): void {
+														setCode(res);
+													} } />
+													: ""}
+													{qrcode != "" && activated2fa == false ?
+													<>
+														<br />
+														<button className="btn btn-outline-dark" type="button" id="check--auth" onClick={checkCode}>Check</button>
+													</>
+													: <p className="black--text"></p>}
 													<ToastContainer
 														position="top-right"
 														autoClose={5000}
