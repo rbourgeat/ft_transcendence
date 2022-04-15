@@ -30,6 +30,7 @@
 
 .live--div {
     background: white !important;
+    position: sticky;
     border-radius: variables.$border-radius-big;
     border: 0.1rem solid #f9f9f9;
     padding: 30px;

@@ -3,6 +3,7 @@
 #listChannels {
 	border-radius: 0px !important;
 	background: white !important;
+	position: sticky;
 	border: 0.1rem solid #f9f9f9 !important;
 	padding: 0px !important;
 	margin: 0px !important;
@@ -30,6 +31,7 @@
 	padding: 0px !important;
 	margin: 0px !important;
 	border: 0.1rem solid #f9f9f9 !important;
+	position: sticky;
 	background-color: #f9f9f9 !important;
 	color: black;
 }
@@ -44,6 +46,7 @@
 	width: 100% !important;
 	height: 100% !important;
 	border: 0.1rem solid #f9f9f9;
+	position: sticky;
 	border-radius: 0px;
 	margin: 0px !important;
 	position: sticky;

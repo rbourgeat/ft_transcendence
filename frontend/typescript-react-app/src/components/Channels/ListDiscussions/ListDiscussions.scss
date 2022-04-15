@@ -2,6 +2,7 @@
 
 #ListDiscussions {
 	background-color: white;
+	position: sticky;
 	min-height: 750px !important;
 	max-height: 750px !important;
 	border: 0.1rem solid #f9f9f9 !important;
@@ -35,6 +36,7 @@
 	min-height: 50px;
 	max-height: 50px;
 	background: #f9f9f9;
+	position: sticky;
 	padding-top: 10px;
 }
 

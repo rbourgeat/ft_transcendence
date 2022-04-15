@@ -2,6 +2,7 @@
 
 #container--blocked {
 	background-color: white !important;
+	position: sticky;
 	border-radius: variables.$border-radius;
 	padding: 10px !important;
 	margin-top: 35px !important;

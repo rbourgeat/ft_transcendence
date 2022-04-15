@@ -124,6 +124,7 @@ function App() {
           background: {
             color: {
               value: "#00000",
+              //value: "D1D5EA",
             },
           },
           fpsLimit: 120,
@@ -157,7 +158,10 @@ function App() {
           },
           particles: {
             color: {
-              value: "#ffffff",
+              //value: "#ffffff",
+              //value: "#c6e2ff",
+              value: "#54CFE8"
+              //value: rgb(84, 207, 232)
             },
             links: {
               color: "#ffffff",

@@ -33,6 +33,7 @@
 
 .channels-not-logged {
 	background-color: white !important;
+	position: sticky;
 	border-radius: variables.$border-radius-big;
 	padding: 40px;
 }

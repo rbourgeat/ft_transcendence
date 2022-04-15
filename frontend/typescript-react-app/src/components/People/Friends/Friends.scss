@@ -8,6 +8,7 @@
 #container--friends {
 	background-color: white !important;
 	border-radius: variables.$border-radius;
+	position: sticky;
 	padding: 10px !important;
 	margin-top: 35px !important;
 }
