@@ -2,15 +2,18 @@
 
 .game--rules--title {
 	color: black !important;
-	font-weight: 900;
-	font-size: 28px !important;
+	//font-weight: 900;
+	font-size: 16px !important;
+	font-family: variables.$big-font !important;
 }
 
 #div--main--2fa {
 	background-color: variables.$lightgrey;
-	margin-top: 10px !important;
-	border-radius: variables.$border-radius;
-	padding: 30px !important;
+	//margin-top: 10px !important;
+	top: 30%;
+	position: absolute;
+	border-radius: variables.$border-radius-big;
+	padding: 50px !important;
 }
 
 #div--main--2fa > * {
@@ -21,10 +24,9 @@
 	margin-top: 10px;
 }
 
-//#check--button {
-//	//align-items: flex-end !important;
-//	//text-align: right !important;
-//}
+#check--button {
+	position: sticky;
+}
 
 //.code-input {
 //	height: 80px !important;
@@ -40,5 +42,30 @@
 
 #loading--title {
 	color: white !important;
-	margin-top: 50px;
+	//margin-top: 50px;
+	//margin-top: 35% !important;
+	//position: absolute !important;
+	//top: 35% !important;
+
+}
+
+.auth--code {
+	border: 0.1rem solid grey !important;
+	border-radius: variables.$border-radius-big;
+	cursor: none !important;
+	height: 80px !important;
+	width: 80px !important;
+	//content: "" !important;
+	text-align: center !important;
+	font-size: 20px !important;
+	font-family: variables.$basic-font;
+	margin: 8px !important;
+	padding: 4px 11px !important;
+	text-transform: uppercase;
+}
+
+.auth--code:focus {
+	appearance: none;
+	outline: 0;
+	box-shadow: 0 0 0 3px rgb(131 192 253 / 50%);
 }
