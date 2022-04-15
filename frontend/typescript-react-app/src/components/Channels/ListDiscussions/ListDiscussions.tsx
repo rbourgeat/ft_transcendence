@@ -5,6 +5,7 @@ import myAxios from "../../Utils/Axios/Axios";
 import { io } from "socket.io-client";
 import axios from 'axios';
 import TypingMessage from "../TypingMessage/TypingMessage";
+
 /*
 export default function ListDiscussions({activeChannel}) {
 
@@ -60,25 +61,38 @@ export default function ListDiscussions({activeChannel}) {
 }
 */
 
-export default function ListDiscussions({ activeChannel, username, socket }) {
+//export default function ListDiscussions({ activeChannel, username, socket }) {
 
-	const [messages, setMessages] = React.useState([]);
+export interface ListDiscussionsProps {
 
-	useEffect(() => {
-		socket.emit('requestAllMessages', activeChannel)
-		socket.on("sendAllMessages", (messagesUpdated) => {
-			if (messagesUpdated) {
-				setMessages(messagesUpdated);
-			}
-		});
-	}, [activeChannel, messages]);
+}
+
+export default function ListDiscussions(props: ListDiscussionsProps) {
+	//const [messages, setMessages] = React.useState([]);
+	//const [socket, setSocket] = React.useState(io("http://localhost:3000/chat", { query: { username: username } }));
+
+	//TODO: a reprendre
+	//useEffect(() => {
+	//	socket.emit('requestAllMessages', activeChannel)
+	//	socket.on("sendAllMessages", (messagesUpdated) => {
+	//		if (messagesUpdated) {
+	//			setMessages(messagesUpdated);
+	//		}
+	//	});
+	//}, [activeChannel, messages]);
 
 	return (
 		<div>
 			<div id="ListDiscussions">
-				<p id="discussions--title">channelId: {activeChannel}</p>
-				<div id="sub--div">
-					<ul id="messages" className='text'>
+				<div className="title_chat_div">
+					<p className="chat--title">Chat</p>
+				</div>
+				<div className="messages-zone">
+				</div>
+				<TypingMessage />
+				{/*<p id="discussions--title">channelId: {activeChannel}</p>*/}
+				{/*<div id="sub--div">*/}
+					{/*<ul id="messages" className='text'>
 						{
 							messages.map(message =>
 								<div key={message.id}>
@@ -89,10 +103,9 @@ export default function ListDiscussions({ activeChannel, username, socket }) {
 								</div>
 							)
 						}
-					</ul>
-				</div>
+					</ul>*/}
+				{/*</div>*/}
 			</div>
-			<TypingMessage />
 		</div >
 	);
 }

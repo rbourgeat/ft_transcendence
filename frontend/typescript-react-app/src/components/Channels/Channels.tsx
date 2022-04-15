@@ -80,6 +80,7 @@ export default function Channels(props: ChatProps) {
 					</div>
 					<div className="chat--messages">
 						{/*<ListDiscussions activeChannel={activeChannel} username={username} socket={socket} />*/}
+						<ListDiscussions />
 					</div>
 
 				</div>

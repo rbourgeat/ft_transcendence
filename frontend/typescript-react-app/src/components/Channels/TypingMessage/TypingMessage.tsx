@@ -41,7 +41,7 @@ export default function TypingMessage() {
     }
 
     useEffect(() => {
-        getUser();
+        //getUser();
     }, []);
 
     let socket = io("http://localhost:3000/chat", { query: { username: username } });
@@ -61,8 +61,9 @@ export default function TypingMessage() {
                     onChange={e => updateText(e.target.value)}
                 />
                 <button
-                    id="send--button"
+                    //id="send--button"
                     type="submit"
+                    className="btn btn-outline-dark"
                     onClick={() => sendMessage("DummyChannel", text)}
                 >
                     Send

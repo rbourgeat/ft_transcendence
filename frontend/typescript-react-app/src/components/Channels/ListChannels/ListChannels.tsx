@@ -62,11 +62,25 @@ export default function ListChannels(props: ListChannelsProps) {
 		//renderListChannels();
 	}, []);
 
-	function createDM()
+	function createJoinChan()
 	{
-		//TODO: a reprendre
+		//TODO: a reprendre - doit permettre de rejoindr ou creer une channel
 		let toast = new ToastAlerts(null);
-		toast.notifyDanger("A reprendre");
+		toast.notifyDanger("A reprendre - doit permettre d'ouvrir un modal pour creer un dm ou rejoindre ou creer un channel");
+	}
+
+	function displayDM()
+	{
+		//TODO: a reprendre - doit permettre de rejoindr ou creer une channel
+		let toast = new ToastAlerts(null);
+		toast.notifyDanger("A reprendre - doit afficher tous les dms");
+	}
+
+	function displayChannels()
+	{
+		//TODO: a reprendre - doit permettre de rejoindr ou creer une channel
+		let toast = new ToastAlerts(null);
+		toast.notifyDanger("A reprendre - doit afficher tous les channels");
 	}
 
 	return (
@@ -77,7 +91,13 @@ export default function ListChannels(props: ListChannelsProps) {
 						<p className="channels-title">Channels</p>
 					</div>
 					<div className="add-channel-a">
-						<a /*className="dropdown-item"*/ onClick={createDM}>+</a>
+						<button type="button" className="btn btn-success" id="createchannel-button" onClick={createJoinChan}>+</button>
+					</div>
+					<div className="displaying-div">
+					</div>
+					<div className="send--dm_div">
+						<button type="button" className="btn btn-light" id="send--dm" onClick={displayDM}>DM</button>
+						<button type="button" className="btn btn-light" id="display--channels" onClick={displayChannels}>Channels</button>
 					</div>
 					{/*<p id="list--channels--title"> Public channels :</p>*/}
 					{/*<ul id="list--channels--ul">*/}

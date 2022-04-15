@@ -1,8 +1,13 @@
 @use "../../../variables";
 
 #ListDiscussions {
-	border-radius: variables.$border-radius;
+	//border-radius: variables.$border-radius;
 	background-color: white;
+	min-height: 755px !important;
+	max-height: 750px !important;
+	border: 0.1rem solid #f9f9f9 !important;
+	min-width: 750px !important;
+	max-width: 750px !important;
 }
 
 #ListDiscussions > * {
@@ -11,15 +16,10 @@
 
 #discussions--title {
 	font-family: variables.$basic-font;
-	//margin-top: 15px;
 }
 
 #sub--div {
-	//overflow-y: scroll;
-	//overflow-x: scroll;
-
 	padding: 35px;
-	//height: 38.3rem;
 	color: black !important;
 }
 
@@ -29,4 +29,24 @@
 
 #message {
 	color: black !important;
+}
+
+.title_chat_div {
+	border: 0.1rem solid #f9f9f9;
+	min-height: 50px;
+	max-height: 50px;
+	background: #f9f9f9;
+	padding-top: 10px;
+}
+
+.chat--title {
+	font-family: variables.$big-font;
+	font-size: 16px;
+	text-align: center;
+}
+
+.messages-zone {
+	min-height: 600px;
+	max-height: 600px;
+	border: 0.1rem solid #f9f9f9;
 }
