@@ -32,6 +32,7 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
 
 	@SubscribeMessage('search')
 	async searchMessage(@ConnectedSocket() socket: Socket, @MessageBody() body: string) {
+		// File d'attente en fonction du gamemode choisis
 		let gameMode = 0;
 		if (body == "bigball")
 			gameMode = 1;
@@ -44,6 +45,7 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
 		if (body == "STOPSEARCH")
 			gameMode = -1;
 
+		// Le joueur rejoins une file d'attende suivant le mode de jeu
 		if (socket.handshake.query.username && gameMode != -1) {
 			MatchMaking[gameMode].push(socket.handshake.query.username);
 			console.log(socket.handshake.query.username + " a rejoint la file d'attente " + gameMode)
@@ -57,7 +59,9 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
 			console.log("File d'attente " + gameMode + ": " + MatchMaking[gameMode]);
 		}
 
-		if (socket.handshake.query.username && MatchMaking[gameMode].length >= 2)
+		// Adversaire trouvé, la partie peut commencer (joueur en haut de la file en premier)
+		if (socket.handshake.query.username && MatchMaking[gameMode].length >= 2 
+			&& MatchMaking[gameMode][0] != socket.handshake.query.username)
 		{
 			var index = MatchMaking[gameMode].indexOf(socket.handshake.query.username);
 			if (index > -1) {
@@ -71,8 +75,6 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
 			this.server.emit('gameStart', socket.handshake.query.username, adversaire, gameMode);
 			console.log("Une partie commence avec " + socket.handshake.query.username + " VS " + adversaire)
 		}
-
-		// console.log(MatchMaking) 
 	}  
 
 	@SubscribeMessage('gameEnd')
