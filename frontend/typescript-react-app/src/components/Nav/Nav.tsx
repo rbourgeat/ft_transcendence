@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import './Nav.scss';
 import axios from 'axios';
 import cookies from 'react-cookie';
+import ToastAlerts from '../Utils/ToastAlerts/ToastAlerts';
 
 /**
  * @malatini
@@ -56,6 +57,43 @@ function Nav() {
 
 	}
 
+	//faire des modals pour ca ?
+	function changeUsername()
+	{
+		let toast = new ToastAlerts(null);
+		toast.notifyDanger("To be implemented");
+	}
+
+	function changeAvatar()
+	{
+		let toast = new ToastAlerts(null);
+		toast.notifyDanger("To be implemented");
+	}
+
+	function play()
+	{
+		let toast = new ToastAlerts(null);
+		toast.notifyDanger("To be implemented");
+	}
+
+	function watch()
+	{
+		let toast = new ToastAlerts(null);
+		toast.notifyDanger("To be implemented");
+	}
+
+	function sendDM()
+	{
+		let toast = new ToastAlerts(null);
+		toast.notifyDanger("To be implemented");
+	}
+
+	function joinChannel()
+	{
+		let toast = new ToastAlerts(null);
+		toast.notifyDanger("To be implemented");
+	}
+
 	return (
 		<div id="nav">
 			<nav className="navbar navbar-expand-lg bg-dark" id="nav-bar">
@@ -97,6 +135,26 @@ function Nav() {
 						</li>
 					</ul>
 				</div>
+				{/*<button id="logout--button" type="button" className="btn btn-dark" />Settings</button>*/}
+				<div className="dropdown show"  id="menu">
+					<a className="btn btn-dark btn-sm dropdown-toggle" role="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						Quick actions
+					</a>
+					<div className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+						{/*<a className="dropdown-item">Action</a>*/}
+						<a className="dropdown-item" onClick={sendDM}>Send DM</a>
+						<a className="dropdown-item" onClick={joinChannel}>Join channel</a>
+						{/*<a className="dropdown-item" onClick={play}>Play</a>
+						<a className="dropdown-item" onClick={watch}>Watch</a>*/}
+						{/*<a className="dropdown-item" onClick={changeAvatar}>Something</a>
+						<a className="dropdown-item" onClick={changeUsername}>Change username</a>*/}
+						{/*<a className="dropdown-item" onClick={disconnect}>Logout</a>*/}
+						{/*<button id="logout--button" type="button" className="btn btn-dark" onClick={disconnect}>Log Out</button>*/}
+					</div>
+					{/*<br />
+					<br />*/}
+				</div>
+				{/*<br />*/}
 				<button id="logout--button" type="button" className="btn btn-dark" onClick={disconnect}>Log Out</button>
 			</nav>
 		</div>

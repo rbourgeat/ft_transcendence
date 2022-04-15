@@ -54,6 +54,7 @@ export default function Blocked() {
 						<h1 className="text-people" id="displaying--blocked">Blocked</h1>
 						<br />
 						<ul id="list--users--ul" className="wrapper list-group list-group-horizontal-lg">
+						{load == true && users.length == 0 ? <p className="no--contact">No blocked user 😇</p> : ""}
 							{load == true ?
 								users.map(user => <MiniDisplay key={user.login} login={user.login} status={user.status} avatar={user.avatar} ftlogin={user.login42} user={user} extra="blocked" container="blocked" />)
 								: ""}

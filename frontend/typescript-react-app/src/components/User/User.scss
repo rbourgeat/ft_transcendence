@@ -6,7 +6,7 @@
   border: 0.1rem solid black;
 }
 
-.span--stats, #stats > *, #activate--2fa {
+.span--stats, #stats > *, #activate--2fa, #activate--modal {
   color: black !important;
   font-size: 10px !important;
 }
@@ -51,13 +51,6 @@ input {
 
 button {
   margin-top: 15px !important;
-}
-
-#change--avatar {
-  margin-top: 5px;
-  margin-bottom: 5px;
-  margin-left: 15%;
-  margin-right: auto;
 }
 
 #user--settings--div {
@@ -120,6 +113,10 @@ img[src=""] {
 
 .test {
   color: green !important;
+}
+
+#user--div{
+   position: sticky !important;
 }
 
 .change--username {

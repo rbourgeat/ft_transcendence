@@ -426,14 +426,16 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
 
         let res = axios.post(url, body)
             .then(res => {
-                toast.notifySuccess("Successfully sent invitation !");
+                //toast.notifySuccess("Successfully sent invitation !");
                 console.log(res);
                 console.log("Succesfully sent invitation !");
+                window.top.location = "http://localhost:3030/profile/".concat(login);
             })
             .catch((error) => {
                 toast.notifyDanger("Your invite failed")
                 console.log(error);
                 console.log("Error while sending invitation");
+                //window.top.location = "http://localhost:3030/profile/".concat(login);
             })
     }
 
@@ -455,8 +457,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
                 console.log("Succesfully answer invitation");
                 toast.notifySuccess("Succesfully answered to invitation !");
                 //TODO: a revoir
-                if (extra != "")
-                {
+                if (extra != "") {
                     let id = "minidisplay".concat("_" + login + "_" + extra);
                     console.log("id looked is " + id);
                     let elem = document.getElementById(id);
@@ -514,18 +515,25 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
         axios.defaults.withCredentials = true;
 
+        let toast = new ToastAlerts(null);
+
         axios.delete(url)
             .then(res => {
                 console.log("Succesfully delete target friend");
                 console.log(res);
-                let id = "minidisplay".concat("_" + login + "_" + extra);
-                console.log("id looked is " + id);
-                let elem = document.getElementById(id);
-                elem.parentNode.removeChild(elem);
+                toast.notifySuccess("Successfully removed friend.");
+                if (extra != "") {
+                    let id = "minidisplay".concat("_" + login + "_" + extra);
+                    console.log("id looked is " + id);
+                    let elem = document.getElementById(id);
+                    elem.parentNode.removeChild(elem);
+                    window.top.location = "http://localhost:3030/profile/".concat(login);
+                }
             })
             .catch((error) => {
                 console.log("Error while deleting target friend");
                 console.log(error);
+                toast.notifyDanger("Error while removing friend.");
             })
     }
 
@@ -536,36 +544,47 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
         axios.defaults.withCredentials = true;
 
+        let toast = new ToastAlerts(null);
+
         axios.post(url)
             .then(res => {
                 console.log("Succesfully blocked target friend");
                 console.log(res);
+                toast.notifySuccess("Successfully blocked user");
+                window.top.location = "http://localhost:3030/profile/".concat(login);
             })
             .catch((error) => {
                 console.log("Error while blocking target friend");
                 console.log(error);
+                toast.notifyDanger("Error while blocking contact");
+                window.top.location = "http://localhost:3030/profile/".concat(login);
             })
     }
 
-    //TODO: a tester
     delete_relation_unblock(login: string, extra: string) {
         let url = "http://localhost:3000/api/user/relation/unblock/".concat(login);
 
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
         axios.defaults.withCredentials = true;
 
+        let toast = new ToastAlerts(null);
+
         axios.delete(url)
             .then(res => {
                 console.log("Succesfully unblocked target friend");
                 console.log(res);
-                let id = "minidisplay".concat("_" + login + "_" + extra);
-                console.log("id looked is " + id);
-                let elem = document.getElementById(id);
-                elem.parentNode.removeChild(elem);
+                if (extra != "") {
+                    let id = "minidisplay".concat("_" + login + "_" + extra);
+                    console.log("id looked is " + id);
+                    let elem = document.getElementById(id);
+                    elem.parentNode.removeChild(elem);
+                }
+                window.top.location = "http://localhost:3030/profile/".concat(login);
             })
             .catch((error) => {
                 console.log("Error while unblocking target friend");
                 console.log(error);
+                toast.notifyDanger("Error while unblocking contact !");
             })
     }
 
@@ -626,7 +645,8 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
         }
 
         const headers = {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+
         };
 
         console.log(bod);
@@ -643,20 +663,22 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
                         localStorage.setItem("login42", res.data.login42);
                     else
                         localStorage.setItem("login42", "");
-                   // window.top.location = "/chat/";
+                    // window.top.location = "/chat/";
                     window.top.location = "http://localhost:3030/user";
                     //return;
                 }
-                else {
-                    //toast.notifyDanger('Oops ! An error happened, incorrect email or password.');
-                    console.log("Did not receive 200 when logging it.");
-                    toast.notifyDanger("😢 Error while logging in !");
-                    //return;
-                }
+                //else {
+                //    //toast.notifyDanger('Oops ! An error happened, incorrect email or password.');
+                //    console.log("Did not receive 200 when logging it.");
+                //    toast.notifyDanger("😢 Error while logging in !");
+                //    //console.log()
+                //    //return;
+                //}
             })
             .catch((error) => {
                 console.log("Error while logging in.");
                 toast.notifyDanger("😢 Error while logging in !");
+                console.log(error);
             })
     }
 
@@ -715,6 +737,11 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
             return (<img className="profile--pic" src={myImage.src} alt={imageName} height="80" width="80" id={login} />);
         }
 
+        //if (imageCode == "" || imageCode == null)
+        //{
+        //    return (<img className="profile--pic" src="https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg" alt={imageName} height="80" width="80" id={login} />);
+        //}
+
         //endof bahaas add
 
 
@@ -752,6 +779,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
 
         let imageCode = null;
         let imageName = "alt-photo";
+        //console.log("should render api image");
         let url = "http://localhost:3000/api/user/".concat(chosenLogin)
 
         let res = axios.get(url)
@@ -790,6 +818,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
                     if (res.data.login != res.data.login42)
                         haschanged = true;
                     this.render_avatar(login, "", haschanged);
+                    window.top.location = "http://localhost:3030/settings";
                 }
                 else {
                     console.log("Oops! Avatar not updated");
@@ -804,29 +833,36 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     /*
     ** edit user data (for login)
     */
-    //TODO: a implémenter test
     patch_user(old_login: string, new_login: string) {
-        let url = "http://localhost:3000/api/user/".concat(old_login);
+        //let url = "http://localhost:3000/api/user/".concat(old_login);
 
+        let url = "http://localhost:3000/api/user/".concat(old_login).concat("/changeto/").concat(new_login);
+        //@Post(':oldlogin/changeto/:newlogin')
         axios.defaults.baseURL = 'http://localhost:3000/api/';
         axios.defaults.headers.post['Content-Type'] = 'application/json';
         axios.defaults.headers.post['Accept'] = '*/*';
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 
-        let body = {
-            login: new_login
-        }
+        //let body = {
+        //    login: new_login
+        //}
 
         let headers = {
             login: new_login
         }
 
-        let res = axios.patch(url, body, { headers })
+        console.log("old login is " + old_login);
+        console.log("new login is " + new_login);
+        console.log("url is " + url);
+
+        let res = axios.patch(url, { headers })
             .then(res => {
                 console.log("Yay ! Successfully changed login");
+                console.log(res);
             })
             .catch((error) => {
                 console.log("Catched error !");
+                console.log(error);
             }
             )
         //Attention j'ai bien réussi à changer le nom mais maintenant le component n'a plus la bonne props

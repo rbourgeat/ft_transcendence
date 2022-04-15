@@ -3,3 +3,4 @@
 *database-data*
 *.cache*
 docker-compose.yml
+package-lock.json

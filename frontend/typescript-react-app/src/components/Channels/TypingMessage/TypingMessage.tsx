@@ -20,9 +20,8 @@ export interface TypingState {
 const message = document.getElementById('message');
 const messages = document.getElementById('messages');
 
-export default function TypingMessage()
-{
-		const [text, updateText] = React.useState("");
+export default function TypingMessage() {
+    const [text, updateText] = React.useState("");
     const [username, setUsername] = React.useState("");
 
     function getUser() {
@@ -51,24 +50,24 @@ export default function TypingMessage()
         socket.emit('message', username + ":" + channel + ":" + message)
     }
 
-		return (
-			<div id="typing--div">
-				<p id="typing--title">Typing message section</p>
-				<section className="send-message-form">
-					<input
-						placeholder="Type something..."
-						value={text}
-						className="form-control typing--input"
-						id="message"
-						onChange={e => updateText(e.target.value)}
-					/>
-					<button
-						id="send--button"
-						type="submit"
-						onClick={() => sendMessage("DummyChannel", text)}>
-						Send
+    return (
+        <div id="typing--div">
+            <section className="send-message-form">
+                <input
+                    placeholder="Your message..."
+                    value={text}
+                    className="form-control typing--input"
+                    id="message"
+                    onChange={e => updateText(e.target.value)}
+                />
+                <button
+                    id="send--button"
+                    type="submit"
+                    onClick={() => sendMessage("DummyChannel", text)}
+                >
+                    Send
 					</button>
-				</section>
-			</div>
-		);
+            </section>
+        </div>
+    );
 }

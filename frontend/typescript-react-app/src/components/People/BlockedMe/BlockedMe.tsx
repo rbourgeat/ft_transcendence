@@ -4,7 +4,7 @@ import myAxios from "../../Utils/Axios/Axios";
 import axios from "axios";
 import MiniDisplay from '../MiniDisplay/MiniDisplay';
 
-//TODO: a faire
+//TODO: a faire ? a priori non
 export default function BlockedMe() {
 
 	const [users, setUsers] = React.useState([]);

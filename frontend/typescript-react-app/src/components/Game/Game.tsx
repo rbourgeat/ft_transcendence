@@ -1,4 +1,4 @@
-import React, {useState,  useEffect, useLayoutEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
 import './Game.scss';
 import useWindowDimensions from "./useWindowDimensions"
 import Header from "../Header/Header";
@@ -58,7 +58,7 @@ export default function Game() {
 		}
 		else
 			document.querySelector('#search-button').textContent = "Impossible de te connecter !"
-    }
+	}
 
 	socket.on("gameStart", (...args) => {
 		document.querySelector('#player-score').textContent = "0";
@@ -91,36 +91,31 @@ export default function Game() {
 	});
 
 	function setGameMode(gm: number) {
-		if (gm == 0)
-		{
-			PLAYER_HEIGHT = 80;
-			PLAYER_WIDTH = 10;
-			BALL_HEIGHT = 10;
+		if (gm == 0) {
+			PLAYER_HEIGHT = 80 * size.height / 600;
+			PLAYER_WIDTH = 10 * size.width / 600;
+			BALL_HEIGHT = 10 * size.width / 600;
 			BALL_SPEED = 2;
 			BALL_ACCELERATE = true;
-		} else if (gm == 1)
-		{
+		} else if (gm == 1) {
 			PLAYER_HEIGHT = 80;
 			PLAYER_WIDTH = 10;
 			BALL_HEIGHT = 50;
 			BALL_SPEED = 2;
 			BALL_ACCELERATE = true;
-		} else if (gm == 2)
-		{
+		} else if (gm == 2) {
 			PLAYER_HEIGHT = 80;
 			PLAYER_WIDTH = 10;
 			BALL_HEIGHT = 10;
 			BALL_SPEED = 4;
 			BALL_ACCELERATE = true;
-		} else if (gm == 3)
-		{
+		} else if (gm == 3) {
 			PLAYER_HEIGHT = 80;
 			PLAYER_WIDTH = 10;
 			BALL_HEIGHT = 10;
 			BALL_SPEED = 0.5;
 			BALL_ACCELERATE = false;
-		} else if (gm == 4)
-		{
+		} else if (gm == 4) {
 			PLAYER_HEIGHT = 80;
 			PLAYER_WIDTH = 80;
 			BALL_HEIGHT = 10;
@@ -163,8 +158,7 @@ export default function Game() {
 		context.fill();
 	}
 
-	function initParty()
-	{
+	function initParty() {
 		canvas = document.getElementById('canvas');
 		game = {
 			player: {
@@ -192,7 +186,7 @@ export default function Game() {
 	useEffect(() => {
 		getUser();
 		initParty();
-    }, []);
+	}, []);
 
 	function play() {
 		draw();
@@ -226,7 +220,7 @@ export default function Game() {
 				game.player2.y = mouseLocation - PLAYER_HEIGHT / 2;
 			}
 			if (adversaire)
-				socket.emit('playerMove', joueur + ":" + game.player2.y + ":" + adversaire+ ":" + "droit");
+				socket.emit('playerMove', joueur + ":" + game.player2.y + ":" + adversaire + ":" + "droit");
 		}
 	}
 
@@ -333,8 +327,7 @@ export default function Game() {
 		// draw();
 	}
 
-	function clearDataGame()
-	{
+	function clearDataGame() {
 		joueur1 = null;
 		joueur2 = null;
 		game = null;
@@ -379,7 +372,7 @@ export default function Game() {
 										</Form.Select>
 									</Form.Group>
 								</Form>
-							: ""}
+								: ""}
 							{isActive ? <button type="button" className="btn btn-outline-dark" id="search-button" onClick={() => sendSearch()}>{SearchText}</button> : ""}
 							<p id="victoryMessage"></p>
 							<main role="main">

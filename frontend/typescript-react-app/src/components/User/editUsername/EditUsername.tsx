@@ -9,10 +9,10 @@ import {Modal, Button} from "react-bootstrap";
 export default function EditUsernameModal(props) {
 	const [inputValue, setInputValue] = React.useState("");
 
-	useEffect(() => {
-		let ax = new myAxios(null);
-		let url = "http://localhost:3000/api/user";
-	}, []);
+	//useEffect(() => {
+	//	let ax = new myAxios(null);
+	//	let url = "http://localhost:3000/api/user";
+	//}, []);
 
 	function clearInput() {
         setInputValue("");
@@ -25,8 +25,10 @@ export default function EditUsernameModal(props) {
 	let changeUsername = (event: any) => {
 		event.preventDefault();
 		let ax = new myAxios(null);
+		console.log("username is ", props.username);
+		console.log("input value is " + inputValue);
 		let res = ax.patch_user(props.username, inputValue);
-		window.top.location = "http://localhost:3030/user";
+		//window.top.location = "http://localhost:3030/user";
 	}
 
 		//TODO: a reprendre sans react bootstrap

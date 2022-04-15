@@ -6,7 +6,7 @@ import MyAxios from '../Utils/Axios/Axios';
 import { ToastContainer, toast } from 'react-toastify';
 import ToastAlerts from '../Utils/ToastAlerts/ToastAlerts';
 import EditUsernameModal from "./editUsername/EditUsername";
-import Badge from "../Dashboard/Badge/Badge"
+import Badge from "../Badge/Badge"
 import Achievements from "../Achievements/Achievements";
 import { Modal } from "react-bootstrap"
 import Settings from "./Settings/Settings"
@@ -51,10 +51,10 @@ export default function User(props: UserfuncProps) {
 	const [pendingInvite, setPendingInvite] = React.useState(false);
 
 	//Status socket
-	const [color, setColor] = React.useState("");
-	const [status, setStatus] = React.useState("offline");
+	const [color, setColor] = React.useState("green");
+	const [status, setStatus] = React.useState("online");
 
-	async function getUser() {
+	function getUser() {
 
 		let url = "http://localhost:3000/api/auth/";
 
@@ -65,7 +65,7 @@ export default function User(props: UserfuncProps) {
 		axios.defaults.withCredentials = true;
 
 		let username = "";
-		await axios.get(url)
+		axios.get(url)
 			.then(res => {
 				username = res.data.login;
 				console.log(res);
@@ -74,19 +74,18 @@ export default function User(props: UserfuncProps) {
 					setlogin42(res.data.login42);
 					localStorage.setItem("login", res.data.login);
 					localStorage.setItem("login42", res.data.login42);
-
 					setNextLevel(res.data.percent_to_next_lvl);
 					setLevel(res.data.level);
 					setPoints(res.data.points);
-					//setRank(res.data.rank);
+					setRank(res.data.rank);
 					setTotalGames(res.data.total_games);
 					setLoss(res.data.total_loss);
 					setWins(res.data.total_wins);
 					setRatio(res.data.win_loss_ration);
 					setXp(res.data.xp);
-
-					if (res.data.status == "offline")
-						setColor("grey")
+					//S il s agit de moi je ne peux pas etre offline
+					//if (res.data.status == "offline")
+					//	setColor("grey")
 					if (res.data.status == "online") {
 						setColor("green");
 						setStatus("online");
@@ -95,30 +94,36 @@ export default function User(props: UserfuncProps) {
 						setColor("purple");
 						setStatus("ingame")
 					}
-					renderImage(res.data.login);
+
 				}
 				setUsername(username);
+				setLoaded(true);
+				renderImage(username);
 			})
 			.catch((err) => {
 				console.log("Auth returned 400 -> missing cookie");
 			})
-
-		setLoaded(true);
 	}
 
 	useEffect(() => {
+		if (calledOnce.current) {
+			return;
+		}
 		getUser();
-		//calledOnce.current = true;
-	});
+		calledOnce.current = true;
+	}, []);
 
 	function renderImage(login: string) {
 		let ax = new MyAxios(null);
 		let log42 = localStorage.getItem("login42");
+		console.log("log42 is " + log42);
 		let haschanged = false;
 		if (login != log42)
 			haschanged = true;
-		if (log42 != "" && log42 != null && log42 != undefined)
+		console.log("calling render avatar");
+		if (log42 != "" && log42 != null && log42 != "null" && log42 != undefined)
 			return (ax.render_avatar(login, log42, haschanged));
+		console.log("Calling render avatar with login  " + login);
 		return (ax.render_avatar(login, "", haschanged));
 	}
 

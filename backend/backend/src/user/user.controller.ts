@@ -6,14 +6,11 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiImageFile } from 'src/user/utils/api-file.decorator';
 import { ParseFile } from 'src/user/utils/parse-file.pipe';
 import { diskStorage } from 'multer';
-import { extname } from 'path';
-import { FtOauthGuard } from 'src/auth/42auth/guard/ft-oauth.guard';
 import JwtAuthenticationGuard from 'src/auth/guard/jwt-authentication.guard';
 import { Observable } from 'rxjs';
 import { RelationStatusClass, } from 'src/user/interface/friend-request.interface';
 import { User } from 'src/user/entity/user.entity';
 import { editFileName, imageFileFilter, myStorage } from './upload.utils'
-import { Achievement } from './entity/achievement.entity';
 
 @ApiTags('Users')
 @ApiExtraModels(CreateUserDtoViaRegistration) //force unused dto to show on swagger
@@ -38,13 +35,28 @@ export class UserController {
         return this.userService.getUserByLogin(login);
     }
 
+    //@ApiOperation({ summary: 'Update {login}\'s data' })
+    //@ApiOkResponse({ description: 'Data updated' })
+    //@Patch(':login')
+    //async updateUser(@Param('login') login: string, @Body() user: UpdateUserDto) {
+    //    return this.userService.updateUser(login, user);
+    //}
+
     @ApiOperation({ summary: 'Update {login}\'s data' })
     @ApiOkResponse({ description: 'Data updated' })
-    @Patch(':login')
-    async updateUser(@Param('login') login: string, @Body() user: UpdateUserDto) {
-        return this.userService.updateUser(login, user);
+    @Patch(':oldlogin/changeto/:newlogin')
+    async updateUser(@Param('oldlogin') oldlogin: string, @Param('newlogin') newlogin: string) {
+        return this.userService.updateUser(oldlogin, newlogin);
     }
 
+    /*
+        @ApiOperation({ summary: 'Update {login}\'s data' })
+        @ApiOkResponse({ description: 'Data updated' })
+        @Patch(':login')
+        async updateUser(@Param('login') login: string, @Req() req) {
+            return this.userService.updateUser(req.user, login);
+        }
+    */
     @ApiOperation({ summary: 'Upload {login} avatar' })
     @ApiOkResponse({ description: '{login} avatar uploaded' })
     @ApiConflictResponse({ description: '{login} avatar conflict' })
@@ -89,25 +101,26 @@ export class UserController {
     @ApiOperation({ summary: 'Answer to the invitation request (accepted/declined/blocked) [jwt-protected]' })
     @UseGuards(JwtAuthenticationGuard)
     @Post('relation/answerToInvitation/:login')
-    answerToInvitation(@Param('login') login: string, @Body() statusResponse: RelationStatusClass, @Request() req) {
-        return this.userService.answerToInvitation(statusResponse.status, login, req.user);
+    async answerToInvitation(@Param('login') login: string, @Body() statusResponse: RelationStatusClass, @Request() req) {
+        const creator = await this.getUserByLogin(login);
+        return this.userService.updateRelationStatus(statusResponse.status, creator, req.user);
     }
 
-    @ApiOperation({ summary: 'List all received invitation [jwt-protected]' })
+    @ApiOperation({ summary: 'List all received invitations [jwt-protected]' })
     @UseGuards(JwtAuthenticationGuard)
     @Get('relation/me/receivedInvitations')
     getReceivedInvitations(@Request() req): Observable<RelationStatusClass[]> {
         return this.userService.getReceivedInvitations(req.user);
     }
 
-    @ApiOperation({ summary: 'List all received invitation [jwt-protected]' })
+    @ApiOperation({ summary: 'List all sent invitations [jwt-protected]' })
     @UseGuards(JwtAuthenticationGuard)
     @Get('relation/me/sentInvitations')
     getSentInvitations(@Request() req): Observable<RelationStatusClass[]> {
         return this.userService.getSentInvitations(req.user);
     }
 
-    @ApiOperation({ summary: 'List all received invitation [jwt-protected]' })
+    @ApiOperation({ summary: 'List all pending invitations [jwt-protected]' })
     @UseGuards(JwtAuthenticationGuard)
     @Get('relation/me/pendingInvitations')
     getPendingInvitations(@Request() req): Observable<RelationStatusClass[]> {
@@ -121,32 +134,40 @@ export class UserController {
         return this.userService.getFriends(req.user);
     }
 
-    @ApiOperation({ summary: 'Remove someone as friend [jwt-protected]' })
+    @ApiOperation({ summary: 'Remove someone as a friend [jwt-protected]' })
     @UseGuards(JwtAuthenticationGuard)
     @Delete('relation/remove/:login')
-    removeFriend(@Param('login') login: string, @Request() req) {
-        return this.userService.removeFriend(login, req.user);
+    async removeFriend(@Param('login') login: string, @Request() req) {
+        const target = await this.getUserByLogin(login);
+        if (target)
+            return this.userService.removeRelation(target, req.user);
     }
 
     @ApiOperation({ summary: 'Block a user [jwt-protected]' })
     @UseGuards(JwtAuthenticationGuard)
     @Post('relation/block/:login')
-    blockUser(@Param('login') login: string, @Request() req) {
-        return this.userService.blockUser(login, req.user);
+    async blockUser(@Param('login') login: string, @Request() req) {
+        const target = await this.getUserByLogin(login);
+        if (target)
+            return this.userService.blockUser(target, req.user);
     }
 
-    @ApiOperation({ summary: 'Get relation with a user [jwt-protected]' })
+    @ApiOperation({ summary: 'Get current relation status with a user [jwt-protected]' })
     @UseGuards(JwtAuthenticationGuard)
     @Get('relation/relationStatusWith/:login')
     async getRelation(@Param('login') login: string, @Request() req): Promise<any> {
-        return this.userService.getRelation(login, req.user);
+        const target = await this.getUserByLogin(login);
+        if (target)
+            return this.userService.getRelation(target, req.user);
     }
 
     @ApiOperation({ summary: 'Unblock a user [jwt-protected]' })
     @UseGuards(JwtAuthenticationGuard)
     @Delete('relation/unblock/:login')
-    unblockUser(@Param('login') login: string, @Request() req) {
-        return this.userService.unblockUser(login, req.user);
+    async unblockUser(@Param('login') login: string, @Request() req) {
+        const target = await this.getUserByLogin(login);
+        if (target)
+            return this.userService.unblockUser(target, req.user);
     }
 
     @ApiOperation({ summary: 'Returns list of blocked users [jwt-protected]' })
@@ -156,17 +177,19 @@ export class UserController {
         return this.userService.getBlockedUsers(req.user);
     }
 
-    @ApiOperation({ summary: 'Returns list of achievements of a specific user [jwt-protected]' })
+    @ApiOperation({ summary: 'Returns achievements list of a specific user [jwt-protected]' })
     @UseGuards(JwtAuthenticationGuard)
     @Get('achievements/:login')
-    getAchievementsOf(@Param('login') login: string) {
-        return this.userService.getAchievementsOf(login);
+    async getAchievements(@Param('login') login: string) {
+        const target = await this.getUserByLogin(login);
+        if (target)
+            return this.userService.getAchievements(target);
     }
 
-    @ApiOperation({ summary: 'Returns list of achievements of a specific user [jwt-protected]' })
+    @ApiOperation({ summary: 'Return stats list of a specific user [jwt-protected]' })
     @UseGuards(JwtAuthenticationGuard)
     @Get('stats/:login')
-    getStats(@Param('login') login: string) {
+    async getStats(@Param('login') login: string) {
         return this.userService.getStats(login);
     }
 }

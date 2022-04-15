@@ -25,8 +25,8 @@ export default function Settings(props: SettingsProps) {
 	const [username, setUsername] = React.useState("");
 
 	//status, realtime variable (a reprendre avec les sockets)
-	const [status, setStatus] = React.useState("offline");
-	const [color, setColor] = React.useState("grey");
+	const [status, setStatus] = React.useState("online");
+	const [color, setColor] = React.useState("green");
 
 	//MODALS
 	const [show, setShow] = useState(false);
@@ -127,7 +127,7 @@ export default function Settings(props: SettingsProps) {
 			const file = e.target.files[0];
 
 			let ax = new MyAxios(null);
-			let ret = ax.post_avatar(props.username, file);
+			let ret = ax.post_avatar(username, file);
 		}
 	}
 
@@ -145,6 +145,7 @@ export default function Settings(props: SettingsProps) {
 			.then(res => {
 				username = res.data.login;
 				console.log(res);
+				console.log("Successful api auth!");
 				if (res.data.login42 != null && res.data.login42 != undefined &&  res.data.login42 != "")
 				{
 					setis42(true);
@@ -152,11 +153,11 @@ export default function Settings(props: SettingsProps) {
 					localStorage.setItem("login", res.data.login);
 					localStorage.setItem("login42", res.data.login42);
 					console.log(res.data);
-					if (res.data.status == "offline")
-					{
-						setColor("grey")
-						setStatus("offline");
-					}
+					//if (res.data.status == "offline")
+					//{
+					//	setColor("grey")
+					//	setStatus("offline");
+					//}
 					if (res.data.status == "online")
 					{
 						setColor("green");
@@ -168,14 +169,15 @@ export default function Settings(props: SettingsProps) {
 						setStatus("ingame")
 					}
 				}
+				setLoaded(true);
 				setUsername(username);
-				//renderImage(username);
+				renderImage(username);
 			})
 			.catch((err) => {
 				console.log("Auth returned 400 -> missing cookie");
 			})
-		setLoaded(true);
-		renderImage(username);
+
+		//renderImage(username);
 	}
 
 	async function renderImage(login: string) {
@@ -184,7 +186,7 @@ export default function Settings(props: SettingsProps) {
 		let haschanged = false;
 		if (login != log42)
 			haschanged = true;
-		if (log42 != "" && log42 != null && log42 != undefined)
+		if (log42 != "" && log42 != null && log42 != "null" && log42 != undefined)
 			return (await ax.render_avatar(login, log42, haschanged));
 		return (await ax.render_avatar(login, "", haschanged));
 	}
@@ -216,49 +218,64 @@ export default function Settings(props: SettingsProps) {
 													<circle cx="20" cy="20" r="15" fill={color} stroke="white" style={{ strokeWidth: '3' }} />
 												</svg>
 											{/*{status == "" ? getUser() : ""}*/}
+											<p className="username-text">{username}</p>
 											<p className="status-text">{status}</p>
-											{/*<br />*/}
-											<label id="change--avatar--label">Change avatar</label>
-											<div id="change--avatar">
-											<input
-												type="file"
-												name="image-upload"
-												id="input--upload"
-												accept="image/*"
-												onChange={onChangePicture}
-												className="input-file-upload"
-											/>
+											<br />
+											<div className="row d-flex justify-content-center text-center">
+												<div id="change-avatar-div" className="col-5">
+												{/*<br />*/}
+													<label id="change--avatar--label">Change avatar</label>
+													<div id="change--avatar">
+														<input
+															type="file"
+															name="image-upload"
+															id="input--upload"
+															accept="image/*"
+															onChange={onChangePicture}
+															className="input-file-upload"
+														/>
+													</div>
+											</div>
+											<br />
 										</div>
-									<div id="change--username--div">
-										<button id="change--username"  type="button" className="btn btn-outline-dark"
-												onClick={handleShow}>change username
-										</button>
-										<EditUsernameModal username={props.username} show={show} onHide={handleClose}/>
-										<br />
+									<br />
+									<br />
+									<div className="row d-flex justify-content-center text-center">
+										<div id="change--username--div">
+											<h3 id="activate--modal">Change username</h3>
+											<button id="change--username"  type="button" className="btn btn-outline-dark"
+													onClick={handleShow}>click to change
+											</button>
+											<EditUsernameModal username={username} show={show} onHide={handleClose}/>
+											<br />
+										</div>
 									</div>
-									<div id="2fa--div">
-										<h3 id="activate--2fa">2 Factor Authentication</h3>
-										<button className={activated2fa ? "btn btn-outline-danger" : "btn btn-outline-success"}
-												id="button--2fa" onClick={handle2FA}>{activated2fa == true ? "Turn off 2FA" : "Turn on 2FA"}
-										</button>
-										<br />
-										{qrcode != "" && activated2fa == false ? <img style={{marginBottom: "20ox"}} id="qrcode" src={qrcode}></img> : <p></p>}
-										<br />
-										{qrcode != "" && activated2fa == false ? <p className="black--text" id="please">Please scan the QR Code with your Google Authenticator app.</p> : <p className="black--text"></p>}
-										{qrcode != "" && activated2fa == false ? <label className="black--text">Enter the code provided</label> : <p className="black--text"></p>}
-										{qrcode != "" && activated2fa == false ? <input className="form-control form-control-sm" id="check_code" type="text" placeholder="422 022" onChange={handleInputChange}></input> : <p className="black--text"></p>}
-										{qrcode != "" && activated2fa == false ? <button className="btn btn-outline-dark" type="button" id="check--auth" onClick={checkCode}>Check</button> : <p className="black--text"></p>}
-										<ToastContainer
-											position="top-right"
-											autoClose={5000}
-											hideProgressBar={false}
-											newestOnTop={false}
-											closeOnClick
-											rtl={false}
-											pauseOnFocusLoss
-											draggable
-											pauseOnHover
-										/>
+									<br />
+									<div className="row d-flex justify-content-center text-center">
+										<div id="2fa--div">
+											<h3 id="activate--2fa">2 Factor Authentication</h3>
+											<button className={activated2fa ? "btn btn-outline-danger" : "btn btn-outline-success"}
+													id="button--2fa" onClick={handle2FA}>{activated2fa == true ? "Turn off 2FA" : "Turn on 2FA"}
+											</button>
+											<br />
+											{qrcode != "" && activated2fa == false ? <img style={{marginBottom: "20ox"}} id="qrcode" src={qrcode}></img> : <p></p>}
+											<br />
+											{qrcode != "" && activated2fa == false ? <p className="black--text" id="please">Please scan the QR Code with your Google Authenticator app.</p> : <p className="black--text"></p>}
+											{qrcode != "" && activated2fa == false ? <label className="black--text">Enter the code provided</label> : <p className="black--text"></p>}
+											{qrcode != "" && activated2fa == false ? <input className="form-control form-control-sm" id="check_code" type="text" placeholder="422 022" onChange={handleInputChange}></input> : <p className="black--text"></p>}
+											{qrcode != "" && activated2fa == false ? <button className="btn btn-outline-dark" type="button" id="check--auth" onClick={checkCode}>Check</button> : <p className="black--text"></p>}
+											<ToastContainer
+												position="top-right"
+												autoClose={5000}
+												hideProgressBar={false}
+												newestOnTop={false}
+												closeOnClick
+												rtl={false}
+												pauseOnFocusLoss
+												draggable
+												pauseOnHover
+											/>
+									</div>
 								</div>
 										</>
 

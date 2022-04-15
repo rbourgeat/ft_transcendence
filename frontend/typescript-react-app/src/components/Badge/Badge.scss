@@ -1,4 +1,4 @@
-@use "../../../variables";
+@use "../../variables";
 
 //#badge--div {
 //  //border-radius: variables.$border-radius-big;
@@ -64,6 +64,13 @@
   font-family: variables.$big-font !important;
   font-size: 12px;
   color: black !important;
+}
+
+#progress-bar {
+  margin-top: 15px !important;
+  margin-bottom: 15px !important;
+  width: 80% !important;
+  //align-items: center !important;
 }
 
 /*
