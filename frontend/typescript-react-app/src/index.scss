@@ -7,7 +7,7 @@ body {
 
 body, code {
   font-family: "Arial", "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    "Ubuntu", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   margin: 0;
   padding: 0;
@@ -38,3 +38,8 @@ img {
 //  margin-left: -8.5%;
 //	margin-top: -6.5%;
 //}
+
+a {
+  font-family: variables.$basic-font;
+  font-size: 12px !important;
+}

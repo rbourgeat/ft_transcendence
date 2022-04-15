@@ -66,11 +66,12 @@ label {
 
 button {
   // transform: scale(1);
-  transition-property: tranform;
+  //transition-property: tranform;
   border-radius: 0.5rem;
-  transition-duration: all 300ms;
-  font-family: variables.$big-font;
-  font-size: variables.$mini-font-size;
+  //font-family: variables.$basic-font !important;
+  //transition-duration: all 300ms;
+  //font-family: variables.$big-font;
+  //font-size: variables.$mini-font-size;
 }
 
 
