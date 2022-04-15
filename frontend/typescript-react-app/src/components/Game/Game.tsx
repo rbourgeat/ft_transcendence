@@ -8,6 +8,7 @@ import GameRules from "../GameRules/GameRules";
 import io from "socket.io-client";
 import axios from "axios";
 import { Form } from 'react-bootstrap'
+import Confetti from 'react-confetti';
 
 var adversaire: string;
 var joueur: string;
@@ -20,6 +21,7 @@ var gm = 0;
 export default function Game() {
 	let size = useWindowDimensions();
 	const [isActive, setActive] = React.useState(true);
+	const [isWin, setWin] = React.useState(false);
 	const [gameMode, chanScopeSet] = React.useState("original");
 
 	// socket game
@@ -314,6 +316,8 @@ export default function Game() {
 		}
 		if (document.querySelector('#victoryMessage').textContent != "Victory")
 			document.querySelector('#victoryMessage').textContent = "Game Over";
+		else
+			setWin(true);
 		cancelAnimationFrame(anim);
 		// Set ball and players to the center
 		game.ball.x = canvas.width / 2 - BALL_HEIGHT / 2;
@@ -357,6 +361,7 @@ export default function Game() {
 				:
 				<div id="game-root">
 					<Nav />
+					{isWin ? <Confetti width={size.width} height={size.height} /> : ""}
 					<div className="container">
 						<div className="row d-flex justify-content-center text-center">
 							{isActive ?
