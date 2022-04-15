@@ -1,9 +1,9 @@
 import './Login2FA.scss';
 import io from "socket.io-client";
 import axios from "axios";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Nav from "../../Nav/Nav";
-import AuthCode from 'react-auth-code-input';
+import AuthCode, { AuthCodeRef }  from 'react-auth-code-input';
 import ToastAlerts from '../../Utils/ToastAlerts/ToastAlerts';
 import {ToastContainer} from "react-toastify";
 
@@ -13,10 +13,12 @@ export default function Login2fa() {
 	const [loggedIn, setLoggedIn] = React.useState("false");
 	const calledOnce = React.useRef(false);
 	const [code, setCode] = React.useState("");
+	const AuthInputRef = useRef<AuthCodeRef>(null);
 	//const [load, setLoad] = React.useState(false);
 
 	async function getUser() {
 
+		//to do, a rechecker plus tard
 		let check1 = localStorage.getItem("loggedIn");
 		console.log("check1 is " + check1);
 		if (check1 == "true")
@@ -126,15 +128,21 @@ export default function Login2fa() {
 	return (
 		<div>
 			<div id="login--2FA" className="container">
+				<div className="row d-flex justify-content-center text-center">
+					<div className="col-6">
 						<div id="div--main--2fa">
+							<br />
 							<h1 className="game--rules--title">✨ 2 factor authentication</h1>
 							<br />
 							<div>
 								<AuthCode
 									allowedCharacters='numeric'
+									ref={AuthInputRef}
+									inputClassName="auth--code"
+									//id="auth--code"
 									onChange={function (res: string): void {
 									setCode(res);
-									console.log("code is " + code);
+									//console.log("code is " + code);
 								} } />
 								<button type="submit" className="btn btn-outline-dark" value="Submit" id="check--button" onClick={checkcode}>Check code</button>
 								<ToastContainer
@@ -157,7 +165,9 @@ export default function Login2fa() {
 							</div>
 						</div>
 						}*/}
+					</div>
 				</div>
+			</div>
 		</div>
 	);
 }
