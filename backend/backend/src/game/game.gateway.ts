@@ -87,7 +87,7 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
 		}
 		
 	}
-
+ 
 	@SubscribeMessage('playerMove')
 	async playerMove(@ConnectedSocket() socket: Socket, @MessageBody() body: string) {
 		const b = body.split(':');

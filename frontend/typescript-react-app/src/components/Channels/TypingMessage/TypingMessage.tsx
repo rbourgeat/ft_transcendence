@@ -50,17 +50,11 @@ export default function TypingMessage() {
         socket.emit('message', username + ":" + channel + ":" + message)
     }
 
-    function onClickLol() {
-        sendMessage("DummyChannel", text);
-        //document.getElementById("message").nodeValue = "";
-    }
-
     return (
         <div id="typing--div">
-            <p id="typing--title">Typing message section</p>
             <section className="send-message-form">
                 <input
-                    placeholder="Type something..."
+                    placeholder="Your message..."
                     value={text}
                     className="form-control typing--input"
                     id="message"
@@ -70,8 +64,6 @@ export default function TypingMessage() {
                     id="send--button"
                     type="submit"
                     onClick={() => sendMessage("DummyChannel", text)}
-                //onClick={() => document.getElementById("input--text").autofocus}
-                //onClick={() => onClickLol}
                 >
                     Send
 					</button>
