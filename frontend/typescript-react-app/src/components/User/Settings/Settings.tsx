@@ -220,48 +220,62 @@ export default function Settings(props: SettingsProps) {
 											{/*{status == "" ? getUser() : ""}*/}
 											<p className="username-text">{username}</p>
 											<p className="status-text">{status}</p>
-											{/*<br />*/}
-											<label id="change--avatar--label">Change avatar</label>
-											<div id="change--avatar">
-												<input
-													type="file"
-													name="image-upload"
-													id="input--upload"
-													accept="image/*"
-													onChange={onChangePicture}
-													className="input-file-upload"
-												/>
+											<br />
+											<div className="row d-flex justify-content-center text-center">
+												<div id="change-avatar-div" className="col-5">
+												{/*<br />*/}
+													<label id="change--avatar--label">Change avatar</label>
+													<div id="change--avatar">
+														<input
+															type="file"
+															name="image-upload"
+															id="input--upload"
+															accept="image/*"
+															onChange={onChangePicture}
+															className="input-file-upload"
+														/>
+													</div>
+											</div>
+											<br />
 										</div>
-									<div id="change--username--div">
-										<button id="change--username"  type="button" className="btn btn-outline-dark"
-												onClick={handleShow}>change username
-										</button>
-										<EditUsernameModal username={username} show={show} onHide={handleClose}/>
-										<br />
+									<br />
+									<br />
+									<div className="row d-flex justify-content-center text-center">
+										<div id="change--username--div">
+											<h3 id="activate--modal">Change username</h3>
+											<button id="change--username"  type="button" className="btn btn-outline-dark"
+													onClick={handleShow}>click to change
+											</button>
+											<EditUsernameModal username={username} show={show} onHide={handleClose}/>
+											<br />
+										</div>
 									</div>
-									<div id="2fa--div">
-										<h3 id="activate--2fa">2 Factor Authentication</h3>
-										<button className={activated2fa ? "btn btn-outline-danger" : "btn btn-outline-success"}
-												id="button--2fa" onClick={handle2FA}>{activated2fa == true ? "Turn off 2FA" : "Turn on 2FA"}
-										</button>
-										<br />
-										{qrcode != "" && activated2fa == false ? <img style={{marginBottom: "20ox"}} id="qrcode" src={qrcode}></img> : <p></p>}
-										<br />
-										{qrcode != "" && activated2fa == false ? <p className="black--text" id="please">Please scan the QR Code with your Google Authenticator app.</p> : <p className="black--text"></p>}
-										{qrcode != "" && activated2fa == false ? <label className="black--text">Enter the code provided</label> : <p className="black--text"></p>}
-										{qrcode != "" && activated2fa == false ? <input className="form-control form-control-sm" id="check_code" type="text" placeholder="422 022" onChange={handleInputChange}></input> : <p className="black--text"></p>}
-										{qrcode != "" && activated2fa == false ? <button className="btn btn-outline-dark" type="button" id="check--auth" onClick={checkCode}>Check</button> : <p className="black--text"></p>}
-										<ToastContainer
-											position="top-right"
-											autoClose={5000}
-											hideProgressBar={false}
-											newestOnTop={false}
-											closeOnClick
-											rtl={false}
-											pauseOnFocusLoss
-											draggable
-											pauseOnHover
-										/>
+									<br />
+									<div className="row d-flex justify-content-center text-center">
+										<div id="2fa--div">
+											<h3 id="activate--2fa">2 Factor Authentication</h3>
+											<button className={activated2fa ? "btn btn-outline-danger" : "btn btn-outline-success"}
+													id="button--2fa" onClick={handle2FA}>{activated2fa == true ? "Turn off 2FA" : "Turn on 2FA"}
+											</button>
+											<br />
+											{qrcode != "" && activated2fa == false ? <img style={{marginBottom: "20ox"}} id="qrcode" src={qrcode}></img> : <p></p>}
+											<br />
+											{qrcode != "" && activated2fa == false ? <p className="black--text" id="please">Please scan the QR Code with your Google Authenticator app.</p> : <p className="black--text"></p>}
+											{qrcode != "" && activated2fa == false ? <label className="black--text">Enter the code provided</label> : <p className="black--text"></p>}
+											{qrcode != "" && activated2fa == false ? <input className="form-control form-control-sm" id="check_code" type="text" placeholder="422 022" onChange={handleInputChange}></input> : <p className="black--text"></p>}
+											{qrcode != "" && activated2fa == false ? <button className="btn btn-outline-dark" type="button" id="check--auth" onClick={checkCode}>Check</button> : <p className="black--text"></p>}
+											<ToastContainer
+												position="top-right"
+												autoClose={5000}
+												hideProgressBar={false}
+												newestOnTop={false}
+												closeOnClick
+												rtl={false}
+												pauseOnFocusLoss
+												draggable
+												pauseOnHover
+											/>
+									</div>
 								</div>
 										</>
 
