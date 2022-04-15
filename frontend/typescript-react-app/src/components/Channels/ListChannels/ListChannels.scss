@@ -1,52 +1,79 @@
 @use "../../../variables";
 
 #listChannels {
-	//background-color: white;
-	//color: black;
-	//border-radius: variables.$border-radius;
-}
-
-#channel--list {
-	color: black;
-}
-
-#list--channels--title {
-	color: black;
-	font-family: variables.$big-font;
-	margin-top: 10px;
-	margin-bottom: 15px;
-	text-align: justify;
-}
-
-#list--channels--ul > * {
-	color: black;
-	font-family: variables.$basic-font;
-	padding-bottom: 10px;
-	//margin-left: 5%;
-	//text-align: left;
+	border-radius: 0px !important;
+	background: white !important;
+	//border: 0.1rem solid orange !important;
+	border: 0.1rem solid #f9f9f9 !important;
+	padding: 0px !important;
+	margin: 0px !important;
 }
 
 #channel--col {
-	//background-color: white;
-	border-radius: variables.$border-radius;
-}
-
-#quick--actions {
-	//background-color: white;
-	background-color: variables.$grey;
-	padding: 20px;
-	padding-left: 100px;
-	padding-right: 100px;
-	padding-bottom: 40px;
-	border-radius: variables.$border-radius;
-}
-
-#quick--actions > * {
-	color: black;
-	font-family: variables.$basic-font;
+	border-radius: 0px !important;
+	min-height: 750px !important;
+	max-height: 750px !important;
+	min-width: 300px;
+	max-width: 300px;
+	padding: 0px !important;
+	margin: 0px !important;
+	//border: 0.1rem solid red !important;
+	border: 0.1rem solid #f9f9f9 !important;
+	text-align: center;
 }
 
 .quick--actions {
 	font-family: variables.$basic-font;
 	font-size: 14px;
 }
+
+.title--channel--col {
+	border: 0.1rem solid grey;
+	padding: 0px !important;
+	margin: 0px !important;
+	//border: 0.1rem solid green !important;
+	border: 0.1rem solid #f9f9f9 !important;
+	background-color: #f9f9f9 !important;
+	color: black;
+}
+
+.add-channel-a {
+	min-height: 40px !important;
+	min-width: 40px !important;
+	background-color: green;
+	border-radius: green;
+}
+
+.channels-title {
+	font-family: variables.$big-font;
+	padding: 10px;
+	font-size: 12px;
+	//border: 0.1rem solid purple !important;
+
+}
+
+//#quick--actions {
+//	background-color: variables.$grey;
+//	padding: 20px;
+//	padding-left: 100px;
+//	padding-right: 100px;
+//	padding-bottom: 40px;
+//	border-radius: variables.$border-radius;
+//}
+
+//#channel--list {
+//	color: black;
+//}
+
+//#list--channels--title {
+//	color: black;
+//	font-family: variables.$big-font;
+//	margin-top: 10px;
+//	margin-bottom: 15px;
+//	text-align: justify;
+//}
+
+//#list--channels--ul > * {
+//	color: black;
+//	font-family: variables.$basic-font;
+//}

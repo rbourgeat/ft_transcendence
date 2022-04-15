@@ -94,6 +94,12 @@ function Nav() {
 		toast.notifyDanger("To be implemented");
 	}
 
+	function createChannel()
+	{
+		let toast = new ToastAlerts(null);
+		toast.notifyDanger("A reprendre");
+	}
+
 	return (
 		<div id="nav">
 			<nav className="navbar navbar-expand-lg bg-dark" id="nav-bar">
@@ -144,6 +150,7 @@ function Nav() {
 						{/*<a className="dropdown-item">Action</a>*/}
 						<a className="dropdown-item" onClick={sendDM}>Send DM</a>
 						<a className="dropdown-item" onClick={joinChannel}>Join channel</a>
+						<a className="dropdown-item" onClick={createChannel}>Create channel</a>
 						{/*<a className="dropdown-item" onClick={play}>Play</a>
 						<a className="dropdown-item" onClick={watch}>Watch</a>*/}
 						{/*<a className="dropdown-item" onClick={changeAvatar}>Something</a>

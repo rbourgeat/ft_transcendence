@@ -65,18 +65,21 @@ export default function Channels(props: ChatProps) {
 			<div className="container">
 				<div className="chat-container">
 					<div className="chat-channel-menu">
-						<CreateChan endpoint="http://localhost:3000/api/chat" action="Create" />
-						<CreateChan endpoint="http://localhost:3000/api/chat/join" action="Join" />
-						<ListChannels
+						{/*TODO: A reprendre */}
+						{/*<CreateChan endpoint="http://localhost:3000/api/chat" action="Create" />*/}
+						{/*<CreateChan endpoint="http://localhost:3000/api/chat/join" action="Join" />*/}
+						{/*<ListChannels
 							activeChannel={activeChannel}
 							updateActiveChannel={updateActiveChannel}
 							chanUsers={chanUsers}
 							updateChanUsers={updateChanUsers}
-						/>
-						<ListPubChannels />
+						/>*/}
+						<ListChannels />
+						{/* Devrait pourvoir lister tous les channels dont on fait partie */}
+						{/*<ListPubChannels />*/}
 					</div>
 					<div className="chat--messages">
-						<ListDiscussions activeChannel={activeChannel} username={username} socket={socket} />
+						{/*<ListDiscussions activeChannel={activeChannel} username={username} socket={socket} />*/}
 					</div>
 
 				</div>
