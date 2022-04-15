@@ -93,9 +93,9 @@ export default function Game() {
 	function setGameMode(gm: number) {
 		if (gm == 0)
 		{
-			PLAYER_HEIGHT = 80 * size.height / 600;
-			PLAYER_WIDTH = 10 * size.width / 600;
-			BALL_HEIGHT = 10 * size.width / 600;
+			PLAYER_HEIGHT = 80;
+			PLAYER_WIDTH = 10;
+			BALL_HEIGHT = 10;
 			BALL_SPEED = 2;
 			BALL_ACCELERATE = true;
 		} else if (gm == 1)
@@ -135,15 +135,15 @@ export default function Game() {
 	var game;
 	var anim;
 	// On peut changer les dimensions de la balle et des joueurs, ex: autres modes de jeux
-	var PLAYER_HEIGHT = 80 * size.height / 600;
-	var PLAYER_WIDTH = 10 * size.width / 600;
-	var BALL_HEIGHT = 10 * size.width / 600;
+	var PLAYER_HEIGHT = 80;
+	var PLAYER_WIDTH = 10;
+	var BALL_HEIGHT = 10;
 	var BALL_SPEED = 2;
 	var BALL_ACCELERATE = true;
 	function draw() {
 		var context = canvas.getContext('2d');
 		// Draw field
-		context.fillStyle = 'blue';
+		context.fillStyle = 'black';
 		context.fillRect(0, 0, canvas.width, canvas.height);
 		// Draw middle line
 		context.strokeStyle = 'white';
@@ -369,9 +369,9 @@ export default function Game() {
 							{isActive ?
 								<Form>
 									<Form.Group>
-										<Form.Select aria-label="Modes de jeux:" onChange={e => chanScopeSet(e.target.value)}>
+										<Form.Select aria-label="Modes de jeux:" defaultValue="original" onChange={e => chanScopeSet(e.target.value)}>
 												<option>Modes de jeux:</option>
-												<option selected={true} value="original">Original (1972)</option>
+												<option value="original">Original (1972)</option>
 												<option value="bigball">Big Ball (Facile)</option>
 												<option value="blitz">Blitz (Balle Rapide)</option>
 												<option value="slow">Slow (Balle Lente)</option>
