@@ -21,6 +21,9 @@ export class Game {
     @Column({ nullable: true })
     winner: string;
 
+    @Column({ nullable: true })
+    game_mode: number;
+
     @ManyToMany(() => User, (user) => user.games)
     players: User[]
 }

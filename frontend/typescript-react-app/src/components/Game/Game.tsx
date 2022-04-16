@@ -9,6 +9,8 @@ import io from "socket.io-client";
 import axios from "axios";
 import { Form } from 'react-bootstrap'
 import Confetti from 'react-confetti';
+import ReactRain from 'react-rain-animation';
+import "../../../node_modules/react-rain-animation/lib/style.css";
 
 var adversaire: string;
 var joueur: string;
@@ -16,12 +18,12 @@ let joueur1: string;
 let joueur2: string;
 var isSearching = false;
 var gm = 0;
-// let isActive = true;
 
 export default function Game() {
 	let size = useWindowDimensions();
 	const [isActive, setActive] = React.useState(true);
 	const [isWin, setWin] = React.useState(false);
+	const [isLoose, setLoose] = React.useState(false);
 	const [gameMode, chanScopeSet] = React.useState("original");
 
 	// socket game
@@ -63,16 +65,16 @@ export default function Game() {
 	}
 
 	socket.on("gameStart", (...args) => {
+		setWin(false);
+		setLoose(false);
 		document.querySelector('#player-score').textContent = "0";
 		document.querySelector('#player2-score').textContent = "0";
 		document.querySelector('#victoryMessage').textContent = "";
 		joueur1 = args[0];
 		joueur2 = args[1];
 		gm = args[2];
-		console.log("joueur1 = " + joueur1 + " joueur2 = " + joueur2)
-		console.log("adversaire = " + adversaire + " joueur = " + joueur)
-		if (joueur1 != adversaire && joueur1 == joueur) {
-			initParty();
+		initParty();
+		if (joueur1 != adversaire && joueur1 == joueur && game) {
 			adversaire = joueur2;
 			document.querySelector('#joueur1').textContent = joueur1;
 			document.querySelector('#joueur2').textContent = joueur2;
@@ -80,8 +82,7 @@ export default function Game() {
 			setActive(false);
 			setGameMode(gm);
 		}
-		else if (joueur2 != adversaire && joueur2 == joueur) {
-			initParty();
+		else if (joueur2 != adversaire && joueur2 == joueur && game) {
 			adversaire = joueur1;
 			document.querySelector('#joueur1').textContent = joueur1;
 			document.querySelector('#joueur2').textContent = joueur2;
@@ -140,7 +141,7 @@ export default function Game() {
 	function draw() {
 		// Draw Canvas
 		var context = canvas.getContext('2d');
-		context.fillStyle = 'blue';
+		context.fillStyle = 'black';
 		context.fillRect(0, 0, canvas.width, canvas.height);
 		context.strokeStyle = 'white';
 		context.beginPath();
@@ -177,13 +178,13 @@ export default function Game() {
 			}
 		}
 		draw();
-		document.addEventListener('mousemove', playerMove);
 	}
 
 	useEffect(() => {
 		// First page loading event (only one time)
 		getUser();
 		initParty();
+		canvas.addEventListener('mousemove', playerMove);
 	}, []);
 
 	function play() {
@@ -223,12 +224,14 @@ export default function Game() {
 	}
 
 	socket.on("playerMove", (body: string) => {
-		// Update Paddle position in real time
-		const b = body.split(':');
-		if (b[0] == joueur2) {
-			game.player2.y = b[1];
-		} else if (b[0] == joueur1) {
-			game.player.y = b[1];
+		if (game) {
+			// Update Paddle position in real time
+			const b = body.split(':');
+			if (b[0] == joueur2) {
+				game.player2.y = b[1];
+			} else if (b[0] == joueur1) {
+				game.player.y = b[1];
+			}
 		}
 	});
 
@@ -279,9 +282,6 @@ export default function Game() {
 				}
 			}
 		} else {
-			var bas: Number;
-			bas = Number(player.y) + Number(PLAYER_HEIGHT);
-			console.log("paddle haut = " + player.y + ", paddle bas = " + bas + ", balle.y = " + game.ball.y)
 			// Increase speed and change direction
 			if (BALL_ACCELERATE)
 				game.ball.speed.x *= -1.2;
@@ -299,18 +299,19 @@ export default function Game() {
 	}
 
 	function stop() {
-		// document.querySelector('#victoryMessage').textContent = "Game Over";
-		console.log("username: ", joueur, "adversaire", adversaire, "score player 1: ", game.player.score, "score player 2: ", game.player.score)
+		// console.log("username: ", joueur, ", adversaire: ", adversaire, ", score player 1: ", game.player.score, ", score player 2: ", game.player.score, ", gameMode: ", gm)
 		if (game.player.score > game.player2.score && joueur1 && joueur2 && joueur1 == joueur) {
-			socket.emit('gameEnd', joueur1 + ":" + joueur2 + ":" + game.player.score + ":" + game.player2.score);
+			socket.emit('gameEnd', joueur1 + ":" + joueur2 + ":" + game.player.score + ":" + game.player2.score + ":" + gm);
 			document.querySelector('#victoryMessage').textContent = "Victory";
 		}
 		if (game.player.score < game.player2.score && joueur1 && joueur2 && joueur2 == joueur) {
-			socket.emit('gameEnd', joueur2 + ":" + joueur1 + ":" + game.player2.score + ":" + game.player.score);
+			socket.emit('gameEnd', joueur2 + ":" + joueur1 + ":" + game.player2.score + ":" + game.player.score + ":" + gm);
 			document.querySelector('#victoryMessage').textContent = "Victory";
 		}
-		if (document.querySelector('#victoryMessage').textContent != "Victory")
+		if (document.querySelector('#victoryMessage').textContent != "Victory") {
+			setLoose(true);
 			document.querySelector('#victoryMessage').textContent = "Game Over";
+		}
 		else
 			setWin(true);
 		cancelAnimationFrame(anim);
@@ -327,20 +328,27 @@ export default function Game() {
 	function clearDataGame() {
 		joueur1 = null;
 		joueur2 = null;
-		game.ball.x = 0;
-		game.ball.y = 0;
-		game.ball.speed.x = 0;
-		game.ball.speed.y = 0;
-		game.player.y = 0;
-		game.player.score = 0;
-		game.player2.y = 0;
-		game.player2.score = 0;
 		adversaire = null;
+		game = {
+			player: {
+				y: canvas.height / 2 - PLAYER_HEIGHT / 2
+			},
+			player2: {
+				y: canvas.height / 2 - PLAYER_HEIGHT / 2
+			},
+			ball: {
+				x: canvas.width / 2 - BALL_HEIGHT / 2,
+				y: canvas.height / 2 - BALL_HEIGHT / 2,
+				speed: {
+					x: 0,
+					y: 0
+				}
+			}
+		}
 		anim = null;
 		isSearching = false;
 		setActive(true);
 		document.querySelector('#search-button').textContent = "Refaire une partie";
-		setWin(false);
 	}
 
 	return (
@@ -363,6 +371,7 @@ export default function Game() {
 				<div id="game-root">
 					<Nav />
 					{isWin ? <Confetti width={size.width} height={size.height} /> : ""}
+					{isLoose ? <ReactRain numDrops="500" /> : ""}
 					<div className="container">
 						<div className="row d-flex justify-content-center text-center">
 							{isActive ?
