@@ -94,9 +94,9 @@ export default function Game() {
 
 	function setGameMode(gm: number) {
 		if (gm == 0) {
-			PLAYER_HEIGHT = 80 * size.height / 600;
-			PLAYER_WIDTH = 10 * size.width / 600;
-			BALL_HEIGHT = 10 * size.width / 600;
+			PLAYER_HEIGHT = 80;
+			PLAYER_WIDTH = 10;
+			BALL_HEIGHT = 10;
 			BALL_SPEED = 2;
 			BALL_ACCELERATE = true;
 		} else if (gm == 1) {
@@ -109,7 +109,7 @@ export default function Game() {
 			PLAYER_HEIGHT = 80;
 			PLAYER_WIDTH = 10;
 			BALL_HEIGHT = 10;
-			BALL_SPEED = 4;
+			BALL_SPEED = 5;
 			BALL_ACCELERATE = true;
 		} else if (gm == 3) {
 			PLAYER_HEIGHT = 80;
@@ -138,25 +138,21 @@ export default function Game() {
 	var BALL_SPEED = 2;
 	var BALL_ACCELERATE = true;
 	function draw() {
+		// Draw Canvas
 		var context = canvas.getContext('2d');
-		// Draw field
-		context.fillStyle = 'black';
+		context.fillStyle = 'blue';
 		context.fillRect(0, 0, canvas.width, canvas.height);
-		// Draw middle line
 		context.strokeStyle = 'white';
 		context.beginPath();
 		context.moveTo(canvas.width / 2, 0);
 		context.lineTo(canvas.width / 2, canvas.height);
 		context.stroke();
-		// Draw players
 		context.fillStyle = 'white';
 		context.fillRect(0, game.player.y, PLAYER_WIDTH, PLAYER_HEIGHT);
 		context.fillRect(canvas.width - PLAYER_WIDTH, game.player2.y, PLAYER_WIDTH, PLAYER_HEIGHT);
-		// Draw ball
 		context.beginPath();
 		context.fillStyle = 'white';
-		// context.arc(game.ball.x, game.ball.y, game.ball.r, 0, Math.PI * 2, false); // Si on veut la faire ronde !
-		context.fillRect(game.ball.x, game.ball.y, BALL_HEIGHT, BALL_HEIGHT); // Si on veut la faire carré !
+		context.fillRect(game.ball.x, game.ball.y, BALL_HEIGHT, BALL_HEIGHT);
 		context.fill();
 	}
 
@@ -174,7 +170,6 @@ export default function Game() {
 			ball: {
 				x: canvas.width / 2 - BALL_HEIGHT / 2,
 				y: canvas.height / 2 - BALL_HEIGHT / 2,
-				r: 5,
 				speed: {
 					x: BALL_SPEED,
 					y: BALL_SPEED
@@ -182,10 +177,11 @@ export default function Game() {
 			}
 		}
 		draw();
-		canvas.addEventListener('mousemove', playerMove);
+		document.addEventListener('mousemove', playerMove);
 	}
 
 	useEffect(() => {
+		// First page loading event (only one time)
 		getUser();
 		initParty();
 	}, []);
@@ -200,7 +196,7 @@ export default function Game() {
 		// Get the mouse location in the canvas
 		var canvasLocation = canvas.getBoundingClientRect();
 		var mouseLocation = event.clientY - canvasLocation.y;
-		// collision
+		// Emit socket player position
 		if (joueur == joueur1) {
 			game.player.y = mouseLocation - PLAYER_HEIGHT / 2;
 			if (mouseLocation < PLAYER_HEIGHT / 2) {
@@ -210,7 +206,7 @@ export default function Game() {
 			} else {
 				game.player.y = mouseLocation - PLAYER_HEIGHT / 2;
 			}
-			if (adversaire)
+			if (joueur && game.player.y && adversaire)
 				socket.emit('playerMove', joueur + ":" + game.player.y + ":" + adversaire + ":" + "gauche");
 		} else if (joueur == joueur2) {
 			game.player2.y = mouseLocation - PLAYER_HEIGHT / 2;
@@ -221,7 +217,7 @@ export default function Game() {
 			} else {
 				game.player2.y = mouseLocation - PLAYER_HEIGHT / 2;
 			}
-			if (adversaire)
+			if (joueur && game.player.y && adversaire)
 				socket.emit('playerMove', joueur + ":" + game.player2.y + ":" + adversaire + ":" + "droit");
 		}
 	}
@@ -229,7 +225,6 @@ export default function Game() {
 	socket.on("playerMove", (body: string) => {
 		// Update Paddle position in real time
 		const b = body.split(':');
-		// console.log("joueur = " + b[0] + " | position = " + b[1] + " | socket = " + socket.id)
 		if (b[0] == joueur2) {
 			game.player2.y = b[1];
 		} else if (b[0] == joueur1) {
@@ -247,21 +242,20 @@ export default function Game() {
 		} else if (game.ball.x < PLAYER_WIDTH) {
 			collide(game.player);
 		}
+		// Ball progressive speed
 		game.ball.x += game.ball.speed.x;
 		game.ball.y += game.ball.speed.y;
 	}
 
 	function collide(player) {
 		// The player does not hit the ball
-		if (game.ball.y < player.y || game.ball.y > player.y + PLAYER_HEIGHT) {
+		var bottom: Number;
+		bottom = Number(player.y) + Number(PLAYER_HEIGHT);
+		if (game.ball.y < player.y || game.ball.y > bottom) {
 			// Set ball and players to the center
 			game.ball.x = canvas.width / 2 - BALL_HEIGHT / 2;
 			game.ball.y = canvas.height / 2 - BALL_HEIGHT / 2;
 			game.ball.speed.y = BALL_SPEED;
-
-			// Set player to init postion
-			// game.player.y = canvas.height / 2 - PLAYER_HEIGHT / 2;
-			// game.player2.y = canvas.height / 2 - PLAYER_HEIGHT / 2;
 
 			if (player == game.player) {
 				// Change ball direction + reset speed
@@ -285,6 +279,9 @@ export default function Game() {
 				}
 			}
 		} else {
+			var bas: Number;
+			bas = Number(player.y) + Number(PLAYER_HEIGHT);
+			console.log("paddle haut = " + player.y + ", paddle bas = " + bas + ", balle.y = " + game.ball.y)
 			// Increase speed and change direction
 			if (BALL_ACCELERATE)
 				game.ball.speed.x *= -1.2;
@@ -295,12 +292,10 @@ export default function Game() {
 	}
 
 	function changeDirection(playerPosition) {
+		// Ball bounce
 		var impact = game.ball.y - playerPosition - PLAYER_HEIGHT / 2;
 		var ratio = 100 / (PLAYER_HEIGHT / 2);
-		// Get a value between 0 and 10
-		// game.ball.speed.y = Math.round(impact * ratio / 10); // REBOND RAPIDE
-		// game.ball.speed.y = Math.round(impact * ratio / 10 / 2); // REBOND NORMAL
-		game.ball.speed.y = Math.round(impact * ratio / 10 / 4); // REBOND LENT
+		game.ball.speed.y = Math.round(impact * ratio / 10);
 	}
 
 	function stop() {
@@ -327,19 +322,25 @@ export default function Game() {
 		// Reset speed
 		game.ball.speed.x = 0;
 		game.ball.speed.y = 0;
-
-		// draw();
 	}
 
 	function clearDataGame() {
 		joueur1 = null;
 		joueur2 = null;
-		game = null;
+		game.ball.x = 0;
+		game.ball.y = 0;
+		game.ball.speed.x = 0;
+		game.ball.speed.y = 0;
+		game.player.y = 0;
+		game.player.score = 0;
+		game.player2.y = 0;
+		game.player2.score = 0;
 		adversaire = null;
 		anim = null;
 		isSearching = false;
 		setActive(true);
 		document.querySelector('#search-button').textContent = "Refaire une partie";
+		setWin(false);
 	}
 
 	return (
@@ -377,7 +378,7 @@ export default function Game() {
 										</Form.Select>
 									</Form.Group>
 								</Form>
-								: ""}
+							: ""}
 							{isActive ? <button type="button" className="btn btn-outline-dark" id="search-button" onClick={() => sendSearch()}>{SearchText}</button> : ""}
 							<p id="victoryMessage"></p>
 							<main role="main">
@@ -387,7 +388,6 @@ export default function Game() {
 									<em className="canvas-score" id="player-score">0</em> - <em id="joueur2"></em><span>:</span><em className="canvas-score" id="player2-score">0</em></p>
 								<canvas id="canvas" width={size.width / 1.5} height={size.height / 1.25}></canvas>
 							</main>
-							{/*<GameRules />*/}
 						</div>
 					</div>
 				</div>

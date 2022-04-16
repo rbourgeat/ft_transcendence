@@ -259,9 +259,7 @@ export default function Live() {
 				<div className="row d-flex justify-content-center text-center">
 					<div className="col-9">
 						<div className="live--div">
-
-							<p id="titre">📺 Live watch</p>
-							{/* <button type='button' id='watch' onClick={() => gotoGame()}>Watch</button> */}
+							<p id="titre">📺 Watch games live</p>
 							<div id="content"></div>
 						</div>
 					</div>
