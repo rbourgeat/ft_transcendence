@@ -2,14 +2,12 @@
 
 .game--rules--title {
 	color: black !important;
-	//font-weight: 900;
 	font-size: 16px !important;
 	font-family: variables.$big-font !important;
 }
 
 #div--main--2fa {
 	background-color: variables.$lightgrey;
-	//margin-top: 10px !important;
 	top: 30%;
 	position: absolute;
 	border-radius: variables.$border-radius-big;
@@ -28,25 +26,9 @@
 	position: sticky;
 }
 
-//.code-input {
-//	height: 80px !important;
-//	caret-color: black;
-//	//caret-height: 100%;
-//	caret-shape: auto;
-//}
-
-//.content-area > *{
-//	height: 80px !important;
-//}
-
 
 #loading--title {
 	color: white !important;
-	//margin-top: 50px;
-	//margin-top: 35% !important;
-	//position: absolute !important;
-	//top: 35% !important;
-
 }
 
 .auth--code_2fa {
@@ -55,7 +37,6 @@
 	cursor: none !important;
 	height: 80px !important;
 	width: 80px !important;
-	//content: "" !important;
 	text-align: center !important;
 	font-size: 20px !important;
 	font-family: variables.$basic-font;

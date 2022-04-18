@@ -1,6 +1,4 @@
 import './SentInvitations.scss';
-//import '../MiniDisplay/MiniDisplay.scss';
-
 import React, { Component, useState, useEffect } from "react";
 import myAxios from "../../Utils/Axios/Axios";
 import axios from "axios";
@@ -14,12 +12,10 @@ export default function Invitations() {
 
 	async function renderInvitations() {
 		axios.defaults.withCredentials = true;
-		//Besoin endpoint sentInvitations
+
 		let url = "http://localhost:3000/api/user/relation/me/sentInvitations";
 		await axios.get(url)
 			.then(res => {
-				//console.log("Get api me/pendingInvitations successfully called.");
-				//let users = res.data.map(element => element.receiver)
 				let users = res.data.map(element => element.receiver)
 				let len = users.length;
 				let i = 0;

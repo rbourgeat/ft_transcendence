@@ -22,7 +22,7 @@
 }
 
 .label-file {
-  color: black; //#00b1ca;
+  color: black;
   font-weight: bold;
   font-size: 12px !important;
   text-align: center !important;
@@ -54,7 +54,7 @@ button {
 }
 
 #user--settings--div {
-  border: 0.1rem solid variables.$lightgrey !important; //#00b1ca;
+  border: 0.1rem solid variables.$lightgrey !important;
   border-radius: variables.$border-radius-big;
   width: 75%;
 }
@@ -63,7 +63,6 @@ button {
   font-family: variables.$big-font;
   font-size: variables.$mini-font-size;
 }
-
 
 #user--data {
   font-size: 18px !important;
@@ -103,20 +102,12 @@ button {
 	border-radius: variables.$border-radius;
 }
 
-img[src=""] {
-  display: none;
-}
-
 #please {
   margin-top: 20px !important;
 }
 
-.test {
-  color: green !important;
-}
-
 #user--div{
-   position: sticky !important;
+    position: sticky !important;
 }
 
 .change--username {

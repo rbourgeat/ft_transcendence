@@ -1,10 +1,9 @@
 @use "../../../../variables";
 
-#message > *, span {
+#message > * {
 	color: black !important;
 }
 
 #username {
-	//font-weight: variables.$bold;
 	color: grey !important;
 }

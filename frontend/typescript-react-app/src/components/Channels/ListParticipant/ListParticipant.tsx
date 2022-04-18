@@ -2,7 +2,6 @@ import './ListParticipant.scss';
 import React, { useState, useEffect } from "react";
 import Participant from './Participant/Participant';
 import Footer from "../../Footer/Footer";
-import MyTimer from "./MyTimer/MyTimer";
 import axios from "axios";
 import { ToastContainer } from 'react-toastify';
 import ToastAlerts from '../../Utils/ToastAlerts/ToastAlerts';
@@ -169,6 +168,16 @@ export default function ListParticipant(props: ParticipantProps)
 				<div className="row">
 					<div className="col"  id="row--button_admin">
 						<button id="admin--buton" className="btn btn-secondary" onClick={setAdmin}>Set admin</button>
+					</div>
+				</div>
+				<div className="row">
+					<div className="col"  id="row--button_kick">
+						<button id="kick--button" className="btn btn-danger" disabled /*onClick={setAdmin}*/>Kick</button>
+					</div>
+				</div>
+				<div className="row">
+					<div className="col"  id="row--button_leave">
+						<button id="leave--button" className="btn btn-danger" disabled /*onClick={setAdmin}*/>Leave channel</button>
 					</div>
 				</div>
 				{/*<button id="mute-temp-button" className="btn btn-warning" onClick={muteUser}>Mute temporalily</button>*/}

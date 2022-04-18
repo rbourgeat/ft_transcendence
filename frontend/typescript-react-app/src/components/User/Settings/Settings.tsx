@@ -18,7 +18,6 @@ export default function Settings(props: SettingsProps) {
 
 	const [qrcode, setqrCode] = useState("");
 	const [activated2fa, setActivated2fa] = React.useState(false);
-	const [verifCode, setverifCode] = React.useState("");
 	const calledOnce = React.useRef(false);
 	const [load, setLoaded] = React.useState(false);
 	const [is42, setis42] = React.useState(false);
@@ -37,10 +36,6 @@ export default function Settings(props: SettingsProps) {
 	//Style pour le authcode
 	const AuthInputRef = useRef<AuthCodeRef>(null);
 	const [code, setCode] = React.useState("");
-
-	function clearInput() {
-		setverifCode("");
-	}
 
 	async function manageQR() {
 		const res = await fetch('http://localhost:3000/api/2fa/generate', { method: 'POST', credentials: 'include' });
@@ -65,16 +60,18 @@ export default function Settings(props: SettingsProps) {
 				toast.notifySuccess('😇 2FA successfully turned-off !');
 				localStorage.setItem("2fa", "false");
 				setActivated2fa(false);
+				localStorage.setItem("2faverif", "false");
 			})
 			.catch((error) => {
 				toast.notifyDanger('🥲 Error while turnoff on 2FA.');
+				console.log(error);
 			})
 	}
 
 	const checkCode = (event: any) => {
 		event.preventDefault();
-		let number = verifCode;
-		setverifCode("");
+		//let number = verifCode;
+		console.log("verif code is " + code);
 
 		axios.defaults.baseURL = 'http://localhost:3000/api/';
 		axios.defaults.headers.post['Content-Type'] = 'application/json';
@@ -83,13 +80,15 @@ export default function Settings(props: SettingsProps) {
 		axios.defaults.withCredentials = true;
 
 		let bod = {
-			twoFactorAuthenticationCode: number
+			twoFactorAuthenticationCode: code
 		}
 		let toast = new ToastAlerts(null);
-		if (number == "") {
-			toast.notifyDanger('🥲 Error while turning on 2FA. Your verif code is wrong or the QR Code is outdated.');
-			return;
-		}
+		//if (code == "")
+		//{
+		//	toast.notifyDanger('🥲 Error while turning on 2FA. Your verif code is wrong or the QR Code is outdated.');
+		//	setCode("");
+		//	return ;
+		//}
 
 		let url = "http://localhost:3000/api/2fa/turn-on";
 
@@ -99,11 +98,14 @@ export default function Settings(props: SettingsProps) {
 				localStorage.setItem("2fa", "true");
 				localStorage.setItem("2faverif", "true");
 				setActivated2fa(true);
+				setCode("");
 			})
 			.catch((error) => {
 				toast.notifyDanger('🥲 Error while turning on 2FA. Your verif code is wrong or the QR Code is outdated.');
+				setCode("");
+				console.log(error);
 			})
-		clearInput();
+		//clearInput();
 	}
 
 
@@ -112,10 +114,6 @@ export default function Settings(props: SettingsProps) {
 		manageQR();
 		if (activated2fa == true)
 			turnoff2FA();
-	}
-
-	function handleInputChange(event) {
-		setverifCode(event.target.value);
 	}
 
 	const onChangePicture = (e: any) => {
@@ -155,11 +153,6 @@ export default function Settings(props: SettingsProps) {
 					localStorage.setItem("login", res.data.login);
 					localStorage.setItem("login42", res.data.login42);
 					console.log(res.data);
-					//if (res.data.status == "offline")
-					//{
-					//	setColor("grey")
-					//	setStatus("offline");
-					//}
 					if (res.data.status == "online") {
 						setColor("green");
 						setStatus("online");
@@ -176,8 +169,6 @@ export default function Settings(props: SettingsProps) {
 			.catch((err) => {
 				console.log("Auth returned 400 -> missing cookie");
 			})
-
-		//renderImage(username);
 	}
 
 	async function renderImage(login: string) {
@@ -192,9 +183,13 @@ export default function Settings(props: SettingsProps) {
 	}
 
 	useEffect(() => {
+		if (calledOnce.current) {
+			return;
+		}
 		if (localStorage.getItem("2fa") == "true")
 			setActivated2fa(true);
 		getUser();
+		calledOnce.current = true;
 	});
 
 	return (
@@ -213,17 +208,14 @@ export default function Settings(props: SettingsProps) {
 								:
 								<>
 									<img id={username} className="profile--pic" height="80" width="80" />
-									{/*{renderImage(username)}*/}
 									<svg className="log--color_profile" height="40" width="40">
 										<circle cx="20" cy="20" r="15" fill={color} stroke="white" style={{ strokeWidth: '3' }} />
 									</svg>
-									{/*{status == "" ? getUser() : ""}*/}
 									<p className="username-text">{username}</p>
 									<p className="status-text">{status}</p>
 									<br />
 									<div className="row d-flex justify-content-center text-center">
 										<div id="change-avatar-div" className="col-5">
-											{/*<br />*/}
 											<label id="change--avatar--label">Change avatar</label>
 											<div id="change--avatar">
 												<input
@@ -256,7 +248,6 @@ export default function Settings(props: SettingsProps) {
 											<div className="col-6">
 												<div id="2fa--div">
 													<h3 id="activate--2fa">2 Factor Authentication</h3>
-													{/*<br />*/}
 													<button className={activated2fa ? "btn btn-outline-danger" : "btn btn-outline-success"}
 														id="button--2fa" onClick={handle2FA}>{activated2fa == true ? "Turn off 2FA" : "Turn on 2FA"}
 													</button>
@@ -271,16 +262,17 @@ export default function Settings(props: SettingsProps) {
 															<label className="black--text">Enter the code provided</label>
 														</>
 														: <p className="black--text"></p>}
-													{/*<br />*/}
-													{/*{qrcode != "" && activated2fa == false ? <input className="form-control form-control-sm" id="check_code" type="text" placeholder="422 022" onChange={handleInputChange}></input> : ""}*/}
 													{qrcode != "" && activated2fa == false ?
 														<AuthCode
 															allowedCharacters='numeric'
 															ref={AuthInputRef}
 															inputClassName="auth--code_settings"
-															onChange={function (res: string): void {
-																setCode(res);
-															}} />
+															onChange={
+																function (res: string): void {
+																	setCode(res);
+																	console.log("res is " + res);
+																}}
+														/>
 														: ""}
 													{qrcode != "" && activated2fa == false ?
 														<>
@@ -304,7 +296,6 @@ export default function Settings(props: SettingsProps) {
 										</div>
 									</div>
 								</>
-
 							}
 						</div>
 					</div>

@@ -29,12 +29,9 @@ export default function Welcome() {
                             <li>rbourgea</li>
                             <li>malatini</li>
                             <br />
-                            <button id="play-button-1" onClick={routeChange}>PLAY</button>
+                            <button id="play-button-1" onClick={routeChange}>Play</button>
                         </ul>
                     </div>
-                    {/*<div id="welcome--video-div">
-                        <video autoPlay loop muted src={video1} id="welcome--video-video" height="200px" />
-                    </div>*/}
                 </div>
             </div>
         </>

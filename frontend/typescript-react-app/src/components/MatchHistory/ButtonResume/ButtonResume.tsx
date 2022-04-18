@@ -13,7 +13,6 @@ export interface MatchHistoryProps {
     key?: string
 }
 
-//TODO: renommer
 export default function MatchHistory(props: MatchHistoryProps) {
 
     const [myDate, setMyDate] = React.useState(new Date());
@@ -43,7 +42,7 @@ export default function MatchHistory(props: MatchHistoryProps) {
         <div className="buttonresume">
             <div className="row">
                 <div id="scores">
-                    <div /*className="buttonresume--result"*/ className={props.winner == props.login ? "result--score_winnner" : "result--score_loser"}>
+                    <div className={props.winner == props.login ? "result--score_p result--score_winner" : "result--score_p result--score_loser"}>
                         <p className="info--game">
                             <span className="info--game2">{myDate.toDateString()} </span>
                             <span className="info--game2"> {displayGamemode(props.gameMode)}</span>
@@ -51,7 +50,6 @@ export default function MatchHistory(props: MatchHistoryProps) {
                         <p className={props.winner == props.login ? "results--winner-color" : "results--loser-color"}>
                             {props.winner == props.login ? "Win" : "Loss"}
                         </p>
-                        {/*<img src="https://miro.medium.com/max/720/1*W35QUSvGpcLuxPo3SRTH4w.png" id="player-1-img" className="player-img" alt="player1"></img>*/}
                         <p>
                             <span id="player1" className="winner">{props.winner}</span>
                             <span className="text-match">  -  </span>
@@ -59,7 +57,6 @@ export default function MatchHistory(props: MatchHistoryProps) {
                             <span className="text-match"> / </span>
                             <span id="score-player-2" className="score">{props.scoreLooser}</span>
                             <span className="tex-match"> - </span><span id="player-2" className="looser">{props.looser}</span></p>
-                        {/*<img src="https://miro.medium.com/max/720/1*W35QUSvGpcLuxPo3SRTH4w.png" id="player-2-img" className="player-img" alt="player2"></img>*/}
                     </div>
                 </div>
             </div >

@@ -23,31 +23,6 @@ export default function MatchHistory(props: MatchHistoryProps) {
         calledOnce.current = true;
     }, []);
 
-    //function renderMatches(length: number, res: any)
-    //{
-    //    console.log("Length is "+ length);
-    //    console.log("res is " + res);
-    //    if (length != 0)
-    //    {
-    //        return (
-    //        resultsID.map(result =>
-    //        <div className="main--button--resume" key={result.id}>
-    //                                <ButtonResume
-    //                                    winner={result.winner}
-    //                                    looser={result.loser}
-    //                                    scoreWinner={result.winner_score}
-    //                                    scoreLooser={result.loser_score}
-    //                                    login={props.login}
-    //                                    key={result.id}
-    //                                />
-    //                            </div>));
-    //    }
-    //    else
-    //    {
-    //        <p id="no--game">You did not play any game yet.</p>
-    //    }
-    //}
-
     async function getHistory() {
         let url = "http://localhost:3000/api/game/".concat(props.login).concat("/history");
         let headers = {
@@ -76,10 +51,6 @@ export default function MatchHistory(props: MatchHistoryProps) {
                 setLen(0);
                 setLoad(true);
             })
-        //.then( res => {
-        //    renderMatches(len, resultsID);}
-        //)
-        //setLoad(true);
     }
 
     return (

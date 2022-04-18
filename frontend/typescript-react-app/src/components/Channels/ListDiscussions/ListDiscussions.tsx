@@ -6,6 +6,8 @@ import { io } from "socket.io-client";
 import axios from 'axios';
 import TypingMessage from "../TypingMessage/TypingMessage";
 
+//TODO: a reprendre
+
 /*
 export default function ListDiscussions({activeChannel}) {
 
@@ -71,7 +73,7 @@ export default function ListDiscussions(props: ListDiscussionsProps) {
 	//const [messages, setMessages] = React.useState([]);
 	//const [socket, setSocket] = React.useState(io("http://localhost:3000/chat", { query: { username: username } }));
 
-	//TODO: a reprendre
+
 	//useEffect(() => {
 	//	socket.emit('requestAllMessages', activeChannel)
 	//	socket.on("sendAllMessages", (messagesUpdated) => {

@@ -1,7 +1,6 @@
 @use "../../../variables";
 
-
-//TODO: re spliter le scss pour chaque sub folder parce que j'ai des regles qui ne concernent pas forcement le fichier
+//Utilisé pour tests quand membres de l'équipe freeze mais plus présenté pour la validation
 
 #auth-form-div {
   background-color: white !important;
@@ -24,7 +23,6 @@
 
 #auth-container {
   background-image: none !important;
-  // background-color: red !important;
 }
 
 #auth-container > * {
@@ -40,13 +38,10 @@
 
 #auth-form-div {
   background-color: white !important;
-  //padding: 5%;
   border-radius: variables.$border-radius;
 }
 
 label {
-  //border: 0.1rem solid red !important;
-  //display: block;
   margin-left: 10px !important;
   margin-top: 10px !important;
   font-family: variables.$big-font;

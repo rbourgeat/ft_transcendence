@@ -1,16 +1,10 @@
 import './TypingMessage.scss';
-//import { w3cwebsocket} from "websocket";
 import React, { Component, useState, useEffect } from "react";
 import io from "socket.io-client";
 import SingleMessage from "../ListDiscussions/SingleMessage/SingleMessage";
 import axios from 'axios';
 
-/**
- * @malatini ou @macrespo
- * Composant qui permettra à l'user de "preparer" / ecrire le message qu'il va envoyer sur le channel ou le dm.
- */
 export interface TypingProps {
-
 }
 
 export interface TypingState {
@@ -32,7 +26,6 @@ export default function TypingMessage() {
         axios.get(url)
             .then(res => {
                 username = res.data.login;
-                //console.log(username + ' <-- result of get user')
                 setUsername(username);
             })
             .catch((err) => {
@@ -41,7 +34,6 @@ export default function TypingMessage() {
     }
 
     useEffect(() => {
-        //getUser();
     }, []);
 
     let socket = io("http://localhost:3000/chat", { query: { username: username } });
@@ -61,7 +53,6 @@ export default function TypingMessage() {
                     onChange={e => updateText(e.target.value)}
                 />
                 <button
-                    //id="send--button"
                     type="submit"
                     className="btn btn-outline-dark"
                     onClick={() => sendMessage("DummyChannel", text)}

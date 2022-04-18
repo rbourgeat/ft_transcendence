@@ -4,6 +4,7 @@ import io from "socket.io-client";
 import axios from "axios";
 import React, { Component, useState, useEffect } from "react";
 
+//TODO: idéalement à supprimer car on ne l'appelle plus et c'était pas très joli et le texte des règles est le même qu'un autre groupe
 export default function GameRules() {
 
 	const [username, setUsername] = React.useState("");

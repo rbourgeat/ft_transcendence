@@ -1,17 +1,9 @@
 @use "../../../variables";
 
 #ListParticipant {
-	//width: 20%;
-	//border: 0.1rem solid grey;
-	//border-radius: variables.$border-radius;
 	background: white;
 	color: black;
 	position: sticky;
-	//max-width: 225px;
-	//min-width: 225px;
-	//border: 0.1rem solid red;
-	//min-height: 760px;
-	//max-height: 760px;
 	border: 0.1rem solid #f9f9f9;
 }
 
@@ -24,64 +16,39 @@
 	text-align: center;
 	padding-top: 15px;
 	padding-bottom: 35px;
-	//position: fixed;
 }
-
 
 #sub--div {
 	overflow-y: scroll;
-	max-height: 70%;
-	min-height: 70%;
-	//padding: 0px;
-	//margin: 0px;
+	max-height: 53.5%;
+	min-height: 53.5%;
 	border: 0.1rem solid #f9f9f9;
 }
 
-#invite--button, #admin--buton {
+//boutons solo horizontal
+#invite--button, #admin--buton, #leave--button, #kick--button {
 	width: 100%;
 	position: sticky;
-	border-radius: 0px !important;
-	margin: 0.1px !important;
-	//margin-right: 0.2px !important;
-	//margin-left: 0.2px !important;
+	margin-top: 2px !important;
 	color: white !important;
-	//padding: 2px !important;
-	//margin: 0px !important;
-	//padding: 2px !important;
-	//position: fixed;
+	width: 98% !important;
+	margin-left: 3px !important;
 }
 
-#row--buttons_chat, #row--buttons_chat > *, #row--buttons_danger, #row--buttons_danger > *, #row--buttons_invite, #row--buttons_invite > *,  #row--buttons_admin, #row--buttons_admin > * {
-	border-radius: 0px !important;
-	margin: 0.1px !important;
-	padding: 2px !important;
-	//width: 100% !important;
-	//margin: 0px !important;
-	//width: 100% !important;
+//Boutons duo horizontal
+#row--buttons_chat, #row--buttons_chat > *, #row--buttons_danger, #row--buttons_danger > *,
+#row--buttons_invite, #row--buttons_invite > *,  #row--buttons_admin, #row--buttons_admin > *
+{
+	margin: 0.5px !important;
+	padding: 3px !important;
 }
-
-//#invite--button {
-//	color: white !important;
-//}
 
 #players-channel-button, #players-dm-button
 {
-	//border: 0.1rem solid red;
 	width: 100% !important;
 	margin: 0.1px !important;
-	border-radius: 0px !important;
-	//position: absolute;
 	position: sticky;
 }
-
-//.buttons_div {
-//	margin: 0.1px !important;
-//}
-
-//.buttons_div > button {
-//	position: fixed;
-//	width: 100%;
-//}
 
 #roles--title {
 	margin-bottom: 20px;
@@ -100,19 +67,3 @@
 #roles--title{
 	font-size: 12px;
 }
-
-.btn {
-	margin: 5px;
-	padding-top: 5px;
-	padding-bottom: 5px;
-}
-
-//#bann-button:hover, #mute-button:hover {
-//	transition: 0.2s ease-in;
-//	filter: brightness(80%);
-//}
-
-//#roles {
-//	height: 200px;
-//	margin-top: 25px;
-//}

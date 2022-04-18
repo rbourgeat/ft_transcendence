@@ -14,7 +14,9 @@ var adversaires = [];
 // For resize elements from game canvas
 let resize = 4;
 
+//TODO: a refacto un tout petit peu @rbourgea ?
 export default function Live() {
+	const [isShown, setIsShown] = useState(-1);
 
 	if (localStorage.getItem("loggedIn") != "true")
 	{
@@ -138,6 +140,8 @@ export default function Live() {
 			// context.arc(game.ball.x, game.ball.y, game.ball.r, 0, Math.PI * 2, false); // Si on veut la faire ronde !
 			context.fillRect(game[idGame].ball.x, game[idGame].ball.y, BALL_HEIGHT, BALL_HEIGHT); // Si on veut la faire carré !
 			context.fill();
+			if (isShown == idGame)
+				context.scale(2, 2)
 		}
 	}
 
@@ -218,16 +222,23 @@ export default function Live() {
 	socket.on("playerMove", (body: string) => {
 		// Update Paddle position in real time
 		const b = body.split(':');
-		// console.log("joueur = " + b[0] + " | position = " + b[1] + " | socket = " + socket.id)
+		console.log("joueur: " + b[0] + ", position : " + b[1] + ", adversaire : " + b[2] + ", coté : " + b[3]);
 
 		if (b[3] == "gauche")
 			joueurs.map(joueur => {
-				if (joueur == b[0])
-					game[joueurs.indexOf(joueur)].player.y = b[1];
+				if (joueur)
+					if (joueur == b[0]) {
+						game[joueurs.indexOf(joueur)].player.y = Number(b[1]) / resize;
+						draw(joueurs.indexOf(joueur));
+					}
 			});
 		if (b[3] == "droit")
 			adversaires.map(adversaire => {
-				game[adversaires.indexOf(adversaire)].player2.y = b[1];
+				if (adversaire)
+					if (adversaire == b[0]) {
+						game[adversaires.indexOf(adversaire)].player2.y = Number(b[1]) / resize;
+						draw(adversaires.indexOf(adversaire));
+					}
 			})
 	});
 
@@ -317,29 +328,6 @@ export default function Live() {
 				</div>
 			</div>
 		</div>
-		// <>
-		// {localStorage.getItem("loggedIn") != "true" ?
-		// 		<>
-		// 			<Nav />
-		// 			<div className="container">
-		// 				<div className="row d-flex justify-content-center text-center">
-		// 					<div className="col-9">
-		// 						<div className="channels-not-logged">
-		// 							<p>You are not logged in.</p>
-		// 						</div>
-		// 					</div>
-		// 				</div>
-		// 			</div>
-		// 		</>
-		// 		:
-		// 		<div>
-		// 			<Nav/>
-		// 			<div id="titre" className="list--lives">📺 Liste des Lives</div>
-		// 				<div id="content" className="content-class">
-		// 				</div>
-		// 		</div>
-		// }
-		// </>
 	)
 
 }

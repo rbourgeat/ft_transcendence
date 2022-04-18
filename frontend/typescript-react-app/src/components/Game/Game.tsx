@@ -46,7 +46,7 @@ export default function Game() {
 	var SearchText = "Rechercher une partie"
 	var SearchText2 = "Rejouer avec le même joueur"
 
-	let socket = io("http://localhost:3000/game", { query: { username: username } });
+	var socket = io("http://localhost:3000/game", { query: { username: username } });
 
 	function sendSearch() {
 		if (joueur) {
@@ -412,8 +412,8 @@ export default function Game() {
 											</Form.Group>
 										</Form>
 									: ""}
-									{isActive ? <button type="button" className="btn btn-outline-dark" id="search-button" onClick={() => sendSearch()}>{SearchText}</button> : ""}
-									{isActive2 ? <button type="button" className="btn btn-outline-dark" id="search-button2" onClick={() => sendSearch2()}>{SearchText2}</button> : ""}
+									{isActive ? <button type="button" className="btn btn-outline-light" id="search-button" onClick={() => sendSearch()}>{SearchText}</button> : ""}
+									{isActive2 ? <button type="button" className="btn btn-outline-light" id="search-button2" onClick={() => sendSearch2()}>{SearchText2}</button> : ""}
 									<p id="victoryMessage"></p>
 									<main role="main">
 										<p className="canvas-score" id="scores">

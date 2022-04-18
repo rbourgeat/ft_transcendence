@@ -17,7 +17,6 @@ export interface PeopleProps {
 export default function People(props: PeopleProps) {
 
 	const [load, setLoad] = React.useState(false);
-	const [authorized, setAuthorized] = React.useState(false);
 	const calledOnce = React.useRef(false);
 
 	function update() {
@@ -38,13 +37,9 @@ export default function People(props: PeopleProps) {
 			.then(res => {
 				username = res.data.login;
 				console.log(res);
-				setAuthorized(true);
-				//setLoaded(true);
-				//setUsername(username);
 			})
 			.catch((err) => {
 				console.log("Auth returned 400 -> missing cookie");
-				setAuthorized(false);
 			})
 		setLoad(true);
 	}
@@ -61,29 +56,8 @@ export default function People(props: PeopleProps) {
 
 	return (
 		<>
-			{/*{authorized == false ?
-				<>
-				<div id="people--div">
-					<Nav />
-					<div id="all">
-						<div className="row">
-							<div className="container">
-								<div className="row d-flex justify-content-center text-center">
-									<div className="col-9">
-										<div className="channels-not-logged">
-											<p>You are not logged in or properly authenticated (no cookie).</p>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				</>
-				: ""}*/}
 			<div id="people--div">
 				<Nav />
-				{/*<button onClick={update}>update</button>*/}
 				<div id="all">
 					<div className="row">
 						<br />

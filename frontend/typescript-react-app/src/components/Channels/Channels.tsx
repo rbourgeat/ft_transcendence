@@ -15,6 +15,8 @@ interface ChatProps {
 	username?: string
 }
 
+//TODO: a refactoriser quand ca sera terminé
+
 export default function Channels(props: ChatProps) {
 	const calledOnce = React.useRef(false);
 	const [username, setUsername] = React.useState("");
@@ -23,7 +25,7 @@ export default function Channels(props: ChatProps) {
 	/*
 	let socket = io("http://localhost:3000/chat", { query: { username: username } });
 	setSocket(socket);
-*/
+	*/
 	useEffect(() => {
 
 		async function getUser() {

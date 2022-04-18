@@ -4,8 +4,9 @@ import Nav from "../Nav/Nav";
 import Footer from "../Footer/Footer";
 
 export interface SearchProps {}
-
 export interface SearchState {}
+
+//Plus utilisé car supprimé du sujet
 
 export default class Search extends React.Component<SearchProps, SearchState>
 {
@@ -16,7 +17,6 @@ export default class Search extends React.Component<SearchProps, SearchState>
 	}
 
 	componentDidMount() {}
-
 	render()
 	{
 		return (
