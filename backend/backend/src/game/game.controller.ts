@@ -29,6 +29,6 @@ export class GameController {
     @UseGuards(JwtAuthenticationGuard)
     @Post('CreateCustomResult:login1/:login2')
     createGame(@Param('login1') login: string, @Param('login2') login2: string, @Request() req) {
-        return this.gameService.createGame(login, login2, 5, 2);
+        return this.gameService.createGame(login, login2, 5, 2, 0);
     }
 }
