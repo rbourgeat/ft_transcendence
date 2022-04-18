@@ -49,12 +49,13 @@ export class UserService {
 			console.log("name already taken");
 			throw new HttpException('Login already taken', HttpStatus.UNAUTHORIZED);
 		}
-		const updatedUser = await this.userRepository.findOne({ login: oldlogin });
-		await this.triggerAchievement42(updatedUser);
-		return this.userRepository.update({ login: oldlogin },
+		await this.userRepository.update({ login: oldlogin },
 			{
 				login: newlogin
-			})
+			});
+		const updatedUser = await this.userRepository.findOne({ login: newlogin });
+		await this.triggerAchievement42(updatedUser);
+		return updatedUser;
 	}
 
 	async updateStatus(login: string, s: string) {
@@ -70,6 +71,7 @@ export class UserService {
 	}
 
 	async triggerAchievement42(user: User) {
+		console.log(user);
 		if (user.login == "norminet")
 			this.saveAchievement(user, "42")
 	}

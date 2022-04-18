@@ -25,9 +25,7 @@ export default function Badge(props: ProfileProps) {
                         <br />
                         <p id="badge--rank" className="badge--stats-text">Rank: {props.rank}</p>
                         <p id="badge--ratio" className="badge--stats-text">Level: {props.level}</p>
-                        <div className="row d-flex justify-content-center">
-                            <ProgressBar animated now={props.to_next} label={`${props.to_next}%`} variant="info" id="progress-bar"/>
-                        </div>
+                        <ProgressBar animated now={props.to_next} label={`${props.to_next}%`} variant="info" id="progress-bar" />
                         <br />
                     </div>
                     <div className="col" id="badge--stats-2">
