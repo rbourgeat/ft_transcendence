@@ -49,3 +49,12 @@
     background-color: black;
     padding: 10px;
 }
+
+#dark-canvas:hover {
+    transform: scale(3);
+    transition-duration: 2s;
+}
+
+#dark-canvas {
+    transition-duration: 2s;
+}
