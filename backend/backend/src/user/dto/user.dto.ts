@@ -1,28 +1,17 @@
 import { ApiProperty, ApiTags } from '@nestjs/swagger';
-import { IsAlphanumeric, IsEmail, IsNotEmpty, Length, MinLength, Matches, IsOptional, IsDefined } from 'class-validator';
+import { IsAlphanumeric, IsEmail, IsNotEmpty, Length, MinLength, Matches } from 'class-validator';
 import { Match } from 'src/user/utils/match.decorator';
 
 @ApiTags('Users')
 export class UpdateUserDto {
-    @IsOptional()
-    @IsEmail()
+    @IsNotEmpty()
+    @Length(4, 20)
+    @IsAlphanumeric()
     @ApiProperty()
-    email: string;
-
-    //@IsOptional()
-    //@MinLength(8)
-    //@Matches(/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/, { message: 'password is too weak, it must have minimum 8 characters, at least 1 letter and 1 number', })
-    //@ApiProperty({ description: 'minimum 8 characters, at least 1 letter and 1 number' })
-    //password: string;
-    //
-    //@IsOptional()
-    //@IsNotEmpty()
-    //@Match('password', { message: 'password doesn\'t match' })
-    //@ApiProperty({ description: 'password confirmation has to match initial password' })
-    //password_confirmation: string;
+    login: string;
 }
 
-@ApiTags('Users') //Create a category on swagger
+@ApiTags('Users')
 export class UserDto {
     @IsNotEmpty()
     @Length(4, 20)

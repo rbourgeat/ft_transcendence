@@ -97,7 +97,8 @@ export class UserMigration1645626140921 implements MigrationInterface {
                 win_loss_ration: 40,
                 total_loss: 3,
                 total_wins: 2,
-                total_games: 5
+                total_games: 5,
+                rank: 6
             }),
         );
 

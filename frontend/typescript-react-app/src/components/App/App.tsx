@@ -33,6 +33,7 @@ function App() {
   const [user, setUser] = useState(null);
   const [username, setUsername] = React.useState("");
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+  const calledOnce = React.useRef(false);
 
   const value = useMemo(() =>
     ({ user, setUser }), [user, setUser]);
@@ -73,12 +74,17 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (localStorage.getItem("2fa") != "true" && localStorage.getItem("2fa") != "false") {
+    if (calledOnce.current) {
+			return;}
+    if (localStorage.getItem("2fa") != "true" && localStorage.getItem("2fa") != "false")
       localStorage.setItem("2fa", "false");
-    }
-    if (localStorage.getItem("loggedIn") != "true" && localStorage.getItem("loggedIn") != "false") {
+    if (localStorage.getItem("loggedIn") != "true" && localStorage.getItem("loggedIn") != "false")
       localStorage.setItem("loggedIn", "false");
-    }
+    calledOnce.current = true;
+    if (localStorage.getItem("2fa") != "true" && localStorage.getItem("2fa") != "false")
+        localStorage.setItem("2fa", "false");
+    if (localStorage.getItem("2faverif") != "true" && localStorage.getItem("2faverif") != "false")
+      localStorage.setItem("2faverif", "false");
   }, []);
 
   let particlesLoaded = (container) => {
@@ -172,22 +178,16 @@ function App() {
         <Route path="/" element={<Welcome />} />
         <Route path="/welcome" element={<Welcome />} />
         <Route path="/auth" element={<Auth />} />
-        {localStorage.getItem("loggedIn") == "false" ?
+        {(localStorage.getItem("loggedIn") == "false" &&
+          ((localStorage.getItem("2fa") == "true" && localStorage.getItem("2faverif") != "false") || (localStorage.getItem("2fa") == "false" && localStorage.getItem("2faverif") == "false")))
+          ?
           <>
+            <Route path="/welcome" element={<Welcome />} />
             <Route path="/auth" element={<Auth />} />
-            <Route path="*" element={<NotLogged />} />
+            <Route path="*" element={<Auth />} />
+            {/*<Route path="*" element={<NotLogged />} />*/}
           </>
-          : ""}
-
-        {localStorage.getItem("loggedIn") == "true" && localStorage.getItem("2fa") == "true" && localStorage.getItem("2faverif") == "false" ?
-          <Route path="*" element={<Login2fa />} /> : ""}
-        {(localStorage.getItem("2fa") == "true" && localStorage.getItem("2faverif") == "false") ?
-          <Route path="*" element={<Login2FA />} />
-          : ""}
-          {((localStorage.getItem("logginedIn") == "true" && localStorage.getItem("2fa") == "false")
-            || (localStorage.getItem("logginedIn") == "true" && localStorage.getItem("2fa") == "true" && localStorage.getItem("2faverif") == "true")
-            || (localStorage.getItem("logginedIn") == "true" && localStorage.getItem("2fa") == "false" && localStorage.getItem("2faverif") == "false"))
-            ?
+          :
           <>
             <Route path="/user" element={<UserSub/>} />
             <Route path="/settings" element={<Settings />} />
@@ -200,8 +200,14 @@ function App() {
             <Route path="/2fa" element={<Login2FA />} />
             <Route path="/profile/:login" element={<Profile />} />
             <Route path="*" element={<NotFound />} />
-          </> : ""
+          </>
           }
+
+        {localStorage.getItem("loggedIn") == "true" && localStorage.getItem("2fa") == "true" && localStorage.getItem("2faverif") == "false" ?
+          <Route path="*" element={<Login2fa />} /> : ""}
+        {(localStorage.getItem("2fa") == "true" && localStorage.getItem("2faverif") == "false") ?
+          <Route path="*" element={<Login2FA />} />
+          : ""}
       </Routes>
     </div>
   );
