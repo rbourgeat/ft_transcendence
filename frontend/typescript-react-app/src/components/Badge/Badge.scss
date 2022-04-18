@@ -1,12 +1,5 @@
 @use "../../variables";
 
-//#badge--div {
-//  //border-radius: variables.$border-radius-big;
-//  //color: black !important;
-//  //background-color: #333333;
-//  //border-radius: black !important;
-//}
-
 #badge--div--sub {
   border-radius: variables.$border-radius-big;
   border: 0.1rem solid black !important;
@@ -15,16 +8,10 @@
   text-align: center !important;
 }
 
-//#badge {
-//  margin-top: 10px;
-//}
-
 #graph-title,  #badge--title, #p--wins, #badge--stats > *, .text {
   color: white !important;
   font-family: variables.$basic-font;
   font-size: 12px;
-  //text-align: left;
-  //background-color: #333333;
 }
 
 #badge--stats-2 > *, .text {
@@ -33,7 +20,6 @@
   font-size: 12px;
   text-align: left;
   margin-left: 25%;
-  //background-color: #333333;
 }
 
 #badge--wins {
@@ -57,7 +43,6 @@
 #badge {
   border-radius: variables.$border-radius-big;
   position: sticky;
-  //position:absolute !important; //IDEE ne se superpose plus avec les bulles
 }
 
 .stats--h2 {
@@ -70,33 +55,5 @@
   margin-top: 15px !important;
   margin-bottom: 15px !important;
   width: 80% !important;
-  //align-items: center !important;
+  margin-left: 10% !important;
 }
-
-/*
-.progress {
-    height: 20px;
-    background: #333;
-    box-shadow: none;
-    margin-bottom: 30px;
-    overflow: visible
-}
-
-.progress .progress-bar {
-    position: sticky;
-    -webkit-animation: animate-positive 2s;
-    animation: animate-positive 2s;
-    background-color: blue;
-    width:65%;
-}
-
-.progress .progress-value {
-    display: block;
-    font-size: 18px;
-    font-weight: 500;
-    color: white;
-    top: -30px;
-    right: -25px;
-    position:sticky;
-}
-*/

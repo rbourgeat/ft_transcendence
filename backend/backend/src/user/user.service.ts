@@ -43,56 +43,20 @@ export class UserService {
 		throw new HttpException('User not found by 42login', HttpStatus.NOT_FOUND);
 	}
 
-	//async updateUser(login: string, user: UpdateUserDto) {
-	//	await this.userRepository.update({ login }, user);
-	//	const updatedUser = await this.userRepository.findOne({ login });
-	//	if (updatedUser)
-	//		return updatedUser;
-	//	throw new HttpException('User not found', HttpStatus.NOT_FOUND);
-	//}
-
-	/*
-	async updateUser(user: User, newlogin: string) {
-		console.log(user);
-		user.login = newlogin;
-		const updatedUser = await this.userRepository.save(user);
-		if (updatedUser)
-			return updatedUser;
-	}
-*/
-	/*
-		async updateUser(old: string, newlogin: string) {
-			const user = await this.userRepository.findOne({ login: old });
-			console.log(user);
-			user.login = newlogin;
-			const updatedUser = await this.userRepository.save(user);
-			if (updatedUser)
-				return updatedUser;
-		}
-	*/
-
-	async updateUser(login: string, s: string) {
-		const alreadyTaken = await this.userRepository.findOne({ login: login });
+	async updateUser(oldlogin: string, newlogin: string) {
+		const alreadyTaken = await this.userRepository.findOne({ login: newlogin });
 		if (alreadyTaken) {
 			console.log("name already taken");
 			throw new HttpException('Login already taken', HttpStatus.UNAUTHORIZED);
 		}
-
-		return this.userRepository.update({ login }, {
-			login: s
-		});
+		await this.userRepository.update({ login: oldlogin },
+			{
+				login: newlogin
+			});
+		const updatedUser = await this.userRepository.findOne({ login: newlogin });
+		await this.triggerAchievement42(updatedUser);
+		return updatedUser;
 	}
-
-	/*
-	async updateUser(user: User, newlogin: string) {
-		console.log(user);
-		user.login = newlogin;
-		const updatedUser = await this.userRepository.save(user);
-		if (updatedUser)
-			return updatedUser;
-		//throw new HttpException('User not found', HttpStatus.NOT_FOUND);
-	}
-*/
 
 	async updateStatus(login: string, s: string) {
 		return this.userRepository.update({ login }, {
@@ -106,15 +70,16 @@ export class UserService {
 		});
 	}
 
+	async triggerAchievement42(user: User) {
+		console.log(user);
+		if (user.login == "norminet")
+			this.saveAchievement(user, "42")
+	}
+
 	async giveRankOnCreation(user: User) {
 		const allUsers = await this.getAllUsers();
 		user.rank = allUsers.length + 1;
 		await this.userRepository.save(user);
-	}
-
-	async triggerAchievement42(user: User) {
-		if (user.login == "norminet")
-			this.saveAchievement(user, "42")
 	}
 
 	async create(userData: CreateUserDtoViaRegistration) {

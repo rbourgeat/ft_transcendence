@@ -9,7 +9,6 @@ import io from "socket.io-client";
 import axios from "axios";
 import { Form } from 'react-bootstrap'
 import Confetti from 'react-confetti';
-
 import { Offline, Online } from "react-detect-offline";
 import "../../../node_modules/react-rain-animation/lib/style.css";
 
