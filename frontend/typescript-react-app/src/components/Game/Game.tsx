@@ -22,6 +22,7 @@ var gm = 0;
 export default function Game() {
 	let size = useWindowDimensions();
 	const [isActive, setActive] = React.useState(true);
+	const [isActive2, setActive2] = React.useState(false);
 	const [isWin, setWin] = React.useState(false);
 	const [isLoose, setLoose] = React.useState(false);
 	const [gameMode, chanScopeSet] = React.useState("original");
@@ -44,6 +45,7 @@ export default function Game() {
 			})
 	}
 	var SearchText = "Rechercher une partie"
+	var SearchText2 = "Rejouer avec le même joueur"
 
 	let socket = io("http://localhost:3000/game", { query: { username: username } });
 
@@ -51,10 +53,12 @@ export default function Game() {
 		if (joueur) {
 			isSearching = isSearching ? false : true;
 			if (isSearching) {
+				setActive2(false);
 				SearchText = "Annuler la recherche"
 				socket.emit('search', gameMode);
 			}
 			else {
+				setActive2(true);
 				SearchText = "Rechercher une partie à nouveau"
 				socket.emit('search', "STOPSEARCH");
 			}
@@ -62,6 +66,25 @@ export default function Game() {
 		}
 		else
 			document.querySelector('#search-button').textContent = "Impossible de te connecter !"
+	}
+
+	function sendSearch2() {
+		if (joueur) {
+			isSearching = isSearching ? false : true;
+			if (isSearching) {
+				setActive(false);
+				SearchText2 = "Annuler la demande"
+				socket.emit('search', "RETRY:" + gameMode + ":" + adversaire);
+			}
+			else {
+				setActive(true);
+				SearchText2 = "Rejouer avec le même adversaire"
+				socket.emit('search', "STOPSEARCH");
+			}
+			document.querySelector('#search-button2').textContent = SearchText;
+		}
+		else
+			document.querySelector('#search-button2').textContent = "Impossible de te connecter !"
 	}
 
 	socket.on("gameStart", (...args) => {
@@ -80,6 +103,7 @@ export default function Game() {
 			document.querySelector('#joueur2').textContent = joueur2;
 			play();
 			setActive(false);
+			setActive2(false);
 			setGameMode(gm);
 		}
 		else if (joueur2 != adversaire && joueur2 == joueur && game) {
@@ -88,6 +112,7 @@ export default function Game() {
 			document.querySelector('#joueur2').textContent = joueur2;
 			play();
 			setActive(false);
+			setActive2(false);
 			setGameMode(gm);
 		}
 
@@ -328,7 +353,7 @@ export default function Game() {
 	function clearDataGame() {
 		joueur1 = null;
 		joueur2 = null;
-		adversaire = null;
+		// adversaire = null;
 		game = {
 			player: {
 				y: canvas.height / 2 - PLAYER_HEIGHT / 2
@@ -348,7 +373,9 @@ export default function Game() {
 		anim = null;
 		isSearching = false;
 		setActive(true);
+		setActive2(true);
 		document.querySelector('#search-button').textContent = "Refaire une partie";
+		document.querySelector('#search-button2').textContent = "Rejouer avec le même joueur";
 	}
 
 	return (
@@ -388,6 +415,7 @@ export default function Game() {
 								</Form>
 								: ""}
 							{isActive ? <button type="button" className="btn btn-outline-dark" id="search-button" onClick={() => sendSearch()}>{SearchText}</button> : ""}
+							{isActive2 ? <button type="button" className="btn btn-outline-dark" id="search-button2" onClick={() => sendSearch2()}>{SearchText2}</button> : ""}
 							<p id="victoryMessage"></p>
 							<main role="main">
 								<p className="canvas-score" id="scores">
