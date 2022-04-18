@@ -61,6 +61,7 @@ export default function Settings(props: SettingsProps) {
 				toast.notifySuccess('😇 2FA successfully turned-off !');
 				localStorage.setItem("2fa", "false");
 				setActivated2fa(false);
+				localStorage.setItem("2faverif", "false");
             })
             .catch((error) => {
 				toast.notifyDanger('🥲 Error while turnoff on 2FA.');

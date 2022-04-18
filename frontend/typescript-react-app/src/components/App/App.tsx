@@ -178,15 +178,9 @@ function App() {
         <Route path="/" element={<Welcome />} />
         <Route path="/welcome" element={<Welcome />} />
         <Route path="/auth" element={<Auth />} />
-        {(localStorage.getItem("loggedIn") == "false" &&
-          ((localStorage.getItem("2fa") == "true" && localStorage.getItem("2faverif") != "false") || (localStorage.getItem("2fa") == "false" && localStorage.getItem("2faverif") == "false")))
+        {(localStorage.getItem("loggedIn") == "true" &&
+          ((localStorage.getItem("2fa") == "true" && localStorage.getItem("2faverif") == "true") || (localStorage.getItem("2fa") == "false" && localStorage.getItem("2faverif") == "false")))
           ?
-          <>
-            <Route path="/welcome" element={<Welcome />} />
-            <Route path="/auth" element={<Auth />} />
-            <Route path="*" element={<Auth />} />
-          </>
-          :
           <>
             <Route path="/user" element={<UserSub/>} />
             <Route path="/settings" element={<Settings />} />
@@ -198,7 +192,11 @@ function App() {
             <Route path="/game" element={<Game />} />
             <Route path="/profile/:login" element={<Profile />} />
             <Route path="*" element={<NotFound />} />
+            {/*<Route path="/welcome" element={<Welcome />} />
+            <Route path="/auth" element={<Auth />} />
+            <Route path="*" element={<Auth />} />*/}
           </>
+          : ""
           }
 
         {localStorage.getItem("loggedIn") == "true" && localStorage.getItem("2fa") == "true" && localStorage.getItem("2faverif") == "false" ?
