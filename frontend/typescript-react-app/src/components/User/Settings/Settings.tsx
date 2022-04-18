@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './Settings.scss';
 import { ToastContainer } from 'react-toastify';
 import ToastAlerts from '../../Utils/ToastAlerts/ToastAlerts';
@@ -6,10 +6,10 @@ import axios from "axios";
 import MyAxios from '../../Utils/Axios/Axios';
 import EditUsernameModal from '../editUsername/EditUsername';
 import Nav from "../../Nav/Nav";
-import AuthCode, { AuthCodeRef }  from 'react-auth-code-input';
+import AuthCode, { AuthCodeRef } from 'react-auth-code-input';
+import { AiOutlineLoading3Quarters, AiOutlineLoading } from "react-icons/ai";
 
-export interface SettingsProps
-{
+export interface SettingsProps {
 	username?: string
 	login42?: string
 }
@@ -39,8 +39,8 @@ export default function Settings(props: SettingsProps) {
 	const [code, setCode] = React.useState("");
 
 	function clearInput() {
-        setverifCode("");
-    }
+		setverifCode("");
+	}
 
 	async function manageQR() {
 		const res = await fetch('http://localhost:3000/api/2fa/generate', { method: 'POST', credentials: 'include' });
@@ -49,27 +49,26 @@ export default function Settings(props: SettingsProps) {
 		setqrCode(imgUrl);
 	}
 
-	function turnoff2FA()
-	{
+	function turnoff2FA() {
 		let url = "http://localhost:3000/api/2fa/turn-off";
 
 		axios.defaults.baseURL = 'http://localhost:3000/api/';
-        axios.defaults.headers.post['Content-Type'] = 'application/json';
-        axios.defaults.headers.post['Accept'] = '*/*';
-        axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
-        axios.defaults.withCredentials = true;
+		axios.defaults.headers.post['Content-Type'] = 'application/json';
+		axios.defaults.headers.post['Accept'] = '*/*';
+		axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+		axios.defaults.withCredentials = true;
 
 		let toast = new ToastAlerts(null);
 
 		axios.post(url)
-            .then(res => {
+			.then(res => {
 				toast.notifySuccess('😇 2FA successfully turned-off !');
 				localStorage.setItem("2fa", "false");
 				setActivated2fa(false);
-            })
-            .catch((error) => {
+			})
+			.catch((error) => {
 				toast.notifyDanger('🥲 Error while turnoff on 2FA.');
-            })
+			})
 	}
 
 	const checkCode = (event: any) => {
@@ -78,33 +77,32 @@ export default function Settings(props: SettingsProps) {
 		setverifCode("");
 
 		axios.defaults.baseURL = 'http://localhost:3000/api/';
-        axios.defaults.headers.post['Content-Type'] = 'application/json';
-        axios.defaults.headers.post['Accept'] = '*/*';
-        axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
-        axios.defaults.withCredentials = true;
+		axios.defaults.headers.post['Content-Type'] = 'application/json';
+		axios.defaults.headers.post['Accept'] = '*/*';
+		axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+		axios.defaults.withCredentials = true;
 
 		let bod = {
 			twoFactorAuthenticationCode: number
 		}
 		let toast = new ToastAlerts(null);
-		if (number == "")
-		{
+		if (number == "") {
 			toast.notifyDanger('🥲 Error while turning on 2FA. Your verif code is wrong or the QR Code is outdated.');
-			return ;
+			return;
 		}
 
 		let url = "http://localhost:3000/api/2fa/turn-on";
 
 		axios.post(url, bod)
-            .then(res => {
+			.then(res => {
 				toast.notifySuccess('✨ 2FA successfully turned-on !');
 				localStorage.setItem("2fa", "true");
 				localStorage.setItem("2faverif", "true");
 				setActivated2fa(true);
-            })
-            .catch((error) => {
+			})
+			.catch((error) => {
 				toast.notifyDanger('🥲 Error while turning on 2FA. Your verif code is wrong or the QR Code is outdated.');
-            })
+			})
 		clearInput();
 	}
 
@@ -117,8 +115,8 @@ export default function Settings(props: SettingsProps) {
 	}
 
 	function handleInputChange(event) {
-        setverifCode(event.target.value);
-    }
+		setverifCode(event.target.value);
+	}
 
 	const onChangePicture = (e: any) => {
 		e.preventDefault();
@@ -151,8 +149,7 @@ export default function Settings(props: SettingsProps) {
 				username = res.data.login;
 				console.log(res);
 				console.log("Successful api auth!");
-				if (res.data.login42 != null && res.data.login42 != undefined &&  res.data.login42 != "")
-				{
+				if (res.data.login42 != null && res.data.login42 != undefined && res.data.login42 != "") {
 					setis42(true);
 					setlogin42(res.data.login42);
 					localStorage.setItem("login", res.data.login);
@@ -163,13 +160,11 @@ export default function Settings(props: SettingsProps) {
 					//	setColor("grey")
 					//	setStatus("offline");
 					//}
-					if (res.data.status == "online")
-					{
+					if (res.data.status == "online") {
 						setColor("green");
 						setStatus("online");
 					}
-					if (res.data.status == "ingame")
-					{
+					if (res.data.status == "ingame") {
 						setColor("purple");
 						setStatus("ingame")
 					}
@@ -202,56 +197,56 @@ export default function Settings(props: SettingsProps) {
 		getUser();
 	});
 
-    return (
-	<>
-		<Nav />
-		<div className="container" id="settings_container">
+	return (
+		<>
+			<Nav />
+			<div className="container" id="settings_container">
 				<div className="row d-flex justify-content-center text-center">
 					<div className="col-9">
 						<div id="settings">
 							<h2 id="user--settings">Settings</h2>
 							<br />
 							{load == false ?
-										<div className="spinner-border m-5" role="status">
-											<span className="sr-only">Loading...</span>
-										</div>
-										:
-										<>
-											<img id={username} className="profile--pic" height="80" width="80"/>
-											{/*{renderImage(username)}*/}
-												<svg className="log--color_profile" height="40" width="40">
-													<circle cx="20" cy="20" r="15" fill={color} stroke="white" style={{ strokeWidth: '3' }} />
-												</svg>
-											{/*{status == "" ? getUser() : ""}*/}
-											<p className="username-text">{username}</p>
-											<p className="status-text">{status}</p>
-											<br />
-											<div className="row d-flex justify-content-center text-center">
-												<div id="change-avatar-div" className="col-5">
-												{/*<br />*/}
-													<label id="change--avatar--label">Change avatar</label>
-													<div id="change--avatar">
-														<input
-															type="file"
-															name="image-upload"
-															id="input--upload"
-															accept="image/*"
-															onChange={onChangePicture}
-															className="input-file-upload"
-														/>
-													</div>
+								<div className="spinner-border m-5" role="status">
+									<span className="sr-only"><AiOutlineLoading /></span>
+								</div>
+								:
+								<>
+									<img id={username} className="profile--pic" height="80" width="80" />
+									{/*{renderImage(username)}*/}
+									<svg className="log--color_profile" height="40" width="40">
+										<circle cx="20" cy="20" r="15" fill={color} stroke="white" style={{ strokeWidth: '3' }} />
+									</svg>
+									{/*{status == "" ? getUser() : ""}*/}
+									<p className="username-text">{username}</p>
+									<p className="status-text">{status}</p>
+									<br />
+									<div className="row d-flex justify-content-center text-center">
+										<div id="change-avatar-div" className="col-5">
+											{/*<br />*/}
+											<label id="change--avatar--label">Change avatar</label>
+											<div id="change--avatar">
+												<input
+													type="file"
+													name="image-upload"
+													id="input--upload"
+													accept="image/*"
+													onChange={onChangePicture}
+													className="input-file-upload"
+												/>
 											</div>
-											<br />
 										</div>
+										<br />
+									</div>
 									<br />
 									<br />
 									<div className="row d-flex justify-content-center text-center">
 										<div id="change--username--div">
 											<h3 id="activate--modal">Change username</h3>
-											<button id="change--username"  type="button" className="btn btn-outline-dark"
-													onClick={handleShow}>click to change
+											<button id="change--username" type="button" className="btn btn-outline-dark"
+												onClick={handleShow}>click to change
 											</button>
-											<EditUsernameModal username={username} show={show} onHide={handleClose}/>
+											<EditUsernameModal username={username} show={show} onHide={handleClose} />
 											<br />
 										</div>
 									</div>
@@ -263,36 +258,36 @@ export default function Settings(props: SettingsProps) {
 													<h3 id="activate--2fa">2 Factor Authentication</h3>
 													{/*<br />*/}
 													<button className={activated2fa ? "btn btn-outline-danger" : "btn btn-outline-success"}
-															id="button--2fa" onClick={handle2FA}>{activated2fa == true ? "Turn off 2FA" : "Turn on 2FA"}
+														id="button--2fa" onClick={handle2FA}>{activated2fa == true ? "Turn off 2FA" : "Turn on 2FA"}
 													</button>
 													<br />
 													<br />
-													{qrcode != "" && activated2fa == false ? <img style={{marginBottom: "20ox"}} id="qrcode" src={qrcode}></img> : <p></p>}
+													{qrcode != "" && activated2fa == false ? <img style={{ marginBottom: "20ox" }} id="qrcode" src={qrcode}></img> : <p></p>}
 													<br />
 													{qrcode != "" && activated2fa == false ? <p className="black--text" id="please">Please scan the QR Code with your Google Authenticator app.</p> : <p className="black--text"></p>}
 													{qrcode != "" && activated2fa == false ?
-													<>
-														<br />
-														<label className="black--text">Enter the code provided</label>
-													</>
-													: <p className="black--text"></p>}
+														<>
+															<br />
+															<label className="black--text">Enter the code provided</label>
+														</>
+														: <p className="black--text"></p>}
 													{/*<br />*/}
 													{/*{qrcode != "" && activated2fa == false ? <input className="form-control form-control-sm" id="check_code" type="text" placeholder="422 022" onChange={handleInputChange}></input> : ""}*/}
 													{qrcode != "" && activated2fa == false ?
 														<AuthCode
-														allowedCharacters='numeric'
-														ref={AuthInputRef}
-														inputClassName="auth--code_settings"
-														onChange={function (res: string): void {
-														setCode(res);
-													} } />
-													: ""}
+															allowedCharacters='numeric'
+															ref={AuthInputRef}
+															inputClassName="auth--code_settings"
+															onChange={function (res: string): void {
+																setCode(res);
+															}} />
+														: ""}
 													{qrcode != "" && activated2fa == false ?
-													<>
-														<br />
-														<button className="btn btn-outline-dark" type="button" id="check--auth" onClick={checkCode}>Check</button>
-													</>
-													: <p className="black--text"></p>}
+														<>
+															<br />
+															<button className="btn btn-outline-dark" type="button" id="check--auth" onClick={checkCode}>Check</button>
+														</>
+														: <p className="black--text"></p>}
 													<ToastContainer
 														position="top-right"
 														autoClose={5000}
@@ -304,17 +299,17 @@ export default function Settings(props: SettingsProps) {
 														draggable
 														pauseOnHover
 													/>
+												</div>
 											</div>
 										</div>
 									</div>
-								</div>
-										</>
+								</>
 
 							}
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-	</>
-    )
+		</>
+	)
 }

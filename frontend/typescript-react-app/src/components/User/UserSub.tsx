@@ -14,6 +14,7 @@ import MatchHistory from '../MatchHistory/MatchHistory';
 import Footer from "../Footer/Footer";
 import { render } from '@testing-library/react';
 import Login from '../Auth/Login/Login';
+import { AiOutlineLoading3Quarters, AiOutlineLoading } from "react-icons/ai";
 
 export interface UserfuncProps {
 	username?: string,
@@ -136,7 +137,7 @@ export default function User(props: UserfuncProps) {
 						<div className="user--stats" key={username}>
 							{loaded == false ?
 								<div className="spinner-border m-5" role="status">
-									<span className="sr-only">Loading...</span>
+									<span className="sr-only"><AiOutlineLoading /></span>
 								</div>
 								:
 								<>
@@ -178,6 +179,6 @@ export default function User(props: UserfuncProps) {
 					</div>
 				</div>
 			</div>
-		</div>
+		</div >
 	);
 };

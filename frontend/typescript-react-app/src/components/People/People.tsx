@@ -7,9 +7,9 @@ import Friends from "./Friends/Friends";
 import Blocked from "./Blocked/Blocked";
 import SentInvitations from "./SentInvitations/SentInvitations";
 
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-
+import { AiOutlineLoading3Quarters, AiOutlineLoading } from "react-icons/ai";
 export interface PeopleProps {
 	login?: string
 }
@@ -50,10 +50,11 @@ export default function People(props: PeopleProps) {
 	}
 
 	useEffect(() => {
-        if (calledOnce.current) {
-			return;}
+		if (calledOnce.current) {
+			return;
+		}
 		getUser();
-        calledOnce.current = true;
+		calledOnce.current = true;
 	}, []);
 
 
@@ -80,39 +81,39 @@ export default function People(props: PeopleProps) {
 				</div>
 				</>
 				: ""}*/}
-				<div id="people--div">
-					<Nav />
-					{/*<button onClick={update}>update</button>*/}
-					<div id="all">
-						<div className="row">
-							<br />
-							{load == false ?
-								<div className="container">
-									<div className="row d-flex justify-content-center text-center">
-										<div className="mycontainer">
-											<div className="spinner-border m-5" role="status">
-												<span className="sr-only">Loading...</span>
-											</div>
+			<div id="people--div">
+				<Nav />
+				{/*<button onClick={update}>update</button>*/}
+				<div id="all">
+					<div className="row">
+						<br />
+						{load == false ?
+							<div className="container">
+								<div className="row d-flex justify-content-center text-center">
+									<div className="mycontainer">
+										<div className="spinner-border m-5" role="status">
+											<span className="sr-only"><AiOutlineLoading /></span>
 										</div>
 									</div>
 								</div>
-										:
-										<>
-											<All login={props.login} />
-											<br />
-											<Friends />
-											<br />
-											<Invitations />
-											<br />
-											<SentInvitations />
-											<br />
-											<Blocked />
-											<br />
-										</>
-							}
-						</div>
+							</div>
+							:
+							<>
+								<All login={props.login} />
+								<br />
+								<Friends />
+								<br />
+								<Invitations />
+								<br />
+								<SentInvitations />
+								<br />
+								<Blocked />
+								<br />
+							</>
+						}
 					</div>
 				</div>
+			</div>
 		</>
 	);
 }

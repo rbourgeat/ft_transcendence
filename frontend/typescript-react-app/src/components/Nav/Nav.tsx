@@ -34,8 +34,7 @@ function Nav() {
 				let check = localStorage.getItem("loggedIn");
 				console.log("Check is " + check);
 				let twofa = localStorage.getItem("2fa");
-				if (twofa == "true")
-				{
+				if (twofa == "true") {
 					localStorage.setItem("2faverif", "false");
 				}
 				window.top.location = "http://localhost:3030/";
@@ -58,44 +57,37 @@ function Nav() {
 	}
 
 	//faire des modals pour ca ?
-	function changeUsername()
-	{
+	function changeUsername() {
 		let toast = new ToastAlerts(null);
 		toast.notifyDanger("To be implemented");
 	}
 
-	function changeAvatar()
-	{
+	function changeAvatar() {
 		let toast = new ToastAlerts(null);
 		toast.notifyDanger("To be implemented");
 	}
 
-	function play()
-	{
+	function play() {
 		let toast = new ToastAlerts(null);
 		toast.notifyDanger("To be implemented");
 	}
 
-	function watch()
-	{
+	function watch() {
 		let toast = new ToastAlerts(null);
 		toast.notifyDanger("To be implemented");
 	}
 
-	function sendDM()
-	{
+	function sendDM() {
 		let toast = new ToastAlerts(null);
 		toast.notifyDanger("To be implemented");
 	}
 
-	function joinChannel()
-	{
+	function joinChannel() {
 		let toast = new ToastAlerts(null);
 		toast.notifyDanger("To be implemented");
 	}
 
-	function createChannel()
-	{
+	function createChannel() {
 		let toast = new ToastAlerts(null);
 		toast.notifyDanger("A reprendre");
 	}
@@ -142,7 +134,7 @@ function Nav() {
 					</ul>
 				</div>
 				{/*<button id="logout--button" type="button" className="btn btn-dark" />Settings</button>*/}
-				<div className="dropdown show"  id="menu">
+				<div className="dropdown show" id="menu">
 					<a className="btn btn-dark btn-sm dropdown-toggle" role="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						Quick actions
 					</a>

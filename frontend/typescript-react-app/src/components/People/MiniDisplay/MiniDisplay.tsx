@@ -10,7 +10,6 @@ import { FiUserMinus, FiUserPlus, FiUserX } from 'react-icons/fi';
 import { Oval, Hearts } from "react-loader-spinner";
 import { FaMarsStroke } from 'react-icons/fa';
 import { ToastContainer, toast } from 'react-toastify';
-
 export interface MiniDisplayProps {
 	login?: string,
 	status?: string,
@@ -176,7 +175,7 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 		else if (props.container == "sent")
 			return (
 				<>
-				{/*<br />*/}
+					{/*<br />*/}
 					<p className="waiting">Waiting for {props.login} to answer</p>
 					{/*<i className="user--action" onClick={() => refuseInvitation(props.login)}>{<MdCancel />}</i>*/}
 				</>
@@ -203,40 +202,40 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 			<li className="list-group-item" key={props.extra ? props.login.concat(props.extra) : props.login}>
 				<div className="mini-display-li">
 					{/*<Suspense fallback={<Hearts color="#ffe4e1" height={100} width={100} key={props.login} />}>*/}
-						<img
-							className="profile--pic"
-							id={props.login.concat("_" + props.extra)}
-							src="https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg"
-							width="100"
-							height="100"
-							onClick={gotoprofile}
-						/>
-						{load == true ?
+					<img
+						className="profile--pic"
+						id={props.login.concat("_" + props.extra)}
+						src="https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg"
+						width="100"
+						height="100"
+						onClick={gotoprofile}
+					/>
+					{load == true ?
 						<>
-						{renderImage(props.avatar, props.login, props.ftlogin, props.extra)}
+							{renderImage(props.avatar, props.login, props.ftlogin, props.extra)}
 						</>
 
 						:
-											<div className="d-flex justify-content-center">
-												<div className="spinner-border" role="status">
-													{/*<span className="sr-only">Loading...</span>*/}
-												</div>
-											</div>
-						}
-						<br />
-						<p className="user--p" id={"mini--login".concat("_"+ props.login)}>{props.login}</p>
-						{buttonToDidsplay()}
-						<ToastContainer
-							position="top-right"
-							autoClose={5000}
-							hideProgressBar={false}
-							newestOnTop={false}
-							closeOnClick
-							rtl={false}
-							pauseOnFocusLoss
-							draggable
-							pauseOnHover
-						/>
+						<div className="d-flex justify-content-center">
+							<div className="spinner-border" role="status">
+								{/*<span className="sr-only">Loading...</span>*/}
+							</div>
+						</div>
+					}
+					<br />
+					<p className="user--p" id={"mini--login".concat("_" + props.login)}>{props.login}</p>
+					{buttonToDidsplay()}
+					<ToastContainer
+						position="top-right"
+						autoClose={5000}
+						hideProgressBar={false}
+						newestOnTop={false}
+						closeOnClick
+						rtl={false}
+						pauseOnFocusLoss
+						draggable
+						pauseOnHover
+					/>
 					{/*</Suspense>*/}
 				</div>
 				<svg className="log--color" height="40" width="40">

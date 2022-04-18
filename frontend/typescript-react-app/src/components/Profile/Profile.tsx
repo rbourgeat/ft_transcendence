@@ -12,6 +12,7 @@ import Achievement from '../Achievements/Achievements';
 import Badge from "../Badge/Badge";
 import Footer from "../Footer/Footer";
 //import MyAxios from '../Utils/Axios/Axios';
+import { AiOutlineLoading3Quarters, AiOutlineLoading } from "react-icons/ai";
 
 export interface ProfileProps {
 	login?: string,
@@ -251,7 +252,7 @@ export default function Profile() {
 								<br />
 								{load == false ?
 									<div className="spinner-border m-5" role="status">
-										<span className="sr-only">Loading...</span>
+										<span className="sr-only"><AiOutlineLoading /></span>
 									</div>
 
 									: ""}

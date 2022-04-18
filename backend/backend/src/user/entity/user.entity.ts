@@ -31,7 +31,7 @@ export class User {
     @Column({ nullable: true })
     status: string = "offline";
 
-    @Column({ nullable: true /*, select: false */ })
+    @Column({ nullable: true })
     password: string;
 
     @Column({ nullable: true })

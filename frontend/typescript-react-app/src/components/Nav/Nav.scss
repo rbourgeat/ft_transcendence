@@ -26,6 +26,10 @@
 	color: white !important;
 }
 
+.navbar--title:hover  {
+	color: rgb(9, 194, 191) !important;
+}
+
 #logout--button {
 	border: 0.1rem solid white !important;
 	margin-top: 0px !important;
@@ -72,10 +76,14 @@
 	margin: 5px !important;
 }
 
-//#logout--button {
-//	padding
-//}
+#logout--button:hover {
+	color: black !important;
+	border: 0.1rem solid rgb(9, 194, 191) !important;
+	background-color: rgb(9, 194, 191) !important;
+}
 
-//#menu {
-//	width: 20px !important;
-//}
+#dropdownMenuButton1:hover {
+		color: black !important;
+	border: 0.1rem solid rgb(9, 194, 191) !important;
+	background-color: rgb(9, 194, 191) !important;
+}
