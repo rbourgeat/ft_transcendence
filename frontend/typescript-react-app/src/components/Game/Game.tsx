@@ -9,7 +9,7 @@ import io from "socket.io-client";
 import axios from "axios";
 import { Form } from 'react-bootstrap'
 import Confetti from 'react-confetti';
-import ReactRain from 'react-rain-animation';
+//import ReactRain from 'react-rain-animation';
 import "../../../node_modules/react-rain-animation/lib/style.css";
 
 var adversaire: string;
@@ -371,23 +371,22 @@ export default function Game() {
 				<div id="game-root">
 					<Nav />
 					{isWin ? <Confetti width={size.width} height={size.height} /> : ""}
-					{isLoose ? <ReactRain numDrops="500" /> : ""}
 					<div className="container">
 						<div className="row d-flex justify-content-center text-center">
 							{isActive ?
 								<Form>
 									<Form.Group>
 										<Form.Select aria-label="Modes de jeux:" defaultValue="original" onChange={e => chanScopeSet(e.target.value)}>
-												<option>Modes de jeux:</option>
-												<option value="original">Original (1972)</option>
-												<option value="bigball">Big Ball (Facile)</option>
-												<option value="blitz">Blitz (Balle Rapide)</option>
-												<option value="slow">Slow (Balle Lente)</option>
-												<option value="cube">Cube World (All is cubic)</option>
+											<option>Modes de jeux:</option>
+											<option value="original">Original (1972)</option>
+											<option value="bigball">Big Ball (Facile)</option>
+											<option value="blitz">Blitz (Balle Rapide)</option>
+											<option value="slow">Slow (Balle Lente)</option>
+											<option value="cube">Cube World (All is cubic)</option>
 										</Form.Select>
 									</Form.Group>
 								</Form>
-							: ""}
+								: ""}
 							{isActive ? <button type="button" className="btn btn-outline-dark" id="search-button" onClick={() => sendSearch()}>{SearchText}</button> : ""}
 							<p id="victoryMessage"></p>
 							<main role="main">
