@@ -11,7 +11,6 @@ import MatchHistory from '../MatchHistory/MatchHistory';
 import Achievement from '../Achievements/Achievements';
 import Badge from "../Badge/Badge";
 import Footer from "../Footer/Footer";
-//import MyAxios from '../Utils/Axios/Axios';
 
 export interface ProfileProps {
 	login?: string,
@@ -46,7 +45,6 @@ export default function Profile() {
 	const [level, setLevel] = React.useState(0);
 	const [nextlevel, setNextLevel] = React.useState(0);
 	const [pendingInvite, setPendingInvite] = React.useState(false);
-	//const [load, setLoad] = React.useState(false);
 
 	async function getUserLogin(log: string) {
 		let url = "http://localhost:3000/api/user/".concat(login);
@@ -56,17 +54,14 @@ export default function Profile() {
 			.then(res => {
 				console.log(res);
 				setUserOk(true);
-				//setisFriend(true);
 				setLevel(res.data.percent_to_next_lvl);
 				setNextLevel(res.data.level);
 				setPoints(res.data.points);
-				//setRank(res.data.rank);
 				setTotalGames(res.data.total_games);
 				setLoss(res.data.total_loss);
 				setWins(res.data.wins);
 				setRatio(res.data.win_loss_ration);
 				setXp(res.data.xp);
-				//setLoad(true);
 				if (res.data.status == "offline")
 					setColor("grey")
 				if (res.data.status == "online") {
@@ -108,12 +103,8 @@ export default function Profile() {
 	}, []);
 
 	function buttonToDisplay() {
-		//let notBlocked: boolean = true;
-		//let notFriend: boolean = true;
 
 		let friends: boolean;
-
-
 		let url = "http://localhost:3000/api/user/relation/relationStatusWith/".concat(login);
 
 		axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
@@ -130,17 +121,10 @@ export default function Profile() {
 					console.log("You are friends !");
 					friends = true;
 					setisFriend(true);
-					//let parent = document.getElementById("relationship").nodeValue;
 					let message = "You are friends !";
-					//let child = document.createElement("p");
-					//child.appendChild(document.createTextNode(message));
-					//document.getElementById("relationship").appendChild(child);
-					//document.getElementById("relationship").appendChild(<span className="badge bg-success">Friends</span>);
-					//parent.appendChild();
 				}
 				else if (relation.status == "pending" && relation.receiver == login) {
 					console.log("You invited that user");
-					//setReceivedInvitation(true);
 					setSentInvitation(true);
 					setPendingInvite(true);
 				}
@@ -155,22 +139,16 @@ export default function Profile() {
 				}
 				else if (relation.status == "blocked" && relation.creator == login) {
 					console.log("You are blocked by this contact");
-					//setisBlocked(true);
 				}
 				else {
 					setisFriend(false);
-					//console.log("Somebody blocked the other.");
 				}
-
-				//setRelationStatus(status);
 			})
 			.catch((error) => {
 				console.log("Error while getting relation data");
 				console.log(error);
 				friends = false;
 			})
-
-		//return (<span className="badge bg-success">Friend</span>);
 	}
 
 	function inviteFriend() {
@@ -190,18 +168,12 @@ export default function Profile() {
 		console.log("We have to answer !");
 		let ax = new MyAxios(null);
 		ax.post_api_user_relation_answerInvitation_id(login, "declined", "");
-		//TODO: voir un moyen de refresh la page plus proprement
 		window.top.location = "http://localhost:3000/user/".concat(login);
 	}
 
 	function block() {
-		console.log("We have to block.");
-		//let toast = new ToastAlerts(null);
-		//toast.notifyDanger("Not implemented yet");
-
 		let ax = new MyAxios(null);
 		ax.post_relation_block(login);
-		//window.top.location = "http://localhost:3000/user/".concat(login);
 	}
 
 	//Besoin rbourgea
@@ -209,7 +181,6 @@ export default function Profile() {
 		console.log("We have to watch playing.");
 		let toast = new ToastAlerts(null);
 		toast.notifyDanger("To do @rbourgea");
-		//window.top.location = "http://localhost:3000/user/".concat(login);
 	}
 
 	function askToPlay() {
@@ -223,16 +194,11 @@ export default function Profile() {
 	}
 
 	function unblock() {
-		//let toast = new ToastAlerts(null);
-		//toast.notifyDanger("Not implemented yet");
-
 		let ax = new MyAxios(null);
 		ax.delete_relation_unblock(login, "");
 	}
 
 	function remove() {
-		//let toast = new ToastAlerts(null);
-		//toast.notifyDanger("Not implemented yet");
 		console.log("Removing friend");
 		let ax = new MyAxios(null);
 		ax.delete_relation_id(login, "");
@@ -255,24 +221,20 @@ export default function Profile() {
 									</div>
 
 									: ""}
-								{/*{load == false ? getUserLogin(login) : ""}*/}
 								{userOK == true ?
 									<div id="profile--div">
 										<h3 className="profile--type">{isFriend == true ? "Friend profile" : "Public profile"}</h3>
 										<br />
-										<div /*className="col-4"*/ id="text-type">{isFriend == true ? "You are able to see a detailed profile because you are friends 🥰 !"
+										<div id="text-type">{isFriend == true ? "You are able to see a detailed profile because you are friends 🥰 !"
 											: "You are not able to see a detailed profile because you are not friends 😢 !"}</div>
 										<br />
 										<img id={login} className="profile--pic" src="" width="100" height="100" />
-										{/*<br />*/}
 										{load == false ? renderImage(login, isUser) : ""}
 										<svg className="log--color" height="40" width="40">
 											<circle cx="20" cy="20" r="15" fill={color} stroke="white" style={{ strokeWidth: '3' }} />
 										</svg>
-										{/*<br />*/}
 										<h2 id="profile-title">{login}</h2>
 										<p className="status-text">{status}</p>
-										{/*<br />*/}
 										<div className="row d-flex justify-content-center text-center" id="relations">
 											{isFriend == false && pendingInvite == false && isBlocked == false ? <button type="button" className="btn btn-outline-success" id="invite--buton" onClick={inviteFriend}>Invite</button> : ""}
 											{isFriend == false && pendingInvite == true && receivedInvitation == true && isBlocked == false ?
@@ -291,11 +253,8 @@ export default function Profile() {
 													<button type="button" className="btn btn-outline-danger" id="invite--buton" onClick={declineFriend}>
 														Decline
 											</button>
-													{/*<br />*/}
 												</>
 												: ""}
-											{/*<br />*/}
-											{/* TODO: changer id /scss */}
 											<div className="row d-flex justify-content-center text-center" id="relations">
 												{isFriend == false && pendingInvite == true && sentInvitation == true && isBlocked == false ? <button type="button" className="btn btn-outline-info" id="invite--buton" disabled /*onClick={inviteFriend}*/>Sent Invitation</button> : ""}
 											</div>
@@ -306,8 +265,6 @@ export default function Profile() {
 												</>
 												: ""}
 										</div>
-										{/*<br />*/}
-										{/*<br />*/}
 										<div className="row d-flex justify-content-center text-center" id="friends--related">
 											{isBlocked != true ? <button type="button" className="btn btn-outline-danger" id="block--buton" onClick={block}>Block</button> : ""}
 											{isFriend == true ? <button type="button" className="btn btn-outline-danger" id="remove--buton" onClick={remove}>Remove</button> : ""}
@@ -327,7 +284,6 @@ export default function Profile() {
 											<br />
 										</div>
 										<div id="relationship">
-											{/*<span className="badge bg-success">Friends</span>*/}
 										</div>
 										<br />
 										{isFriend == true ? <Achievement login={login} /> : ""}
@@ -371,7 +327,6 @@ export default function Profile() {
 					</div>
 				</div>
 			</div>
-			{/*<Footer />*/}
 		</>
 	)
 }

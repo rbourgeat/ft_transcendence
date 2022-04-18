@@ -1,18 +1,7 @@
 @use "../../../variables";
 
-//.score, .buttonresume {
-//  width: 100% !important;
-//}
-
-//.buttonresume {
-//  margin-top: 5px !important;
-//  max-height: 5px !important;
-//}
-
-//TODO: changer des couleurs
-.result--score_winnner {
-  border: 0.2rem solid #469536 !important;
-  background: white !important;
+//Mêmes règles de base pour les deux, seule la couleur change
+.result--score_winner, .result--score_loser {
   border-radius: variables.$border-radius-big;
   width: 100% !important;
   text-align: center !important;
@@ -23,27 +12,16 @@
   box-shadow: 0.1px 0.1px #f9f9f9, -0.1em 0 .4em #f9f9f9;
   font-size: 12px !important;
   font-family: variables.$basic-font !important;
-  //height: 20px;
   color: black !important;
   position: sticky;
 }
 
-.result--score_loser{
+.result--score_winnner {
+  border: 0.2rem solid #469536 !important;
+}
+
+.result--score_loser {
   border: 0.2rem solid #ff4040 !important;
-  border-radius: variables.$border-radius-big;
-  width: 100% !important;
-  //min-height: 50px;
-  text-align: center !important;
-  font-weight: variables.$bold;
-  z-index: 2;
-  margin-top: 10px;
-  padding: 5px;
-  box-shadow: 0.1px 0.1px #f9f9f9, -0.1em 0 .4em #f9f9f9;
-  font-size: 12px !important;
-  font-family: variables.$basic-font !important;
-  //height: 20px;
-  color: black !important;
-  position: sticky;
 }
 
 #buttoresumee--result > .text {
@@ -65,28 +43,3 @@
   font-size: 18px !important;
   font-weight: 900 !important;
 }
-
-
-//.buttonresume--result {
-//  background: white !important;
-//  border-radius: variables.$border-radius;
-//  width: 100% !important;
-//  min-height: 50px;
-//  text-align: center !important;
-//  font-weight: variables.$bold;
-//  z-index: 2;
-//  margin-top: 10px;
-//  padding-top: 10px;
-//  border: 0.1rem solid #f9f9f9;
-//  box-shadow: 0.1px 0.1px #f9f9f9, -0.1em 0 .4em #f9f9f9;
-//  font-size: 12px !important;
-//  font-family: variables.$basic-font !important;
-//}
-
-//.winner {
-//  color: variables.$green !important;
-//}
-
-//.looser {
-//  color: variables.$red !important;
-//}

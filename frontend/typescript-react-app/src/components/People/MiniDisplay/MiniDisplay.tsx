@@ -22,7 +22,6 @@ export interface MiniDisplayProps {
 	relation?: string;
 	extra?: string;
 	currentUser?: string;
-	//children?: React.ReactNode | React.ReactChild | React.ReactChildren | React.ReactChild[] | React.ReactChildren[]
 }
 
 import ReactDOM from 'react-dom';
@@ -125,7 +124,6 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 	}
 
 	function buttonToDidsplay() {
-		//NOT WORKING CUZ OF THE EXECUTION ORDER
 		if (props.container == "all") {
 
 			let notBlocked: boolean = true;
@@ -147,7 +145,6 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 					console.log(error);
 				})
 
-			//console.log("as " + props.currentUser + "my relation with" + props.login + "is " + relationStatus);
 			if (relationStatus == "accepted" || relationStatus == "pending")
 				notFriend = true;
 			else if (relationStatus == "blocked")
@@ -176,9 +173,7 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 		else if (props.container == "sent")
 			return (
 				<>
-				{/*<br />*/}
 					<p className="waiting">Waiting for {props.login} to answer</p>
-					{/*<i className="user--action" onClick={() => refuseInvitation(props.login)}>{<MdCancel />}</i>*/}
 				</>
 			)
 		else if (props.container == "blocked")
@@ -202,7 +197,6 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 		<div className="mini--display--div" id={"minidisplay".concat("_" + props.login + "_" + props.extra)}>
 			<li className="list-group-item" key={props.extra ? props.login.concat(props.extra) : props.login}>
 				<div className="mini-display-li">
-					{/*<Suspense fallback={<Hearts color="#ffe4e1" height={100} width={100} key={props.login} />}>*/}
 						<img
 							className="profile--pic"
 							id={props.login.concat("_" + props.extra)}
@@ -219,7 +213,6 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 						:
 											<div className="d-flex justify-content-center">
 												<div className="spinner-border" role="status">
-													{/*<span className="sr-only">Loading...</span>*/}
 												</div>
 											</div>
 						}
@@ -237,7 +230,6 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 							draggable
 							pauseOnHover
 						/>
-					{/*</Suspense>*/}
 				</div>
 				<svg className="log--color" height="40" width="40">
 					<circle cx="20" cy="20" r="15" fill={color} stroke="white" style={{ strokeWidth: '3' }} />

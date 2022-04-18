@@ -13,7 +13,6 @@ import Particles from "react-tsparticles";
 import Auth from '../Auth/Auth';
 import Welcome from '../Welcome/Welcome';
 import NotFound from '../NotFound/NotFound';
-import UserMain from '../User/UserMain';
 import Search from "../Search/Search";
 import Achievements from "../Achievements/Achievements";
 import GameRules from "../GameRules/GameRules";
@@ -27,6 +26,7 @@ import NotLogged from '../NotLogged/NotLogged'; import Login2fa from '../Auth/Lo
 import Profile from "../Profile/Profile";
 import Live from '../Live/Live';
 import Settings from "../User/Settings/Settings";
+import UserSub from "../User/UserSub";
 
 function App() {
 
@@ -38,23 +38,11 @@ function App() {
     ({ user, setUser }), [user, setUser]);
 
 
-  //PK les sockets ici ??
   let socket = io("http://localhost:3000/chat", { query: { username: username } });
 
   async function getUser() {
-    //if (localStorage.getItem("loggedIn") != "true")
-    //{
-    //  console.log("You are not logged in.")
-    //    return ;
-    //}
+
     let url = "http://localhost:3000/api/auth/";
-
-    let cookieCheck = document.cookie.match("Authentication");
-    let cookieCheck2 = document.cookie.match("connected.sid");
-
-    //console.log("Cookie 1 is " + cookieCheck);
-    //console.log("Cookie 2 " + cookieCheck2);
-
     let username = "";
     axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
     axios.defaults.withCredentials = true;
@@ -93,38 +81,18 @@ function App() {
     }
   }, []);
 
-  //let particlesInit = (main: any) => {
-  //  console.log(main);
-  //};
-
-  //let particlesLoaded = (container: any) => {
-  //  console.log(container);
-  //};
-
-  //let  particlesInit = (main) => {
-  //  console.log(main);
-
-  //  // you can initialize the tsParticles instance (main) here, adding custom shapes or presets
-  //};
-
   let particlesLoaded = (container) => {
     console.log(container);
   };
 
   return (
     <div id="main">
-      {/*<myParticules />*/}
-
-
       <Particles
         id="tsparticles"
-        //init={particlesInit}
-        //loaded={particlesLoaded}
         options={{
           background: {
             color: {
               value: "#00000",
-              //value: "D1D5EA",
             },
           },
           fpsLimit: 120,
@@ -158,10 +126,7 @@ function App() {
           },
           particles: {
             color: {
-              //value: "#ffffff",
-              //value: "#c6e2ff",
               value: "#54CFE8"
-              //value: rgb(84, 207, 232)
             },
             links: {
               color: "#ffffff",
@@ -216,23 +181,27 @@ function App() {
 
         {localStorage.getItem("loggedIn") == "true" && localStorage.getItem("2fa") == "true" && localStorage.getItem("2faverif") == "false" ?
           <Route path="*" element={<Login2fa />} /> : ""}
-
         {(localStorage.getItem("2fa") == "true" && localStorage.getItem("2faverif") == "false") ?
           <Route path="*" element={<Login2FA />} />
-          :
+          : ""}
+          {((localStorage.getItem("logginedIn") == "true" && localStorage.getItem("2fa") == "false")
+            || (localStorage.getItem("logginedIn") == "true" && localStorage.getItem("2fa") == "true" && localStorage.getItem("2faverif") == "true")
+            || (localStorage.getItem("logginedIn") == "true" && localStorage.getItem("2fa") == "false" && localStorage.getItem("2faverif") == "false"))
+            ?
           <>
-            <Route path="/user" element={<UserMain />} />
+            <Route path="/user" element={<UserSub/>} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/live" element={<Live />} />
             <Route path="/chat" element={<CreateChan endpoint={undefined} action={undefined} />} />
-            <Route path="/auth" element={<UserMain />} />
+            <Route path="/auth" element={<UserSub />} />
             <Route path="/channels" element={<Channels />} />
             <Route path="/people" element={<People login={username} />} />
             <Route path="/game" element={<Game />} />
             <Route path="/2fa" element={<Login2FA />} />
             <Route path="/profile/:login" element={<Profile />} />
             <Route path="*" element={<NotFound />} />
-          </>}
+          </> : ""
+          }
       </Routes>
     </div>
   );

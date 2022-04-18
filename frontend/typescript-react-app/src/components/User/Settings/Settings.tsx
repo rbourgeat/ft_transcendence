@@ -158,11 +158,6 @@ export default function Settings(props: SettingsProps) {
 					localStorage.setItem("login", res.data.login);
 					localStorage.setItem("login42", res.data.login42);
 					console.log(res.data);
-					//if (res.data.status == "offline")
-					//{
-					//	setColor("grey")
-					//	setStatus("offline");
-					//}
 					if (res.data.status == "online")
 					{
 						setColor("green");
@@ -181,8 +176,6 @@ export default function Settings(props: SettingsProps) {
 			.catch((err) => {
 				console.log("Auth returned 400 -> missing cookie");
 			})
-
-		//renderImage(username);
 	}
 
 	async function renderImage(login: string) {
@@ -218,17 +211,14 @@ export default function Settings(props: SettingsProps) {
 										:
 										<>
 											<img id={username} className="profile--pic" height="80" width="80"/>
-											{/*{renderImage(username)}*/}
 												<svg className="log--color_profile" height="40" width="40">
 													<circle cx="20" cy="20" r="15" fill={color} stroke="white" style={{ strokeWidth: '3' }} />
 												</svg>
-											{/*{status == "" ? getUser() : ""}*/}
 											<p className="username-text">{username}</p>
 											<p className="status-text">{status}</p>
 											<br />
 											<div className="row d-flex justify-content-center text-center">
 												<div id="change-avatar-div" className="col-5">
-												{/*<br />*/}
 													<label id="change--avatar--label">Change avatar</label>
 													<div id="change--avatar">
 														<input
@@ -276,8 +266,6 @@ export default function Settings(props: SettingsProps) {
 														<label className="black--text">Enter the code provided</label>
 													</>
 													: <p className="black--text"></p>}
-													{/*<br />*/}
-													{/*{qrcode != "" && activated2fa == false ? <input className="form-control form-control-sm" id="check_code" type="text" placeholder="422 022" onChange={handleInputChange}></input> : ""}*/}
 													{qrcode != "" && activated2fa == false ?
 														<AuthCode
 														allowedCharacters='numeric'
@@ -308,8 +296,7 @@ export default function Settings(props: SettingsProps) {
 										</div>
 									</div>
 								</div>
-										</>
-
+							</>
 							}
 					</div>
 				</div>

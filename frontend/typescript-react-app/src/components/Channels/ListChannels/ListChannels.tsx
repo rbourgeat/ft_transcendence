@@ -1,18 +1,12 @@
 import './ListChannels.scss';
 import React, {Component, useState, useEffect} from "react";
 import Nav from "../../Nav/Nav";
-import CreateChanModal from "../../Utils/Modal/Modal";
 import myAxios from "../../Utils/Axios/Axios";
 import axios from "axios";
 import ToastAlerts from '../../Utils/ToastAlerts/ToastAlerts';
 
-/**
- * @malatini ou @macrespo ?
- * Pour la personne en charge du chat
- */
 
 export interface ListChannelsProps {
-
 }
 
 

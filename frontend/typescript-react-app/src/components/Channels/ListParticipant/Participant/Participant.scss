@@ -7,35 +7,35 @@
 	display: inline-block;
 }
 
-  .online {
+.online {
 	height: 5px;
 	width: 5px;
 	margin-left: 5px;
 	background-color: greenyellow;
 	border-radius: 50%;
 	display: inline-block;
-  }
+}
 
-  .offline {
+.offline {
 	height: 5px;
 	width: 5px;
 	margin-left: 5px;
 	background-color: #bbb;
 	border-radius: 50%;
 	display: inline-block;
-  }
+}
 
-  .owner {
+.owner {
 	height: 5px;
 	width: 5px;
 	margin-left: 5px;
 	background-color: black;
 	border-radius: 50%;
 	display: inline-block;
-  }
+}
 
 
-  .p--participant {
+.p--participant {
 	font-size: 10px !important;
 	color: black !important;
 	padding: 1rem 0.1rem;
@@ -45,4 +45,4 @@
 	&:hover {
 		border-color: white;
 	}
- }
+}

@@ -18,31 +18,15 @@
   color: white !important;
 }
 
-#canvas {
-  //position: sticky !important;
-}
+
 
 .canvas-score
 {
   color: white !important;
 }
 
-//#canvas {
-//  padding: 10px;
-//}
-
-// #game-root > .text {
-//  color: white !important;
-//  font-size: 5vh !important;
-// }
 
 // PONG CSS BELOW:
-
-ul {
-  list-style: none;
-  padding: 0;
-}
-
 .game--li {
   display: inline-block;
 }
@@ -52,3 +36,14 @@ ul {
   font-size: 8vh !important;
   font-weight: bold;
 }
+
+//TODO: a refacto @rbourgea
+//#canvas {
+//  position: sticky !important;
+//  padding: 10px;
+//}
+
+// #game-root > .text {
+//  color: white !important;
+//  font-size: 5vh !important;
+// }

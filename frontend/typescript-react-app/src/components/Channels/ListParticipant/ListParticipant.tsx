@@ -2,7 +2,6 @@ import './ListParticipant.scss';
 import React, { useState, useEffect } from "react";
 import Participant from './Participant/Participant';
 import Footer from "../../Footer/Footer";
-import MyTimer from "./MyTimer/MyTimer";
 import axios from "axios";
 import { ToastContainer } from 'react-toastify';
 import ToastAlerts from '../../Utils/ToastAlerts/ToastAlerts';

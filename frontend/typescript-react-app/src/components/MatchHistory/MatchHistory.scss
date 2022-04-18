@@ -6,7 +6,6 @@
 }
 
 #matchhistory--title {
-  //font-family: variables.$basic-font;
   font-family: variables.$big-font;
   font-size: 14px;
   color: black !important;
@@ -25,17 +24,10 @@
   font-family: variables.$basic-font;
 }
 
-//.main--button--resume {
-//  //min-height: 100px;
-
-//  //overlow-y: scroll;
-//}
-
 .col--matchhistory {
   max-height: 150px;
   min-height: 150px;
   overflow-x: scroll;
   padding-left: 30px !important;
   padding-right: 30px !important;
-  //overflow-y: scroll;
 }

@@ -1,15 +1,17 @@
 import './Achievements.scss';
 import Nav from "../Nav/Nav";
-import Footer from "../Footer/Footer";
 import React, { useEffect } from "react";
-import { MdLocalFireDepartment } from "react-icons/md";
-import { FaCat, FaUserFriends } from "react-icons/fa";
-import { GiPowerButton, GiPeaceDove } from "react-icons/gi";
-import { GrGamepad } from "react-icons/gr";
-import { BsCheckLg } from "react-icons/bs";
-
 import axios from 'axios';
 import MyAxios from "../Utils/Axios/Axios";
+import { BsCheckLg } from "react-icons/bs";
+
+// Plus importé car problèmes d'affichage ponctuels
+
+//import { MdLocalFireDepartment } from "react-icons/md";
+//import { FaCat, FaUserFriends } from "react-icons/fa";
+//import { GiPowerButton, GiPeaceDove } from "react-icons/gi";
+//import { GrGamepad } from "react-icons/gr";
+
 
 export interface AchievementsProps {
     login?: string,
@@ -51,8 +53,6 @@ export default function Achievement(props: AchievementsProps) {
             getAchievements()
     }, []);
 
-
-    //TODO: attention dans les achievements il y a une erreur si je change de username !
     const style = { height: "40", width: "40" }
     return (
         <div id="Leaderboard">
@@ -67,7 +67,6 @@ export default function Achievement(props: AchievementsProps) {
                             <div className="card-body">
                                 <h5 className="card-title">Let's talk</h5>
                                 <p className="card-text">Admin of a channel</p>
-                                {/*<GiPeaceDove style={style} />*/}
                             </div>
                         </div>
 

@@ -8,11 +8,6 @@
     display: inline-block;
 }
 
-//#content {
-//    padding: 0.5vw;
-//    display: block;
-//}
-
 #watch {
     padding: 5px;
 }
@@ -21,6 +16,7 @@
     font-size: 8vw;
 }
 
+//Les commentaires montrent comment on peut utiliser vw plutot que px comme unité de mesure
 #vs {
     //font-size: 1vw;
     font-size: 16px;
@@ -49,3 +45,8 @@
     background-color: black;
     padding: 10px;
 }
+
+//#content {
+//    padding: 0.5vw;
+//    display: block;
+//}

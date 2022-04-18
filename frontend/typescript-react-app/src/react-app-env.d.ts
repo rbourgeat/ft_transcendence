@@ -1,6 +1,5 @@
 /**
- * @malatini
- * Nécessaire pour loader et typer la vidéo sur la page de welcome
+ * Nécessaire pour loader et typer la vidéo sur la page de welcome - plus utilisé mais intéressant
  */
 declare module '*.mp4'
 {

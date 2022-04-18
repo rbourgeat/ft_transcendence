@@ -1,6 +1,4 @@
 import './NotFound.scss';
-//Mahaut pb de dépendences
-//import TypeAnimation from 'react-type-animation'
 import Nav from '../Nav/Nav';
 import Footer from "../Footer/Footer";
 

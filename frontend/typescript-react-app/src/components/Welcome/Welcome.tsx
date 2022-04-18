@@ -32,9 +32,6 @@ export default function Welcome() {
                             <button id="play-button-1" onClick={routeChange}>PLAY</button>
                         </ul>
                     </div>
-                    {/*<div id="welcome--video-div">
-                        <video autoPlay loop muted src={video1} id="welcome--video-video" height="200px" />
-                    </div>*/}
                 </div>
             </div>
         </>
