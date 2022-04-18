@@ -9,7 +9,6 @@ import ToastAlerts from '../../Utils/ToastAlerts/ToastAlerts';
 export interface ListChannelsProps {
 }
 
-
 //export default function ListChannels({activeChannel, updateActiveChannel, chanUsers, updateChanUsers}) {
 export default function ListChannels(props: ListChannelsProps) {
     const [channels, setChannels] = React.useState([]);

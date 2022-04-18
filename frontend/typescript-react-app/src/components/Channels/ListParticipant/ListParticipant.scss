@@ -1,6 +1,7 @@
 @use "../../../variables";
 
 #ListParticipant {
+	border-radius: variables.$border-radius-big;
 	background: white;
 	color: black;
 	position: sticky;
@@ -8,8 +9,9 @@
 }
 
 #participant--title {
-	font-size: 14px;
+	font-size: 12px;
 	background: #f9f9f9;
+	border-radius: variables.$border-radius-big;
 	border: 0.1rem solid #f9f9f9;
 	position: sticky;
 	height: 40px;
@@ -22,11 +24,14 @@
 	overflow-y: scroll;
 	max-height: 53.5%;
 	min-height: 53.5%;
+	margin: 5px !important;
 	border: 0.1rem solid #f9f9f9;
+	border-radius: variables.$border-radius-big;
 }
 
 //boutons solo horizontal
 #invite--button, #admin--buton, #leave--button, #kick--button {
+	border-radius: variables.$border-radius-big;
 	width: 100%;
 	position: sticky;
 	margin-top: 2px !important;
@@ -41,6 +46,7 @@
 {
 	margin: 0.5px !important;
 	padding: 3px !important;
+	border-radius: variables.$border-radius-big !important;
 }
 
 #players-channel-button, #players-dm-button
@@ -48,16 +54,17 @@
 	width: 100% !important;
 	margin: 0.1px !important;
 	position: sticky;
+	border-radius: variables.$border-radius-big !important;
 }
 
 #roles--title {
 	margin-bottom: 20px;
-	font-size: 16px;
+	font-size: 12px;
 }
 
 #roles > *:not(h3) {
 	font-family: variables.$basic-font;
-	font-size: 14px;
+	font-size: 12px;
 }
 
 .p--participants {
