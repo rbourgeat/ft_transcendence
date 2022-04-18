@@ -76,7 +76,7 @@ export class GameService {
 		await this.triggerTotalGamesAchievement(loser, 1000);
 	}
 
-	async createGame(winner_login: string, loser_login: string, winner_points: number, loser_points: number) {
+	async createGame(winner_login: string, loser_login: string, winner_points: number, loser_points: number, gm: number) {
 		const winner = await this.userService.getUserByLogin(winner_login);
 		const loser = await this.userService.getUserByLogin(loser_login);
 
@@ -90,6 +90,7 @@ export class GameService {
 				loser: loser_login,
 				winner_score: winner_points,
 				loser_score: loser_points,
+				game_mode: gm,
 				players: [winner, loser]
 			});
 			await this.gameRepository.save(newGame);
