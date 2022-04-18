@@ -20,23 +20,27 @@
 
 #sub--div {
 	overflow-y: scroll;
-	max-height: 70%;
-	min-height: 70%;
+	max-height: 53.5%;
+	min-height: 53.5%;
 	border: 0.1rem solid #f9f9f9;
 }
 
-#invite--button, #admin--buton {
+//boutons solo horizontal
+#invite--button, #admin--buton, #leave--button, #kick--button {
 	width: 100%;
 	position: sticky;
-	border-radius: 0px !important;
-	margin: 0.1px !important;
+	margin-top: 2px !important;
 	color: white !important;
+	width: 98% !important;
+	margin-left: 3px !important;
 }
 
+//Boutons duo horizontal
 #row--buttons_chat, #row--buttons_chat > *, #row--buttons_danger, #row--buttons_danger > *,
-#row--buttons_invite, #row--buttons_invite > *,  #row--buttons_admin, #row--buttons_admin > * {
-	margin: 0.1px !important;
-	padding: 2px !important;
+#row--buttons_invite, #row--buttons_invite > *,  #row--buttons_admin, #row--buttons_admin > *
+{
+	margin: 0.5px !important;
+	padding: 3px !important;
 }
 
 #players-channel-button, #players-dm-button

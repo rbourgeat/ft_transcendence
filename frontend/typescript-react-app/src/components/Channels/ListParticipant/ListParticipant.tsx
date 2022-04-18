@@ -170,6 +170,16 @@ export default function ListParticipant(props: ParticipantProps)
 						<button id="admin--buton" className="btn btn-secondary" onClick={setAdmin}>Set admin</button>
 					</div>
 				</div>
+				<div className="row">
+					<div className="col"  id="row--button_kick">
+						<button id="kick--button" className="btn btn-danger" disabled /*onClick={setAdmin}*/>Kick</button>
+					</div>
+				</div>
+				<div className="row">
+					<div className="col"  id="row--button_leave">
+						<button id="leave--button" className="btn btn-danger" disabled /*onClick={setAdmin}*/>Leave channel</button>
+					</div>
+				</div>
 				{/*<button id="mute-temp-button" className="btn btn-warning" onClick={muteUser}>Mute temporalily</button>*/}
 			</div>
 				<ToastContainer
