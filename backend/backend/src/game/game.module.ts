@@ -7,7 +7,6 @@ import { Game } from 'src/game/entity/game.entity'
 import { GameGateway } from './game.gateway';
 import { UserService } from '../user/user.service';
 import { User } from 'src/user/entity/user.entity'
-import { UserEvent } from '../user/user.event';
 import { UserRelation } from '../user/entity/friend-request.entity';
 import { UsersRepository } from '../user/user.repository';
 import { Achievement } from 'src/user/entity/achievement.entity';
@@ -15,7 +14,7 @@ import { Achievement } from 'src/user/entity/achievement.entity';
 @Module({
     imports: [TypeOrmModule.forFeature([Game, User, UserRelation, Achievement])],
     controllers: [GameController],
-    providers: [GameService, GameGateway, UserService, UserEvent, UserRelation, UsersRepository],
+    providers: [GameService, GameGateway, UserService, UserRelation, UsersRepository],
     exports: [GameService]
 })
 export class GameModule { }

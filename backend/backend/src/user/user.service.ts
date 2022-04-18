@@ -2,19 +2,16 @@ import { HttpException, HttpStatus, Injectable, UnsupportedMediaTypeException } 
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from 'src/user/entity/user.entity';
-import { UpdateUserDto, CreateUserDtoViaRegistration, User42Dto } from 'src/user/dto/user.dto';
-import { UserEvent } from 'src/user/user.event';
+import { CreateUserDtoViaRegistration, User42Dto } from 'src/user/dto/user.dto';
 import { UsersRepository } from 'src/user/user.repository';
 import { UserRelation } from 'src/user/entity/friend-request.entity';
 import { RelationInvitation, RelationStatus } from 'src/user/interface/friend-request.interface';
 import { from, Observable } from 'rxjs';
-import { UserStatus } from 'src/participate/participate.entity';
 import { Achievement } from './entity/achievement.entity';
 
 @Injectable()
 export class UserService {
 	constructor(
-		private readonly userEvent: UserEvent,
 		@InjectRepository(User)
 		public userRepository: Repository<User>,
 		@InjectRepository(UsersRepository)
