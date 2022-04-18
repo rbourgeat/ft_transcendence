@@ -61,7 +61,7 @@ export default function MatchHistory(props: MatchHistoryProps) {
                 </div>
                 <div id="match--history">
                     <div>
-                        <div className="col--matchhistory">
+                        <div className={resultsID.length > 0 ? "col--matchhistory_big" : "col--matchhistory_small"}>
                             <ul>
                                 {load == true && resultsID.length > 0 ? resultsID.map(result =>
                                     <div className="main--button--resume" key={result.id}>
@@ -73,6 +73,7 @@ export default function MatchHistory(props: MatchHistoryProps) {
                                             date={result.createdAt}
                                             login={props.login}
                                             key={result.id}
+                                            nbr={resultsID.length}
                                         />
                                     </div>) : ""}
                                 {

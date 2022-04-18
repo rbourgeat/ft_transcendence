@@ -17,10 +17,6 @@
   padding: 40px;
 }
 
-#button--2fa{
-  font-size: 12px !important;
-}
-
 .label-file {
   color: black;
   font-weight: bold;
@@ -70,10 +66,12 @@ button {
 
 
 #change--username {
-  padding: 10px !important;
-  border: none;
-  font-size: 10px !important;
   color: black !important;
+}
+
+#button--2fa, #change--username {
+  font-size: 16px !important;
+  padding: 10px !important;
 }
 
 #change--username:hover {
@@ -108,11 +106,6 @@ button {
 
 #user--div{
     position: sticky !important;
-}
-
-.change--username {
-  margin-top: 5px !important;
-  margin-bottom: 5px !important;
 }
 
 .own-profile {

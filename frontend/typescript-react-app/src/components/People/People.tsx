@@ -59,7 +59,7 @@ export default function People(props: PeopleProps) {
 			<div id="people--div">
 				<Nav />
 				<div id="all">
-					<div className="row">
+					<div className="row" id="row-all">
 						<br />
 						{load == false ?
 							<div className="container">

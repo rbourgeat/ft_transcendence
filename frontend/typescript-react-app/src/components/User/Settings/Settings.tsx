@@ -83,12 +83,6 @@ export default function Settings(props: SettingsProps) {
 			twoFactorAuthenticationCode: code
 		}
 		let toast = new ToastAlerts(null);
-		//if (code == "")
-		//{
-		//	toast.notifyDanger('🥲 Error while turning on 2FA. Your verif code is wrong or the QR Code is outdated.');
-		//	setCode("");
-		//	return ;
-		//}
 
 		let url = "http://localhost:3000/api/2fa/turn-on";
 
@@ -236,7 +230,7 @@ export default function Settings(props: SettingsProps) {
 										<div id="change--username--div">
 											<h3 id="activate--modal">Change username</h3>
 											<button id="change--username" type="button" className="btn btn-outline-dark"
-												onClick={handleShow}>click to change
+												onClick={handleShow}>Click to change
 											</button>
 											<EditUsernameModal username={username} show={show} onHide={handleClose} />
 											<br />
@@ -249,7 +243,7 @@ export default function Settings(props: SettingsProps) {
 												<div id="2fa--div">
 													<h3 id="activate--2fa">2 Factor Authentication</h3>
 													<button className={activated2fa ? "btn btn-outline-danger" : "btn btn-outline-success"}
-														id="button--2fa" onClick={handle2FA}>{activated2fa == true ? "Turn off 2FA" : "Turn on 2FA"}
+														id="button--2fa" type="button" onClick={handle2FA}>{activated2fa == true ? "Turn off 2FA" : "Turn on 2FA"}
 													</button>
 													<br />
 													<br />

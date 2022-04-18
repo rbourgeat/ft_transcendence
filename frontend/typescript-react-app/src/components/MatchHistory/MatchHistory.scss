@@ -24,10 +24,19 @@
   font-family: variables.$basic-font;
 }
 
-.col--matchhistory {
+.col--matchhistory_big {
   max-height: 300px;
   min-height: 300px;
   overflow-x: scroll;
   padding-left: 30px !important;
   padding-right: 30px !important;
 }
+
+.col--matchhistory_small {
+  max-height: 30px;
+  min-height: 30px;
+  overflow-x: scroll;
+  padding-left: 30px !important;
+  padding-right: 30px !important;
+}
+

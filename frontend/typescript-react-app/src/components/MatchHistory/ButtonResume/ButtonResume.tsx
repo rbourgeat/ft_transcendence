@@ -13,6 +13,7 @@ export interface MatchHistoryProps {
     gameMode?: number,
     login?: string,
     key?: string
+    nbr?: number
 }
 
 export default function MatchHistory(props: MatchHistoryProps) {
