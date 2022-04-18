@@ -29,7 +29,7 @@ export default function Welcome() {
                             <li>rbourgea</li>
                             <li>malatini</li>
                             <br />
-                            <button id="play-button-1" onClick={routeChange}>Play</button>
+                            <button id="play-button-1" className="btn btn-outline-light" onClick={routeChange}>Play</button>
                         </ul>
                     </div>
                 </div>

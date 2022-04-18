@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import './ButtonResume.scss';
-import * as moment from 'moment'
+//import { Moment } from 'moment'
+import { default as moment, Moment } from 'moment'
+//let moment = require('moment');
 
 export interface MatchHistoryProps {
     winner?: string,
