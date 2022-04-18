@@ -1,14 +1,14 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 
 import './Welcome.scss';
 import '../App/App.scss';
 import '../../index.scss';
-import Footer from "../Footer/Footer";
-import Header from "../Header/Header";
-import video1 from "../../public/pong-demo.mp4";
 import { useNavigate } from 'react-router-dom'
+import Header from '../Header/Header';
 
 export default function Welcome() {
+
+    const calledOnce = React.useRef(false);
 
     const navigate = useNavigate();
 
@@ -17,6 +17,13 @@ export default function Welcome() {
         let path = `/auth`;
         navigate(path);
     }
+
+    useEffect(() => {
+		if (calledOnce.current) {
+			return;
+		}
+		calledOnce.current = true;
+	}, []);
 
     return (
         <>
