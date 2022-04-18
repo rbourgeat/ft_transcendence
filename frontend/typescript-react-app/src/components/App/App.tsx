@@ -185,7 +185,6 @@ function App() {
             <Route path="/welcome" element={<Welcome />} />
             <Route path="/auth" element={<Auth />} />
             <Route path="*" element={<Auth />} />
-            {/*<Route path="*" element={<NotLogged />} />*/}
           </>
           :
           <>
@@ -197,7 +196,6 @@ function App() {
             <Route path="/channels" element={<Channels />} />
             <Route path="/people" element={<People login={username} />} />
             <Route path="/game" element={<Game />} />
-            <Route path="/2fa" element={<Login2FA />} />
             <Route path="/profile/:login" element={<Profile />} />
             <Route path="*" element={<NotFound />} />
           </>
