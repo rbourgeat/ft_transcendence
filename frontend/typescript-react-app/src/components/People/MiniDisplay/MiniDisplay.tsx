@@ -7,7 +7,6 @@ import io from "socket.io-client";
 import axios from 'axios';
 import { MdCancel, MdCheck, MdBlock } from 'react-icons/md';
 import { FiUserMinus, FiUserPlus, FiUserX } from 'react-icons/fi';
-import { Oval, Hearts } from "react-loader-spinner";
 import { FaMarsStroke } from 'react-icons/fa';
 import { ToastContainer, toast } from 'react-toastify';
 export interface MiniDisplayProps {
