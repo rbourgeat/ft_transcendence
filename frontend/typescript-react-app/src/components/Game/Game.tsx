@@ -46,7 +46,7 @@ export default function Game() {
 	var SearchText = "Rechercher une partie"
 	var SearchText2 = "Rejouer avec le même joueur"
 
-	let socket = io("http://localhost:3000/game", { query: { username: username } });
+	var socket = io("http://localhost:3000/game", { query: { username: username } });
 
 	function sendSearch() {
 		if (joueur) {
