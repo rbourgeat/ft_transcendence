@@ -1,6 +1,6 @@
 import './MiniDisplay.scss';
 import MyAxios from '../../Utils/Axios/Axios';
-import React, { Component, useState, useEffect, Suspense, lazy } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import { AiOutlineCloseCircle, AiFillPlusCircle, AiFillCheckCircle, AiFillUnlock } from "react-icons/ai";
 import { BsFillPersonPlusFill, BsFillPersonXFill } from "react-icons/bs";
 import io from "socket.io-client";

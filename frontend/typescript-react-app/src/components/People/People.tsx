@@ -6,7 +6,6 @@ import Invitations from "./Invitations/Invitations";
 import Friends from "./Friends/Friends";
 import Blocked from "./Blocked/Blocked";
 import SentInvitations from "./SentInvitations/SentInvitations";
-
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { AiOutlineLoading3Quarters, AiOutlineLoading } from "react-icons/ai";

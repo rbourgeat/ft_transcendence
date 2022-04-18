@@ -1,13 +1,14 @@
 import './All.scss';
-import React, { Component, useState, useEffect, Suspense, lazy } from "react";
+import React, { Component, useState, useEffect} from "react";
 import myAxios from "../../Utils/Axios/Axios";
 import axios from "axios";
 import Invitations from "../Invitations/Invitations";
 import Blocked from "../Blocked/Blocked";
 import Friends from "../Friends/Friends";
 import { DetailedHTMLProps, HTMLAttributes } from 'react';
+import MiniDisplay from '../MiniDisplay/MiniDisplay';
 
-const MiniDisplay = lazy(() => import('../MiniDisplay/MiniDisplay'));
+//const MiniDisplay = lazy(() => import('../MiniDisplay/MiniDisplay'));
 
 
 export interface InputWrapperProps {
