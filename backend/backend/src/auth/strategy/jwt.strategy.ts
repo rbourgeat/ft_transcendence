@@ -10,7 +10,6 @@ import { UserService } from 'src/user/user.service';
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
     constructor(
-        private readonly configService: ConfigService,
         private readonly userService: UserService,
     ) {
         super({
@@ -22,7 +21,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     }
 
     async validate(payload: TokenPayload) {
-        console.log('went by validate in jwt strategy');
         return this.userService.getById(payload.userId);
     }
 }

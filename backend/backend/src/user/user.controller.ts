@@ -1,16 +1,15 @@
-import { Request, Req, Body, Controller, Delete, Put, Get, Param, Patch, Post, UseGuards, UseInterceptors, UploadedFile, Header, Res } from '@nestjs/common';
-import { UserService, fileMimetypeFilter } from './user.service';
-import CreateUserDtoViaRegistration, { UpdateUserDto, UploadAvatarDto } from 'src/user/dto/user.dto';
-import { ApiBody, ApiExtraModels, ApiConflictResponse, ApiConsumes, ApiOkResponse, ApiOperation, ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger'
+import { Request, Body, Controller, Delete, Get, Param, Patch, Post, UseGuards, UseInterceptors, UploadedFile, Res } from '@nestjs/common';
+import { UserService } from './user.service';
+import CreateUserDtoViaRegistration from 'src/user/dto/user.dto';
+import { ApiExtraModels, ApiConflictResponse, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger'
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiImageFile } from 'src/user/utils/api-file.decorator';
-import { ParseFile } from 'src/user/utils/parse-file.pipe';
 import { diskStorage } from 'multer';
 import JwtAuthenticationGuard from 'src/auth/guard/jwt-authentication.guard';
 import { Observable } from 'rxjs';
 import { RelationStatusClass, } from 'src/user/interface/friend-request.interface';
 import { User } from 'src/user/entity/user.entity';
-import { editFileName, imageFileFilter, myStorage } from './upload.utils'
+import { editFileName, imageFileFilter } from './upload.utils'
 
 @ApiTags('Users')
 @ApiExtraModels(CreateUserDtoViaRegistration) //force unused dto to show on swagger
@@ -35,13 +34,6 @@ export class UserController {
         return this.userService.getUserByLogin(login);
     }
 
-    //@ApiOperation({ summary: 'Update {login}\'s data' })
-    //@ApiOkResponse({ description: 'Data updated' })
-    //@Patch(':login')
-    //async updateUser(@Param('login') login: string, @Body() user: UpdateUserDto) {
-    //    return this.userService.updateUser(login, user);
-    //}
-
     @ApiOperation({ summary: 'Update {login}\'s data' })
     @ApiOkResponse({ description: 'Data updated' })
     @Patch(':oldlogin/changeto/:newlogin')
@@ -49,14 +41,6 @@ export class UserController {
         return this.userService.updateUser(oldlogin, newlogin);
     }
 
-    /*
-        @ApiOperation({ summary: 'Update {login}\'s data' })
-        @ApiOkResponse({ description: 'Data updated' })
-        @Patch(':login')
-        async updateUser(@Param('login') login: string, @Req() req) {
-            return this.userService.updateUser(req.user, login);
-        }
-    */
     @ApiOperation({ summary: 'Upload {login} avatar' })
     @ApiOkResponse({ description: '{login} avatar uploaded' })
     @ApiConflictResponse({ description: '{login} avatar conflict' })
