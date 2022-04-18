@@ -166,13 +166,15 @@ export default function Live() {
 			}
 		}
 		draw(idGame);
+		// play(idGame);
 		// canvas.addEventListener('mousemove', playerMove);
 	}
 
-	// function play() {
-	// 	draw();
-	// 	anim = requestAnimationFrame(play);
-	// }
+	function play(idGame: number) {
+		draw(idGame);
+		ballMove(idGame);
+		anim = requestAnimationFrame(play);
+	}
 
 	function setGameMode(gm: number) {
 		if (gm == 0)
@@ -218,12 +220,12 @@ export default function Live() {
 		const b = body.split(':');
 		// console.log("joueur = " + b[0] + " | position = " + b[1] + " | socket = " + socket.id)
 
-		if (b[2] == "gauche")
+		if (b[3] == "gauche")
 			joueurs.map(joueur => {
 				if (joueur == b[0])
 					game[joueurs.indexOf(joueur)].player.y = b[1];
 			});
-		if (b[2] == "droit")
+		if (b[3] == "droit")
 			adversaires.map(adversaire => {
 				game[adversaires.indexOf(adversaire)].player2.y = b[1];
 			})
@@ -250,6 +252,55 @@ export default function Live() {
 			display();
 		}
 	});
+
+	function ballMove(idGame: number) {
+		// Rebounds on top and bottom
+		if (game[idGame].ball.y > canvas[idGame].height || game[idGame].ball.y < 0) {
+			game[idGame].ball.speed.y *= -1;
+		}
+		if (game[idGame].ball.x > canvas[idGame].width - PLAYER_WIDTH) {
+			collide(game[idGame].player2, idGame);
+		} else if (game[idGame].ball.x < PLAYER_WIDTH) {
+			collide(game[idGame].player, idGame);
+		}
+		// Ball progressive speed
+		game[idGame].ball.x += game[idGame].ball.speed.x;
+		game[idGame].ball.y += game[idGame].ball.speed.y;
+	}
+
+	function collide(player, idGame: number) {
+		// The player does not hit the ball
+		var bottom: Number;
+		bottom = Number(player.y) + Number(PLAYER_HEIGHT);
+		if (game[idGame].ball.y < player.y || game[idGame].ball.y > bottom) {
+			// Set ball and players to the center
+			game[idGame].ball.x = canvas[idGame].width / 2 - BALL_HEIGHT / 2;
+			game[idGame].ball.y = canvas[idGame].height / 2 - BALL_HEIGHT / 2;
+			game[idGame].ball.speed.y = BALL_SPEED;
+
+			if (player == game[idGame].player) {
+				// Change ball direction + reset speed
+				game[idGame].ball.speed.x = BALL_SPEED * -1;
+			} else {
+				// Change ball direction + reset speed
+				game[idGame].ball.speed.x = BALL_SPEED;
+			}
+		} else {
+			// Increase speed and change direction
+			if (BALL_ACCELERATE)
+				game[idGame].ball.speed.x *= -1.2;
+			else
+				game[idGame].ball.speed.x *= -1;
+			changeDirection(player.y, idGame);
+		}
+	}
+
+	function changeDirection(playerPosition, idGame: number) {
+		// Ball bounce
+		var impact = game[idGame].ball.y - playerPosition - PLAYER_HEIGHT / 2;
+		var ratio = 100 / (PLAYER_HEIGHT / 2);
+		game[idGame].ball.speed.y = Math.round(impact * ratio / 10);
+	}
 
 	//Attention sur les autres pages ont a le texte en anglais
 	return(

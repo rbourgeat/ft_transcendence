@@ -9,7 +9,8 @@ import io from "socket.io-client";
 import axios from "axios";
 import { Form } from 'react-bootstrap'
 import Confetti from 'react-confetti';
-import ReactRain from 'react-rain-animation';
+
+import { Offline, Online } from "react-detect-offline";
 import "../../../node_modules/react-rain-animation/lib/style.css";
 
 var adversaire: string;
@@ -24,7 +25,6 @@ export default function Game() {
 	const [isActive, setActive] = React.useState(true);
 	const [isActive2, setActive2] = React.useState(false);
 	const [isWin, setWin] = React.useState(false);
-	const [isLoose, setLoose] = React.useState(false);
 	const [gameMode, chanScopeSet] = React.useState("original");
 
 	// socket game
@@ -89,7 +89,6 @@ export default function Game() {
 
 	socket.on("gameStart", (...args) => {
 		setWin(false);
-		setLoose(false);
 		document.querySelector('#player-score').textContent = "0";
 		document.querySelector('#player2-score').textContent = "0";
 		document.querySelector('#victoryMessage').textContent = "";
@@ -333,10 +332,8 @@ export default function Game() {
 			socket.emit('gameEnd', joueur2 + ":" + joueur1 + ":" + game.player2.score + ":" + game.player.score + ":" + gm);
 			document.querySelector('#victoryMessage').textContent = "Victory";
 		}
-		if (document.querySelector('#victoryMessage').textContent != "Victory") {
-			setLoose(true);
+		if (document.querySelector('#victoryMessage').textContent != "Victory")
 			document.querySelector('#victoryMessage').textContent = "Game Over";
-		}
 		else
 			setWin(true);
 		cancelAnimationFrame(anim);
@@ -395,38 +392,44 @@ export default function Game() {
 					</div>
 				</>
 				:
-				<div id="game-root">
-					<Nav />
-					{isWin ? <Confetti width={size.width} height={size.height} /> : ""}
-					{isLoose ? <ReactRain numDrops="500" /> : ""}
-					<div className="container">
-						<div className="row d-flex justify-content-center text-center">
-							{isActive ?
-								<Form>
-									<Form.Group>
-										<Form.Select aria-label="Modes de jeux:" defaultValue="original" onChange={e => chanScopeSet(e.target.value)}>
-												<option>Modes de jeux:</option>
-												<option value="original">Original (1972)</option>
-												<option value="bigball">Big Ball (Facile)</option>
-												<option value="blitz">Blitz (Balle Rapide)</option>
-												<option value="slow">Slow (Balle Lente)</option>
-												<option value="cube">Cube World (All is cubic)</option>
-										</Form.Select>
-									</Form.Group>
-								</Form>
-							: ""}
-							{isActive ? <button type="button" className="btn btn-outline-dark" id="search-button" onClick={() => sendSearch()}>{SearchText}</button> : ""}
-							{isActive2 ? <button type="button" className="btn btn-outline-dark" id="search-button2" onClick={() => sendSearch2()}>{SearchText2}</button> : ""}
-							<p id="victoryMessage"></p>
-							<main role="main">
-								<p className="canvas-score" id="scores">
-									<em className="canvas-score" id="joueur1"></em>
-									<span className="canvas-score">:</span>
-									<em className="canvas-score" id="player-score">0</em> - <em id="joueur2"></em><span>:</span><em className="canvas-score" id="player2-score">0</em></p>
-								<canvas id="canvas" width={size.width / 1.5} height={size.height / 1.25}></canvas>
-							</main>
+				<div>
+					<Online>
+						<div id="game-root">
+							<Nav />
+							{isWin ? <Confetti width={size.width} height={size.height} /> : ""}
+							<div className="container">
+								<div className="row d-flex justify-content-center text-center">
+									{isActive ?
+										<Form>
+											<Form.Group>
+												<Form.Select aria-label="Modes de jeux:" defaultValue="original" onChange={e => chanScopeSet(e.target.value)}>
+														<option>Modes de jeux:</option>
+														<option value="original">Original (1972)</option>
+														<option value="bigball">Big Ball (Facile)</option>
+														<option value="blitz">Blitz (Balle Rapide)</option>
+														<option value="slow">Slow (Balle Lente)</option>
+														<option value="cube">Cube World (All is cubic)</option>
+												</Form.Select>
+											</Form.Group>
+										</Form>
+									: ""}
+									{isActive ? <button type="button" className="btn btn-outline-dark" id="search-button" onClick={() => sendSearch()}>{SearchText}</button> : ""}
+									{isActive2 ? <button type="button" className="btn btn-outline-dark" id="search-button2" onClick={() => sendSearch2()}>{SearchText2}</button> : ""}
+									<p id="victoryMessage"></p>
+									<main role="main">
+										<p className="canvas-score" id="scores">
+											<em className="canvas-score" id="joueur1"></em>
+											<span className="canvas-score">:</span>
+											<em className="canvas-score" id="player-score">0</em> - <em id="joueur2"></em><span>:</span><em className="canvas-score" id="player2-score">0</em></p>
+										<canvas id="canvas" width={size.width / 1.5} height={size.height / 1.25}></canvas>
+									</main>
+								</div>
+							</div>
 						</div>
-					</div>
+					</Online>
+					<Offline>
+						<div id="offline">Vous n'êtes pas connecté à internet !</div>
+					</Offline>
 				</div>
 			}
 		</>
