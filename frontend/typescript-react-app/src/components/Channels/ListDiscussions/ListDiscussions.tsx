@@ -98,7 +98,7 @@ export default function ListDiscussions(props: ListDiscussionsProps) {
 			<div id="ListDiscussions" className="col-5">
 				<div className="title_chat_div">
 					<p className="chat--title">Chat</p>
-					{/*{isDM == "true" ? }*/}
+					<p className="chat--title_open">{props.isDM == "true" ? "Your open DM : ".concat(props.activeDMName) : "Your open channel : ".concat(props.activeChannelName)}</p>
 				</div>
 				<div className="messages-zone">
 				</div>

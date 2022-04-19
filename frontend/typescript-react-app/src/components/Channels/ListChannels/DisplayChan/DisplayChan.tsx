@@ -28,11 +28,27 @@ export default function DisplayChan(props: DisplayChanProps) {
 		if (calledOnce.current) {
 			return;
 		}
-		//console.log("props channel id is " + props.channel.id);
-		//console.log("props minId is " + props.minId);
+		console.log("props channel id is " + props.channel.id);
+		console.log("props minId is " + props.minId);
 		if (calledOnce.current != true && props.channel.id == props.minId)
 		{
 			setIsSelected("true");
+			//console.log("selected it");
+			if (props.isDM == true)
+			{
+				props.setActiveDMName(props.channel.name);
+				props.setActiveChannelName("");
+				props.setActiveChannelId("");
+				props.setActiveDMID(props.channel.id);
+			}
+			else
+			{
+				props.setActiveChannelName(props.channel.name);
+				props.setActiveChannelId(props.channel.id);
+				props.setActiveDMName("");
+				props.setActiveDMID("");
+			}
+			//console.log("called props min");
 		}
 		setLoad(true);
 		calledOnce.current = true;
