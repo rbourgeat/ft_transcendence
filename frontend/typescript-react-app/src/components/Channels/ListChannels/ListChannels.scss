@@ -82,8 +82,8 @@
 	border: 0.1rem solid #f9f9f9 !important;
 	//padding: 10px !important;
 	margin: 10px !important;
-	min-height: 515px !important;
-	max-height: 515px !important;
+	min-height: 410px !important;
+	max-height: 410px !important;
 	overflow-y: scroll;//a tester
 }
 
@@ -95,8 +95,10 @@
 	text-align: justify;
 }
 
-.selected--categorie {
-	font-size: 12px;
+.selected--categorie, .quick--add {
+	font-size: 14px;
+	margin-top: 15px !important;
+	//text-decoration: underline !important;
 }
 
 //.send--dm_div {

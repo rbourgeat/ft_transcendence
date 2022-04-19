@@ -7,6 +7,7 @@ import ToastAlerts from '../../Utils/ToastAlerts/ToastAlerts';
 import DisplayChan from './DisplayChan/DisplayChan';
 import { ToastContainer } from 'react-toastify';
 import CreateChan from '../CreateChan/CreateChan';
+import CreateDM from "../CreateChan/CreateDM";
 //import ChatPage from '../CreateChan/ChatPage';
 
 export interface ListChannelsProps {
@@ -32,23 +33,6 @@ export default function ListChannels(props: ListChannelsProps) {
 
 	const calledOnce = React.useRef(false);
 
-
-	//TODO: a reprendre
-	function createChanneltest()
-	{
-		let toast = new ToastAlerts(null);
-		toast.notifyDanger("A reprendre");
-
-		//let body = {
-		//	password: "test",
-		//	pub: true,
-		//	name: "test"
-		//}
-
-		//const ax = new myAxios(null);
-		//ax.post_api_chat(body.name, body.pub, body.password);
-	}
-
 	function renderListChannels()
 	{
 		//console.log("rendering all channels");
@@ -70,7 +54,6 @@ export default function ListChannels(props: ListChannelsProps) {
 						}
 						setChannels(prevArray => [...prevArray, channels[i]]);
 						//On informe le component parent qu'on va se focus sur une chan
-
 					}
 					//console.log("min id is " + minId);
 					i++;
@@ -167,7 +150,6 @@ export default function ListChannels(props: ListChannelsProps) {
 
 	//function createJoinChan()
 	//{
-	//	//TODO: a reprendre - doit permettre de rejoindr ou creer une channel
 	//	//let toast = new ToastAlerts(null);
 	//	//toast.notifyDanger("A reprendre - doit permettre d'ouvrir un modal pour creer un dm ou rejoindre ou creer un channel");
 	//	return (<CreateChan handleshow="true">);
@@ -221,30 +203,13 @@ export default function ListChannels(props: ListChannelsProps) {
 				<div id="channel--col">
 					<div className="title--channel--col">
 						<p className="channels-title">Channels</p>
-						<p className="selected--categorie">{selectedCat== "Channels" ? "Channels you are in" : "Your direct messages"}</p>
 					</div>
 					<div className="add-channel-a">
+						<p className="quick--add">Quick actions</p>
 						<CreateChan />
-						{/*<div className="modal fade" id="exampleModalCenter" tab-index="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-							<div className="modal-dialog modal-dialog-centered" role="document">
-								<div className="modal-content">
-								<div className="modal-header">
-									<h5 className="modal-title" id="exampleModalLongTitle">Modal title</h5>
-									<button type="button" className="close" data-dismiss="modal" aria-label="Close">
-									<span aria-hidden="true">&times;</span>
-									</button>
-								</div>
-								<div className="modal-body">
-									...
-								</div>
-								<div className="modal-footer">
-									<button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-									<button type="button" className="btn btn-primary">Save changes</button>
-								</div>
-								</div>
-							</div>
-						</div>*/}
+						<CreateDM />
 					</div>
+					<p className="selected--categorie">{selectedCat== "Channels" ? "Channels you are in" : "Your direct messages"}</p>
 					<div className="displaying-div">
 						{load == true && selectedCat == "Channels" ?
 							Object.keys(channels).map(function(key, index) {

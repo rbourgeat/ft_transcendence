@@ -4,14 +4,12 @@ import React, {useState} from "react";
 import ToastAlerts from '../../Utils/ToastAlerts/ToastAlerts';
 import MyAxios from '../../Utils/Axios/Axios';
 
-//TODO : a reprendre ?
-
-export interface CreateChanProps {
+export interface CreateDMProps {
 	endpoint?: any,
 	action?: any
 	handleshow?: any
 }
-export default function CreateChan(props: CreateChanProps) {
+export default function CreateDM(props: CreateDMProps) {
 
 	const [show, setShow] = React.useState(false);
 	const handleClose = () => setShow(false);
@@ -21,55 +19,26 @@ export default function CreateChan(props: CreateChanProps) {
 	const [chanName, chanNameSet] = React.useState("");
 	const [chanPassword, chanPasswordSet] = React.useState("");
 
-	const createChannel = () => {
-		//let toast = new ToastAlerts(null);
-		//toast.notifyDanger("A revoir");
-		//return ;
+	const createDM = () => {
 
-		let ax = new MyAxios(null);
-
-		//if (chanScope === "public") {
-		//	axios.post(endpoint, {
-		//		"public": chanScope === "public" ? true : false,
-		//		"name": chanName
-		//	})
-		//		.catch(function (error) {
-		//			console.log(error);
-		//		});
-		//}
-		//else {
-		//	axios.post(endpoint, {
-		//		"password": chanPassword,
-		//		"public": chanScope === "public" ? true : false,
-		//		"name": chanName
-		//	})
-		//		.then(function (response) {
-		//			console.log(response);
-		//		})
-		//		.catch(function (error) {
-		//			console.log(error);
-		//		});
-		//}//		.then(function (response) {
-		//			console.log(response);
-		//		})
-
+		//let ax = new MyAxios(null);
 	}
 
 	return (
 		<div>
-			<button type="button" className="btn btn-success"
+			<button type="button" className="btn btn-dark"
 							id="createchannel-button" /*onClick={createJoinChan}*/
 							onClick={handleShow}
-							data-toggle="modal" data-target="#exampleModalCenter"
-						>New channel</button>
+							//data-toggle="modal" data-target="#exampleModalCenter"
+						>New DM</button>
 			<Modal show={show} onHide={handleClose}>
 				<Modal.Header closeButton>
-					<Modal.Title>Join or create a channel 💌</Modal.Title>
+					<Modal.Title>Send a DM 💌</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
 					<Form>
 						<Form.Group className="mb-3" controlId="channName">
-							<Form.Label>Channel name</Form.Label>
+							<Form.Label>To do</Form.Label>
 							<Form.Control
 								type="text"
 								value={chanName}
@@ -79,14 +48,14 @@ export default function CreateChan(props: CreateChanProps) {
 							/>
 						</Form.Group>
 						<Form.Group>
-							<Form.Label>Choose policy</Form.Label>
+							<Form.Label>to do</Form.Label>
 							<Form.Select aria-label="Channel visibility" onChange={e => chanScopeSet(e.target.value)} defaultValue="public">
 								<option value="public">public</option>
 								<option value="private">private</option>
 							</Form.Select>
 						</Form.Group>
 						<Form.Group className="mb-3" controlId="channPassword">
-							<Form.Label>Channel password</Form.Label>
+							<Form.Label>to do</Form.Label>
 							<Form.Control
 								type="password"
 								value={chanPassword}
@@ -100,7 +69,7 @@ export default function CreateChan(props: CreateChanProps) {
 					<Button variant="ligth" onClick={handleClose}>
 						Close
 					</Button>
-					<Button variant="dark" type="submit" onClick={createChannel}>
+					<Button variant="dark" type="submit" onClick={createDM}>
 						Send form
 					</Button>
 				</Modal.Footer>
