@@ -12,57 +12,49 @@ export interface ParticipantProps {
 //export default function ListParticipant({activeChannel})
 export default function ListParticipant(props: ParticipantProps) {
 	const [selectedUser, updateSelectedUser] = React.useState("");
+	const [functionToUse, updateFunctionToUse] = React.useState("");
 	const [loggedUser, updateLoggedUser] = React.useState({});
 	const [participates, updateParticipates] = React.useState([]);
-	/*
-		const [users, setUsers] = React.useState([]);
-		const [load, setLoad] = React.useState(true);
-		const calledOnce = React.useRef(false);
-		async function renderUsers() {
 
-			axios.defaults.withCredentials = true;
-			let log = localStorage.getItem("login");
-			console.log("My login is " + log);
-			let url = "http://localhost:3000/api/user/";
-			await axios.get(url)
-				.then(res => {
-					console.log("Get api users successfully called.");
-					let users = res.data;
-					let len = users.length;
-					let i = 0;
-					while (i < len) {
-						if (users[i].login != log)
-							setUsers(prevArray => [...prevArray, users[i]])
-						i++;
-					}
-				})
-				.catch((error) => {
-					console.log("Error while getting all users");
-				})
-			setLoad(true);
-		}
-
-		useEffect(() => {
-			if (calledOnce.current) {
-				return;
-			}
-			renderUsers();
-			calledOnce.current = true;
-
-		}, []);
-	*/
 	React.useEffect(() => {
+
 		axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 		axios.defaults.withCredentials = true;
 		axios.get(`http://localhost:3000/api/chat/1/users`)
 			.then(response => {
 				updateParticipates(response.data);
+				console.log("participates are updated");
 			})
 			.catch(error => {
 				console.log("error");
 			})
 	}, [])
 
+	React.useEffect(() => {
+		console.log("selectedUser is set to : " + selectedUser);
+	}, [selectedUser])
+
+	React.useEffect(() => {
+		console.log("functionToUse is set to : " + functionToUse);
+		executeFunction(functionToUse);
+	}, [functionToUse])
+
+	async function executeFunction(param) {
+		switch (param) {
+			case 'block':
+				return blockUser();
+			case 'invite':
+				return inviteToPlay();
+			case 'admin':
+				return setAdmin();
+			case 'mute':
+				return muteUser();
+			case 'ban':
+				return banUser();
+		}
+	}
+
+	/*
 	//TODO: a reprendre; mute user
 	const time = new Date();
 	time.setSeconds(time.getSeconds() + 600);
@@ -121,6 +113,20 @@ export default function ListParticipant(props: ParticipantProps) {
 		//		toast.notifyDanger("Error while banned user");
 		//	})
 	}
+*/
+	function banUser() {
+		//const url = 'http://localhost:3000/api/chat/ban';
+
+		let toast = new ToastAlerts(null);
+		toast.notifyDanger("A reprendre.");
+	}
+
+	function blockUser() {
+		//const url = 'http://localhost:3000/api/chat/ban';
+
+		let toast = new ToastAlerts(null);
+		toast.notifyDanger("A reprendre.");
+	}
 
 	function sendDM() {
 		//const url = 'http://localhost:3000/api/chat/ban';
@@ -143,18 +149,37 @@ export default function ListParticipant(props: ParticipantProps) {
 		toast.notifyDanger("A reprendre.");
 	}
 
-	function muteUSer() {
+	function muteUser() {
 		//const url = 'http://localhost:3000/api/chat/ban';
 
 		let toast = new ToastAlerts(null);
 		toast.notifyDanger("A reprendre.");
 	}
 
-	function setAdmin() {
-		//const url = 'http://localhost:3000/api/chat/ban';
-
+	async function setAdmin() {
+		const url = 'http://localhost:3000/api/chat/setAdmin';
+		//const time = new Date();
+		//time.setSeconds(time.getSeconds() + 600);
+		//console.log("selectedUser is " + selectedUser);
 		let toast = new ToastAlerts(null);
-		toast.notifyDanger("A reprendre.");
+
+		//hardcoded idCHat
+		await axios.post(url, {
+			"idChat": 1, //replace by ActiveChannel later
+			"user": selectedUser,
+			//	"time": time,
+			//	"password": "string"
+		})
+			.then(response => {
+				console.log(response);
+				toast.notifySuccess("Successfully set as admin");
+			})
+			.catch(error => {
+				console.log(error);
+				toast.notifyDanger("Error while setting as admin");
+			})
+
+		//toast.notifyDanger("A reprendre.");
 	}
 
 	return (
@@ -162,17 +187,7 @@ export default function ListParticipant(props: ParticipantProps) {
 			<h2 id="participant--title">Members</h2>
 			<p>hardcoded participant atm</p>
 			<div id="sub--div">
-				{/*<div id="participants--div">
-					{participates.map(user =>
-					<Participant
-						key={user.id}
-						username={user.login}
-						status={user.status}
-						owner={user.owner}
-						admin={user.admin}
-						updateSelectedUser={updateSelectedUser} />
-					)}
-				</div>*/
+				{
 					<div id="participants--div">
 						{participates.map(user =>
 							<Participant
@@ -181,7 +196,8 @@ export default function ListParticipant(props: ParticipantProps) {
 								status={user.status}
 								owner={user.owner}
 								admin={user.admin}
-								updateSelectedUser={updateSelectedUser} />
+								updateSelectedUser={updateSelectedUser}
+								updateFunctionToUse={updateFunctionToUse} />
 						)}
 					</div>
 				}
