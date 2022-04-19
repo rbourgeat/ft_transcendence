@@ -231,7 +231,7 @@ export default function Game() {
 				game.player.y = mouseLocation - PLAYER_HEIGHT / 2;
 			}
 			if (joueur && game.player.y && adversaire)
-				socket.emit('playerMove', joueur + ":" + game.player.y + ":" + adversaire + ":" + "gauche");
+				socket.emit('playerMove', joueur + ":" + game.player.y + ":" + adversaire + ":" + "gauche" + ":" + gm);
 		} else if (joueur == joueur2) {
 			game.player2.y = mouseLocation - PLAYER_HEIGHT / 2;
 			if (mouseLocation < PLAYER_HEIGHT / 2) {
@@ -242,7 +242,7 @@ export default function Game() {
 				game.player2.y = mouseLocation - PLAYER_HEIGHT / 2;
 			}
 			if (joueur && game.player.y && adversaire)
-				socket.emit('playerMove', joueur + ":" + game.player2.y + ":" + adversaire + ":" + "droit");
+				socket.emit('playerMove', joueur + ":" + game.player2.y + ":" + adversaire + ":" + "droit" + ":" + gm);
 		}
 	}
 
@@ -288,6 +288,7 @@ export default function Game() {
 				game.ball.speed.x = BALL_SPEED * -1;
 				// Update score
 				game.player2.score++;
+				socket.emit('roundStart', 0 + ":" + joueur1 + ":" + joueur2 + ":" + game.player.score + ":" + game.player2.score);
 				document.querySelector('#player2-score').textContent = game.player2.score;
 				if (game.player2.score >= 5) {
 					stop();
@@ -298,6 +299,7 @@ export default function Game() {
 				game.ball.speed.x = BALL_SPEED;
 				// Update score
 				game.player.score++;
+				socket.emit('roundStart', 0 + ":" + joueur1 + ":" + joueur2 + ":" + game.player.score + ":" + game.player2.score);
 				document.querySelector('#player-score').textContent = game.player.score;
 				if (game.player.score >= 5) {
 					stop();
