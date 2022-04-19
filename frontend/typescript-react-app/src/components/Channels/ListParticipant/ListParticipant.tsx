@@ -4,6 +4,7 @@ import Participant from './Participant/Participant';
 import axios from "axios";
 import { ToastContainer } from 'react-toastify';
 import ToastAlerts from '../../Utils/ToastAlerts/ToastAlerts';
+import MyAxios from '../../Utils/Axios/Axios';
 
 export interface ParticipantProps {
 	setActiveChannelName?: any,
@@ -105,15 +106,17 @@ export default function ListParticipant(props: ParticipantProps) {
 	}
 
 	function blockUser() {
-		let toast = new ToastAlerts(null);
-		toast.notifyDanger("A reprendre.");
+		let ax = new MyAxios(null);
+		ax.post_relation_block(selectedUser);
 	}
 
+	//TODO
 	function sendDM() {
 		let toast = new ToastAlerts(null);
 		toast.notifyDanger("A reprendre.");
 	}
 
+	//TODO
 	function inviteToPlay() {
 		let toast = new ToastAlerts(null);
 		toast.notifyDanger("A reprendre.");

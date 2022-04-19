@@ -80,7 +80,10 @@ export class UserMigration1645626140921 implements MigrationInterface {
                 status: 'online',
                 email: 'malatini@student.42.fr',
                 login42: 'malatini',
-                isTwoFactorAuthenticationEnabled: false
+                isTwoFactorAuthenticationEnabled: false,
+                points: 1000,
+                level: 1,
+                rank: 7
             }),
         );
 

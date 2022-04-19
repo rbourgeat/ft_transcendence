@@ -7,50 +7,37 @@
   text-align: center !important;
   font-weight: variables.$bold;
   z-index: 2;
-  margin-top: 10px;
-  font-size: 12px !important;
+  margin-top: 5px;
   font-family: variables.$basic-font !important;
   color: black !important;
-  position: sticky;
 }
 
 .result--score_winner {
   border: 0.2rem solid #469536 !important;
-  background: radial-gradient(circle, rgba(8, 179, 156, 0.213) 25%, rgba(10,168,109,0.7280288824514181) 100%) !important;
+  background: radial-gradient(circle, rgba(8, 179, 156, 0.213) 25%, rgba(10, 168, 109, 0.7280288824514181) 100%) !important;
 }
 
 .result--score_loser {
   border: 0.2rem solid #ff4040 !important;
-  background: radial-gradient(circle, rgba(255, 170, 170, 0.597) 25%, rgba(255,0,38,0.7280288824514181) 100%) !important;
-}
-
-.score, .winner, .looser, #scores, .text {
-  font-size: 14px;
-  font-family: variables.$basic-font !important;
-}
-
-.result--score {
-  font-size: 16px !important;
-}
-
-.results {
-  font-size: 18px !important;
-  font-weight: 900 !important;
+  background: radial-gradient(circle, rgba(255, 170, 170, 0.597) 25%, rgba(255, 0, 38, 0.7280288824514181) 100%) !important;
 }
 
 .results--loser-color {
   font-size: 18px !important;
-  font-weight: 900 !important;
   color: #c70000;
 }
 
 .results--winner-color {
   font-size: 18px !important;
-  font-weight: 900 !important;
   color: #14805f;
 }
 
 .info--game {
   text-align: left !important;
+  font-size: 12px !important;
   margin-left: 2%;
+}
+
+.text-match {
+  font-size: 16px !important;
 }

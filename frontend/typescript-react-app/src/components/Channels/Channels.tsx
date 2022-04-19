@@ -21,6 +21,7 @@ export default function Channels(props: ChatProps) {
 	const calledOnce = React.useRef(false);
 	const [chanUsers, updateChanUsers] = React.useState([]);
 	const [username, setUsername] = React.useState("");
+	const [user, setUser] = React.useState();
 	const [load, setLoad] = React.useState(false);
 
 	//Pour la selection des chans et DMs sur les 3 colonnes de la page
@@ -48,6 +49,7 @@ export default function Channels(props: ChatProps) {
 			await axios.get(url)
 				.then(res => {
 					username = res.data.login;
+					setUser(res.data);
 				})
 				.catch((err) => {
 					console.log("Error while getting api auth");
@@ -86,26 +88,26 @@ export default function Channels(props: ChatProps) {
 				<div className="row" id="row_chat">
 					{/* Ces props permettent à tous ces childs components de savoir la channel sélectionnée */}
 					{load == true ? <ListChannels login={username}
-										setActiveChannelName={setActiveChannelName} setActiveChannelID={setActiveChannelID}
-										setActiveDMName={setActiveDMName} setActiveDMID={setActiveDMID}
-										setIsDM={setIsDM} setIsChan={setIsChan}
+						setActiveChannelName={setActiveChannelName} setActiveChannelID={setActiveChannelID}
+						setActiveDMName={setActiveDMName} setActiveDMID={setActiveDMID}
+						setIsDM={setIsDM} setIsChan={setIsChan}
 					/>
-					: ""}
+						: ""}
 					{load == true ? <ListDiscussions login={username}
-										setActiveChannelName={setActiveChannelName} setActiveChannelID={setActiveChannelID}
-										setActiveDMName={setActiveDMName} setActiveDMID={setActiveDMID}
-										setIsDM={setIsDM} setIsChan={setIsChan}
+						setActiveChannelName={setActiveChannelName} setActiveChannelID={setActiveChannelID}
+						setActiveDMName={setActiveDMName} setActiveDMID={setActiveDMID}
+						setIsDM={setIsDM} setIsChan={setIsChan}
 					/>
-					: ""}
+						: ""}
 					{load == true ? <ListParticipant login={username}
-									setActiveChannelName={setActiveChannelName} setActiveChannelID={setActiveChannelID}
-									setActiveDMName={setActiveDMName} setActiveDMID={setActiveDMID}
-									setIsDM={setIsDM} setIsChan={setIsChan}
+						setActiveChannelName={setActiveChannelName} setActiveChannelID={setActiveChannelID}
+						setActiveDMName={setActiveDMName} setActiveDMID={setActiveDMID}
+						setIsDM={setIsDM} setIsChan={setIsChan}
 					/>
-					: "" }
+						: ""}
+				</div>
+			</div>
 		</div>
-	</div>
-</div>
 	);
 }
 

@@ -7,7 +7,9 @@
 	width: 140px !important;
 }
 
-#minidisplay--div > *, #mini--login, #mini--status {
+#minidisplay--div>*,
+#mini--login,
+#mini--status {
 	color: black !important;
 }
 
@@ -22,14 +24,15 @@
 
 .profile--pic {
 	border: 0.1rem solid #f9f9f9 !important;
-	border-radius:50%;
+	border-radius: 50%;
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
 	cursor: pointer;
 }
 
-.user--p, .profile--link {
+.user--p,
+.profile--link {
 	text-align: center !important;
 	font-family: variables.$basic-font;
 	font-size: 12px;
@@ -38,7 +41,7 @@
 
 .log--color {
 	text-align: right !important;
-	margin-top: -200px;
+	margin-top: -250px;
 }
 
 .user--action {
