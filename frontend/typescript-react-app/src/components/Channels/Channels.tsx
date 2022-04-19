@@ -23,8 +23,13 @@ export default function Channels(props: ChatProps) {
 	const [username, setUsername] = React.useState("");
 	const [load, setLoad] = React.useState(false);
 
+	//Pour la selection des chans et DMs sur les 3 colonnes de la page
 	const [activeChannelId, setActiveChannelID] = React.useState("");//Va permettre de transmettre l'id de l'active channel
 	const [activeChannelName, setActiveChannelName] = React.useState("");//Va permettre de transmettre le name de l'active channel
+	const [activateDMName, setActiveDMName] = React.useState("");
+	const [activateDMID, setActiveDMID] = React.useState("");
+	const [isDM, setIsDM] = React.useState("false");
+	const [isChan, setIsChan] = React.useState("true");
 
 	//TODO: rbourgea : reprendre partie socket
 	//const [socket, setSocket] = React.useState(io("http://localhost:3000/chat", { query: { username: username } }));
@@ -80,9 +85,24 @@ export default function Channels(props: ChatProps) {
 			<div className="container">
 				<div className="row" id="row_chat">
 					{/* Ces props permettent à tous ces childs components de savoir la channel sélectionnée */}
-					{load == true ? <ListChannels login={username} setActiveChannelName={setActiveChannelName} setActiveChannelID={setActiveChannelID}/> : ""}
-					{load == true ? <ListDiscussions login={username} setActiveChannelName={setActiveChannelName} setActiveChannelID={setActiveChannelID}/> : ""}
-					{load == true ? <ListParticipant login={username} setActiveChannelName={setActiveChannelName} setActiveChannelID={setActiveChannelID}/> : "" }
+					{load == true ? <ListChannels login={username}
+										setActiveChannelName={setActiveChannelName} setActiveChannelID={setActiveChannelID}
+										setActiveDMName={setActiveDMName} setActiveDMID={setActiveDMID}
+										setIsDM={setIsDM} setIsChan={setIsChan}
+					/>
+					: ""}
+					{load == true ? <ListDiscussions login={username}
+										setActiveChannelName={setActiveChannelName} setActiveChannelID={setActiveChannelID}
+										setActiveDMName={setActiveDMName} setActiveDMID={setActiveDMID}
+										setIsDM={setIsDM} setIsChan={setIsChan}
+					/>
+					: ""}
+					{load == true ? <ListParticipant login={username}
+									setActiveChannelName={setActiveChannelName} setActiveChannelID={setActiveChannelID}
+									setActiveDMName={setActiveDMName} setActiveDMID={setActiveDMID}
+									setIsDM={setIsDM} setIsChan={setIsChan}
+					/>
+					: "" }
 		</div>
 	</div>
 </div>
