@@ -50,6 +50,7 @@ export default function DisplayChan(props: DisplayChanProps) {
 			props.setActiveChannelName(props.channel.name);
 			props.setActiveChannelId(props.channel.id);
 			props.setActiveDMName("");
+			props.setActiveDMID("");
 
 			let other = document.getElementById("chan-title_".concat(props.channel.id));
 			other.className = "chan-title_selected";
@@ -68,11 +69,11 @@ export default function DisplayChan(props: DisplayChanProps) {
 			//On note le DM actif en mettant à vide l'éventuelle channel précédemment sélectionnée
 			props.setActiveDMName(props.channel.name);
 			props.setActiveChannelName("");
+			props.setActiveChannelId("");
 			props.setActiveDMID(props.channel.id);
 
 			let other = document.getElementById("dm-title_".concat(props.channel.id));
 			other.className = "dm-title_selected";
-
 		}
 	}
 
