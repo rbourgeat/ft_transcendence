@@ -59,21 +59,21 @@ export default function ListChannels(props: ListChannelsProps) {
 				//setChannels(channels);
 
 				let len = channels.length;
-				console.log("len is " + len);
+				//console.log("len is " + len);
 				let i = 0;
 				while (i < len) {
 					//if (channels[i].login != log)
-					//setChannelsId(prevArray => [...prevArray, channels[i].id])
-					//setChannelsName(prevArray => [...prevArray, channels[i].name])
-					//setChannelsCat(prevArray => [...prevArray, channels[i].public])
-					setChannels(prevArray => [...prevArray, [i]])
+					//setChannelsId(prevArray => [...prevArray, channels.id])
+					//setChannelsName(prevArray => [...prevArray, channels.name])
+					//setChannelsCat(prevArray => [...prevArray, channels.public])
+					setChannels(prevArray => [...prevArray, channels[i]])
 					i++;
 				}
 				//console.log(channelsId);
 				//console.log(channelsName);
 				//console.log(channelsCat);
 				console.log(channels);
-				console.log(channels[0]);
+				//console.log(channels[0]);
 				//console.log(channels[0].name);
 				//console.log(channels[1].name);
 				setLoad(true);
@@ -138,7 +138,18 @@ export default function ListChannels(props: ListChannelsProps) {
 							//	</div>
 							//	)
 							Object.keys(channels).map(function(key, index) {
-								console.log("my id is " + channels[key]);
+								//console.log("my id is " + channels[key].id);
+								//console.log("my name is " + channels[key].name);
+								//console.log("my name is " + channels[key].name);
+								if (channels[key].id != undefined)
+								{
+									//console.log("ici");
+									return (
+										<div key={channels[key].id}>
+											<DisplayChan channel={channels[key]} />
+										</div>
+									)
+								}
 								//console.log("my name is " + channels[name]);
 							})
 						: ""}
