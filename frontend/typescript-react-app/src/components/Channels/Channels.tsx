@@ -26,7 +26,7 @@ export default function Channels(props: ChatProps) {
 	const [activeChannelId, setActiveChannelID] = React.useState("");//Va permettre de transmettre l'id de l'active channel
 	const [activeChannelName, setActiveChannelName] = React.useState("");//Va permettre de transmettre le name de l'active channel
 	const [activeDMName, setActiveDMName] = React.useState("");
-	const [activateDMID, setActiveDMID] = React.useState("");
+	const [activeDMID, setActiveDMID] = React.useState("");
 	const [isDM, setIsDM] = React.useState("false");
 	const [isChan, setIsChan] = React.useState("true");
 
@@ -89,16 +89,22 @@ export default function Channels(props: ChatProps) {
 										setIsDM={setIsDM} setIsChan={setIsChan}
 					/>
 					: ""}
+					{/* Attention ici est-ce qu'on veut les setters ou simplement les variables ? */}
 					{load == true ? <ListDiscussions login={username}
-										setActiveChannelName={setActiveChannelName} setActiveChannelID={setActiveChannelID}
-										setActiveDMName={setActiveDMName} setActiveDMID={setActiveDMID}
-										setIsDM={setIsDM} setIsChan={setIsChan}
+										//setActiveChannelName={setActiveChannelName} setActiveChannelID={setActiveChannelID}
+										//setActiveDMName={setActiveDMName} setActiveDMID={setActiveDMID}
+										activeChannelName={activeChannelName} activeChannelId={activeChannelId}
+										activeDMName={activeDMName} activeDMId={activeDMID}
+										isDM={isDM} isChan={isChan}
 					/>
 					: ""}
 					{load == true ? <ListParticipant login={username}
-									setActiveChannelName={setActiveChannelName} setActiveChannelID={setActiveChannelID}
-									setActiveDMName={setActiveDMName} setActiveDMID={setActiveDMID}
-									setIsDM={setIsDM} setIsChan={setIsChan}
+									//setActiveChannelName={setActiveChannelName} setActiveChannelID={setActiveChannelID}
+									//setActiveDMName={setActiveDMName} setActiveDMID={setActiveDMID}
+									//setIsDM={setIsDM} setIsChan={setIsChan}
+									activeChannelName={activeChannelName} activeChannelId={activeChannelId}
+									activeDMName={activeDMName} activeDMId={activeDMID}
+									isDM={isDM} isChan={isChan}
 					/>
 					: "" }
 		</div>

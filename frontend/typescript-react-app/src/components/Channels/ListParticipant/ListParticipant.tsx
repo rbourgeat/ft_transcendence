@@ -6,13 +6,19 @@ import { ToastContainer } from 'react-toastify';
 import ToastAlerts from '../../Utils/ToastAlerts/ToastAlerts';
 
 export interface ParticipantProps {
-	setActiveChannelName?: any,
-	setActiveChannelID?: any,
+	//setActiveChannelName?: any,
+	//setActiveChannelID?: any,
 	login: string,
-	setActiveDMID?: any,
-	setActiveDMName?: any,
-	setIsDM?: any,
-	setIsChan?: any
+	//setActiveDMID?: any,
+	//setActiveDMName?: any,
+	//setIsDM?: any,
+	//setIsChan?: any
+	activeChannelName?: any,
+	activeChannelId?: any,
+	activeDMName?: any,
+	activeDMId?: any
+	isDM?: any,
+	isChan?: any
 }
 
 //export default function ListParticipant({activeChannel})
