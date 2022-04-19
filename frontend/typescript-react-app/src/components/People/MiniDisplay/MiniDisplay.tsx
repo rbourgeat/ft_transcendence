@@ -22,8 +22,6 @@ export interface MiniDisplayProps {
 	currentUser?: string;
 }
 
-import ReactDOM from 'react-dom';
-
 export default function MiniDisplay(props: MiniDisplayProps) {
 	const [load, setLoad] = React.useState(false);
 	const calledOnce = React.useRef(false);
@@ -93,7 +91,7 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 
 	function blockContact(login: string) {
 		let ax = new MyAxios(null);
-		return (ax.post_relation_block(login));
+		return (ax.post_relation_block(login, "people"));
 	}
 
 	function acceptInvitation(login: string) {
@@ -155,26 +153,26 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 				</>
 			)
 		}
-		else if (props.container == "friends")
+		else if (props.container === "friends")
 			return (
 				<>
 					<i className="user--action" onClick={() => removeContact(props.login)}>{<FiUserMinus />}</i>
 				</>
 			)
-		else if (props.container == "invitation")
+		else if (props.container === "invitation")
 			return (
 				<>
 					<i className="user--action" onClick={() => acceptInvitation(props.login)}>{<AiFillCheckCircle />}</i>
 					<i className="user--action" onClick={() => refuseInvitation(props.login)}>{<MdCancel />}</i>
 				</>
 			)
-		else if (props.container == "sent")
+		else if (props.container === "sent")
 			return (
 				<>
 					<p className="waiting">Waiting for {props.login} to answer</p>
 				</>
 			)
-		else if (props.container == "blocked")
+		else if (props.container === "blocked")
 			return (
 				<>
 					<i id="button-action" className="user--action" onClick={() => unblockContact(props.login)}>{<AiFillUnlock />}</i>

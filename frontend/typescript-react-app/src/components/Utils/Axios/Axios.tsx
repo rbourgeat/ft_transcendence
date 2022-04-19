@@ -504,7 +504,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
             })
     }
 
-    post_relation_block(login: string) {
+    post_relation_block(login: string, blocked_from: string) {
         let url = "http://localhost:3000/api/user/relation/block/".concat(login);
 
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
@@ -517,13 +517,15 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
                 console.log("Succesfully blocked target friend");
                 console.log(res);
                 toast.notifySuccess("Successfully blocked user");
-                window.top.location = "http://localhost:3030/profile/".concat(login);
+                if (blocked_from === "people")
+                    window.top.location = "http://localhost:3030/profile/".concat(login);
             })
             .catch((error) => {
                 console.log("Error while blocking target friend");
                 console.log(error);
                 toast.notifyDanger("Error while blocking contact");
-                window.top.location = "http://localhost:3030/profile/".concat(login);
+                if (blocked_from === "people")
+                    window.top.location = "http://localhost:3030/profile/".concat(login);
             })
     }
 
@@ -709,8 +711,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     }
 
     render_avatar(login: string, login42: string, haschanged: boolean) {
-        if (!login)
-        {
+        if (!login) {
             return;
         }
 
@@ -805,7 +806,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
                 console.log("Catched error !");
                 console.log(error);
             }
-        )
+            )
     }
 
     /*

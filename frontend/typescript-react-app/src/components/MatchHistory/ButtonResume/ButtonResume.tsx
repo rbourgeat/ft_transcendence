@@ -45,7 +45,7 @@ export default function MatchHistory(props: MatchHistoryProps) {
         <div className="buttonresume">
             <div className="row">
                 <div className={props.winner === props.login ? "result--score_p result--score_winner" : "result--score_p result--score_loser"}>
-                    <p className="info--game">{myDate.toDateString()} {displayGamemode(props.gameMode)}</p>
+                    <p className="info--game">{myDate.toDateString()} - {displayGamemode(props.gameMode)}</p>
                     <p className={props.winner === props.login ? "results--winner-color" : "results--loser-color"}>
                         {props.winner === props.login ? "Win" : "Loss"}</p>
                     <p className="text-match">{props.winner} - {props.scoreWinner} / {props.scoreLooser} - {props.looser}</p>

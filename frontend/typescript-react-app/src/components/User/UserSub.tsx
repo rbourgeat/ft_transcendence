@@ -68,31 +68,31 @@ export default function User(props: UserfuncProps) {
 			.then(res => {
 				username = res.data.login;
 				console.log(res);
-				if (res.data.login42 != null && res.data.login42 != undefined && res.data.login42 != "") {
-					setis42(true);
-					setlogin42(res.data.login42);
-					localStorage.setItem("login", res.data.login);
-					localStorage.setItem("login42", res.data.login42);
-					setNextLevel(res.data.percent_to_next_lvl);
-					setLevel(res.data.level);
-					setPoints(res.data.points);
-					setRank(res.data.rank);
-					setTotalGames(res.data.total_games);
-					setLoss(res.data.total_loss);
-					setWins(res.data.total_wins);
-					setRatio(res.data.win_loss_ration);
-					setXp(res.data.xp);
+				/*if (res.data.login42 != null && res.data.login42 != undefined && res.data.login42 != "") {*/
+				setis42(true);
+				setlogin42(res.data.login42);
+				localStorage.setItem("login", res.data.login);
+				localStorage.setItem("login42", res.data.login42);
+				setNextLevel(res.data.percent_to_next_lvl);
+				setLevel(res.data.level);
+				setPoints(res.data.points);
+				setRank(res.data.rank);
+				setTotalGames(res.data.total_games);
+				setLoss(res.data.total_loss);
+				setWins(res.data.total_wins);
+				setRatio(res.data.win_loss_ration);
+				setXp(res.data.xp);
 
-					if (res.data.status == "online") {
-						setColor("green");
-						setStatus("online");
-					}
-					if (res.data.status == "ingame") {
-						setColor("purple");
-						setStatus("ingame")
-					}
-
+				if (res.data.status == "online") {
+					setColor("green");
+					setStatus("online");
 				}
+				if (res.data.status == "ingame") {
+					setColor("purple");
+					setStatus("ingame")
+				}
+
+				/*}*/
 				setUsername(username);
 				setLoaded(true);
 				renderImage(username);
@@ -143,13 +143,13 @@ export default function User(props: UserfuncProps) {
 									<svg className="log--color_profile" height="40" width="40">
 										<circle cx="20" cy="20" r="15" fill={color} stroke="white" style={{ strokeWidth: '3' }} />
 									</svg>
-									<p className="status-text">{status}</p>
 									<h2 id="user--data">{username}</h2>
 									<div className="col-9 mx-auto text-center" id="input-div">
 										<br />
 										<Achievements login={username} />
 										<br />
 										<Badge
+											rank={rank}
 											total_wins={wins}
 											total_loss={loss}
 											total_games={totalGames}

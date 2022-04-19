@@ -1,5 +1,5 @@
 import './Participant.scss';
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 
 export interface ParticipantsProps {
 	username?: string,
@@ -53,6 +53,16 @@ export default function Participant(props: ParticipantsProps) {
 		}
 	}
 
+	function setUpAdmin() {
+		props.updateFunctionToUse("admin");
+		document.getElementById("admin-click").remove();
+	}
+
+	function setUpBlock() {
+		props.updateFunctionToUse("block");
+		document.getElementById("block-click").remove();
+	}
+
 	return (
 		<div className="participant--div">
 			{<div className="dropdown show">
@@ -61,10 +71,10 @@ export default function Participant(props: ParticipantsProps) {
 				</a>
 				<div className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
 					<a id="ban-click" className="dropdown-item" onClick={() => setUpBan()}>{isBanned}</a>
-					<a className="dropdown-item" onClick={() => props.updateFunctionToUse("admin")}>set admin</a>
+					<a id="admin-click" className="dropdown-item" onClick={() => setUpAdmin()}>set admin</a>
 					<a id="mute-click" className="dropdown-item" onClick={() => setUpMute()}>{isMuted}</a>
 					<a className="dropdown-item" onClick={() => props.updateFunctionToUse("invite")}>invite to play</a>
-					<a className="dropdown-item" onClick={() => props.updateFunctionToUse("block")}>block</a>
+					<a className="dropdown-item" onClick={() => setUpBlock()}>block</a>
 				</div>
 			</div>
 			}

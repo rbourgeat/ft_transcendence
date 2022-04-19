@@ -33,7 +33,7 @@ export default function ListParticipant(props: ParticipantProps) {
 
 		axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 		axios.defaults.withCredentials = true;
-		axios.get(`http://localhost:3000/api/chat/1/users`)
+		axios.get(`http://localhost:3000/api/chat/${props.activeChannelId}/users`)
 			.then(response => {
 				updateParticipates(response.data);
 				console.log("participates are updated");
@@ -41,7 +41,7 @@ export default function ListParticipant(props: ParticipantProps) {
 			.catch(error => {
 				console.log("error");
 			})
-	}, [])
+	}, [props.activeChannelId])
 
 	React.useEffect(() => {
 		console.log("selectedUser is set to : " + selectedUser);
@@ -76,7 +76,7 @@ export default function ListParticipant(props: ParticipantProps) {
 		const url = 'http://localhost:3000/api/chat/unban';
 
 		const body = {
-			"idChat": 1, //replace by ActiveChannel later
+			"idChat": props.activeChannelId,
 			"user": selectedUser,
 		}
 		//hardcoded idCHat
@@ -96,7 +96,7 @@ export default function ListParticipant(props: ParticipantProps) {
 		let toast = new ToastAlerts(null);
 
 		const body = {
-			"idChat": 1, //replace by ActiveChannel later
+			"idChat": props.activeChannelId,
 			"user": selectedUser,
 		}
 		//hardcoded idCHat
@@ -113,7 +113,7 @@ export default function ListParticipant(props: ParticipantProps) {
 
 	function blockUser() {
 		let ax = new MyAxios(null);
-		ax.post_relation_block(selectedUser);
+		ax.post_relation_block(selectedUser, "chat");
 	}
 
 	//TODO
@@ -128,6 +128,27 @@ export default function ListParticipant(props: ParticipantProps) {
 		toast.notifyDanger("A reprendre.");
 	}
 
+	async function leaveChannel() {
+		let toast = new ToastAlerts(null);
+		const url = 'http://localhost:3000/api/chat/quit';
+
+		const body = {
+			"idChat": props.activeChannelId,
+			"user": props.login,
+		}
+		//hardcoded idCHat
+		await axios.post(url, body)
+			.then(response => {
+				console.log(response);
+				toast.notifySuccess("Successfully quitted chat");
+			})
+			.catch(error => {
+				console.log(error);
+				toast.notifyDanger("Error while quitting channel");
+			})
+	}
+
+
 	async function muteUser() {
 		const url = 'http://localhost:3000/api/chat/mute';
 		let toast = new ToastAlerts(null);
@@ -136,7 +157,7 @@ export default function ListParticipant(props: ParticipantProps) {
 		time.setSeconds(time.getSeconds() + 600);
 
 		const body = {
-			"idChat": 1, //replace by ActiveChannel later
+			"idChat": props.activeChannelId,
 			"user": selectedUser,
 			"time": time
 		}
@@ -157,7 +178,7 @@ export default function ListParticipant(props: ParticipantProps) {
 		const url = 'http://localhost:3000/api/chat/unmute';
 
 		const body = {
-			"idChat": 1, //replace by ActiveChannel later
+			"idChat": props.activeChannelId,
 			"user": selectedUser,
 		}
 		//hardcoded idCHat
@@ -180,7 +201,7 @@ export default function ListParticipant(props: ParticipantProps) {
 		let toast = new ToastAlerts(null);
 
 		const body = {
-			"idChat": 1, //replace by ActiveChannel later
+			"idChat": props.activeChannelId,
 			"user": selectedUser,
 		}
 		//hardcoded idCHat
@@ -198,7 +219,6 @@ export default function ListParticipant(props: ParticipantProps) {
 	return (
 		<div id="ListParticipant" className="col-3">
 			<h2 id="participant--title">Members</h2>
-			<p>hardcoded participant atm</p>
 			<div id="sub--div">
 				{
 					<div id="participants--div">
@@ -221,6 +241,7 @@ export default function ListParticipant(props: ParticipantProps) {
 						<button id="invite--button" className="btn btn-warning" onClick={inviteToPlay}>Invite to play</button>
 					</div>
 				</div>
+
 				<div className="row" id="row--buttons_chat">
 					<div className="col">
 						<button id="players-dm-button" className="btn btn-success" onClick={sendDM}>DM</button>
@@ -249,7 +270,14 @@ export default function ListParticipant(props: ParticipantProps) {
 						<button id="leave--button" className="btn btn-danger" disabled >Leave channel</button>
 					</div>
 				</div>
-			</div>*/}
+			</div>*/
+				<div className="buttons_div">
+					<div className="row">
+						<div className="col" id="row--button_invite">
+							<button id="invite--button" className="btn btn-danger" onClick={leaveChannel}>Leave channel</button>
+						</div>
+					</div>
+				</div>}
 			<ToastContainer
 				position="top-right"
 				autoClose={5000}
