@@ -5,6 +5,7 @@ import myAxios from "../../Utils/Axios/Axios";
 import axios from "axios";
 import ToastAlerts from '../../Utils/ToastAlerts/ToastAlerts';
 import DisplayChan from './DisplayChan/DisplayChan';
+import { ToastContainer } from 'react-toastify';
 
 
 export interface ListChannelsProps {
@@ -30,7 +31,7 @@ export default function ListChannels(props: ListChannelsProps) {
     //const [count, setCount] = useState(0);
 
 	//Affichage sélection DM ou channels
-	const [selectedCat, setSelectedCat] = React.useState("Channels");
+	const [selectedCat, setSelectedCat] = React.useState("");
 	const [load, setLoad] = React.useState(false);
 
 	const calledOnce = React.useRef(false);
@@ -77,7 +78,7 @@ export default function ListChannels(props: ListChannelsProps) {
 
 	function renderListDMs()
 	{
-		//console.log("should render dms");
+		console.log("should render dms");
 		axios.defaults.withCredentials = true;
 		const url = "http://localhost:3000/api/chat/joinedChannels";
 		axios.get(url)
@@ -88,46 +89,60 @@ export default function ListChannels(props: ListChannelsProps) {
 				//trier sur direct true
 				while (i < len) {
 					if (DMs[i].direct == true)
-						setDMs(prevArray => [...prevArray, DMs[i]])
+					{
+						setDMs(prevArray => [...prevArray, DMs[i]]);
+						console.log("found one DM");
+					}
 					i++;
 				}
-				console.log("displaying dms")
-				//console.log(DMs);
+				setLoad(true);
 				//setLoad(true);//a re voir pour le set load
 			})
 			.catch((error) => {
 				console.log("Error while getting all channels");
 			})
+			console.log("displaying dms")
+			console.log(DMs);
+			setLoad(true);
 	}
 
-	function displaySelectedCat()
+	function displaySelectedCat(arg: string)
 	{
-		if (selectedCat == "Channels")
+		//console.log("here again");
+		//setSelectedCat(arg);
+		let toast = new ToastAlerts(null);
+		toast.notifyDanger("En cours - ne pas tester");
+		if (arg == "Channels")
 		{
+			//console.log("and here here")
 			//console.log("calling render list channels");
 			renderListChannels();
 		}
-		if (selectedCat == "DMs")
+		else if (arg== "DMs")
 		{
-			console.log("should not display channels but dms");
+			console.log("selected cat is DMS");
+			//console.log("should not display channels but dms");
 			renderListDMs();
+		}
+		else
+		{
+			console.log("Its null !!");
 		}
 	}
 
 	function removeDisplayChans()
 	{
 		console.log("We whould remove displayed chan");
-
 	}
 
 	//premier use effect pour le chargement
 	useEffect(() => {
-	if (calledOnce.current) {
-		return;
-	}
-		displaySelectedCat();
-		calledOnce.current = true;
-	}, [])
+	//if (calledOnce.current) {
+	//	return;
+	//}
+		displaySelectedCat(selectedCat);
+		//calledOnce.current = true;
+	}, [selectedCat])
 
 	//useEffect(() => {
 	////deuxieme ôur les modifs
@@ -144,7 +159,7 @@ export default function ListChannels(props: ListChannelsProps) {
 	function displayDM()
 	{
 		//console.log("calling display dm")
-		setSelectedCat("DMs");
+		//setSelectedCat("DMs");
 		console.log("Calling display dms");
 		//Faire la même chose dans l'autre sens
 		let chans = Array.from(document.getElementsByClassName("displaying_channels"));
@@ -157,13 +172,15 @@ export default function ListChannels(props: ListChannelsProps) {
 			channels.pop();
 			i++;
 		}
-		displaySelectedCat();
+		//console.log("here");
+		displaySelectedCat("DMs");
 	}
 
 	function displayChannels()
 	{
 		//console.log("calling display channels")
-		setSelectedCat("Channels");
+		//setSelectedCat("Channels");
+		displaySelectedCat("Channels");
 	}
 
 	return (
@@ -188,21 +205,35 @@ export default function ListChannels(props: ListChannelsProps) {
 									)
 								}})
 						: ""}
-						{/*{load == true && selectedCat == "DMs" ?
+						{load == true && selectedCat == "DMs" ?
 							Object.keys(DMs).map(function(key, index) {
-								return (
-									<div key={DMs[key].id}>
-										{<DisplayChan dm={DMs[key]}
-										setActiveDMName={props.setActiveDMName} setActiveDMID={props.setActiveDMID}/>}
-									</div>
-								)
+								if (DMs[key].id != undefined && selectedCat === "DMs")
+								{
+									return (
+										<div key={DMs[key].id}>
+											<DisplayChan dm={DMs[key]}
+												isChan={false} isDM={true} channel={DMs[key]}
+												setActiveDMName={props.setActiveDMName} setActiveDMID={props.setActiveDMID}/>
+										</div>)
+								}
 							})
-						: ""}*/}
+						: ""}
 					</div>
 					<div className="send--dm_div">
 						<button type="button" className="btn btn-light" id="send--dm" onClick={displayDM} disabled={selectedCat == "DMs" ? true : false}>DM</button>
 						<button type="button" className="btn btn-light" id="display--channels" onClick={displayChannels} disabled={selectedCat == "Channels" ? true : false}>Channels</button>
 					</div>
+					<ToastContainer
+						position="top-right"
+						autoClose={5000}
+						hideProgressBar={false}
+						newestOnTop={false}
+						closeOnClick
+						rtl={false}
+						pauseOnFocusLoss
+						draggable
+						pauseOnHover
+					/>
 				</div>
 		</div>
 	);

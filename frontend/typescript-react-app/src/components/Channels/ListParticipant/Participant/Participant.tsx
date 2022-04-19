@@ -8,13 +8,14 @@ export interface ParticipantSProps {
 	admin?: boolean
 }
 
+//TODO: écrire les props proprement x) !!
 export interface ParticipantSState {
 
 }
 
 export default function Participant({ username, status, owner, admin, updateSelectedUser, updateFunctionToUse }) {
 	return (
-		<>
+		<div className="participant--div">
 			{<div className="dropdown show">
 				<a className="btn btn-sm dropdown-toggle p--participant" role="button" data-toggle="dropdown" onClick={() => updateSelectedUser(username)}>
 					{username}
@@ -35,5 +36,5 @@ export default function Participant({ username, status, owner, admin, updateSele
 					<a>Contact</a>
 				</div>
 				</div>*/}
-		</>);
+		</div>);
 }

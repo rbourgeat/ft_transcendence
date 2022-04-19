@@ -209,7 +209,7 @@ export default function ListParticipant(props: ParticipantProps) {
 					</div>
 				}
 			</div>
-			<div className="buttons_div">
+			{/*<div className="buttons_div">
 				<div className="row">
 					<div className="col" id="row--button_invite">
 						<button id="invite--button" className="btn btn-warning" onClick={inviteToPlay}>Invite to play</button>
@@ -238,16 +238,15 @@ export default function ListParticipant(props: ParticipantProps) {
 				</div>
 				<div className="row">
 					<div className="col" id="row--button_kick">
-						<button id="kick--button" className="btn btn-danger" disabled /*onClick={setAdmin}*/>Kick</button>
+						<button id="kick--button" className="btn btn-danger" disabled>Kick</button>
 					</div>
 				</div>
 				<div className="row">
 					<div className="col" id="row--button_leave">
-						<button id="leave--button" className="btn btn-danger" disabled /*onClick={setAdmin}*/>Leave channel</button>
+						<button id="leave--button" className="btn btn-danger" disabled >Leave channel</button>
 					</div>
 				</div>
-				{/*<button id="mute-temp-button" className="btn btn-warning" onClick={muteUser}>Mute temporalily</button>*/}
-			</div>
+			</div>*/}
 			<ToastContainer
 				position="top-right"
 				autoClose={5000}

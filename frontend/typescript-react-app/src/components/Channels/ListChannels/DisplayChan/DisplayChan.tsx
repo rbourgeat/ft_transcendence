@@ -49,12 +49,20 @@ export default function DisplayChan(props: DisplayChanProps) {
 	}
 
 	return (
-		<div className="display_chan" id={"display_chan".concat("_" + props.channel.name)}>
-			{load == true && props.isChan == true ? <>
-				<button type="button" id={"chan-title_".concat(props.channel.id)} className={isSelected == "true" ? "chan-title_selected" : "chan-title_notselected" }
-				onClick={selectChan}>{props.channel.name}</button>
-			</> : ""}
-			{/* TODO: a reprendre pour les DMs */}
-		</div>
+		<>
+			<div className="display_chan" id={"display_chan".concat("_" + props.channel.name)}>
+				{load == true && props.isChan == true ? <>
+					<button type="button" id={"chan-title_".concat(props.channel.id)} className={isSelected == "true" ? "chan-title_selected" : "chan-title_notselected" }
+					onClick={selectChan}>{props.channel.name}</button>
+				</> : ""}
+			</div>
+			<div className="display_dm" id={"dm_chan".concat("_" + props.channel.name)}>
+				{/* TODO: a reprendre pour les DMs */}
+				{load == true && props.isDM == true ? <>
+					<button type="button" id={"dm-title_".concat(props.channel.id)} className={isSelected == "true" ? "dm-title_selected" : "dm-title_notselected" }
+					/*onClick={selecDM}*/>{props.channel.name}</button>
+				</> : ""}
+			</div>
+		</>
 	);
 }
