@@ -1,7 +1,6 @@
 import './ListParticipant.scss';
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Participant from './Participant/Participant';
-import Footer from "../../Footer/Footer";
 import axios from "axios";
 import { ToastContainer } from 'react-toastify';
 import ToastAlerts from '../../Utils/ToastAlerts/ToastAlerts';
@@ -54,109 +53,110 @@ export default function ListParticipant(props: ParticipantProps) {
 				return muteUser();
 			case 'ban':
 				return banUser();
+			case 'unban':
+				return unbanUser();
+			case 'unmute':
+				return unmuteUser();
 		}
 	}
 
-	/*
-	//TODO: a reprendre; mute user
-	const time = new Date();
-	time.setSeconds(time.getSeconds() + 600);
-
-	const muteUser = () => {
-
+	async function unbanUser() {
 		let toast = new ToastAlerts(null);
+		const url = 'http://localhost:3000/api/chat/unban';
 
-		toast.notifyDanger("A reprendre.");
-
-		//if (selectedUser == "")
-		//{
-		//	toast.notifyDanger("No user where selected.");
-		//	return ;
-		//}
-		//const url = 'http://localhost:3000/api/chat/mute';
-		//axios.post(url, {
-		//"idChat": activeChannel,
-		//"user": selectedUser,
-		//"time": time,
-		//"password": "string"})
-		//	.then(response => {
-		//		console.log(response);
-		//	})
-		//	.catch(error => {
-		//		console.log(error);
-		//	})
+		const body = {
+			"idChat": 1, //replace by ActiveChannel later
+			"user": selectedUser,
+		}
+		//hardcoded idCHat
+		await axios.post(url, body)
+			.then(response => {
+				console.log(response);
+				toast.notifySuccess("Successfully unbanned");
+			})
+			.catch(error => {
+				console.log(error);
+				toast.notifyDanger("Error while unbanning");
+			})
 	}
 
-	//TODO: a reprendre - Ban user
-	const banUser = () => {
+	async function banUser() {
 		const url = 'http://localhost:3000/api/chat/ban';
-
 		let toast = new ToastAlerts(null);
 
-		toast.notifyDanger("A reprendre.");
-
-		//console.log("selectedUser is " + selectedUser);
-
-		//if (selectedUser == "")
-		//{
-		//	toast.notifyDanger("No user where selected.");
-		//	return ;
-		//}
-		//axios.post(url, {
-		//"idChat": activeChannel,
-		//"user": selectedUser,
-		//"time": time,
-		//"password": "string"})
-		//	.then(response => {
-		//		console.log(response);
-		//		toast.notifySuccess("Successfully banned");
-		//	})
-		//	.catch(error => {
-		//		console.log(error);
-		//		toast.notifyDanger("Error while banned user");
-		//	})
-	}
-*/
-	function banUser() {
-		//const url = 'http://localhost:3000/api/chat/ban';
-
-		let toast = new ToastAlerts(null);
-		toast.notifyDanger("A reprendre.");
+		const body = {
+			"idChat": 1, //replace by ActiveChannel later
+			"user": selectedUser,
+		}
+		//hardcoded idCHat
+		await axios.post(url, body)
+			.then(response => {
+				console.log(response);
+				toast.notifySuccess("Successfully ban");
+			})
+			.catch(error => {
+				console.log(error);
+				toast.notifyDanger("Error while banning");
+			})
 	}
 
 	function blockUser() {
-		//const url = 'http://localhost:3000/api/chat/ban';
-
 		let toast = new ToastAlerts(null);
 		toast.notifyDanger("A reprendre.");
 	}
 
 	function sendDM() {
-		//const url = 'http://localhost:3000/api/chat/ban';
-
-		let toast = new ToastAlerts(null);
-		toast.notifyDanger("A reprendre.");
-	}
-
-	function banChannel() {
-		//const url = 'http://localhost:3000/api/chat/ban';
-
 		let toast = new ToastAlerts(null);
 		toast.notifyDanger("A reprendre.");
 	}
 
 	function inviteToPlay() {
-		//const url = 'http://localhost:3000/api/chat/ban';
-
 		let toast = new ToastAlerts(null);
 		toast.notifyDanger("A reprendre.");
 	}
 
-	function muteUser() {
-		//const url = 'http://localhost:3000/api/chat/ban';
-
+	async function muteUser() {
+		const url = 'http://localhost:3000/api/chat/mute';
 		let toast = new ToastAlerts(null);
-		toast.notifyDanger("A reprendre.");
+
+		const time = new Date();
+		time.setSeconds(time.getSeconds() + 600);
+
+		const body = {
+			"idChat": 1, //replace by ActiveChannel later
+			"user": selectedUser,
+			"time": time
+		}
+		//hardcoded idCHat
+		await axios.post(url, body)
+			.then(response => {
+				console.log(response);
+				toast.notifySuccess("Successfully mute");
+			})
+			.catch(error => {
+				console.log(error);
+				toast.notifyDanger("Error while muting");
+			})
+	}
+
+	async function unmuteUser() {
+		let toast = new ToastAlerts(null);
+		const url = 'http://localhost:3000/api/chat/unmute';
+
+		const body = {
+			"idChat": 1, //replace by ActiveChannel later
+			"user": selectedUser,
+		}
+		//hardcoded idCHat
+		await axios.post(url, body)
+			.then(response => {
+				console.log(response);
+				toast.notifySuccess("Successfully unbanned");
+			})
+			.catch(error => {
+				console.log(error);
+				toast.notifyDanger("Error while unbanning");
+			})
 	}
 
 	async function setAdmin() {
@@ -166,13 +166,12 @@ export default function ListParticipant(props: ParticipantProps) {
 		//console.log("selectedUser is " + selectedUser);
 		let toast = new ToastAlerts(null);
 
-		//hardcoded idCHat
-		await axios.post(url, {
+		const body = {
 			"idChat": 1, //replace by ActiveChannel later
 			"user": selectedUser,
-			//	"time": time,
-			//	"password": "string"
-		})
+		}
+		//hardcoded idCHat
+		await axios.post(url, body)
 			.then(response => {
 				console.log(response);
 				toast.notifySuccess("Successfully set as admin");
@@ -181,8 +180,6 @@ export default function ListParticipant(props: ParticipantProps) {
 				console.log(error);
 				toast.notifyDanger("Error while setting as admin");
 			})
-
-		//toast.notifyDanger("A reprendre.");
 	}
 
 	return (
@@ -192,13 +189,13 @@ export default function ListParticipant(props: ParticipantProps) {
 			<div id="sub--div">
 				{
 					<div id="participants--div">
-						{participates.map(user =>
+						{participates.map(participate =>
 							<Participant
-								key={user.id}
-								username={user.login}
-								status={user.status}
-								owner={user.owner}
-								admin={user.admin}
+								key={participate.id}
+								username={participate.user.login}
+								role={participate.role}
+								owner={participate.owner}
+								admin={participate.admin}
 								updateSelectedUser={updateSelectedUser}
 								updateFunctionToUse={updateFunctionToUse} />
 						)}
@@ -214,9 +211,6 @@ export default function ListParticipant(props: ParticipantProps) {
 				<div className="row" id="row--buttons_chat">
 					<div className="col">
 						<button id="players-dm-button" className="btn btn-success" onClick={sendDM}>DM</button>
-					</div>
-					<div className="col">
-						<button id="players-channel-button" className="btn btn-primary" onClick={banChannel}>Channel</button>
 					</div>
 				</div>
 				<div className="row" id="row--buttons_danger">
