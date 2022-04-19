@@ -1,9 +1,17 @@
 import {Button, Modal, Form} from 'react-bootstrap';
 import axios from 'axios';
 import React, {useState} from "react";
+import ToastAlerts from '../../Utils/ToastAlerts/ToastAlerts';
+import MyAxios from '../../Utils/Axios/Axios';
 
-//TODO : a reprendre ? 
-export default function CreateChan({endpoint, action}) {
+//TODO : a reprendre ?
+
+export interface CreateChanProps {
+	endpoint?: any,
+	action?: any
+	handleshow?: any
+}
+export default function CreateChan(props: CreateChanProps) {
 
 	const [show, setShow] = React.useState(false);
 	const handleClose = () => setShow(false);
@@ -14,50 +22,52 @@ export default function CreateChan({endpoint, action}) {
 	const [chanPassword, chanPasswordSet] = React.useState("");
 
 	const createChannel = () => {
-		if (chanScope === "public") {
-			axios.post(endpoint, {
-				"public": chanScope === "public" ? true : false,
-				"name": chanName
-			})
-				.then(function (response) {
-					console.log(response);
-				})
-				.catch(function (error) {
-					console.log(error);
-				});
-		}
-		else {
-			axios.post(endpoint, {
-				"password": chanPassword,
-				"public": chanScope === "public" ? true : false,
-				"name": chanName
-			})
-				.then(function (response) {
-					console.log(response);
-				})
-				.catch(function (error) {
-					console.log(error);
-				});
-		}
+		//let toast = new ToastAlerts(null);
+		//toast.notifyDanger("A revoir");
+		//return ;
+
+		let ax = new MyAxios(null);
+
+		//if (chanScope === "public") {
+		//	axios.post(endpoint, {
+		//		"public": chanScope === "public" ? true : false,
+		//		"name": chanName
+		//	})
+		//		.catch(function (error) {
+		//			console.log(error);
+		//		});
+		//}
+		//else {
+		//	axios.post(endpoint, {
+		//		"password": chanPassword,
+		//		"public": chanScope === "public" ? true : false,
+		//		"name": chanName
+		//	})
+		//		.then(function (response) {
+		//			console.log(response);
+		//		})
+		//		.catch(function (error) {
+		//			console.log(error);
+		//		});
+		//}//		.then(function (response) {
+		//			console.log(response);
+		//		})
+
 	}
 
 	return (
 		<div>
-			<Button variant="secondary" onClick={handleShow}>{action} channel</Button>
-
+			<button type="button" className="btn btn-success"
+							id="createchannel-button" /*onClick={createJoinChan}*/
+							onClick={handleShow}
+							data-toggle="modal" data-target="#exampleModalCenter"
+						>Join channel</button>
 			<Modal show={show} onHide={handleClose}>
 				<Modal.Header closeButton>
-					<Modal.Title>{action} a new channel</Modal.Title>
+					<Modal.Title>Join or create a channel 💌</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
 					<Form>
-						<Form.Group>
-							<Form.Select aria-label="Channel visibility" onChange={e => chanScopeSet(e.target.value)} defaultValue="public">
-								<option value="public">public</option>
-								<option value="private">private</option>
-								<option value="protected">protected</option>
-							</Form.Select>
-						</Form.Group>
 						<Form.Group className="mb-3" controlId="channName">
 							<Form.Label>Channel name</Form.Label>
 							<Form.Control
@@ -65,7 +75,15 @@ export default function CreateChan({endpoint, action}) {
 								value={chanName}
 								onChange={e => {chanNameSet(e.target.value)}}
 								autoFocus
+								placeholder="my_unique_chanName"
 							/>
+						</Form.Group>
+						<Form.Group>
+							<Form.Label>Choose policy</Form.Label>
+							<Form.Select aria-label="Channel visibility" onChange={e => chanScopeSet(e.target.value)} defaultValue="public">
+								<option value="public">public</option>
+								<option value="private">private</option>
+							</Form.Select>
 						</Form.Group>
 						<Form.Group className="mb-3" controlId="channPassword">
 							<Form.Label>Channel password</Form.Label>
@@ -73,16 +91,17 @@ export default function CreateChan({endpoint, action}) {
 								type="password"
 								value={chanPassword}
 								onChange={e => {chanPasswordSet(e.target.value)}}
+								disabled={chanScope == "public" ? true : false}
 							/>
 						</Form.Group>
 					</Form>
 				</Modal.Body>
 				<Modal.Footer>
-					<Button variant="secondary" onClick={handleClose}>
+					<Button variant="ligth" onClick={handleClose}>
 						Close
 					</Button>
-					<Button variant="primary" type="submit" onClick={createChannel}>
-						{action}
+					<Button variant="dark" type="submit" onClick={createChannel}>
+						Send form
 					</Button>
 				</Modal.Footer>
 			</Modal>
