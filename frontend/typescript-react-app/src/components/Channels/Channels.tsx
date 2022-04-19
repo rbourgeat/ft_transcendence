@@ -10,7 +10,6 @@ import ToastAlerts from '../Utils/ToastAlerts/ToastAlerts';
 import { ToastContainer, toast } from 'react-toastify';
 import { io } from "socket.io-client";
 import ListChannels from './ListChannels/ListChannels';
-//import ListPubChannels from './ListChannels/ListPubChannels';
 import axios from 'axios';
 
 interface ChatProps {
@@ -27,7 +26,7 @@ export default function Channels(props: ChatProps) {
 	//Pour la selection des chans et DMs sur les 3 colonnes de la page
 	const [activeChannelId, setActiveChannelID] = React.useState("");//Va permettre de transmettre l'id de l'active channel
 	const [activeChannelName, setActiveChannelName] = React.useState("");//Va permettre de transmettre le name de l'active channel
-	const [activateDMName, setActiveDMName] = React.useState("");
+	const [activeDMName, setActiveDMName] = React.useState("");
 	const [activateDMID, setActiveDMID] = React.useState("");
 	const [isDM, setIsDM] = React.useState("false");
 	const [isChan, setIsChan] = React.useState("true");
@@ -40,7 +39,6 @@ export default function Channels(props: ChatProps) {
 	*/
 
 	useEffect(() => {
-
 		async function getUser() {
 			let url = "http://localhost:3000/api/auth/";
 			let username = "";
@@ -65,10 +63,10 @@ export default function Channels(props: ChatProps) {
 		calledOnce.current = true;
 	}, []);
 
+	//TODO @malatini : a revoir
 	useEffect(() => {
-		//console.log("Parent composant Channels saw child update active channel");
-		//console.log("Activate channel name is " + activeChannelName);
-	}, [activeChannelName, activeChannelId]);
+		console.log("use effect called")
+	}, [activeChannelName]);
 
 	return (
 		<div id="channels">
