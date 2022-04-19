@@ -28,8 +28,8 @@ export default function DisplayChan(props: DisplayChanProps) {
 		if (calledOnce.current) {
 			return;
 		}
-		console.log("props channel id is " + props.channel.id);
-		console.log("props minId is " + props.minId);
+		//console.log("props channel id is " + props.channel.id);
+		//console.log("props minId is " + props.minId);
 		if (calledOnce.current != true && props.channel.id == props.minId)
 		{
 			setIsSelected("true");
@@ -45,10 +45,15 @@ export default function DisplayChan(props: DisplayChanProps) {
 			let selected = document.getElementsByClassName("chan-title_selected");
 			selected.item(0).className = 'chan-title_notselected';
 			setIsSelected("true");
-			let other = document.getElementById("chan-title_".concat(props.channel.id));
-			other.className = "chan-title_selected";
+
+			//On note la channel active en mettant à vide un éventuel dm sélectionné précédemment
 			props.setActiveChannelName(props.channel.name);
 			props.setActiveChannelId(props.channel.id);
+			props.setActiveDMName("");
+
+			let other = document.getElementById("chan-title_".concat(props.channel.id));
+			other.className = "chan-title_selected";
+
 		}
 	}
 
@@ -59,10 +64,15 @@ export default function DisplayChan(props: DisplayChanProps) {
 			let selected = document.getElementsByClassName("dm-title_selected");
 			selected.item(0).className = 'dm-title_notselected';
 			setIsSelected("true");
+
+			//On note le DM actif en mettant à vide l'éventuelle channel précédemment sélectionnée
+			props.setActiveDMName(props.channel.name);
+			props.setActiveChannelName("");
+			props.setActiveDMID(props.channel.id);
+
 			let other = document.getElementById("dm-title_".concat(props.channel.id));
 			other.className = "dm-title_selected";
-			props.setActiveDMName(props.channel.name);
-			props.setActiveDMID(props.channel.id);
+
 		}
 	}
 

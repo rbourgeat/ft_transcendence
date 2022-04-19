@@ -68,12 +68,16 @@ export default function ListChannels(props: ListChannelsProps) {
 							first = 1;
 						}
 						setChannels(prevArray => [...prevArray, channels[i]]);
+						//On informe le component parent qu'on va se focus sur une chan
+
 					}
 					//console.log("min id is " + minId);
 					i++;
 				}
 				//console.log(channels);
 				setLoad(true);
+				props.setIsChan("true");
+				props.setIsDM("false");
 			})
 			.catch((error) => {
 				console.log("Error while getting all channels");
@@ -107,6 +111,8 @@ export default function ListChannels(props: ListChannelsProps) {
 					i++;
 				}
 				setLoad(true);
+				props.setIsChan("false");
+				props.setIsDM("true")
 				//setLoad(true);//a re voir pour le set load
 			})
 			.catch((error) => {
@@ -181,7 +187,7 @@ export default function ListChannels(props: ListChannelsProps) {
 			chans.pop();
 			//channels.pop();
 			channels.pop();
-			console.log("poping channels");
+			//console.log("poping channels");
 			i++;
 		}
 		//console.log("here");
@@ -200,7 +206,7 @@ export default function ListChannels(props: ListChannelsProps) {
 			//suppression dans le dom et dans notre variable state
 			chans.pop();
 			DMs.pop();
-			console.log("poping dm");
+			//console.log("poping dm");
 			i++;
 		}
 		//setLoad(false);
@@ -225,7 +231,9 @@ export default function ListChannels(props: ListChannelsProps) {
 									return (
 										<div key={channels[key].id} className="displaying_channels">
 											<DisplayChan isChan={true} isDM={false} channel={channels[key]} minId={minId}
-											setActiveChannelName={props.setActiveChannelName} setActiveChannelId={props.setActiveChannelID}/>
+												setActiveChannelName={props.setActiveChannelName} setActiveChannelId={props.setActiveChannelID}
+												setActiveDMName={props.setActiveDMName} setActiveDMID={props.setActiveDMID}
+											/>
 										</div>
 									)
 								}})
@@ -238,6 +246,7 @@ export default function ListChannels(props: ListChannelsProps) {
 										<div key={DMs[key].id} className="displaying_dm">
 											<DisplayChan dm={DMs[key]}
 												isChan={false} isDM={true} channel={DMs[key]} minId={minId}
+												setActiveChannelName={props.setActiveChannelName} setActiveChannelId={props.setActiveChannelID}
 												setActiveDMName={props.setActiveDMName} setActiveDMID={props.setActiveDMID}/>
 										</div>)
 								}
