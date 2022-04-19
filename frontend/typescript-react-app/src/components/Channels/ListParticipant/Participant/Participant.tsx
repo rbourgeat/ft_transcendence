@@ -10,8 +10,6 @@ export interface ParticipantsProps {
 	updateFunctionToUse?: any
 }
 
-
-
 export default function Participant(props: ParticipantsProps) {
 	const [isBanned, setIsBanned] = React.useState("ban");
 	const [isMuted, setIsMuted] = React.useState("mute");
@@ -33,22 +31,30 @@ export default function Participant(props: ParticipantsProps) {
 
 	function setUpBan() {
 		props.updateFunctionToUse(isBanned);
-		if (isBanned === 'ban')
+		if (isBanned === 'ban') {
 			document.getElementById("ban-click").innerHTML = 'unban';
-		else
+			setIsBanned("unban");
+		}
+		else {
 			document.getElementById("ban-click").innerHTML = 'ban';
+			setIsBanned("ban");
+		}
 	}
 
 	function setUpMute() {
 		props.updateFunctionToUse(isMuted);
-		if (isMuted === 'mute')
+		if (isMuted === 'mute') {
 			document.getElementById("mute-click").innerHTML = 'unmute';
-		else
+			setIsBanned("unmute");
+		}
+		else {
 			document.getElementById("mute-click").innerHTML = 'mute';
+			setIsBanned("mute");
+		}
 	}
 
 	return (
-		<>
+		<div className="participant--div">
 			{<div className="dropdown show">
 				<a className="btn btn-sm dropdown-toggle p--participant" role="button" data-toggle="dropdown" onClick={() => props.updateSelectedUser(props.username)}>
 					{props.username}
@@ -62,5 +68,5 @@ export default function Participant(props: ParticipantsProps) {
 				</div>
 			</div>
 			}
-		</>);
+		</div>);
 }

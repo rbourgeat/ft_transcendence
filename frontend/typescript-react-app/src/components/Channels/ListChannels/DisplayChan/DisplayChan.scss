@@ -11,13 +11,16 @@
 }
 
 .chan-title_selected {
-	//background: #696969 !important;
-	background: green !important;
+	background: silver !important;
+	border: 0.2rem solid silver !important;
+	//background: green !important;
 }
 
 .chan-title_notselected {
 	//background: #f9f9f9 !important;
-	background: red !important;
+	//background: red !important;
+	background: white !important;
+	border: 0.2rem solid silver !important;
 }
 
 

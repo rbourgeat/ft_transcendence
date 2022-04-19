@@ -22,8 +22,10 @@
 
 #sub--div {
 	overflow-y: scroll;
-	max-height: 52.5%;
-	min-height: 52.5%;
+	max-height: 80%;
+	min-height: 80%;
+	text-align: center !important;
+	align-items: center !important;
 	margin: 5px !important;
 	border: 0.1rem solid #f9f9f9;
 	border-radius: variables.$border-radius-big;

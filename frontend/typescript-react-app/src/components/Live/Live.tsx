@@ -16,7 +16,6 @@ let resize = 4;
 
 //TODO: a refacto un tout petit peu @rbourgea ?
 export default function Live() {
-	const [isShown, setIsShown] = useState(-1);
 
 	if (localStorage.getItem("loggedIn") != "true")
 	{
@@ -35,18 +34,6 @@ export default function Live() {
 		</>)
 	}
 	let socket = io("http://localhost:3000/game");
-
-	socket.on("playerMove", (body: string) => {
-		const b = body.split(':');
-		// console.log("joueur: " + b[0] + ", position : " + b[1] + ", adversaire : " + b[2]);
-		if (joueurs.indexOf(b[0]) == -1 && adversaires.indexOf(b[0]) == -1) {
-			joueurs.push(b[0]);
-			adversaires.push(b[2]);
-			display();
-		}
-
-
-	});
 
 	useEffect(() => {
 		noGames();
@@ -91,35 +78,31 @@ export default function Live() {
 				document.getElementById("content").innerHTML += `
 				<div id='box'>
 					<div id='vs'>🏓 ` + joueur +` vs ` + adversaire +`</div>
+					<div id='score-` + adversaires.indexOf(adversaire) + `'></div>
 					<div id='dark-canvas'>
-						<canvas id="canvas-` + adversaires.indexOf(adversaire) + `" width={size.width / 2} height={size.height / 2}></canvas>
+						<canvas id="canvas-` + adversaires.indexOf(adversaire) + `" width={size.width / 1.5} height={size.height / 1.25}></canvas>
 					</div>
 				</div>
 				`;
 				// init partie pour chaque joueur + adversaire
-				initParty(adversaires.indexOf(adversaire))
+				initParty(adversaires.indexOf(adversaire));
 			})
 		});
 		noGames();
 	}
-
-	useEffect(() => {
-		// getUser();
-		// initParty();
-    }, []);
 
 	// PONG CODE BELOW
 	var canvas = [];
 	var game = [];
 	var anim;
 	// On peut changer les dimensions de la balle et des joueurs, ex: autres modes de jeux
-	var PLAYER_HEIGHT = 80 / resize;
-	var PLAYER_WIDTH = 10 / resize;
-	var BALL_HEIGHT = 10 / resize;
-	var BALL_SPEED = 2 / resize;
+	var PLAYER_HEIGHT = 80;
+	var PLAYER_WIDTH = 10;
+	var BALL_HEIGHT = 10;
+	var BALL_SPEED = 2;
 	var BALL_ACCELERATE = true;
 	function draw(idGame: number) {
-		if (canvas.length != 0) {
+		if (canvas.length != 0 && canvas[idGame]) {
 			var context = canvas[idGame].getContext('2d');
 			// Draw field
 			context.fillStyle = 'black';
@@ -137,11 +120,8 @@ export default function Live() {
 			// Draw ball
 			context.beginPath();
 			context.fillStyle = 'white';
-			// context.arc(game.ball.x, game.ball.y, game.ball.r, 0, Math.PI * 2, false); // Si on veut la faire ronde !
-			context.fillRect(game[idGame].ball.x, game[idGame].ball.y, BALL_HEIGHT, BALL_HEIGHT); // Si on veut la faire carré !
+			context.fillRect(game[idGame].ball.x, game[idGame].ball.y, BALL_HEIGHT, BALL_HEIGHT);
 			context.fill();
-			if (isShown == idGame)
-				context.scale(2, 2)
 		}
 	}
 
@@ -174,9 +154,15 @@ export default function Live() {
 		// canvas.addEventListener('mousemove', playerMove);
 	}
 
-	function play(idGame: number) {
-		draw(idGame);
-		ballMove(idGame);
+	function play() {
+		var i = 0;
+		canvas.forEach(c => {
+			draw(i);
+			ballMove(i);
+			i++;
+		});
+		// draw(idGame);
+		// ballMove(idGame);
 		anim = requestAnimationFrame(play);
 	}
 
@@ -222,13 +208,18 @@ export default function Live() {
 	socket.on("playerMove", (body: string) => {
 		// Update Paddle position in real time
 		const b = body.split(':');
+		if (joueurs.indexOf(b[0]) == -1 && adversaires.indexOf(b[0]) == -1) {
+			joueurs.push(b[0]);
+			adversaires.push(b[2]);
+			display();
+		}
 		console.log("joueur: " + b[0] + ", position : " + b[1] + ", adversaire : " + b[2] + ", coté : " + b[3]);
 
 		if (b[3] == "gauche")
 			joueurs.map(joueur => {
 				if (joueur)
 					if (joueur == b[0]) {
-						game[joueurs.indexOf(joueur)].player.y = Number(b[1]) / resize;
+						game[joueurs.indexOf(joueur)].player.y = Number(b[1]);
 						draw(joueurs.indexOf(joueur));
 					}
 			});
@@ -236,11 +227,23 @@ export default function Live() {
 			adversaires.map(adversaire => {
 				if (adversaire)
 					if (adversaire == b[0]) {
-						game[adversaires.indexOf(adversaire)].player2.y = Number(b[1]) / resize;
+						game[adversaires.indexOf(adversaire)].player2.y = Number(b[1]);
 						draw(adversaires.indexOf(adversaire));
 					}
 			})
 	});
+
+	socket.on("roundStartLIVE", (...args) => {
+		const b = args[0].split(':');
+		// console.log("round: " + b[0] + ", player1: " + b[1] + ", player2: " + b[2] + ", score1: " + b[3] + ", score2: " + b[4]);
+		joueurs.map(joueur => {
+			if (joueur)
+				if (joueur == b[1]) {
+					play();
+					document.querySelector('#score-' + joueurs.indexOf(joueur)).textContent = b[3] + " : " + b[4];
+				}
+		});
+	})
 
 
 	socket.on("stopGame", (...args) => {
@@ -266,17 +269,19 @@ export default function Live() {
 
 	function ballMove(idGame: number) {
 		// Rebounds on top and bottom
-		if (game[idGame].ball.y > canvas[idGame].height || game[idGame].ball.y < 0) {
-			game[idGame].ball.speed.y *= -1;
+		if (canvas[idGame]) {
+			if (game[idGame].ball.y > canvas[idGame].height || game[idGame].ball.y < 0) {
+				game[idGame].ball.speed.y *= -1;
+			}
+			if (game[idGame].ball.x > canvas[idGame].width - PLAYER_WIDTH) {
+				collide(game[idGame].player2, idGame);
+			} else if (game[idGame].ball.x < PLAYER_WIDTH) {
+				collide(game[idGame].player, idGame);
+			}
+			// Ball progressive speed
+			game[idGame].ball.x += game[idGame].ball.speed.x;
+			game[idGame].ball.y += game[idGame].ball.speed.y;
 		}
-		if (game[idGame].ball.x > canvas[idGame].width - PLAYER_WIDTH) {
-			collide(game[idGame].player2, idGame);
-		} else if (game[idGame].ball.x < PLAYER_WIDTH) {
-			collide(game[idGame].player, idGame);
-		}
-		// Ball progressive speed
-		game[idGame].ball.x += game[idGame].ball.speed.x;
-		game[idGame].ball.y += game[idGame].ball.speed.y;
 	}
 
 	function collide(player, idGame: number) {

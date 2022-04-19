@@ -66,9 +66,13 @@ export default function ListDiscussions({activeChannel}) {
 //export default function ListDiscussions({ activeChannel, username, socket }) {
 
 export interface ListDiscussionsProps {
-	setActiveChannelName: any,
-	setActiveChannelID: any
+	setActiveChannelName?: any,
+	setActiveChannelID?: any
 	login: string
+	setActiveDMName?: any,
+	setActiveDMID?: any,
+	setIsDM?: any,
+	setIsChan?: any
 }
 
 export default function ListDiscussions(props: ListDiscussionsProps) {
