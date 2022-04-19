@@ -7,7 +7,6 @@ import Blocked from "../Blocked/Blocked";
 import Friends from "../Friends/Friends";
 import { DetailedHTMLProps, HTMLAttributes } from 'react';
 import MiniDisplay from '../MiniDisplay/MiniDisplay';
-
 //const MiniDisplay = lazy(() => import('../MiniDisplay/MiniDisplay'));
 
 

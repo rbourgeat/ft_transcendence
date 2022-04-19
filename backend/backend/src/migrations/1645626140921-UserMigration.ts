@@ -228,6 +228,20 @@ export class UserMigration1645626140921 implements MigrationInterface {
             }),
         );
 
+        const malatiniparticipate1 = await queryRunner.manager.save(
+            queryRunner.manager.create<Participate>(Participate, {
+                user: malatini,
+                chat: channel1,
+            }),
+        );
+
+        const malatiniparticipate2 = await queryRunner.manager.save(
+            queryRunner.manager.create<Participate>(Participate, {
+                user: malatini,
+                chat: channel2,
+            }),
+        );
+
         const bahaasparticipate2 = await queryRunner.manager.save(
             queryRunner.manager.create<Participate>(Participate, {
                 user: bahaas,
