@@ -9,7 +9,8 @@ import DisplayChan from './DisplayChan/DisplayChan';
 
 export interface ListChannelsProps {
 	setActiveChannelName: any,
-	setActiveChannelID: any
+	setActiveChannelID: any,
+	login: string
 }
 
 //export default function ListChannels({activeChannel, updateActiveChannel, chanUsers, updateChanUsers}) {

@@ -21,6 +21,7 @@ export default function Channels(props: ChatProps) {
 	const calledOnce = React.useRef(false);
 	const [chanUsers, updateChanUsers] = React.useState([]);
 	const [username, setUsername] = React.useState("");
+	const [load, setLoad] = React.useState(false);
 
 	const [activeChannelId, setActiveChannelID] = React.useState("");//Va permettre de transmettre l'id de l'active channel
 	const [activeChannelName, setActiveChannelName] = React.useState("");//Va permettre de transmettre le name de l'active channel
@@ -46,6 +47,7 @@ export default function Channels(props: ChatProps) {
 				.catch((err) => {
 					console.log("Error while getting api auth");
 				})
+			setLoad(true);
 		}
 		getUser();
 		if (calledOnce.current) {
@@ -78,9 +80,9 @@ export default function Channels(props: ChatProps) {
 			<div className="container">
 				<div className="row" id="row_chat">
 					{/* Ces props permettent à tous ces childs components de savoir la channel sélectionnée */}
-					<ListChannels setActiveChannelName={setActiveChannelName} setActiveChannelID={setActiveChannelID}/>
-					<ListDiscussions setActiveChannelName={setActiveChannelName} setActiveChannelID={setActiveChannelID}/>
-					<ListParticipant setActiveChannelName={setActiveChannelName} setActiveChannelID={setActiveChannelID}/>
+					{load == true ? <ListChannels login={username} setActiveChannelName={setActiveChannelName} setActiveChannelID={setActiveChannelID}/> : ""}
+					{load == true ? <ListDiscussions login={username} setActiveChannelName={setActiveChannelName} setActiveChannelID={setActiveChannelID}/> : ""}
+					{load == true ? <ListParticipant login={username} setActiveChannelName={setActiveChannelName} setActiveChannelID={setActiveChannelID}/> : "" }
 		</div>
 	</div>
 </div>

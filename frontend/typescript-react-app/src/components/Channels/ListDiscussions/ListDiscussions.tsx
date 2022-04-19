@@ -68,6 +68,7 @@ export default function ListDiscussions({activeChannel}) {
 export interface ListDiscussionsProps {
 	setActiveChannelName: any,
 	setActiveChannelID: any
+	login: string
 }
 
 export default function ListDiscussions(props: ListDiscussionsProps) {
