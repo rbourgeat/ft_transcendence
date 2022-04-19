@@ -6,27 +6,62 @@ import axios from "axios";
 import { ToastContainer } from 'react-toastify';
 import ToastAlerts from '../../Utils/ToastAlerts/ToastAlerts';
 
-export interface ParticipantProps{
+export interface ParticipantProps {
 }
 
 //export default function ListParticipant({activeChannel})
-export default function ListParticipant(props: ParticipantProps)
-{
+export default function ListParticipant(props: ParticipantProps) {
 	const [selectedUser, updateSelectedUser] = React.useState("");
 	const [loggedUser, updateLoggedUser] = React.useState({});
 	const [participates, updateParticipates] = React.useState([]);
+	/*
+		const [users, setUsers] = React.useState([]);
+		const [load, setLoad] = React.useState(true);
+		const calledOnce = React.useRef(false);
+		async function renderUsers() {
 
-	//React.useEffect(() => {
-	//	axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
-	//	axios.defaults.withCredentials = true;
-	//	axios.get(`http://localhost:3000/api/chat/${activeChannel}/users`)
-	//		.then(response => {
-	//			updateParticipates(response.data);
-	//		})
-	//		.catch(error => {
-	//			console.log("error");
-	//		})
-	//}, [activeChannel])
+			axios.defaults.withCredentials = true;
+			let log = localStorage.getItem("login");
+			console.log("My login is " + log);
+			let url = "http://localhost:3000/api/user/";
+			await axios.get(url)
+				.then(res => {
+					console.log("Get api users successfully called.");
+					let users = res.data;
+					let len = users.length;
+					let i = 0;
+					while (i < len) {
+						if (users[i].login != log)
+							setUsers(prevArray => [...prevArray, users[i]])
+						i++;
+					}
+				})
+				.catch((error) => {
+					console.log("Error while getting all users");
+				})
+			setLoad(true);
+		}
+
+		useEffect(() => {
+			if (calledOnce.current) {
+				return;
+			}
+			renderUsers();
+			calledOnce.current = true;
+
+		}, []);
+	*/
+	React.useEffect(() => {
+		axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+		axios.defaults.withCredentials = true;
+		axios.get(`http://localhost:3000/api/chat/1/users`)
+			.then(response => {
+				updateParticipates(response.data);
+			})
+			.catch(error => {
+				console.log("error");
+			})
+	}, [])
 
 	//TODO: a reprendre; mute user
 	const time = new Date();
@@ -87,40 +122,35 @@ export default function ListParticipant(props: ParticipantProps)
 		//	})
 	}
 
-	function sendDM()
-	{
+	function sendDM() {
 		//const url = 'http://localhost:3000/api/chat/ban';
 
 		let toast = new ToastAlerts(null);
 		toast.notifyDanger("A reprendre.");
 	}
 
-	function banChannel()
-	{
+	function banChannel() {
 		//const url = 'http://localhost:3000/api/chat/ban';
 
 		let toast = new ToastAlerts(null);
 		toast.notifyDanger("A reprendre.");
 	}
 
-	function inviteToPlay()
-	{
+	function inviteToPlay() {
 		//const url = 'http://localhost:3000/api/chat/ban';
 
 		let toast = new ToastAlerts(null);
 		toast.notifyDanger("A reprendre.");
 	}
 
-	function muteUSer()
-	{
+	function muteUSer() {
 		//const url = 'http://localhost:3000/api/chat/ban';
 
 		let toast = new ToastAlerts(null);
 		toast.notifyDanger("A reprendre.");
 	}
 
-	function setAdmin()
-	{
+	function setAdmin() {
 		//const url = 'http://localhost:3000/api/chat/ban';
 
 		let toast = new ToastAlerts(null);
@@ -129,9 +159,10 @@ export default function ListParticipant(props: ParticipantProps)
 
 	return (
 		<div id="ListParticipant" className="col-3">
-			<h2 id="participant--title">Players</h2>
+			<h2 id="participant--title">Members</h2>
+			<p>hardcoded participant atm</p>
 			<div id="sub--div">
-					{/*<div id="participants--div">
+				{/*<div id="participants--div">
 					{participates.map(user =>
 					<Participant
 						key={user.id}
@@ -141,7 +172,19 @@ export default function ListParticipant(props: ParticipantProps)
 						admin={user.admin}
 						updateSelectedUser={updateSelectedUser} />
 					)}
-				</div>*/}
+				</div>*/
+					<div id="participants--div">
+						{participates.map(user =>
+							<Participant
+								key={user.id}
+								username={user.login}
+								status={user.status}
+								owner={user.owner}
+								admin={user.admin}
+								updateSelectedUser={updateSelectedUser} />
+						)}
+					</div>
+				}
 			</div>
 			<div className="buttons_div">
 				<div className="row">
@@ -166,33 +209,33 @@ export default function ListParticipant(props: ParticipantProps)
 					</div>
 				</div>
 				<div className="row">
-					<div className="col"  id="row--button_admin">
+					<div className="col" id="row--button_admin">
 						<button id="admin--buton" className="btn btn-secondary" onClick={setAdmin}>Set admin</button>
 					</div>
 				</div>
 				<div className="row">
-					<div className="col"  id="row--button_kick">
+					<div className="col" id="row--button_kick">
 						<button id="kick--button" className="btn btn-danger" disabled /*onClick={setAdmin}*/>Kick</button>
 					</div>
 				</div>
 				<div className="row">
-					<div className="col"  id="row--button_leave">
+					<div className="col" id="row--button_leave">
 						<button id="leave--button" className="btn btn-danger" disabled /*onClick={setAdmin}*/>Leave channel</button>
 					</div>
 				</div>
 				{/*<button id="mute-temp-button" className="btn btn-warning" onClick={muteUser}>Mute temporalily</button>*/}
 			</div>
-				<ToastContainer
-                        position="top-right"
-                        autoClose={5000}
-						hideProgressBar={false}
-                        newestOnTop={false}
-						closeOnClick
-                        rtl={false}
-                        pauseOnFocusLoss
-                        draggable
-                        pauseOnHover
-				/>
-			</div>
+			<ToastContainer
+				position="top-right"
+				autoClose={5000}
+				hideProgressBar={false}
+				newestOnTop={false}
+				closeOnClick
+				rtl={false}
+				pauseOnFocusLoss
+				draggable
+				pauseOnHover
+			/>
+		</div>
 	);
 }
