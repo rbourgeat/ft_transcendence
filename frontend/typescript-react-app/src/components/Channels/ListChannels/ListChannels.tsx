@@ -6,7 +6,8 @@ import axios from "axios";
 import ToastAlerts from '../../Utils/ToastAlerts/ToastAlerts';
 import DisplayChan from './DisplayChan/DisplayChan';
 import { ToastContainer } from 'react-toastify';
-
+import CreateChan from '../CreateChan/CreateChan';
+//import ChatPage from '../CreateChan/ChatPage';
 
 export interface ListChannelsProps {
 	setActiveChannelName?: any,
@@ -164,12 +165,14 @@ export default function ListChannels(props: ListChannelsProps) {
 	//	displaySelectedCat();
 	//}, [selectedCat]);
 
-	function createJoinChan()
-	{
-		//TODO: a reprendre - doit permettre de rejoindr ou creer une channel
-		let toast = new ToastAlerts(null);
-		toast.notifyDanger("A reprendre - doit permettre d'ouvrir un modal pour creer un dm ou rejoindre ou creer un channel");
-	}
+	//function createJoinChan()
+	//{
+	//	//TODO: a reprendre - doit permettre de rejoindr ou creer une channel
+	//	//let toast = new ToastAlerts(null);
+	//	//toast.notifyDanger("A reprendre - doit permettre d'ouvrir un modal pour creer un dm ou rejoindre ou creer un channel");
+	//	return (<CreateChan handleshow="true">);
+
+	//}
 
 	function displayDM()
 	{
@@ -221,7 +224,26 @@ export default function ListChannels(props: ListChannelsProps) {
 						<p className="selected--categorie">{selectedCat== "Channels" ? "Channels you are in" : "Your direct messages"}</p>
 					</div>
 					<div className="add-channel-a">
-						<button type="button" className="btn btn-success" id="createchannel-button" onClick={createJoinChan}>+</button>
+						<CreateChan />
+						{/*<div className="modal fade" id="exampleModalCenter" tab-index="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+							<div className="modal-dialog modal-dialog-centered" role="document">
+								<div className="modal-content">
+								<div className="modal-header">
+									<h5 className="modal-title" id="exampleModalLongTitle">Modal title</h5>
+									<button type="button" className="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div className="modal-body">
+									...
+								</div>
+								<div className="modal-footer">
+									<button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+									<button type="button" className="btn btn-primary">Save changes</button>
+								</div>
+								</div>
+							</div>
+						</div>*/}
 					</div>
 					<div className="displaying-div">
 						{load == true && selectedCat == "Channels" ?
