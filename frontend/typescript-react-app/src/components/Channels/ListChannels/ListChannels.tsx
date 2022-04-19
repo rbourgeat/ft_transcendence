@@ -183,7 +183,7 @@ export default function ListChannels(props: ListChannelsProps) {
 								{
 									return (
 										<div key={channels[key].id} className="displaying_channels">
-											<DisplayChan /*isChan={true} isDM={false}*/ channel={channels[key]} setActiveChannelName={props.setActiveChannelName} setActiveChannelId={props.setActiveChannelID}/>
+											<DisplayChan isChan={true} isDM={false} channel={channels[key]} setActiveChannelName={props.setActiveChannelName} setActiveChannelId={props.setActiveChannelID}/>
 										</div>
 									)
 								}})
