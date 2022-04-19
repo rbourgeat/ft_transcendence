@@ -225,6 +225,8 @@ export class UserMigration1645626140921 implements MigrationInterface {
             queryRunner.manager.create<Participate>(Participate, {
                 user: bahaas,
                 chat: channel1,
+                owner: true,
+                admin: true
             }),
         );
 
