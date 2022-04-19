@@ -128,14 +128,21 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
 		}
 		
 	}
- 
+
 	@SubscribeMessage('playerMove')
 	async playerMove(@ConnectedSocket() socket: Socket, @MessageBody() body: string) {
 		const b = body.split(':');
 		this.server.emit('playerMove', body);
 		this.userService.updateStatus(String(socket.handshake.query.username), "ingame");
 		console.log("joueur: " + b[0] + ", position : " + b[1] + ", adversaire : " + b[2] + ", coté : " + b[3]);
-	}  
+	}
+
+	@SubscribeMessage('roundStart')
+	async roundStart(@ConnectedSocket() socket: Socket, @MessageBody() body: string) {
+		const b = body.split(':');
+		this.server.emit('roundStartLIVE', body);
+		console.log("round: " + b[0] + ", player1: " + b[1] + ", player2: " + b[2] + ", score1: " + b[3] + ", score2: " + b[4]);
+	}
 
 
 }

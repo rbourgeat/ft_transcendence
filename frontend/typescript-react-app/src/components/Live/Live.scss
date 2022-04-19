@@ -8,10 +8,10 @@
     display: inline-block;
 }
 
-//#content {
-//    padding: 0.5vw;
-//    display: block;
-//}
+#content {
+   padding: 0.5vw;
+   display: block;
+}
 
 #watch {
     padding: 5px;
@@ -50,11 +50,11 @@
     padding: 10px;
 }
 
-#dark-canvas:hover {
-    transform: scale(3);
-    transition-duration: 2s;
-}
+// #dark-canvas:hover {
+//     transform: scale(3);
+//     transition-duration: 2s;
+// }
 
-#dark-canvas {
-    transition-duration: 2s;
-}
+// #dark-canvas {
+//     transition-duration: 2s;
+// }
