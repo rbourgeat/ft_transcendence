@@ -6,10 +6,9 @@ import Invitations from "./Invitations/Invitations";
 import Friends from "./Friends/Friends";
 import Blocked from "./Blocked/Blocked";
 import SentInvitations from "./SentInvitations/SentInvitations";
-
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-
+import { AiOutlineLoading3Quarters, AiOutlineLoading } from "react-icons/ai";
 export interface PeopleProps {
 	login?: string
 }
@@ -17,7 +16,6 @@ export interface PeopleProps {
 export default function People(props: PeopleProps) {
 
 	const [load, setLoad] = React.useState(false);
-	const [authorized, setAuthorized] = React.useState(false);
 	const calledOnce = React.useRef(false);
 
 	function update() {
@@ -38,81 +36,57 @@ export default function People(props: PeopleProps) {
 			.then(res => {
 				username = res.data.login;
 				console.log(res);
-				setAuthorized(true);
-				//setLoaded(true);
-				//setUsername(username);
 			})
 			.catch((err) => {
 				console.log("Auth returned 400 -> missing cookie");
-				setAuthorized(false);
 			})
 		setLoad(true);
 	}
 
 	useEffect(() => {
-        if (calledOnce.current) {
-			return;}
+		if (calledOnce.current) {
+			return;
+		}
 		getUser();
-        calledOnce.current = true;
+		calledOnce.current = true;
 	}, []);
 
 
 
 	return (
 		<>
-			{/*{authorized == false ?
-				<>
-				<div id="people--div">
-					<Nav />
-					<div id="all">
-						<div className="row">
+			<div id="people--div">
+				<Nav />
+				<div id="all">
+					<div className="row" id="row-all">
+						<br />
+						{load == false ?
 							<div className="container">
 								<div className="row d-flex justify-content-center text-center">
-									<div className="col-9">
-										<div className="channels-not-logged">
-											<p>You are not logged in or properly authenticated (no cookie).</p>
+									<div className="mycontainer">
+										<div className="spinner-border m-5" role="status">
+											<span className="sr-only"><AiOutlineLoading /></span>
 										</div>
 									</div>
 								</div>
 							</div>
-						</div>
+							:
+							<>
+								<All login={props.login} />
+								<br />
+								<Friends />
+								<br />
+								<Invitations />
+								<br />
+								<SentInvitations />
+								<br />
+								<Blocked />
+								<br />
+							</>
+						}
 					</div>
 				</div>
-				</>
-				: ""}*/}
-				<div id="people--div">
-					<Nav />
-					{/*<button onClick={update}>update</button>*/}
-					<div id="all">
-						<div className="row">
-							<br />
-							{load == false ?
-								<div className="container">
-									<div className="row d-flex justify-content-center text-center">
-										<div className="mycontainer">
-											<div className="spinner-border m-5" role="status">
-												<span className="sr-only">Loading...</span>
-											</div>
-										</div>
-									</div>
-								</div>
-										:
-										<>
-											<All login={props.login} />
-											<br />
-											<Friends />
-											<br />
-											<Invitations />
-											<br />
-											<SentInvitations />
-											<br />
-											<Blocked />
-											<br />
-										</>
-							}
-						</div>
-					</div>
-				</div>
+			</div>
 		</>
 	);
 }

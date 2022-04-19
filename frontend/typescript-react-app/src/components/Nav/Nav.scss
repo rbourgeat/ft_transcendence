@@ -13,17 +13,12 @@
 	background-color: black !important;
 }
 
-@media only screen and (max-width : 768px) {
-	.navbar-header {
-		float: left;
-	}
-	.navbar-nav {
-		float: right;
-	}
-}
-
 .navbar--title, .nav-item > * {
 	color: white !important;
+}
+
+.navbar--title:hover  {
+	color: rgb(9, 194, 191) !important;
 }
 
 #logout--button {
@@ -55,27 +50,27 @@
 	}
 }
 
+//On a principalement besoin d'utiliser le mot clé important car on veut surcharger les règles css bootstrap
 #quick--actions {
 	font-family: variables.$basic-font !important;
 	font-size: 12px !important;
-	//border: 0.1rem solid white !important;
-	//width: 20px !important;
-	//height: 20px !important;
-	//border: white !important;
 }
 
 #dropdownMenuButton1 , #logout--button {
 	border: 0.1rem solid white !important;
-	//margin-top: 0px !important;
 	font-size: 12px !important;
 	padding: 5px !important;
 	margin: 5px !important;
 }
 
-//#logout--button {
-//	padding
-//}
+#logout--button:hover {
+	color: black !important;
+	border: 0.1rem solid rgb(9, 194, 191) !important;
+	background-color: rgb(9, 194, 191) !important;
+}
 
-//#menu {
-//	width: 20px !important;
-//}
+#dropdownMenuButton1:hover {
+		color: black !important;
+	border: 0.1rem solid rgb(9, 194, 191) !important;
+	background-color: rgb(9, 194, 191) !important;
+}

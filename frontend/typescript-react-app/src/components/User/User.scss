@@ -17,12 +17,8 @@
   padding: 40px;
 }
 
-#button--2fa{
-  font-size: 12px !important;
-}
-
 .label-file {
-  color: black; //#00b1ca;
+  color: black;
   font-weight: bold;
   font-size: 12px !important;
   text-align: center !important;
@@ -54,7 +50,7 @@ button {
 }
 
 #user--settings--div {
-  border: 0.1rem solid variables.$lightgrey !important; //#00b1ca;
+  border: 0.1rem solid variables.$lightgrey !important;
   border-radius: variables.$border-radius-big;
   width: 75%;
 }
@@ -64,17 +60,18 @@ button {
   font-size: variables.$mini-font-size;
 }
 
-
 #user--data {
   font-size: 18px !important;
 }
 
 
 #change--username {
-  padding: 10px !important;
-  border: none;
-  font-size: 10px !important;
   color: black !important;
+}
+
+#button--2fa, #change--username {
+  font-size: 16px !important;
+  padding: 10px !important;
 }
 
 #change--username:hover {
@@ -103,25 +100,12 @@ button {
 	border-radius: variables.$border-radius;
 }
 
-img[src=""] {
-  display: none;
-}
-
 #please {
   margin-top: 20px !important;
 }
 
-.test {
-  color: green !important;
-}
-
 #user--div{
-   position: sticky !important;
-}
-
-.change--username {
-  margin-top: 5px !important;
-  margin-bottom: 5px !important;
+    position: sticky !important;
 }
 
 .own-profile {

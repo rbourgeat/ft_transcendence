@@ -1,4 +1,4 @@
-import { Req, Body, Controller, Delete, Get, Param, Patch, Post, UseInterceptors, UploadedFile, UseGuards } from '@nestjs/common';
+import { Request, Req, Body, Controller, Delete, Get, Param, Patch, Post, UseInterceptors, UploadedFile, UseGuards } from '@nestjs/common';
 import { ChatService } from './chat.service';
 import { CreateChatDto, ChatDto } from './dto/chat.dto';
 import { ApiBody, ApiConflictResponse, ApiConsumes, ApiOkResponse, ApiOperation, ApiParam, ApiQuery, ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger'
@@ -101,7 +101,7 @@ export class ChatController {
     @ApiOkResponse({ description: 'new admin added' }) //answer sent back
     @ApiConflictResponse({ description: 'admin already admin' }) //not working atm
     @Post('setAdmin')
-    async setAdmin(@Body() chat: ChatDto, @Req() req: RequestWithUser) {
+    async setAdmin(@Body() chat: ChatDto, @Request() req) {
         console.log(req.user + 'set admin' + chat.user + ' to chat ' + chat.idChat)
         return this.chatService.setAdmin(chat.idChat, chat.user, req.user);
     }

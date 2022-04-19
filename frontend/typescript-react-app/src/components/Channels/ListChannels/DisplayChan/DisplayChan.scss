@@ -1,0 +1,31 @@
+@use "../../../../variables";
+
+.chan-title_selected, .chan-title_notselected {
+	border: 0.1rem solid #f9f9f9 !important;
+	padding-top: 5px;
+	margin-top: 5px !important;
+	padding-bottom: 5px;
+	font-size: 14px;
+	border-radius: variables.$border-radius-big !important;
+	width: 90% !important;
+}
+
+.chan-title_selected {
+	background: silver !important;
+	border: 0.2rem solid silver !important;
+	//background: green !important;
+}
+
+.chan-title_notselected {
+	//background: #f9f9f9 !important;
+	//background: red !important;
+	background: white !important;
+	border: 0.2rem solid silver !important;
+}
+
+
+#chan-title_selected:hover {
+	color: black !important;
+	font-weight: 700 !important;
+}
+

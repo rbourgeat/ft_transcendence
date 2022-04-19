@@ -1,16 +1,14 @@
 import './MiniDisplay.scss';
 import MyAxios from '../../Utils/Axios/Axios';
-import React, { Component, useState, useEffect, Suspense, lazy } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import { AiOutlineCloseCircle, AiFillPlusCircle, AiFillCheckCircle, AiFillUnlock } from "react-icons/ai";
 import { BsFillPersonPlusFill, BsFillPersonXFill } from "react-icons/bs";
 import io from "socket.io-client";
 import axios from 'axios';
 import { MdCancel, MdCheck, MdBlock } from 'react-icons/md';
 import { FiUserMinus, FiUserPlus, FiUserX } from 'react-icons/fi';
-import { Oval, Hearts } from "react-loader-spinner";
 import { FaMarsStroke } from 'react-icons/fa';
 import { ToastContainer, toast } from 'react-toastify';
-
 export interface MiniDisplayProps {
 	login?: string,
 	status?: string,
@@ -22,7 +20,6 @@ export interface MiniDisplayProps {
 	relation?: string;
 	extra?: string;
 	currentUser?: string;
-	//children?: React.ReactNode | React.ReactChild | React.ReactChildren | React.ReactChild[] | React.ReactChildren[]
 }
 
 import ReactDOM from 'react-dom';
@@ -125,7 +122,6 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 	}
 
 	function buttonToDidsplay() {
-		//NOT WORKING CUZ OF THE EXECUTION ORDER
 		if (props.container == "all") {
 
 			let notBlocked: boolean = true;
@@ -147,7 +143,6 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 					console.log(error);
 				})
 
-			//console.log("as " + props.currentUser + "my relation with" + props.login + "is " + relationStatus);
 			if (relationStatus == "accepted" || relationStatus == "pending")
 				notFriend = true;
 			else if (relationStatus == "blocked")
@@ -176,9 +171,7 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 		else if (props.container == "sent")
 			return (
 				<>
-				{/*<br />*/}
 					<p className="waiting">Waiting for {props.login} to answer</p>
-					{/*<i className="user--action" onClick={() => refuseInvitation(props.login)}>{<MdCancel />}</i>*/}
 				</>
 			)
 		else if (props.container == "blocked")
@@ -202,42 +195,39 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 		<div className="mini--display--div" id={"minidisplay".concat("_" + props.login + "_" + props.extra)}>
 			<li className="list-group-item" key={props.extra ? props.login.concat(props.extra) : props.login}>
 				<div className="mini-display-li">
-					{/*<Suspense fallback={<Hearts color="#ffe4e1" height={100} width={100} key={props.login} />}>*/}
-						<img
-							className="profile--pic"
-							id={props.login.concat("_" + props.extra)}
-							src="https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg"
-							width="100"
-							height="100"
-							onClick={gotoprofile}
-						/>
-						{load == true ?
+					<img
+						className="profile--pic"
+						id={props.login.concat("_" + props.extra)}
+						src="https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg"
+						width="100"
+						height="100"
+						onClick={gotoprofile}
+					/>
+					{load == true ?
 						<>
-						{renderImage(props.avatar, props.login, props.ftlogin, props.extra)}
+							{renderImage(props.avatar, props.login, props.ftlogin, props.extra)}
 						</>
 
 						:
-											<div className="d-flex justify-content-center">
-												<div className="spinner-border" role="status">
-													{/*<span className="sr-only">Loading...</span>*/}
-												</div>
-											</div>
-						}
-						<br />
-						<p className="user--p" id={"mini--login".concat("_"+ props.login)}>{props.login}</p>
-						{buttonToDidsplay()}
-						<ToastContainer
-							position="top-right"
-							autoClose={5000}
-							hideProgressBar={false}
-							newestOnTop={false}
-							closeOnClick
-							rtl={false}
-							pauseOnFocusLoss
-							draggable
-							pauseOnHover
-						/>
-					{/*</Suspense>*/}
+						<div className="d-flex justify-content-center">
+							<div className="spinner-border" role="status">
+							</div>
+						</div>
+					}
+					<br />
+					<p className="user--p" id={"mini--login".concat("_" + props.login)}>{props.login}</p>
+					{buttonToDidsplay()}
+					<ToastContainer
+						position="top-right"
+						autoClose={5000}
+						hideProgressBar={false}
+						newestOnTop={false}
+						closeOnClick
+						rtl={false}
+						pauseOnFocusLoss
+						draggable
+						pauseOnHover
+					/>
 				</div>
 				<svg className="log--color" height="40" width="40">
 					<circle cx="20" cy="20" r="15" fill={color} stroke="white" style={{ strokeWidth: '3' }} />

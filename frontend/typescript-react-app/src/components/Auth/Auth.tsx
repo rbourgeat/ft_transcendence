@@ -18,11 +18,6 @@ export default function Auth() {
         }
 	}, []);
 
-	//function renderImage(login: string) {
-	//	let ax = new MyAxios(null);
-	//	return (ax.render_avatar(login));
-	//}
-
     return (
         <>
             <Header />
@@ -54,7 +49,6 @@ export default function Auth() {
                                 pauseOnHover/>
                     </div>
                 </div>
-            {/*<Footer />*/}
         </>
     );
 }

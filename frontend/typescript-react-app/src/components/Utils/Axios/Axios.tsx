@@ -17,6 +17,10 @@ interface AxiosState {
     avatar?: string
 }
 
+
+//Classe utilisee pour les requetes à l'api. Non exhaustive.Des requêtes axios ont également été faites sans passer par cette classe car axios retourne une Promise
+//et nous avions souvent besoin de récupérer le retour de la requête.
+
 export default class MyAxios extends React.Component<AxiosProps, AxiosState>
 {
     constructor(props: AxiosProps) {
@@ -44,7 +48,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     ** Create a channel with channel name, public boolean and password argument
     */
     post_api_chat(channame: string, pub: boolean, pass: string) {
-        //TODO: a reprendre
+        //TODO: a reprendre ou a supprimer ?
         return;
         let url = "http://localhost:3000/api/chat/";
 
@@ -88,10 +92,6 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     }
 
     /*
-    ** post /api/chat/message -> attente endpoint à modifier ?
-    */
-
-    /*
     ** post /api/chat/join
     */
     post_api_chat_join(pass: string, pub: boolean, channame: string) {
@@ -121,7 +121,6 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     /*
     ** Sending a message in a channel
     */
-    //TODO: a tester
     post_api_chat_sendmessage(message: string, channame: string) {
         let url = "http://localhost:3000/api/chat/sendMessage/";
 
@@ -133,8 +132,6 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
         axios.defaults.baseURL = 'http://localhost:3000/api/';
         axios.defaults.headers.post['Content-Type'] = 'application/json';
         axios.defaults.headers.post['Accept'] = '*/*';
-
-        //Verifier si la ligne du dessous est vraiment utile
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
         axios.defaults.withCredentials = true;
 
@@ -150,7 +147,6 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     /*
     ** Leaving a channel
     */
-    //TODO: a tester
     post_api_chat_quit(pass: string, pub: boolean, channame: string) {
         let url = "http://localhost:3000/api/chat/quit/";
 
@@ -163,8 +159,6 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
         axios.defaults.baseURL = 'http://localhost:3000/api/';
         axios.defaults.headers.post['Content-Type'] = 'application/json';
         axios.defaults.headers.post['Accept'] = '*/*';
-
-        //Verifier si la ligne du dessous est vraiment utile
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
         axios.defaults.withCredentials = true;
 
@@ -180,16 +174,12 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     /*
     ** get /api/chat/id/messages
     */
-    //TODO: faire un retour sur ce endpoint également + tester
     get_api_id_messages(id: string) {
         let url = "http://localhost:3000/api/chat/".concat(id).concat("/messages/");
 
-        //voir quel body il faudrait ?
         axios.defaults.baseURL = 'http://localhost:3000/api/';
         axios.defaults.headers.post['Content-Type'] = 'application/json';
         axios.defaults.headers.post['Accept'] = '*/*';
-
-        //Verifier si la ligne du dessous est vraiment utile
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
         axios.defaults.withCredentials = true;
 
@@ -205,7 +195,6 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     /*
     ** Setting an admin
     */
-    //TODO: a tester
     post_api_set_admin(id: number, username: string, datetime: string, pass: string) {
         let url = "http://localhost:3000/api/chat/setAdmin/";
 
@@ -219,8 +208,6 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
         axios.defaults.baseURL = 'http://localhost:3000/api/';
         axios.defaults.headers.post['Content-Type'] = 'application/json';
         axios.defaults.headers.post['Accept'] = '*/*';
-
-        //Verifier si la ligne du dessous est vraiment utile
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
         axios.defaults.withCredentials = true;
 
@@ -233,10 +220,8 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
             })
     }
 
-    //TODO: a tester
+    //TODO: a reprendre
     post_api_ban(id: number, username: string, datetime: string, pass: string) {
-        console.log("Post api banned called");
-        //return ;
         let url = "http://localhost:3000/api/chat/ban/";
 
         const body = {
@@ -246,7 +231,6 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
             password: pass,
         }
 
-        //Verifier si la ligne du dessous est vraiment utile
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
         axios.defaults.withCredentials = true;
 
@@ -259,8 +243,6 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
             })
     }
 
-    //TODO: a tester et variabiliser !
-    //A variabiliser pour économiser les lignes
     post_api_unban(id: number, username: string, datetime: string, pass: string) {
         let url = "http://localhost:3000/api/chat/unban/";
 
@@ -271,7 +253,6 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
             password: pass,
         }
 
-        //Verifier si la ligne du dessous est vraiment utile
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
         axios.defaults.withCredentials = true;
 
@@ -284,7 +265,6 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
             })
     }
 
-    //TODO: a tester et variabiliser !
     post_api_mute(id: number, username: string, datetime: string, pass: string) {
         let url = "http://localhost:3000/api/chat/mute/";
 
@@ -295,7 +275,6 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
             password: pass,
         }
 
-        //Verifier si la ligne du dessous est vraiment utile
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
         axios.defaults.withCredentials = true;
 
@@ -320,7 +299,6 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
             password: pass,
         }
 
-        //Verifier si la ligne du dessous est vraiment utile
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
         axios.defaults.withCredentials = true;
 
@@ -333,7 +311,6 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
             })
     }
 
-    //TODO: a tester et variabiliser !
     post_api_setprivate(id: number, username: string, datetime: string, pass: string) {
         let url = "http://localhost:3000/api/chat/setPrivate/";
 
@@ -345,7 +322,6 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
             password: pass,
         }
 
-        //Verifier si la ligne du dessous est vraiment utile
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
         axios.defaults.withCredentials = true;
 
@@ -358,7 +334,6 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
             })
     }
 
-    //TODO: a tester et variabiliser !
     post_api_setpublic(id: number, username: string, datetime: string, pass: string) {
         let url = "http://localhost:3000/api/chat/setPublic/";
 
@@ -369,7 +344,6 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
             password: pass,
         }
 
-        //Verifier si la ligne du dessous est vraiment utile
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
         axios.defaults.withCredentials = true;
 
@@ -398,11 +372,9 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
 
         let res = axios.get(url)
             .then(res => {
-                //console.log(res);
                 console.log("Succesfully got user data");
             })
             .catch((error) => {
-                //console.log(error);
                 console.log("Error while getting user data");
             })
     }
@@ -412,7 +384,6 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     */
 
     //Send invitation
-    //TODO: a tester ! -> est-ce qu'on veut vraiment gérer ça ?
     post_api_user_relation_sendInvation_id(login: string) {
         let url = "http://localhost:3000/api/user/relation/sendInvitation/".concat(login);
 
@@ -439,7 +410,6 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
             })
     }
 
-    //TODO: a tester ! -> est-ce qu'on veut vraiment gérer ça ?
     post_api_user_relation_answerInvitation_id(login: string, status: string, extra: string) {
         let url = "http://localhost:3000/api/user/relation/answerToInvitation/".concat(login);
 
@@ -471,7 +441,6 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
             })
     }
 
-    //TODO: received invitations
     get_api_received_invitations(id: number) {
         let url = "http://localhost:3000/api/user/relation/answerToInvitation/".concat(id.toString());
 
@@ -490,7 +459,6 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
 
     }
 
-    //TODO: get all friends - a tester etc
     get_api_me_allfriends() {
         let url = "http://localhost:3000/api/user/relation/me/allFriends/"
 
@@ -508,7 +476,6 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
             })
     }
 
-    //TODO: a tester
     delete_relation_id(login: string, extra: string) {
         let url = "http://localhost:3000/api/user/relation/remove/".concat(login);
 
@@ -537,7 +504,6 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
             })
     }
 
-    //TODO: a tester
     post_relation_block(login: string) {
         let url = "http://localhost:3000/api/user/relation/block/".concat(login);
 
@@ -588,7 +554,6 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
             })
     }
 
-    //TODO: a tester
     async get_relation_status(login: string) {
 
         console.log("get relation with" + login);
@@ -613,7 +578,6 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
         return status;
     }
 
-    //TODO: a tester
     get_relation_allBlocked() {
         let url = "http://localhost:3000/api/user/relation/me/allBlocked/";
 
@@ -632,7 +596,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     }
 
     /*
-    ** AUTH ENDPOINT
+    ** AUTH ENDPOINTS
     */
 
     /*
@@ -655,25 +619,14 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
         let res = axios.post('http://localhost:3000/api/auth/log-in/', bod, { headers })
             .then(res => {
                 if (res.status == 200 || res.status == 201) {
-                    //console.log(res);
                     localStorage.setItem("loggedIn", "true");
-                    //TODO: faire en sorte de récupérer le login pour l'enregistrer dans le localStorage
                     localStorage.setItem("login", res.data.login);
                     if (res.data.login42 != null || res.data.login42 != undefined || res.data.login42 != "")
                         localStorage.setItem("login42", res.data.login42);
                     else
                         localStorage.setItem("login42", "");
-                    // window.top.location = "/chat/";
                     window.top.location = "http://localhost:3030/user";
-                    //return;
                 }
-                //else {
-                //    //toast.notifyDanger('Oops ! An error happened, incorrect email or password.');
-                //    console.log("Did not receive 200 when logging it.");
-                //    toast.notifyDanger("😢 Error while logging in !");
-                //    //console.log()
-                //    //return;
-                //}
             })
             .catch((error) => {
                 console.log("Error while logging in.");
@@ -717,17 +670,18 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     ** renderAvatar
     */
     getImage(imageCode: string, login: string, is42: boolean, haschanged: boolean) {
+
         let imageName = "alt-photo";
         let imageUser42 = "";
-
         let login42 = localStorage.getItem("login42");
 
-        //console.log("has changed is " + haschanged);
+        //Va chercher l'image 42 si c'est un user 42 et qu'il n'a pas changé son username
         if (haschanged == false)
             imageUser42 = "https://cdn.intra.42.fr/users/".concat(login).concat(".jpg")
         else
             imageUser42 = "https://cdn.intra.42.fr/users/".concat(login42).concat(".jpg")
-        //console.log("image is " + imageUser42);
+
+        //Si l'utilisateur a une image qui n'a pas été uploadée (par défaut)
         if (imageCode.startsWith("http")) {
             let myImage: HTMLImageElement = document.querySelector("#".concat(login));
             if (is42)
@@ -737,16 +691,8 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
             return (<img className="profile--pic" src={myImage.src} alt={imageName} height="80" width="80" id={login} />);
         }
 
-        //if (imageCode == "" || imageCode == null)
-        //{
-        //    return (<img className="profile--pic" src="https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg" alt={imageName} height="80" width="80" id={login} />);
-        //}
-
-        //endof bahaas add
-
-
+        //Va chercher l'image uploadée
         let url = "http://localhost:3000/api/user/".concat(imageCode).concat("/avatar/");
-        //console.log('url:' + url);
 
         let res = axios.get(url, { responseType: 'blob' })
             .then(res => {
@@ -758,34 +704,30 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
                 )
             })
             .catch((error) => {
-                //console.log("Catched error during get/fileId/avatar");
                 return (<img className="profile--pic" src="https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg" alt={imageName} height="80" width="80" id={login} />);
-                //console.log(error);
             })
     }
 
     render_avatar(login: string, login42: string, haschanged: boolean) {
-        if (!login) {
+        if (!login)
+        {
             return;
         }
 
-        let chosenLogin;
-        let is42;
+        //Va permettre d'aller chercher l'image puis de la render
+        let chosenLogin: string;
+        let is42: boolean;
 
-        //tests
         login42 != "" ? chosenLogin = login : chosenLogin = login;
         login42 != "" ? is42 = true : is42 = false;
-        //console.log("login is " + login);
 
         let imageCode = null;
         let imageName = "alt-photo";
-        //console.log("should render api image");
         let url = "http://localhost:3000/api/user/".concat(chosenLogin)
 
         let res = axios.get(url)
             .then(res => {
                 imageCode = res.data.avatar;
-                //console.log("chosenLogin is " + chosenLogin);
                 return (this.getImage(imageCode, chosenLogin, is42, haschanged));
             })
             .catch(error => {
@@ -794,6 +736,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     }
 
     post_avatar(login: string, file: any) {
+        //Permet d'uploader son avatar / image
         let url = "http://localhost:3000/api/user/avatar/".concat(login);
 
         axios.defaults.baseURL = 'http://localhost:3000/api/';
@@ -812,8 +755,6 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
             then(res => {
                 if (res.status == 201) {
                     console.log("Yay ! Avatar updated");
-                    //TODO: attention voir si le user est user42 et si il a pas changé de nom
-                    //let log42 = localStorage.getItem("login42");
                     let haschanged = false;
                     if (res.data.login != res.data.login42)
                         haschanged = true;
@@ -864,8 +805,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
                 console.log("Catched error !");
                 console.log(error);
             }
-            )
-        //Attention j'ai bien réussi à changer le nom mais maintenant le component n'a plus la bonne props
+        )
     }
 
     /*
@@ -881,12 +821,12 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
 
         axios.post(url)
             .then(res => {
-                console.log("Successfully generate 2fa target");
+                //console.log("Successfully generate 2fa target");
                 console.log(res);
             })
             .catch((error) => {
                 console.log("Error while generating 2fa target");
-                console.log(error);
+                //console.log(error);
             })
     }
 
@@ -900,17 +840,20 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
         }
 
         console.log("Code is " + code);
+        let toast = new ToastAlerts(null);
 
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
         axios.defaults.withCredentials = true;
 
         axios.post(url, body)
             .then(res => {
-                console.log("Successfully turn 2fa on");
-                console.log("The res is " + res);
+                //console.log("Successfully turn 2fa on");
+                //console.log("The res is " + res);
+                toast.notifySuccess("✅ Successfully turned 2FA on !")
             })
             .catch((error) => {
-                console.log("Error while turning 2fa on");
+                //console.log("Error while turning 2fa on");
+                toast.notifyDanger("❌ Error while turning on 2FA.")
                 console.log(error);
             })
     }
@@ -926,7 +869,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
         axios.post(url)
             .then(res => {
                 console.log("Successfully logging with 2fa");
-                console.log(res);
+                //console.log(res);
             })
             .catch((error) => {
                 console.log("Error while logging in with 2fa");
@@ -936,8 +879,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
 
 
     get_api_achievements() {
-        console.log("get achievement via axios request");
-
+        //console.log("get achievement via axios request");
         let url = "http://localhost:3000/api/user/achievements/me";
 
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
@@ -946,8 +888,8 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
 
         axios.get(url)
             .then(res => {
-                console.log("Successfully retrieve achievements");
-                console.log(res.data);
+                //console.log("Successfully retrieve achievements");
+                //console.log(res.data);
                 let arr = res.data.map(element => element.title)
                 return arr;
             })
@@ -956,5 +898,4 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
                 console.log(error);
             })
     }
-    //TODO: demander un endpoint pour le endpoint pour turn off (et log out ?)
 }

@@ -35,14 +35,11 @@ export default function Blocked() {
 	}
 
 	useEffect(() => {
-		/*
 		if (calledOnce.current) {
 			return;
 		}
-		*/
-
 		renderBlocked();
-		//calledOnce.current = true;
+		calledOnce.current = true;
 	}, []);
 
 	return (

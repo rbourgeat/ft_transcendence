@@ -7,42 +7,60 @@
 	display: inline-block;
 }
 
-  .online {
+.online {
 	height: 5px;
 	width: 5px;
 	margin-left: 5px;
 	background-color: greenyellow;
 	border-radius: 50%;
 	display: inline-block;
-  }
+}
 
-  .offline {
+.offline {
 	height: 5px;
 	width: 5px;
 	margin-left: 5px;
 	background-color: #bbb;
 	border-radius: 50%;
 	display: inline-block;
-  }
+}
 
-  .owner {
+.owner {
 	height: 5px;
 	width: 5px;
 	margin-left: 5px;
 	background-color: black;
 	border-radius: 50%;
 	display: inline-block;
-  }
+}
 
 
-  .p--participant {
-	font-size: 10px !important;
+.p--participant {
+	font-size: 15px !important;
 	color: black !important;
-	padding: 1rem 0.1rem;
-	border: 2px solid black;
+	padding: 5px;
+	//border: 2px solid black;
 	border-radius: 0.5rem;
 	margin-bottom: 1rem;
+	text-align: center;
+	position: sticky !important;
+
 	&:hover {
-		border-color: white;
+		background-color: rgba(170, 170, 170, 0.264) !important;
 	}
- }
+}
+
+#dropdownUser1 {
+	border: 0.1rem solid white !important;
+	font-size: 12px !important;
+	padding: 5px !important;
+	margin: 5px !important;
+
+	&:hover {
+		background-color: rgba(170, 170, 170, 0.264) !important;
+	}
+}
+
+//.participant--div > * {
+//	width: 100% !important;
+//}

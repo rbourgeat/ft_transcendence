@@ -2,7 +2,7 @@ import {Button, Modal, Form} from 'react-bootstrap';
 import axios from 'axios';
 import React, {useState} from "react";
 
-
+//TODO : a reprendre ? 
 export default function CreateChan({endpoint, action}) {
 
 	const [show, setShow] = React.useState(false);
@@ -17,7 +17,7 @@ export default function CreateChan({endpoint, action}) {
 		if (chanScope === "public") {
 			axios.post(endpoint, {
 				"public": chanScope === "public" ? true : false,
-				"name": chanName 
+				"name": chanName
 			})
 				.then(function (response) {
 					console.log(response);
@@ -30,7 +30,7 @@ export default function CreateChan({endpoint, action}) {
 			axios.post(endpoint, {
 				"password": chanPassword,
 				"public": chanScope === "public" ? true : false,
-				"name": chanName 
+				"name": chanName
 			})
 				.then(function (response) {
 					console.log(response);
@@ -82,7 +82,7 @@ export default function CreateChan({endpoint, action}) {
 						Close
 					</Button>
 					<Button variant="primary" type="submit" onClick={createChannel}>
-						{action} 
+						{action}
 					</Button>
 				</Modal.Footer>
 			</Modal>

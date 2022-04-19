@@ -403,25 +403,32 @@ export default function Game() {
 									{isActive ?
 										<Form>
 											<Form.Group>
-												<Form.Select aria-label="Modes de jeux:" defaultValue="original" onChange={e => chanScopeSet(e.target.value)}>
-														<option>Modes de jeux:</option>
-														<option value="original">Original (1972)</option>
-														<option value="bigball">Big Ball (Facile)</option>
-														<option value="blitz">Blitz (Balle Rapide)</option>
-														<option value="slow">Slow (Balle Lente)</option>
-														<option value="cube">Cube World (All is cubic)</option>
-												</Form.Select>
+												<div className="row d-flex justify-content-center text-center">
+													<Form.Label className="form--label">Choose game option</Form.Label>
+													<Form.Select id="form-select" aria-label="Modes de jeux:" defaultValue="original" onChange={e => chanScopeSet(e.target.value)}>
+															<option>Modes de jeux:</option>
+															<option value="original">Original (1972)</option>
+															<option value="bigball">Big Ball (Facile)</option>
+															<option value="blitz">Blitz (Balle Rapide)</option>
+															<option value="slow">Slow (Balle Lente)</option>
+															<option value="cube">Cube World (All is cubic)</option>
+													</Form.Select>
+												</div>
 											</Form.Group>
 										</Form>
 									: ""}
-									{isActive ? <button type="button" className="btn btn-outline-light" id="search-button" onClick={() => sendSearch()}>{SearchText}</button> : ""}
-									{isActive2 ? <button type="button" className="btn btn-outline-light" id="search-button2" onClick={() => sendSearch2()}>{SearchText2}</button> : ""}
+									<div className="row d-flex justify-content-center text-center">
+										{isActive ? <button type="button" className="btn btn-outline-light" id="search-button" onClick={() => sendSearch()}>{SearchText}</button> : ""}
+										{isActive2 ? <button type="button" className="btn btn-outline-light" id="search-button2" onClick={() => sendSearch2()}>{SearchText2}</button> : ""}
+									</div>
 									<p id="victoryMessage"></p>
 									<main role="main">
 										<p className="canvas-score" id="scores">
 											<em className="canvas-score" id="joueur1"></em>
-											<span className="canvas-score">:</span>
-											<em className="canvas-score" id="player-score">0</em> - <em id="joueur2"></em><span>:</span><em className="canvas-score" id="player2-score">0</em></p>
+											{/*<span className="canvas-score">:</span>*/}
+											<em className="canvas-score" id="player-score">0</em> - <em id="joueur2"></em>
+											{/*<span className="canvas-score">:</span>*/}
+											<em className="canvas-score" id="player2-score">0</em></p>
 										<canvas id="canvas" width={size.width / 1.5} height={size.height / 1.25}></canvas>
 									</main>
 								</div>

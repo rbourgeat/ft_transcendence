@@ -1,10 +1,10 @@
 import './ListChannels.scss';
 import React, {Component, useState, useEffect} from "react";
 import Nav from "../../Nav/Nav";
-import CreateChanModal from "../../Utils/Modal/Modal";
 import myAxios from "../../Utils/Axios/Axios";
 import axios from "axios";
 
+//TODO: a reprendre - ou supprimer (maxime)
 
 export default function ListPubChannels() {
 	const [pubChan, pubChanSet] = React.useState([]);
@@ -22,7 +22,7 @@ export default function ListPubChannels() {
 	function joinChan(chanName) {
 		axios.post("http://localhost:3000/api/chat/join", {
 				"public": true,
-				"name": chanName 
+				"name": chanName
 			})
 				.then(function (response) {
 					console.log(response);
@@ -31,13 +31,13 @@ export default function ListPubChannels() {
 					console.log(error);
 				});
 	}
-	
+
 	return (
 		<div className="listChannels">
 			<h2>Public Channels</h2>
 			<ul id="list--channels--ul">
-				{pubChan.map(channel => 
-					channel.public === true ?	<button key={channel.id} className="channel--list" onClick={() => {joinChan(channel.name)}}>{channel.name}</button> : "" 
+				{pubChan.map(channel =>
+					channel.public === true ?	<button key={channel.id} className="channel--list" onClick={() => {joinChan(channel.name)}}>{channel.name}</button> : ""
 				)}
 			</ul>
 		</div>

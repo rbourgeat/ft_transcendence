@@ -1,20 +1,18 @@
 @use "../../../variables";
 
 #listChannels {
-	border-radius: 0px !important;
+	//border-radius: 0px !important;
+	border-radius: variables.$border-radius-big;
 	background: white !important;
 	position: sticky;
 	border: 0.1rem solid #f9f9f9 !important;
 	padding: 0px !important;
 	margin: 0px !important;
-	//min-width: 300px;
-	//max-width: 300px;
 }
 
 #channel--col {
-	border-radius: 0px !important;
-	//min-height: 700px !important;
-	//max-height: 700px !important;
+	//border-radius: 0px !important;
+	border-radius: variables.$border-radius-big;
 	padding: 0px !important;
 	margin: 0px !important;
 	border: 0.1rem solid #f9f9f9 !important;
@@ -27,27 +25,29 @@
 }
 
 .title--channel--col {
+	border-radius: variables.$border-radius-big;
 	border: 0.1rem solid grey;
 	padding: 0px !important;
 	margin: 0px !important;
 	border: 0.1rem solid #f9f9f9 !important;
 	position: sticky;
-	background-color: #f9f9f9 !important;
+	background: #f9f9f9 !important;
 	color: black;
 }
 
 .add-channel-a {
 	min-height: 40px !important;
-	background-color: #f9f9f9 !important;
-	border-radius: #f9f9f9 !important;
+	background: #f9f9f9 !important;
+	border: #f9f9f9 !important;
 }
 
 #createchannel-button {
+	border-radius: variables.$border-radius-big;
+	//border-radius: 0px;
 	width: 100% !important;
 	height: 100% !important;
 	border: 0.1rem solid #f9f9f9;
 	position: sticky;
-	border-radius: 0px;
 	margin: 0px !important;
 	position: sticky;
 }
@@ -61,18 +61,12 @@
 	font-size: 12px;
 	border-radius: 0px !important;
 	margin: 0px;
-	font-weight: 900 !important;
-}
-
-.send--dm_div {
-	width: 100% !important;
-	height: 100% !important;
-	border-radius: 0px;
-	bottom: 0 !important;
-	border: #f9f9f9 !important;
+	//font-weight: 900 !important;
 }
 
 #send--dm , #display--channels {
+	border-radius: variables.$border-radius-big;
+	//border-radius: 0px;
 	width: 100% !important;
 	height: 100% !important;
 	background-color: #025d93 !important;
@@ -81,13 +75,16 @@
 	font-family: variables.$basic-font;
 	color: white;
 	border: 0.1rem solid #f9f9f9 !important;
-	border-radius: 0px;
 }
 
 .displaying-div {
+	border-radius: variables.$border-radius-big;
 	border: 0.1rem solid #f9f9f9 !important;
-	min-height: 580px !important;
-	max-height: 580px !important;
+	//padding: 10px !important;
+	margin: 10px !important;
+	min-height: 515px !important;
+	max-height: 515px !important;
+	overflow-y: scroll;//a tester
 }
 
 #list--channels--title {
@@ -98,20 +95,14 @@
 	text-align: justify;
 }
 
-//#list--channels--ul > * {
-//	color: black;
-//	font-family: variables.$basic-font;
-//}
+.selected--categorie {
+	font-size: 12px;
+}
 
-//#quick--actions {
-//	background-color: variables.$grey;
-//	padding: 20px;
-//	padding-left: 100px;
-//	padding-right: 100px;
-//	padding-bottom: 40px;
-//	border-radius: variables.$border-radius;
-//}
-
-//#channel--list {
-//	color: black;
+//.send--dm_div {
+//	width: 100% !important;
+//	height: 100% !important;
+//	border-radius: 0px;
+//	bottom: 0 !important;
+//	border: #f9f9f9 !important;
 //}

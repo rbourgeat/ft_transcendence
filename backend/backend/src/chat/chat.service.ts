@@ -306,13 +306,29 @@ export class ChatService {
 	async setAdmin(id: number, login: string, admin: User) {
 		const chat = await this.chatRepository.findOne({ id });
 		const user = await this.userRepository.findOne({ login });
-		const participate = chat.participates.find(e => e == user.participate.find(e => e.chat == chat));
+		console.log(user);
+		const participate = await this.participateRepository.findOne({
+			where: [
+				{ chat: chat, user: user },
+			],
+		}
+		)
+		console.log(participate);
 		if (!participate)
 			return console.log("L'utilisateur ne peut pas être admin car il n'est pas dans le chat !");
-		if (!admin.participate.find(e => e.chat == chat).owner)
+
+		const adminParticipate = await this.participateRepository.findOne({
+			where: [
+				{ chat: chat, user: admin },
+			],
+		});
+		console.log('request from:' + adminParticipate);
+		if (!adminParticipate.owner)
 			return console.log("L'utilisateur ne peut pas rendre qqn admin car il n'est pas owner du chat !");
-		if (user.participate.find(e => e.chat == chat).admin || user.participate.find(e => e.chat == chat).owner)
+		//if (user.participate.find(e => e.chat == chat).admin || user.participate.find(e => e.chat == chat).owner)
+		if (participate.admin || participate.owner)
 			return console.log("L'utilisateur ne peut pas rendre admin un admin !");
+
 
 		user.participate.find(e => e.chat == chat).admin = true;
 

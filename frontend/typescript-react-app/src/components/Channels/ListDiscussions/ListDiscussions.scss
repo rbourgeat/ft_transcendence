@@ -1,10 +1,11 @@
 @use "../../../variables";
 
 #ListDiscussions {
-	background-color: white;
+	border-radius: variables.$border-radius-big;
+	background: white;
 	position: sticky;
-	min-height: 750px !important;
-	max-height: 750px !important;
+	min-height: 740px !important;
+	max-height: 740px !important;
 	border: 0.1rem solid #f9f9f9 !important;
 	margin-right: 2% !important;
 	margin-left: 2% !important;
@@ -18,11 +19,6 @@
 	font-family: variables.$basic-font;
 }
 
-//#sub--div {
-//	padding: 35px;
-//	color: black !important;
-//}
-
 #sub--div > * {
 	font-family: variables.$basic-font;
 }
@@ -32,22 +28,27 @@
 }
 
 .title_chat_div {
+	border-radius: variables.$border-radius-big;
 	border: 0.1rem solid #f9f9f9;
-	min-height: 50px;
-	max-height: 50px;
+	min-height: 40px;
+	max-height: 40px;
 	background: #f9f9f9;
 	position: sticky;
-	padding-top: 10px;
+	//padding-top: 10px;
+
 }
 
 .chat--title {
 	font-family: variables.$big-font;
-	font-size: 16px;
+	font-size: 12px;
 	text-align: center;
+	padding-top: 10px !important;
 }
 
 .messages-zone {
-	min-height: 600px;
-	max-height: 600px;
+	min-height: 590px;
+	max-height: 590px;
+	margin: 5px;
 	border: 0.1rem solid #f9f9f9;
+	border-radius: variables.$border-radius-big;
 }

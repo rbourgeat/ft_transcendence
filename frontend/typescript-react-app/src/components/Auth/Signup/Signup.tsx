@@ -14,6 +14,8 @@ interface SignupState {
     password_conf?: string
 }
 
+//Utilisé pour tests quand membres de l'équipe freeze mais plus présenté pour la validation
+
 class Signup extends React.Component<SignupProps, SignupState>
 {
     constructor(props: SignupProps)

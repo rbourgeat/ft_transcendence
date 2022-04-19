@@ -11,9 +11,8 @@ import Achievements from "../Achievements/Achievements";
 import { Modal } from "react-bootstrap"
 import Settings from "./Settings/Settings"
 import MatchHistory from '../MatchHistory/MatchHistory';
-import Footer from "../Footer/Footer";
-import { render } from '@testing-library/react';
 import Login from '../Auth/Login/Login';
+import { AiOutlineLoading3Quarters, AiOutlineLoading } from "react-icons/ai";
 
 export interface UserfuncProps {
 	username?: string,
@@ -83,9 +82,7 @@ export default function User(props: UserfuncProps) {
 					setWins(res.data.total_wins);
 					setRatio(res.data.win_loss_ration);
 					setXp(res.data.xp);
-					//S il s agit de moi je ne peux pas etre offline
-					//if (res.data.status == "offline")
-					//	setColor("grey")
+
 					if (res.data.status == "online") {
 						setColor("green");
 						setStatus("online");
@@ -136,27 +133,23 @@ export default function User(props: UserfuncProps) {
 						<div className="user--stats" key={username}>
 							{loaded == false ?
 								<div className="spinner-border m-5" role="status">
-									<span className="sr-only">Loading...</span>
+									<span className="sr-only"><AiOutlineLoading /></span>
 								</div>
 								:
 								<>
 									<h2 className="own-profile">My profile</h2>
 									<br />
 									<img id={username} className="profile--pic" height="80" width="80" />
-									{/*{renderImage(username)}*/}
-									{/*<br />*/}
 									<svg className="log--color_profile" height="40" width="40">
 										<circle cx="20" cy="20" r="15" fill={color} stroke="white" style={{ strokeWidth: '3' }} />
 									</svg>
 									<p className="status-text">{status}</p>
-									{/*<br />*/}
 									<h2 id="user--data">{username}</h2>
 									<div className="col-9 mx-auto text-center" id="input-div">
 										<br />
 										<Achievements login={username} />
 										<br />
 										<Badge
-											//login={props.login}
 											total_wins={wins}
 											total_loss={loss}
 											total_games={totalGames}
@@ -169,15 +162,13 @@ export default function User(props: UserfuncProps) {
 										<br />
 										<MatchHistory login={username} />
 										<br />
-										{/*<br />*/}
 									</div>
 								</>
-
 							}
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
+		</div >
 	);
 };

@@ -23,22 +23,37 @@
   color: white !important;
 }
 
-//#canvas {
-//  padding: 10px;
-//}
-
-// #game-root > .text {
-//  color: white !important;
-//  font-size: 5vh !important;
-// }
-
-// PONG CSS BELOW:
-
-ul {
-  list-style: none;
-  padding: 0;
+#canvas {
+  background: black !important;
+  padding: 50px !important;
+  border-radius: variables.$border-radius-big;
+  border: 0.1rem solid white;
+  position: sticky;
+  box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
+  margin-bottom: 50px;
 }
 
+#form-select, #search-button, #search-button2 {
+  width: 35% !important;
+  text-align: center !important;
+  position: sticky;
+  font-weight: 900 !important;
+}
+
+#scores > * {
+  font-size: 34px !important;
+  font-weight: 900 !important;
+  font-family: variables.$basic-font !important;
+  font-style: normal !important;
+}
+
+.form--label {
+  font-size: 24px !important;
+  text-align: center !important;
+  font-family: variables.$basic-font !important;
+}
+
+// PONG CSS BELOW:
 .game--li {
   display: inline-block;
 }

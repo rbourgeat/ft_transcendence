@@ -1,5 +1,4 @@
 import React, {Component, useState, useEffect} from "react";
-//import Nav from "../../Nav/Nav"
 import ToastAlerts from "../../Utils/ToastAlerts/ToastAlerts";
 import { ToastContainer, toast } from 'react-toastify';
 import myAxios from "../../Utils/Axios/Axios";
@@ -8,11 +7,6 @@ import {Modal, Button} from "react-bootstrap";
 
 export default function EditUsernameModal(props) {
 	const [inputValue, setInputValue] = React.useState("");
-
-	//useEffect(() => {
-	//	let ax = new myAxios(null);
-	//	let url = "http://localhost:3000/api/user";
-	//}, []);
 
 	function clearInput() {
         setInputValue("");
@@ -28,10 +22,8 @@ export default function EditUsernameModal(props) {
 		console.log("username is ", props.username);
 		console.log("input value is " + inputValue);
 		let res = ax.patch_user(props.username, inputValue);
-		//window.top.location = "http://localhost:3030/user";
 	}
 
-		//TODO: a reprendre sans react bootstrap
 		return (
 			<div id="modal--create--channel">
 				<Modal

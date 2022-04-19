@@ -14,6 +14,7 @@ var adversaires = [];
 // For resize elements from game canvas
 let resize = 4;
 
+//TODO: a refacto un tout petit peu @rbourgea ?
 export default function Live() {
 
 	if (localStorage.getItem("loggedIn") != "true")
@@ -332,29 +333,6 @@ export default function Live() {
 				</div>
 			</div>
 		</div>
-		// <>
-		// {localStorage.getItem("loggedIn") != "true" ?
-		// 		<>
-		// 			<Nav />
-		// 			<div className="container">
-		// 				<div className="row d-flex justify-content-center text-center">
-		// 					<div className="col-9">
-		// 						<div className="channels-not-logged">
-		// 							<p>You are not logged in.</p>
-		// 						</div>
-		// 					</div>
-		// 				</div>
-		// 			</div>
-		// 		</>
-		// 		:
-		// 		<div>
-		// 			<Nav/>
-		// 			<div id="titre" className="list--lives">📺 Liste des Lives</div>
-		// 				<div id="content" className="content-class">
-		// 				</div>
-		// 		</div>
-		// }
-		// </>
 	)
 
 }
