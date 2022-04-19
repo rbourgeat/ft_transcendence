@@ -4,7 +4,7 @@ import Nav from "../../Nav/Nav";
 import myAxios from "../../Utils/Axios/Axios";
 import axios from "axios";
 
-//TODO: a reprendre
+//TODO: a reprendre - ou supprimer (maxime)
 
 export default function ListPubChannels() {
 	const [pubChan, pubChanSet] = React.useState([]);

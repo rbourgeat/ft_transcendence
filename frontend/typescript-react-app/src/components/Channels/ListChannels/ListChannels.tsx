@@ -8,6 +8,9 @@ import DisplayChan from './DisplayChan/DisplayChan';
 
 
 export interface ListChannelsProps {
+	setActiveChannelName: any,
+	setActiveChannelID: any,
+	login: string
 }
 
 //export default function ListChannels({activeChannel, updateActiveChannel, chanUsers, updateChanUsers}) {
@@ -44,38 +47,20 @@ export default function ListChannels(props: ListChannelsProps) {
 
 	function renderListChannels()
 	{
-		//let toast = new ToastAlerts(null);
-		//toast.notifyDanger("A reprendre");
-
-		console.log("rendering all channels");
+		//console.log("rendering all channels");
 		axios.defaults.withCredentials = true;
 		const url = "http://localhost:3000/api/chat/joinedChannels";
 		axios.get(url)
 			.then( res => {
-				//console.log(res.data);
-				//console.log(res);
 				let channels = res.data;
-				//console.log(channels);
-				//setChannels(channels);
 
 				let len = channels.length;
-				//console.log("len is " + len);
 				let i = 0;
 				while (i < len) {
-					//if (channels[i].login != log)
-					//setChannelsId(prevArray => [...prevArray, channels.id])
-					//setChannelsName(prevArray => [...prevArray, channels.name])
-					//setChannelsCat(prevArray => [...prevArray, channels.public])
 					setChannels(prevArray => [...prevArray, channels[i]])
 					i++;
 				}
-				//console.log(channelsId);
-				//console.log(channelsName);
-				//console.log(channelsCat);
 				console.log(channels);
-				//console.log(channels[0]);
-				//console.log(channels[0].name);
-				//console.log(channels[1].name);
 				setLoad(true);
 			})
 			.catch((error) => {
@@ -85,7 +70,6 @@ export default function ListChannels(props: ListChannelsProps) {
 
 	function displaySelectedCat()
 	{
-		//console.log("displaying selected category");
 		if (selectedCat === "Channels")
 		{
 			renderListChannels();
@@ -93,7 +77,6 @@ export default function ListChannels(props: ListChannelsProps) {
 	}
 
 	useEffect(() => {
-		//console.log("SelectedCat is " + selectedCat);
 		displaySelectedCat();
 	}, [selectedCat]);
 
@@ -137,7 +120,7 @@ export default function ListChannels(props: ListChannelsProps) {
 								{
 									return (
 										<div key={channels[key].id}>
-											<DisplayChan channel={channels[key]} />
+											<DisplayChan channel={channels[key]} setActiveChannelName={props.setActiveChannelName} setActiveChannelId={props.setActiveChannelID}/>
 										</div>
 									)
 								}
@@ -148,12 +131,6 @@ export default function ListChannels(props: ListChannelsProps) {
 						<button type="button" className="btn btn-light" id="send--dm" onClick={displayDM} disabled={selectedCat == "Channels" ? false : true}>DM</button>
 						<button type="button" className="btn btn-light" id="display--channels" onClick={displayChannels} disabled={selectedCat == "DM" ? false : true}>Channels</button>
 					</div>
-					{/*<p id="list--channels--title"> Public channels :</p>*/}
-					{/*<ul id="list--channels--ul">*/}
-						{/*{channels.map(channel  =>
-						<button key={channel.id} onClick={() => {updateActiveChannel(channel.id); updateChanUsers(channel.participates)}} className="channel--list">{channel.name} {channel.public === true ? "public" : "private"}</button>
-						)}*/}
-					{/*</ul>*/}
 				</div>
 		</div>
 	);
