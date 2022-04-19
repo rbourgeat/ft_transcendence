@@ -1,7 +1,8 @@
 @use "../../../variables";
 
-#createdm-button {
+#createchan-button {
 	font-weight: 800 !important;
 	width: 85% !important;
+	//border: 0.1rem solid red !important;
 	border-radius: variables.$border-radius-big !important;
 }

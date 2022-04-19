@@ -82,8 +82,8 @@
 	border: 0.1rem solid #f9f9f9 !important;
 	//padding: 10px !important;
 	margin: 10px !important;
-	min-height: 410px !important;
-	max-height: 410px !important;
+	min-height: 430px !important;
+	max-height: 430px !important;
 	overflow-y: scroll;//a tester
 }
 
@@ -96,15 +96,10 @@
 }
 
 .selected--categorie, .quick--add {
-	font-size: 14px;
-	margin-top: 15px !important;
+	font-size: 10px;
+	padding-top: 15px !important;
+	font-family: variables.$big-font;
+	background-color: #f9f9f9 !important;
+	color: 0.1rem solid #f9f9f9 !important;
 	//text-decoration: underline !important;
 }
-
-//.send--dm_div {
-//	width: 100% !important;
-//	height: 100% !important;
-//	border-radius: 0px;
-//	bottom: 0 !important;
-//	border: #f9f9f9 !important;
-//}

@@ -3,6 +3,7 @@ import axios from 'axios';
 import React, {useState} from "react";
 import ToastAlerts from '../../Utils/ToastAlerts/ToastAlerts';
 import MyAxios from '../../Utils/Axios/Axios';
+import "./CreateChan.scss";
 
 //TODO : a reprendre ?
 
@@ -58,7 +59,7 @@ export default function CreateChan(props: CreateChanProps) {
 	return (
 		<div>
 			<button type="button" className="btn btn-success"
-							id="createchannel-button" /*onClick={createJoinChan}*/
+							id="createchan-button" /*onClick={createJoinChan}*/
 							onClick={handleShow}
 							data-toggle="modal" data-target="#exampleModalCenter"
 						>New channel</button>

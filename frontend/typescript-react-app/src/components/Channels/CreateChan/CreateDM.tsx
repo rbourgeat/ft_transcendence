@@ -3,6 +3,7 @@ import axios from 'axios';
 import React, {useState} from "react";
 import ToastAlerts from '../../Utils/ToastAlerts/ToastAlerts';
 import MyAxios from '../../Utils/Axios/Axios';
+import "./CreateDM.scss";
 
 export interface CreateDMProps {
 	endpoint?: any,
@@ -27,7 +28,7 @@ export default function CreateDM(props: CreateDMProps) {
 	return (
 		<div>
 			<button type="button" className="btn btn-dark"
-							id="createchannel-button" /*onClick={createJoinChan}*/
+							id="createdm-button" /*onClick={createJoinChan}*/
 							onClick={handleShow}
 							//data-toggle="modal" data-target="#exampleModalCenter"
 						>New DM</button>
