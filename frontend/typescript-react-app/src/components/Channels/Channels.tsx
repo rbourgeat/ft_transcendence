@@ -57,8 +57,8 @@ export default function Channels(props: ChatProps) {
 	}, []);
 
 	useEffect(() => {
-		console.log("Parent composant Channels saw child update active channel");
-		console.log("Activate channel name is " + activeChannelName);
+		//console.log("Parent composant Channels saw child update active channel");
+		//console.log("Activate channel name is " + activeChannelName);
 	}, [activeChannelName, activeChannelId]);
 
 	return (
@@ -77,6 +77,7 @@ export default function Channels(props: ChatProps) {
 			/>
 			<div className="container">
 				<div className="row" id="row_chat">
+					{/* Ces props permettent à tous ces childs components de savoir la channel sélectionnée */}
 					<ListChannels setActiveChannelName={setActiveChannelName} setActiveChannelID={setActiveChannelID}/>
 					<ListDiscussions setActiveChannelName={setActiveChannelName} setActiveChannelID={setActiveChannelID}/>
 					<ListParticipant setActiveChannelName={setActiveChannelName} setActiveChannelID={setActiveChannelID}/>

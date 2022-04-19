@@ -46,7 +46,7 @@ export default function ListChannels(props: ListChannelsProps) {
 
 	function renderListChannels()
 	{
-		console.log("rendering all channels");
+		//console.log("rendering all channels");
 		axios.defaults.withCredentials = true;
 		const url = "http://localhost:3000/api/chat/joinedChannels";
 		axios.get(url)

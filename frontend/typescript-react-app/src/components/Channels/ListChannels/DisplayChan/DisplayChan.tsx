@@ -24,7 +24,7 @@ export default function DisplayChan(props: DisplayChanProps) {
 		}
 		if (props.channel.id === 1 && calledOnce.current != true)
 		{
-			console.log("called once")
+			//console.log("called once")
 			setIsSelected("true");
 		}
 		setLoad(true);
@@ -39,10 +39,12 @@ export default function DisplayChan(props: DisplayChanProps) {
 			selected.item(0).className = 'chan-title_notselected';
 			setIsSelected("true");
 			let other = document.getElementById("chan-title_".concat(props.channel.id));
-			console.log("other is " + other);
-			console.log(other.className);
+			//console.log("other is " + other);
+			//console.log(other.className);
 			other.className = "chan-title_selected";
-			console.log(other.className);
+			//console.log(other.className);
+			props.setActiveChannelName(props.channel.name);
+			props.setActiveChannelId(props.channel.id);
 		}
 
 
