@@ -85,7 +85,7 @@ export default function ListChannels(props: ListChannelsProps) {
 
 	function displaySelectedCat()
 	{
-		console.log("displaying selected category");
+		//console.log("displaying selected category");
 		if (selectedCat === "Channels")
 		{
 			renderListChannels();
@@ -93,7 +93,7 @@ export default function ListChannels(props: ListChannelsProps) {
 	}
 
 	useEffect(() => {
-		console.log("SelectedCat is " + selectedCat);
+		//console.log("SelectedCat is " + selectedCat);
 		displaySelectedCat();
 	}, [selectedCat]);
 
@@ -132,25 +132,15 @@ export default function ListChannels(props: ListChannelsProps) {
 					</div>
 					<div className="displaying-div">
 						{load == true ?
-							//channels.map(channel=>
-							//	<div key={channels}>
-							//		<DisplayChan channel={channel} />
-							//	</div>
-							//	)
 							Object.keys(channels).map(function(key, index) {
-								//console.log("my id is " + channels[key].id);
-								//console.log("my name is " + channels[key].name);
-								//console.log("my name is " + channels[key].name);
 								if (channels[key].id != undefined)
 								{
-									//console.log("ici");
 									return (
 										<div key={channels[key].id}>
 											<DisplayChan channel={channels[key]} />
 										</div>
 									)
 								}
-								//console.log("my name is " + channels[name]);
 							})
 						: ""}
 					</div>
