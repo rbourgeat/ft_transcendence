@@ -64,14 +64,6 @@
 	//font-weight: 900 !important;
 }
 
-.send--dm_div {
-	width: 100% !important;
-	height: 100% !important;
-	border-radius: 0px;
-	bottom: 0 !important;
-	border: #f9f9f9 !important;
-}
-
 #send--dm , #display--channels {
 	border-radius: variables.$border-radius-big;
 	//border-radius: 0px;
@@ -90,8 +82,9 @@
 	border: 0.1rem solid #f9f9f9 !important;
 	//padding: 10px !important;
 	margin: 10px !important;
-	min-height: 570px !important;
-	max-height: 570px !important;
+	min-height: 515px !important;
+	max-height: 515px !important;
+	overflow-y: scroll;
 }
 
 #list--channels--title {
@@ -101,3 +94,15 @@
 	margin-bottom: 15px;
 	text-align: justify;
 }
+
+.selected--categorie {
+	font-size: 12px;
+}
+
+//.send--dm_div {
+//	width: 100% !important;
+//	height: 100% !important;
+//	border-radius: 0px;
+//	bottom: 0 !important;
+//	border: #f9f9f9 !important;
+//}

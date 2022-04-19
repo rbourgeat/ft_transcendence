@@ -13,6 +13,7 @@ export interface ListChannelsProps {
 export default function ListChannels(props: ListChannelsProps) {
     const [channels, setChannels] = React.useState([]);
     const [count, setCount] = useState(0);
+	const [selectedCat, setSelectedCat] = React.useState("Channels");
 
 	//TODO: a reprendre
 	function createChanneltest()
@@ -82,6 +83,7 @@ export default function ListChannels(props: ListChannelsProps) {
 				<div id="channel--col">
 					<div className="title--channel--col">
 						<p className="channels-title">Channels</p>
+						<p className="selected--categorie">{selectedCat== "Channels" ? "Channels you are in" : "Your direct messages"}</p>
 					</div>
 					<div className="add-channel-a">
 						<button type="button" className="btn btn-success" id="createchannel-button" onClick={createJoinChan}>+</button>
@@ -89,8 +91,8 @@ export default function ListChannels(props: ListChannelsProps) {
 					<div className="displaying-div">
 					</div>
 					<div className="send--dm_div">
-						<button type="button" className="btn btn-light" id="send--dm" onClick={displayDM}>DM</button>
-						<button type="button" className="btn btn-light" id="display--channels" onClick={displayChannels}>Channels</button>
+						<button type="button" className="btn btn-light" id="send--dm" onClick={displayDM} disabled={selectedCat == "Channels" ? false : true}>DM</button>
+						<button type="button" className="btn btn-light" id="display--channels" onClick={displayChannels} disabled={selectedCat == "DM" ? false : true}>Channels</button>
 					</div>
 					{/*<p id="list--channels--title"> Public channels :</p>*/}
 					{/*<ul id="list--channels--ul">*/}
