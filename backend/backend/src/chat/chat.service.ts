@@ -221,8 +221,8 @@ export class ChatService {
 			return console.log(chat + ' not found');
 	}
 
-	async quitChat(chat: CreateChatDto, user: User) {
-		const chatT = await this.chatRepository.findOne({ name: chat.name });
+	async quitChat(id: number, user: User) {
+		const chatT = await this.chatRepository.findOne({ id });
 		const participateToDelete = await this.participateRepository.findOne({ user: user, chat: chatT });
 		await this.participateRepository.delete(participateToDelete);
 		return console.log('has quit chat');
@@ -405,6 +405,13 @@ export class ChatService {
 		*/
 		//return this.userRepository.findByIds(usersIds)
 		return listParticipateCard;
+	}
+
+	async chatExist(channelName: string) {
+		const chat = await this.chatRepository.findOne({ name: channelName });
+		if (chat)
+			return false;
+		return true;
 	}
 
 }

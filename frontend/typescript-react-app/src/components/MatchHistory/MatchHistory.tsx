@@ -66,6 +66,7 @@ export default function MatchHistory(props: MatchHistoryProps) {
                                 {load == true && resultsID.length > 0 ? resultsID.map(result =>
                                     <div className="main--button--resume" key={result.id}>
                                         <ButtonResume
+                                            gameMode={result.game_mode}
                                             winner={result.winner}
                                             looser={result.loser}
                                             scoreWinner={result.winner_score}

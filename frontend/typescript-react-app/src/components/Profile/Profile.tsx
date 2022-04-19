@@ -174,7 +174,7 @@ export default function Profile() {
 
 	function block() {
 		let ax = new MyAxios(null);
-		ax.post_relation_block(login);
+		ax.post_relation_block(login, "people");
 	}
 
 	//Besoin rbourgea
@@ -250,10 +250,10 @@ export default function Profile() {
 												<>
 													<button type="button" className="btn btn-outline-success" id="invite--buton" onClick={acceptFriend}>
 														Accept
-											</button>
+													</button>
 													<button type="button" className="btn btn-outline-danger" id="invite--buton" onClick={declineFriend}>
 														Decline
-											</button>
+													</button>
 												</>
 												: ""}
 											<div className="row d-flex justify-content-center text-center" id="relations">

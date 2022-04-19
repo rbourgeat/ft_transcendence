@@ -64,8 +64,8 @@ export class ChatController {
     @ApiOkResponse({ description: 'chat quit' })
     @UseGuards(JwtAuthenticationGuard)
     @Post('quit')
-    async quitChat(@Body() chat: CreateChatDto, @Req() req: RequestWithUser) {
-        return this.chatService.quitChat(chat, req.user);
+    async quitChat(@Body() chat: ChatDto, @Request() req) {
+        return this.chatService.quitChat(chat.idChat, req.user);
     }
 
     @ApiOperation({ summary: 'Create a new chat [jwt-protected]' })
@@ -181,4 +181,11 @@ export class ChatController {
         return this.chatService.getUsersInChannel(channelId);
     }
 
+    @ApiOperation({ summary: 'Boolean to know if that chat exist [jwt-protected + for swagger test only]' })
+    @ApiOkResponse({ description: 'Suceed' })
+    @UseGuards(JwtAuthenticationGuard)
+    @Get(':channelName/exist')
+    async getChatExist(@Param('channelName') channelName: string, @Request() req) {
+        return this.chatService.chatExist(channelName);
+    }
 }
