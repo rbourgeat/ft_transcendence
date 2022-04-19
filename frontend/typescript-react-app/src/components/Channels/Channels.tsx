@@ -10,7 +10,6 @@ import ToastAlerts from '../Utils/ToastAlerts/ToastAlerts';
 import { ToastContainer, toast } from 'react-toastify';
 import { io } from "socket.io-client";
 import ListChannels from './ListChannels/ListChannels';
-//import ListPubChannels from './ListChannels/ListPubChannels';
 import axios from 'axios';
 
 interface ChatProps {
@@ -39,7 +38,6 @@ export default function Channels(props: ChatProps) {
 	*/
 
 	useEffect(() => {
-
 		async function getUser() {
 			let url = "http://localhost:3000/api/auth/";
 			let username = "";
@@ -63,10 +61,11 @@ export default function Channels(props: ChatProps) {
 		calledOnce.current = true;
 	}, []);
 
-	useEffect(() => {
-		//console.log("Parent composant Channels saw child update active channel");
-		//console.log("Activate channel name is " + activeChannelName);
-	}, [activeChannelName, activeChannelId]);
+	//TODO @malatini : a revoir
+	//useEffect(() => {
+	//	//console.log("Parent composant Channels saw child update active channel");
+	//	//console.log("Activate channel name is " + activeChannelName);
+	//}, [activeChannelName, activeChannelId]);
 
 	return (
 		<div id="channels">

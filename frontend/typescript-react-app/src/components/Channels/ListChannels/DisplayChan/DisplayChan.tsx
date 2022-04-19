@@ -12,7 +12,8 @@ export interface DisplayChanProps {
 	isDM?: boolean,
 	dm?: any,
 	setActiveDMName?: any,
-	setActiveDMID?: any
+	setActiveDMID?: any,
+	minId?: any
 }
 
 //TODO: a reprendre pour les dms
@@ -20,13 +21,16 @@ export default function DisplayChan(props: DisplayChanProps) {
 
 	const calledOnce = React.useRef(false);
 	const [isSelected, setIsSelected] = React.useState("false");
+	//const [firstIsSelected, setFirstIsSelected] = React.useState("false");
 	const [load, setLoad] = React.useState(false);
 
 	useEffect(() => {
 		if (calledOnce.current) {
 			return;
 		}
-		if (props.channel.id === 1 && calledOnce.current != true && props.isChan == true)
+		console.log("props channel id is " + props.channel.id);
+		console.log("props minId is " + props.minId);
+		if (calledOnce.current != true && props.channel.id == props.minId)
 		{
 			setIsSelected("true");
 		}
@@ -48,6 +52,20 @@ export default function DisplayChan(props: DisplayChanProps) {
 		}
 	}
 
+	function selectDM()
+	{
+		if (load == true && props.isDM == true)
+		{
+			let selected = document.getElementsByClassName("dm-title_selected");
+			selected.item(0).className = 'dm-title_notselected';
+			setIsSelected("true");
+			let other = document.getElementById("dm-title_".concat(props.channel.id));
+			other.className = "dm-title_selected";
+			props.setActiveDMName(props.channel.name);
+			props.setActiveDMID(props.channel.id);
+		}
+	}
+
 	return (
 		<>
 			<div className="display_chan" id={"display_chan".concat("_" + props.channel.name)}>
@@ -57,10 +75,9 @@ export default function DisplayChan(props: DisplayChanProps) {
 				</> : ""}
 			</div>
 			<div className="display_dm" id={"dm_chan".concat("_" + props.channel.name)}>
-				{/* TODO: a reprendre pour les DMs */}
 				{load == true && props.isDM == true ? <>
 					<button type="button" id={"dm-title_".concat(props.channel.id)} className={isSelected == "true" ? "dm-title_selected" : "dm-title_notselected" }
-					/*onClick={selecDM}*/>{props.channel.name}</button>
+					onClick={selectDM}>{props.channel.name}</button>
 				</> : ""}
 			</div>
 		</>
