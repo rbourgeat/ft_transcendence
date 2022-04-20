@@ -44,7 +44,8 @@ export default function CreateChan(props: CreateChanProps) {
 		else
 		{
 
-			toast.notifyDanger("Unsucessfull add");
+			//toast.notifyDanger("Unsucessfull add");
+			console.log("Did not add anything")
 			//props.setExited(!props.exited);
 			//props.setUpdate(chanName);//pour trigger un update
 		}
@@ -69,30 +70,32 @@ export default function CreateChan(props: CreateChanProps) {
 			console.log(typeof res.data);
 			isFree = res.data;
 			load = true;
+
+			axios.defaults.baseURL = 'http://localhost:3000/api/';
+			axios.defaults.headers.post['Content-Type'] = 'application/json';
+			axios.defaults.headers.post['Accept'] = '*/*';
+			axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+			axios.defaults.withCredentials = true;
+
+			let headers = {
+				'Content-Type': 'application/json'
+			}
+
+			let body = {};
+
 			if (res.data == true || res.data == "true")
 			{
 				//setIsFree("true");
-				console.log("it is damn true !");
-				console.log("result");
-				console.log(isFree);
-				console.log(load);
+				//console.log("it is damn true !");
+				//console.log("result");
+				//console.log(isFree);
+				//console.log(load);
+
 				//Ca ne rentre pas dans cette putin de condition
 				if (isFree == true && load == true)
 				{
-					console.log("creating channel");
+					//console.log("creating channel");
 					url = "http://localhost:3000/api/chat/";
-
-					let headers = {
-						'Content-Type': 'application/json'
-					}
-
-					axios.defaults.baseURL = 'http://localhost:3000/api/';
-					axios.defaults.headers.post['Content-Type'] = 'application/json';
-					axios.defaults.headers.post['Accept'] = '*/*';
-					axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
-					axios.defaults.withCredentials = true;
-
-					let body = {};
 
 					if (chanScope === "private")
 					{
@@ -102,16 +105,12 @@ export default function CreateChan(props: CreateChanProps) {
 							name: chanName
 						}
 					}
-					else
-					{
+					else {
 						body = {
 							public: true,
 							name: chanName
 						}
 					}
-
-					console.log("body is ");
-					console.log(body);
 
 					let res = axios.post(url, body, {headers})
 					.then(res => {
@@ -123,35 +122,52 @@ export default function CreateChan(props: CreateChanProps) {
 						console.log("Catched error on post api chat.");
 						console.log(error);
 					})
-				}
-				else if (load == true && res.data == false)
-				{
-					console.log("here");
-					toast.notifySuccess("here");
+				//}
 				}
 			}
-			//console.log("The name is free ? " + isFree);
-			//si c'est libre, je crée la channel, sinon je la join
-			//console.log(typeof isFree);
+			else if (res.data == false || res.data == "false")
+			{
+				//console.log("here");
+				//toast.notifySuccess("here");
+				//console.log("joining channel");
+				let url = "http://localhost:3000/api/chat/join";
 
-			//TODO: a reprendre
-			//if (isFree == "false" && load == true)
-			//{
-			//	console.log("joining channel");
-			//	let url = "http://localhost:3000/api/chat/join";
-			//}
-			//else if (load == false)
-			//{
-			//	//console.log("wrong type !")
-			//	console.log(load);
-			//	console.log(isFree);
-			//	console.log("Not loaded !");
-			//}
+				if (chanScope === "private")
+					{
+						body = {
+							password: chanPassword,
+							public: false,
+							name: chanName
+						}
+					}
+					else {
+						body = {
+							public: true,
+							name: chanName
+						}
+					}
 
-		})
-		.catch((error) => {
-			console.log("Error while getting exist");
-		})
+				let res = axios.post(url, body, {headers})
+					.then(res => {
+						//console.log("successfully joined a chat !");
+						console.log(res);
+						if (res.data.statusCode != 400 || res.data.statusCode != 401)
+						{
+							toast.notifySuccess("✨ Successfully joined channel !");
+							setSuccessfull(true);
+						}
+						else
+						{
+							toast.notifyDanger("Error while joining ! Name or password maybe wrong");
+							setSuccessfull(false);
+						}
+					})
+					.catch((error) => {
+						console.log("Catched error while joining channel");
+						console.log(error);
+					})
+			}})
+		.catch((error) => {console.log(error)})
 	}
 
 	return (
