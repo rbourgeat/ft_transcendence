@@ -49,6 +49,9 @@ export default function CreateChan(props: CreateChanProps) {
 			//props.setExited(!props.exited);
 			//props.setUpdate(chanName);//pour trigger un update
 		}
+		chanNameSet("");
+		chanScopeSet("public");
+		chanPasswordSet("");
 	}
 
 	const handleSend = () => {
