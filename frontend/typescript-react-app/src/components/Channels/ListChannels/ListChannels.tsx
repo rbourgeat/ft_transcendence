@@ -248,7 +248,7 @@ export default function ListChannels(props: ListChannelsProps) {
 					<div className="add-channel-a">
 						<p className="quick--add">Quick actions</p>
 						<CreateChan setExited={setExited} setUpdate={setUpdate} exited={exited}/>
-						<CreateDM />
+						<CreateDM setExited={setExited} setUpdate={setUpdate} exited={exited}/>
 					</div>
 					<p className="selected--categorie">{selectedCat== "Channels" ? "Channels you are in" : "Your direct messages"}</p>
 					<div className="displaying-div">

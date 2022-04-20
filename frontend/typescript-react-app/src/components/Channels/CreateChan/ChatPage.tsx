@@ -3,12 +3,13 @@ import Nav from '../../Nav/Nav';
 import MyAxios from '../../Utils/Axios/Axios';
 import ToastAlerts from '../../Utils/ToastAlerts/ToastAlerts';
 import { ToastContainer, toast } from 'react-toastify';
+import axios from "axios";
 
 interface ChatProps {
     username?: string
 }
 
-//TODO: a reprendre ?
+//TODO: a reprendre ? / a supprimer
 export default function Chat(props: ChatProps) {
     function createChat()
     {
@@ -19,7 +20,20 @@ export default function Chat(props: ChatProps) {
     function listChats()
     {
         let ax = new MyAxios(null);
-        let res = ax.get_api_chat();
+
+        //axios.defaults.baseURL = 'http://localhost:3000/api/';
+		//axios.defaults.headers.post['Content-Type'] = 'application/json';
+		//	axios.defaults.headers.post['Accept'] = '*/*';
+		//	axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+		//	axios.defaults.withCredentials = true;
+
+		//let headers = {
+		//	'Content-Type': 'application/json'
+		//}
+
+		//let body = {};
+
+        //let res = ax.get_api_chat();
     }
 
         return (
