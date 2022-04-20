@@ -338,6 +338,28 @@ export class UserMigration1645626140921 implements MigrationInterface {
             }),
         );
 
+        const game3 = await queryRunner.manager.save(
+            queryRunner.manager.create<Game>(Game, {
+                game_mode: 1,
+                winner_score: 5,
+                loser_score: 3,
+                winner: "dummy1",
+                loser: "dummy4",
+                players: [dummy1, dummy4]
+            }),
+        );
+
+        const game4 = await queryRunner.manager.save(
+            queryRunner.manager.create<Game>(Game, {
+                game_mode: 1,
+                winner_score: 5,
+                loser_score: 3,
+                winner: "dummy2",
+                loser: "dummy1",
+                players: [dummy2, dummy1]
+            }),
+        );
+
         const bahaasgame1 = await queryRunner.manager.save(
             queryRunner.manager.create<Game>(Game, {
                 game_mode: 0,
