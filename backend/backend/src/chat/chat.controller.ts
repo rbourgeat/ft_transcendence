@@ -140,6 +140,7 @@ export class ChatController {
     @ApiOperation({ summary: 'Unmute user' }) //endpoint summary on swaggerui
     @ApiOkResponse({ description: 'user unmute' }) //answer sent back
     @ApiConflictResponse({ description: 'user not mute' }) //not working atm
+    @UseGuards(JwtAuthenticationGuard)
     @Post('unmute')
     async unmute(@Body() chat: ChatDto, @Request() req) {
         console.log(req.user + ' unmute ' + chat.user + ' in chat' + chat.idChat)
@@ -186,10 +187,10 @@ export class ChatController {
     @UseGuards(JwtAuthenticationGuard)
     @Get(':channelName/exist')
     async getChatExist(@Param('channelName') channelName: string, @Request() req) {
-        if (this.chatService.chatExist(channelName))
-            return (String("true"));
-        else
-            return (String("false"));
-        //return (this.chatService.chatExist(channelName));
+        //if (this.chatService.chatExist(channelName))
+        //    return (String("true"));
+        //else
+        //    return (String("false"));
+        return (this.chatService.chatExist(channelName));
     }
 }

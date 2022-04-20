@@ -5,6 +5,7 @@ import axios from "axios";
 import { ToastContainer } from 'react-toastify';
 import ToastAlerts from '../../Utils/ToastAlerts/ToastAlerts';
 import MyAxios from '../../Utils/Axios/Axios';
+import { BsWindowSidebar } from 'react-icons/bs';
 
 export interface ParticipantProps {
 	//setActiveChannelName?: any,
@@ -30,17 +31,19 @@ export default function ListParticipant(props: ParticipantProps) {
 	const [participates, updateParticipates] = React.useState([]);
 
 	React.useEffect(() => {
-
-		axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
-		axios.defaults.withCredentials = true;
-		axios.get(`http://localhost:3000/api/chat/${props.activeChannelId}/users`)
-			.then(response => {
-				updateParticipates(response.data);
-				console.log("participates are updated");
-			})
-			.catch(error => {
-				console.log("error");
-			})
+		const getUsers = async () => {
+			axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+			axios.defaults.withCredentials = true;
+			await axios.get(`http://localhost:3000/api/chat/${props.activeChannelId}/users`)
+				.then(response => {
+					updateParticipates(response.data);
+					console.log("participates are updated");
+				})
+				.catch(error => {
+					console.log("error");
+				})
+		}
+		getUsers();
 	}, [props.activeChannelId])
 
 	React.useEffect(() => {
@@ -68,6 +71,10 @@ export default function ListParticipant(props: ParticipantProps) {
 				return unbanUser();
 			case 'unmute':
 				return unmuteUser();
+			case 'leave':
+				return leaveChannel();
+			case 'profile':
+				return seeProfile();
 		}
 	}
 
@@ -128,6 +135,10 @@ export default function ListParticipant(props: ParticipantProps) {
 		toast.notifyDanger("A reprendre.");
 	}
 
+	function seeProfile() {
+		window.top.location = "http://localhost:3030/profile/".concat(selectedUser);
+	}
+
 	async function leaveChannel() {
 		let toast = new ToastAlerts(null);
 		const url = 'http://localhost:3000/api/chat/quit';
@@ -185,11 +196,11 @@ export default function ListParticipant(props: ParticipantProps) {
 		await axios.post(url, body)
 			.then(response => {
 				console.log(response);
-				toast.notifySuccess("Successfully unbanned");
+				toast.notifySuccess("Successfully unmuted");
 			})
 			.catch(error => {
 				console.log(error);
-				toast.notifyDanger("Error while unbanning");
+				toast.notifyDanger("Error while unmuting");
 			})
 	}
 
@@ -224,6 +235,7 @@ export default function ListParticipant(props: ParticipantProps) {
 					<div id="participants--div">
 						{participates.map(participate =>
 							<Participant
+								currentUser={props.login}
 								key={participate.id}
 								username={participate.user.login}
 								role={participate.role}

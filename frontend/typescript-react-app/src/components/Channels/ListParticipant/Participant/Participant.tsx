@@ -1,7 +1,9 @@
 import './Participant.scss';
 import React, { useEffect } from "react";
+import { FaCrown, FaVolumeMute, FaBan, FaShieldAlt } from "react-icons/fa";
 
 export interface ParticipantsProps {
+	currentUser?: string,
 	username?: string,
 	role?: string,
 	owner?: boolean,
@@ -13,6 +15,7 @@ export interface ParticipantsProps {
 export default function Participant(props: ParticipantsProps) {
 	const [isBanned, setIsBanned] = React.useState("ban");
 	const [isMuted, setIsMuted] = React.useState("mute");
+	const [isAdmin, setIsAdmin] = React.useState(false);
 
 	const calledOnce = React.useRef(false);
 
@@ -21,13 +24,12 @@ export default function Participant(props: ParticipantsProps) {
 			setIsBanned("unban");
 		else if (props.role === 'mute')
 			setIsMuted("unmute");
-
 		if (calledOnce.current) {
 			return;
 		}
 		console.log('props of ' + props.username + ', owner: ' + props.owner + ', admin: ' + props.admin + ', role: ' + props.role);
 		calledOnce.current = true;
-	}, [isBanned, isMuted]);
+	}, [isBanned, isMuted, isAdmin]);
 
 	function setUpBan() {
 		props.updateFunctionToUse(isBanned);
@@ -45,15 +47,16 @@ export default function Participant(props: ParticipantsProps) {
 		props.updateFunctionToUse(isMuted);
 		if (isMuted === 'mute') {
 			document.getElementById("mute-click").innerHTML = 'unmute';
-			setIsBanned("unmute");
+			setIsMuted("unmute");
 		}
 		else {
 			document.getElementById("mute-click").innerHTML = 'mute';
-			setIsBanned("mute");
+			setIsMuted("mute");
 		}
 	}
 
 	function setUpAdmin() {
+		setIsAdmin(true);
 		props.updateFunctionToUse("admin");
 		document.getElementById("admin-click").remove();
 	}
@@ -63,19 +66,34 @@ export default function Participant(props: ParticipantsProps) {
 		document.getElementById("block-click").remove();
 	}
 
+	function setUpLeave() {
+		props.updateFunctionToUse("leave");
+	}
+
+	function setUpProfile() {
+		props.updateFunctionToUse("profile");
+	}
+
 	return (
 		<div className="participant--div">
 			{<div className="dropdown show">
 				<a className="btn btn-sm dropdown-toggle p--participant" role="button" data-toggle="dropdown" onClick={() => props.updateSelectedUser(props.username)}>
-					{props.username}
+					{props.owner ? <FaCrown /> : ""} {props.admin ? <FaShieldAlt /> : ""} {isBanned === "unban" ? <FaBan /> : ""}{isMuted === "unmute" ? <FaVolumeMute /> : ""} {props.username}
 				</a>
-				<div className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-					<a id="ban-click" className="dropdown-item" onClick={() => setUpBan()}>{isBanned}</a>
-					<a id="admin-click" className="dropdown-item" onClick={() => setUpAdmin()}>set admin</a>
-					<a id="mute-click" className="dropdown-item" onClick={() => setUpMute()}>{isMuted}</a>
-					<a className="dropdown-item" onClick={() => props.updateFunctionToUse("invite")}>invite to play</a>
-					<a className="dropdown-item" onClick={() => setUpBlock()}>block</a>
-				</div>
+				{props.currentUser === props.username ?
+					<div className="dropdown-menu" aria-labelledby="dropdownMenuButton1" >
+						<a className="dropdown-item" onClick={() => setUpLeave()}>leave</a>
+					</div>
+					:
+					<div className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+						<a id="ban-click" className="dropdown-item" onClick={() => setUpBan()}>{isBanned}</a>
+						<a id="admin-click" className="dropdown-item" onClick={() => setUpAdmin()}>set admin</a>
+						<a id="mute-click" className="dropdown-item" onClick={() => setUpMute()}>{isMuted}</a>
+						<a className="dropdown-item" onClick={() => props.updateFunctionToUse("invite")}>invite to play</a>
+						<a className="dropdown-item" onClick={() => setUpBlock()}>block</a>
+						<a className="dropdown-item" onClick={() => setUpProfile()}>see profile</a>
+					</div>
+				}
 			</div>
 			}
 		</div>);

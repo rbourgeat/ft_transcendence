@@ -38,22 +38,36 @@ export default function Channels(props: ChatProps) {
 	setSocket(socket);
 	*/
 
+	async function getUser() {
+		let url = "http://localhost:3000/api/auth/";
+		axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+		axios.defaults.withCredentials = true;
+		await axios.get(url)
+			.then(res => {
+				setUsername(res.data.login);
+				setUser(res.data);
+			})
+			.catch((err) => {
+				console.log("Error while getting api auth");
+			})
+		setLoad(true);
+	}
+
+	//let newSocket = io("http://localhost:3000/chat", { query: { username: username } });
+	/*
+	const [socket, setSocket] = React.useState(io("http://localhost:3000/chat", { query: { username: username } }));
+	socket.on('connect', () => {
+		console.log(`online ` + username);
+		socket.emit('status', username + ':online')
+	})
+
+	socket.on('disconnect', () => {
+		console.log(`offline ` + username);
+		socket.emit('status', username + ':offline')
+	})
+*/
+
 	useEffect(() => {
-		async function getUser() {
-			let url = "http://localhost:3000/api/auth/";
-			let username = "";
-			axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
-			axios.defaults.withCredentials = true;
-			await axios.get(url)
-				.then(res => {
-					username = res.data.login;
-					setUser(res.data);
-				})
-				.catch((err) => {
-					console.log("Error while getting api auth");
-				})
-			setLoad(true);
-		}
 		getUser();
 		if (calledOnce.current) {
 			return;
@@ -61,7 +75,7 @@ export default function Channels(props: ChatProps) {
 		setActiveChannelID("1");
 		setActiveChannelName("DummyChannel");
 		calledOnce.current = true;
-	}, []);
+	}, [username]);
 
 	//TODO @malatini : a revoir
 	useEffect(() => {
@@ -90,22 +104,22 @@ export default function Channels(props: ChatProps) {
 						setActiveDMName={setActiveDMName} setActiveDMID={setActiveDMID}
 						setIsDM={setIsDM} setIsChan={setIsChan}
 					/>
-					: ""}
+						: ""}
 					{/* Attention ici est-ce qu'on veut les setters ou simplement les variables ? */}
 					{load == true ? <ListDiscussions login={username}
-										//setActiveChannelName={setActiveChannelName} setActiveChannelID={setActiveChannelID}
-										//setActiveDMName={setActiveDMName} setActiveDMID={setActiveDMID}
-										activeChannelName={activeChannelName} activeChannelId={activeChannelId}
-										activeDMName={activeDMName} activeDMId={activeDMID}
-										isDM={isDM} isChan={isChan}/>
+						//setActiveChannelName={setActiveChannelName} setActiveChannelID={setActiveChannelID}
+						//setActiveDMName={setActiveDMName} setActiveDMID={setActiveDMID}
+						activeChannelName={activeChannelName} activeChannelId={activeChannelId}
+						activeDMName={activeDMName} activeDMId={activeDMID}
+						isDM={isDM} isChan={isChan} />
 						: ""}
 					{load == true ? <ListParticipant login={username}
-									//setActiveChannelName={setActiveChannelName} setActiveChannelID={setActiveChannelID}
-									//setActiveDMName={setActiveDMName} setActiveDMID={setActiveDMID}
-									//setIsDM={setIsDM} setIsChan={setIsChan}
-									activeChannelName={activeChannelName} activeChannelId={activeChannelId}
-									activeDMName={activeDMName} activeDMId={activeDMID}
-									isDM={isDM} isChan={isChan}
+						//setActiveChannelName={setActiveChannelName} setActiveChannelID={setActiveChannelID}
+						//setActiveDMName={setActiveDMName} setActiveDMID={setActiveDMID}
+						//setIsDM={setIsDM} setIsChan={setIsChan}
+						activeChannelName={activeChannelName} activeChannelId={activeChannelId}
+						activeDMName={activeDMName} activeDMId={activeDMID}
+						isDM={isDM} isChan={isChan}
 					/>
 						: ""}
 				</div>
