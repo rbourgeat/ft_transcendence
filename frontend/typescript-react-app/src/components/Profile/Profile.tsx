@@ -55,21 +55,22 @@ export default function Profile() {
 			.then(res => {
 				console.log(res);
 				setUserOk(true);
-				setLevel(res.data.percent_to_next_lvl);
-				setNextLevel(res.data.level);
+				setNextLevel(res.data.percent_to_next_lvl);
+				setLevel(res.data.level);
+				setRank(res.data.rank)
 				setPoints(res.data.points);
 				setTotalGames(res.data.total_games);
 				setLoss(res.data.total_loss);
-				setWins(res.data.wins);
+				setWins(res.data.total_wins);
 				setRatio(res.data.win_loss_ration);
 				setXp(res.data.xp);
-				if (res.data.status == "offline")
+				if (res.data.status === "offline")
 					setColor("grey")
-				if (res.data.status == "online") {
+				if (res.data.status === "online") {
 					setColor("green");
 					setStatus("online");
 				}
-				if (res.data.status == "ingame") {
+				if (res.data.status === "ingame") {
 					setColor("purple");
 					setStatus("ingame")
 				}
@@ -303,6 +304,8 @@ export default function Profile() {
 											pauseOnHover
 										/>
 										{isFriend == true ? <Badge
+											rank={rank}
+											level={level}
 											login={login}
 											total_wins={wins}
 											total_loss={loss}
