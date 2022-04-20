@@ -13,7 +13,8 @@ export interface CreateChanProps {
 	action?: any,
 	handleshow?: any,
 	setExited?: any,
-	setUpdate?: any
+	setUpdate?: any,
+	exited?: any
 }
 export default function CreateChan(props: CreateChanProps) {
 
@@ -30,15 +31,22 @@ export default function CreateChan(props: CreateChanProps) {
 
 	const handleExit = () => {
 		let toast = new ToastAlerts(null);
-		//if (sucessfull == true)
-		//{
-		//	toast.notifySuccess("Successfully added");
-		//}
-		if (sucessfull == false)
+
+		console.log("it is successfull ? " + sucessfull);
+		if (sucessfull == true)
 		{
+			//toast.notifySuccess("Successfully added");
+			console.log("result will be " + !props.exited);
+			//redirection crade pour recharger la page
+			//window.top.location = "http://localhost:3030/channels";
+			props.setExited(!props.exited);
+		}
+		else
+		{
+
 			toast.notifyDanger("Unsucessfull add");
-			props.setExited(true);
-			props.setUpdate(chanName);//pour trigger un update
+			//props.setExited(!props.exited);
+			//props.setUpdate(chanName);//pour trigger un update
 		}
 	}
 
@@ -109,7 +117,7 @@ export default function CreateChan(props: CreateChanProps) {
 					.then(res => {
 						console.log("successfully posted a chat !");
 						setSuccessfull(true);
-						toast.notifySuccess("✨ Successfully created channel !")
+						toast.notifySuccess("✨ Successfully created channel !");
 					})
 					.catch((error) => {
 						console.log("Catched error on post api chat.");
