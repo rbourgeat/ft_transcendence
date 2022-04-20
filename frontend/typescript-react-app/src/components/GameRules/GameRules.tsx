@@ -27,20 +27,21 @@ export default function GameRules() {
 
 	//const calledOnce = React.useRef(false);
 
-	let socket = io("http://localhost:3000/game", { query: { username: username } });
+	//let socket = io("http://localhost:3000/game", { query: { username: username } });
 
 	useEffect(() => {
 		getUser();
-
-		socket.on('connect', () => {
-			console.log(`Socket connectée !`);
-			//socket.emit('status', username + ':online')
-		})
-
-		socket.on('disconnect', () => {
-			console.log(`Socket déconnectée !`);
-			//socket.emit('status', username + ':offline')
-		})
+		/*
+				socket.on('connect', () => {
+					console.log(`Socket connectée !`);
+					//socket.emit('status', username + ':online')
+				})
+		
+				socket.on('disconnect', () => {
+					console.log(`Socket déconnectée !`);
+					//socket.emit('status', username + ':offline')
+				})
+				*/
 	}, []);
 
 	return (

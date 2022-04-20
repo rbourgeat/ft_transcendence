@@ -36,11 +36,13 @@ export default function TypingMessage() {
     useEffect(() => {
     }, []);
 
+    /*
     let socket = io("http://localhost:3000/chat", { query: { username: username } });
 
     function sendMessage(channel: string, message: string) {
         socket.emit('message', username + ":" + channel + ":" + message)
     }
+    */
 
     return (
         <div id="typing--div">
@@ -55,10 +57,10 @@ export default function TypingMessage() {
                 <button
                     type="submit"
                     className="btn btn-outline-dark"
-                    onClick={() => sendMessage("DummyChannel", text)}
+                //onClick={() => sendMessage("DummyChannel", text)}
                 >
                     Send
-					</button>
+                </button>
             </section>
         </div>
     );
