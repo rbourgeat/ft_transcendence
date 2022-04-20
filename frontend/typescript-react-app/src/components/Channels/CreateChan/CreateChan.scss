@@ -5,12 +5,18 @@
 	width: 85% !important;
 	//border: 0.1rem solid red !important;
 	border-radius: variables.$border-radius-big !important;
+	margin: 2px !important;
+	//padding: 0px !important;
 }
 
 #create_title {
 	font-family: variables.$big-font;
 	font-size: 14px;
 }
+
+//#create-chan_div {
+//	margin: 0px !important;
+//}
 
 //#modal_create {
 //	background: black !important;

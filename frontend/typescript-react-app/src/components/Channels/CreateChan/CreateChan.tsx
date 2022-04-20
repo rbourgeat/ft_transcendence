@@ -63,7 +63,7 @@ export default function CreateChan(props: CreateChanProps) {
 		let isFree = false;
 		axios.get(url)
 		.then(res => {
-			console.log("Get checked if exist.");
+			//console.log("Get checked if exist.");
 			console.log(res);//si existe renvoie faux
 			console.log(res.data);
 			console.log(typeof res.data);
@@ -115,7 +115,7 @@ export default function CreateChan(props: CreateChanProps) {
 
 					let res = axios.post(url, body, {headers})
 					.then(res => {
-						console.log("successfully posted a chat !");
+						console.log("successfully created a chat !");
 						setSuccessfull(true);
 						toast.notifySuccess("✨ Successfully created channel !");
 					})
@@ -124,12 +124,12 @@ export default function CreateChan(props: CreateChanProps) {
 						console.log(error);
 					})
 				}
-				else {
+				else if (load == true && res.data == false)
+				{
 					console.log("here");
-					}
+					toast.notifySuccess("here");
 				}
-			//setIsFree(res.data);
-			setLoad(true);
+			}
 			//console.log("The name is free ? " + isFree);
 			//si c'est libre, je crée la channel, sinon je la join
 			//console.log(typeof isFree);
@@ -154,43 +154,8 @@ export default function CreateChan(props: CreateChanProps) {
 		})
 	}
 
-	const createChannel = () => {
-		//let toast = new ToastAlerts(null);
-		//toast.notifyDanger("A revoir");
-		//return ;
-
-		let ax = new MyAxios(null);
-
-		//if (chanScope === "public") {
-		//	axios.post(endpoint, {
-		//		"public": chanScope === "public" ? true : false,
-		//		"name": chanName
-		//	})
-		//		.catch(function (error) {
-		//			console.log(error);
-		//		});
-		//}
-		//else {
-		//	axios.post(endpoint, {
-		//		"password": chanPassword,
-		//		"public": chanScope === "public" ? true : false,
-		//		"name": chanName
-		//	})
-		//		.then(function (response) {
-		//			console.log(response);
-		//		})
-		//		.catch(function (error) {
-		//			console.log(error);
-		//		});
-		//}//		.then(function (response) {
-		//			console.log(response);
-		//		})
-
-	}
-
-
 	return (
-		<div>
+		<div id="create-chan_div">
 			<button type="button" className="btn btn-success"
 							id="createchan-button" /*onClick={createJoinChan}*/
 							onClick={handleShow}
