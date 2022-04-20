@@ -45,6 +45,9 @@ export default function ListChannels(props: ListChannelsProps) {
 				let channels = res.data;
 				let len = channels.length;
 				let i = 0;
+
+				console.log(res);
+
 				let first = 0;
 				while (i < len) {
 					if (channels[i].direct == false)
@@ -81,6 +84,9 @@ export default function ListChannels(props: ListChannelsProps) {
 				let len = DMs.length;
 				let i = 0;
 				let first = 0;
+
+				console.log(res);
+
 				//trier sur direct true
 				while (i < len) {
 					if (DMs[i].direct == true)
@@ -98,7 +104,8 @@ export default function ListChannels(props: ListChannelsProps) {
 				}
 				setLoad(true);
 				props.setIsChan("false");
-				props.setIsDM("true")
+				props.setIsDM("true");
+				console.log("dms are " + DMs);
 				//setLoad(true);//a re voir pour le set load
 			})
 			.catch((error) => {
@@ -134,17 +141,19 @@ export default function ListChannels(props: ListChannelsProps) {
 		console.log("We whould remove displayed chan");
 	}
 
-	//premier use effect pour le chargement
+	//nécessaire pour mettre à jour suite à la fermeture d'un modal
 	useEffect(() => {
-	//if (calledOnce.current) {
-	//	return;
-	//}
-		//console.log("called useEffect");
-		//setLoad(false);
 		clean();
 		displaySelectedCat(selectedCat);
-		//calledOnce.current = true;
-	}, [exited]) //[exited]
+	}, [exited])
+
+	//permet d'afficher les channels sans faire de doublons
+	useEffect(() => {
+		if (load == true )
+		{
+			displaySelectedCat(selectedCat);
+		}
+		}, [])
 
 	//useEffect(() => {
 	////deuxieme ôur les modifs
@@ -189,9 +198,8 @@ export default function ListChannels(props: ListChannelsProps) {
 
 	function displayDM()
 	{
-		//console.log("calling display dm")
-		//setSelectedCat("DMs");
-		//console.log("Calling display dms");
+		//Ne surtout pas commenter !
+		setSelectedCat("DMs");
 
 		//Faire la même chose dans l'autre sens
 		let chans = Array.from(document.getElementsByClassName("displaying_channels"));
@@ -207,6 +215,8 @@ export default function ListChannels(props: ListChannelsProps) {
 			i++;
 		}
 		//console.log("here");
+
+		console.log("displaying DMs");
 		displaySelectedCat("DMs");
 	}
 

@@ -242,7 +242,7 @@ export class UserMigration1645626140921 implements MigrationInterface {
             queryRunner.manager.create<Chat>(Chat, {
                 name: "SecretChannel",
                 public: false,
-                password: "secret"
+                password: "SecretPass"
             }),
         );
 
