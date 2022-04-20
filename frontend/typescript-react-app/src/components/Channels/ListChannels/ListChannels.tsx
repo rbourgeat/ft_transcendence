@@ -1,5 +1,5 @@
 import './ListChannels.scss';
-import React, {Component, useState, useEffect} from "react";
+import React, { Component, useState, useEffect } from "react";
 import Nav from "../../Nav/Nav";
 import myAxios from "../../Utils/Axios/Axios";
 import axios from "axios";
@@ -18,7 +18,7 @@ export interface ListChannelsProps {
 	login: string,
 	setIsDM?: any,
 	setIsChan?: any,
-	minIdDM?: any
+	minIdDM?: any,
 }
 
 export default function ListChannels(props: ListChannelsProps) {
@@ -36,13 +36,12 @@ export default function ListChannels(props: ListChannelsProps) {
 	const calledOnce = React.useRef(false);
 	const [count, setCount] = React.useState(0);
 
-	function renderListChannels()
-	{
+	function renderListChannels() {
 		//console.log("rendering all channels");
 		axios.defaults.withCredentials = true;
 		const url = "http://localhost:3000/api/chat/joinedChannels";
 		axios.get(url)
-			.then( res => {
+			.then(res => {
 				let channels = res.data;
 				let len = channels.length;
 				let i = 0;
@@ -52,10 +51,8 @@ export default function ListChannels(props: ListChannelsProps) {
 				let first = 0;
 
 				while (i < len) {
-					if (channels[i].direct == false)
-					{
-						if (first == 0)
-						{
+					if (channels[i].direct == false) {
+						if (first == 0) {
 							setMinID(channels[i].id);
 							first = 1;
 							setCount(1);
@@ -71,21 +68,20 @@ export default function ListChannels(props: ListChannelsProps) {
 				//setCount(res.data.length);
 				//console.log("count is " + count);
 				setLoad(true);
-				props.setIsChan("true");
-				props.setIsDM("false");
+				props.setIsChan(true);
+				props.setIsDM(false);
 			})
 			.catch((error) => {
 				console.log("Error while getting all channels");
 			})
 	}
 
-	function renderListDMs()
-	{
+	function renderListDMs() {
 		//console.log("should render dms");
 		axios.defaults.withCredentials = true;
 		const url = "http://localhost:3000/api/chat/joinedChannels";
 		axios.get(url)
-			.then( res => {
+			.then(res => {
 				let DMs = res.data;
 				let len = DMs.length;
 				let i = 0;
@@ -95,10 +91,8 @@ export default function ListChannels(props: ListChannelsProps) {
 
 				//trier sur direct true
 				while (i < len) {
-					if (DMs[i].direct == true)
-					{
-						if (first == 0)
-						{
+					if (DMs[i].direct == true) {
+						if (first == 0) {
 							setMinID(DMs[i].id);
 							first = 1;
 							setCount(1);
@@ -113,8 +107,9 @@ export default function ListChannels(props: ListChannelsProps) {
 				//setCount(res.data.length);
 				//console.log("count is " + count);
 				setLoad(true);
-				props.setIsChan("false");
-				props.setIsDM("true");
+				props.setIsChan(false);
+				props.setIsDM(true);
+
 				console.log("dms are " + DMs);
 				//setLoad(true);//a re voir pour le set load
 			})
@@ -125,29 +120,29 @@ export default function ListChannels(props: ListChannelsProps) {
 		//console.log(DMs);
 	}
 
-	function displaySelectedCat(arg: string)
-	{
+	function displaySelectedCat(arg: string) {
 		//let toast = new ToastAlerts(null);
 		//toast.notifyDanger("En cours - ne pas tester");
 		//setSelectedCat(arg);
-		if (arg == "Channels")
-		{
+		if (arg == "Channels") {
+			console.log("selected cat is Channels");
+			props.setIsChan(true);
+			props.setIsDM(false);
 			renderListChannels();
 		}
-		else if (arg== "DMs")
-		{
+		else if (arg == "DMs") {
 			console.log("selected cat is DMS");
+			props.setIsChan(false);
+			props.setIsDM(true);
 			//console.log("should not display channels but dms");
 			renderListDMs();
 		}
-		else
-		{
+		else {
 			console.log("Its null !!");
 		}
 	}
 
-	function removeDisplayChans()
-	{
+	function removeDisplayChans() {
 		console.log("We whould remove displayed chan");
 	}
 
@@ -159,11 +154,10 @@ export default function ListChannels(props: ListChannelsProps) {
 
 	//permet d'afficher les channels sans faire de doublons
 	useEffect(() => {
-		if (load == true )
-		{
+		if (load == true) {
 			displaySelectedCat(selectedCat);
 		}
-		}, [])
+	}, [])
 
 	//useEffect(() => {
 	////deuxieme ôur les modifs
@@ -178,13 +172,11 @@ export default function ListChannels(props: ListChannelsProps) {
 
 	//}
 
-	function clean()
-	{
+	function clean() {
 		let chans = Array.from(document.getElementsByClassName("displaying_channels"));
 		let len = chans.length;
 		let i: number = 0;
-		while (i < len)
-		{
+		while (i < len) {
 			//suppression dans le dom et dans notre variable state
 			chans.pop();
 			//channels.pop();
@@ -196,8 +188,7 @@ export default function ListChannels(props: ListChannelsProps) {
 		chans = Array.from(document.getElementsByClassName("displaying_dm"));
 		len = chans.length;
 		i = 0;
-		while (i < len)
-		{
+		while (i < len) {
 			//suppression dans le dom et dans notre variable state
 			chans.pop();
 			DMs.pop();
@@ -206,8 +197,7 @@ export default function ListChannels(props: ListChannelsProps) {
 		}
 	}
 
-	function displayDM()
-	{
+	function displayDM() {
 		//Ne surtout pas commenter !
 		setSelectedCat("DMs");
 		setCount(0);
@@ -215,8 +205,7 @@ export default function ListChannels(props: ListChannelsProps) {
 		let chans = Array.from(document.getElementsByClassName("displaying_channels"));
 		let len = chans.length;
 		let i: number = 0;
-		while (i < len)
-		{
+		while (i < len) {
 			//suppression dans le dom et dans notre variable state
 			chans.pop();
 			//channels.pop();
@@ -230,16 +219,14 @@ export default function ListChannels(props: ListChannelsProps) {
 		displaySelectedCat("DMs");
 	}
 
-	function displayChannels()
-	{
+	function displayChannels() {
 		//console.log("calling display channels")
 		setSelectedCat("Channels");
 		setCount(0);
 		let chans = Array.from(document.getElementsByClassName("displaying_dm"));
 		let len = chans.length;
 		let i: number = 0;
-		while (i < len)
-		{
+		while (i < len) {
 			//suppression dans le dom et dans notre variable state
 			chans.pop();
 			DMs.pop();
@@ -252,73 +239,71 @@ export default function ListChannels(props: ListChannelsProps) {
 
 	return (
 		<div id="listChannels" className="col-3" >
-				<div id="channel--col">
-					<div className="title--channel--col">
-						<p className="channels-title">Channels</p>
-					</div>
-					<div className="add-channel-a">
-						<p className="quick--add">Quick actions</p>
-						<CreateChan setExited={setExited} setUpdate={setUpdate} exited={exited}/>
-						<CreateDM setExited={setExited} setUpdate={setUpdate} exited={exited}/>
-					</div>
-					<p className="selected--categorie">{selectedCat== "Channels" ? "Channels you are in" : "Your direct messages"}</p>
-					<div className="displaying-div">
-						{load == true && selectedCat == "Channels" && count != 0 ?
-							Object.keys(channels).map(function(key, index) {
-								if (channels[key].id != undefined && selectedCat === "Channels")
-								{
-									return (
-										<div key={channels[key].id} className="displaying_channels">
-											<DisplayChan isChan={true} isDM={false} channel={channels[key]} minId={minId}
-												setActiveChannelName={props.setActiveChannelName} setActiveChannelId={props.setActiveChannelID}
-												setActiveDMName={props.setActiveDMName} setActiveDMID={props.setActiveDMID}
-											/>
-										</div>
-									)
-								}})
+			<div id="channel--col">
+				<div className="title--channel--col">
+					<p className="channels-title">Channels</p>
+				</div>
+				<div className="add-channel-a">
+					<CreateChan setExited={setExited} setUpdate={setUpdate} exited={exited} />
+					<CreateDM setExited={setExited} setUpdate={setUpdate} exited={exited} />
+				</div>
+				<p className="selected--categorie">{selectedCat == "Channels" ? "Channels you are in" : "Your direct messages"}</p>
+				<div className="displaying-div">
+					{load == true && selectedCat == "Channels" && count != 0 ?
+						Object.keys(channels).map(function (key, index) {
+							if (channels[key].id != undefined && selectedCat === "Channels") {
+								return (
+									<div key={channels[key].id} className="displaying_channels">
+										<DisplayChan isChan={true} isDM={false} channel={channels[key]} minId={minId}
+											setActiveChannelName={props.setActiveChannelName} setActiveChannelId={props.setActiveChannelID}
+											setActiveDMName={props.setActiveDMName} setActiveDMID={props.setActiveDMID}
+										/>
+									</div>
+								)
+							}
+						})
 						: ""}
-						{/* TODO: a tester css */}
-						{load == true && selectedCat == "Channels" && count == 0 ?
+					{/* TODO: a tester css */}
+					{load == true && selectedCat == "Channels" && count == 0 ?
 						<>
 							<p className="no_message">You have no channel 🥲</p>
 						</>
 						: ""}
-						{load == true && selectedCat == "DMs" && count == 0 ?
+					{load == true && selectedCat == "DMs" && count == 0 ?
 						<>
 							<p className="no_message">You have no DM 🥲</p>
 						</>
 						: ""}
-						{load == true && selectedCat == "DMs" && count != 0?
-							Object.keys(DMs).map(function(key, index) {
-								if (DMs[key].id != undefined && selectedCat === "DMs")
-								{
-									return (
-										<div key={DMs[key].id} className="displaying_dm">
-											<DisplayChan dm={DMs[key]}
-												isChan={false} isDM={true} channel={DMs[key]} minId={minId}
-												setActiveChannelName={props.setActiveChannelName} setActiveChannelId={props.setActiveChannelID}
-												setActiveDMName={props.setActiveDMName} setActiveDMID={props.setActiveDMID}/>
-										</div>)
-								}
-							})
+					{load == true && selectedCat == "DMs" && count != 0 ?
+						Object.keys(DMs).map(function (key, index) {
+							if (DMs[key].id != undefined && selectedCat === "DMs") {
+								return (
+									<div key={DMs[key].id} className="displaying_dm">
+										<DisplayChan dm={DMs[key]}
+											isChan={false} isDM={true} channel={DMs[key]} minId={minId}
+											setActiveChannelName={props.setActiveChannelName} setActiveChannelId={props.setActiveChannelID}
+											setActiveDMName={props.setActiveDMName} setActiveDMID={props.setActiveDMID} />
+									</div>)
+							}
+						})
 						: ""}
-					</div>
-					<div className="send--dm_div">
-						<button type="button" className="btn btn-light" id="send--dm" onClick={displayDM} disabled={selectedCat == "DMs" ? true : false}>DM</button>
-						<button type="button" className="btn btn-light" id="display--channels" onClick={displayChannels} disabled={selectedCat == "Channels" ? true : false}>Channels</button>
-					</div>
-					<ToastContainer
-						position="top-right"
-						autoClose={5000}
-						hideProgressBar={false}
-						newestOnTop={false}
-						closeOnClick
-						rtl={false}
-						pauseOnFocusLoss
-						draggable
-						pauseOnHover
-					/>
 				</div>
+				<div className="send--dm_div">
+					<button type="button" className="btn btn-light" id="send--dm" onClick={displayDM} disabled={selectedCat == "DMs" ? true : false}>DM</button>
+					<button type="button" className="btn btn-light" id="display--channels" onClick={displayChannels} disabled={selectedCat == "Channels" ? true : false}>Channels</button>
+				</div>
+				<ToastContainer
+					position="top-right"
+					autoClose={5000}
+					hideProgressBar={false}
+					newestOnTop={false}
+					closeOnClick
+					rtl={false}
+					pauseOnFocusLoss
+					draggable
+					pauseOnHover
+				/>
+			</div>
 		</div>
 	);
 }

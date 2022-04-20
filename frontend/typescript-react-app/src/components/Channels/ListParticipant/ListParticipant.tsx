@@ -18,8 +18,8 @@ export interface ParticipantProps {
 	activeChannelId?: any,
 	activeDMName?: any,
 	activeDMId?: any
-	isDM?: any,
-	isChan?: any
+	isDM?: boolean,
+	isChan?: boolean
 }
 
 export default function ListParticipant(props: ParticipantProps) {
@@ -31,10 +31,40 @@ export default function ListParticipant(props: ParticipantProps) {
 
 
 	React.useEffect(() => {
-		getUsers();
+		console.log("--------------");
+		console.log("isDM:" + props.isDM);
+		console.log("isChan:" + props.isChan);
+		console.log("activeDMId:" + props.activeDMId);
+		console.log("activeDMName:" + props.activeDMName);
+		console.log("activeChannelName:" + props.activeChannelName);
+		console.log("--------------");
+
+		if (props.isChan === true) {
+			console.log("goto getUsersfromChannel")
+			getUsersfromChannel();
+
+		}
+		else if (props.isChan === false) {
+			console.log("goto getUsersfromDM")
+			getUsersfromDM();
+
+		}
 		getCurrentUserAdminStatus();
 
-		async function getUsers() {
+		async function getUsersfromDM() {
+			axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+			axios.defaults.withCredentials = true;
+			await axios.get(`http://localhost:3000/api/chat/${props.activeDMId}/users`)
+				.then(response => {
+					updateParticipates(response.data);
+					console.log("participates are updated");
+				})
+				.catch(error => {
+					console.log("error");
+				})
+		}
+
+		async function getUsersfromChannel() {
 			axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 			axios.defaults.withCredentials = true;
 			await axios.get(`http://localhost:3000/api/chat/${props.activeChannelId}/users`)
@@ -245,6 +275,7 @@ export default function ListParticipant(props: ParticipantProps) {
 					<div id="participants--div">
 						{participates.map(participate =>
 							<Participant
+								isChannel={props.isChan}
 								currentUserAdmin={currentUserAdmin}
 								currentUser={props.login}
 								key={participate.id}
