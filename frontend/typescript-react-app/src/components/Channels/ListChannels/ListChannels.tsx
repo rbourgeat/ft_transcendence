@@ -141,9 +141,10 @@ export default function ListChannels(props: ListChannelsProps) {
 	//}
 		//console.log("called useEffect");
 		//setLoad(false);
+		clean();
 		displaySelectedCat(selectedCat);
 		//calledOnce.current = true;
-	}, [update])
+	}, [exited]) //[exited]
 
 	//useEffect(() => {
 	////deuxieme ôur les modifs
@@ -158,10 +159,38 @@ export default function ListChannels(props: ListChannelsProps) {
 
 	//}
 
+	function clean()
+	{
+		let chans = Array.from(document.getElementsByClassName("displaying_channels"));
+		let len = chans.length;
+		let i: number = 0;
+		while (i < len)
+		{
+			//suppression dans le dom et dans notre variable state
+			chans.pop();
+			//channels.pop();
+			channels.pop();
+			//console.log("poping channels");
+			i++;
+		}
+
+		chans = Array.from(document.getElementsByClassName("displaying_dm"));
+		len = chans.length;
+		i = 0;
+		while (i < len)
+		{
+			//suppression dans le dom et dans notre variable state
+			chans.pop();
+			DMs.pop();
+			//console.log("poping dm");
+			i++;
+		}
+	}
+
 	function displayDM()
 	{
 		//console.log("calling display dm")
-		setSelectedCat("DMs");
+		//setSelectedCat("DMs");
 		//console.log("Calling display dms");
 
 		//Faire la même chose dans l'autre sens
@@ -208,7 +237,7 @@ export default function ListChannels(props: ListChannelsProps) {
 					</div>
 					<div className="add-channel-a">
 						<p className="quick--add">Quick actions</p>
-						<CreateChan setExited={setExited} setUpdate={setUpdate}/>
+						<CreateChan setExited={setExited} setUpdate={setUpdate} exited={exited}/>
 						<CreateDM />
 					</div>
 					<p className="selected--categorie">{selectedCat== "Channels" ? "Channels you are in" : "Your direct messages"}</p>

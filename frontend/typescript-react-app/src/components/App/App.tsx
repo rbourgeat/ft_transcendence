@@ -185,7 +185,6 @@ function App() {
             <Route path="/user" element={<UserSub/>} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/live" element={<Live />} />
-            <Route path="/chat" element={<CreateChan endpoint={undefined} action={undefined} />} />
             <Route path="/auth" element={<UserSub />} />
             <Route path="/channels" element={<Channels />} />
             <Route path="/people" element={<People login={username} />} />
