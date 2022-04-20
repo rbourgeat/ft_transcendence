@@ -1,7 +1,7 @@
 import { Request, Req, Body, Controller, Delete, Get, Param, Patch, Post, UseInterceptors, UploadedFile, UseGuards } from '@nestjs/common';
 import { ChatService } from './chat.service';
 import { CreateChatDto, ChatDto } from './dto/chat.dto';
-import { ApiBody, ApiConflictResponse, ApiConsumes, ApiOkResponse, ApiOperation, ApiParam, ApiQuery, ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger'
+import { ApiBody, ApiConflictResponse, ApiConsumes, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger'
 import { FileInterceptor } from '@nestjs/platform-express';
 import RequestWithUser from 'src/auth/interface/requestWithUser.interface';
 import JwtAuthenticationGuard from 'src/auth/guard/jwt-authentication.guard';
@@ -64,8 +64,8 @@ export class ChatController {
     @ApiOkResponse({ description: 'chat quit' })
     @UseGuards(JwtAuthenticationGuard)
     @Post('quit')
-    async quitChat(@Body() chat: CreateChatDto, @Req() req: RequestWithUser) {
-        return this.chatService.quitChat(chat, req.user);
+    async quitChat(@Body() chat: ChatDto, @Request() req) {
+        return this.chatService.quitChat(chat.idChat, req.user);
     }
 
     @ApiOperation({ summary: 'Create a new chat [jwt-protected]' })
@@ -83,7 +83,7 @@ export class ChatController {
     @UseGuards(JwtAuthenticationGuard)
     @Post('/:userLogin/direct')
     async createDirectMessage(@Param('userLogin') user: string, @Req() req: RequestWithUser) {
-        let user2 = await this.userService.getUserByLogin(user);
+        const user2 = await this.userService.getUserByLogin(user);
         return await this.chatService.createDirectMessage(req.user, user2);
     }
 
@@ -100,44 +100,48 @@ export class ChatController {
     @ApiOperation({ summary: 'Adding new admin' }) //endpoint summary on swaggerui
     @ApiOkResponse({ description: 'new admin added' }) //answer sent back
     @ApiConflictResponse({ description: 'admin already admin' }) //not working atm
+    @UseGuards(JwtAuthenticationGuard)
     @Post('setAdmin')
     async setAdmin(@Body() chat: ChatDto, @Request() req) {
-        console.log(req.user + 'set admin' + chat.user + ' to chat ' + chat.idChat)
+        console.log(req.user.login + ' set admin ' + chat.user + ' to chat ' + chat.idChat)
         return this.chatService.setAdmin(chat.idChat, chat.user, req.user);
     }
 
     @ApiOperation({ summary: 'Ban user' }) //endpoint summary on swaggerui
     @ApiOkResponse({ description: 'user banned' }) //answer sent back
     @ApiConflictResponse({ description: 'user already banned' }) //not working atm
+    @UseGuards(JwtAuthenticationGuard)
     @Post('ban')
-    async ban(@Body() chat: ChatDto, @Req() req: RequestWithUser) {
-        console.log(req.user + ' ban ' + chat.user + ' in chat' + chat.idChat)
+    async ban(@Body() chat: ChatDto, @Request() req) {
+        console.log(req.user.login + ' ban ' + chat.user + ' in chat' + chat.idChat)
         return this.chatService.ban(chat.idChat, chat.user, req.user, chat.time);
     }
 
     @ApiOperation({ summary: 'Unban user' }) //endpoint summary on swaggerui
     @ApiOkResponse({ description: 'user unbanned' }) //answer sent back
     @ApiConflictResponse({ description: 'user not banned' }) //not working atm
+    @UseGuards(JwtAuthenticationGuard)
     @Post('unban')
-    async unban(@Body() chat: ChatDto, @Req() req: RequestWithUser) {
-        console.log(req.user + ' unban ' + chat.user + ' in chat' + chat.idChat)
+    async unban(@Body() chat: ChatDto, @Request() req) {
+        console.log(req.user.login + ' unban ' + chat.user + ' in chat' + chat.idChat)
         return this.chatService.active(chat.idChat, chat.user, req.user);
     }
 
     @ApiOperation({ summary: 'Mute user' }) //endpoint summary on swaggerui
     @ApiOkResponse({ description: 'user mute' }) //answer sent back
     @ApiConflictResponse({ description: 'user already mute' }) //not working atm
+    @UseGuards(JwtAuthenticationGuard)
     @Post('mute')
-    async mute(@Body() chat: ChatDto, @Req() req: RequestWithUser) {
-        console.log(req.user + ' mute ' + chat.user + ' in chat' + chat.idChat)
-        return this.chatService.ban(chat.idChat, chat.user, req.user, chat.time);
+    async mute(@Body() chat: ChatDto, @Request() req) {
+        console.log(req.user.login + ' mute ' + chat.user + ' in chat' + chat.idChat)
+        return this.chatService.mute(chat.idChat, chat.user, req.user, chat.time);
     }
 
     @ApiOperation({ summary: 'Unmute user' }) //endpoint summary on swaggerui
     @ApiOkResponse({ description: 'user unmute' }) //answer sent back
     @ApiConflictResponse({ description: 'user not mute' }) //not working atm
     @Post('unmute')
-    async unmute(@Body() chat: ChatDto, @Req() req: RequestWithUser) {
+    async unmute(@Body() chat: ChatDto, @Request() req) {
         console.log(req.user + ' unmute ' + chat.user + ' in chat' + chat.idChat)
         return this.chatService.active(chat.idChat, chat.user, req.user);
     }
@@ -177,4 +181,15 @@ export class ChatController {
         return this.chatService.getUsersInChannel(channelId);
     }
 
+    @ApiOperation({ summary: 'Boolean to know if that chat exist [jwt-protected + for swagger test only]' })
+    @ApiOkResponse({ description: 'Suceed' })
+    @UseGuards(JwtAuthenticationGuard)
+    @Get(':channelName/exist')
+    async getChatExist(@Param('channelName') channelName: string, @Request() req) {
+        if (this.chatService.chatExist(channelName))
+            return (String("true"));
+        else
+            return (String("false"));
+        //return (this.chatService.chatExist(channelName));
+    }
 }

@@ -1,11 +1,13 @@
 @use "../../variables";
 
-.card, .card--locked, .card--unlocked {
+.card,
+.card--locked,
+.card--unlocked {
     width: 18rem !important;
     margin: 20px !important;
     background-color: white;
     border: 0.1rem solid variables.$lightgrey;
-    filter: drop-shadow(0 0 0.3rem rgb(0, 0, 0));
+    filter: drop-shadow(0 0 0.3rem rgb(183, 181, 181));
 }
 
 .card--unlocked {
@@ -20,7 +22,11 @@
     border-radius: variables.$border-radius;
 }
 
-#achievements > *, .card, .card-group, .card--locked, .card--unlocked {
+#achievements>*,
+.card,
+.card-group,
+.card--locked,
+.card--unlocked {
     border-radius: variables.$border-radius !important;
 }
 
@@ -38,7 +44,7 @@
 }
 
 .checkmark {
-	margin-top: 15%;
+    margin-top: 15%;
     margin-left: 80%;
     font-size: 60px;
     color: rgb(32, 123, 114);

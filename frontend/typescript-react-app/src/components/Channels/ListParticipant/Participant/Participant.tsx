@@ -1,40 +1,82 @@
 import './Participant.scss';
-import React from "react";
+import React, { useEffect } from "react";
 
-export interface ParticipantSProps {
+export interface ParticipantsProps {
 	username?: string,
-	status?: string
+	role?: string,
 	owner?: boolean,
-	admin?: boolean
+	admin?: boolean,
+	updateSelectedUser?: any,
+	updateFunctionToUse?: any
 }
 
-//TODO: écrire les props proprement x) !!
-export interface ParticipantSState {
+export default function Participant(props: ParticipantsProps) {
+	const [isBanned, setIsBanned] = React.useState("ban");
+	const [isMuted, setIsMuted] = React.useState("mute");
 
-}
+	const calledOnce = React.useRef(false);
 
-export default function Participant({ username, status, owner, admin, updateSelectedUser, updateFunctionToUse }) {
+	useEffect(() => {
+		if (props.role === 'ban')
+			setIsBanned("unban");
+		else if (props.role === 'mute')
+			setIsMuted("unmute");
+
+		if (calledOnce.current) {
+			return;
+		}
+		console.log('props of ' + props.username + ', owner: ' + props.owner + ', admin: ' + props.admin + ', role: ' + props.role);
+		calledOnce.current = true;
+	}, [isBanned, isMuted]);
+
+	function setUpBan() {
+		props.updateFunctionToUse(isBanned);
+		if (isBanned === 'ban') {
+			document.getElementById("ban-click").innerHTML = 'unban';
+			setIsBanned("unban");
+		}
+		else {
+			document.getElementById("ban-click").innerHTML = 'ban';
+			setIsBanned("ban");
+		}
+	}
+
+	function setUpMute() {
+		props.updateFunctionToUse(isMuted);
+		if (isMuted === 'mute') {
+			document.getElementById("mute-click").innerHTML = 'unmute';
+			setIsBanned("unmute");
+		}
+		else {
+			document.getElementById("mute-click").innerHTML = 'mute';
+			setIsBanned("mute");
+		}
+	}
+
+	function setUpAdmin() {
+		props.updateFunctionToUse("admin");
+		document.getElementById("admin-click").remove();
+	}
+
+	function setUpBlock() {
+		props.updateFunctionToUse("block");
+		document.getElementById("block-click").remove();
+	}
+
 	return (
 		<div className="participant--div">
 			{<div className="dropdown show">
-				<a className="btn btn-sm dropdown-toggle p--participant" role="button" data-toggle="dropdown" onClick={() => updateSelectedUser(username)}>
-					{username}
+				<a className="btn btn-sm dropdown-toggle p--participant" role="button" data-toggle="dropdown" onClick={() => props.updateSelectedUser(props.username)}>
+					{props.username}
 				</a>
 				<div className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-					<a className="dropdown-item" onClick={() => updateFunctionToUse("ban")}>ban</a>
-					<a className="dropdown-item" onClick={() => updateFunctionToUse("admin")}>set admin</a>
-					<a className="dropdown-item" onClick={() => updateFunctionToUse("mute")}>mute</a>
-					<a className="dropdown-item" onClick={() => updateFunctionToUse("invite")}>invite to play</a>
-					<a className="dropdown-item" onClick={() => updateFunctionToUse("block")}>block</a>
+					<a id="ban-click" className="dropdown-item" onClick={() => setUpBan()}>{isBanned}</a>
+					<a id="admin-click" className="dropdown-item" onClick={() => setUpAdmin()}>set admin</a>
+					<a id="mute-click" className="dropdown-item" onClick={() => setUpMute()}>{isMuted}</a>
+					<a className="dropdown-item" onClick={() => props.updateFunctionToUse("invite")}>invite to play</a>
+					<a className="dropdown-item" onClick={() => setUpBlock()}>block</a>
 				</div>
 			</div>
-				/*<div className="dropdown p--participant">
-				<p onClick={() => updateSelectedUser("username")} className="dropbtn">{username}</p>
-				<div id="myDropdown" className="dropdown-content">
-					<a>Home</a>
-					<a>About</a>
-					<a>Contact</a>
-				</div>
-				</div>*/}
+			}
 		</div>);
 }

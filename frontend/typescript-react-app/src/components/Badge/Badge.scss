@@ -11,15 +11,17 @@
 #graph-title,  #badge--title, #p--wins, #badge--stats > *, .text {
   color: white !important;
   font-family: variables.$basic-font;
-  font-size: 12px;
+  font-size: 16px !important;
+  font-weight: 700 !important;
 }
 
 #badge--stats-2 > *, .text {
   color: white !important;
   font-family: variables.$basic-font;
-  font-size: 12px;
+  font-size: 16px;
   text-align: left;
   margin-left: 25%;
+  font-weight: 700 !important;
 }
 
 #badge--wins {

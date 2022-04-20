@@ -13,6 +13,7 @@ import { AuthService } from '../auth/auth.service';
 import { WsException } from '@nestjs/websockets';
 import { from } from 'rxjs';
 import { ChatInterface } from './test.interface';
+import { constants } from 'zlib';
 
 @Injectable()
 export class ChatService {
@@ -55,14 +56,14 @@ export class ChatService {
 	}
 
 	async getChatsFromUser(user: User) {
-		let listParticipateCard = await this.participateRepository.find({
+		const listParticipateCard = await this.participateRepository.find({
 			where: [
 				{ user: user },
 			],
 			relations: ['user', 'chat'],
 		});
 
-		let channelsIds: number[] = [];
+		const channelsIds: number[] = [];
 		listParticipateCard.forEach((participate: Participate) => {
 			channelsIds.push(participate.chat.id);
 		});
@@ -143,7 +144,7 @@ export class ChatService {
 		);
 		await this.participateRepository.save(newParticipate2);
 
-		let chatName = "direct_" + user1.id + "_" + user2.id;
+		const chatName = "direct_" + user1.id + "_" + user2.id;
 		const newChat = await this.chatRepository.create(
 			{
 				name: chatName,
@@ -168,9 +169,9 @@ export class ChatService {
 	async sendMessage(message: SendMessageToChatDto, user: User) {
 		console.log('search for chat');
 
-		let chat = await this.getChatByName(message.channel);
+		const chat = await this.getChatByName(message.channel);
 
-		let participate = await this.participateRepository.findOne({ user: user, chat: chat });
+		const participate = await this.participateRepository.findOne({ user: user, chat: chat });
 		if (participate.role == UserStatus.BAN || participate.role == UserStatus.MUTE) {
 			console.log('can\'t send message, you are banned or mute');
 			return;
@@ -191,12 +192,12 @@ export class ChatService {
 	 */
 
 	async joinChat(chat: CreateChatDto, user: User) {
-		let joinedChat = await this.getChatByName(chat.name);
+		const joinedChat = await this.getChatByName(chat.name);
 		if (joinedChat) {
 			if (chat.password == joinedChat.password) {
 				console.log('has good pass');
-				let chatT = await this.getChatByName(chat.name);
-				let participate = await this.participateRepository.findOne({ user: user, chat: chatT });
+				const chatT = await this.getChatByName(chat.name);
+				const participate = await this.participateRepository.findOne({ user: user, chat: chatT });
 				console.log(participate);
 				if (!participate) {
 					const newParticipate = await this.participateRepository.create(
@@ -220,9 +221,9 @@ export class ChatService {
 			return console.log(chat + ' not found');
 	}
 
-	async quitChat(chat: CreateChatDto, user: User) {
-		const chatT = await this.chatRepository.findOne({ name: chat.name });
-		let participateToDelete = await this.participateRepository.findOne({ user: user, chat: chatT });
+	async quitChat(id: number, user: User) {
+		const chatT = await this.chatRepository.findOne({ id });
+		const participateToDelete = await this.participateRepository.findOne({ user: user, chat: chatT });
 		await this.participateRepository.delete(participateToDelete);
 		return console.log('has quit chat');
 	}
@@ -235,7 +236,7 @@ export class ChatService {
 
 		const messages = chat.message;
 		//TODO clear message when u have a user blocked
-		let history: Message[] = [];
+		const history: Message[] = [];
 		for (const message of messages) {
 			history.push(message);
 		}
@@ -245,96 +246,104 @@ export class ChatService {
 	async ban(id: number, login: string, admin: User, time: Date) {
 		const chat = await this.chatRepository.findOne({ id });
 		const user = await this.userRepository.findOne({ login });
-		const participate = chat.participates.find(e => e == user.participate.find(e => e.chat == chat));
+		//const participate = chat.participates.find(e => e == user.participate.find(e => e.chat == chat));
+
+		const participate = await this.participateRepository.findOne({
+			where: [{ chat: chat, user: user }]
+		});
+
 		if (!participate)
 			return console.log("L'utilisateur ne peut pas être banni car il n'est pas dans le chat !");
-		if (!admin.participate.find(e => e.chat == chat).admin)
+		const adminParticipate = await this.participateRepository.findOne({
+			where: [{ chat: chat, user: admin }]
+		});
+		if (!adminParticipate.admin)
 			return console.log("L'utilisateur ne peut pas bannir car il n'est pas admin du chat !");
-		if (user.participate.find(e => e.chat == chat).admin || user.participate.find(e => e.chat == chat).owner)
+		if (participate.admin || participate.owner)
 			return console.log("L'utilisateur ne peut pas bannir un admin !");
 
-		user.participate.find(e => e.chat == chat).role = UserStatus.BAN;
-
-		await this.userRepository.save(user);
+		//user.participate.find(e => e.chat == chat).role = UserStatus.BAN;
+		participate.role = UserStatus.BAN;
 		if (time)
-			user.participate.find(e => e.chat == chat).timestamp = time;
+			participate.timestamp = time;
 
-		await this.userRepository.save(user);
-		console.log(user + ' banned');
-		return user.participate.find(e => e.chat == chat);
+		await this.participateRepository.save(participate);
+
+		//await this.userRepository.save(user);
+		console.log(user.login + ' has been banned');
+		//return user.participate.find(e => e.chat == chat);
 	}
 
 	async active(id: number, login: string, admin: User) {
 		const chat = await this.chatRepository.findOne({ id });
 		const user = await this.userRepository.findOne({ login });
-		const participate = chat.participates.find(e => e == user.participate.find(e => e.chat == chat));
+		const participate = await this.participateRepository.findOne({
+			where: [{ chat: chat, user: user }]
+		});
 
 		if (!participate)
 			return console.log("L'utilisateur ne peut pas être débanni/démute car il n'est pas dans le chat !");
-		if (!admin.participate.find(e => e.chat == chat).admin)
+		const adminParticipate = await this.participateRepository.findOne({
+			where: [{ chat: chat, user: admin }]
+		});
+		if (!adminParticipate.admin)
 			return console.log("L'utilisateur ne peut pas débannir/démute car il n'est pas admin du chat !");
 
-		user.participate.find(e => e.chat == chat).role = UserStatus.ACTIVE;
+		participate.timestamp = null;
+		participate.role = UserStatus.ACTIVE;
 
-		user.participate.find(e => e.chat == chat).timestamp = null;
-
-		await this.userRepository.save(user);
-		console.log(user + ' unbanned or unmuted');
-		return user.participate.find(e => e.chat == chat);
+		await this.participateRepository.save(participate);
+		console.log(user.login + ' unbanned or unmuted');
+		//return user.participate.find(e => e.chat == chat);
 	}
 
 	async mute(id: number, login: string, admin: User, time: Date) {
 		const chat = await this.chatRepository.findOne({ id });
 		const user = await this.userRepository.findOne({ login });
-		const participate = chat.participates.find(e => e == user.participate.find(e => e.chat == chat));
+		//const participate = chat.participates.find(e => e == user.participate.find(e => e.chat == chat));
+		const participate = await this.participateRepository.findOne({
+			where: [{ chat: chat, user: user }]
+		});
 		if (!participate)
 			return console.log("L'utilisateur ne peut pas être mute car il n'est pas dans le chat !");
-		if (!admin.participate.find(e => e.chat == chat).admin)
+		const adminParticipate = await this.participateRepository.findOne({
+			where: [{ chat: chat, user: admin }]
+		});
+		if (!adminParticipate.admin)
 			return console.log("L'utilisateur ne peut pas mute car il n'est pas admin du chat !");
-		if (user.participate.find(e => e.chat == chat).admin || user.participate.find(e => e.chat == chat).owner)
+		if (participate.admin || participate.owner)
 			return console.log("L'utilisateur ne peut pas mute un admin !");
 
-		user.participate.find(e => e.chat == chat).role = UserStatus.MUTE;
+		participate.role = UserStatus.MUTE;
 		if (time)
-			user.participate.find(e => e.chat == chat).timestamp = time;
+			participate.timestamp = time;
 
-		await this.userRepository.save(user);
-		console.log(user + ' mute');
-		return user.participate.find(e => e.chat == chat);
+		await this.participateRepository.save(participate);
+		console.log(user.login + ' mute');
+		//return user.participate.find(e => e.chat == chat);
 	}
 
 	async setAdmin(id: number, login: string, admin: User) {
 		const chat = await this.chatRepository.findOne({ id });
 		const user = await this.userRepository.findOne({ login });
-		console.log(user);
 		const participate = await this.participateRepository.findOne({
-			where: [
-				{ chat: chat, user: user },
-			],
-		}
-		)
-		console.log(participate);
+			where: [{ chat: chat, user: user }]
+		});
 		if (!participate)
 			return console.log("L'utilisateur ne peut pas être admin car il n'est pas dans le chat !");
 
 		const adminParticipate = await this.participateRepository.findOne({
-			where: [
-				{ chat: chat, user: admin },
-			],
+			where: [{ chat: chat, user: admin }]
 		});
-		console.log('request from:' + adminParticipate);
+		//console.log('request from:' + adminParticipate.id);
 		if (!adminParticipate.owner)
 			return console.log("L'utilisateur ne peut pas rendre qqn admin car il n'est pas owner du chat !");
-		//if (user.participate.find(e => e.chat == chat).admin || user.participate.find(e => e.chat == chat).owner)
 		if (participate.admin || participate.owner)
 			return console.log("L'utilisateur ne peut pas rendre admin un admin !");
 
-
-		user.participate.find(e => e.chat == chat).admin = true;
-
-		await this.userRepository.save(user);
-		console.log(user + ' is now an admin');
-		return user.participate.find(e => e.chat == chat);
+		participate.admin = true;
+		await this.participateRepository.save(participate);
+		console.log(user.login + ' is now an admin');
 	}
 
 	async password(id: number, admin: User, password: string) {
@@ -379,37 +388,30 @@ export class ChatService {
 		return chat;
 	}
 
-	/*
-	let listParticipateCard = await this.participateRepository.find({
-			where: [
-				{ user: user },
-			],
-			relations: ['user', 'chat'],
-		});
-
-		let channelsIds: number[] = [];
-		listParticipateCard.forEach((participate: Participate) => {
-			channelsIds.push(participate.chat.id);
-		});
-		return this.chatRepository.findByIds(channelsIds);
-		*/
-
-
 	async getUsersInChannel(channelId: number) {
 		const chat = await this.chatRepository.findOne({ id: channelId });
 
-		let listParticipateCard = await this.participateRepository.find({
+		const listParticipateCard = await this.participateRepository.find({
 			where: [
 				{ chat: chat },
 			],
 			relations: ['user', 'chat'],
 		});
-
-		let usersIds: number[] = [];
+		/*
+		const usersIds: number[] = [];
 		listParticipateCard.forEach((participate: Participate) => {
 			usersIds.push(participate.user.id);
 		})
-		return this.userRepository.findByIds(usersIds)
+		*/
+		//return this.userRepository.findByIds(usersIds)
+		return listParticipateCard;
+	}
+
+	async chatExist(channelName: string) {
+		const chat = await this.chatRepository.findOne({ name: channelName });
+		if (chat)
+			return false;
+		return true;
 	}
 
 }

@@ -1,5 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, CreateDateColumn, Column, Unique, OneToMany, ManyToMany, JoinTable } from "typeorm";
 import { User } from 'src/user/entity/user.entity'
+import { find } from "rxjs";
 
 @Entity('game')
 export class Game {

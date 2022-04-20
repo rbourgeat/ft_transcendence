@@ -39,8 +39,16 @@
 }
 
 .chat--title {
-	font-family: variables.$big-font;
 	font-size: 12px;
+	font-family: variables.$big-font;
+}
+
+.chat--title_open {
+	font-size: 14px;
+	font-family: variables.$basic-font;
+}
+
+.chat--title,  .chat--title_open {
 	text-align: center;
 	padding-top: 10px !important;
 }

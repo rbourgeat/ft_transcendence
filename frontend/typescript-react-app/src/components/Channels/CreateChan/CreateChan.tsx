@@ -1,9 +1,21 @@
 import {Button, Modal, Form} from 'react-bootstrap';
 import axios from 'axios';
 import React, {useState} from "react";
+import ToastAlerts from '../../Utils/ToastAlerts/ToastAlerts';
+import MyAxios from '../../Utils/Axios/Axios';
+import "./CreateChan.scss";
+import { ToastContainer } from 'react-toastify';
 
-//TODO : a reprendre ? 
-export default function CreateChan({endpoint, action}) {
+//TODO : a reprendre ?
+
+export interface CreateChanProps {
+	endpoint?: any,
+	action?: any,
+	handleshow?: any,
+	setExited?: any,
+	setUpdate?: any
+}
+export default function CreateChan(props: CreateChanProps) {
 
 	const [show, setShow] = React.useState(false);
 	const handleClose = () => setShow(false);
@@ -12,52 +24,168 @@ export default function CreateChan({endpoint, action}) {
 	const [chanScope, chanScopeSet] = React.useState("public");
 	const [chanName, chanNameSet] = React.useState("");
 	const [chanPassword, chanPasswordSet] = React.useState("");
+	const [isFree, setIsFree] = React.useState("false");
+	const [sucessfull, setSuccessfull] = React.useState(false);
+	const [load, setLoad] = React.useState(false);
 
-	const createChannel = () => {
-		if (chanScope === "public") {
-			axios.post(endpoint, {
-				"public": chanScope === "public" ? true : false,
-				"name": chanName
-			})
-				.then(function (response) {
-					console.log(response);
-				})
-				.catch(function (error) {
-					console.log(error);
-				});
-		}
-		else {
-			axios.post(endpoint, {
-				"password": chanPassword,
-				"public": chanScope === "public" ? true : false,
-				"name": chanName
-			})
-				.then(function (response) {
-					console.log(response);
-				})
-				.catch(function (error) {
-					console.log(error);
-				});
+	const handleExit = () => {
+		let toast = new ToastAlerts(null);
+		//if (sucessfull == true)
+		//{
+		//	toast.notifySuccess("Successfully added");
+		//}
+		if (sucessfull == false)
+		{
+			toast.notifyDanger("Unsucessfull add");
+			props.setExited(true);
+			props.setUpdate(chanName);//pour trigger un update
 		}
 	}
 
+	const handleSend = async () => {
+		//console.log("Creating channel");
+		axios.defaults.withCredentials = true;
+
+		//Check si la channel existe ou pas
+		let url = "http://localhost:3000/api/chat/".concat(chanName).concat("/exist");
+
+		let toast = new ToastAlerts(null);
+
+		await axios.get(url)
+		.then(res => {
+			console.log("Get checked if exist.");
+			console.log(res);//si existe renvoie faux
+			console.log(res.data);
+			console.log(typeof res.data);
+
+			if (res.data == "true")
+			{
+				setIsFree("true");
+				console.log("it is damn true !");
+			}
+			//setIsFree(res.data);
+			//console.log("The name is free ? " + isFree);
+			//si c'est libre, je crée la channel, sinon je la join
+			//console.log(typeof isFree);
+		})
+		.catch((error) => {
+			console.log("Error while getting exist");
+		})
+		setLoad(true);
+		//.then(res =>
+		//{
+			if (isFree == "true" && load == true)
+			{
+				console.log("creating channel");
+				url = "http://localhost:3000/api/chat/";
+
+				let headers = {
+					'Content-Type': 'application/json'
+				}
+
+				axios.defaults.baseURL = 'http://localhost:3000/api/';
+				axios.defaults.headers.post['Content-Type'] = 'application/json';
+				axios.defaults.headers.post['Accept'] = '*/*';
+				axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+				axios.defaults.withCredentials = true;
+
+				let body = {};
+
+				if (chanScope === "private")
+				{
+					body = {
+						password: chanPassword,
+						public: false,
+						name: chanName
+					}
+				}
+				else
+				{
+					body = {
+						public: true,
+						name: chanName
+					}
+				}
+
+				console.log("body is ");
+				console.log(body);
+
+				let res = axios.post(url, body, {headers})
+				.then(res => {
+					console.log("successfully posted a chat !");
+					setSuccessfull(true);
+					toast.notifySuccess("✨ Successfully created channel !")
+				})
+				.catch((error) => {
+					console.log("Catched error on post api chat.");
+					console.log(error);
+				})
+			}
+			else if (isFree == "false" && load == true)
+			{
+				console.log("joining channel");
+				url = "http://localhost:3000/api/chat/join";
+			}
+			else
+			{
+				//console.log("wrong type !")
+				console.log(load);
+				console.log(isFree);
+				console.log("Not loaded !");
+			}
+		//})
+
+		//créer ou join en fonction du résultat précédent
+	}
+
+	const createChannel = () => {
+		//let toast = new ToastAlerts(null);
+		//toast.notifyDanger("A revoir");
+		//return ;
+
+		let ax = new MyAxios(null);
+
+		//if (chanScope === "public") {
+		//	axios.post(endpoint, {
+		//		"public": chanScope === "public" ? true : false,
+		//		"name": chanName
+		//	})
+		//		.catch(function (error) {
+		//			console.log(error);
+		//		});
+		//}
+		//else {
+		//	axios.post(endpoint, {
+		//		"password": chanPassword,
+		//		"public": chanScope === "public" ? true : false,
+		//		"name": chanName
+		//	})
+		//		.then(function (response) {
+		//			console.log(response);
+		//		})
+		//		.catch(function (error) {
+		//			console.log(error);
+		//		});
+		//}//		.then(function (response) {
+		//			console.log(response);
+		//		})
+
+	}
+
+
 	return (
 		<div>
-			<Button variant="secondary" onClick={handleShow}>{action} channel</Button>
-
-			<Modal show={show} onHide={handleClose}>
+			<button type="button" className="btn btn-success"
+							id="createchan-button" /*onClick={createJoinChan}*/
+							onClick={handleShow}
+							data-toggle="modal" data-target="#exampleModalCenter"
+						>New channel</button>
+			<Modal show={show} animation={true} onHide={handleClose} onExited={handleExit}>
 				<Modal.Header closeButton>
-					<Modal.Title>{action} a new channel</Modal.Title>
+					<Modal.Title id="create_title">Join or create a channel 💌</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
 					<Form>
-						<Form.Group>
-							<Form.Select aria-label="Channel visibility" onChange={e => chanScopeSet(e.target.value)} defaultValue="public">
-								<option value="public">public</option>
-								<option value="private">private</option>
-								<option value="protected">protected</option>
-							</Form.Select>
-						</Form.Group>
 						<Form.Group className="mb-3" controlId="channName">
 							<Form.Label>Channel name</Form.Label>
 							<Form.Control
@@ -65,7 +193,15 @@ export default function CreateChan({endpoint, action}) {
 								value={chanName}
 								onChange={e => {chanNameSet(e.target.value)}}
 								autoFocus
+								placeholder="my_unique_chanName"
 							/>
+						</Form.Group>
+						<Form.Group>
+							<Form.Label>Choose policy</Form.Label>
+							<Form.Select aria-label="Channel visibility" onChange={e => chanScopeSet(e.target.value)} defaultValue="public">
+								<option value="public">public</option>
+								<option value="private">private</option>
+							</Form.Select>
 						</Form.Group>
 						<Form.Group className="mb-3" controlId="channPassword">
 							<Form.Label>Channel password</Form.Label>
@@ -73,19 +209,31 @@ export default function CreateChan({endpoint, action}) {
 								type="password"
 								value={chanPassword}
 								onChange={e => {chanPasswordSet(e.target.value)}}
+								disabled={chanScope == "public" ? true : false}
 							/>
 						</Form.Group>
 					</Form>
 				</Modal.Body>
 				<Modal.Footer>
-					<Button variant="secondary" onClick={handleClose}>
+					<Button variant="ligth" onClick={handleClose}>
 						Close
 					</Button>
-					<Button variant="primary" type="submit" onClick={createChannel}>
-						{action}
+					<Button variant="dark" type="submit" onClick={handleSend}>
+						Send form
 					</Button>
 				</Modal.Footer>
 			</Modal>
+			<ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+			/>
 		</div>
 	);
 }

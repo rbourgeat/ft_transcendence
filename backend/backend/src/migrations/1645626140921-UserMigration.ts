@@ -80,7 +80,10 @@ export class UserMigration1645626140921 implements MigrationInterface {
                 status: 'online',
                 email: 'malatini@student.42.fr',
                 login42: 'malatini',
-                isTwoFactorAuthenticationEnabled: false
+                isTwoFactorAuthenticationEnabled: false,
+                points: 1000,
+                level: 1,
+                rank: 7
             }),
         );
 
@@ -225,6 +228,8 @@ export class UserMigration1645626140921 implements MigrationInterface {
             queryRunner.manager.create<Participate>(Participate, {
                 user: bahaas,
                 chat: channel1,
+                owner: true,
+                admin: true
             }),
         );
 
@@ -330,6 +335,28 @@ export class UserMigration1645626140921 implements MigrationInterface {
                 winner: "dummy3",
                 loser: "dummy4",
                 players: [dummy3, dummy4]
+            }),
+        );
+
+        const game3 = await queryRunner.manager.save(
+            queryRunner.manager.create<Game>(Game, {
+                game_mode: 1,
+                winner_score: 5,
+                loser_score: 3,
+                winner: "dummy1",
+                loser: "dummy4",
+                players: [dummy1, dummy4]
+            }),
+        );
+
+        const game4 = await queryRunner.manager.save(
+            queryRunner.manager.create<Game>(Game, {
+                game_mode: 1,
+                winner_score: 5,
+                loser_score: 3,
+                winner: "dummy2",
+                loser: "dummy1",
+                players: [dummy2, dummy1]
             }),
         );
 

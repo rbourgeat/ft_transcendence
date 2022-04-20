@@ -32,27 +32,35 @@
 }
 
 //boutons solo horizontal
-#invite--button, #admin--buton, #leave--button, #kick--button {
+#invite--button,
+#admin--buton,
+#leave--button,
+#kick--button {
 	border-radius: variables.$border-radius-big;
 	width: 100%;
 	position: sticky;
-	margin-top: 2px !important;
+	margin-top: 10px !important;
 	color: white !important;
 	width: 98% !important;
 	margin-left: 3px !important;
 }
 
 //Boutons duo horizontal
-#row--buttons_chat, #row--buttons_chat > *, #row--buttons_danger, #row--buttons_danger > *,
-#row--buttons_invite, #row--buttons_invite > *,  #row--buttons_admin, #row--buttons_admin > *
-{
+#row--buttons_chat,
+#row--buttons_chat>*,
+#row--buttons_danger,
+#row--buttons_danger>*,
+#row--buttons_invite,
+#row--buttons_invite>*,
+#row--buttons_admin,
+#row--buttons_admin>* {
 	margin: 0.5px !important;
 	padding: 3px !important;
 	border-radius: variables.$border-radius-big !important;
 }
 
-#players-channel-button, #players-dm-button
-{
+#players-channel-button,
+#players-dm-button {
 	width: 100% !important;
 	margin: 0.1px !important;
 	position: sticky;
@@ -64,7 +72,7 @@
 	font-size: 12px;
 }
 
-#roles > *:not(h3) {
+#roles>*:not(h3) {
 	font-family: variables.$basic-font;
 	font-size: 12px;
 }
@@ -73,6 +81,6 @@
 	font-size: 12px;
 }
 
-#roles--title{
+#roles--title {
 	font-size: 12px;
 }

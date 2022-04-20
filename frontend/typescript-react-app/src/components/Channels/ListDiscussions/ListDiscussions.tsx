@@ -6,7 +6,7 @@ import { io } from "socket.io-client";
 import axios from 'axios';
 import TypingMessage from "../TypingMessage/TypingMessage";
 
-//TODO: a reprendre
+//TODO: a reprendre @rbourgea
 
 /*
 export default function ListDiscussions({activeChannel}) {
@@ -66,13 +66,17 @@ export default function ListDiscussions({activeChannel}) {
 //export default function ListDiscussions({ activeChannel, username, socket }) {
 
 export interface ListDiscussionsProps {
-	setActiveChannelName?: any,
-	setActiveChannelID?: any
+	//setActiveChannelName?: any,
+	//setActiveChannelID?: any
 	login: string
-	setActiveDMName?: any,
-	setActiveDMID?: any,
-	setIsDM?: any,
-	setIsChan?: any
+	//setActiveDMName?: any,
+	//setActiveDMID?: any,
+	activeChannelName?: any,
+	activeChannelId?: any,
+	activeDMName?: any,
+	activeDMId?: any
+	isDM?: any,
+	isChan?: any
 }
 
 export default function ListDiscussions(props: ListDiscussionsProps) {
@@ -94,6 +98,7 @@ export default function ListDiscussions(props: ListDiscussionsProps) {
 			<div id="ListDiscussions" className="col-5">
 				<div className="title_chat_div">
 					<p className="chat--title">Chat</p>
+					<p className="chat--title_open">{props.isDM == "true" ? "Your open DM : ".concat(props.activeDMName) : "Your open channel : ".concat(props.activeChannelName)}</p>
 				</div>
 				<div className="messages-zone">
 				</div>
