@@ -72,8 +72,8 @@ export default function Channels(props: ChatProps) {
 		if (calledOnce.current) {
 			return;
 		}
-		setActiveChannelID("1");
-		setActiveChannelName("DummyChannel");
+		//setActiveChannelID("1");
+		//setActiveChannelName("DummyChannel");
 		calledOnce.current = true;
 	}, [username]);
 

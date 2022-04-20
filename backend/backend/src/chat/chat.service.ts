@@ -1,6 +1,6 @@
-import { HttpException, HttpStatus, Injectable, UnsupportedMediaTypeException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, getConnection, QueryRunner, PessimisticLockTransactionRequiredError } from 'typeorm';
+import { Repository } from 'typeorm';
 import { Chat } from './entity/chat.entity';
 import { CreateChatDto } from './dto/chat.dto';
 import { User } from 'src/user/entity/user.entity';
@@ -11,9 +11,6 @@ import { Socket } from 'socket.io';
 import { parse } from 'cookie';
 import { AuthService } from '../auth/auth.service';
 import { WsException } from '@nestjs/websockets';
-import { from } from 'rxjs';
-import { ChatInterface } from './test.interface';
-import { constants } from 'zlib';
 
 @Injectable()
 export class ChatService {
@@ -246,8 +243,6 @@ export class ChatService {
 	async ban(id: number, login: string, admin: User, time: Date) {
 		const chat = await this.chatRepository.findOne({ id });
 		const user = await this.userRepository.findOne({ login });
-		//const participate = chat.participates.find(e => e == user.participate.find(e => e.chat == chat));
-
 		const participate = await this.participateRepository.findOne({
 			where: [{ chat: chat, user: user }]
 		});
@@ -262,16 +257,12 @@ export class ChatService {
 		if (participate.admin || participate.owner)
 			return console.log("L'utilisateur ne peut pas bannir un admin !");
 
-		//user.participate.find(e => e.chat == chat).role = UserStatus.BAN;
 		participate.role = UserStatus.BAN;
 		if (time)
 			participate.timestamp = time;
 
 		await this.participateRepository.save(participate);
-
-		//await this.userRepository.save(user);
 		console.log(user.login + ' has been banned');
-		//return user.participate.find(e => e.chat == chat);
 	}
 
 	async active(id: number, login: string, admin: User) {
@@ -294,13 +285,11 @@ export class ChatService {
 
 		await this.participateRepository.save(participate);
 		console.log(user.login + ' unbanned or unmuted');
-		//return user.participate.find(e => e.chat == chat);
 	}
 
 	async mute(id: number, login: string, admin: User, time: Date) {
 		const chat = await this.chatRepository.findOne({ id });
 		const user = await this.userRepository.findOne({ login });
-		//const participate = chat.participates.find(e => e == user.participate.find(e => e.chat == chat));
 		const participate = await this.participateRepository.findOne({
 			where: [{ chat: chat, user: user }]
 		});
@@ -320,7 +309,6 @@ export class ChatService {
 
 		await this.participateRepository.save(participate);
 		console.log(user.login + ' mute');
-		//return user.participate.find(e => e.chat == chat);
 	}
 
 	async setAdmin(id: number, login: string, admin: User) {
@@ -335,7 +323,6 @@ export class ChatService {
 		const adminParticipate = await this.participateRepository.findOne({
 			where: [{ chat: chat, user: admin }]
 		});
-		//console.log('request from:' + adminParticipate.id);
 		if (!adminParticipate.owner)
 			return console.log("L'utilisateur ne peut pas rendre qqn admin car il n'est pas owner du chat !");
 		if (participate.admin || participate.owner)
@@ -392,18 +379,9 @@ export class ChatService {
 		const chat = await this.chatRepository.findOne({ id: channelId });
 
 		const listParticipateCard = await this.participateRepository.find({
-			where: [
-				{ chat: chat },
-			],
+			where: [{ chat: chat }],
 			relations: ['user', 'chat'],
 		});
-		/*
-		const usersIds: number[] = [];
-		listParticipateCard.forEach((participate: Participate) => {
-			usersIds.push(participate.user.id);
-		})
-		*/
-		//return this.userRepository.findByIds(usersIds)
 		return listParticipateCard;
 	}
 
@@ -412,6 +390,18 @@ export class ChatService {
 		if (chat)
 			return false;
 		return true;
+	}
+
+	async getIsAdmin(channelId: number, user: User) {
+		const chat = await this.chatRepository.findOne({ id: channelId });
+		const admin = await this.userRepository.findOne({ login: user.login });
+		const participate = await this.participateRepository.findOne({
+			where: [{ chat: chat, user: admin }]
+		});
+
+		if (participate.admin)
+			return true;
+		return false;
 	}
 
 }

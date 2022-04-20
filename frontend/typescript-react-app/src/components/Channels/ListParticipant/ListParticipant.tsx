@@ -5,7 +5,6 @@ import axios from "axios";
 import { ToastContainer } from 'react-toastify';
 import ToastAlerts from '../../Utils/ToastAlerts/ToastAlerts';
 import MyAxios from '../../Utils/Axios/Axios';
-import { BsWindowSidebar } from 'react-icons/bs';
 
 export interface ParticipantProps {
 	//setActiveChannelName?: any,
@@ -23,15 +22,19 @@ export interface ParticipantProps {
 	isChan?: any
 }
 
-//export default function ListParticipant({activeChannel})
 export default function ListParticipant(props: ParticipantProps) {
 	const [selectedUser, updateSelectedUser] = React.useState("");
 	const [functionToUse, updateFunctionToUse] = React.useState("");
-	const [loggedUser, updateLoggedUser] = React.useState({});
 	const [participates, updateParticipates] = React.useState([]);
 
+	const [currentUserAdmin, setCurrentUserAdmin] = React.useState(false);
+
+
 	React.useEffect(() => {
-		const getUsers = async () => {
+		getUsers();
+		getCurrentUserAdminStatus();
+
+		async function getUsers() {
 			axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 			axios.defaults.withCredentials = true;
 			await axios.get(`http://localhost:3000/api/chat/${props.activeChannelId}/users`)
@@ -43,7 +46,21 @@ export default function ListParticipant(props: ParticipantProps) {
 					console.log("error");
 				})
 		}
-		getUsers();
+
+		async function getCurrentUserAdminStatus() {
+
+			let url = "http://localhost:3000/api/chat/isAdminIn/".concat(props.activeChannelId);
+			axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+			axios.defaults.withCredentials = true;
+			await axios.get(url)
+				.then(res => {
+					if (res.data === true)
+						setCurrentUserAdmin(true);
+				})
+				.catch((err) => {
+					console.log("Error while getting api auth");
+				})
+		}
 	}, [props.activeChannelId])
 
 	React.useEffect(() => {
@@ -75,6 +92,8 @@ export default function ListParticipant(props: ParticipantProps) {
 				return leaveChannel();
 			case 'profile':
 				return seeProfile();
+			case 'dm':
+				return sendDM();
 		}
 	}
 
@@ -86,7 +105,6 @@ export default function ListParticipant(props: ParticipantProps) {
 			"idChat": props.activeChannelId,
 			"user": selectedUser,
 		}
-		//hardcoded idCHat
 		await axios.post(url, body)
 			.then(response => {
 				console.log(response);
@@ -106,7 +124,6 @@ export default function ListParticipant(props: ParticipantProps) {
 			"idChat": props.activeChannelId,
 			"user": selectedUser,
 		}
-		//hardcoded idCHat
 		await axios.post(url, body)
 			.then(response => {
 				console.log(response);
@@ -147,7 +164,6 @@ export default function ListParticipant(props: ParticipantProps) {
 			"idChat": props.activeChannelId,
 			"user": props.login,
 		}
-		//hardcoded idCHat
 		await axios.post(url, body)
 			.then(response => {
 				console.log(response);
@@ -172,7 +188,6 @@ export default function ListParticipant(props: ParticipantProps) {
 			"user": selectedUser,
 			"time": time
 		}
-		//hardcoded idCHat
 		await axios.post(url, body)
 			.then(response => {
 				console.log(response);
@@ -192,7 +207,6 @@ export default function ListParticipant(props: ParticipantProps) {
 			"idChat": props.activeChannelId,
 			"user": selectedUser,
 		}
-		//hardcoded idCHat
 		await axios.post(url, body)
 			.then(response => {
 				console.log(response);
@@ -206,16 +220,12 @@ export default function ListParticipant(props: ParticipantProps) {
 
 	async function setAdmin() {
 		const url = 'http://localhost:3000/api/chat/setAdmin';
-		//const time = new Date();
-		//time.setSeconds(time.getSeconds() + 600);
-		//console.log("selectedUser is " + selectedUser);
 		let toast = new ToastAlerts(null);
 
 		const body = {
 			"idChat": props.activeChannelId,
 			"user": selectedUser,
 		}
-		//hardcoded idCHat
 		await axios.post(url, body)
 			.then(response => {
 				console.log(response);
@@ -235,6 +245,7 @@ export default function ListParticipant(props: ParticipantProps) {
 					<div id="participants--div">
 						{participates.map(participate =>
 							<Participant
+								currentUserAdmin={currentUserAdmin}
 								currentUser={props.login}
 								key={participate.id}
 								username={participate.user.login}
@@ -247,49 +258,13 @@ export default function ListParticipant(props: ParticipantProps) {
 					</div>
 				}
 			</div>
-			{/*<div className="buttons_div">
+			<div className="buttons_div">
 				<div className="row">
 					<div className="col" id="row--button_invite">
-						<button id="invite--button" className="btn btn-warning" onClick={inviteToPlay}>Invite to play</button>
+						<button id="invite--button" className="btn btn-danger" onClick={leaveChannel}>Leave channel</button>
 					</div>
 				</div>
-
-				<div className="row" id="row--buttons_chat">
-					<div className="col">
-						<button id="players-dm-button" className="btn btn-success" onClick={sendDM}>DM</button>
-					</div>
-				</div>
-				<div className="row" id="row--buttons_danger">
-					<div className="col">
-						<button id="players-dm-button" className="btn btn-danger" onClick={banUser}>Block</button>
-					</div>
-					<div className="col">
-						<button id="players-channel-button" className="btn btn-danger" onClick={muteUser}>Mute</button>
-					</div>
-				</div>
-				<div className="row">
-					<div className="col" id="row--button_admin">
-						<button id="admin--buton" className="btn btn-secondary" onClick={setAdmin}>Set admin</button>
-					</div>
-				</div>
-				<div className="row">
-					<div className="col" id="row--button_kick">
-						<button id="kick--button" className="btn btn-danger" disabled>Kick</button>
-					</div>
-				</div>
-				<div className="row">
-					<div className="col" id="row--button_leave">
-						<button id="leave--button" className="btn btn-danger" disabled >Leave channel</button>
-					</div>
-				</div>
-			</div>*/
-				<div className="buttons_div">
-					<div className="row">
-						<div className="col" id="row--button_invite">
-							<button id="invite--button" className="btn btn-danger" onClick={leaveChannel}>Leave channel</button>
-						</div>
-					</div>
-				</div>}
+			</div>
 			<ToastContainer
 				position="top-right"
 				autoClose={5000}

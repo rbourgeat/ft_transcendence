@@ -4,6 +4,7 @@ import { FaCrown, FaVolumeMute, FaBan, FaShieldAlt } from "react-icons/fa";
 
 export interface ParticipantsProps {
 	currentUser?: string,
+	currentUserAdmin?: boolean,
 	username?: string,
 	role?: string,
 	owner?: boolean,
@@ -17,6 +18,7 @@ export default function Participant(props: ParticipantsProps) {
 	const [isMuted, setIsMuted] = React.useState("mute");
 	const [isAdmin, setIsAdmin] = React.useState(false);
 
+
 	const calledOnce = React.useRef(false);
 
 	useEffect(() => {
@@ -28,6 +30,7 @@ export default function Participant(props: ParticipantsProps) {
 			return;
 		}
 		console.log('props of ' + props.username + ', owner: ' + props.owner + ', admin: ' + props.admin + ', role: ' + props.role);
+		console.log('current user is:' + props.currentUser + ', its admin status:' + props.currentUserAdmin);
 		calledOnce.current = true;
 	}, [isBanned, isMuted, isAdmin]);
 
@@ -77,21 +80,21 @@ export default function Participant(props: ParticipantsProps) {
 	return (
 		<div className="participant--div">
 			{<div className="dropdown show">
-				<a className="btn btn-sm dropdown-toggle p--participant" role="button" data-toggle="dropdown" onClick={() => props.updateSelectedUser(props.username)}>
+				<p className="btn btn-sm dropdown-toggle p--participant" role="button" data-toggle="dropdown" onClick={() => props.updateSelectedUser(props.username)}>
 					{props.owner ? <FaCrown /> : ""} {props.admin ? <FaShieldAlt /> : ""} {isBanned === "unban" ? <FaBan /> : ""}{isMuted === "unmute" ? <FaVolumeMute /> : ""} {props.username}
-				</a>
+				</p>
 				{props.currentUser === props.username ?
 					<div className="dropdown-menu" aria-labelledby="dropdownMenuButton1" >
-						<a className="dropdown-item" onClick={() => setUpLeave()}>leave</a>
+						<p className="dropdown-item" onClick={() => setUpLeave()}>leave</p>
 					</div>
 					:
 					<div className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-						<a id="ban-click" className="dropdown-item" onClick={() => setUpBan()}>{isBanned}</a>
-						<a id="admin-click" className="dropdown-item" onClick={() => setUpAdmin()}>set admin</a>
-						<a id="mute-click" className="dropdown-item" onClick={() => setUpMute()}>{isMuted}</a>
-						<a className="dropdown-item" onClick={() => props.updateFunctionToUse("invite")}>invite to play</a>
-						<a className="dropdown-item" onClick={() => setUpBlock()}>block</a>
-						<a className="dropdown-item" onClick={() => setUpProfile()}>see profile</a>
+						{props.currentUserAdmin ? <p id="admin-click" className="dropdown-item" onClick={() => setUpAdmin()}>set admin</p> : ""}
+						{props.currentUserAdmin ? <p id="ban-click" className="dropdown-item" onClick={() => setUpBan()}>{isBanned}</p> : ""}
+						{props.currentUserAdmin ? <p id="mute-click" className="dropdown-item" onClick={() => setUpMute()}>{isMuted}</p> : ""}
+						<p className="dropdown-item" onClick={() => props.updateFunctionToUse("invite")}>invite to play</p>
+						<p className="dropdown-item" onClick={() => setUpBlock()}>block</p>
+						<p className="dropdown-item" onClick={() => setUpProfile()}>see profile</p>
 					</div>
 				}
 			</div>
