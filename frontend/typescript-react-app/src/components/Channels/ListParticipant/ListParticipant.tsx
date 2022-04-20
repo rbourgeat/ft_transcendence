@@ -31,17 +31,19 @@ export default function ListParticipant(props: ParticipantProps) {
 	const [participates, updateParticipates] = React.useState([]);
 
 	React.useEffect(() => {
-
-		axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
-		axios.defaults.withCredentials = true;
-		axios.get(`http://localhost:3000/api/chat/${props.activeChannelId}/users`)
-			.then(response => {
-				updateParticipates(response.data);
-				console.log("participates are updated");
-			})
-			.catch(error => {
-				console.log("error");
-			})
+		const getUsers = async () => {
+			axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+			axios.defaults.withCredentials = true;
+			await axios.get(`http://localhost:3000/api/chat/${props.activeChannelId}/users`)
+				.then(response => {
+					updateParticipates(response.data);
+					console.log("participates are updated");
+				})
+				.catch(error => {
+					console.log("error");
+				})
+		}
+		getUsers();
 	}, [props.activeChannelId])
 
 	React.useEffect(() => {
@@ -194,11 +196,11 @@ export default function ListParticipant(props: ParticipantProps) {
 		await axios.post(url, body)
 			.then(response => {
 				console.log(response);
-				toast.notifySuccess("Successfully unbanned");
+				toast.notifySuccess("Successfully unmuted");
 			})
 			.catch(error => {
 				console.log(error);
-				toast.notifyDanger("Error while unbanning");
+				toast.notifyDanger("Error while unmuting");
 			})
 	}
 

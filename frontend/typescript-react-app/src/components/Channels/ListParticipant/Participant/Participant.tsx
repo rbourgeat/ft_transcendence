@@ -1,6 +1,6 @@
 import './Participant.scss';
 import React, { useEffect } from "react";
-import { FaCrown } from "react-icons/fa";
+import { FaCrown, FaVolumeMute, FaBan, FaShieldAlt } from "react-icons/fa";
 
 export interface ParticipantsProps {
 	currentUser?: string,
@@ -15,6 +15,7 @@ export interface ParticipantsProps {
 export default function Participant(props: ParticipantsProps) {
 	const [isBanned, setIsBanned] = React.useState("ban");
 	const [isMuted, setIsMuted] = React.useState("mute");
+	const [isAdmin, setIsAdmin] = React.useState(false);
 
 	const calledOnce = React.useRef(false);
 
@@ -23,13 +24,12 @@ export default function Participant(props: ParticipantsProps) {
 			setIsBanned("unban");
 		else if (props.role === 'mute')
 			setIsMuted("unmute");
-
 		if (calledOnce.current) {
 			return;
 		}
 		console.log('props of ' + props.username + ', owner: ' + props.owner + ', admin: ' + props.admin + ', role: ' + props.role);
 		calledOnce.current = true;
-	}, [isBanned, isMuted]);
+	}, [isBanned, isMuted, isAdmin]);
 
 	function setUpBan() {
 		props.updateFunctionToUse(isBanned);
@@ -47,15 +47,16 @@ export default function Participant(props: ParticipantsProps) {
 		props.updateFunctionToUse(isMuted);
 		if (isMuted === 'mute') {
 			document.getElementById("mute-click").innerHTML = 'unmute';
-			setIsBanned("unmute");
+			setIsMuted("unmute");
 		}
 		else {
 			document.getElementById("mute-click").innerHTML = 'mute';
-			setIsBanned("mute");
+			setIsMuted("mute");
 		}
 	}
 
 	function setUpAdmin() {
+		setIsAdmin(true);
 		props.updateFunctionToUse("admin");
 		document.getElementById("admin-click").remove();
 	}
@@ -77,7 +78,7 @@ export default function Participant(props: ParticipantsProps) {
 		<div className="participant--div">
 			{<div className="dropdown show">
 				<a className="btn btn-sm dropdown-toggle p--participant" role="button" data-toggle="dropdown" onClick={() => props.updateSelectedUser(props.username)}>
-					{props.owner ? <FaCrown /> : ""} {props.username}
+					{props.owner ? <FaCrown /> : ""} {props.admin ? <FaShieldAlt /> : ""} {isBanned === "unban" ? <FaBan /> : ""}{isMuted === "unmute" ? <FaVolumeMute /> : ""} {props.username}
 				</a>
 				{props.currentUser === props.username ?
 					<div className="dropdown-menu" aria-labelledby="dropdownMenuButton1" >

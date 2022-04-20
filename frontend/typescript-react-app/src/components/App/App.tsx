@@ -1,6 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import React, { useState, useMemo, useEffect } from 'react';
-import { io } from 'socket.io-client';
 import { useParams } from 'react-router-dom'
 import './App.scss';
 import {
@@ -39,7 +38,6 @@ function App() {
     ({ user, setUser }), [user, setUser]);
 
 
-  let socket = io("http://localhost:3000/chat", { query: { username: username } });
 
   async function getUser() {
 
@@ -59,30 +57,19 @@ function App() {
 
   useEffect(() => {
     getUser();
-    if (username) {
-      let socket = io("http://localhost:3000/chat", { query: { username: username } });
-      socket.on('connect', () => {
-        console.log(`online ` + username);
-        socket.emit('status', username + ':online')
-      })
-
-      socket.on('disconnect', () => {
-        console.log(`offline ` + username);
-        socket.emit('status', username + ':offline')
-      })
-    }
   }, []);
 
   useEffect(() => {
     if (calledOnce.current) {
-			return;}
+      return;
+    }
     if (localStorage.getItem("2fa") != "true" && localStorage.getItem("2fa") != "false")
       localStorage.setItem("2fa", "false");
     if (localStorage.getItem("loggedIn") != "true" && localStorage.getItem("loggedIn") != "false")
       localStorage.setItem("loggedIn", "false");
     calledOnce.current = true;
     if (localStorage.getItem("2fa") != "true" && localStorage.getItem("2fa") != "false")
-        localStorage.setItem("2fa", "false");
+      localStorage.setItem("2fa", "false");
     if (localStorage.getItem("2faverif") != "true" && localStorage.getItem("2faverif") != "false")
       localStorage.setItem("2faverif", "false");
   }, []);
@@ -182,7 +169,7 @@ function App() {
           ((localStorage.getItem("2fa") == "true" && localStorage.getItem("2faverif") == "true") || (localStorage.getItem("2fa") == "false" && localStorage.getItem("2faverif") == "false")))
           ?
           <>
-            <Route path="/user" element={<UserSub/>} />
+            <Route path="/user" element={<UserSub />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/live" element={<Live />} />
             <Route path="/auth" element={<UserSub />} />
@@ -196,7 +183,7 @@ function App() {
             <Route path="*" element={<Auth />} />*/}
           </>
           : ""
-          }
+        }
 
         {localStorage.getItem("loggedIn") == "true" && localStorage.getItem("2fa") == "true" && localStorage.getItem("2faverif") == "false" ?
           <Route path="*" element={<Login2fa />} /> : ""}
