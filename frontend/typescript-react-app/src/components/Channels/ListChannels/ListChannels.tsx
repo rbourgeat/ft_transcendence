@@ -34,6 +34,7 @@ export default function ListChannels(props: ListChannelsProps) {
 	const [exited, setExited] = React.useState(false);
 	const [update, setUpdate] = React.useState("");
 	const calledOnce = React.useRef(false);
+	const [count, setCount] = React.useState(0);
 
 	function renderListChannels()
 	{
@@ -49,6 +50,7 @@ export default function ListChannels(props: ListChannelsProps) {
 				console.log(res);
 
 				let first = 0;
+
 				while (i < len) {
 					if (channels[i].direct == false)
 					{
@@ -56,6 +58,8 @@ export default function ListChannels(props: ListChannelsProps) {
 						{
 							setMinID(channels[i].id);
 							first = 1;
+							setCount(1);
+							console.log("count is " + count);
 						}
 						setChannels(prevArray => [...prevArray, channels[i]]);
 						//On informe le component parent qu'on va se focus sur une chan
@@ -64,6 +68,8 @@ export default function ListChannels(props: ListChannelsProps) {
 					i++;
 				}
 				//console.log(channels);
+				//setCount(res.data.length);
+				//console.log("count is " + count);
 				setLoad(true);
 				props.setIsChan("true");
 				props.setIsDM("false");
@@ -95,6 +101,8 @@ export default function ListChannels(props: ListChannelsProps) {
 						{
 							setMinID(DMs[i].id);
 							first = 1;
+							setCount(1);
+							console.log("count is " + count);
 						}
 						setDMs(prevArray => [...prevArray, DMs[i]]);
 						//console.log("found one DM");
@@ -102,6 +110,8 @@ export default function ListChannels(props: ListChannelsProps) {
 					//console.log("min id is " + minId);
 					i++;
 				}
+				//setCount(res.data.length);
+				//console.log("count is " + count);
 				setLoad(true);
 				props.setIsChan("false");
 				props.setIsDM("true");
@@ -200,7 +210,7 @@ export default function ListChannels(props: ListChannelsProps) {
 	{
 		//Ne surtout pas commenter !
 		setSelectedCat("DMs");
-
+		setCount(0);
 		//Faire la même chose dans l'autre sens
 		let chans = Array.from(document.getElementsByClassName("displaying_channels"));
 		let len = chans.length;
@@ -224,6 +234,7 @@ export default function ListChannels(props: ListChannelsProps) {
 	{
 		//console.log("calling display channels")
 		setSelectedCat("Channels");
+		setCount(0);
 		let chans = Array.from(document.getElementsByClassName("displaying_dm"));
 		let len = chans.length;
 		let i: number = 0;
@@ -252,7 +263,7 @@ export default function ListChannels(props: ListChannelsProps) {
 					</div>
 					<p className="selected--categorie">{selectedCat== "Channels" ? "Channels you are in" : "Your direct messages"}</p>
 					<div className="displaying-div">
-						{load == true && selectedCat == "Channels" ?
+						{load == true && selectedCat == "Channels" && count != 0 ?
 							Object.keys(channels).map(function(key, index) {
 								if (channels[key].id != undefined && selectedCat === "Channels")
 								{
@@ -266,7 +277,18 @@ export default function ListChannels(props: ListChannelsProps) {
 									)
 								}})
 						: ""}
-						{load == true && selectedCat == "DMs" ?
+						{/* TODO: a tester css */}
+						{load == true && selectedCat == "Channels" && count == 0 ?
+						<>
+							<p className="no_message">You have no channel 🥲</p>
+						</>
+						: ""}
+						{load == true && selectedCat == "DMs" && count == 0 ?
+						<>
+							<p className="no_message">You have no DM 🥲</p>
+						</>
+						: ""}
+						{load == true && selectedCat == "DMs" && count != 0?
 							Object.keys(DMs).map(function(key, index) {
 								if (DMs[key].id != undefined && selectedCat === "DMs")
 								{

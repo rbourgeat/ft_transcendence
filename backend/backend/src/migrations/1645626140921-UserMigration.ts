@@ -314,35 +314,36 @@ export class UserMigration1645626140921 implements MigrationInterface {
         );
 
         //DM
-        const dm1 = await queryRunner.manager.save(
-            queryRunner.manager.create<Chat>(Chat, {
-                name: "DM bahaas/malatini",
-                public: false,
-                direct: true
-            }),
-        );
 
-        const message3 = await queryRunner.manager.save(
-            queryRunner.manager.create<Message>(Message, {
-                content: "Hello comment ca va",
-                author: bahaas,
-                channel: dm1
-            }),
-        );
+        //const dm1 = await queryRunner.manager.save(
+        //    queryRunner.manager.create<Chat>(Chat, {
+        //        name: "DM bahaas/malatini",
+        //        public: false,
+        //        direct: true
+        //    }),
+        //);
 
-        const bahaasparticipate4 = await queryRunner.manager.save(
-            queryRunner.manager.create<Participate>(Participate, {
-                user: bahaas,
-                chat: dm1,
-            }),
-        );
+        //const message3 = await queryRunner.manager.save(
+        //    queryRunner.manager.create<Message>(Message, {
+        //        content: "Hello comment ca va",
+        //        author: bahaas,
+        //        channel: dm1
+        //    }),
+        //);
 
-        const malatiniparticipate3 = await queryRunner.manager.save(
-            queryRunner.manager.create<Participate>(Participate, {
-                user: malatini,
-                chat: dm1,
-            }),
-        );
+        //const bahaasparticipate4 = await queryRunner.manager.save(
+        //    queryRunner.manager.create<Participate>(Participate, {
+        //        user: bahaas,
+        //        chat: dm1,
+        //    }),
+        //);
+
+        //const malatiniparticipate3 = await queryRunner.manager.save(
+        //    queryRunner.manager.create<Participate>(Participate, {
+        //        user: malatini,
+        //        chat: dm1,
+        //    }),
+        //);
 
 
         const game1 = await queryRunner.manager.save(

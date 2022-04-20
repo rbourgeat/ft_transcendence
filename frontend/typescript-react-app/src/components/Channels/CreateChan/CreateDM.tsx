@@ -45,6 +45,8 @@ export default function CreateDM(props: CreateDMProps) {
 			//props.setExited(!props.exited);
 			//props.setUpdate(chanName);//pour trigger un update
 		}
+		chanNameSet("");
+		setReceiver("");
 	}
 
 	const createDM = () => {
