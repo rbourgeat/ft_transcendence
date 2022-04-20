@@ -24,7 +24,7 @@ export default function CreateChan(props: CreateChanProps) {
 	const [chanScope, chanScopeSet] = React.useState("public");
 	const [chanName, chanNameSet] = React.useState("");
 	const [chanPassword, chanPasswordSet] = React.useState("");
-	const [isFree, setIsFree] = React.useState("false");
+	//const [isFree, setIsFree] = React.useState("false");
 	const [sucessfull, setSuccessfull] = React.useState(false);
 	const [load, setLoad] = React.useState(false);
 
@@ -42,7 +42,7 @@ export default function CreateChan(props: CreateChanProps) {
 		}
 	}
 
-	const handleSend = async () => {
+	const handleSend = () => {
 		//console.log("Creating channel");
 		axios.defaults.withCredentials = true;
 
@@ -51,91 +51,99 @@ export default function CreateChan(props: CreateChanProps) {
 
 		let toast = new ToastAlerts(null);
 
-		await axios.get(url)
+		let load = false;
+		let isFree = false;
+		axios.get(url)
 		.then(res => {
 			console.log("Get checked if exist.");
 			console.log(res);//si existe renvoie faux
 			console.log(res.data);
 			console.log(typeof res.data);
-
-			if (res.data == "true")
+			isFree = res.data;
+			load = true;
+			if (res.data == true || res.data == "true")
 			{
-				setIsFree("true");
+				//setIsFree("true");
 				console.log("it is damn true !");
-			}
+				console.log("result");
+				console.log(isFree);
+				console.log(load);
+				//Ca ne rentre pas dans cette putin de condition
+				if (isFree == true && load == true)
+				{
+					console.log("creating channel");
+					url = "http://localhost:3000/api/chat/";
+
+					let headers = {
+						'Content-Type': 'application/json'
+					}
+
+					axios.defaults.baseURL = 'http://localhost:3000/api/';
+					axios.defaults.headers.post['Content-Type'] = 'application/json';
+					axios.defaults.headers.post['Accept'] = '*/*';
+					axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+					axios.defaults.withCredentials = true;
+
+					let body = {};
+
+					if (chanScope === "private")
+					{
+						body = {
+							password: chanPassword,
+							public: false,
+							name: chanName
+						}
+					}
+					else
+					{
+						body = {
+							public: true,
+							name: chanName
+						}
+					}
+
+					console.log("body is ");
+					console.log(body);
+
+					let res = axios.post(url, body, {headers})
+					.then(res => {
+						console.log("successfully posted a chat !");
+						setSuccessfull(true);
+						toast.notifySuccess("✨ Successfully created channel !")
+					})
+					.catch((error) => {
+						console.log("Catched error on post api chat.");
+						console.log(error);
+					})
+				}
+				else {
+					console.log("here");
+					}
+				}
 			//setIsFree(res.data);
+			setLoad(true);
 			//console.log("The name is free ? " + isFree);
 			//si c'est libre, je crée la channel, sinon je la join
 			//console.log(typeof isFree);
+
+			//TODO: a reprendre
+			//if (isFree == "false" && load == true)
+			//{
+			//	console.log("joining channel");
+			//	let url = "http://localhost:3000/api/chat/join";
+			//}
+			//else if (load == false)
+			//{
+			//	//console.log("wrong type !")
+			//	console.log(load);
+			//	console.log(isFree);
+			//	console.log("Not loaded !");
+			//}
+
 		})
 		.catch((error) => {
 			console.log("Error while getting exist");
 		})
-		setLoad(true);
-		//.then(res =>
-		//{
-			if (isFree == "true" && load == true)
-			{
-				console.log("creating channel");
-				url = "http://localhost:3000/api/chat/";
-
-				let headers = {
-					'Content-Type': 'application/json'
-				}
-
-				axios.defaults.baseURL = 'http://localhost:3000/api/';
-				axios.defaults.headers.post['Content-Type'] = 'application/json';
-				axios.defaults.headers.post['Accept'] = '*/*';
-				axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
-				axios.defaults.withCredentials = true;
-
-				let body = {};
-
-				if (chanScope === "private")
-				{
-					body = {
-						password: chanPassword,
-						public: false,
-						name: chanName
-					}
-				}
-				else
-				{
-					body = {
-						public: true,
-						name: chanName
-					}
-				}
-
-				console.log("body is ");
-				console.log(body);
-
-				let res = axios.post(url, body, {headers})
-				.then(res => {
-					console.log("successfully posted a chat !");
-					setSuccessfull(true);
-					toast.notifySuccess("✨ Successfully created channel !")
-				})
-				.catch((error) => {
-					console.log("Catched error on post api chat.");
-					console.log(error);
-				})
-			}
-			else if (isFree == "false" && load == true)
-			{
-				console.log("joining channel");
-				url = "http://localhost:3000/api/chat/join";
-			}
-			else
-			{
-				//console.log("wrong type !")
-				console.log(load);
-				console.log(isFree);
-				console.log("Not loaded !");
-			}
-		//})
-
-		//créer ou join en fonction du résultat précédent
 	}
 
 	const createChannel = () => {
