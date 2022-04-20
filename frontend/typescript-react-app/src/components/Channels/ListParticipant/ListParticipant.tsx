@@ -5,6 +5,7 @@ import axios from "axios";
 import { ToastContainer } from 'react-toastify';
 import ToastAlerts from '../../Utils/ToastAlerts/ToastAlerts';
 import MyAxios from '../../Utils/Axios/Axios';
+import { BsWindowSidebar } from 'react-icons/bs';
 
 export interface ParticipantProps {
 	//setActiveChannelName?: any,
@@ -68,6 +69,10 @@ export default function ListParticipant(props: ParticipantProps) {
 				return unbanUser();
 			case 'unmute':
 				return unmuteUser();
+			case 'leave':
+				return leaveChannel();
+			case 'profile':
+				return seeProfile();
 		}
 	}
 
@@ -126,6 +131,10 @@ export default function ListParticipant(props: ParticipantProps) {
 	function inviteToPlay() {
 		let toast = new ToastAlerts(null);
 		toast.notifyDanger("A reprendre.");
+	}
+
+	function seeProfile() {
+		window.top.location = "http://localhost:3030/profile/".concat(selectedUser);
 	}
 
 	async function leaveChannel() {
@@ -224,6 +233,7 @@ export default function ListParticipant(props: ParticipantProps) {
 					<div id="participants--div">
 						{participates.map(participate =>
 							<Participant
+								currentUser={props.login}
 								key={participate.id}
 								username={participate.user.login}
 								role={participate.role}
