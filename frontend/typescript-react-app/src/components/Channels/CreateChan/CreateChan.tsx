@@ -10,8 +10,10 @@ import { ToastContainer } from 'react-toastify';
 
 export interface CreateChanProps {
 	endpoint?: any,
-	action?: any
-	handleshow?: any
+	action?: any,
+	handleshow?: any,
+	setExited?: any,
+	setUpdate?: any
 }
 export default function CreateChan(props: CreateChanProps) {
 
@@ -22,8 +24,9 @@ export default function CreateChan(props: CreateChanProps) {
 	const [chanScope, chanScopeSet] = React.useState("public");
 	const [chanName, chanNameSet] = React.useState("");
 	const [chanPassword, chanPasswordSet] = React.useState("");
-	const [isFree, setIsFree] = React.useState(false);
+	const [isFree, setIsFree] = React.useState("false");
 	const [sucessfull, setSuccessfull] = React.useState(false);
+	const [load, setLoad] = React.useState(false);
 
 	const handleExit = () => {
 		let toast = new ToastAlerts(null);
@@ -34,10 +37,12 @@ export default function CreateChan(props: CreateChanProps) {
 		if (sucessfull == false)
 		{
 			toast.notifyDanger("Unsucessfull add");
+			props.setExited(true);
+			props.setUpdate(chanName);//pour trigger un update
 		}
 	}
 
-	const handleSend = () => {
+	const handleSend = async () => {
 		//console.log("Creating channel");
 		axios.defaults.withCredentials = true;
 
@@ -46,16 +51,30 @@ export default function CreateChan(props: CreateChanProps) {
 
 		let toast = new ToastAlerts(null);
 
-		let res = axios.get(url)
+		await axios.get(url)
 		.then(res => {
 			console.log("Get checked if exist.");
 			console.log(res);//si existe renvoie faux
 			console.log(res.data);
-			setIsFree(res.data);
-			console.log("The name is free ? " + isFree);
+			console.log(typeof res.data);
+
+			if (res.data == "true")
+			{
+				setIsFree("true");
+				console.log("it is damn true !");
+			}
+			//setIsFree(res.data);
+			//console.log("The name is free ? " + isFree);
 			//si c'est libre, je crée la channel, sinon je la join
-			console.log(typeof isFree);
-			if (isFree == true)
+			//console.log(typeof isFree);
+		})
+		.catch((error) => {
+			console.log("Error while getting exist");
+		})
+		setLoad(true);
+		//.then(res =>
+		//{
+			if (isFree == "true" && load == true)
 			{
 				console.log("creating channel");
 				url = "http://localhost:3000/api/chat/";
@@ -102,19 +121,19 @@ export default function CreateChan(props: CreateChanProps) {
 					console.log(error);
 				})
 			}
-			else if (isFree == false)
+			else if (isFree == "false" && load == true)
 			{
 				console.log("joining channel");
 				url = "http://localhost:3000/api/chat/join";
 			}
 			else
 			{
-				console.log("wrong type !")
+				//console.log("wrong type !")
+				console.log(load);
+				console.log(isFree);
+				console.log("Not loaded !");
 			}
-		})
-		.catch((error) => {
-			console.log("Error while getting exist");
-		})
+		//})
 
 		//créer ou join en fonction du résultat précédent
 	}

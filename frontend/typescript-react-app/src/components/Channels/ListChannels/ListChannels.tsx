@@ -31,6 +31,8 @@ export default function ListChannels(props: ListChannelsProps) {
 
 	const [minId, setMinID] = React.useState(0);
 
+	const [exited, setExited] = React.useState(false);
+	const [update, setUpdate] = React.useState("");
 	const calledOnce = React.useRef(false);
 
 	function renderListChannels()
@@ -141,7 +143,7 @@ export default function ListChannels(props: ListChannelsProps) {
 		//setLoad(false);
 		displaySelectedCat(selectedCat);
 		//calledOnce.current = true;
-	}, [])
+	}, [update])
 
 	//useEffect(() => {
 	////deuxieme ôur les modifs
@@ -206,7 +208,7 @@ export default function ListChannels(props: ListChannelsProps) {
 					</div>
 					<div className="add-channel-a">
 						<p className="quick--add">Quick actions</p>
-						<CreateChan />
+						<CreateChan setExited={setExited} setUpdate={setUpdate}/>
 						<CreateDM />
 					</div>
 					<p className="selected--categorie">{selectedCat== "Channels" ? "Channels you are in" : "Your direct messages"}</p>

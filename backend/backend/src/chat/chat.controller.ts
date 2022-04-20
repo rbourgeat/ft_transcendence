@@ -186,6 +186,10 @@ export class ChatController {
     @UseGuards(JwtAuthenticationGuard)
     @Get(':channelName/exist')
     async getChatExist(@Param('channelName') channelName: string, @Request() req) {
-        return this.chatService.chatExist(channelName);
+        if (this.chatService.chatExist(channelName))
+            return (String("true"));
+        else
+            return (String("false"));
+        //return (this.chatService.chatExist(channelName));
     }
 }
