@@ -15,7 +15,8 @@ export interface DisplayChanProps {
 	setActiveDMID?: any,
 	minId?: any,
 	login: string,
-	receiver?: string
+	//receiver?: string,
+	//dm?: any
 }
 
 //TODO: a reprendre pour les dms
@@ -30,21 +31,47 @@ export default function DisplayChan(props: DisplayChanProps) {
 	const [participates, updateParticipates] = React.useState([]);
 	const [DMname, setDMName] = React.useState("");
 
+	const [receiver, setReceiver] = React.useState("");
+
 	//console.log(props.login);
 	useEffect(() => {
 		if (calledOnce.current) {
 			return;
 		}
+
+		//console.log("use effect called");
+		//console.log("receiver is " + props.receiver);
 		//console.log("props channel id is " + props.channel.id);
 		//console.log("props minId is " + props.minId);
 		//setNameToReceiverLogin();
 
+		if (props.dm)
+		{
+			console.log("DM is " + props.dm);
+
+			let rec;
+			if (props.dm.participates[0].login == props.login || props.dm.participates[0].login === props.login)
+			{
+				rec = props.dm.participates[1].login;
+			}
+			else if (props.dm.participates[0].login == props.dm.participates[1].login)
+			{
+					console.log("Erreur, deux fois le même particpant");
+			}
+			else
+			{
+					rec = props.dm.participates[0].login;
+			}
+			console.log("rec is " + rec);
+			setReceiver(rec);
+		}
+		
 		if (calledOnce.current != true && props.channel.id == props.minId) {
 			setIsSelected("true");
 			//console.log("selected it");
 			if (props.isDM == true) {
 				//props.setActiveDMName(props.channel.name);
-				props.setActiveDMName(props.receiver);
+				props.setActiveDMName(receiver);
 				//setDMName(props.receiver);
 				//props.setActiveDMName(props.receiver)
 				props.setActiveChannelName("");
@@ -86,7 +113,7 @@ export default function DisplayChan(props: DisplayChanProps) {
 			//.catch(error => {
 			//	console.log(error);
 			//})
-			setDMName(props.receiver);
+			setDMName(receiver);
 		}
 	}
 
@@ -119,8 +146,8 @@ export default function DisplayChan(props: DisplayChanProps) {
 			//setNameToReceiverLogin();
 			//On note le DM actif en mettant à vide l'éventuelle channel précédemment sélectionnée
 			//props.setActiveDMName(props.channel.name);
-			console.log("receiver is " + props.receiver);
-			props.setActiveDMName(props.receiver);
+			console.log("receiver is " + receiver);
+			props.setActiveDMName(receiver);
 			props.setActiveChannelName("");
 			props.setActiveChannelId("");
 			props.setActiveDMID(props.channel.id);
@@ -141,7 +168,7 @@ export default function DisplayChan(props: DisplayChanProps) {
 			<div className="display_dm" id={"dm_chan".concat("_" + props.channel.name)}>
 				{load == true && props.isDM == true /*&& load2 == true*/ ? <>
 					<button type="button" id={"dm-title_".concat(props.channel.id)} className={isSelected == "true" ? "dm-title_selected" : "dm-title_notselected"}
-						onClick={selectDM}>{props.receiver}</button>
+						onClick={selectDM}>{receiver}</button>
 				</> : ""}
 			</div>
 		</>
