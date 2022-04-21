@@ -24,6 +24,7 @@ export interface ListChannelsProps {
 export default function ListChannels(props: ListChannelsProps) {
 	const [channels, setChannels] = React.useState([{}]);
 	const [DMs, setDMs] = React.useState([{}]);
+	const [receiver, setReceiver] = React.useState("");
 
 	//Affichage sélection DM ou channels
 	const [selectedCat, setSelectedCat] = React.useState("Channels");

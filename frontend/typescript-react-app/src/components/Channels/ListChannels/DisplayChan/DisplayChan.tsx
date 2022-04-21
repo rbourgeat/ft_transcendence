@@ -24,14 +24,20 @@ export default function DisplayChan(props: DisplayChanProps) {
 	const [isSelected, setIsSelected] = React.useState("false");
 	//const [firstIsSelected, setFirstIsSelected] = React.useState("false");
 	const [load, setLoad] = React.useState(false);
+	const [load2, setLoad2] = React.useState(false);
+
+	const [participates, updateParticipates] = React.useState([]);
+	const [DMname, setDMName] = React.useState("");
 
 	console.log(props.login);
 	useEffect(() => {
-		if (calledOnce.current) {
-			return;
-		}
+		//if (calledOnce.current) {
+		//	return;
+		//}
 		console.log("props channel id is " + props.channel.id);
 		console.log("props minId is " + props.minId);
+		//setNameToReceiverLogin();
+
 		if (calledOnce.current != true && props.channel.id == props.minId) {
 			setIsSelected("true");
 			//console.log("selected it");
@@ -50,17 +56,16 @@ export default function DisplayChan(props: DisplayChanProps) {
 			//console.log("called props min");
 		}
 		setLoad(true);
-		calledOnce.current = true;
+		//calledOnce.current = true;
 	}, [isSelected]);
 
+	function setNameToReceiverLogin() {
 
-	const [participates, updateParticipates] = React.useState([]);
-	const [DMname, setDMName] = React.useState("");
-
-	async function setNameToReceiverLogin() {
-
-		await axios.get(`http://localhost:3000/api/chat/${props.channel.id}/users`)
+		if (props.isDM == true)
+		{
+			axios.get(`http://localhost:3000/api/chat/${props.channel.id}/users`)
 			.then(res => {
+				console.log("HHEERRRRRRREEEE");
 				const users = res.data.map(element => element.user);
 				updateParticipates(users);
 				for (let i = 0; i < participates.length; i++) {
@@ -68,12 +73,16 @@ export default function DisplayChan(props: DisplayChanProps) {
 						console.log("dm name will change to the receiver login value:" + participates[i].login);
 						props.setActiveDMName(participates[i].login);
 						setDMName(participates[i].login);
+						console.log("--------");
+						console.log("DM name is " + DMname);
 					}
 				}
+				setLoad2(true);
 			})
 			.catch(error => {
 				console.log(error);
 			})
+		}
 	}
 
 	function selectChan() {
@@ -124,7 +133,7 @@ export default function DisplayChan(props: DisplayChanProps) {
 				</> : ""}
 			</div>
 			<div className="display_dm" id={"dm_chan".concat("_" + props.channel.name)}>
-				{load == true && props.isDM == true ? <>
+				{load == true && props.isDM == true && load2 == true ? <>
 					<button type="button" id={"dm-title_".concat(props.channel.id)} className={isSelected == "true" ? "dm-title_selected" : "dm-title_notselected"}
 						onClick={selectDM}>{DMname}</button>
 				</> : ""}
