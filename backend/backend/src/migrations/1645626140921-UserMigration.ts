@@ -390,7 +390,7 @@ export class UserMigration1645626140921 implements MigrationInterface {
 
         const dm3 = await queryRunner.manager.save(
             queryRunner.manager.create<Chat>(Chat, {
-                name: "DM malatini/dummy2",
+                name: "DM malatini/dummy1",
                 public: false,
                 direct: true
             }),

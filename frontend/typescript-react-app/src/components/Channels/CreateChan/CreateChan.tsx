@@ -77,6 +77,7 @@ export default function CreateChan(props: CreateChanProps) {
 			if (isFree == false)
 			{
 				toast.notifyDanger("This channel already exists.");
+				//handleClose();
 				return ;
 			}
 
@@ -121,6 +122,7 @@ export default function CreateChan(props: CreateChanProps) {
 						console.log("successfully created a chat !");
 						setSuccessfull(true);
 						toast.notifySuccess("✨ Successfully created channel !");
+						handleClose();
 					})
 					.catch((error) => {
 						console.log("Catched error on post api chat.");

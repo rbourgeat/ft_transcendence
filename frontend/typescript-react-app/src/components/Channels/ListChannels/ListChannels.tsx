@@ -24,7 +24,7 @@ export interface ListChannelsProps {
 export default function ListChannels(props: ListChannelsProps) {
 	const [channels, setChannels] = React.useState([{}]);
 	const [DMs, setDMs] = React.useState([{}]);
-	const [receiver, setReceiver] = React.useState("");
+	const [receiver, setReceiver] = React.useState(["mama"]);
 
 	//Affichage sélection DM ou channels
 	const [selectedCat, setSelectedCat] = React.useState("Channels");
@@ -90,16 +90,54 @@ export default function ListChannels(props: ListChannelsProps) {
 
 				console.log(res);
 
+				console.log(res.data.participates);
+
+				//if (res.data.participates[0].login == props.login)
+				//	setReceiver(res.data.participates[1].login);
+				//else
+				//	setReceiver(res.data.participates[0].login);
+				
+				//console.log("The receiver is " + receiver);
+
 				//trier sur direct true
 				while (i < len) {
 					if (DMs[i].direct == true) {
 						if (first == 0) {
 							setMinID(DMs[i].id);
 							first = 1;
+							//setCount(1);
 							setCount(1);
-							console.log("count is " + count);
+							
 						}
+						//console.log("EOOO")
+						//setCount(1);
 						setDMs(prevArray => [...prevArray, DMs[i]]);
+						//console.log("count is " + count);
+						//console.log("-----------");
+						let rec;
+						console.log("----------");
+						console.log(DMs[i].participates[0].login);
+						console.log(DMs[i].participates[1].login);
+						console.log("----------");
+						if (DMs[i].participates[0].login == props.login || DMs[i].participates[0].login === props.login)
+						{
+							rec = DMs[i].participates[1].login;
+							console.log("login is " + props.login)
+							console.log("rec is " + rec);
+							//console.log
+						}
+						else if (DMs[i].participates[0].login == DMs[i].participates[1].login)
+						{
+							console.log("Erreur, deux fois le même particpant");
+						}
+						else
+						{
+							rec = DMs[i].participates[0].login;
+							console.log("login is " + props.login)
+							console.log("rec is " + rec);
+						}
+							
+						//console.log("receiver is " + rec);
 						//console.log("found one DM");
 					}
 					//console.log("min id is " + minId);
@@ -111,7 +149,7 @@ export default function ListChannels(props: ListChannelsProps) {
 				props.setIsChan(false);
 				props.setIsDM(true);
 
-				console.log("dms are " + DMs);
+				//console.log("dms are " + DMs);
 				//setLoad(true);//a re voir pour le set load
 			})
 			.catch((error) => {
@@ -258,6 +296,7 @@ export default function ListChannels(props: ListChannelsProps) {
 										<DisplayChan isChan={true} isDM={false} channel={channels[key]} minId={minId}
 											setActiveChannelName={props.setActiveChannelName} setActiveChannelId={props.setActiveChannelID}
 											setActiveDMName={props.setActiveDMName} setActiveDMID={props.setActiveDMID} login={props.login}
+											receiver={receiver[index]}
 										/>
 									</div>
 								)
