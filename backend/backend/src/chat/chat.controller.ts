@@ -201,4 +201,12 @@ export class ChatController {
     async getIsAdmin(@Param('channelId') channelId: number, @Request() req) {
         return this.chatService.getIsAdmin(channelId, req.user);
     }
+
+    @ApiOperation({ summary: 'Boolean to know if requesting user is admin [jwt-protected + for swagger test only]' })
+    @ApiOkResponse({ description: 'Suceed' })
+    @UseGuards(JwtAuthenticationGuard)
+    @Get('notjoinedchannels')
+    async getnotjoinedchanels(@Request() req) {
+        return this.chatService.getnotjoinedchannels(req.user);
+    }
 }
