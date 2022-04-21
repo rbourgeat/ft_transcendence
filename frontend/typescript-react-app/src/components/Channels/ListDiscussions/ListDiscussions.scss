@@ -64,4 +64,9 @@
 	margin: 5px;
 	border: 0.1rem solid #f9f9f9;
 	border-radius: variables.$border-radius-big;
+	overflow-y: scroll;
+	scrollbar-color: rebeccapurple green;
+	scrollbar-width: thin;
+	display: flex;
+	flex-direction: column-reverse;
 }
