@@ -9,11 +9,11 @@ import MyAxios from '../../Utils/Axios/Axios';
 export interface ParticipantProps {
 	//setActiveChannelName?: any,
 	//setActiveChannelID?: any,
-	login: string,
 	//setActiveDMID?: any,
 	//setActiveDMName?: any,
 	//setIsDM?: any,
 	//setIsChan?: any
+	login: string,
 	activeChannelName?: any,
 	activeChannelId?: any,
 	activeDMName?: any,
@@ -26,7 +26,6 @@ export default function ListParticipant(props: ParticipantProps) {
 	const [selectedUser, updateSelectedUser] = React.useState("");
 	const [functionToUse, updateFunctionToUse] = React.useState("");
 	const [participates, updateParticipates] = React.useState([]);
-
 	const [currentUserAdmin, setCurrentUserAdmin] = React.useState(false);
 
 
@@ -40,40 +39,27 @@ export default function ListParticipant(props: ParticipantProps) {
 		console.log("--------------");
 
 		if (props.isChan === true) {
-			console.log("goto getUsersfromChannel")
+			getUsersfromChannel();
+			getCurrentUserAdminStatus();
+		}
+		else if (props.isChan === false)
 			getUsersfromChannel();
 
-		}
-		else if (props.isChan === false) {
-			console.log("goto getUsersfromDM")
-			getUsersfromDM();
-
-		}
-		getCurrentUserAdminStatus();
-
-		async function getUsersfromDM() {
-			axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
-			axios.defaults.withCredentials = true;
-			await axios.get(`http://localhost:3000/api/chat/${props.activeDMId}/users`)
-				.then(response => {
-					updateParticipates(response.data);
-					console.log("participates are updated");
-				})
-				.catch(error => {
-					console.log("error");
-				})
-		}
-
 		async function getUsersfromChannel() {
+			let url: string;
+			if (props.isChan === true)
+				url = "http://localhost:3000/api/chat/".concat(props.activeChannelId).concat("/users");
+			else
+				url = "http://localhost:3000/api/chat/".concat(props.activeDMId).concat("/users");
+
 			axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 			axios.defaults.withCredentials = true;
-			await axios.get(`http://localhost:3000/api/chat/${props.activeChannelId}/users`)
+			await axios.get(url)
 				.then(response => {
 					updateParticipates(response.data);
-					console.log("participates are updated");
 				})
 				.catch(error => {
-					console.log("error");
+					console.log("Error while getting users from a Channel/DM");
 				})
 		}
 
@@ -102,7 +88,7 @@ export default function ListParticipant(props: ParticipantProps) {
 		executeFunction(functionToUse);
 	}, [functionToUse])
 
-	async function executeFunction(param) {
+	function executeFunction(param: string) {
 		switch (param) {
 			case 'block':
 				return blockUser();
@@ -127,42 +113,28 @@ export default function ListParticipant(props: ParticipantProps) {
 		}
 	}
 
-	async function unbanUser() {
-		let toast = new ToastAlerts(null);
-		const url = 'http://localhost:3000/api/chat/unban';
-
-		const body = {
-			"idChat": props.activeChannelId,
-			"user": selectedUser,
-		}
-		await axios.post(url, body)
-			.then(response => {
-				console.log(response);
-				toast.notifySuccess("Successfully unbanned");
-			})
-			.catch(error => {
-				console.log(error);
-				toast.notifyDanger("Error while unbanning");
-			})
+	function unbanUser() {
+		makeAPIcall("unban", "Successfully unbanned", "Error while unbanning", false);
 	}
 
-	async function banUser() {
-		const url = 'http://localhost:3000/api/chat/ban';
-		let toast = new ToastAlerts(null);
+	function banUser() {
+		makeAPIcall("ban", "Successfully ban", "Error while banning", false);
+	}
 
-		const body = {
-			"idChat": props.activeChannelId,
-			"user": selectedUser,
-		}
-		await axios.post(url, body)
-			.then(response => {
-				console.log(response);
-				toast.notifySuccess("Successfully ban");
-			})
-			.catch(error => {
-				console.log(error);
-				toast.notifyDanger("Error while banning");
-			})
+	function unmuteUser() {
+		makeAPIcall("unmute", "Successfully unmuted", "Error while unmuting", false);
+	}
+
+	function setAdmin() {
+		makeAPIcall("setAdmin", "Successfully set as admin", "Error while setting as admin", false);
+	}
+
+	function muteUser() {
+		makeAPIcall("mute", "Successfully mute", "Error while muting", false);
+	}
+
+	function leaveChannel() {
+		makeAPIcall("quit", "Successfull quit", "Error while quitting channel", true);
 	}
 
 	function blockUser() {
@@ -170,13 +142,11 @@ export default function ListParticipant(props: ParticipantProps) {
 		ax.post_relation_block(selectedUser, "chat");
 	}
 
-	//TODO
 	function sendDM() {
 		let toast = new ToastAlerts(null);
 		toast.notifyDanger("A reprendre.");
 	}
 
-	//TODO
 	function inviteToPlay() {
 		let toast = new ToastAlerts(null);
 		toast.notifyDanger("A reprendre.");
@@ -186,84 +156,22 @@ export default function ListParticipant(props: ParticipantProps) {
 		window.top.location = "http://localhost:3030/profile/".concat(selectedUser);
 	}
 
-	async function leaveChannel() {
+	async function makeAPIcall(endpoint: string, toastSuccessMessage: string, toastErrorMessage: string, me: boolean) {
 		let toast = new ToastAlerts(null);
-		const url = 'http://localhost:3000/api/chat/quit';
+		const url = 'http://localhost:3000/api/chat/'.concat(endpoint);
 
+		let user: string;
+		me === true ? user = props.login : user = selectedUser;
 		const body = {
 			"idChat": props.activeChannelId,
-			"user": props.login,
+			"user": user
 		}
 		await axios.post(url, body)
 			.then(response => {
-				console.log(response);
-				toast.notifySuccess("Successfully quitted chat");
+				toast.notifySuccess(toastSuccessMessage);
 			})
 			.catch(error => {
-				console.log(error);
-				toast.notifyDanger("Error while quitting channel");
-			})
-	}
-
-
-	async function muteUser() {
-		const url = 'http://localhost:3000/api/chat/mute';
-		let toast = new ToastAlerts(null);
-
-		const time = new Date();
-		time.setSeconds(time.getSeconds() + 600);
-
-		const body = {
-			"idChat": props.activeChannelId,
-			"user": selectedUser,
-			"time": time
-		}
-		await axios.post(url, body)
-			.then(response => {
-				console.log(response);
-				toast.notifySuccess("Successfully mute");
-			})
-			.catch(error => {
-				console.log(error);
-				toast.notifyDanger("Error while muting");
-			})
-	}
-
-	async function unmuteUser() {
-		let toast = new ToastAlerts(null);
-		const url = 'http://localhost:3000/api/chat/unmute';
-
-		const body = {
-			"idChat": props.activeChannelId,
-			"user": selectedUser,
-		}
-		await axios.post(url, body)
-			.then(response => {
-				console.log(response);
-				toast.notifySuccess("Successfully unmuted");
-			})
-			.catch(error => {
-				console.log(error);
-				toast.notifyDanger("Error while unmuting");
-			})
-	}
-
-	async function setAdmin() {
-		const url = 'http://localhost:3000/api/chat/setAdmin';
-		let toast = new ToastAlerts(null);
-
-		const body = {
-			"idChat": props.activeChannelId,
-			"user": selectedUser,
-		}
-		await axios.post(url, body)
-			.then(response => {
-				console.log(response);
-				toast.notifySuccess("Successfully set as admin");
-			})
-			.catch(error => {
-				console.log(error);
-				toast.notifyDanger("Error while setting as admin");
+				toast.notifyDanger(toastErrorMessage);
 			})
 	}
 
