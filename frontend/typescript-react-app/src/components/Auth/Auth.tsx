@@ -26,8 +26,9 @@ export default function Auth() {
                         {localStorage.getItem("loggedIn") != "true" ?
                             <>
                             <div id="auth-form-div" className="col-8">
-                                <div id="auth--form1" >
-                                    <div id="form--auth1" className="forms">
+                                <div id="auth--form1" className="row d-flex justify-content-center">
+                                    <br />
+                                    <div id="form--auth1" /*className="forms"*/ className="row d-flex justify-content-center">
                                         <p id="jouer">Pour jouer, vous devez vous authentifier 🏓 </p>
                                         <FourtyTwo />
                                         <Signup />

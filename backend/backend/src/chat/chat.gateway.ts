@@ -4,15 +4,7 @@ import { ChatService } from './chat.service';
 import { UserService } from 'src/user/user.service';
 import { Logger } from "@nestjs/common";
 
-//@WebSocketGateway(
-//	{
-//	//{
-//	//cors: {
-//	//	origin: '*',
-//	//},
-//})
-
-var clients = [];
+const clients = [];
 
 @WebSocketGateway({ namespace: 'chat', cors: true })
 
@@ -31,7 +23,7 @@ export class ChatGateway implements OnGatewayConnection {
 		this.logger.log("Client connected: " + socket.handshake.query.username + ' id: ' + socket.id + ')');
 		this.userService.updateStatus(String(socket.handshake.query.username), "online");
 		clients.push(socket);
-		clients.forEach(function(client) {
+		clients.forEach(function (client) {
 			client.emit("updateStatus", String(socket.handshake.query.username), "online");
 		});
 	}
@@ -39,13 +31,12 @@ export class ChatGateway implements OnGatewayConnection {
 	async handleDisconnect(socket: Socket, ...args: any[]) {
 		this.logger.log("Client disconnected: " + socket.handshake.query.username + ' id: ' + socket.id + ')');
 		this.userService.updateStatus(String(socket.handshake.query.username), "offline");
-		clients.forEach(function(client) {
+		clients.forEach(function (client) {
 			client.emit("updateStatus", String(socket.handshake.query.username), "offline");
 		});
 		const index = clients.indexOf(socket);
-		if (index > -1) {
+		if (index > -1)
 			clients.splice(index, 1);
-		}
 	}
 
 	@SubscribeMessage('message')
@@ -60,11 +51,7 @@ export class ChatGateway implements OnGatewayConnection {
 
 	@SubscribeMessage('requestAllMessages')
 	async requestAllMessages(@ConnectedSocket() socket: Socket, @MessageBody() body: number) {
-		// const messages = await this.chatService.getAllMessages();
 		const messages = await this.chatService.getMessages(body);
-		// messages.forEach(message => {
-		// 	console.log("messages: " + message.content)
-		// })
 		socket.emit('sendAllMessages', messages);
 	}
 }

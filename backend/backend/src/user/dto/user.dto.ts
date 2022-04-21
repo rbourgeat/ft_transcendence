@@ -24,8 +24,7 @@ export class UploadAvatarDto {
     name: string;
 }
 
-//Used while a new user is registering
-@ApiTags('Auth') //Create a category on swagger
+@ApiTags('Auth')
 export class CreateUserDtoViaRegistration {
     @IsNotEmpty()
     @Length(4, 20)

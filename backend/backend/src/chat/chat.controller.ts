@@ -19,8 +19,8 @@ export class ChatController {
         private userService: UserService
     ) { }
 
-    @ApiOperation({ summary: 'Retrieve all chats data' }) //endpoint summary on swaggerui
-    @ApiOkResponse({ description: 'Data received' }) //answer sent back
+    @ApiOperation({ summary: 'Retrieve all chats data' })
+    @ApiOkResponse({ description: 'Data received' })
     @Get()
     getAllChats() {
         return this.chatService.getAllChats();
@@ -87,9 +87,9 @@ export class ChatController {
         return await this.chatService.createDirectMessage(req.user, user2);
     }
 
-    @ApiOperation({ summary: 'Retrieve message history' }) //endpoint summary on swaggerui
-    @ApiOkResponse({ description: 'Messages load successfully' }) //answer sent back
-    @ApiConflictResponse({ description: 'Fail' }) //not working atm
+    @ApiOperation({ summary: 'Retrieve message history' })
+    @ApiOkResponse({ description: 'Messages load successfully' })
+    @ApiConflictResponse({ description: 'Fail' })
     @Get(':idChat/messages')
     async getMessages(@Param('idChat') id: number) {
         console.log('Retrieve message history from chat: ' + id)
@@ -97,9 +97,9 @@ export class ChatController {
     }
 
 
-    @ApiOperation({ summary: 'Adding new admin' }) //endpoint summary on swaggerui
-    @ApiOkResponse({ description: 'new admin added' }) //answer sent back
-    @ApiConflictResponse({ description: 'admin already admin' }) //not working atm
+    @ApiOperation({ summary: 'Adding new admin' })
+    @ApiOkResponse({ description: 'new admin added' })
+    @ApiConflictResponse({ description: 'admin already admin' })
     @UseGuards(JwtAuthenticationGuard)
     @Post('setAdmin')
     async setAdmin(@Body() chat: ChatDto, @Request() req) {
@@ -107,9 +107,9 @@ export class ChatController {
         return this.chatService.setAdmin(chat.idChat, chat.user, req.user);
     }
 
-    @ApiOperation({ summary: 'Ban user' }) //endpoint summary on swaggerui
-    @ApiOkResponse({ description: 'user banned' }) //answer sent back
-    @ApiConflictResponse({ description: 'user already banned' }) //not working atm
+    @ApiOperation({ summary: 'Ban user' })
+    @ApiOkResponse({ description: 'user banned' })
+    @ApiConflictResponse({ description: 'user already banned' })
     @UseGuards(JwtAuthenticationGuard)
     @Post('ban')
     async ban(@Body() chat: ChatDto, @Request() req) {
@@ -117,9 +117,9 @@ export class ChatController {
         return this.chatService.ban(chat.idChat, chat.user, req.user, chat.time);
     }
 
-    @ApiOperation({ summary: 'Unban user' }) //endpoint summary on swaggerui
-    @ApiOkResponse({ description: 'user unbanned' }) //answer sent back
-    @ApiConflictResponse({ description: 'user not banned' }) //not working atm
+    @ApiOperation({ summary: 'Unban user' })
+    @ApiOkResponse({ description: 'user unbanned' })
+    @ApiConflictResponse({ description: 'user not banned' })
     @UseGuards(JwtAuthenticationGuard)
     @Post('unban')
     async unban(@Body() chat: ChatDto, @Request() req) {
@@ -127,9 +127,9 @@ export class ChatController {
         return this.chatService.active(chat.idChat, chat.user, req.user);
     }
 
-    @ApiOperation({ summary: 'Mute user' }) //endpoint summary on swaggerui
-    @ApiOkResponse({ description: 'user mute' }) //answer sent back
-    @ApiConflictResponse({ description: 'user already mute' }) //not working atm
+    @ApiOperation({ summary: 'Mute user' })
+    @ApiOkResponse({ description: 'user mute' })
+    @ApiConflictResponse({ description: 'user already mute' })
     @UseGuards(JwtAuthenticationGuard)
     @Post('mute')
     async mute(@Body() chat: ChatDto, @Request() req) {
@@ -137,9 +137,9 @@ export class ChatController {
         return this.chatService.mute(chat.idChat, chat.user, req.user, chat.time);
     }
 
-    @ApiOperation({ summary: 'Unmute user' }) //endpoint summary on swaggerui
-    @ApiOkResponse({ description: 'user unmute' }) //answer sent back
-    @ApiConflictResponse({ description: 'user not mute' }) //not working atm
+    @ApiOperation({ summary: 'Unmute user' })
+    @ApiOkResponse({ description: 'user unmute' })
+    @ApiConflictResponse({ description: 'user not mute' })
     @UseGuards(JwtAuthenticationGuard)
     @Post('unmute')
     async unmute(@Body() chat: ChatDto, @Request() req) {
@@ -147,35 +147,35 @@ export class ChatController {
         return this.chatService.active(chat.idChat, chat.user, req.user);
     }
 
-    @ApiOperation({ summary: 'set chat password' }) //endpoint summary on swaggerui
-    @ApiOkResponse({ description: 'Chat password done' }) //answer sent back
-    @ApiConflictResponse({ description: 'Chat password error' }) //not working atm
+    @ApiOperation({ summary: 'set chat password' })
+    @ApiOkResponse({ description: 'Chat password done' })
+    @ApiConflictResponse({ description: 'Chat password error' })
     @Post('password')
     async password(@Body() chat: ChatDto, @Req() req: RequestWithUser) {
         console.log(' set password to chat ' + chat.idChat)
         return this.chatService.password(chat.idChat, req.user, chat.password);
     }
 
-    @ApiOperation({ summary: 'setting chat to private' }) //endpoint summary on swaggerui
-    @ApiOkResponse({ description: 'Chat now private' }) //answer sent back
-    @ApiConflictResponse({ description: 'Chat can\'t being private' }) //not working atm
+    @ApiOperation({ summary: 'setting chat to private' })
+    @ApiOkResponse({ description: 'Chat now private' })
+    @ApiConflictResponse({ description: 'Chat can\'t being private' })
     @Post('setPrivate')
     async setPrivate(@Body() chat: ChatDto, @Req() req: RequestWithUser) {
         console.log(' set chat ' + chat.idChat + ' to private')
         return this.chatService.setPrivate(chat.idChat, req.user);
     }
 
-    @ApiOperation({ summary: 'setting chat to public' }) //endpoint summary on swaggerui
-    @ApiOkResponse({ description: 'Chat now public' }) //answer sent back
-    @ApiConflictResponse({ description: 'Chat can\'t being public' }) //not working atm
+    @ApiOperation({ summary: 'setting chat to public' })
+    @ApiOkResponse({ description: 'Chat now public' })
+    @ApiConflictResponse({ description: 'Chat can\'t being public' })
     @Post('setPublic')
     async setPublic(@Body() chat: ChatDto, @Req() req: RequestWithUser) {
         console.log(' set chat ' + chat.idChat + ' to public')
         return this.chatService.setPublic(chat.idChat, req.user);
     }
 
-    @ApiOperation({ summary: 'get user of a channel' }) //endpoint summary on swaggerui
-    @ApiOkResponse({ description: 'Suceed' }) //answer sent back
+    @ApiOperation({ summary: 'get user of a channel' })
+    @ApiOkResponse({ description: 'Suceed' })
     @Get(':channelId/users')
     async getUsersInChannel(@Param('channelId') channelId: number) {
         console.log('chat id ' + channelId);
@@ -192,5 +192,13 @@ export class ChatController {
         //else
         //    return (String("false"));
         return (this.chatService.chatExist(channelName));
+    }
+
+    @ApiOperation({ summary: 'Boolean to know if requesting user is admin [jwt-protected + for swagger test only]' })
+    @ApiOkResponse({ description: 'Suceed' })
+    @UseGuards(JwtAuthenticationGuard)
+    @Get('/isAdminIn/:channelId')
+    async getIsAdmin(@Param('channelId') channelId: number, @Request() req) {
+        return this.chatService.getIsAdmin(channelId, req.user);
     }
 }

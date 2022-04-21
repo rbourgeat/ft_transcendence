@@ -28,8 +28,8 @@ export default function Channels(props: ChatProps) {
 	const [activeChannelName, setActiveChannelName] = React.useState("");//Va permettre de transmettre le name de l'active channel
 	const [activeDMName, setActiveDMName] = React.useState("");
 	const [activeDMID, setActiveDMID] = React.useState("");
-	const [isDM, setIsDM] = React.useState("false");
-	const [isChan, setIsChan] = React.useState("true");
+	const [isDM, setIsDM] = React.useState(false);
+	const [isChan, setIsChan] = React.useState(true);
 
 	//TODO: rbourgea : reprendre partie socket
 	//const [socket, setSocket] = React.useState(io("http://localhost:3000/chat", { query: { username: username } }));
@@ -72,8 +72,8 @@ export default function Channels(props: ChatProps) {
 		if (calledOnce.current) {
 			return;
 		}
-		setActiveChannelID("1");
-		setActiveChannelName("DummyChannel");
+		//setActiveChannelID("1");
+		//setActiveChannelName("DummyChannel");
 		calledOnce.current = true;
 	}, [username]);
 

@@ -35,7 +35,7 @@ export class GameService {
 	}
 
 	async updateAllRanks() {
-		let allUsers = await this.userRepository.createQueryBuilder("user").orderBy("user.points", "DESC").getMany();
+		const allUsers = await this.userRepository.createQueryBuilder("user").orderBy("user.points", "DESC").getMany();
 		allUsers.forEach((user: User, index: 1) => {
 			user.rank = index + 1;
 			console.log(user.login + " new data is:" + " rank:" + user.rank + "points:" + user.points + " level: " + user.level + " xp:" + user.xp + " %lvl:" + user.percent_to_next_lvl);

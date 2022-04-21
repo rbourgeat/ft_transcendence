@@ -4,16 +4,17 @@
   background-color: white !important;
   background-image: none !important;
   border-radius: variables.$border-radius;
-  padding-right: 50px !important;
-  padding-left: 50px !important;
-  padding-bottom: 50px !important;
-  padding-top: 5px !important;
+  //padding: 20px !important;
+  //padding-right: 50px !important;
+  //padding-left: 50px !important;
+  //padding-bottom: 50px !important;
+  //padding-top: 5px !important;
   position: sticky;
 }
 
 #auth-btn-1,
 #auth-btn-2,
-#auth-btn-3,
+//#auth-btn-3,
 #signup {
   width: 100%;
 }
@@ -31,6 +32,7 @@
 #sinscrire, #jouer, #auth-container > * {
   margin-top: 30px !important;
   color: black !important;
+  padding-bottom: 20px !important;
 }
 
 #auth-form-div {
@@ -44,6 +46,7 @@
   margin-bottom: 5px !important;
   font-family: variables.$big-font;
   font-size: 12px !important;
+  margin-top: 0px !important;
 }
 
 #auth-container > input {

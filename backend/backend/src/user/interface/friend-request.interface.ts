@@ -2,12 +2,10 @@ import { ApiProperty } from '@nestjs/swagger';
 import { User } from 'src/user/entity/user.entity';
 
 export type RelationStatus =
-    | 'not-sent'
     | 'pending'
     | 'accepted'
     | 'declined'
-    | 'blocked'
-    | 'waiting-for-current-user-response';
+    | 'blocked';
 
 export class RelationStatusClass {
     @ApiProperty()

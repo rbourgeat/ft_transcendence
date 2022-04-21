@@ -250,7 +250,7 @@ export class UserService {
 	}
 
 	async getFriends(user: User) {
-		let list = await this.userRelationRepository.find({
+		const list = await this.userRelationRepository.find({
 			where: [
 				{ creator: user, status: 'accepted' },
 				{ receiver: user, status: 'accepted' },
@@ -258,7 +258,7 @@ export class UserService {
 			relations: ['creator', 'receiver'],
 		});
 
-		let userIds: number[] = [];
+		const userIds: number[] = [];
 		list.forEach((relation: RelationInvitation) => {
 			if (relation.creator.id === user.id) {
 				userIds.push(relation.receiver.id);
@@ -270,12 +270,12 @@ export class UserService {
 	}
 
 	async getBlockedUsers(user: User) {
-		let list = await this.userRelationRepository.find({
+		const list = await this.userRelationRepository.find({
 			where: [{ creator: user, status: 'blocked' }],
 			relations: ['creator', 'receiver'],
 		});
 
-		let userIds: number[] = [];
+		const userIds: number[] = [];
 		list.forEach((relation: RelationInvitation) => {
 			if (relation.creator.id === user.id)
 				userIds.push(relation.receiver.id);
@@ -346,7 +346,7 @@ export class UserService {
 			],
 		});
 		if (invite) {
-			let struct = {
+			const struct = {
 				id: invite.id,
 				creator: user.login,
 				receiver: target.login,

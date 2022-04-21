@@ -313,38 +313,98 @@ export class UserMigration1645626140921 implements MigrationInterface {
             }),
         );
 
-        //DM
+        //DM1
 
-        //const dm1 = await queryRunner.manager.save(
-        //    queryRunner.manager.create<Chat>(Chat, {
-        //        name: "DM bahaas/malatini",
-        //        public: false,
-        //        direct: true
-        //    }),
-        //);
+        const dm1 = await queryRunner.manager.save(
+            queryRunner.manager.create<Chat>(Chat, {
+                name: "DM bahaas/malatini",
+                public: false,
+                direct: true
+            }),
+        );
 
-        //const message3 = await queryRunner.manager.save(
-        //    queryRunner.manager.create<Message>(Message, {
-        //        content: "Hello comment ca va",
-        //        author: bahaas,
-        //        channel: dm1
-        //    }),
-        //);
+        const message3 = await queryRunner.manager.save(
+            queryRunner.manager.create<Message>(Message, {
+                content: "Hello comment ca va",
+                author: bahaas,
+                channel: dm1
+            }),
+        );
 
-        //const bahaasparticipate4 = await queryRunner.manager.save(
-        //    queryRunner.manager.create<Participate>(Participate, {
-        //        user: bahaas,
-        //        chat: dm1,
-        //    }),
-        //);
+        const bahaasparticipate4 = await queryRunner.manager.save(
+            queryRunner.manager.create<Participate>(Participate, {
+                user: bahaas,
+                chat: dm1,
+            }),
+        );
 
-        //const malatiniparticipate3 = await queryRunner.manager.save(
-        //    queryRunner.manager.create<Participate>(Participate, {
-        //        user: malatini,
-        //        chat: dm1,
-        //    }),
-        //);
+        const malatiniparticipate3 = await queryRunner.manager.save(
+            queryRunner.manager.create<Participate>(Participate, {
+                user: malatini,
+                chat: dm1,
+            }),
+        );
 
+        //DM2
+        const dm2 = await queryRunner.manager.save(
+            queryRunner.manager.create<Chat>(Chat, {
+                name: "DM bahaas/dummy2",
+                public: false,
+                direct: true
+            }),
+        );
+
+        const message4 = await queryRunner.manager.save(
+            queryRunner.manager.create<Message>(Message, {
+                content: "Hello comment ca va",
+                author: bahaas,
+                channel: dm2
+            }),
+        );
+
+        const bahaasparticipate5 = await queryRunner.manager.save(
+            queryRunner.manager.create<Participate>(Participate, {
+                user: bahaas,
+                chat: dm2,
+            }),
+        );
+
+        const malatiniparticipate4 = await queryRunner.manager.save(
+            queryRunner.manager.create<Participate>(Participate, {
+                user: dummy1,
+                chat: dm2,
+            }),
+        );
+
+        const dm3 = await queryRunner.manager.save(
+            queryRunner.manager.create<Chat>(Chat, {
+                name: "DM malatini/dummy2",
+                public: false,
+                direct: true
+            }),
+        );
+
+        const message5 = await queryRunner.manager.save(
+            queryRunner.manager.create<Message>(Message, {
+                content: "Hello comment ca va",
+                author: malatini,
+                channel: dm3
+            }),
+        );
+
+        const malatiniparticipate5 = await queryRunner.manager.save(
+            queryRunner.manager.create<Participate>(Participate, {
+                user: malatini,
+                chat: dm3,
+            }),
+        );
+
+        const dummyparticipate = await queryRunner.manager.save(
+            queryRunner.manager.create<Participate>(Participate, {
+                user: dummy1,
+                chat: dm3,
+            }),
+        );
 
         const game1 = await queryRunner.manager.save(
             queryRunner.manager.create<Game>(Game, {
