@@ -5,6 +5,8 @@ import SingleMessage from "../ListDiscussions/SingleMessage/SingleMessage";
 import axios from 'axios';
 
 export interface TypingProps {
+    login: string,
+    channel: string,
 }
 
 export interface TypingState {
@@ -14,7 +16,7 @@ export interface TypingState {
 const message = document.getElementById('message');
 const messages = document.getElementById('messages');
 
-export default function TypingMessage() {
+export default function TypingMessage(props: TypingProps) {
     const [text, updateText] = React.useState("");
     const [username, setUsername] = React.useState("");
 
@@ -36,13 +38,13 @@ export default function TypingMessage() {
     useEffect(() => {
     }, []);
 
-    /*
-    let socket = io("http://localhost:3000/chat", { query: { username: username } });
+    
+    let socket = io("http://localhost:3000/chat", { query: { username: props.login } });
 
-    function sendMessage(channel: string, message: string) {
-        socket.emit('message', username + ":" + channel + ":" + message)
+    function sendMessage(message: string) {
+        updateText("");
+        socket.emit('message', props.login + ":" + props.channel + ":" + message)
     }
-    */
 
     return (
         <div id="typing--div">
@@ -57,7 +59,7 @@ export default function TypingMessage() {
                 <button
                     type="submit"
                     className="btn btn-outline-dark"
-                //onClick={() => sendMessage("DummyChannel", text)}
+                    onClick={() => sendMessage(text)}
                 >
                     Send
                 </button>

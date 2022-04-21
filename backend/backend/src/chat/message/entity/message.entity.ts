@@ -10,7 +10,7 @@ export class Message {
     @Column()
     public content: string;
 
-    @ManyToOne(() => User, (author: User) => author.message)
+    @ManyToOne(() => User, (author: User) => author.message, {eager: true})
     public author: User;
 
     @ManyToOne(() => Chat, (channel: Chat) => channel.message)
