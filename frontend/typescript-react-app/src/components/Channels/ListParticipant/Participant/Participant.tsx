@@ -30,8 +30,8 @@ export default function Participant(props: ParticipantsProps) {
 		if (calledOnce.current) {
 			return;
 		}
-		console.log('props of ' + props.username + ', owner: ' + props.owner + ', admin: ' + props.admin + ', role: ' + props.role);
-		console.log('current user is:' + props.currentUser + ', its admin status:' + props.currentUserAdmin);
+		//console.log('props of ' + props.username + ', owner: ' + props.owner + ', admin: ' + props.admin + ', role: ' + props.role);
+		//console.log('current user is:' + props.currentUser + ', its admin status:' + props.currentUserAdmin);
 		calledOnce.current = true;
 	}, [isBanned, isMuted, isAdmin]);
 
