@@ -24,7 +24,12 @@
 }
 
 #message {
-	color: black !important;
+	color: rgb(255, 255, 255) !important;
+	background-color: rgb(3, 3, 3);
+	padding: 10px;
+	border-radius: 25px;
+	left: 10%;
+	position: absolute;
 }
 
 .title_chat_div {
