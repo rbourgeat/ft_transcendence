@@ -178,28 +178,42 @@ export default function ListParticipant(props: ParticipantProps) {
 	}
 
 	const [show, setShow] = React.useState(false);
+	const [passFail, setPassFAil] = React.useState("");
+	const [newPass, setNewPass] = React.useState("");
+	const [newPassConf, setNewPassConf] = React.useState("");
 	const handleClose = () => setShow(false);
-	const handleShow = () => setShow(true);
+	const handleShow = () => {
+		setNewPass("");
+		setNewPassConf("");
+		setPassFAil("")
+		setShow(true);
+	}
 
-	function updatePass() {
-		/*
-		return (
-			<Modal.Dialog>
-				<Modal.Header closeButton>
-					<Modal.Title>Modal title</Modal.Title>
-				</Modal.Header>
+	const handleSend = () => {
+		if (newPass !== newPassConf) {
+			setPassFAil("Pass doesn't match")
+		}
+		else {
+			updatePass();
+			handleClose();
+		}
+	}
 
-				<Modal.Body>
-					<p>Modal body text goes here.</p>
-				</Modal.Body>
+	async function updatePass() {
+		let toast = new ToastAlerts(null);
+		const url = 'http://localhost:3000/api/chat/password';
 
-				<Modal.Footer>
-					<Button variant="secondary">Close</Button>
-					<Button variant="primary">Save changes</Button>
-				</Modal.Footer>
-			</Modal.Dialog>
-		)
-		*/
+		const body = {
+			"idChat": props.activeChannelId,
+			"password": newPass
+		}
+		await axios.post(url, body)
+			.then(response => {
+				toast.notifySuccess("Update password :)");
+			})
+			.catch(error => {
+				toast.notifyDanger("Fail to update password");
+			})
 	}
 
 	return (
@@ -233,7 +247,40 @@ export default function ListParticipant(props: ParticipantProps) {
 							:
 							null
 						}
-
+						<Modal show={show} animation={true} onHide={handleClose}>
+							<Modal.Header closeButton></Modal.Header>
+							<Modal.Body>
+								<Form>
+									<Form.Group>
+										<Form.Label>New Password</Form.Label>
+										<Form.Control
+											type="password"
+											value={newPass}
+											onChange={e => { setNewPass(e.target.value) }}
+											autoFocus
+											placeholder="******"
+											className={passFail ? "fail" : ""}
+										/>
+									</Form.Group>
+									<p className="fail">{passFail}</p>
+									<Form.Group>
+										<Form.Label>New Password confirmation</Form.Label>
+										<Form.Control
+											type="password"
+											value={newPassConf}
+											onChange={e => { setNewPassConf(e.target.value) }}
+											autoFocus
+											placeholder="******"
+										/>
+									</Form.Group>
+								</Form>
+							</Modal.Body>
+							<Modal.Footer>
+								<Button variant="primary" onClick={handleSend}>
+									Confirm
+								</Button>
+							</Modal.Footer>
+						</Modal>
 					</div>
 				</div>
 			</div>
