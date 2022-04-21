@@ -256,7 +256,7 @@ export default function ListChannels(props: ListChannelsProps) {
 									<div key={channels[key].id} className="displaying_channels">
 										<DisplayChan isChan={true} isDM={false} channel={channels[key]} minId={minId}
 											setActiveChannelName={props.setActiveChannelName} setActiveChannelId={props.setActiveChannelID}
-											setActiveDMName={props.setActiveDMName} setActiveDMID={props.setActiveDMID}
+											setActiveDMName={props.setActiveDMName} setActiveDMID={props.setActiveDMID} login={props.login}
 										/>
 									</div>
 								)
@@ -282,7 +282,7 @@ export default function ListChannels(props: ListChannelsProps) {
 										<DisplayChan dm={DMs[key]}
 											isChan={false} isDM={true} channel={DMs[key]} minId={minId}
 											setActiveChannelName={props.setActiveChannelName} setActiveChannelId={props.setActiveChannelID}
-											setActiveDMName={props.setActiveDMName} setActiveDMID={props.setActiveDMID} />
+											setActiveDMName={props.setActiveDMName} setActiveDMID={props.setActiveDMID} login={props.login} />
 									</div>)
 							}
 						})
