@@ -47,7 +47,7 @@ export class ChatGateway implements OnGatewayConnection {
 		const message = await this.chatService.saveChatMessage(b[1], b[2], author);
 
 		const messages = await this.chatService.getMessagesbyName(b[1]);
-		socket.emit('sendAllMessages', messages);
+		this.server.emit('refreshMessages', messages, b[1]);
 	}
 
 	@SubscribeMessage('requestAllMessages')

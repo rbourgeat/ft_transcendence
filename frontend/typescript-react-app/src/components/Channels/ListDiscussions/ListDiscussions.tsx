@@ -83,7 +83,6 @@ export default function ListDiscussions(props: ListDiscussionsProps) {
 	const [messages, setMessages] = React.useState([]);
 	const [socket, setSocket] = React.useState(io("http://localhost:3000/chat", { query: { username: props.login } }));
 
-
 	useEffect(() => {
 		socket.emit('requestAllMessages', props.activeChannelName)
 		socket.on("sendAllMessages", (messagesUpdated) => {
@@ -92,6 +91,12 @@ export default function ListDiscussions(props: ListDiscussionsProps) {
 			}
 		});
 	}, [props.activeChannelName]);
+
+	socket.on("refreshMessages", (...args) => {
+		console.log("channel is " + props.activeChannelName + " | channel socket is " + args[1])
+		if (args[1] == props.activeChannelName)
+			setMessages(args[0]);
+	});
 
 	return (
 		//<div>
