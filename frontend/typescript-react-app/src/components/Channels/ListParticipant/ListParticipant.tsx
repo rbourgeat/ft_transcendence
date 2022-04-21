@@ -37,6 +37,7 @@ export default function ListParticipant(props: ParticipantProps) {
 		console.log("activeDMId:" + props.activeDMId);
 		console.log("activeDMName:" + props.activeDMName);
 		console.log("activeChannelName:" + props.activeChannelName);
+		console.log("activeChannelId:" + props.activeChannelId);
 		console.log("--------------");
 
 		if (props.isChan === true) {
@@ -78,7 +79,7 @@ export default function ListParticipant(props: ParticipantProps) {
 					console.log("Error while getting api auth");
 				})
 		}
-	}, [props.activeChannelId])
+	}, [props.activeChannelId, props.activeDMId])
 
 	React.useEffect(() => {
 		console.log("selectedUser is set to : " + selectedUser);
