@@ -74,6 +74,13 @@ export default function CreateChan(props: CreateChanProps) {
 			isFree = res.data;
 			load = true;
 
+			if (isFree == false)
+			{
+				toast.notifyDanger("This channel already exists.");
+				//handleClose();
+				return ;
+			}
+
 			axios.defaults.baseURL = 'http://localhost:3000/api/';
 			axios.defaults.headers.post['Content-Type'] = 'application/json';
 			axios.defaults.headers.post['Accept'] = '*/*';
@@ -89,11 +96,6 @@ export default function CreateChan(props: CreateChanProps) {
 			if (res.data == true || res.data == "true")
 			{
 				//setIsFree("true");
-				//console.log("it is damn true !");
-				//console.log("result");
-				//console.log(isFree);
-				//console.log(load);
-
 				//Ca ne rentre pas dans cette putin de condition
 				if (isFree == true && load == true)
 				{
@@ -120,58 +122,65 @@ export default function CreateChan(props: CreateChanProps) {
 						console.log("successfully created a chat !");
 						setSuccessfull(true);
 						toast.notifySuccess("✨ Successfully created channel !");
+						handleClose();
 					})
 					.catch((error) => {
 						console.log("Catched error on post api chat.");
 						console.log(error);
 					})
-				//}
 				}
+				//}
 			}
-			else if (res.data == false || res.data == "false")
-			{
-				//console.log("here");
-				//toast.notifySuccess("here");
-				//console.log("joining channel");
-				let url = "http://localhost:3000/api/chat/join";
-
-				if (chanScope === "private")
-					{
-						body = {
-							password: chanPassword,
-							public: false,
-							name: chanName
-						}
-					}
-					else {
-						body = {
-							public: true,
-							name: chanName
-						}
-					}
-
-				let res = axios.post(url, body, {headers})
-					.then(res => {
-						//console.log("successfully joined a chat !");
-						console.log(res);
-						if (res.data.statusCode != 400 || res.data.statusCode != 401)
-						{
-							toast.notifySuccess("✨ Successfully joined channel !");
-							setSuccessfull(true);
-						}
-						else
-						{
-							toast.notifyDanger("Error while joining ! Name or password maybe wrong");
-							setSuccessfull(false);
-						}
-					})
-					.catch((error) => {
-						console.log("Catched error while joining channel");
-						console.log(error);
-					})
-			}})
-		.catch((error) => {console.log(error)})
+		})
 	}
+		//}
+		//}
+		// Existe deja, reprendre dans l'autre modal 
+
+		//	else if (res.data == false || res.data == "false")
+		//	{
+		//		//console.log("here");
+		//		//toast.notifySuccess("here");
+		//		//console.log("joining channel");
+		//		let url = "http://localhost:3000/api/chat/join";
+
+		//		if (chanScope === "private")
+		//			{
+		//				body = {
+		//					password: chanPassword,
+		//					public: false,
+		//					name: chanName
+		//				}
+		//			}
+		//			else {
+		//				body = {
+		//					public: true,
+		//					name: chanName
+		//				}
+		//			}
+
+		//		let res = axios.post(url, body, {headers})
+		//			.then(res => {
+		//				//console.log("successfully joined a chat !");
+		//				console.log(res);
+		//				if (res.data.statusCode != 400 || res.data.statusCode != 401)
+		//				{
+		//					toast.notifySuccess("✨ Successfully joined channel !");
+		//					setSuccessfull(true);
+		//				}
+		//				else
+		//				{
+		//					toast.notifyDanger("Error while joining ! Name or password maybe wrong");
+		//					setSuccessfull(false);
+		//				}
+		//			})
+		//			.catch((error) => {
+		//				console.log("Catched error while joining channel");
+		//				console.log(error);
+		//			})
+		//	}})
+		//.catch((error) => {console.log(error)})
+	//}
 
 	return (
 		<div id="create-chan_div">
@@ -236,4 +245,5 @@ export default function CreateChan(props: CreateChanProps) {
 			/>
 		</div>
 	);
+
 }
