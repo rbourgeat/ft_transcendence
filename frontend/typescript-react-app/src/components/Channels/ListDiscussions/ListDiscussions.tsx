@@ -106,7 +106,7 @@ export default function ListDiscussions(props: ListDiscussionsProps) {
 							messages.map(message =>
 								<div key={message.id}>
 									<li id="message" key={message.id}>
-										{message.content}
+										{message.author.login}: {message.content}
 									</li>
 									<br /><br />
 								</div>
@@ -114,7 +114,10 @@ export default function ListDiscussions(props: ListDiscussionsProps) {
 						}
 					</ul>
 				</div>
-				<TypingMessage />
+				<TypingMessage
+					login={props.login}
+					channel={props.activeChannelName}
+				/>
 				{/*<p id="discussions--title">channelId: {activeChannel}</p>*/}
 				{/*<div id="sub--div">*/}
 					{/*<ul id="messages" className='text'>
