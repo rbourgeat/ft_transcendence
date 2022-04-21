@@ -52,20 +52,25 @@ export class ChatService {
 		});
 	}
 
-	async getnotjoinedchannels(user: User) {
-		console.log("test");
-		/*
+	async joinableChannels(user: User) {
 		const chats = await this.chatRepository.find({
 			relations: ['participates'],
 		});
 
-		const userChats = this.getChatsFromUser(user);
+		const channelsToJoinIds: number[] = [];
 		chats.forEach((chat: Chat) => {
-			const participants = this.getUsersInChannel(chat.id);
+			let hasJoined = false;
 
-			//channelsIds.push(participate.chat.id);
+			chat.participates.forEach((participate: Participate) => {
+				console.log("test:" + participate.login + ' is in chat: ' + chat.name);
+				if (participate.login === user.login42)
+					hasJoined = true;
+			});
+			if (hasJoined === false && chat.direct == false && chat.public == true) {
+				channelsToJoinIds.push(chat.id);
+			}
 		});
-		*/
+		return this.chatRepository.findByIds(channelsToJoinIds);
 	}
 
 	async getChatsFromUser(user: User) {
