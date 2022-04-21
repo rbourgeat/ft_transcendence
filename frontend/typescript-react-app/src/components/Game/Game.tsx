@@ -97,8 +97,8 @@ export default function Game() {
 		initParty();
 		if (joueur1 != adversaire && joueur1 == joueur && game) {
 			adversaire = joueur2;
-			document.querySelector('#joueur1').textContent = joueur1;
-			document.querySelector('#joueur2').textContent = joueur2;
+			document.querySelector('#joueur1').textContent = joueur1 + ": ";
+			document.querySelector('#joueur2').textContent = joueur2 + ": ";
 			play();
 			setActive(false);
 			setActive2(false);
@@ -106,8 +106,8 @@ export default function Game() {
 		}
 		else if (joueur2 != adversaire && joueur2 == joueur && game) {
 			adversaire = joueur1;
-			document.querySelector('#joueur1').textContent = joueur1;
-			document.querySelector('#joueur2').textContent = joueur2;
+			document.querySelector('#joueur1').textContent = joueur1 + ": ";
+			document.querySelector('#joueur2').textContent = joueur2 + ": ";
 			play();
 			setActive(false);
 			setActive2(false);
@@ -425,9 +425,7 @@ export default function Game() {
 									<main role="main">
 										<p className="canvas-score" id="scores">
 											<em className="canvas-score" id="joueur1"></em>
-											{/*<span className="canvas-score">:</span>*/}
 											<em className="canvas-score" id="player-score">0</em> - <em id="joueur2"></em>
-											{/*<span className="canvas-score">:</span>*/}
 											<em className="canvas-score" id="player2-score">0</em></p>
 										<canvas id="canvas" width={size.width / 1.5} height={size.height / 1.25}></canvas>
 									</main>
