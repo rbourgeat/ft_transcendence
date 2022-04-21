@@ -80,18 +80,18 @@ export interface ListDiscussionsProps {
 }
 
 export default function ListDiscussions(props: ListDiscussionsProps) {
-	//const [messages, setMessages] = React.useState([]);
-	//const [socket, setSocket] = React.useState(io("http://localhost:3000/chat", { query: { username: username } }));
+	const [messages, setMessages] = React.useState([]);
+	const [socket, setSocket] = React.useState(io("http://localhost:3000/chat", { query: { username: props.login } }));
 
 
-	//useEffect(() => {
-	//	socket.emit('requestAllMessages', activeChannel)
-	//	socket.on("sendAllMessages", (messagesUpdated) => {
-	//		if (messagesUpdated) {
-	//			setMessages(messagesUpdated);
-	//		}
-	//	});
-	//}, [activeChannel, messages]);
+	useEffect(() => {
+		socket.emit('requestAllMessages', props.activeChannelName)
+		socket.on("sendAllMessages", (messagesUpdated) => {
+			if (messagesUpdated) {
+				setMessages(messagesUpdated);
+			}
+		});
+	}, [props.activeChannelName]);
 
 	return (
 		//<div>
@@ -99,6 +99,18 @@ export default function ListDiscussions(props: ListDiscussionsProps) {
 				<div className="title_chat_div">
 					<p className="chat--title">Chat</p>
 					<p className="chat--title_open">{props.isDM == "true" ? "Your open DM : ".concat(props.activeDMName) : "Your open channel : ".concat(props.activeChannelName)}</p>
+					<ul id="messages" className='text'>
+						{
+							messages.map(message =>
+								<div key={message.id}>
+									<li id="message" key={message.id}>
+										{message.content}
+									</li>
+									<br />
+								</div>
+							)
+						}
+					</ul>
 				</div>
 				<div className="messages-zone">
 				</div>

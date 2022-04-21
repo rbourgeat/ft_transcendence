@@ -240,6 +240,18 @@ export class ChatService {
 		return history;
 	}
 
+	async getMessagesbyName(name: string) {
+		const chat = await this.getChatByName(name);
+
+		const messages = chat.message;
+		//TODO clear message when u have a user blocked
+		const history: Message[] = [];
+		for (const message of messages) {
+			history.push(message);
+		}
+		return history;
+	}
+
 	async ban(id: number, login: string, admin: User, time: Date) {
 		const chat = await this.chatRepository.findOne({ id });
 		const user = await this.userRepository.findOne({ login });

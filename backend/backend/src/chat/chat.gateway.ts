@@ -50,8 +50,8 @@ export class ChatGateway implements OnGatewayConnection {
 	}
 
 	@SubscribeMessage('requestAllMessages')
-	async requestAllMessages(@ConnectedSocket() socket: Socket, @MessageBody() body: number) {
-		const messages = await this.chatService.getMessages(body);
+	async requestAllMessagesbyName(@ConnectedSocket() socket: Socket, @MessageBody() body: string) {
+		const messages = await this.chatService.getMessagesbyName(body);
 		socket.emit('sendAllMessages', messages);
 	}
 }
