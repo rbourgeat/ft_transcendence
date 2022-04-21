@@ -21,6 +21,9 @@ export class Participate {
     admin: boolean
 
     @Column({ nullable: true })
+    login: string
+
+    @Column({ nullable: true })
     timestamp: Date;
 
     @Column({ type: "enum", enum: UserStatus, default: UserStatus.ACTIVE })

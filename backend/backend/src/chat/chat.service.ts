@@ -52,6 +52,22 @@ export class ChatService {
 		});
 	}
 
+	async getnotjoinedchannels(user: User) {
+		console.log("test");
+		/*
+		const chats = await this.chatRepository.find({
+			relations: ['participates'],
+		});
+
+		const userChats = this.getChatsFromUser(user);
+		chats.forEach((chat: Chat) => {
+			const participants = this.getUsersInChannel(chat.id);
+
+			//channelsIds.push(participate.chat.id);
+		});
+		*/
+	}
+
 	async getChatsFromUser(user: User) {
 		const listParticipateCard = await this.participateRepository.find({
 			where: [
@@ -108,7 +124,8 @@ export class ChatService {
 			{
 				user: user,
 				admin: true,
-				owner: true
+				owner: true,
+				login: user.login42,
 			}
 		);
 		await this.participateRepository.save(newParticipate);
@@ -132,7 +149,8 @@ export class ChatService {
 			{
 				user: user1,
 				admin: false,
-				owner: false
+				owner: false,
+				login: user1.login42,
 			}
 		);
 		await this.participateRepository.save(newParticipate1);
@@ -140,7 +158,8 @@ export class ChatService {
 			{
 				user: user2,
 				admin: false,
-				owner: false
+				owner: false,
+				login: user2.login42,
 			}
 		);
 		await this.participateRepository.save(newParticipate2);
@@ -204,7 +223,8 @@ export class ChatService {
 					const newParticipate = await this.participateRepository.create(
 						{
 							user: user,
-							chat: joinedChat
+							chat: joinedChat,
+							login: user.login42,
 						}
 					);
 					await this.participateRepository.save(newParticipate);

@@ -235,6 +235,7 @@ export class UserMigration1645626140921 implements MigrationInterface {
             queryRunner.manager.create<Participate>(Participate, {
                 user: dummy2,
                 chat: channel3,
+                login: dummy2.login
             }),
         );
 
@@ -250,6 +251,7 @@ export class UserMigration1645626140921 implements MigrationInterface {
             queryRunner.manager.create<Participate>(Participate, {
                 user: dummy2,
                 chat: channel4,
+                login: dummy2.login
             }),
         );
 
@@ -258,7 +260,8 @@ export class UserMigration1645626140921 implements MigrationInterface {
                 user: bahaas,
                 chat: channel1,
                 owner: true,
-                admin: true
+                admin: true,
+                login: bahaas.login
             }),
         );
 
@@ -266,6 +269,7 @@ export class UserMigration1645626140921 implements MigrationInterface {
             queryRunner.manager.create<Participate>(Participate, {
                 user: malatini,
                 chat: channel1,
+                login: malatini.login
             }),
         );
 
@@ -273,6 +277,7 @@ export class UserMigration1645626140921 implements MigrationInterface {
             queryRunner.manager.create<Participate>(Participate, {
                 user: malatini,
                 chat: channel2,
+                login: malatini.login
             }),
         );
 
@@ -280,6 +285,7 @@ export class UserMigration1645626140921 implements MigrationInterface {
             queryRunner.manager.create<Participate>(Participate, {
                 user: bahaas,
                 chat: channel2,
+                login: bahaas.login
             }),
         );
 
@@ -287,6 +293,7 @@ export class UserMigration1645626140921 implements MigrationInterface {
             queryRunner.manager.create<Participate>(Participate, {
                 user: dummy1,
                 chat: channel1,
+                login: dummy1.login
             }),
         );
 
@@ -294,6 +301,7 @@ export class UserMigration1645626140921 implements MigrationInterface {
             queryRunner.manager.create<Participate>(Participate, {
                 user: dummy2,
                 chat: channel1,
+                login: dummy2.login
             }),
         );
 
@@ -335,6 +343,7 @@ export class UserMigration1645626140921 implements MigrationInterface {
             queryRunner.manager.create<Participate>(Participate, {
                 user: bahaas,
                 chat: dm1,
+                login: bahaas.login
             }),
         );
 
@@ -342,6 +351,7 @@ export class UserMigration1645626140921 implements MigrationInterface {
             queryRunner.manager.create<Participate>(Participate, {
                 user: malatini,
                 chat: dm1,
+                login: malatini.login
             }),
         );
 
@@ -366,6 +376,7 @@ export class UserMigration1645626140921 implements MigrationInterface {
             queryRunner.manager.create<Participate>(Participate, {
                 user: bahaas,
                 chat: dm2,
+                login: bahaas.login
             }),
         );
 
@@ -373,6 +384,7 @@ export class UserMigration1645626140921 implements MigrationInterface {
             queryRunner.manager.create<Participate>(Participate, {
                 user: dummy1,
                 chat: dm2,
+                login: malatini.login
             }),
         );
 
@@ -396,6 +408,7 @@ export class UserMigration1645626140921 implements MigrationInterface {
             queryRunner.manager.create<Participate>(Participate, {
                 user: malatini,
                 chat: dm3,
+                login: malatini.login
             }),
         );
 
@@ -403,6 +416,7 @@ export class UserMigration1645626140921 implements MigrationInterface {
             queryRunner.manager.create<Participate>(Participate, {
                 user: dummy1,
                 chat: dm3,
+                login: malatini.login
             }),
         );
 
