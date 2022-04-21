@@ -8,7 +8,7 @@ import MyAxios from '../../Utils/Axios/Axios';
 import { Button, Modal, Form } from 'react-bootstrap';
 
 export interface ParticipantProps {
-	//setActiveChannelName?: any,
+	setActiveChannelName?: any,
 	//setActiveChannelID?: any,
 	//setActiveDMID?: any,
 	//setActiveDMName?: any,
@@ -172,9 +172,35 @@ export default function ListParticipant(props: ParticipantProps) {
 		await axios.post(url, body)
 			.then(response => {
 				toast.notifySuccess(toastSuccessMessage);
+				if (endpoint == "quit")
+				{
+					//let elem: any;
+					if (props.isChan == true)
+					{
+						document.getElementById("display_chan_".concat(props.activeChannelName)).remove();
+						console.log("Removed channel from dom");
+						//setActiveChannelName(document.getElementsByClassName("dm-title_notselected")[0]);
+						console.log("---Inner html---");
+						let title = document.getElementsByClassName("chan-title_notselected")[0].innerHTML;
+						console.log("title is " + title);
+						document.getElementsByClassName("chan-title_notselected")[0].className = 'chan-title_selected';
+						//console.log(document.getElementsByClassName("chan-title_notselected")[0]);
+						//console.log(document.getElementsByClassName("chan-title_notselected"));
+						//if (title != "" && title != undefined)
+							//props.setActiveChannelName(title);
+					}
+					else
+					{
+						document.getElementById("dm_chan_".concat(props.activeDMName)).remove();
+						console.log("Removed dm from dom");
+						//Est-ce qu'on veut leave une channel DM?
+					}
+					
+				}
 			})
 			.catch(error => {
-				toast.notifyDanger(toastErrorMessage);
+				//toast.notifyDanger(toastErrorMessage);
+				console.log("Error while leaving");
 			})
 	}
 

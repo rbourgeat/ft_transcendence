@@ -273,6 +273,30 @@ export default function ListChannels(props: ListChannelsProps) {
 		displaySelectedCat("Channels");
 	}
 
+	//function makeAPIcall(endpoint: string, toastSuccessMessage: string, toastErrorMessage: string, me: boolean) {
+	//	let toast = new ToastAlerts(null);
+	//	const url = 'http://localhost:3000/api/chat/'.concat(endpoint);
+
+	//	let user: string;
+	//	//me === true ? user = props.login : user = selectedUser;
+	//	const body = {
+	//		"idChat": {selectedCat == "Channels" ? }
+	//		//props.activeChannelId,
+	//		"user": props.login
+	//	}
+	//	axios.post(url, body)
+	//		.then(response => {
+	//			toast.notifySuccess(toastSuccessMessage);
+	//		})
+	//		.catch(error => {
+	//			toast.notifyDanger(toastErrorMessage);
+	//		})
+	//}
+
+	//function leaveChannel() {
+	//	makeAPIcall("quit", "Successfull quit", "Error while quitting channel", true);
+	//}
+
 	return (
 		<div id="listChannels" className="col-3" >
 			<div id="channel--col">
@@ -283,6 +307,7 @@ export default function ListChannels(props: ListChannelsProps) {
 					<CreateChan setExited={setExited} setUpdate={setUpdate} exited={exited} />
 					<CreateDM setExited={setExited} setUpdate={setUpdate} exited={exited} />
 					<JoinChan setExited={setExited} setUpdate={setUpdate} exited={exited} />
+					{/*<button id="leave--button" className="btn btn-danger" onClick={leaveChannel}>Leave channel</button>*/}
 				</div>
 				<p className="selected--categorie">{selectedCat == "Channels" ? "Channels you are in" : "Your direct messages"}</p>
 				<div className="displaying-div">
