@@ -3,6 +3,7 @@ import Nav from '../Nav/Nav';
 import TypingMessage from "./TypingMessage/TypingMessage";
 import ListDiscussions from "./ListDiscussions/ListDiscussions";
 import ListParticipant from './ListParticipant/ListParticipant';
+//import JoinChan from './CreateChan/JoinPubChan';
 import CreateChan from './CreateChan/CreateChan';
 import React, { useState, useEffect } from "react";
 import MyAxios from '../Utils/Axios/Axios';

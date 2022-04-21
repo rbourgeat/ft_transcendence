@@ -102,20 +102,14 @@ export default function CreateChan(props: CreateChanProps) {
 					//console.log("creating channel");
 					url = "http://localhost:3000/api/chat/";
 
-					if (chanScope === "private")
-					{
+					//if (chanScope === "private")
+					//{
 						body = {
 							password: chanPassword,
 							public: false,
 							name: chanName
 						}
-					}
-					else {
-						body = {
-							public: true,
-							name: chanName
-						}
-					}
+					//}
 
 					let res = axios.post(url, body, {headers})
 					.then(res => {
@@ -191,7 +185,7 @@ export default function CreateChan(props: CreateChanProps) {
 						>New channel</button>
 			<Modal show={show} animation={true} onHide={handleClose} onExited={handleExit}>
 				<Modal.Header closeButton>
-					<Modal.Title id="create_title">Join or create a channel 💌</Modal.Title>
+					<Modal.Title id="create_title">Create a channel 💌</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
 					<Form>
@@ -218,7 +212,6 @@ export default function CreateChan(props: CreateChanProps) {
 								type="password"
 								value={chanPassword}
 								onChange={e => {chanPasswordSet(e.target.value)}}
-								disabled={chanScope == "public" ? true : false}
 							/>
 						</Form.Group>
 					</Form>
