@@ -9,7 +9,7 @@ interface ChatProps {
     username?: string
 }
 
-//TODO: a reprendre ? / a supprimer
+//TODO: a reprendre ? / a supprimer (macrime's)
 export default function Chat(props: ChatProps) {
     function createChat()
     {

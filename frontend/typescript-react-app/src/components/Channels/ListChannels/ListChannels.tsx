@@ -9,6 +9,7 @@ import { ToastContainer } from 'react-toastify';
 import CreateChan from '../CreateChan/CreateChan';
 import CreateDM from "../CreateChan/CreateDM";
 //import ChatPage from '../CreateChan/ChatPage';
+import JoinChan from '../CreateChan/JoinPubChan';
 
 export interface ListChannelsProps {
 	setActiveChannelName?: any,
@@ -280,6 +281,7 @@ export default function ListChannels(props: ListChannelsProps) {
 				<div className="add-channel-a">
 					<CreateChan setExited={setExited} setUpdate={setUpdate} exited={exited} />
 					<CreateDM setExited={setExited} setUpdate={setUpdate} exited={exited} />
+					<JoinChan setExited={setExited} setUpdate={setUpdate} exited={exited} />
 				</div>
 				<p className="selected--categorie">{selectedCat == "Channels" ? "Channels you are in" : "Your direct messages"}</p>
 				<div className="displaying-div">
