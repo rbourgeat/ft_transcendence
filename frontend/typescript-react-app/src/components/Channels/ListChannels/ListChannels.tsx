@@ -98,7 +98,7 @@ export default function ListChannels(props: ListChannelsProps) {
 				//	setReceiver(res.data.participates[1].login);
 				//else
 				//	setReceiver(res.data.participates[0].login);
-				
+
 				//console.log("The receiver is " + receiver);
 
 				//trier sur direct true
@@ -109,7 +109,7 @@ export default function ListChannels(props: ListChannelsProps) {
 							first = 1;
 							//setCount(1);
 							setCount(1);
-							
+
 						}
 						//console.log("EOOO")
 						//setCount(1);
@@ -294,7 +294,8 @@ export default function ListChannels(props: ListChannelsProps) {
 										<DisplayChan isChan={true} isDM={false} channel={channels[key]} minId={minId}
 											setActiveChannelName={props.setActiveChannelName} setActiveChannelId={props.setActiveChannelID}
 											setActiveDMName={props.setActiveDMName} setActiveDMID={props.setActiveDMID} login={props.login}
-											//receiver={receiver[index]}
+											setHasPass={props.setHasPass}
+										//receiver={receiver[index]}
 										/>
 									</div>
 								)
@@ -320,9 +321,10 @@ export default function ListChannels(props: ListChannelsProps) {
 										<DisplayChan dm={DMs[key]}
 											isChan={false} isDM={true} channel={DMs[key]} minId={minId}
 											setActiveChannelName={props.setActiveChannelName} setActiveChannelId={props.setActiveChannelID}
-											setActiveDMName={props.setActiveDMName} setActiveDMID={props.setActiveDMID} login={props.login} 
-											//receiver={receiver[key]}
-											/>
+											setActiveDMName={props.setActiveDMName} setActiveDMID={props.setActiveDMID} login={props.login}
+											setHasPass={props.setHasPass}
+										//receiver={receiver[key]}
+										/>
 									</div>)
 							}
 						})

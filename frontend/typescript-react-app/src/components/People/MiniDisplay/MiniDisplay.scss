@@ -5,6 +5,14 @@
 	margin: 10px;
 	border: 0.1rem solid #f9f9f9;
 	width: 140px !important;
+
+}
+
+.list-group-item {
+	&:hover {
+		background-color: rgb(246, 246, 246) !important;
+		filter: drop-shadow(0 0 0.6rem rgba(102, 209, 198, 0.609)) !important;
+	}
 }
 
 #minidisplay--div>*,

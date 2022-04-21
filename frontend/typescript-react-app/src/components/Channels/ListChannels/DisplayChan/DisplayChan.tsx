@@ -15,6 +15,7 @@ export interface DisplayChanProps {
 	setActiveDMID?: any,
 	minId?: any,
 	login: string,
+	setHasPass?: any,
 	//receiver?: string,
 	//dm?: any
 }
@@ -45,27 +46,23 @@ export default function DisplayChan(props: DisplayChanProps) {
 		//console.log("props minId is " + props.minId);
 		//setNameToReceiverLogin();
 
-		if (props.dm)
-		{
+		if (props.dm) {
 			console.log("DM is " + props.dm);
 
 			let rec;
-			if (props.dm.participates[0].login == props.login || props.dm.participates[0].login === props.login)
-			{
+			if (props.dm.participates[0].login == props.login || props.dm.participates[0].login === props.login) {
 				rec = props.dm.participates[1].login;
 			}
-			else if (props.dm.participates[0].login == props.dm.participates[1].login)
-			{
-					console.log("Erreur, deux fois le même particpant");
+			else if (props.dm.participates[0].login == props.dm.participates[1].login) {
+				console.log("Erreur, deux fois le même particpant");
 			}
-			else
-			{
-					rec = props.dm.participates[0].login;
+			else {
+				rec = props.dm.participates[0].login;
 			}
 			console.log("rec is " + rec);
 			setReceiver(rec);
 		}
-		
+
 		if (calledOnce.current != true && props.channel.id == props.minId) {
 			setIsSelected("true");
 			//console.log("selected it");
@@ -92,8 +89,7 @@ export default function DisplayChan(props: DisplayChanProps) {
 
 	function setNameToReceiverLogin() {
 
-		if (props.isDM == true)
-		{
+		if (props.isDM == true) {
 			//axios.get(`http://localhost:3000/api/chat/${props.channel.id}/users`)
 			//.then(res => {
 			//	console.log("HHEERRRRRRREEEE");
@@ -132,6 +128,13 @@ export default function DisplayChan(props: DisplayChanProps) {
 			let other = document.getElementById("chan-title_".concat(props.channel.id));
 			other.className = "chan-title_selected";
 
+			//bahaas needs pass boolean in participat to display button change pass
+			console.log("password of channel:" + props.channel.password)
+
+			if (props.channel.password)
+				props.setHasPass(true);
+			else
+				props.setHasPass(false);
 		}
 	}
 

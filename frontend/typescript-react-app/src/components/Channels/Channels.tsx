@@ -121,7 +121,7 @@ export default function Channels(props: ChatProps) {
 						//setIsDM={setIsDM} setIsChan={setIsChan}
 						activeChannelName={activeChannelName} activeChannelId={activeChannelId}
 						activeDMName={activeDMName} activeDMId={activeDMID}
-						isDM={isDM} isChan={isChan}
+						isDM={isDM} isChan={isChan} hasPass={hasPass}
 					/>
 						: ""}
 				</div>

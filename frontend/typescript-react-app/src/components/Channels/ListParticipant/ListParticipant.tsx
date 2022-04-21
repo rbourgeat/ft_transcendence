@@ -21,7 +21,7 @@ export interface ParticipantProps {
 	activeDMId?: any
 	isDM?: boolean,
 	isChan?: boolean,
-	HasPass?: boolean
+	hasPass?: boolean
 }
 
 export default function ListParticipant(props: ParticipantProps) {
@@ -38,6 +38,7 @@ export default function ListParticipant(props: ParticipantProps) {
 		console.log("activeDMName:" + props.activeDMName);
 		console.log("activeChannelName:" + props.activeChannelName);
 		console.log("activeChannelId:" + props.activeChannelId);
+		console.log("hasPass:" + props.hasPass);
 		console.log("--------------");
 
 		if (props.isChan === true) {
@@ -242,7 +243,7 @@ export default function ListParticipant(props: ParticipantProps) {
 				<div className="row">
 					<div className="col">
 						<button id="leave--button" className="btn btn-danger" onClick={leaveChannel}>Leave channel</button>
-						{currentUserAdmin === true ?
+						{currentUserAdmin === true && props.hasPass ?
 							<button id="leave--button" className="btn btn-warning" onClick={handleShow}>Update password</button>
 							:
 							null
