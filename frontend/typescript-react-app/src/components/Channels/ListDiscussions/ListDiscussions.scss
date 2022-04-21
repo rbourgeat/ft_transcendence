@@ -11,21 +11,21 @@
 	margin-left: 2% !important;
 }
 
-#ListDiscussions > * {
-	color: black !important;
+#ListDiscussions>* {
+	color: rgb(0, 0, 0) !important;
 }
 
 #discussions--title {
 	font-family: variables.$basic-font;
 }
 
-#sub--div > * {
+#sub--div>* {
 	font-family: variables.$basic-font;
 }
 
 #message {
 	color: rgb(255, 255, 255) !important;
-	background-color: rgb(3, 3, 3);
+	background-color: rgb(28, 106, 111);
 	padding: 10px;
 	border-radius: 25px;
 	left: 10%;
@@ -33,7 +33,20 @@
 }
 
 #author {
-	color: rgb(0, 0, 0) !important;
+	color: rgb(0, 0, 0);
+}
+
+.my-messages {
+	background-color: rgb(66, 170, 177) !important;
+}
+
+.from-me {
+	margin-left: 25%;
+	margin-right: 2%;
+}
+
+.from-them {
+	margin-right: 25%;
 }
 
 .title_chat_div {
@@ -57,7 +70,8 @@
 	font-family: variables.$basic-font;
 }
 
-.chat--title,  .chat--title_open {
+.chat--title,
+.chat--title_open {
 	text-align: center;
 	padding-top: 10px !important;
 }
@@ -69,7 +83,7 @@
 	border: 0.1rem solid #f9f9f9;
 	border-radius: variables.$border-radius-big;
 	overflow-y: scroll;
-	scrollbar-color: rebeccapurple green;
+	scrollbar-color: rgb(119, 119, 119) rgb(174, 174, 174);
 	scrollbar-width: thin;
 	display: flex;
 	flex-direction: column-reverse;

@@ -38,7 +38,7 @@ export default function TypingMessage(props: TypingProps) {
     useEffect(() => {
     }, []);
 
-    
+
     let socket = io("http://localhost:3000/chat", { query: { username: props.login } });
 
     function sendMessage(message: string) {
@@ -55,7 +55,7 @@ export default function TypingMessage(props: TypingProps) {
                     placeholder="Your message..."
                     value={text}
                     className="form-control typing--input"
-                    id="message"
+                    id="message-typed"
                     onChange={e => updateText(e.target.value)}
                 />
                 <button

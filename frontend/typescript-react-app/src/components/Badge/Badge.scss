@@ -8,14 +8,19 @@
   text-align: center !important;
 }
 
-#graph-title,  #badge--title, #p--wins, #badge--stats > *, .text {
+#graph-title,
+#badge--title,
+#p--wins,
+#badge--stats>*,
+.text {
   color: white !important;
   font-family: variables.$basic-font;
   font-size: 16px !important;
   font-weight: 700 !important;
 }
 
-#badge--stats-2 > *, .text {
+//modfied cuz text appearead also in chat
+#badge--stats-2>* {
   color: white !important;
   font-family: variables.$basic-font;
   font-size: 16px;
@@ -38,7 +43,7 @@
   font-family: variables.$big-font;
 }
 
-#badge--wins > * {
+#badge--wins>* {
   color: green;
 }
 

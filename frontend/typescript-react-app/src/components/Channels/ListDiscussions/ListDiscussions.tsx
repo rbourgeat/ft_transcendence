@@ -114,33 +114,32 @@ export default function ListDiscussions(props: ListDiscussionsProps) {
 
 	return (
 		//<div>
-			<div id="ListDiscussions" className="col-5">
-				<div className="title_chat_div">
-					<p className="chat--title">Chat</p>
-					<p className="chat--title_open">{props.isDM == "true" ? "Your open DM : ".concat(props.activeDMName) : "Your open channel : ".concat(props.activeChannelName)}</p>
-				</div>
-				<div className="messages-zone">
-					<ul id="messages" className='text'>
-						{
-							messages.map(message =>
-								<div id="author" key={message.id}>
-									{message.author.login}
-									<li id="message" key={message.id}>
-										{message.content}
-									</li>
-									<br /><br />
-								</div>
-							)
-						}
-					</ul>
-				</div>
-				<TypingMessage
-					login={props.login}
-					channel={props.activeChannelName}
-				/>
-				{/*<p id="discussions--title">channelId: {activeChannel}</p>*/}
-				{/*<div id="sub--div">*/}
-					{/*<ul id="messages" className='text'>
+		<div id="ListDiscussions" className="col-5">
+			<div className="title_chat_div">
+				<p className="chat--title">{props.isDM == "true" ? props.activeDMName : props.activeChannelName}</p>
+			</div>
+			<div className="messages-zone">
+				<ul className="text">
+					{
+						messages.map(message =>
+							<div id="author" className={message.author.login === props.login ? "from-me" : "from-them"} key={message.id}>
+								{message.author.login}
+								<li id="message" key={message.id} className={message.author.login === props.login ? "my-messages" : ""}>
+									{message.content}
+								</li>
+								<br />
+							</div>
+						)
+					}
+				</ul>
+			</div>
+			<TypingMessage
+				login={props.login}
+				channel={props.activeChannelName}
+			/>
+			{/*<p id="discussions--title">channelId: {activeChannel}</p>*/}
+			{/*<div id="sub--div">*/}
+			{/*<ul id="messages" className='text'>
 						{
 							messages.map(message =>
 								<div key={message.id}>
@@ -152,8 +151,8 @@ export default function ListDiscussions(props: ListDiscussionsProps) {
 							)
 						}
 					</ul>*/}
-				{/*</div>*/}
-			</div>
+			{/*</div>*/}
+		</div>
 		//</div >
 	);
 }

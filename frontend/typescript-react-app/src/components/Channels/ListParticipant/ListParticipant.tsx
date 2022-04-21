@@ -252,7 +252,7 @@ export default function ListParticipant(props: ParticipantProps) {
 							<Modal.Body>
 								<Form>
 									<Form.Group>
-										<Form.Label>New Password</Form.Label>
+										<Form.Label>New Password *</Form.Label>
 										<Form.Control
 											type="password"
 											value={newPass}
@@ -264,7 +264,7 @@ export default function ListParticipant(props: ParticipantProps) {
 									</Form.Group>
 									<p className="fail">{passFail}</p>
 									<Form.Group>
-										<Form.Label>New Password confirmation</Form.Label>
+										<Form.Label>New Password confirmation *</Form.Label>
 										<Form.Control
 											type="password"
 											value={newPassConf}

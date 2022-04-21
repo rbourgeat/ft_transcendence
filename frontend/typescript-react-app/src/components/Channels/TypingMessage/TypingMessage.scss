@@ -6,18 +6,20 @@
 	margin-bottom: 2.5rem;
 }
 
+/*
 #typing--div {
 	border: 0.1rem solid white;
 	border-radius: variables.$border-radius;
 	background-color: white !important;
 }
+*/
 
 .typing--input {
 	border-radius: variables.$border-radius;
 }
 
-#typing--div > * {
-	color: black !important;
+#typing--div {
+	color: rgb(1, 1, 1) !important;
 	padding-left: 20px;
 	padding-right: 20px;
 	padding-top: 20px;
@@ -28,6 +30,7 @@
 	flex-flow: row nowrap;
 	justify-content: center;
 	align-items: baseline;
+
 	button {
 		margin-left: 1rem;
 	}

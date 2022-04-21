@@ -376,8 +376,8 @@ export class ChatService {
 
 	async password(id: number, admin: User, password: string) {
 		const chat = await this.chatRepository.findOne({ id });
-		if (!admin.participate.find(e => e.chat == chat).owner)
-			return console.log("L'utilisateur ne peut pas setup un mdp car il n'est pas owner du chat !");
+		//if (!admin.participate.find(e => e.chat == chat).owner)
+		//	return console.log("L'utilisateur ne peut pas setup un mdp car il n'est pas owner du chat !");
 
 		chat.password = password;
 
