@@ -42,6 +42,7 @@ export default function TypingMessage(props: TypingProps) {
     let socket = io("http://localhost:3000/chat", { query: { username: props.login } });
 
     function sendMessage(message: string) {
+        updateText("");
         socket.emit('message', props.login + ":" + props.channel + ":" + message)
     }
 
