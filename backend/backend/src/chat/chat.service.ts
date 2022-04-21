@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Chat } from './entity/chat.entity';
@@ -124,6 +124,10 @@ export class ChatService {
 	}
 
 	async createDirectMessage(user1: User, user2: User) {
+		if (await this.getChatByName("direct_" + user1.id + "_" + user2.id)) {
+			console.log('error: conv already exist');
+			throw new BadRequestException('Validation failed (files expected)');
+		}
 		const newParticipate1 = await this.participateRepository.create(
 			{
 				user: user1,
