@@ -16,6 +16,7 @@ export interface ListChannelsProps {
 	setActiveChannelID?: any,
 	setActiveDMName?: any,
 	setActiveDMID?: any,
+	setHasPass?: any,
 	login: string,
 	setIsDM?: any,
 	setIsChan?: any,

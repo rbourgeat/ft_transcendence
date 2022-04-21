@@ -5,6 +5,7 @@ import axios from "axios";
 import { ToastContainer } from 'react-toastify';
 import ToastAlerts from '../../Utils/ToastAlerts/ToastAlerts';
 import MyAxios from '../../Utils/Axios/Axios';
+import { Button, Modal, Form } from 'react-bootstrap';
 
 export interface ParticipantProps {
 	//setActiveChannelName?: any,
@@ -19,7 +20,8 @@ export interface ParticipantProps {
 	activeDMName?: any,
 	activeDMId?: any
 	isDM?: boolean,
-	isChan?: boolean
+	isChan?: boolean,
+	HasPass?: boolean
 }
 
 export default function ListParticipant(props: ParticipantProps) {
@@ -31,11 +33,11 @@ export default function ListParticipant(props: ParticipantProps) {
 
 	React.useEffect(() => {
 		console.log("--------------");
-		console.log("isDM:" + props.isDM);
 		console.log("isChan:" + props.isChan);
 		console.log("activeDMId:" + props.activeDMId);
 		console.log("activeDMName:" + props.activeDMName);
 		console.log("activeChannelName:" + props.activeChannelName);
+		console.log("activeChannelId:" + props.activeChannelId);
 		console.log("--------------");
 
 		if (props.isChan === true) {
@@ -77,7 +79,7 @@ export default function ListParticipant(props: ParticipantProps) {
 					console.log("Error while getting api auth");
 				})
 		}
-	}, [props.activeChannelId])
+	}, [props.activeChannelId, props.activeDMId])
 
 	React.useEffect(() => {
 		console.log("selectedUser is set to : " + selectedUser);
@@ -175,6 +177,31 @@ export default function ListParticipant(props: ParticipantProps) {
 			})
 	}
 
+	const [show, setShow] = React.useState(false);
+	const handleClose = () => setShow(false);
+	const handleShow = () => setShow(true);
+
+	function updatePass() {
+		/*
+		return (
+			<Modal.Dialog>
+				<Modal.Header closeButton>
+					<Modal.Title>Modal title</Modal.Title>
+				</Modal.Header>
+
+				<Modal.Body>
+					<p>Modal body text goes here.</p>
+				</Modal.Body>
+
+				<Modal.Footer>
+					<Button variant="secondary">Close</Button>
+					<Button variant="primary">Save changes</Button>
+				</Modal.Footer>
+			</Modal.Dialog>
+		)
+		*/
+	}
+
 	return (
 		<div id="ListParticipant" className="col-3">
 			<h2 id="participant--title">Members</h2>
@@ -199,8 +226,14 @@ export default function ListParticipant(props: ParticipantProps) {
 			</div>
 			<div className="buttons_div">
 				<div className="row">
-					<div className="col" id="row--button_invite">
-						<button id="invite--button" className="btn btn-danger" onClick={leaveChannel}>Leave channel</button>
+					<div className="col">
+						<button id="leave--button" className="btn btn-danger" onClick={leaveChannel}>Leave channel</button>
+						{currentUserAdmin === true ?
+							<button id="leave--button" className="btn btn-warning" onClick={handleShow}>Update password</button>
+							:
+							null
+						}
+
 					</div>
 				</div>
 			</div>

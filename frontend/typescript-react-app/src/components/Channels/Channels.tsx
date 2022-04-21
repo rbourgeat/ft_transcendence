@@ -31,6 +31,7 @@ export default function Channels(props: ChatProps) {
 	const [activeDMID, setActiveDMID] = React.useState("");
 	const [isDM, setIsDM] = React.useState(false);
 	const [isChan, setIsChan] = React.useState(true);
+	const [hasPass, setHasPass] = React.useState(false);
 
 	//TODO: rbourgea : reprendre partie socket
 	//const [socket, setSocket] = React.useState(io("http://localhost:3000/chat", { query: { username: username } }));
@@ -103,7 +104,7 @@ export default function Channels(props: ChatProps) {
 					{load == true ? <ListChannels login={username}
 						setActiveChannelName={setActiveChannelName} setActiveChannelID={setActiveChannelID}
 						setActiveDMName={setActiveDMName} setActiveDMID={setActiveDMID}
-						setIsDM={setIsDM} setIsChan={setIsChan}
+						setIsDM={setIsDM} setIsChan={setIsChan} setHasPass={setHasPass}
 					/>
 						: ""}
 					{/* Attention ici est-ce qu'on veut les setters ou simplement les variables ? */}
