@@ -99,6 +99,8 @@ export default function ListDiscussions(props: ListDiscussionsProps) {
 				<div className="title_chat_div">
 					<p className="chat--title">Chat</p>
 					<p className="chat--title_open">{props.isDM == "true" ? "Your open DM : ".concat(props.activeDMName) : "Your open channel : ".concat(props.activeChannelName)}</p>
+				</div>
+				<div className="messages-zone">
 					<ul id="messages" className='text'>
 						{
 							messages.map(message =>
@@ -106,13 +108,11 @@ export default function ListDiscussions(props: ListDiscussionsProps) {
 									<li id="message" key={message.id}>
 										{message.content}
 									</li>
-									<br />
+									<br /><br />
 								</div>
 							)
 						}
 					</ul>
-				</div>
-				<div className="messages-zone">
 				</div>
 				<TypingMessage />
 				{/*<p id="discussions--title">channelId: {activeChannel}</p>*/}
