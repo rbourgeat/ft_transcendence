@@ -380,11 +380,11 @@ export class UserMigration1645626140921 implements MigrationInterface {
             }),
         );
 
-        const malatiniparticipate4 = await queryRunner.manager.save(
+        const dummy2participate = await queryRunner.manager.save(
             queryRunner.manager.create<Participate>(Participate, {
-                user: dummy1,
+                user: dummy2,
                 chat: dm2,
-                login: malatini.login
+                login: dummy2.login
             }),
         );
 
@@ -414,9 +414,9 @@ export class UserMigration1645626140921 implements MigrationInterface {
 
         const dummyparticipate = await queryRunner.manager.save(
             queryRunner.manager.create<Participate>(Participate, {
-                user: dummy1,
+                user: dummy2,
                 chat: dm3,
-                login: malatini.login
+                login: dummy2.login
             }),
         );
 
