@@ -5,6 +5,7 @@ import myAxios from "../../Utils/Axios/Axios";
 import { io } from "socket.io-client";
 import axios from 'axios';
 import TypingMessage from "../TypingMessage/TypingMessage";
+import MyAxios from '../../Utils/Axios/Axios';
 
 //TODO: a reprendre @rbourgea
 
@@ -98,6 +99,19 @@ export default function ListDiscussions(props: ListDiscussionsProps) {
 			setMessages(args[0]);
 	});
 
+	function renderImage(login: string, isUserProfile: boolean) {
+		let ax = new MyAxios(null);
+		let log42 = localStorage.getItem("login42");
+		let haschanged = false;
+		if (login != log42)
+			haschanged = true;
+		if (isUserProfile == false)
+			haschanged = false;
+		if (log42 != "" && log42 != null && log42 != undefined)
+			return (ax.render_avatar(login, log42, haschanged));
+		return (ax.render_avatar(login, "", haschanged));
+	}
+
 	return (
 		//<div>
 			<div id="ListDiscussions" className="col-5">
@@ -109,9 +123,10 @@ export default function ListDiscussions(props: ListDiscussionsProps) {
 					<ul id="messages" className='text'>
 						{
 							messages.map(message =>
-								<div key={message.id}>
+								<div id="author" key={message.id}>
+									{message.author.login}
 									<li id="message" key={message.id}>
-										{message.author.login}: {message.content}
+										{message.content}
 									</li>
 									<br /><br />
 								</div>
