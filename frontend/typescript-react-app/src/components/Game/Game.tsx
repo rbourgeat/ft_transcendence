@@ -26,6 +26,11 @@ export default function Game() {
 	const [isWin, setWin] = React.useState(false);
 	const [gameMode, chanScopeSet] = React.useState("original");
 
+	const queryParams = new URLSearchParams(window.location.search);
+	const vs = queryParams.get('vs');
+
+	console.log(vs);
+
 	// socket game
 	const [username, setUsername] = React.useState("");
 	async function getUser() {
@@ -427,7 +432,7 @@ export default function Game() {
 											<em className="canvas-score" id="joueur1"></em>
 											<em className="canvas-score" id="player-score">0</em> - <em id="joueur2"></em>
 											<em className="canvas-score" id="player2-score">0</em></p>
-										<canvas id="canvas" width={size.width / 1.5} height={size.height / 1.25}></canvas>
+										<canvas id="canvas" width={500} height={500}></canvas>
 									</main>
 								</div>
 							</div>
