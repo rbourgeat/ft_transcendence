@@ -59,12 +59,13 @@ export class GameService {
 
 		const games = userWithGamesDefined.games.reverse();
 		for (let i = 0; i < 5; i++) {
-			if (games[i].winner != user.login)
-				return;
+			if (games[i])
+				if (games[i].winner != user.login)
+					return;
 		}
 		await this.userService.saveAchievement(user, "5Row")
 	}
-
+ 
 	async triggerGameAchievement(winner: User, loser: User) {
 		await this.triggerTotalGamesAchievement(winner, 1);
 		await this.triggerTotalGamesAchievement(loser, 1);
