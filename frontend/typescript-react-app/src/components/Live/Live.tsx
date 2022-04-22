@@ -80,7 +80,7 @@ export default function Live() {
 					<div id='vs'>🏓 ` + joueur +` vs ` + adversaire +`</div>
 					<div id='score-` + adversaires.indexOf(adversaire) + `'></div>
 					<div id='dark-canvas'>
-						<canvas id="canvas-` + adversaires.indexOf(adversaire) + `" width={size.width / 1.5} height={size.height / 1.25}></canvas>
+						<canvas id="canvas-` + adversaires.indexOf(adversaire) + `" width={500} height={500}></canvas>
 					</div>
 				</div>
 				`;
