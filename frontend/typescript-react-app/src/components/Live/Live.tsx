@@ -24,11 +24,11 @@ export default function Live() {
 			<Nav />
 			<div className="container">
 				<div className="row d-flex justify-content-center text-center">
-					<div className="col-9">
+					{/*<div className="col-9">*/}
 						<div className="channels-not-logged">
 							<p>You are not logged in.</p>
 						</div>
-					</div>
+					{/*</div>*/}
 				</div>
 			</div>
 		</>)
@@ -80,7 +80,7 @@ export default function Live() {
 					<div id='vs'>🏓 ` + joueur +` vs ` + adversaire +`</div>
 					<div id='score-` + adversaires.indexOf(adversaire) + `'></div>
 					<div id='dark-canvas'>
-						<canvas id="canvas-` + adversaires.indexOf(adversaire) + `" width={500} height={500}></canvas>
+						<canvas id="canvas-` + adversaires.indexOf(adversaire) + `"></canvas>
 					</div>
 				</div>
 				`;
@@ -324,12 +324,12 @@ export default function Live() {
 			<Nav/>
 			<div className="container">
 				<div className="row d-flex justify-content-center text-center">
-					<div className="col-9">
+					{/*<div className="col-9">*/}
 						<div className="live--div">
 							<p id="titre">📺 Watch games live</p>
 							<div id="content"></div>
 						</div>
-					</div>
+					{/*</div>*/}
 				</div>
 			</div>
 		</div>

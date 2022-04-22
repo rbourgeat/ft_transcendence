@@ -84,6 +84,11 @@ input[type=number]::-webkit-outer-spin-button {
   margin: 0;
 }
 
+canvas {
+  width: 500px !important;
+  height: 500px !important;
+}
+
 // Plus utilisé mais intéressant
 
 // Style pour input invalides
