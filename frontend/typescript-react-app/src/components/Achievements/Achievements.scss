@@ -8,10 +8,20 @@
     background-color: white;
     border: 0.1rem solid variables.$lightgrey;
     filter: drop-shadow(0 0 0.3rem rgb(183, 181, 181));
+
+    &:hover {
+        background-color: rgb(241, 241, 241) !important;
+        // filter: drop-shadow(0 0 0.6rem rgba(18, 33, 31, 0.609)) !important;
+    }
 }
 
 .card--unlocked {
     filter: drop-shadow(0 0 0.6rem rgb(32, 123, 114)) !important;
+
+    &:hover {
+        background-color: rgb(230, 248, 250) !important;
+        // filter: drop-shadow(0 0 0.6rem rgba(18, 33, 31, 0.609)) !important;
+    }
 }
 
 .card-text {
@@ -50,10 +60,10 @@
     color: rgb(32, 123, 114);
     transform: rotate(-5deg);
     filter: drop-shadow(0px 0px 10px rgb(84, 207, 232));
-    position: absolute;
-    left: 0;
-    top: 0;
-    z-index: 1;
+    position: absolute !important;
+    //left: 0;
+    //top: 0;
+    //z-index: 1;
 }
 
 #achievements--title {
