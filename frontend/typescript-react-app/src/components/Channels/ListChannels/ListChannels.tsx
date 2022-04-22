@@ -21,6 +21,8 @@ export interface ListChannelsProps {
 	setIsDM?: any,
 	setIsChan?: any,
 	minIdDM?: any,
+	setActiveID?: any,
+	setActiveName?: any
 }
 
 export default function ListChannels(props: ListChannelsProps) {
@@ -319,7 +321,7 @@ export default function ListChannels(props: ListChannelsProps) {
 										<DisplayChan isChan={true} isDM={false} channel={channels[key]} minId={minId}
 											setActiveChannelName={props.setActiveChannelName} setActiveChannelId={props.setActiveChannelID}
 											setActiveDMName={props.setActiveDMName} setActiveDMID={props.setActiveDMID} login={props.login}
-											setHasPass={props.setHasPass}
+											setHasPass={props.setHasPass} setActiveID={props.setActiveID} setActiveName={props.setActiveName}
 										//receiver={receiver[index]}
 										/>
 									</div>
@@ -347,7 +349,7 @@ export default function ListChannels(props: ListChannelsProps) {
 											isChan={false} isDM={true} channel={DMs[key]} minId={minId}
 											setActiveChannelName={props.setActiveChannelName} setActiveChannelId={props.setActiveChannelID}
 											setActiveDMName={props.setActiveDMName} setActiveDMID={props.setActiveDMID} login={props.login}
-											setHasPass={props.setHasPass}
+											setHasPass={props.setHasPass} setActiveID={props.setActiveID} setActiveName={props.setActiveName}
 										//receiver={receiver[key]}
 										/>
 									</div>)

@@ -94,7 +94,7 @@ export class ChatController {
     @Get(':idChat/messages')
     async getMessages(@Param('idChat') id: number) {
         console.log('Retrieve message history from chat: ' + id)
-        return this.chatService.getMessages(id);
+        return this.chatService.getMessagesById(id);
     }
 
 
@@ -153,7 +153,7 @@ export class ChatController {
     @ApiConflictResponse({ description: 'Chat password error' })
     @Post('password')
     async password(@Body() chat: ChatDto, @Req() req: RequestWithUser) {
-        console.log(' set password to chat ' + chat.idChat)
+        console.log(' set password to chat ' + chat.idChat + ' to:' + chat.password)
         return this.chatService.password(chat.idChat, req.user, chat.password);
     }
 

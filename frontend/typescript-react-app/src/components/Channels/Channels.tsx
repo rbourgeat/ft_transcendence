@@ -32,13 +32,8 @@ export default function Channels(props: ChatProps) {
 	const [isDM, setIsDM] = React.useState(false);
 	const [isChan, setIsChan] = React.useState(true);
 	const [hasPass, setHasPass] = React.useState(false);
-
-	//TODO: rbourgea : reprendre partie socket
-	//const [socket, setSocket] = React.useState(io("http://localhost:3000/chat", { query: { username: username } }));
-	/*
-	let socket = io("http://localhost:3000/chat", { query: { username: username } });
-	setSocket(socket);
-	*/
+	const [activeID, setActiveID] = React.useState("");
+	const [activeName, setActiveName] = React.useState("");
 
 	async function getUser() {
 		let url = "http://localhost:3000/api/auth/";
@@ -55,21 +50,6 @@ export default function Channels(props: ChatProps) {
 		setLoad(true);
 	}
 
-	//let newSocket = io("http://localhost:3000/chat", { query: { username: username } });
-	/*
-	const [socket, setSocket] = React.useState(io("http://localhost:3000/chat", { query: { username: username } }));
-	socket.on('connect', () => {
-		console.log(`online ` + username);
-		socket.emit('status', username + ':online')
-	})
-
-	socket.on('disconnect', () => {
-		console.log(`offline ` + username);
-		socket.emit('status', username + ':offline')
-	})
-*/
-
-	//TODO @bahaas: rassembler les deux useEffect
 	useEffect(() => {
 		getUser();
 		//if (calledOnce.current) {
@@ -81,8 +61,8 @@ export default function Channels(props: ChatProps) {
 	}, [username]);
 
 	useEffect(() => {
-		console.log("use effect called")
-	}, [activeChannelName]);
+		console.log("Active channel is set to:" + activeName);
+	}, [activeName]);
 
 	return (
 		<div id="channels">
@@ -101,28 +81,26 @@ export default function Channels(props: ChatProps) {
 			<div className="container">
 				<div className="row" id="row_chat">
 					{/* Ces props permettent à tous ces childs components de savoir la channel sélectionnée */}
-					{load == true ? <ListChannels login={username}
+					{load === true ? <ListChannels login={username}
 						setActiveChannelName={setActiveChannelName} setActiveChannelID={setActiveChannelID}
 						setActiveDMName={setActiveDMName} setActiveDMID={setActiveDMID}
-						setIsDM={setIsDM} setIsChan={setIsChan} setHasPass={setHasPass}
+						setIsDM={setIsDM} setIsChan={setIsChan} setHasPass={setHasPass} setActiveID={setActiveID} setActiveName={setActiveName}
 					/>
 						: ""}
-					{/* Attention ici est-ce qu'on veut les setters ou simplement les variables ? */}
-					{load == true ? <ListDiscussions login={username}
-						//setActiveChannelName={setActiveChannelName} setActiveChannelID={setActiveChannelID}
-						//setActiveDMName={setActiveDMName} setActiveDMID={setActiveDMID}
-						activeChannelName={activeChannelName} activeChannelId={activeChannelId}
-						activeDMName={activeDMName} activeDMId={activeDMID}
-						isDM={isDM} isChan={isChan} />
+					{load === true ? <ListDiscussions
+						login={username}
+						isChan={isChan}
+						activeID={activeID}
+						activeName={activeName}
+					/>
 						: ""}
-					{load == true ? <ListParticipant login={username}
-						//setActiveChannelName={setActiveChannelName} setActiveChannelID={setActiveChannelID}
-						//setActiveDMName={setActiveDMName} setActiveDMID={setActiveDMID}
-						//setIsDM={setIsDM} setIsChan={setIsChan}
-						activeChannelName={activeChannelName} activeChannelId={activeChannelId}
-						activeDMName={activeDMName} activeDMId={activeDMID}
-						setActiveChannelName={setActiveChannelName}
-						isDM={isDM} isChan={isChan} hasPass={hasPass}
+					{load === true ? <ListParticipant
+						login={username}
+						isChan={isChan}
+						hasPass={hasPass}
+						setHasPass={setHasPass}
+						activeID={activeID}
+						activeName={activeName}
 					/>
 						: ""}
 				</div>
@@ -130,5 +108,3 @@ export default function Channels(props: ChatProps) {
 		</div>
 	);
 }
-
-//<ListParticipant activeChannel={activeChannel} />

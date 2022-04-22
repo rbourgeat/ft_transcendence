@@ -333,7 +333,7 @@ export class UserMigration1645626140921 implements MigrationInterface {
 
         const message3 = await queryRunner.manager.save(
             queryRunner.manager.create<Message>(Message, {
-                content: "Hello comment ca va",
+                content: "Hello comment ca va mahaut ?",
                 author: bahaas,
                 channel: dm1
             }),
@@ -366,7 +366,7 @@ export class UserMigration1645626140921 implements MigrationInterface {
 
         const message4 = await queryRunner.manager.save(
             queryRunner.manager.create<Message>(Message, {
-                content: "Hello comment ca va",
+                content: "You suck at Pong bro !",
                 author: bahaas,
                 channel: dm2
             }),

@@ -86,7 +86,7 @@ export default function Participant(props: ParticipantsProps) {
 				</p>
 				{props.currentUser === props.username ?
 					<div className="dropdown-menu" aria-labelledby="dropdownMenuButton1" >
-						<p className="dropdown-item" onClick={() => setUpLeave()}>leave</p>
+						{props.isChannel ? <p className="dropdown-item" onClick={() => setUpLeave()}>leave</p> : null}
 					</div>
 					:
 					<div className="dropdown-menu" aria-labelledby="dropdownMenuButton1">

@@ -254,11 +254,9 @@ export class ChatService {
 		return console.log('has quit chat');
 	}
 
-	async getMessages(id: number) {
-		console.log(id);
+	async getMessagesById(id: number) {
+		console.log(id + ':ID of chat in getMessagesById');
 		const chat = await this.chatRepository.findOne({ id });
-
-		console.log(chat.id);
 
 		const messages = chat.message;
 		//TODO clear message when u have a user blocked
@@ -270,6 +268,7 @@ export class ChatService {
 	}
 
 	async getMessagesbyName(name: string) {
+		console.log("test getmessagebyname")
 		const chat = await this.getChatByName(name);
 
 		const messages = chat.message;

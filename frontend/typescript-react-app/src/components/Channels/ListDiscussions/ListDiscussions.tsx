@@ -72,30 +72,44 @@ export interface ListDiscussionsProps {
 	login: string
 	//setActiveDMName?: any,
 	//setActiveDMID?: any,
-	activeChannelName?: any,
-	activeChannelId?: any,
-	activeDMName?: any,
-	activeDMId?: any
-	isDM?: any,
-	isChan?: any
+	//activeChannelName?: any,
+	//activeChannelId?: any,
+	//activeDMName?: any,
+	//activeDMId?: any
+	//isDM?: any,
+	isChan?: any,
+	activeID?: string,
+	activeName?: string
 }
 
 export default function ListDiscussions(props: ListDiscussionsProps) {
 	const [messages, setMessages] = React.useState([]);
 	const [socket, setSocket] = React.useState(io("http://localhost:3000/chat", { query: { username: props.login } }));
 
+	function startLog() {
+		console.log("------LIST DISCUSSION PROPS--------");
+		console.log("isChan:" + props.isChan);
+		console.log("activeID:" + props.activeID);
+		console.log("activeName:" + props.activeName);
+		console.log("--------------");
+	}
+
 	useEffect(() => {
-		socket.emit('requestAllMessages', props.activeChannelName)
+
+		startLog();
+		socket.emit('requestAllMessages', props.activeID);
 		socket.on("sendAllMessages", (messagesUpdated) => {
 			if (messagesUpdated) {
 				setMessages(messagesUpdated);
 			}
+			else
+				setMessages(null)
 		});
-	}, [props.activeChannelName]);
+	}, [props.activeID]);
 
 	socket.on("refreshMessages", (...args) => {
-		console.log("channel is " + props.activeChannelName + " | channel socket is " + args[1])
-		if (args[1] == props.activeChannelName)
+		console.log("channel is " + props.activeName + " | channel socket is " + args[1])
+		if (args[1] == props.activeName)
 			setMessages(args[0]);
 	});
 
@@ -116,7 +130,7 @@ export default function ListDiscussions(props: ListDiscussionsProps) {
 		//<div>
 		<div id="ListDiscussions" className="col-5">
 			<div className="title_chat_div">
-				<p className="chat--title">{props.isDM == "true" ? props.activeDMName : props.activeChannelName}</p>
+				<p className="chat--title">{props.activeName}</p>
 			</div>
 			<div className="messages-zone">
 				<ul className="text">
@@ -135,7 +149,7 @@ export default function ListDiscussions(props: ListDiscussionsProps) {
 			</div>
 			<TypingMessage
 				login={props.login}
-				channel={props.activeChannelName}
+				channel={props.activeName}
 			/>
 			{/*<p id="discussions--title">channelId: {activeChannel}</p>*/}
 			{/*<div id="sub--div">*/}

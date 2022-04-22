@@ -16,6 +16,8 @@ export interface DisplayChanProps {
 	minId?: any,
 	login: string,
 	setHasPass?: any,
+	setActiveID?: any,
+	setActiveName?: any
 	//receiver?: string,
 	//dm?: any
 }
@@ -74,12 +76,16 @@ export default function DisplayChan(props: DisplayChanProps) {
 				props.setActiveChannelName("");
 				props.setActiveChannelId("");
 				props.setActiveDMID(props.channel.id);
+				props.setActiveID(props.channel.id);
+				props.setActiveName(receiver);
 			}
 			else {
 				props.setActiveChannelName(props.channel.name);
 				props.setActiveChannelId(props.channel.id);
 				props.setActiveDMName("");
 				props.setActiveDMID("");
+				props.setActiveID(props.channel.id);
+				props.setActiveName(props.channel.name)
 			}
 			//console.log("called props min");
 		}
@@ -124,6 +130,8 @@ export default function DisplayChan(props: DisplayChanProps) {
 			props.setActiveChannelId(props.channel.id);
 			props.setActiveDMName("");
 			props.setActiveDMID("");
+			props.setActiveID(props.channel.id);
+			props.setActiveName(props.channel.name);
 
 			let other = document.getElementById("chan-title_".concat(props.channel.id));
 			other.className = "chan-title_selected";
@@ -154,6 +162,8 @@ export default function DisplayChan(props: DisplayChanProps) {
 			props.setActiveChannelName("");
 			props.setActiveChannelId("");
 			props.setActiveDMID(props.channel.id);
+			props.setActiveID(props.channel.id);
+			props.setActiveName(receiver);
 
 			let other = document.getElementById("dm-title_".concat(props.channel.id));
 			other.className = "dm-title_selected";
