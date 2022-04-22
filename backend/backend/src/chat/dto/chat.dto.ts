@@ -5,7 +5,6 @@ import { IsNotEmpty, IsOptional, IsAlphanumeric, Length } from 'class-validator'
 export class CreateChatDto {
     @IsOptional()
     @IsAlphanumeric()
-    @Length(4, 10)
     @ApiProperty()
     password: string;
 

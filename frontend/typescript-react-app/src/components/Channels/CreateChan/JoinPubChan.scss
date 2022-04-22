@@ -16,4 +16,9 @@
 	font-family: variables.$basic-font !important;
 	font-size: 14px !important;
 	color: black !important;
+	background-color: rgb(95, 193, 214);
+
+	&:hover {
+		background-color: rgb(121, 212, 224);
+	}
 }

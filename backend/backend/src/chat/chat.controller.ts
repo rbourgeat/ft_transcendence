@@ -72,8 +72,9 @@ export class ChatController {
     @ApiOkResponse({ description: 'Chat creation suceed' })
     @ApiConflictResponse({ description: 'Chat already exist' })
     @UseGuards(JwtAuthenticationGuard)
-    @Post()
+    @Post('new')
     async createChat(@Body() chat: CreateChatDto, @Req() req: RequestWithUser) {
+        console.log("hello");
         return this.chatService.createChat(chat, req.user);
     }
 

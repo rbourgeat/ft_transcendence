@@ -280,7 +280,7 @@ export default function ListChannels(props: ListChannelsProps) {
 					<p className="channels-title">Channels</p>
 				</div>
 				<div className="add-channel-a">
-					<CreateChan setExited={setExited} setUpdate={setUpdate} exited={exited} />
+					<CreateChan setExited={setExited} setUpdate={setUpdate} exited={exited} setHasPass={props.setHasPass} />
 					<CreateDM setExited={setExited} setUpdate={setUpdate} exited={exited} />
 					<JoinChan setExited={setExited} setUpdate={setUpdate} exited={exited} />
 				</div>
