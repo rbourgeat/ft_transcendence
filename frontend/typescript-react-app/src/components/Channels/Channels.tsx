@@ -69,17 +69,17 @@ export default function Channels(props: ChatProps) {
 	})
 */
 
+	//TODO @bahaas: rassembler les deux useEffect
 	useEffect(() => {
 		getUser();
-		if (calledOnce.current) {
-			return;
-		}
+		//if (calledOnce.current) {
+		//	return;
+		//}
 		//setActiveChannelID("1");
 		//setActiveChannelName("DummyChannel");
-		calledOnce.current = true;
+		//calledOnce.current = true;
 	}, [username]);
 
-	//TODO @malatini : a revoir
 	useEffect(() => {
 		console.log("use effect called")
 	}, [activeChannelName]);
@@ -121,6 +121,7 @@ export default function Channels(props: ChatProps) {
 						//setIsDM={setIsDM} setIsChan={setIsChan}
 						activeChannelName={activeChannelName} activeChannelId={activeChannelId}
 						activeDMName={activeDMName} activeDMId={activeDMID}
+						setActiveChannelName={setActiveChannelName}
 						isDM={isDM} isChan={isChan} hasPass={hasPass}
 					/>
 						: ""}
