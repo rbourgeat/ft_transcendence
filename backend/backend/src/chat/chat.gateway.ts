@@ -20,7 +20,7 @@ export class ChatGateway implements OnGatewayConnection {
 	) { }
 
 	async handleConnection(socket: Socket, ...args: any[]) {
-		this.logger.log("Client connected: " + socket.handshake.query.username + ' id: ' + socket.id + ')');
+		this.logger.log("Client connected: " + socket.handshake.query.username);
 		this.userService.updateStatus(String(socket.handshake.query.username), "online");
 		clients.push(socket);
 		clients.forEach(function (client) {
@@ -29,7 +29,7 @@ export class ChatGateway implements OnGatewayConnection {
 	}
 
 	async handleDisconnect(socket: Socket, ...args: any[]) {
-		this.logger.log("Client disconnected: " + socket.handshake.query.username + ' id: ' + socket.id + ')');
+		this.logger.log("Client disconnected: " + socket.handshake.query.username);
 		this.userService.updateStatus(String(socket.handshake.query.username), "offline");
 		clients.forEach(function (client) {
 			client.emit("updateStatus", String(socket.handshake.query.username), "offline");
@@ -41,7 +41,6 @@ export class ChatGateway implements OnGatewayConnection {
 
 	@SubscribeMessage('message')
 	async messageMessage(@ConnectedSocket() socket: Socket, @MessageBody() body: string) {
-		console.log(body + 'event message');
 		const b = body.split(':');
 		const author = await this.userService.getUserByLogin(b[0]);
 		const message = await this.chatService.saveChatMessage(b[1], b[2], author);
@@ -52,7 +51,6 @@ export class ChatGateway implements OnGatewayConnection {
 	@SubscribeMessage('requestAllMessages')
 	async requestAllMessagesbyName(@ConnectedSocket() socket: Socket, @MessageBody() body: number) {
 		if (body) {
-			console.log(body + 'lollll');
 			const messages = await this.chatService.getMessagesById2(body, String(socket.handshake.query.username));
 			socket.emit('sendAllMessages', messages);
 		}

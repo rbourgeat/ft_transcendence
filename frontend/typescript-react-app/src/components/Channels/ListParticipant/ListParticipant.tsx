@@ -9,6 +9,7 @@ import { Button, Modal, Form } from 'react-bootstrap';
 import { io } from "socket.io-client";
 
 export interface ParticipantProps {
+    socket?: any
     login: string,
     isChan?: boolean,
     hasPass?: boolean,
@@ -39,20 +40,6 @@ export default function ListParticipant(props: ParticipantProps) {
         else if (props.isChan === false)
             getUsersfromChannel();
 
-        async function getUsersfromChannel() {
-            let url: string;
-            url = "http://localhost:3000/api/chat/".concat(props.activeID).concat("/users");
-            axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
-            axios.defaults.withCredentials = true;
-            await axios.get(url)
-                .then(response => {
-                    updateParticipates(response.data);
-                })
-                .catch(error => {
-                    console.log("Error while getting users from a Channel/DM");
-                })
-        }
-
         async function getCurrentUserAdminStatus() {
 
             let url = "http://localhost:3000/api/chat/isAdminIn/".concat(props.activeID);
@@ -68,6 +55,21 @@ export default function ListParticipant(props: ParticipantProps) {
                 })
         }
     }, [props.activeID])
+
+    async function getUsersfromChannel() {
+        let url: string;
+        url = "http://localhost:3000/api/chat/".concat(props.activeID).concat("/users");
+        axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+        axios.defaults.withCredentials = true;
+        await axios.get(url)
+            .then(response => {
+                updateParticipates(response.data);
+            })
+            .catch(error => {
+                console.log("Error while getting users from a Channel/DM");
+            })
+    }
+
 
     React.useEffect(() => {
         console.log("selectedUser is set to : " + selectedUser);
@@ -124,6 +126,7 @@ export default function ListParticipant(props: ParticipantProps) {
     }
 
     function leaveChannel() {
+        props.socket.emit('updateChat', true);
         makeAPIcall("quit", "Successfull quit", "Error while quitting channel", true);
     }
 
@@ -248,16 +251,18 @@ export default function ListParticipant(props: ParticipantProps) {
             })
     }
 
-    const [socket, setSocket] = React.useState(io("http://localhost:3000/chat", { query: { username: props.login } }));
 
-    socket.on("updateParticipants", (...args) => {
-        console.log("updateParticipants")
-		particip();
-	});
+    props.socket.on("updateParticipants", (...args) => {
+        console.log("updateParticipants");
+        particip();
+    });
 
     function particip() {
+        getUsersfromChannel();
+
         return (participates.map(participate =>
             <Participant
+                socket={props.socket}
                 isChannel={props.isChan}
                 currentUserAdmin={currentUserAdmin}
                 currentUser={props.login}

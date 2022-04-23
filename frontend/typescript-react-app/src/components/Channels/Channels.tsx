@@ -49,6 +49,10 @@ export default function Channels(props: ChatProps) {
 		console.log("Channels.tsx: Active channel is set to:" + activeName);
 	}, [activeName]);
 
+	//const [socket, setSocket] = React.useState(io("http://localhost:3000/chat", { query: { username: username } }));
+
+	const socket = io("http://localhost:3000/chat", { query: { username: username } });
+	//setSocket(new)
 	return (
 		<div id="channels">
 			<Nav />
@@ -71,6 +75,7 @@ export default function Channels(props: ChatProps) {
 						: ""}
 					{load === true ?
 						<ListParticipant
+							socket={socket}
 							login={username}
 							isChan={isChan}
 							hasPass={hasPass}

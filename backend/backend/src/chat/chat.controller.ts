@@ -75,7 +75,6 @@ export class ChatController {
     @UseGuards(JwtAuthenticationGuard)
     @Post('new')
     async createChat(@Body() chat: CreateChatDto, @Req() req: RequestWithUser) {
-        console.log("hello");
         return this.chatService.createChat(chat, req.user);
     }
 
@@ -180,7 +179,6 @@ export class ChatController {
     @ApiOkResponse({ description: 'Suceed' })
     @Get(':channelId/users')
     async getUsersInChannel(@Param('channelId') channelId: number) {
-        console.log('chat id ' + channelId);
         return this.chatService.getUsersInChannel(channelId);
     }
 
@@ -189,10 +187,6 @@ export class ChatController {
     @UseGuards(JwtAuthenticationGuard)
     @Get(':channelName/exist')
     async getChatExist(@Param('channelName') channelName: string, @Request() req) {
-        //if (this.chatService.chatExist(channelName))
-        //    return (String("true"));
-        //else
-        //    return (String("false"));
         return (this.chatService.chatExist(channelName));
     }
 

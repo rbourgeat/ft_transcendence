@@ -84,8 +84,9 @@ export interface ListDiscussionsProps {
 
 export default function ListDiscussions(props: ListDiscussionsProps) {
 	const [messages, setMessages] = React.useState([]);
-	const [socket, setSocket] = React.useState(io("http://localhost:3000/chat", { query: { username: props.login } }));
+	//const [socket, setSocket] = React.useState(io("http://localhost:3000/chat", { query: { username: props.login } }));
 
+	const socket = io("http://localhost:3000/chat", { query: { username: props.login } });
 	function startLog() {
 		console.log("------LIST DISCUSSION PROPS--------");
 		console.log("isChan:" + props.isChan);
@@ -152,6 +153,7 @@ export default function ListDiscussions(props: ListDiscussionsProps) {
 				</ul>
 			</div>
 			<TypingMessage
+				socket={socket}
 				login={props.login}
 				channel={props.activeName}
 				id={props.activeID}

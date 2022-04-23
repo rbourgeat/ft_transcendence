@@ -8,6 +8,7 @@ export interface TypingProps {
     login: string,
     channel: string,
     id: string,
+    socket?: any
 }
 
 export interface TypingState {
@@ -38,12 +39,12 @@ export default function TypingMessage(props: TypingProps) {
     }, []);
 
 
-    let socket = io("http://localhost:3000/chat", { query: { username: props.login } });
+    //let socket = io("http://localhost:3000/chat", { query: { username: props.login } });
 
     function sendMessage(message: string) {
         if (message !== "") {
             updateText("");
-            socket.emit('message', props.login + ":" + props.channel + ":" + message)
+            props.socket.emit('message', props.login + ":" + props.channel + ":" + message)
         }
     }
 

@@ -109,14 +109,11 @@ export class ChatService {
 	}
 
 	async getChatByName(name: string) {
-		console.log('we search for chat: ' + name);
 		const chat = await this.chatRepository.findOne({ name: name });
 		if (chat)
 			return chat;
-		else {
-			console.log(chat + ' not found');
+		else
 			return;
-		}
 	}
 
 	/**
