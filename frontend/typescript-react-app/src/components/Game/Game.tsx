@@ -26,6 +26,11 @@ export default function Game() {
 	const [isWin, setWin] = React.useState(false);
 	const [gameMode, chanScopeSet] = React.useState("original");
 
+	const queryParams = new URLSearchParams(window.location.search);
+	const vs = queryParams.get('vs');
+
+	console.log(vs);
+
 	// socket game
 	const [username, setUsername] = React.useState("");
 	async function getUser() {
@@ -163,21 +168,23 @@ export default function Game() {
 	var BALL_ACCELERATE = true;
 	function draw() {
 		// Draw Canvas
-		var context = canvas.getContext('2d');
-		context.fillStyle = 'black';
-		context.fillRect(0, 0, canvas.width, canvas.height);
-		context.strokeStyle = 'white';
-		context.beginPath();
-		context.moveTo(canvas.width / 2, 0);
-		context.lineTo(canvas.width / 2, canvas.height);
-		context.stroke();
-		context.fillStyle = 'white';
-		context.fillRect(0, game.player.y, PLAYER_WIDTH, PLAYER_HEIGHT);
-		context.fillRect(canvas.width - PLAYER_WIDTH, game.player2.y, PLAYER_WIDTH, PLAYER_HEIGHT);
-		context.beginPath();
-		context.fillStyle = 'white';
-		context.fillRect(game.ball.x, game.ball.y, BALL_HEIGHT, BALL_HEIGHT);
-		context.fill();
+		if (canvas) {
+			var context = canvas.getContext('2d');
+			context.fillStyle = 'black';
+			context.fillRect(0, 0, canvas.width, canvas.height);
+			context.strokeStyle = 'white';
+			context.beginPath();
+			context.moveTo(canvas.width / 2, 0);
+			context.lineTo(canvas.width / 2, canvas.height);
+			context.stroke();
+			context.fillStyle = 'white';
+			context.fillRect(0, game.player.y, PLAYER_WIDTH, PLAYER_HEIGHT);
+			context.fillRect(canvas.width - PLAYER_WIDTH, game.player2.y, PLAYER_WIDTH, PLAYER_HEIGHT);
+			context.beginPath();
+			context.fillStyle = 'white';
+			context.fillRect(game.ball.x, game.ball.y, BALL_HEIGHT, BALL_HEIGHT);
+			context.fill();
+		}
 	}
 
 	function initParty() {
@@ -209,6 +216,10 @@ export default function Game() {
 		initParty();
 		canvas.addEventListener('mousemove', playerMove);
 	}, []);
+
+	window.addEventListener('resize', function(event) {
+		draw();
+	}, true);
 
 	function play() {
 		draw();
@@ -427,7 +438,7 @@ export default function Game() {
 											<em className="canvas-score" id="joueur1"></em>
 											<em className="canvas-score" id="player-score">0</em> - <em id="joueur2"></em>
 											<em className="canvas-score" id="player2-score">0</em></p>
-										<canvas id="canvas" width={size.width / 1.5} height={size.height / 1.25}></canvas>
+										<canvas id="canvas" width={500} height={500}></canvas>
 									</main>
 								</div>
 							</div>
