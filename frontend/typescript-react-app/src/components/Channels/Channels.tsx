@@ -81,7 +81,8 @@ export default function Channels(props: ChatProps) {
 							hasPass={hasPass}
 							setHasPass={setHasPass}
 							activeID={activeID}
-							activeName={activeName} />
+							activeName={activeName}
+							setActiveID={setActiveID} />
 						: ""}
 				</div>
 			</div>

@@ -15,7 +15,8 @@ export interface ParticipantProps {
     hasPass?: boolean,
     setHasPass?: any,
     activeID?: string,
-    activeName?: string
+    activeName?: string,
+    setActiveID?: any
 }
 
 export default function ListParticipant(props: ParticipantProps) {
@@ -58,16 +59,18 @@ export default function ListParticipant(props: ParticipantProps) {
 
     async function getUsersfromChannel() {
         let url: string;
-        url = "http://localhost:3000/api/chat/".concat(props.activeID).concat("/users");
-        axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
-        axios.defaults.withCredentials = true;
-        await axios.get(url)
-            .then(response => {
-                updateParticipates(response.data);
-            })
-            .catch(error => {
-                console.log("Error while getting users from a Channel/DM");
-            })
+        if (props.activeID) {
+            url = "http://localhost:3000/api/chat/".concat(props.activeID).concat("/users");
+            axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+            axios.defaults.withCredentials = true;
+            await axios.get(url)
+                .then(response => {
+                    updateParticipates(response.data);
+                })
+                .catch(error => {
+                    console.log("Error while getting users from a Channel/DM");
+                })
+        }
     }
 
 
@@ -128,6 +131,7 @@ export default function ListParticipant(props: ParticipantProps) {
     function leaveChannel() {
         props.socket.emit('updateChat', true);
         makeAPIcall("quit", "Successfull quit", "Error while quitting channel", true);
+        props.setActiveID = "0";
     }
 
     function blockUser() {
@@ -254,11 +258,11 @@ export default function ListParticipant(props: ParticipantProps) {
 
     props.socket.on("updateParticipants", (...args) => {
         console.log("updateParticipants");
+        getUsersfromChannel();
         particip();
     });
 
     function particip() {
-        getUsersfromChannel();
 
         return (participates.map(participate =>
             <Participant

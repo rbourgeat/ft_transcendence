@@ -54,7 +54,7 @@ export class ChatGateway implements OnGatewayConnection {
 			const messages = await this.chatService.getMessagesById2(body, String(socket.handshake.query.username));
 			socket.emit('sendAllMessages', messages);
 		}
-	}
+	} 
 
 	@SubscribeMessage('updateChat')
 	async updateChat(@ConnectedSocket() socket: Socket, @MessageBody() body: string) {
