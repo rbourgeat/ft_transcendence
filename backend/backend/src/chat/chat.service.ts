@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Chat } from './entity/chat.entity';
@@ -11,6 +11,7 @@ import { Socket } from 'socket.io';
 import { parse } from 'cookie';
 import { AuthService } from '../auth/auth.service';
 import { WsException } from '@nestjs/websockets';
+import { UserService } from 'src/user/user.service';
 
 @Injectable()
 export class ChatService {
@@ -23,7 +24,8 @@ export class ChatService {
 		private messageRepository: Repository<Message>,
 		@InjectRepository(Participate)
 		private participateRepository: Repository<Participate>,
-		private readonly authenticationService: AuthService
+		private readonly authenticationService: AuthService,
+		private readonly userService: UserService,
 	) { }
 
 	async saveMessage(content: string, author: User) {
@@ -148,6 +150,9 @@ export class ChatService {
 		if (await this.getChatByName("direct_" + user1.id + "_" + user2.id)) {
 			console.log('error: conv already exist');
 			throw new BadRequestException('Validation failed (files expected)');
+		}
+		if (await this.userService.hasBlockedRelation(user1, user2)) {
+			throw new HttpException('You can\'t start a conversation with ' + user2.login, HttpStatus.BAD_REQUEST);
 		}
 		const newParticipate1 = await this.participateRepository.create(
 			{
