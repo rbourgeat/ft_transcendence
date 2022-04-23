@@ -46,8 +46,6 @@ export class ChatGateway implements OnGatewayConnection {
 		const author = await this.userService.getUserByLogin(b[0]);
 		const message = await this.chatService.saveChatMessage(b[1], b[2], author);
 
-		// const messages = await this.chatService.getMessagesbyName(b[1]);
-		// this.server.emit('refreshMessages', messages);
 		this.server.emit('newMessageEvent', true);
 	}
 
@@ -58,5 +56,11 @@ export class ChatGateway implements OnGatewayConnection {
 			const messages = await this.chatService.getMessagesById2(body, String(socket.handshake.query.username));
 			socket.emit('sendAllMessages', messages);
 		}
+	}
+
+	@SubscribeMessage('updateChat')
+	async updateChat(@ConnectedSocket() socket: Socket, @MessageBody() body: string) {
+		this.server.emit('newMessageEvent', true);
+		this.server.emit('updateParticipants', true);
 	}
 }

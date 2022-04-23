@@ -6,6 +6,7 @@ import { ToastContainer } from 'react-toastify';
 import ToastAlerts from '../../Utils/ToastAlerts/ToastAlerts';
 import MyAxios from '../../Utils/Axios/Axios';
 import { Button, Modal, Form } from 'react-bootstrap';
+import { io } from "socket.io-client";
 
 export interface ParticipantProps {
     login: string,
@@ -247,25 +248,36 @@ export default function ListParticipant(props: ParticipantProps) {
             })
     }
 
+    const [socket, setSocket] = React.useState(io("http://localhost:3000/chat", { query: { username: props.login } }));
+
+    socket.on("updateParticipants", (...args) => {
+        console.log("updateParticipants")
+		particip();
+	});
+
+    function particip() {
+        return (participates.map(participate =>
+            <Participant
+                isChannel={props.isChan}
+                currentUserAdmin={currentUserAdmin}
+                currentUser={props.login}
+                key={participate.id}
+                username={participate.user.login}
+                role={participate.role}
+                owner={participate.owner}
+                admin={participate.admin}
+                updateSelectedUser={updateSelectedUser}
+                updateFunctionToUse={updateFunctionToUse} />
+        ))
+    }
+
     return (
         <div id="ListParticipant" className="col-3">
             <h2 id="participant--title">Members</h2>
             <div id="sub--div">
                 {
                     <div id="participants--div">
-                        {participates.map(participate =>
-                            <Participant
-                                isChannel={props.isChan}
-                                currentUserAdmin={currentUserAdmin}
-                                currentUser={props.login}
-                                key={participate.id}
-                                username={participate.user.login}
-                                role={participate.role}
-                                owner={participate.owner}
-                                admin={participate.admin}
-                                updateSelectedUser={updateSelectedUser}
-                                updateFunctionToUse={updateFunctionToUse} />
-                        )}
+                        {particip()}
                     </div>
                 }
             </div>
