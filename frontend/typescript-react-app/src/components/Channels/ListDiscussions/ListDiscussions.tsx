@@ -113,6 +113,10 @@ export default function ListDiscussions(props: ListDiscussionsProps) {
 			setMessages(args[0]);
 	});
 
+	socket.on("newMessageEvent", (...args) => {
+		socket.emit('requestAllMessages', props.activeID);
+	});
+
 	function renderImage(login: string, isUserProfile: boolean) {
 		let ax = new MyAxios(null);
 		let log42 = localStorage.getItem("login42");
