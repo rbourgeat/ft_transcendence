@@ -25,6 +25,7 @@ export class UserMigration1645626140921 implements MigrationInterface {
         const dummy2 = await queryRunner.manager.save(
             queryRunner.manager.create<User>(User, {
                 login: 'dummy2',
+                login42: 'dummy2',
                 password: 'dummy2',
                 email: 'dummy2@gmail.com',
                 status: 'online',
@@ -38,6 +39,7 @@ export class UserMigration1645626140921 implements MigrationInterface {
         const dummy3 = await queryRunner.manager.save(
             queryRunner.manager.create<User>(User, {
                 login: 'dummy3',
+                login42: 'dummy3',
                 password: 'dummy3',
                 email: 'dummy3@gmail.com',
                 status: 'offline',
@@ -50,6 +52,7 @@ export class UserMigration1645626140921 implements MigrationInterface {
         const dummy4 = await queryRunner.manager.save(
             queryRunner.manager.create<User>(User, {
                 login: 'dummy4',
+                login42: 'dummy4',
                 password: 'dummy4',
                 email: 'dummy4@gmail.com',
                 status: 'online',
@@ -63,6 +66,7 @@ export class UserMigration1645626140921 implements MigrationInterface {
         const dummy5 = await queryRunner.manager.save(
             queryRunner.manager.create<User>(User, {
                 login: 'dummy5',
+                login42: 'dummy5',
                 password: 'dummy5',
                 email: 'dummy5@gmail.com',
                 //status: 'ingame',

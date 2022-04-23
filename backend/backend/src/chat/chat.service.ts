@@ -62,7 +62,6 @@ export class ChatService {
 			let hasJoined = false;
 
 			chat.participates.forEach((participate: Participate) => {
-				console.log("test:" + participate.login + ' is in chat: ' + chat.name);
 				if (participate.login === user.login42)
 					hasJoined = true;
 			});

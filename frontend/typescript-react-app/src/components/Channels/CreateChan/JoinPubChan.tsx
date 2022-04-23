@@ -26,30 +26,39 @@ export default function JoinChan(props: JoinChanProps) {
 	const [load, setLoad] = React.useState(false);
 	const calledOnce = React.useRef(false);
 
+	const handleClose = () => {
+		setJoignable([]);
+		setShow(false);
+		return false;
+	}
+
+	React.useEffect(() => {
+		console.log("in join channel")
+	}, [])
 
 	const handleExit = () => {
 		let toast = new ToastAlerts(null);
 
 		console.log("it is successfull ? " + sucessfull);
 		if (sucessfull == true) {
+			//toast.notifySuccess("Successfully added");
 			console.log("result will be " + !props.exited);
+			//redirection crade pour recharger la page
+			//window.top.location = "http://localhost:3030/channels";
 			props.setExited(!props.exited);
 		}
 		else {
+
+			//toast.notifyDanger("Unsucessfull add");
 			console.log("Did not add anything")
+			//props.setExited(!props.exited);
+			//props.setUpdate(chanName);//pour trigger un update
 		}
+		//props.setUpdate(chanName);
 		//chanNameSet("");
 		//chanScopeSet("public");
 		//chanPasswordSet("");
-		setJoignable([]);
 	}
-
-
-	const handleClose = () => {
-		setJoignable([]);
-		setShow(false);
-	}
-
 
 	function handleSend(chan: string) {
 		let toast = new ToastAlerts(null);
@@ -72,12 +81,13 @@ export default function JoinChan(props: JoinChanProps) {
 			})
 	}
 
+
 	const handleShow = () => {
 		getJoignableChans();
 		setShow(true);
 	}
 
-	function getJoignableChans() {
+	const getJoignableChans = () => {
 		console.log("Getting all joinable chans");
 
 		let url = "http://localhost:3000/api/chat/joinableChannels";
@@ -107,11 +117,14 @@ export default function JoinChan(props: JoinChanProps) {
 	const [newPass, setNewPass] = React.useState("")
 	const [show2, setShow2] = React.useState(false);
 	const handleClose2 = () => setShow2(false);
+	/*
 	const handleShow2 = () => {
 		//getJoignableChans();
 		setShow2(true);
 	}
+	*/
 
+	/*
 	function handleSend2(chan: string, pass: string) {
 		let toast = new ToastAlerts(null);
 
@@ -134,52 +147,113 @@ export default function JoinChan(props: JoinChanProps) {
 				toast.notifyDanger("This channel already exists.");
 			})
 	}
+	*/
+
+	const [isPublic, setPublic] = React.useState(Boolean);
+	const [privatePass, setPrivatePass] = React.useState(String);
+	const [publicPass, setPublicPass] = React.useState(String);
+	const [privateToJoin, setPrivateToJoin] = React.useState(String);
+
+	const displayPrivate = () => setPublic(false);
+	const displayPublic = () => setPublic(true);
+	const handleCloseFinale = () => {
+		setShow(false);
+	}
+
+	const handleJoinPrivate = () => {
+		let toast = new ToastAlerts(null);
+
+		axios.defaults.withCredentials = true;
+		let url = "http://localhost:3000/api/chat/join";
+
+		console.log(privateToJoin + ": chan i want to join while im on private side")
+		let body = {};
+		if (privatePass.length <= 0) {
+			body = {
+				"name": privateToJoin,
+			}
+		}
+		else {
+			body = {
+				"password": privatePass,
+				"name": privateToJoin,
+			}
+		}
+		axios.post(url, body)
+			.then(res => {
+				toast.notifySuccess("You joined the channel");
+				props.setUpdate(privateToJoin);
+				setSuccessfull(true);
+				handleCloseFinale();
+			})
+			.catch(error => {
+				toast.notifyDanger("Failed to join the channel.");
+			})
+	}
+
+	function popForm() {
+		let toast = new ToastAlerts(null);
+		toast.notifyDanger("WIP, comment faire quand public + pass")
+	}
+
 	return (
 		<div id="create-chan_div">
 			<button type="button" className="btn btn-secondary"
 				id="joinchan-button"
 				onClick={handleShow}
-				data-toggle="modal" data-target="#exampleModalCenter"
-			>Join public channel</button>
+				data-toggle="modal" data-target="#exampleModalCenter">Join channel</button>
 			<Modal show={show} animation={true} onHide={handleClose} onExited={handleExit}>
-				<Modal.Header closeButton>
-					<Modal.Title id="create_title">Join a channel 💌</Modal.Title>
+				<Modal.Header>
+					<Modal.Title id="create_title">Join a channel</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
 					<Form>
-						<Modal.Title id="list_title">List of channels you can join</Modal.Title>
+						<Modal.Title className="Category">
+							<i className="categ" onClick={displayPublic} > Public</i>
+							<i className="categ" onClick={displayPrivate} > Private</i>
+						</Modal.Title>
 						<br />
-						<ul className="wrapper list-group list-group-horizontal-lg">
-							{load == true ?
-								joignable.map(join =>
-									<div key={join} className="joignable_chans">
-										<i className="btn joignable" onClick={join.password ? handleShow2 : () => handleSend(join.name)}>{join.name}</i>
-										<Modal show={show2} animation={true} onHide={handleClose2}>
-											<Modal.Body>
-												<Form>
-													<Form.Group>
-														<Form.Label>Password *</Form.Label>
-														<Form.Control
-															type="password"
-															value={newPass}
-															onChange={e => { setNewPass(e.target.value) }}
-															autoFocus
-															placeholder="******"
-														/>
-													</Form.Group>
-												</Form>
-												<Button variant="dark" type="submit" onClick={() => handleSend2(join.name, newPass)}>
-													Confirm pass
-												</Button>
-											</Modal.Body>
-										</Modal>
-									</div>
-								)
-								: ""}
-						</ul>
+						{isPublic === true ?
+							<ul className="wrapper list-group list-group-horizontal-lg">
+								{load == true ?
+									joignable.map(join =>
+										<div key={join} className="joignable_chans">
+											<i className="btn joignable" onClick={join.password ? () => popForm() : () => handleSend(join.name)}>{join.name}</i>
+										</div>)
+									:
+									null
+								}
+							</ul>
+							:
+							<>
+								<Form.Group>
+									<Form.Label>Channel Name *</Form.Label>
+									<Form.Control
+										type="text"
+										value={privateToJoin}
+										onChange={e => { setPrivateToJoin(e.target.value) }}
+										autoFocus
+										placeholder="channel"
+									/>
+								</Form.Group>
+								<Form.Group>
+									<Form.Label>Password</Form.Label>
+									<Form.Control
+										type="password"
+										value={privatePass}
+										onChange={e => { setPrivatePass(e.target.value) }}
+										autoFocus
+										placeholder="******"
+									/>
+								</Form.Group>
+								<Button variant="dark" type="submit" onClick={handleJoinPrivate}>
+									Join Private Channel
+								</Button>
+							</>
+						}
 					</Form>
 				</Modal.Body>
-			</Modal>
+			</Modal >
 			<ToastContainer
 				position="top-right"
 				autoClose={5000}

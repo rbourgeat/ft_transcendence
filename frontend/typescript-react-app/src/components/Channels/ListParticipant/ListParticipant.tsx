@@ -279,7 +279,6 @@ export default function ListParticipant(props: ParticipantProps) {
                             null
                         }
                         <Modal show={show} animation={true} onHide={handleClose}>
-                            <Modal.Header closeButton></Modal.Header>
                             <Modal.Body>
                                 <Form>
                                     <Form.Group>
@@ -305,14 +304,20 @@ export default function ListParticipant(props: ParticipantProps) {
                                         />
                                     </Form.Group>
                                 </Form>
-                                <Button variant="primary" onClick={handleRemovePass}>
-                                    Remove Pass
-                                </Button>
                             </Modal.Body>
                             <Modal.Footer>
-                                <Button variant="primary" onClick={handleSend}>
-                                    Confirm
+                                <Button variant="danger" onClick={handleRemovePass}>
+                                    Remove Pass
                                 </Button>
+                                {newPassConf && newPass ?
+                                    <Button variant="success" onClick={handleSend} >
+                                        Confirm New Pass
+                                    </Button>
+                                    :
+                                    <Button variant="success" onClick={handleSend} disabled>
+                                        Confirm New Pass
+                                    </Button>
+                                }
                             </Modal.Footer>
                         </Modal>
                     </div>

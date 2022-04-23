@@ -48,6 +48,7 @@ export class ChatController {
     @UseGuards(JwtAuthenticationGuard)
     @Post('join')
     async joinChat(@Body() chat: CreateChatDto, @Req() req: RequestWithUser) {
+        console.log(req.user.login + ' tries to join the chat:' + chat.name);
         return this.chatService.joinChat(chat, req.user);
     }
 

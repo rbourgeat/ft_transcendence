@@ -1,12 +1,9 @@
 import { Button, Modal, Form } from 'react-bootstrap';
 import axios from 'axios';
-import React, { useState } from "react";
+import React from "react";
 import ToastAlerts from '../../Utils/ToastAlerts/ToastAlerts';
-import MyAxios from '../../Utils/Axios/Axios';
 import "./CreateChan.scss";
 import { ToastContainer } from 'react-toastify';
-
-//TODO : a reprendre ?
 
 export interface CreateChanProps {
 	endpoint?: any,
@@ -26,29 +23,17 @@ export default function CreateChan(props: CreateChanProps) {
 	const [chanScope, chanScopeSet] = React.useState("public");
 	const [chanName, chanNameSet] = React.useState("");
 	const [chanPassword, chanPasswordSet] = React.useState("");
-	//const [isFree, setIsFree] = React.useState("false");
 	const [sucessfull, setSuccessfull] = React.useState(false);
 	const [load, setLoad] = React.useState(false);
 
 	const handleExit = () => {
-		let toast = new ToastAlerts(null);
-
-		console.log("it is successfull ? " + sucessfull);
-		if (sucessfull == true) {
-			//toast.notifySuccess("Successfully added");
+		if (sucessfull === true) {
 			console.log("result will be " + !props.exited);
-			//redirection crade pour recharger la page
-			//window.top.location = "http://localhost:3030/channels";
 			props.setExited(!props.exited);
 		}
 		else {
-
-			//toast.notifyDanger("Unsucessfull add");
 			console.log("Did not add anything")
-			//props.setExited(!props.exited);
-			//props.setUpdate(chanName);//pour trigger un update
 		}
-		//props.setUpdate(chanName);
 		chanNameSet("");
 		chanScopeSet("public");
 		chanPasswordSet("");
@@ -118,14 +103,12 @@ export default function CreateChan(props: CreateChanProps) {
 
 						axios.post(url, body)
 							.then(res => {
-								console.log("successfully created a chat !");
 								setSuccessfull(true);
 								toast.notifySuccess("✨ Successfully created channel !");
 								handleClose();
 							})
 							.catch((error) => {
 								console.log("Catched error on post api chat. :(");
-								console.log(error);
 							})
 					}
 				}
@@ -135,7 +118,7 @@ export default function CreateChan(props: CreateChanProps) {
 	return (
 		<div id="create-chan_div">
 			<button type="button" className="btn btn-success"
-				id="createchan-button" /*onClick={createJoinChan}*/
+				id="createchan-button"
 				onClick={handleShow}
 				data-toggle="modal" data-target="#exampleModalCenter"
 			>New channel</button>
