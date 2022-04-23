@@ -28,8 +28,9 @@ export default function Game() {
 
 	const queryParams = new URLSearchParams(window.location.search);
 	const vs = queryParams.get('vs');
+	const live = queryParams.get('live');
 
-	console.log(vs);
+	console.log(live);
 
 	// socket game
 	const [username, setUsername] = React.useState("");
@@ -214,7 +215,8 @@ export default function Game() {
 		// First page loading event (only one time)
 		getUser();
 		initParty();
-		canvas.addEventListener('mousemove', playerMove);
+		if (!live)
+			canvas.addEventListener('mousemove', playerMove);
 	}, []);
 
 	window.addEventListener('resize', function(event) {
