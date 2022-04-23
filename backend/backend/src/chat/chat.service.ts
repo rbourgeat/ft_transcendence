@@ -11,11 +11,8 @@ import { Socket } from 'socket.io';
 import { parse } from 'cookie';
 import { AuthService } from '../auth/auth.service';
 import { WsException } from '@nestjs/websockets';
-<<<<<<< HEAD
-import { UserService } from 'src/user/user.service';
-=======
 import { UserRelation } from 'src/user/entity/friend-request.entity';
->>>>>>> dfb2e38d1f7bfd0ee5bcaf7b5f1d808dceb580f9
+import { UserService } from 'src/user/user.service';
 
 @Injectable()
 export class ChatService {
@@ -29,12 +26,9 @@ export class ChatService {
 		@InjectRepository(Participate)
 		private participateRepository: Repository<Participate>,
 		private readonly authenticationService: AuthService,
-<<<<<<< HEAD
 		private readonly userService: UserService,
-=======
 		@InjectRepository(UserRelation)
 		private readonly userRelationRepository: Repository<UserRelation>,
->>>>>>> dfb2e38d1f7bfd0ee5bcaf7b5f1d808dceb580f9
 	) { }
 
 	async saveMessage(content: string, author: User) {
@@ -289,7 +283,7 @@ export class ChatService {
 		//TODO clear message when u have a user blocked
 		const history: Message[] = [];
 		for (const message of messages) {
-			if (!(await this.userRelationRepository.findOne({ where: [{ receiver: message.author, creator: user, status: 'blocked' }], relations: ['receiver', 'creator']})))
+			if (!(await this.userRelationRepository.findOne({ where: [{ receiver: message.author, creator: user, status: 'blocked' }], relations: ['receiver', 'creator'] })))
 				history.push(message);
 		}
 		return history;
