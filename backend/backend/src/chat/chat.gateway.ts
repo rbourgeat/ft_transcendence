@@ -46,15 +46,16 @@ export class ChatGateway implements OnGatewayConnection {
 		const author = await this.userService.getUserByLogin(b[0]);
 		const message = await this.chatService.saveChatMessage(b[1], b[2], author);
 
-		const messages = await this.chatService.getMessagesbyName(b[1]);
-		this.server.emit('refreshMessages', messages, b[1]);
+		// const messages = await this.chatService.getMessagesbyName(b[1]);
+		// this.server.emit('refreshMessages', messages);
+		this.server.emit('newMessageEvent', true);
 	}
 
 	@SubscribeMessage('requestAllMessages')
 	async requestAllMessagesbyName(@ConnectedSocket() socket: Socket, @MessageBody() body: number) {
 		if (body) {
 			console.log(body + 'lollll');
-			const messages = await this.chatService.getMessagesById(body);
+			const messages = await this.chatService.getMessagesById2(body, String(socket.handshake.query.username));
 			socket.emit('sendAllMessages', messages);
 		}
 	}
