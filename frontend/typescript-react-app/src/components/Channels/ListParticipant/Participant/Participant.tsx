@@ -90,9 +90,9 @@ export default function Participant(props: ParticipantsProps) {
 					</div>
 					:
 					<div className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-						{props.isChannel && props.currentUserAdmin ? <p id="admin-click" className="dropdown-item" onClick={() => setUpAdmin()}>set admin</p> : ""}
-						{props.isChannel && props.currentUserAdmin ? <p id="ban-click" className="dropdown-item" onClick={() => setUpBan()}>{isBanned}</p> : ""}
-						{props.isChannel && props.currentUserAdmin ? <p id="mute-click" className="dropdown-item" onClick={() => setUpMute()}>{isMuted}</p> : ""}
+						{props.isChannel && props.currentUserAdmin && !props.owner && !props.admin ? <p id="admin-click" className="dropdown-item" onClick={() => setUpAdmin()}>set admin</p> : ""}
+						{props.isChannel && props.currentUserAdmin && !props.owner ? <p id="ban-click" className="dropdown-item" onClick={() => setUpBan()}>{isBanned}</p> : ""}
+						{props.isChannel && props.currentUserAdmin && !props.owner ? <p id="mute-click" className="dropdown-item" onClick={() => setUpMute()}>{isMuted}</p> : ""}
 						<p className="dropdown-item" onClick={() => props.updateFunctionToUse("invite")}>invite to play</p>
 						<p className="dropdown-item" onClick={() => setUpBlock()}>block</p>
 						<p className="dropdown-item" onClick={() => setUpProfile()}>see profile</p>
