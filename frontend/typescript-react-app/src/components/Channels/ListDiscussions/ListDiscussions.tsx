@@ -150,6 +150,7 @@ export default function ListDiscussions(props: ListDiscussionsProps) {
 			<TypingMessage
 				login={props.login}
 				channel={props.activeName}
+				id={props.activeID}
 			/>
 			{/*<p id="discussions--title">channelId: {activeChannel}</p>*/}
 			{/*<div id="sub--div">*/}

@@ -58,8 +58,11 @@ export default function CreateDM(props: CreateDMProps) {
 				handleClose();
 			})
 			.catch((error) => {
+				console.log(error);
 				//toast.notifyDanger("You have already a conversation with that user");
-				toast.notifyDanger("Error while creating DM conv");
+				toast.notifyDanger("Error while creating conversation with " + receiver);
+				//toast.notifyDanger(error);
+				handleClose();
 				setSuccessfull(false);
 			})
 	}
@@ -77,17 +80,6 @@ export default function CreateDM(props: CreateDMProps) {
 				</Modal.Header>
 				<Modal.Body>
 					<Form>
-						{/* A reprendre */}
-						{/*<Form.Group className="mb-3" controlId="channName">
-							<Form.Label>Conversation title</Form.Label>
-							<Form.Control
-								type="text"
-								value={chanName}
-								onChange={e => {chanNameSet(e.target.value)}}
-								autoFocus
-								placeholder="my_unique_chanName"
-							/>
-						</Form.Group>*/}
 						<Form.Group className="mb-3" controlId="channPassword">
 							<Form.Label>Receiver</Form.Label>
 							<Form.Control
@@ -100,9 +92,6 @@ export default function CreateDM(props: CreateDMProps) {
 					</Form>
 				</Modal.Body>
 				<Modal.Footer>
-					<Button variant="ligth" onClick={handleClose}>
-						Close
-					</Button>
 					<Button variant="dark" type="submit" onClick={createDM}>
 						Send form
 					</Button>

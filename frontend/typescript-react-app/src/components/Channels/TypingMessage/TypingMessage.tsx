@@ -7,6 +7,7 @@ import axios from 'axios';
 export interface TypingProps {
     login: string,
     channel: string,
+    id: string,
 }
 
 export interface TypingState {
@@ -20,19 +21,17 @@ export default function TypingMessage(props: TypingProps) {
     const [text, updateText] = React.useState("");
     const [username, setUsername] = React.useState("");
 
-    function getUser() {
-        let url = "http://localhost:3000/api/auth/";
-        let username = "";
+    function getUserParticipateCard() {
+        /*
+        let url = "http://localhost:3000/api/chat/".concat(parseInt(id)).concat("/users");
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
         axios.defaults.withCredentials = true;
         axios.get(url)
             .then(res => {
-                username = res.data.login;
-                setUsername(username);
             })
             .catch((err) => {
-                console.log("Error while getting api auth");
             })
+            */
     }
 
     useEffect(() => {
