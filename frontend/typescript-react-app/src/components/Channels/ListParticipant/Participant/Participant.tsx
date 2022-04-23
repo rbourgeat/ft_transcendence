@@ -1,6 +1,7 @@
 import './Participant.scss';
 import React, { useEffect } from "react";
 import { FaCrown, FaVolumeMute, FaBan, FaShieldAlt } from "react-icons/fa";
+import { io } from "socket.io-client";
 
 export interface ParticipantsProps {
 	currentUser?: string,
@@ -65,7 +66,10 @@ export default function Participant(props: ParticipantsProps) {
 		document.getElementById("admin-click").remove();
 	}
 
+	const [socket, setSocket] = React.useState(io("http://localhost:3000/chat", { query: { username: props.currentUser } }));
+
 	function setUpBlock() {
+		socket.emit('updateChat', true);
 		props.updateFunctionToUse("block");
 		document.getElementById("block-click").remove();
 	}
