@@ -22,7 +22,7 @@ var gm = 0;
 export default function Game() {
 	let size = useWindowDimensions();
 	const [isActive, setActive] = React.useState(true);
-	const [isActive2, setActive2] = React.useState(false);
+	// const [isActive2, setActive2] = React.useState(false);
 	const [isWin, setWin] = React.useState(false);
 	const [gameMode, chanScopeSet] = React.useState("original");
 
@@ -30,7 +30,7 @@ export default function Game() {
 	const vs = queryParams.get('vs');
 	const live = queryParams.get('live');
 
-	console.log(live);
+	// console.log(live);
 
 	// socket game
 	const [username, setUsername] = React.useState("");
@@ -50,7 +50,7 @@ export default function Game() {
 			})
 	}
 	var SearchText = "Rechercher une partie"
-	var SearchText2 = "Rejouer avec le même joueur"
+	// var SearchText2 = "Rejouer avec le même joueur"
 
 	var socket = io("http://localhost:3000/game", { query: { username: username } });
 
@@ -58,14 +58,14 @@ export default function Game() {
 		if (joueur) {
 			isSearching = isSearching ? false : true;
 			if (isSearching) {
-				setActive2(false);
+				// setActive2(false);
 				SearchText = "Annuler la recherche"
 				socket.emit('search', gameMode);
 			}
 			else {
-				setActive2(true);
+				// setActive2(true);
 				SearchText = "Rechercher une partie à nouveau"
-				socket.emit('search', "STOPSEARCH");
+				socket.emit('search', "STOPSEARCH-" + gameMode);
 			}
 			document.querySelector('#search-button').textContent = SearchText;
 		}
@@ -73,24 +73,24 @@ export default function Game() {
 			document.querySelector('#search-button').textContent = "Impossible de te connecter !"
 	}
 
-	function sendSearch2() {
-		if (joueur) {
-			isSearching = isSearching ? false : true;
-			if (isSearching) {
-				setActive(false);
-				SearchText2 = "Annuler la demande"
-				socket.emit('search', "RETRY:" + gameMode + ":" + adversaire);
-			}
-			else {
-				setActive(true);
-				SearchText2 = "Rejouer avec le même adversaire"
-				socket.emit('search', "STOPSEARCH");
-			}
-			document.querySelector('#search-button2').textContent = SearchText;
-		}
-		else
-			document.querySelector('#search-button2').textContent = "Impossible de te connecter !"
-	}
+	// function sendSearch2() {
+	// 	if (joueur) {
+	// 		isSearching = isSearching ? false : true;
+	// 		if (isSearching) {
+	// 			setActive(false);
+	// 			SearchText2 = "Annuler la demande"
+	// 			socket.emit('search', "RETRY:" + gameMode + ":" + adversaire);
+	// 		}
+	// 		else {
+	// 			setActive(true);
+	// 			SearchText2 = "Rejouer avec le même adversaire"
+	// 			socket.emit('search', "STOPSEARCH");
+	// 		}
+	// 		document.querySelector('#search-button2').textContent = SearchText;
+	// 	}
+	// 	else
+	// 		document.querySelector('#search-button2').textContent = "Impossible de te connecter !"
+	// }
 
 	socket.on("gameStart", (...args) => {
 		setWin(false);
@@ -107,7 +107,7 @@ export default function Game() {
 			document.querySelector('#joueur2').textContent = joueur2 + ": ";
 			play();
 			setActive(false);
-			setActive2(false);
+			// setActive2(false);
 			setGameMode(gm);
 		}
 		else if (joueur2 != adversaire && joueur2 == joueur && game) {
@@ -116,7 +116,7 @@ export default function Game() {
 			document.querySelector('#joueur2').textContent = joueur2 + ": ";
 			play();
 			setActive(false);
-			setActive2(false);
+			// setActive2(false);
 			setGameMode(gm);
 		}
 
@@ -384,9 +384,9 @@ export default function Game() {
 		anim = null;
 		isSearching = false;
 		setActive(true);
-		setActive2(true);
+		// setActive2(true);
 		document.querySelector('#search-button').textContent = "Refaire une partie";
-		document.querySelector('#search-button2').textContent = "Rejouer avec le même joueur";
+		// document.querySelector('#search-button2').textContent = "Rejouer avec le même joueur";
 	}
 
 	return (
@@ -432,7 +432,7 @@ export default function Game() {
 									: ""}
 									<div className="row d-flex justify-content-center text-center">
 										{isActive ? <button type="button" className="btn btn-outline-light" id="search-button" onClick={() => sendSearch()}>{SearchText}</button> : ""}
-										{isActive2 ? <button type="button" className="btn btn-outline-light" id="search-button2" onClick={() => sendSearch2()}>{SearchText2}</button> : ""}
+										{/* {isActive2 ? <button type="button" className="btn btn-outline-light" id="search-button2" onClick={() => sendSearch2()}>{SearchText2}</button> : ""} */}
 									</div>
 									<p id="victoryMessage"></p>
 									<main role="main">
