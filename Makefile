@@ -29,7 +29,11 @@ unpause:
 # down and make sure every containers are deleted
 clean	:
 			$(COMPOSE) down -v --rmi all --remove-orphans
-			rm -rf database-data/
+			rm -rf ./database-data && echo "removed database"
+			rm -rf ./frontend/typescript-react-app/node_modules && echo "removed node_modules"
+			rm -rf ./frontend/typescript-react-app/package-lock.json
+			rm -rf ./backend/backend/node_modules && echo "removed node_modules"
+
 
 # cleans and makes sure every volumes, networks and image are deleted
 fclean	:	clean
