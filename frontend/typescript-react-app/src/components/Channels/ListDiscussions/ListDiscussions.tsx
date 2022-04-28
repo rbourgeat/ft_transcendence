@@ -83,34 +83,56 @@ export interface ListDiscussionsProps {
 }
 
 export default function ListDiscussions(props: ListDiscussionsProps) {
+	const [sockChan, setsockChan] = React.useState(props.activeName);
 	const [messages, setMessages] = React.useState([]);
 	const [socket, setSocket] = React.useState(io("http://localhost:3000/chat", { query: { username: props.login } }));
 
-	function startLog() {
-		console.log("------LIST DISCUSSION PROPS--------");
-		console.log("isChan:" + props.isChan);
-		console.log("activeID:" + props.activeID);
-		console.log("activeName:" + props.activeName);
-		console.log("--------------");
-	}
+	//function startLog() {
+	//	console.log("------LIST DISCUSSION PROPS--------");
+	//	console.log("isChan:" + props.isChan);
+	//	console.log("activeID:" + props.activeID);
+	//	console.log("activeName:" + props.activeName);
+	//	console.log("--------------");
+	//}
 
 	useEffect(() => {
 
-		startLog();
+		setsockChan(props.activeName);
+
+		console.log("use effect called");
+
+		//startLog();
 		socket.emit('requestAllMessages', props.activeID);
 		socket.on("sendAllMessages", (messagesUpdated) => {
 			if (messagesUpdated) {
+				//console.log("first condition");
 				setMessages(messagesUpdated);
 			}
 			else
+			{
+				//console.log("second condition");
 				setMessages(null)
+			}
+				
 		});
 	}, [props.activeID]);
 
 	socket.on("refreshMessages", (...args) => {
-		console.log("channel is " + props.activeName + " | channel socket is " + args[1])
-		if (args[1] == props.activeName)
+		//console.log("refreshedMessage");
+		////console.log("args are : ");
+		//console.log(args);
+		//console.log("props.activeName is " + props.activeName);
+		//console.log("channel name is " + name)
+		//console.log("channel is " + props.activeName + " | channel socket is " + args[1])
+
+		//TODO: a remettre 
+		if (args[1] == props.activeName && (props.activeName != "" || props.activeName != undefined ||  props.activeName != null))
+		{
 			setMessages(args[0]);
+			console.log("goes here !");
+			setsockChan(args[1]);
+		}
+			
 	});
 
 	function renderImage(login: string, isUserProfile: boolean) {
@@ -126,6 +148,24 @@ export default function ListDiscussions(props: ListDiscussionsProps) {
 		return (ax.render_avatar(login, "", haschanged));
 	}
 
+	//function displayMessage()
+	//{
+	//	console.log("sockChan is " + sockChan);
+	//	console.log("props is " + props.activeName);
+	//	if (sockChan == props.activeName)
+	//	{
+	//		return (
+	//		messages.map(message =>
+	//			<div id="author" className={message.author.login === props.login ? "from-me" : "from-them"} key={message.id}>
+	//				{message.author.login}
+	//				<li id="message" key={message.id} className={message.author.login === props.login ? "my-messages" : ""}>
+	//					{message.content}
+	//				</li>
+	//				<br />
+	//			</div>))
+	//	}
+	//}
+
 	return (
 		//<div>
 		<div id="ListDiscussions" className="col-5">
@@ -134,16 +174,17 @@ export default function ListDiscussions(props: ListDiscussionsProps) {
 			</div>
 			<div className="messages-zone">
 				<ul className="text">
+					{/*{displayMessage}*/}
 					{
-						messages.map(message =>
+						props.activeName == sockChan ? messages.map(message =>
 							<div id="author" className={message.author.login === props.login ? "from-me" : "from-them"} key={message.id}>
 								{message.author.login}
 								<li id="message" key={message.id} className={message.author.login === props.login ? "my-messages" : ""}>
 									{message.content}
 								</li>
 								<br />
-							</div>
-						)
+							</div> 
+						) : ""
 					}
 				</ul>
 			</div>
