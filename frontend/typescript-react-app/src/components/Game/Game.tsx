@@ -46,7 +46,7 @@ export default function Game() {
 				setUsername(username);
 			})
 			.catch((err) => {
-				console.log("Error while getting api auth");
+				// console.log("Error while getting api auth");
 			})
 	}
 	var SearchText = "Rechercher une partie"
@@ -92,6 +92,10 @@ export default function Game() {
 	// 		document.querySelector('#search-button2').textContent = "Impossible de te connecter !"
 	// }
 
+	// socket.on("roundStart", (...args) => {
+
+	// });
+
 	socket.on("gameStart", (...args) => {
 		setWin(false);
 		document.querySelector('#player-score').textContent = "0";
@@ -105,6 +109,7 @@ export default function Game() {
 			adversaire = joueur2;
 			document.querySelector('#joueur1').textContent = joueur1 + ": ";
 			document.querySelector('#joueur2').textContent = joueur2 + ": ";
+			cancelAnimationFrame(anim);
 			play();
 			setActive(false);
 			// setActive2(false);
@@ -114,6 +119,7 @@ export default function Game() {
 			adversaire = joueur1;
 			document.querySelector('#joueur1').textContent = joueur1 + ": ";
 			document.querySelector('#joueur2').textContent = joueur2 + ": ";
+			cancelAnimationFrame(anim);
 			play();
 			setActive(false);
 			// setActive2(false);
@@ -189,31 +195,34 @@ export default function Game() {
 	}
 
 	function initParty() {
-		canvas = document.getElementById('canvas');
-		game = {
-			player: {
-				y: canvas.height / 2 - PLAYER_HEIGHT / 2,
-				score: 0
-			},
-			player2: {
-				y: canvas.height / 2 - PLAYER_HEIGHT / 2,
-				score: 0
-			},
-			ball: {
-				x: canvas.width / 2 - BALL_HEIGHT / 2,
-				y: canvas.height / 2 - BALL_HEIGHT / 2,
-				speed: {
-					x: BALL_SPEED,
-					y: BALL_SPEED
+		if (canvas)
+		{
+			game = {
+				player: {
+					y: canvas.height / 2 - PLAYER_HEIGHT / 2,
+					score: 0
+				},
+				player2: {
+					y: canvas.height / 2 - PLAYER_HEIGHT / 2,
+					score: 0
+				},
+				ball: {
+					x: canvas.width / 2 - BALL_HEIGHT / 2,
+					y: canvas.height / 2 - BALL_HEIGHT / 2,
+					speed: {
+						x: BALL_SPEED,
+						y: BALL_SPEED
+					}
 				}
 			}
+			draw();
 		}
-		draw();
 	}
 
 	useEffect(() => {
 		// First page loading event (only one time)
 		getUser();
+		canvas = document.getElementById('canvas');
 		initParty();
 		if (!live)
 			canvas.addEventListener('mousemove', playerMove);
@@ -263,9 +272,9 @@ export default function Game() {
 		if (game) {
 			// Update Paddle position in real time
 			const b = body.split(':');
-			if (b[0] == joueur2) {
+			if (b[0] == joueur2 && joueur != joueur2) {
 				game.player2.y = b[1];
-			} else if (b[0] == joueur1) {
+			} else if (b[0] == joueur1 && joueur != joueur1) {
 				game.player.y = b[1];
 			}
 		}
@@ -303,7 +312,7 @@ export default function Game() {
 				game.player2.score++;
 				socket.emit('roundStart', 0 + ":" + joueur1 + ":" + joueur2 + ":" + game.player.score + ":" + game.player2.score);
 				document.querySelector('#player2-score').textContent = game.player2.score;
-				if (game.player2.score >= 5) {
+				if (game.player2.score === 5) {
 					stop();
 					clearDataGame();
 				}
@@ -314,7 +323,7 @@ export default function Game() {
 				game.player.score++;
 				socket.emit('roundStart', 0 + ":" + joueur1 + ":" + joueur2 + ":" + game.player.score + ":" + game.player2.score);
 				document.querySelector('#player-score').textContent = game.player.score;
-				if (game.player.score >= 5) {
+				if (game.player.score === 5) {
 					stop();
 					clearDataGame();
 				}
@@ -381,7 +390,7 @@ export default function Game() {
 				}
 			}
 		}
-		anim = null;
+		cancelAnimationFrame(anim);
 		isSearching = false;
 		setActive(true);
 		// setActive2(true);
@@ -400,7 +409,6 @@ export default function Game() {
 								<div className="channels-not-logged">
 									<p>You are not logged in.</p>
 								</div>
-								<canvas id="canvas" width="0" height="0"></canvas>
 							</div>
 						</div>
 					</div>
@@ -410,7 +418,6 @@ export default function Game() {
 					<Online>
 						<div id="game-root">
 							<Nav />
-							{isWin ? <Confetti width={size.width} height={size.height} /> : ""}
 							<div className="container">
 								<div className="row d-flex justify-content-center text-center">
 									{isActive ?
@@ -435,6 +442,7 @@ export default function Game() {
 										{/* {isActive2 ? <button type="button" className="btn btn-outline-light" id="search-button2" onClick={() => sendSearch2()}>{SearchText2}</button> : ""} */}
 									</div>
 									<p id="victoryMessage"></p>
+									{isWin ? <Confetti width={2000} height={2000} /> : ""}
 									<main role="main">
 										<p className="canvas-score" id="scores">
 											<em className="canvas-score" id="joueur1"></em>

@@ -80,7 +80,7 @@ function App() {
 
   return (
     <div id="main">
-      <Particles
+      {/* <Particles
         id="tsparticles"
         options={{
           background: {
@@ -160,7 +160,7 @@ function App() {
           },
           detectRetina: false
         }}
-      />
+      /> */}
       <Routes>
         <Route path="/" element={<Welcome />} />
         <Route path="/welcome" element={<Welcome />} />
