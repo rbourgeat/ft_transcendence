@@ -161,7 +161,9 @@ export default function Settings(props: SettingsProps) {
 				renderImage(username);
 			})
 			.catch((err) => {
-				console.log("Auth returned 400 -> missing cookie");
+				//console.log("Auth returned 400 -> missing cookie");
+				localStorage.setItem("loggedIn", "false");
+				window.top.location = "http://localhost:3030/auth/"
 			})
 	}
 
