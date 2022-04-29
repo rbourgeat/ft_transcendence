@@ -19,14 +19,6 @@ export default function ListDiscussions(props: ListDiscussionsProps) {
 	const [messages, setMessages] = React.useState([]);
 	const [socket, setSocket] = React.useState(io("http://localhost:3000/chat", { query: { username: props.login } }));
 
-	//function startLog() {
-	//	console.log("------LIST DISCUSSION PROPS--------");
-	//	console.log("isChan:" + props.isChan);
-	//	console.log("activeID:" + props.activeID);
-	//	console.log("activeName:" + props.activeName);
-	//	console.log("--------------");
-	//}
-
 	useEffect(() => {
 
 		setsockChan(props.activeName);
@@ -90,6 +82,7 @@ export default function ListDiscussions(props: ListDiscussionsProps) {
 			<TypingMessage
 				login={props.login}
 				channel={props.activeName}
+				chanId={props.activeID}
 			/>
 		</div>
 	);
