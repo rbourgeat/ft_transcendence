@@ -766,8 +766,13 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
             login: new_login
         }
 
+        let toast = new ToastAlerts(null);
+
         let res = axios.patch(url, { headers })
             .then(res => {
+                toast.notifySuccess("✨ Successfully updated username");
+                let user = document.getElementById("user_username");
+                user.innerHTML = new_login;
                 //console.log("Yay ! Successfully changed login");
                 //console.log(res);
                 ;
@@ -775,7 +780,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
             .catch((error) => {
                 //console.log("Catched error !");
                 //console.log(error);
-                ;
+                toast.notifySuccess("😢 Error while updating username");;
             }
             )
     }
