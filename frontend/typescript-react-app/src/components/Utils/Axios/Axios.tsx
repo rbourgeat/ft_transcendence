@@ -527,7 +527,8 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
             })
     }
 
-    async get_relation_status(login: string) {
+    /*async*/
+    get_relation_status(login: string) {
 
         console.log("get relation with" + login);
         let url = "http://localhost:3000/api/user/relation/relationStatusWith/".concat(login);

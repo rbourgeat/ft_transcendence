@@ -23,13 +23,24 @@ export default function MatchHistory(props: MatchHistoryProps) {
         calledOnce.current = true;
     }, []);
 
-    async function getHistory() {
-        let url = "http://localhost:3000/api/game/".concat(props.login).concat("/history");
+    /*async*/
+    function getHistory() {
+        let url: string = "";
+        if (props.login)
+        {
+            url = "http://localhost:3000/api/game/".concat(props.login).concat("/history");
+        }
+        else 
+        {
+            console.log("props is null !");
+            return ;
+        }
         let headers = {
             login: props.login
         }
 
-        await axios.get(url, { headers })
+        /*await*/
+        axios.get(url, { headers })
             .then(res => {
                 let results = res.data;
                 let l = results.length;

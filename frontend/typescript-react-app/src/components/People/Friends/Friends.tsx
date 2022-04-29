@@ -9,10 +9,12 @@ export default function Friends() {
 	const [load, setLoad] = React.useState(false);
 	const calledOnce = React.useRef(false);
 
-	async function renderFriends() {
+	/*async*/
+	function renderFriends() {
 		axios.defaults.withCredentials = true;
 		let url = "http://localhost:3000/api/user/relation/me/allFriends";
-		await axios.get(url)
+		/*await*/ 
+		axios.get(url)
 			.then(res => {
 				let users = res.data;
 				let len = users.length;

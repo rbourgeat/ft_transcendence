@@ -4,17 +4,11 @@
   background-color: white !important;
   background-image: none !important;
   border-radius: variables.$border-radius;
-  //padding: 20px !important;
-  //padding-right: 50px !important;
-  //padding-left: 50px !important;
-  //padding-bottom: 50px !important;
-  //padding-top: 5px !important;
   position: sticky;
 }
 
 #auth-btn-1,
 #auth-btn-2,
-//#auth-btn-3,
 #signup {
   width: 100%;
 }
@@ -51,4 +45,8 @@
 
 #auth-container > input {
   padding: 0px !important;
+}
+
+#form--auth1 {
+  padding: 50px !important;
 }

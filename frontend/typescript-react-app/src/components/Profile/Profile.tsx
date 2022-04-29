@@ -47,9 +47,11 @@ export default function Profile() {
 	const [nextlevel, setNextLevel] = React.useState(0);
 	const [pendingInvite, setPendingInvite] = React.useState(false);
 
-	async function getUserLogin(log: string) {
+	/*async*/
+	function getUserLogin(log: string) {
 		let url = "http://localhost:3000/api/user/".concat(login);
-		await axios.get(url)
+		/*await*/
+		axios.get(url)
 			.then(res => {
 				setUserOk(true);
 				setNextLevel(res.data.percent_to_next_lvl);

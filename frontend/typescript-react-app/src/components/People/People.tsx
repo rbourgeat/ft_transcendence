@@ -24,7 +24,8 @@ export default function People(props: PeopleProps) {
 		window.top.location = "/people/";
 	}
 
-	async function getUser() {
+	/*async*/
+	function getUser() {
 		let url = "http://localhost:3000/api/auth/";
 
 		axios.defaults.baseURL = 'http://localhost:3000/api/';
@@ -34,7 +35,8 @@ export default function People(props: PeopleProps) {
 		axios.defaults.withCredentials = true;
 
 		let username = "";
-		await axios.get(url)
+		/*await*/
+		axios.get(url)
 			.then(res => {
 				username = res.data.login;
 			})

@@ -11,10 +11,12 @@ export default function Blocked() {
 	const [reload, setReload] = React.useState(false);
 	const calledOnce = React.useRef(false);
 
-	async function renderBlocked() {
+	/*async*/
+	function renderBlocked() {
 		axios.defaults.withCredentials = true;
 		let url = "http://localhost:3000/api/user/relation/me/allBlocked";
-		await axios.get(url)
+		/*await*/
+		axios.get(url)
 			.then(res => {
 				let users = res.data;
 				let len = users.length;
