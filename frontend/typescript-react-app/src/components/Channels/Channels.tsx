@@ -66,7 +66,7 @@ export default function Channels(props: ChatProps) {
 						: ""}
 					{load === true ?
 						<ListDiscussions
-							//socket={socket}
+							socket={socket}
 							login={username}
 							isChan={isChan}
 							activeID={activeID}

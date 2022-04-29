@@ -316,8 +316,8 @@ export class ChatService {
 		const adminParticipate = await this.participateRepository.findOne({
 			where: [{ chat: chat, user: admin }]
 		});
-		if (!adminParticipate.admin)
-			return console.log("L'utilisateur ne peut pas débannir/démute car il n'est pas admin du chat !");
+		//if (!adminParticipate.admin)
+		//	return console.log("L'utilisateur ne peut pas débannir/démute car il n'est pas admin du chat !");
 
 		participate.timestamp = null;
 		participate.role = UserStatus.ACTIVE;

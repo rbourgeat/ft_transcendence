@@ -180,7 +180,7 @@ function App() {
             <Route path="/settings" element={<Settings />} />
             <Route path="/live" element={<Live />} />
             <Route path="/auth" element={<UserSub />} />
-            <Route path="/channels" element={<Channels /*username={username}*/ />} />
+            <Route path="/channels" element={<Channels username={username} />} />
             <Route path="/people" element={<People login={username} />} />
             <Route path="/game" element={<Game />} />
             <Route path="/profile/:login" element={<Profile />} />

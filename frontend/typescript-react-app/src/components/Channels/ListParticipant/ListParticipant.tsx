@@ -22,7 +22,6 @@ export default function ListParticipant(props: ParticipantProps) {
     const [functionToUse, updateFunctionToUse] = React.useState("");
     const [participates, updateParticipates] = React.useState([]);
     const [currentUserAdmin, setCurrentUserAdmin] = React.useState(false);
-    const [needRefresh, setNeedRefresh] = React.useState(false);
     const [show, setShow] = React.useState(false);
     const [passFail, setPassFAil] = React.useState("");
     const [newPass, setNewPass] = React.useState("");
@@ -76,7 +75,6 @@ export default function ListParticipant(props: ParticipantProps) {
 
     React.useEffect(() => {
 
-        setNeedRefresh(false);
         setsockChan(props.activeName);
         props.socket.emit('requestAllUsers', props.activeID);
         props.socket.on("sendAllUsers", (participants) => {
@@ -89,7 +87,6 @@ export default function ListParticipant(props: ParticipantProps) {
 
         });
 
-        //getUsersfromChannel();
         if (props.isChan === true) {
             setCurrentUserAdmin(false);
             getCurrentUserAdminStatus();
@@ -101,15 +98,10 @@ export default function ListParticipant(props: ParticipantProps) {
             updateParticipates(args[0]);
             setsockChan(args[1]);
         }
-
     });
 
-    React.useEffect(() => {
-        //console.log("selectedUser is set to : " + selectedUser);
-    }, [selectedUser])
 
     React.useEffect(() => {
-        //console.log("functionToUse is set to : " + functionToUse);
         executeFunction(functionToUse);
     }, [functionToUse])
 
@@ -148,6 +140,7 @@ export default function ListParticipant(props: ParticipantProps) {
 
     function unmuteUser() {
         makeAPIcall("unmute", "Successfully unmuted", "Error while unmuting", false);
+        console.log("unmute in listparticipant");
         props.socket.emit('mute', { user: selectedUser, mute: false });
     }
 
@@ -214,7 +207,6 @@ export default function ListParticipant(props: ParticipantProps) {
             .catch(error => {
                 toast.notifyDanger(toastErrorMessage);
             });
-        setNeedRefresh(true);
         props.socket.emit('refresh', props.activeName);
     }
 
@@ -256,7 +248,6 @@ export default function ListParticipant(props: ParticipantProps) {
         props.setHasPass(false);
     }
 
-    /*async*/
     function updatePass() {
         let toast = new ToastAlerts(null);
         const url = 'http://localhost:3000/api/chat/password';
@@ -265,7 +256,6 @@ export default function ListParticipant(props: ParticipantProps) {
             "idChat": props.activeID,
             "password": newPass
         }
-        /*await*/
         axios.post(url, body)
             .then(response => {
                 toast.notifySuccess("Update password :)");
@@ -293,7 +283,6 @@ export default function ListParticipant(props: ParticipantProps) {
                                 admin={participate.admin}
                                 updateSelectedUser={updateSelectedUser}
                                 updateFunctionToUse={updateFunctionToUse}
-                            //needRefresh={needRefresh}
                             />
                         )}
                     </div>

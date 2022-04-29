@@ -11,21 +11,23 @@ export interface ListDiscussionsProps {
 	login: string,
 	isChan?: any,
 	activeID?: string,
-	activeName?: string
+	activeName?: string,
+	socket?: any
 }
 
 export default function ListDiscussions(props: ListDiscussionsProps) {
 	const [sockChan, setsockChan] = React.useState(props.activeName);
 	const [messages, setMessages] = React.useState([]);
-	const [socket, setSocket] = React.useState(io("http://localhost:3000/chat", { query: { username: props.login } }));
+	const [oldMessages, setOldMessages] = React.useState([]);
+	//const [socket, setSocket] = React.useState(io("http://localhost:3000/chat", { query: { username: props.login } }));
 
 	useEffect(() => {
 
 		setsockChan(props.activeName);
 
 		//startLog();
-		socket.emit('requestAllMessages', props.activeID);
-		socket.on("sendAllMessages", (messagesUpdated) => {
+		props.socket.emit('requestAllMessages', props.activeID);
+		props.socket.on("sendAllMessages", (messagesUpdated) => {
 			if (messagesUpdated) {
 				setMessages(messagesUpdated);
 				console.log("refresh mssg")
@@ -38,9 +40,10 @@ export default function ListDiscussions(props: ListDiscussionsProps) {
 		});
 	}, [props.activeID]);
 
-	socket.on("refreshMessages", (...args) => {
-		console.log("before modif and after refresh call sockchan:" + sockChan);
-		console.log("before modif and after refresh call activename:" + props.activeName);
+	props.socket.on("refreshMessages", (...args) => {
+		//console.log("before modif and after refresh call sockchan:" + sockChan);
+		//console.log("before modif and after refresh call activename:" + props.activeName);
+		setOldMessages(messages);
 		if (args[1] == props.activeName && (props.activeName != "" || props.activeName != undefined || props.activeName != null)) {
 			setMessages(args[0]);
 			setsockChan(args[1]);
@@ -71,20 +74,31 @@ export default function ListDiscussions(props: ListDiscussionsProps) {
 			<div className="messages-zone">
 				<ul className="text">
 					{
-						props.activeName == sockChan ? messages.map(message =>
-							<div id="author" className={message.author.login === props.login ? "from-me" : "from-them"} key={message.id}>
-								{message.author.login}
-								<li id="message" key={message.id} className={message.author.login === props.login ? "my-messages" : ""}>
-									{message.content}
-								</li>
-								<br />
-							</div>
-						) : ""
+						props.activeName === sockChan ?
+							messages.map(message =>
+								<div id="author" className={message.author.login === props.login ? "from-me" : "from-them"} key={message.id}>
+									{message.author.login}
+									<li id="message" key={message.id} className={message.author.login === props.login ? "my-messages" : ""}>
+										{message.content}
+									</li>
+									<br />
+								</div>
+							)
+							:
+							oldMessages.map(message =>
+								<div id="author" className={message.author.login === props.login ? "from-me" : "from-them"} key={message.id}>
+									{message.author.login}
+									<li id="message" key={message.id} className={message.author.login === props.login ? "my-messages" : ""}>
+										{message.content}
+									</li>
+									<br />
+								</div>
+							)
 					}
 				</ul>
 			</div>
 			<TypingMessage
-				//socket={socket}
+				socket={props.socket}
 				login={props.login}
 				channel={props.activeName}
 				chanId={props.activeID}
