@@ -29,7 +29,9 @@ export default function JoinChan(props: JoinChanProps) {
 	const calledOnce = React.useRef(false);
 
 	const displayPrivate = () => setPublic(false);
+
 	const displayPublic = () => setPublic(true);
+	
 	const handleCloseFinale = () => {
 		setShow(false);
 	}

@@ -31,11 +31,17 @@ export default function Settings(props: SettingsProps) {
 	//MODALS
 	const [show, setShow] = useState(false);
 	const handleClose = () => setShow(false);
-	const handleShow = () => setShow(true);
+	const handleShow = () => setShow(false);
 
 	//Style pour le authcode
 	const AuthInputRef = useRef<AuthCodeRef>(null);
 	const [code, setCode] = React.useState("");
+
+	//Pour modal changeUsername
+	const [exited, setExited] = React.useState(false);
+	const [checkExited, setCheckExited] = React.useState("false");
+	const [update, setUpdate] = React.useState("");
+	//const handleShow = () => setShow(true);
 
 
 	//Ici le async est ultra nécessaire !
@@ -186,6 +192,11 @@ export default function Settings(props: SettingsProps) {
 		calledOnce.current = true;
 	});
 
+	useEffect(() => {
+		//console.log("updating because of new username");
+		getUser();
+	}, [exited]);
+
 	return (
 		<>
 			<Nav />
@@ -205,7 +216,7 @@ export default function Settings(props: SettingsProps) {
 									<svg className="log--color_profile" height="40" width="40">
 										<circle cx="20" cy="20" r="15" fill={color} stroke="white" style={{ strokeWidth: '3' }} />
 									</svg>
-									<p className="username-text">{username}</p>
+									<p className="username-text" id="user_username">{username}</p>
 									<p className="status-text">{status}</p>
 									<br />
 									<div className="row d-flex justify-content-center text-center">
@@ -229,10 +240,16 @@ export default function Settings(props: SettingsProps) {
 									<div className="row d-flex justify-content-center text-center">
 										<div id="change--username--div">
 											<h3 id="activate--modal">Change username</h3>
-											<button id="change--username" type="button" className="btn btn-outline-dark"
+											{/*<button id="change--username" type="button" className="btn btn-outline-dark"
 												onClick={handleShow}>Click to change
-											</button>
-											<EditUsernameModal username={username} show={show} onHide={handleClose} />
+											</button>*/}
+											<EditUsernameModal 
+												//setUsername={setUsername}
+												username={username}
+												//checkexited={setCheckExited}
+												//setUpdate={setUpdate}
+												exited={checkExited}
+												/>
 											<br />
 										</div>
 									</div>
