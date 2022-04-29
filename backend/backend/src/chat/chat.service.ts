@@ -443,4 +443,16 @@ export class ChatService {
 		return false;
 	}
 
+	async getIsMuted(channelId: number, user: User) {
+		const chat = await this.chatRepository.findOne({ id: channelId });
+		const userT = await this.userRepository.findOne({ login: user.login });
+		const participate = await this.participateRepository.findOne({
+			where: [{ chat: chat, user: userT }]
+		});
+
+		if (participate.role == "mute")
+			return true;
+		return false;
+	}
+
 }

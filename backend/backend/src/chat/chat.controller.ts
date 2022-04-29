@@ -204,6 +204,14 @@ export class ChatController {
         return this.chatService.getIsAdmin(channelId, req.user);
     }
 
+    @ApiOperation({ summary: 'Boolean to know if requesting user is muted [jwt-protected + for swagger test only]' })
+    @ApiOkResponse({ description: 'Suceed' })
+    @UseGuards(JwtAuthenticationGuard)
+    @Get('/isMutedIn/:channelId')
+    async getIsMuted(@Param('channelId') channelId: number, @Request() req) {
+        return this.chatService.getIsMuted(channelId, req.user);
+    }
+
     @ApiOperation({ summary: 'Boolean to know if requesting user is admin [jwt-protected + for swagger test only]' })
     @ApiOkResponse({ description: 'Suceed' })
     @UseGuards(JwtAuthenticationGuard)
