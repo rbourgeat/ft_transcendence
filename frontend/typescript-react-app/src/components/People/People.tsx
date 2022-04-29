@@ -39,11 +39,12 @@ export default function People(props: PeopleProps) {
 		axios.get(url)
 			.then(res => {
 				username = res.data.login;
+				setLoad(true);
 			})
 			.catch((err) => {
 				;
 			})
-		setLoad(true);
+		//setLoad(true);
 	}
 
 	useEffect(() => {

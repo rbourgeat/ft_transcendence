@@ -1,0 +1,8 @@
+{
+	"short_name": "ft_transcendence",
+	"name": "ft_transcendence",
+	"start_url": ".",
+	"display": "standalone",
+	"theme_color": "#000000",
+	"background_color": "#ffffff"
+}

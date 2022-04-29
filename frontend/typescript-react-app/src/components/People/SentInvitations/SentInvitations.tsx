@@ -25,11 +25,12 @@ export default function Invitations() {
 					setUsers(prevArray => [...prevArray, users[i]])
 					i++;
 				}
+				setLoad(true);
 			})
 			.catch((error) => {
 				;
 			})
-		setLoad(true);
+		//setLoad(true);
 	}
 
 	useEffect(() => {
