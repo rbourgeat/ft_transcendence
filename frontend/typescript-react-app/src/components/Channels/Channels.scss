@@ -11,7 +11,7 @@
 	margin-top: 10px;
 }
 
-#chat--container > * {
+#chat--container>* {
 	color: black;
 	position: sticky;
 }
@@ -40,4 +40,46 @@
 #row_chat {
 	margin-top: 5%;
 	max-height: 90%;
+}
+
+.send--dm_div {
+	margin-top: -20px !important;
+}
+
+.send--dm {
+	//background-color: red !important;
+	//border-radius: variables.$border-radius-big;
+	//width: 90% !important;
+	font-weight: 600 !important;
+	background: rgb(255, 255, 255) !important;
+	padding-top: 5px;
+	margin-top: 5px !important;
+	padding-bottom: 5px;
+	font-size: 14px;
+	border-radius: variables.$border-radius-big !important;
+	width: 90% !important;
+	border: 0.2rem solid rgb(223, 223, 223) !important;
+
+	&:hover {
+		filter: drop-shadow(0 0 0.6rem rgba(102, 209, 198, 0.609)) !important;
+	}
+}
+
+.display--channels {
+	//background-color: red !important;
+	//border-radius: variables.$border-radius-big;
+	//width: 90% !important;
+	font-weight: 600 !important;
+	background: rgb(255, 255, 255) !important;
+	padding-top: 5px;
+	margin-top: 5px !important;
+	padding-bottom: 5px;
+	font-size: 14px;
+	border-radius: variables.$border-radius-big !important;
+	width: 90% !important;
+	border: 0.2rem solid rgb(223, 223, 223) !important;
+
+	&:hover {
+		filter: drop-shadow(0 0 0.6rem rgba(102, 209, 198, 0.609)) !important;
+	}
 }

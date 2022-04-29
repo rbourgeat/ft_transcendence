@@ -59,12 +59,12 @@ export default function CreateDM(props: CreateDMProps) {
 
 	return (
 		<div>
-			<button type="button" className="btn btn-dark"
+			<button type="button" className="btn"
 				id="createdm-button"
 				onClick={handleShow}
 			>New DM</button>
 			<Modal show={show} onHide={handleClose} animation={true} onExited={handleExit}>
-				<Modal.Header closeButton>
+				<Modal.Header>
 					<Modal.Title>Create DM conversation 💌</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
@@ -81,11 +81,8 @@ export default function CreateDM(props: CreateDMProps) {
 					</Form>
 				</Modal.Body>
 				<Modal.Footer>
-					<Button variant="ligth" onClick={handleClose}>
-						Close
-					</Button>
 					<Button variant="dark" type="submit" onClick={createDM}>
-						Send form
+						Confirm
 					</Button>
 				</Modal.Footer>
 			</Modal>

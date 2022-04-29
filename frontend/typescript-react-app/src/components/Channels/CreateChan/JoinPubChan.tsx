@@ -139,14 +139,17 @@ export default function JoinChan(props: JoinChanProps) {
 			})
 	}
 
+	const [form, setForm] = React.useState(false);
+
 	function popForm() {
 		let toast = new ToastAlerts(null);
 		toast.notifyDanger("WIP, comment faire quand public + pass")
+		setForm(true);
 	}
 
 	return (
 		<div id="create-chan_div">
-			<button type="button" className="btn btn-secondary"
+			<button type="button" className="btn"
 				id="joinchan-button"
 				onClick={handleShow}
 				data-toggle="modal" data-target="#exampleModalCenter">Join channel</button>
@@ -170,6 +173,13 @@ export default function JoinChan(props: JoinChanProps) {
 										</div>)
 									:
 									null
+								}
+								{
+									form == true ?
+										<Form.Group >
+											<Form.Label>Password *</Form.Label>
+										</Form.Group>
+										: <div>lol</div>
 								}
 							</ul>
 							:
