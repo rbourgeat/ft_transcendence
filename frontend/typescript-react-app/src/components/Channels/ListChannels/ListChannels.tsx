@@ -198,12 +198,12 @@ export default function ListChannels(props: ListChannelsProps) {
 						: ""}
 					{load === true && selectedCat === "Channels" && count === 0 ?
 						<>
-							<p className="no_message">You have no channel 🥲</p>
+							<p className="no_message">You have no channel</p>
 						</>
 						: ""}
 					{load === true && selectedCat === "DMs" && count === 0 ?
 						<>
-							<p className="no_message">You have no DM 🥲</p>
+							<p className="no_message">You have no DM</p>
 						</>
 						: ""}
 					{load === true && selectedCat === "DMs" && count !== 0 ?
@@ -226,8 +226,8 @@ export default function ListChannels(props: ListChannelsProps) {
 						: ""}
 				</div>
 				<div className="send--dm_div">
-					<button type="button" className="btn btn-light" id="send--dm" onClick={displayDM} disabled={selectedCat === "DMs" ? true : false}>DM</button>
-					<button type="button" className="btn btn-light" id="display--channels" onClick={displayChannels} disabled={selectedCat === "Channels" ? true : false}>Channels</button>
+					<button type="button" className="send--dm" onClick={displayDM} disabled={selectedCat === "DMs" ? true : false}>DM</button>
+					<button type="button" className="display--channels" onClick={displayChannels} disabled={selectedCat === "Channels" ? true : false}>Channels</button>
 				</div>
 				<ToastContainer
 					position="top-right"

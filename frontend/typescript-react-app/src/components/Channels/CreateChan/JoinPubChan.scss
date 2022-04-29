@@ -5,6 +5,11 @@
 	width: 85% !important;
 	border-radius: variables.$border-radius-big !important;
 	margin: 2px !important;
+	background-color: rgb(70, 197, 197);
+
+	&:hover {
+		background-color: rgb(107, 230, 230);
+	}
 }
 
 #list_title {

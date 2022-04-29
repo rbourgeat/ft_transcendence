@@ -111,7 +111,7 @@ export default function CreateChan(props: CreateChanProps) {
 
 	return (
 		<div id="create-chan_div">
-			<button type="button" className="btn btn-success"
+			<button type="button" className="btn"
 				id="createchan-button"
 				onClick={handleShow}
 				data-toggle="modal" data-target="#exampleModalCenter"

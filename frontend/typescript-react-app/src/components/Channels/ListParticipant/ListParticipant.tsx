@@ -277,9 +277,9 @@ export default function ListParticipant(props: ParticipantProps) {
             <div className="buttons_div">
                 <div className="row">
                     <div className="col">
-                        {props.isChan === false ? null : <button id="leave--button" className="btn btn-danger" onClick={leaveChannel}>Leave channel</button>}
+                        {props.isChan === false ? null : <button id="leave--button" className="btn" onClick={leaveChannel}>Leave channel</button>}
                         {currentUserAdmin === true && props.hasPass ?
-                            <button id="leave--button" className="btn btn-warning" onClick={handleShow}>Update password</button>
+                            <button id="pass--button" className="btn" onClick={handleShow}>Update password</button>
                             :
                             null
                         }

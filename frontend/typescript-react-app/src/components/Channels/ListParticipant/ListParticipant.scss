@@ -35,14 +35,31 @@
 #invite--button,
 #admin--buton,
 #leave--button,
-#kick--button {
+#kick--button,
+#pass--button {
 	border-radius: variables.$border-radius-big;
 	width: 100%;
 	position: sticky;
 	margin-top: 5px !important;
-	color: white !important;
+	//color: white !important;
 	width: 98% !important;
 	margin-left: 3px !important;
+}
+
+#leave--button {
+	background-color: rgb(245, 83, 83);
+
+	&:hover {
+		background-color: red !important;
+	}
+}
+
+#pass--button {
+	background-color: rgb(85, 165, 165);
+
+	&:hover {
+		background-color: rgb(2, 168, 160) !important;
+	}
 }
 
 //Boutons duo horizontal
