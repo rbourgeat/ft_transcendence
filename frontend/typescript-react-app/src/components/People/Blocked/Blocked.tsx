@@ -25,12 +25,13 @@ export default function Blocked() {
 					setUsers(prevArray => [...prevArray, users[i]])
 					i++;
 				}
+				setLoad(true);
 			})
 			.catch((error) => {
 				//console.log("Error while getting my friends");
 				;
 			})
-		setLoad(true);
+		//setLoad(true);
 	}
 
 	useEffect(() => {

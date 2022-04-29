@@ -17,7 +17,6 @@ export default function All(props: InputWrapperProps) {
 	const [load, setLoad] = React.useState(true);
 	const [count, setCount] = useState(0);
 	const [stateLogin, setStateLogin] = React.useState(props.login);
-
 	const calledOnce = React.useRef(false);
 
 	/*async*/
@@ -36,11 +35,12 @@ export default function All(props: InputWrapperProps) {
 						setUsers(prevArray => [...prevArray, users[i]])
 					i++;
 				}
+				setLoad(true);
 			})
 			.catch((error) => {
 				;
 			})
-		setLoad(true);
+		//setLoad(true);
 	}
 
 	useEffect(() => {
