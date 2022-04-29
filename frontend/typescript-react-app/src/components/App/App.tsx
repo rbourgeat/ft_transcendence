@@ -41,10 +41,10 @@ function App() {
 
   /*async*/ function getUser() {
 
-    if (localStorage.getItem("loggedIn") == "false")
-    {
-      return ;
-    }
+    //if (localStorage.getItem("loggedIn") == "false")
+    //{
+    //  return ;
+    //}
     
     let url = "http://localhost:3000/api/auth/";
     let username = "";
