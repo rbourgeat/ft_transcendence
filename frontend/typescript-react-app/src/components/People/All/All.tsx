@@ -20,12 +20,13 @@ export default function All(props: InputWrapperProps) {
 
 	const calledOnce = React.useRef(false);
 
-	async function renderUsers() {
-
+	/*async*/
+	function renderUsers() {
 		axios.defaults.withCredentials = true;
 		let log = localStorage.getItem("login");
 		let url = "http://localhost:3000/api/user/";
-		await axios.get(url)
+		/*await*/
+		axios.get(url)
 			.then(res => {
 				let users = res.data;
 				let len = users.length;

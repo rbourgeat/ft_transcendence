@@ -3,7 +3,6 @@ import Nav from '../Nav/Nav';
 import TypingMessage from "./TypingMessage/TypingMessage";
 import ListDiscussions from "./ListDiscussions/ListDiscussions";
 import ListParticipant from './ListParticipant/ListParticipant';
-//import JoinChan from './CreateChan/JoinPubChan';
 import CreateChan from './CreateChan/CreateChan';
 import React, { useState, useEffect } from "react";
 import MyAxios from '../Utils/Axios/Axios';
@@ -27,11 +26,12 @@ export default function Channels(props: ChatProps) {
 	const [activeName, setActiveName] = React.useState("");
 
 
-	async function getUser() {
+	/*async*/ function getUser() {
 		let url = "http://localhost:3000/api/auth/";
 		axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 		axios.defaults.withCredentials = true;
-		await axios.get(url)
+		/*await*/
+		axios.get(url)
 			.then(res => {
 				setUsername(res.data.login);
 			})
@@ -47,7 +47,6 @@ export default function Channels(props: ChatProps) {
 	}, [username]);
 
 	useEffect(() => {
-		//console.log("Channels.tsx: Active channel is set to:" + activeName);
 	}, [activeName]);
 
 	return (

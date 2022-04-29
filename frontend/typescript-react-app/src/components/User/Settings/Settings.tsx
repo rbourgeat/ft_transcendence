@@ -37,6 +37,8 @@ export default function Settings(props: SettingsProps) {
 	const AuthInputRef = useRef<AuthCodeRef>(null);
 	const [code, setCode] = React.useState("");
 
+
+	//Ici le async est ultra nécessaire !
 	async function manageQR() {
 		const res = await fetch('http://localhost:3000/api/2fa/generate', { method: 'POST', credentials: 'include' });
 		const blob = await res.blob();
@@ -122,7 +124,8 @@ export default function Settings(props: SettingsProps) {
 		}
 	}
 
-	async function getUser() {
+	/*async*/
+	function getUser() {
 		let url = "http://localhost:3000/api/auth/";
 
 		axios.defaults.baseURL = 'http://localhost:3000/api/';
@@ -132,7 +135,8 @@ export default function Settings(props: SettingsProps) {
 		axios.defaults.withCredentials = true;
 
 		let username = "";
-		await axios.get(url)
+		/*await*/
+		axios.get(url)
 			.then(res => {
 				username = res.data.login;
 				if (res.data.login42 != null && res.data.login42 != undefined && res.data.login42 != "") {
@@ -160,15 +164,16 @@ export default function Settings(props: SettingsProps) {
 			})
 	}
 
-	async function renderImage(login: string) {
+	/*async*/
+	function renderImage(login: string) {
 		let ax = new MyAxios(null);
 		let log42 = localStorage.getItem("login42");
 		let haschanged = false;
 		if (login != log42)
 			haschanged = true;
 		if (log42 != "" && log42 != null && log42 != "null" && log42 != undefined)
-			return (await ax.render_avatar(login, log42, haschanged));
-		return (await ax.render_avatar(login, "", haschanged));
+			return (/*await*/ ax.render_avatar(login, log42, haschanged));
+		return (/*await*/ ax.render_avatar(login, "", haschanged));
 	}
 
 	useEffect(() => {
@@ -190,11 +195,11 @@ export default function Settings(props: SettingsProps) {
 						<div id="settings">
 							<h2 id="user--settings">Settings</h2>
 							<br />
-							{load == false ?
+							{/*{load == false ?
 								<div className="spinner-border m-5" role="status">
 									<span className="sr-only"><AiOutlineLoading /></span>
 								</div>
-								:
+								:*/}
 								<>
 									<img id={username} className="profile--pic" height="80" width="80" />
 									<svg className="log--color_profile" height="40" width="40">
@@ -284,7 +289,7 @@ export default function Settings(props: SettingsProps) {
 										</div>
 									</div>
 								</>
-							}
+							{/*}*/}
 						</div>
 					</div>
 				</div>
