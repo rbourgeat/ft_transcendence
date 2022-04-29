@@ -5,13 +5,16 @@ import ToastAlerts from '../../Utils/ToastAlerts/ToastAlerts';
 import MyAxios from '../../Utils/Axios/Axios';
 import { ToastContainer } from 'react-toastify';
 import "./JoinPubChan.scss";
+import { io, Socket } from "socket.io-client";
 
 export interface JoinChanProps {
 	endpoint?: any,
 	action?: any,
 	setExited?: any,
 	setUpdate?: any,
-	exited?: any
+	exited?: any,
+	login?: string,
+	socket?: any
 }
 export default function JoinChan(props: JoinChanProps) {
 	const [show, setShow] = React.useState(false);
@@ -31,7 +34,7 @@ export default function JoinChan(props: JoinChanProps) {
 	const displayPrivate = () => setPublic(false);
 
 	const displayPublic = () => setPublic(true);
-	
+
 	const handleCloseFinale = () => {
 		setShow(false);
 	}
@@ -90,6 +93,9 @@ export default function JoinChan(props: JoinChanProps) {
 				setSuccessfull(true);
 				setForm(false);
 				setPublicPass("");
+
+				//	let socket = io("http://localhost:3000/chat", { query: { username: props.login } });
+				props.socket.emit('refresh', chan)
 				handleClose();
 			})
 			.catch(error => {

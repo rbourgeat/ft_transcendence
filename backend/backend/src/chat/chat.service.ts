@@ -421,7 +421,7 @@ export class ChatService {
 			where: [{ chat: chat }],
 			relations: ['user', 'chat'],
 		});
-		return listParticipateCard;
+		return listParticipateCard.sort();
 	}
 
 	async chatExist(channelName: string) {

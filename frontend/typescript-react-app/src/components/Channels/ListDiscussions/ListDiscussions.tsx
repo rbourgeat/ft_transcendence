@@ -28,22 +28,26 @@ export default function ListDiscussions(props: ListDiscussionsProps) {
 		socket.on("sendAllMessages", (messagesUpdated) => {
 			if (messagesUpdated) {
 				setMessages(messagesUpdated);
+				console.log("refresh mssg")
 			}
-			else
-			{
+			else {
+				console.log(" refresh mmsg set as null ;(")
 				setMessages(null)
 			}
-				
+
 		});
 	}, [props.activeID]);
 
 	socket.on("refreshMessages", (...args) => {
-		if (args[1] == props.activeName && (props.activeName != "" || props.activeName != undefined ||  props.activeName != null))
-		{
+		console.log("before modif and after refresh call sockchan:" + sockChan);
+		console.log("before modif and after refresh call activename:" + props.activeName);
+		if (args[1] == props.activeName && (props.activeName != "" || props.activeName != undefined || props.activeName != null)) {
 			setMessages(args[0]);
 			setsockChan(args[1]);
+			console.log(sockChan);
+			console.log("messages are refreshed");
 		}
-			
+
 	});
 
 	function renderImage(login: string, isUserProfile: boolean) {
@@ -74,12 +78,13 @@ export default function ListDiscussions(props: ListDiscussionsProps) {
 									{message.content}
 								</li>
 								<br />
-							</div> 
+							</div>
 						) : ""
 					}
 				</ul>
 			</div>
 			<TypingMessage
+				//socket={socket}
 				login={props.login}
 				channel={props.activeName}
 				chanId={props.activeID}

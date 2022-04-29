@@ -13,7 +13,8 @@ export interface ParticipantProps {
     hasPass?: boolean,
     setHasPass?: any,
     activeID?: string,
-    activeName?: string
+    activeName?: string,
+    socket?: any
 }
 
 export default function ListParticipant(props: ParticipantProps) {
@@ -21,10 +22,12 @@ export default function ListParticipant(props: ParticipantProps) {
     const [functionToUse, updateFunctionToUse] = React.useState("");
     const [participates, updateParticipates] = React.useState([]);
     const [currentUserAdmin, setCurrentUserAdmin] = React.useState(false);
+    const [needRefresh, setNeedRefresh] = React.useState(false);
     const [show, setShow] = React.useState(false);
     const [passFail, setPassFAil] = React.useState("");
     const [newPass, setNewPass] = React.useState("");
     const [newPassConf, setNewPassConf] = React.useState("");
+
     //const [loaded, setLoaded] = React.useState("false");
 
     /*async*/
@@ -69,16 +72,37 @@ export default function ListParticipant(props: ParticipantProps) {
         }
     }
 
+    const [sockChan, setsockChan] = React.useState(props.activeName);
+
     React.useEffect(() => {
 
+        setNeedRefresh(false);
+        setsockChan(props.activeName);
+        props.socket.emit('requestAllUsers', props.activeID);
+        props.socket.on("sendAllUsers", (participants) => {
+            if (participants) {
+                updateParticipates(participants);
+            }
+            else {
+                updateParticipates(null)
+            }
+
+        });
+
+        //getUsersfromChannel();
         if (props.isChan === true) {
             setCurrentUserAdmin(false);
-            getUsersfromChannel();
             getCurrentUserAdminStatus();
         }
-        else if (props.isChan === false)
-            getUsersfromChannel();
     }, [props.activeID])
+
+    props.socket.on("refreshParticipants", (...args) => {
+        if (args[1] == props.activeName && (props.activeName != "" || props.activeName != undefined || props.activeName != null)) {
+            updateParticipates(args[0]);
+            setsockChan(args[1]);
+        }
+
+    });
 
     React.useEffect(() => {
         //console.log("selectedUser is set to : " + selectedUser);
@@ -124,6 +148,7 @@ export default function ListParticipant(props: ParticipantProps) {
 
     function unmuteUser() {
         makeAPIcall("unmute", "Successfully unmuted", "Error while unmuting", false);
+        props.socket.emit('mute', { user: selectedUser, mute: false });
     }
 
     function setAdmin() {
@@ -132,6 +157,7 @@ export default function ListParticipant(props: ParticipantProps) {
 
     function muteUser() {
         makeAPIcall("mute", "Successfully mute", "Error while muting", false);
+        props.socket.emit('mute', { user: selectedUser, mute: true });
     }
 
     function leaveChannel() {
@@ -158,10 +184,11 @@ export default function ListParticipant(props: ParticipantProps) {
     }
 
     /*async*/
-    function makeAPIcall(endpoint: string, toastSuccessMessage: string, toastErrorMessage: string, me: boolean) {
+    async function makeAPIcall(endpoint: string, toastSuccessMessage: string, toastErrorMessage: string, me: boolean) {
         let toast = new ToastAlerts(null);
         const url = 'http://localhost:3000/api/chat/'.concat(endpoint);
 
+        // props.socket.emit('refresh', props.activeName);
         let user: string;
         me === true ? user = props.login : user = selectedUser;
         const body = {
@@ -169,12 +196,11 @@ export default function ListParticipant(props: ParticipantProps) {
             "user": user
         }
         /*await*/
-        axios.post(url, body)
+        await axios.post(url, body)
             .then(response => {
                 toast.notifySuccess(toastSuccessMessage);
-                if (endpoint == "quit") {
-                    //let elem: any;
-                    if (props.isChan == true) {
+                if (endpoint === "quit") {
+                    if (props.isChan === true) {
                         document.getElementById("display_chan_".concat(props.activeName)).remove();
                         let title = document.getElementsByClassName("chan-title_notselected")[0].innerHTML;
                         document.getElementsByClassName("chan-title_notselected")[0].className = 'chan-title_selected';
@@ -186,9 +212,10 @@ export default function ListParticipant(props: ParticipantProps) {
                 }
             })
             .catch(error => {
-                //toast.notifyDanger(toastErrorMessage);
-                ;
-            })
+                toast.notifyDanger(toastErrorMessage);
+            });
+        setNeedRefresh(true);
+        props.socket.emit('refresh', props.activeName);
     }
 
     const handleClose = () => setShow(false);
@@ -265,7 +292,9 @@ export default function ListParticipant(props: ParticipantProps) {
                                 owner={participate.owner}
                                 admin={participate.admin}
                                 updateSelectedUser={updateSelectedUser}
-                                updateFunctionToUse={updateFunctionToUse} />
+                                updateFunctionToUse={updateFunctionToUse}
+                            //needRefresh={needRefresh}
+                            />
                         )}
                     </div>
                 }

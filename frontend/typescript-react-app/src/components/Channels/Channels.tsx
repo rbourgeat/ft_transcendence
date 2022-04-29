@@ -25,6 +25,7 @@ export default function Channels(props: ChatProps) {
 	const [activeID, setActiveID] = React.useState("");
 	const [activeName, setActiveName] = React.useState("");
 
+	const [socket, setSocket] = React.useState(io("http://localhost:3000/chat", { query: { username: props.username } }));
 
 	/*async*/ function getUser() {
 		let url = "http://localhost:3000/api/auth/";
@@ -56,6 +57,7 @@ export default function Channels(props: ChatProps) {
 				<div className="row" id="row_chat">
 					{load === true ?
 						<ListChannels
+							socket={socket}
 							login={username}
 							setIsChan={setIsChan}
 							setHasPass={setHasPass}
@@ -64,6 +66,7 @@ export default function Channels(props: ChatProps) {
 						: ""}
 					{load === true ?
 						<ListDiscussions
+							//socket={socket}
 							login={username}
 							isChan={isChan}
 							activeID={activeID}
@@ -71,6 +74,7 @@ export default function Channels(props: ChatProps) {
 						: ""}
 					{load === true ?
 						<ListParticipant
+							socket={socket}
 							login={username}
 							isChan={isChan}
 							hasPass={hasPass}

@@ -45,7 +45,7 @@ function App() {
     //{
     //  return ;
     //}
-    
+
     let url = "http://localhost:3000/api/auth/";
     let username = "";
     axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
@@ -180,7 +180,7 @@ function App() {
             <Route path="/settings" element={<Settings />} />
             <Route path="/live" element={<Live />} />
             <Route path="/auth" element={<UserSub />} />
-            <Route path="/channels" element={<Channels />} />
+            <Route path="/channels" element={<Channels /*username={username}*/ />} />
             <Route path="/people" element={<People login={username} />} />
             <Route path="/game" element={<Game />} />
             <Route path="/profile/:login" element={<Profile />} />

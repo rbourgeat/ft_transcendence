@@ -239,6 +239,8 @@ export class UserMigration1645626140921 implements MigrationInterface {
             queryRunner.manager.create<Participate>(Participate, {
                 user: dummy2,
                 chat: channel3,
+                owner: true,
+                admin: true,
                 login: dummy2.login
             }),
         );
@@ -255,6 +257,8 @@ export class UserMigration1645626140921 implements MigrationInterface {
             queryRunner.manager.create<Participate>(Participate, {
                 user: dummy2,
                 chat: channel4,
+                owner: true,
+                admin: true,
                 login: dummy2.login
             }),
         );
@@ -281,7 +285,9 @@ export class UserMigration1645626140921 implements MigrationInterface {
             queryRunner.manager.create<Participate>(Participate, {
                 user: malatini,
                 chat: channel2,
-                login: malatini.login
+                login: malatini.login,
+                owner: true,
+                admin: true,
             }),
         );
 
