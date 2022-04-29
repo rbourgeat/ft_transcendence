@@ -21,15 +21,19 @@ export default function ListParticipant(props: ParticipantProps) {
     const [functionToUse, updateFunctionToUse] = React.useState("");
     const [participates, updateParticipates] = React.useState([]);
     const [currentUserAdmin, setCurrentUserAdmin] = React.useState(false);
+    const [show, setShow] = React.useState(false);
+    const [passFail, setPassFAil] = React.useState("");
+    const [newPass, setNewPass] = React.useState("");
+    const [newPassConf, setNewPassConf] = React.useState("");
 
 
     React.useEffect(() => {
-        console.log("------LIST PARTICIPANT PROPS--------");
-        console.log("activeID:" + props.activeID);
-        console.log("activeName:" + props.activeName);
-        console.log("isChan:" + props.isChan);
-        console.log("hasPass:" + props.hasPass);
-        console.log("--------------");
+        //console.log("------LIST PARTICIPANT PROPS--------");
+        //console.log("activeID:" + props.activeID);
+        //console.log("activeName:" + props.activeName);
+        //console.log("isChan:" + props.isChan);
+        //console.log("hasPass:" + props.hasPass);
+        //console.log("--------------");
 
         if (props.isChan === true) {
             getUsersfromChannel();
@@ -48,12 +52,12 @@ export default function ListParticipant(props: ParticipantProps) {
                     updateParticipates(response.data);
                 })
                 .catch(error => {
-                    console.log("Error while getting users from a Channel/DM");
+                    //onsole.log("Error while getting users from a Channel/DM");
+                    ;
                 })
         }
 
         async function getCurrentUserAdminStatus() {
-
             let url = "http://localhost:3000/api/chat/isAdminIn/".concat(props.activeID);
             axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
             axios.defaults.withCredentials = true;
@@ -63,17 +67,18 @@ export default function ListParticipant(props: ParticipantProps) {
                         setCurrentUserAdmin(true);
                 })
                 .catch((err) => {
-                    console.log("Error while getting api auth");
+                    //console.log("Error while getting api auth");
+                    ;
                 })
         }
     }, [props.activeID])
 
     React.useEffect(() => {
-        console.log("selectedUser is set to : " + selectedUser);
+        //console.log("selectedUser is set to : " + selectedUser);
     }, [selectedUser])
 
     React.useEffect(() => {
-        console.log("functionToUse is set to : " + functionToUse);
+        //console.log("functionToUse is set to : " + functionToUse);
         executeFunction(functionToUse);
     }, [functionToUse])
 
@@ -162,36 +167,23 @@ export default function ListParticipant(props: ParticipantProps) {
                     //let elem: any;
                     if (props.isChan == true) {
                         document.getElementById("display_chan_".concat(props.activeName)).remove();
-                        console.log("Removed channel from dom");
-                        //setActiveChannelName(document.getElementsByClassName("dm-title_notselected")[0]);
-                        console.log("---Inner html---");
                         let title = document.getElementsByClassName("chan-title_notselected")[0].innerHTML;
-                        console.log("title is " + title);
                         document.getElementsByClassName("chan-title_notselected")[0].className = 'chan-title_selected';
-                        //console.log(document.getElementsByClassName("chan-title_notselected")[0]);
-                        //console.log(document.getElementsByClassName("chan-title_notselected"));
-                        //if (title != "" && title != undefined)
-                        //props.setActiveChannelName(title);
                     }
                     else {
                         document.getElementById("dm_chan_".concat(props.activeName)).remove();
-                        console.log("Removed dm from dom");
-                        //Est-ce qu'on veut leave une channel DM?
                     }
 
                 }
             })
             .catch(error => {
                 //toast.notifyDanger(toastErrorMessage);
-                console.log("Error while leaving");
+                ;
             })
     }
 
-    const [show, setShow] = React.useState(false);
-    const [passFail, setPassFAil] = React.useState("");
-    const [newPass, setNewPass] = React.useState("");
-    const [newPassConf, setNewPassConf] = React.useState("");
     const handleClose = () => setShow(false);
+
     const handleShow = () => {
         setNewPass("");
         setNewPassConf("");
@@ -210,8 +202,6 @@ export default function ListParticipant(props: ParticipantProps) {
     }
 
     const handleRemovePass = () => {
-
-        console.log("we remove pass from chan");
         let toast = new ToastAlerts(null);
         const url = 'http://localhost:3000/api/chat/password';
 

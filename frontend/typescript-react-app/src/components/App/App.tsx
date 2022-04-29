@@ -51,7 +51,8 @@ function App() {
         setUsername(username);
       })
       .catch((err) => {
-        console.log("Error while getting api auth");
+        //console.log("Error while getting api auth");
+        ;
       })
   }
 
@@ -75,7 +76,8 @@ function App() {
   }, []);
 
   let particlesLoaded = (container) => {
-    console.log(container);
+    //console.log(container);
+    ;
   };
 
   return (
@@ -178,9 +180,6 @@ function App() {
             <Route path="/game" element={<Game />} />
             <Route path="/profile/:login" element={<Profile />} />
             <Route path="*" element={<NotFound />} />
-            {/*<Route path="/welcome" element={<Welcome />} />
-            <Route path="/auth" element={<Auth />} />
-            <Route path="*" element={<Auth />} />*/}
           </>
           : ""
         }

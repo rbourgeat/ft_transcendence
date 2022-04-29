@@ -31,7 +31,8 @@ export default function TypingMessage(props: TypingProps) {
                 setUsername(username);
             })
             .catch((err) => {
-                console.log("Error while getting api auth");
+                //console.log("Error while getting api auth");
+                ;
             })
     }
 

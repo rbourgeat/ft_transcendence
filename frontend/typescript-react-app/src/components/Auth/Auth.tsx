@@ -13,7 +13,7 @@ export default function Auth() {
     useEffect(() => {
 		if (localStorage.getItem("loggedIn") == "true")
         {
-            console.log("You are already logged in");
+            //console.log("You are already logged in");
             window.top.location = "http://localhost:3030/settings";
         }
 	}, []);
@@ -28,12 +28,12 @@ export default function Auth() {
                             <div id="auth-form-div" className="col-8">
                                 <div id="auth--form1" className="row d-flex justify-content-center">
                                     <br />
-                                    <div id="form--auth1" /*className="forms"*/ className="row d-flex justify-content-center">
+                                    <div id="form--auth1" className="row d-flex justify-content-center">
                                         <p id="jouer">Pour jouer, vous devez vous authentifier 🏓 </p>
                                         <FourtyTwo />
-                                        <Signup />
+                                        {/*<Signup />*/}
                                     </div>
-                                    <Login />
+                                    {/*<Login />*/}
                                 </div>
                             </div>
                             </>

@@ -19,16 +19,13 @@ export default function Live() {
 
 	if (localStorage.getItem("loggedIn") != "true")
 	{
-		console.log("you are not legged in !");
 		return (<>
 			<Nav />
 			<div className="container">
 				<div className="row d-flex justify-content-center text-center">
-					{/*<div className="col-9">*/}
 						<div className="channels-not-logged">
 							<p>You are not logged in.</p>
 						</div>
-					{/*</div>*/}
 				</div>
 			</div>
 		</>)
@@ -43,7 +40,6 @@ export default function Live() {
 	{
 		if (localStorage.getItem("loggedIn") != "true")
 		{
-			console.log("you are not legged in !");
 			<>
 					<Nav />
 					<div className="container">
@@ -69,7 +65,6 @@ export default function Live() {
 	{
 		if (localStorage.getItem("loggedIn") != "true")
 		{
-			console.log("you are not legged in !");
 			return
 		}
 		document.getElementById("content").innerHTML = "<div></div>";
@@ -249,7 +244,7 @@ export default function Live() {
 	socket.on("stopGame", (...args) => {
 		if (localStorage.getItem("loggedIn") != "true")
 		{
-			console.log("you are not legged in !");
+			//console.log("you are not legged in !");
 			return;
 		}
 		let i1 = joueurs.indexOf(args[0]);

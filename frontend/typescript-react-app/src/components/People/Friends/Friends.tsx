@@ -14,7 +14,6 @@ export default function Friends() {
 		let url = "http://localhost:3000/api/user/relation/me/allFriends";
 		await axios.get(url)
 			.then(res => {
-				console.log("Get api me/allFriends successfully called.");
 				let users = res.data;
 				let len = users.length;
 				let i = 0;
@@ -24,7 +23,7 @@ export default function Friends() {
 				}
 			})
 			.catch((error) => {
-				console.log("Error while getting my friends");
+				;
 			})
 		setLoad(true);
 	}

@@ -15,7 +15,6 @@ export default function Invitations() {
 		let url = "http://localhost:3000/api/user/relation/me/pendingInvitations";
 		await axios.get(url)
 			.then(res => {
-				console.log("Get api me/pendingInvitations successfully called.");
 				let users = res.data.map(element => element.creator)
 				let len = users.length;
 				let i = 0;
@@ -25,7 +24,8 @@ export default function Invitations() {
 				}
 			})
 			.catch((error) => {
-				console.log("Error while getting my friends");
+				//console.log("Error while getting my friends");
+				;
 			})
 		setLoad(true);
 	}

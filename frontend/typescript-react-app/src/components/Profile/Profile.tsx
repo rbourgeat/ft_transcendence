@@ -49,11 +49,8 @@ export default function Profile() {
 
 	async function getUserLogin(log: string) {
 		let url = "http://localhost:3000/api/user/".concat(login);
-
-		console.log("getting user data");
 		await axios.get(url)
 			.then(res => {
-				console.log(res);
 				setUserOk(true);
 				setNextLevel(res.data.percent_to_next_lvl);
 				setLevel(res.data.level);
@@ -76,8 +73,7 @@ export default function Profile() {
 				}
 			})
 			.catch((err) => {
-				console.log("Error while getting api auth");
-				console.log(err);
+				;
 			})
 		setLoad(true);
 	}
@@ -114,60 +110,49 @@ export default function Profile() {
 
 		axios.get(url)
 			.then(res => {
-				console.log("sucessfully retrived relationship data");
-				console.log(res);
 				let relation = res.data;
-				//console.log(relation);
 				let status = relation.status;
 				if (relation.status == "accepted") {
-					console.log("You are friends !");
 					friends = true;
 					setisFriend(true);
 					let message = "You are friends !";
 				}
 				else if (relation.status == "pending" && relation.receiver == login) {
-					console.log("You invited that user");
 					setSentInvitation(true);
 					setPendingInvite(true);
 				}
 				else if (relation.status == "pending" && relation.sender == login) {
-					console.log("This user invited you");
 					setReceivedInvitation(true);
 					setPendingInvite(true);
 				}
 				else if (relation.status == "blocked" && relation.receiver == login) {
-					console.log("You blocked this contact");
 					setisBlocked(true);
 				}
-				else if (relation.status == "blocked" && relation.creator == login) {
-					console.log("You are blocked by this contact");
-				}
+				//else if (relation.status == "blocked" && relation.creator == login) {
+				//	console.log("You are blocked by this contact");
+				//}
 				else {
 					setisFriend(false);
 				}
 			})
 			.catch((error) => {
-				console.log("Error while getting relation data");
-				console.log(error);
 				friends = false;
+				;
 			})
 	}
 
 	function inviteFriend() {
-		console.log("We have to invite friend.");
 		let ax = new MyAxios(null);
 		ax.post_api_user_relation_sendInvation_id(login);
 	}
 
 	function acceptFriend() {
-		console.log("We have to answer !");
 		let ax = new MyAxios(null);
 		ax.post_api_user_relation_answerInvitation_id(login, "accepted", "");
 		window.top.location = "http://localhost:3000/user/".concat(login);
 	}
 
 	function declineFriend() {
-		console.log("We have to answer !");
 		let ax = new MyAxios(null);
 		ax.post_api_user_relation_answerInvitation_id(login, "declined", "");
 		window.top.location = "http://localhost:3000/user/".concat(login);
@@ -178,9 +163,7 @@ export default function Profile() {
 		ax.post_relation_block(login, "people");
 	}
 
-	//Besoin rbourgea
 	function watchPlaying() {
-		console.log("We have to watch playing.");
 		let toast = new ToastAlerts(null);
 		toast.notifyDanger("To do @rbourgea");
 	}
@@ -201,7 +184,6 @@ export default function Profile() {
 	}
 
 	function remove() {
-		console.log("Removing friend");
 		let ax = new MyAxios(null);
 		ax.delete_relation_id(login, "");
 	}

@@ -64,14 +64,12 @@ export default function Settings(props: SettingsProps) {
 			})
 			.catch((error) => {
 				toast.notifyDanger('🥲 Error while turnoff on 2FA.');
-				console.log(error);
+				;
 			})
 	}
 
 	const checkCode = (event: any) => {
 		event.preventDefault();
-		//let number = verifCode;
-		console.log("verif code is " + code);
 
 		axios.defaults.baseURL = 'http://localhost:3000/api/';
 		axios.defaults.headers.post['Content-Type'] = 'application/json';
@@ -97,9 +95,7 @@ export default function Settings(props: SettingsProps) {
 			.catch((error) => {
 				toast.notifyDanger('🥲 Error while turning on 2FA. Your verif code is wrong or the QR Code is outdated.');
 				setCode("");
-				console.log(error);
 			})
-		//clearInput();
 	}
 
 
@@ -139,14 +135,11 @@ export default function Settings(props: SettingsProps) {
 		await axios.get(url)
 			.then(res => {
 				username = res.data.login;
-				console.log(res);
-				console.log("Successful api auth!");
 				if (res.data.login42 != null && res.data.login42 != undefined && res.data.login42 != "") {
 					setis42(true);
 					setlogin42(res.data.login42);
 					localStorage.setItem("login", res.data.login);
 					localStorage.setItem("login42", res.data.login42);
-					console.log(res.data);
 					if (res.data.status == "online") {
 						setColor("green");
 						setStatus("online");
@@ -266,7 +259,6 @@ export default function Settings(props: SettingsProps) {
 															onChange={
 																function (res: string): void {
 																	setCode(res);
-																	console.log("res is " + res);
 																}}
 														/>
 														: ""}

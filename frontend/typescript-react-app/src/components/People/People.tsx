@@ -9,6 +9,8 @@ import SentInvitations from "./SentInvitations/SentInvitations";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { AiOutlineLoading3Quarters, AiOutlineLoading } from "react-icons/ai";
+
+
 export interface PeopleProps {
 	login?: string
 }
@@ -35,10 +37,9 @@ export default function People(props: PeopleProps) {
 		await axios.get(url)
 			.then(res => {
 				username = res.data.login;
-				console.log(res);
 			})
 			.catch((err) => {
-				console.log("Auth returned 400 -> missing cookie");
+				;
 			})
 		setLoad(true);
 	}

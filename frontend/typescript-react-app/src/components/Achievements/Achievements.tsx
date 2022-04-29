@@ -5,17 +5,8 @@ import axios from 'axios';
 import MyAxios from "../Utils/Axios/Axios";
 import { BsCheckLg } from "react-icons/bs";
 
-// Plus importé car problèmes d'affichage ponctuels
-
-//import { MdLocalFireDepartment } from "react-icons/md";
-//import { FaCat, FaUserFriends } from "react-icons/fa";
-//import { GiPowerButton, GiPeaceDove } from "react-icons/gi";
-//import { GrGamepad } from "react-icons/gr";
-
-
 export interface AchievementsProps {
-    login?: string,
-    children?: React.ReactNode | React.ReactChild | React.ReactChildren | React.ReactChild[] | React.ReactChildren[]
+    login?: string
 }
 
 export default function Achievement(props: AchievementsProps) {
@@ -29,20 +20,16 @@ export default function Achievement(props: AchievementsProps) {
 
         axios.get(url)
             .then(res => {
-                console.log("Succesfully retrieved achievements");
+                //console.log("Succesfully retrieved achievements");
                 setMyArray(res.data.map(element => element.title))
             })
             .catch((error) => {
-                console.log("Error while retrieve achievements");
-                console.log(error);
+                //console.log("Error while retrieve achievements");
+                //console.log(error);
+                ;
             })
     }
 
-    /*
-    function CheckMark() {
-        return <svg className="checkmark"><BsCheckLg /></svg>;
-    }
-*/
     function isUnlocked(name: string) {
         if (myArray.find(element => element == name))
             return true;
@@ -76,8 +63,6 @@ export default function Achievement(props: AchievementsProps) {
                             <div className="card-body">
                                 <h5 className="card-title">On fire</h5>
                                 <p className="card-text">Win 5 games</p>
-                                {/*<svg className="test-icon">{<MdLocalFireDepartment />}</svg>*/}
-                                {/*<MdLocalFireDepartment style={style} />*/}
                             </div>
                         </div>
 
@@ -86,8 +71,6 @@ export default function Achievement(props: AchievementsProps) {
                             <div className="card-body">
                                 <h5 className="card-title">True g4m3r</h5>
                                 <p className="card-text">Play 1000 games</p>
-                                {/*<svg className="test-icon">{<GrGamepad />}</svg>*/}
-                                {/*<GrGamepad style={style} />*/}
                             </div>
                         </div>
                     </div>
@@ -100,7 +83,6 @@ export default function Achievement(props: AchievementsProps) {
                             <div className="card-body">
                                 <h5 className="card-title">How I met</h5>
                                 <p className="card-text">Have one friend</p>
-                                {/*<FaUserFriends style={style} />*/}
                             </div>
                         </div>
 
@@ -109,8 +91,6 @@ export default function Achievement(props: AchievementsProps) {
                             <div className="card-body">
                                 <h5 className="card-title">The Pong</h5>
                                 <p className="card-text">Play your first game</p>
-                                {/*<svg className="test-icon">{<GiPowerButton />}</svg>*/}
-                                {/*<GiPowerButton style={style} />*/}
                             </div>
                         </div>
 
@@ -119,8 +99,6 @@ export default function Achievement(props: AchievementsProps) {
                             <div className="card-body">
                                 <h5 className="card-title">Mistery</h5>
                                 <p className="card-text">????????????????</p>
-                                {/*<svg className="test-icon">{<FaCat />}</svg>*/}
-                                {/*<FaCat style={style} />*/}
                             </div>
                         </div>
                     </div>

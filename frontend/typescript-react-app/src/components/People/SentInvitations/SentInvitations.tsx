@@ -25,7 +25,7 @@ export default function Invitations() {
 				}
 			})
 			.catch((error) => {
-				console.log("Error while getting my pending invites");
+				;
 			})
 		setLoad(true);
 	}

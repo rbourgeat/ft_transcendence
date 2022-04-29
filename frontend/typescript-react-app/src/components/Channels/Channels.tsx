@@ -36,7 +36,8 @@ export default function Channels(props: ChatProps) {
 				setUsername(res.data.login);
 			})
 			.catch((err) => {
-				console.log("Error while getting api auth");
+				//console.log("Error while getting api auth");
+				;
 			})
 		setLoad(true);
 	}
@@ -46,7 +47,7 @@ export default function Channels(props: ChatProps) {
 	}, [username]);
 
 	useEffect(() => {
-		console.log("Channels.tsx: Active channel is set to:" + activeName);
+		//console.log("Channels.tsx: Active channel is set to:" + activeName);
 	}, [activeName]);
 
 	return (

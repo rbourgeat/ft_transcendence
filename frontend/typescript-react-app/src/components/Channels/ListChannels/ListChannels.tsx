@@ -24,9 +24,7 @@ export default function ListChannels(props: ListChannelsProps) {
 	//Affichage sélection DM ou channels
 	const [selectedCat, setSelectedCat] = React.useState("Channels");
 	const [load, setLoad] = React.useState(false);
-
 	const [minId, setMinID] = React.useState(0);
-
 	const [exited, setExited] = React.useState(false);
 	const [update, setUpdate] = React.useState("");
 	const calledOnce = React.useRef(false);
@@ -47,28 +45,21 @@ export default function ListChannels(props: ListChannelsProps) {
 							setMinID(channels[i].id);
 							first = 1;
 							setCount(1);
-							console.log("count is " + count);
 						}
 						setChannels(prevArray => [...prevArray, channels[i]]);
-						//On informe le component parent qu'on va se focus sur une chan
 					}
-					//console.log("min id is " + minId);
 					i++;
 				}
-				//console.log(channels);
-				//setCount(res.data.length);
-				//console.log("count is " + count);
 				setLoad(true);
 				props.setIsChan(true);
-				//props.setIsDM(false);
 			})
 			.catch((error) => {
-				console.log("Error while getting all channels");
+				//console.log("Error while getting all channels");
+				;
 			})
 	}
 
 	function renderListDMs() {
-		//console.log("should render dms");
 		axios.defaults.withCredentials = true;
 		const url = "http://localhost:3000/api/chat/joinedChannels";
 		axios.get(url)
@@ -78,18 +69,6 @@ export default function ListChannels(props: ListChannelsProps) {
 				let i = 0;
 				let first = 0;
 
-				console.log(res);
-
-				console.log(res.data.participates);
-
-				//if (res.data.participates[0].login == props.login)
-				//	setReceiver(res.data.participates[1].login);
-				//else
-				//	setReceiver(res.data.participates[0].login);
-
-				//console.log("The receiver is " + receiver);
-
-				//trier sur direct true
 				while (i < len) {
 					if (DMs[i].direct === true) {
 						if (first === 0) {
@@ -99,42 +78,25 @@ export default function ListChannels(props: ListChannelsProps) {
 
 						}
 						setDMs(prevArray => [...prevArray, DMs[i]]);
-						//let rec;
-						//if (DMs[i].participates[0].login == props.login || DMs[i].participates[0].login === props.login)
-						//{
-						//	rec = DMs[i].participates[1].login;
-						//}
-						//else if (DMs[i].participates[0].login == DMs[i].participates[1].login)
-						//{
-						//	console.log("Erreur, deux fois le même particpant");
-						//}
-						//else
-						//{
-						//	rec = DMs[i].participates[0].login;
-						//}
 						setReceiver(prevArray1 => [...prevArray1, DMs[i].participates]);
 					}
-					//console.log("min id is " + minId);
-					console.log("DM found is" + DMs[i]);
 					i++;
 				}
 				setLoad(true);
 				props.setIsChan(false);
-				//setLoad(true);//a re voir pour le set load
 			})
 			.catch((error) => {
-				console.log("Error while getting all channels");
+				//console.log("Error while getting all channels");
+				;
 			})
 	}
 
 	function displaySelectedCat(arg: string) {
 		if (arg === "Channels") {
-			console.log("selected cat is Channels");
 			props.setIsChan(true);
 			renderListChannels();
 		}
 		else if (arg === "DMs") {
-			console.log("selected cat is DMS");
 			props.setIsChan(false);
 			renderListDMs();
 		}
@@ -184,7 +146,6 @@ export default function ListChannels(props: ListChannelsProps) {
 			channels.pop();
 			i++;
 		}
-		console.log("displaying DMs");
 		displaySelectedCat("DMs");
 	}
 
@@ -235,7 +196,6 @@ export default function ListChannels(props: ListChannelsProps) {
 							}
 						})
 						: ""}
-					{/* TODO: a tester css */}
 					{load === true && selectedCat === "Channels" && count === 0 ?
 						<>
 							<p className="no_message">You have no channel 🥲</p>

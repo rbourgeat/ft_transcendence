@@ -3,19 +3,14 @@ import React, { useState, useContext, useEffect } from 'react';
 import './Welcome.scss';
 import '../App/App.scss';
 import '../../index.scss';
-//import { useNavigate } from 'react-router-dom'
 import Header from '../Header/Header';
 
 export default function Welcome() {
 
     const calledOnce = React.useRef(false);
 
-    //const navigate = useNavigate();
-
     const routeChange = (e: any) => {
         e.preventDefault();
-        //let path = `/auth`;
-        //navigate(path);
         window.top.location = "http://localhost:3030/auth/"
     }
 

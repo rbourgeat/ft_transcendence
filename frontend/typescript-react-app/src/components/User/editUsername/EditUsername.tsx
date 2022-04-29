@@ -19,8 +19,6 @@ export default function EditUsernameModal(props) {
 	let changeUsername = (event: any) => {
 		event.preventDefault();
 		let ax = new myAxios(null);
-		console.log("username is ", props.username);
-		console.log("input value is " + inputValue);
 		let res = ax.patch_user(props.username, inputValue);
 	}
 

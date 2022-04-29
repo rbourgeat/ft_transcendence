@@ -17,10 +17,6 @@ interface AxiosState {
     avatar?: string
 }
 
-
-//Classe utilisee pour les requetes à l'api. Non exhaustive.Des requêtes axios ont également été faites sans passer par cette classe car axios retourne une Promise
-//et nous avions souvent besoin de récupérer le retour de la requête.
-
 export default class MyAxios extends React.Component<AxiosProps, AxiosState>
 {
     constructor(props: AxiosProps) {
@@ -37,57 +33,12 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
         let url = "http://localhost:3000/api/chat/";
         let res = axios.get(url)
             .then(res => {
-                console.log("Get api chat successfully called.");
+                //console.log("Get api chat successfully called.");
+                ;
             })
             .catch((error) => {
-                console.log("Error while getting all channels");
-            })
-    }
-
-    /*
-    ** Create a channel with channel name, public boolean and password argument
-    */
-    post_api_chat(channame: string, pub: boolean, pass: string) {
-        //TODO: a reprendre ou a supprimer ?
-        return;
-        let url = "http://localhost:3000/api/chat/";
-
-        let headers = {
-            'Content-Type': 'application/json'
-        }
-
-        const body = {
-            password: pass,
-            public: pub,
-            name: channame
-        }
-
-        axios.defaults.baseURL = 'http://localhost:3000/api/';
-        axios.defaults.headers.post['Content-Type'] = 'application/json';
-        axios.defaults.headers.post['Accept'] = '*/*';
-        axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
-        axios.defaults.withCredentials = true;
-
-        //Useful to debug request
-        /*
-        axios.interceptors.request.use(request => {
-            console.log('Starting Request', JSON.stringify(request, null, 2))
-            return request
-        })
-
-        axios.interceptors.response.use(response => {
-            console.log('Response:', JSON.stringify(response, null, 2))
-            return response
-        })
-        */
-
-        let res = axios.post(url, body, { headers })
-            .then(res => {
-                console.log("successfully posted a chat !");
-            })
-            .catch((error) => {
-                console.log("Catched error on post api chat.");
-                //console.log(error);
+                //console.log("Error while getting all channels");
+                ;
             })
     }
 
@@ -111,10 +62,12 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
 
         axios.post(url, body)
             .then(res => {
-                console.log("Succesfully joined channel !");
+               // console.log("Succesfully joined channel !");
+                ;
             })
             .catch(res => {
-                console.log("Error while joining channel 😢");
+                //console.log("Error while joining channel 😢");
+                ;
             })
     }
 
@@ -137,10 +90,12 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
 
         axios.post(url, body)
             .then(res => {
-                console.log("Succesfully send message to channel !");
+                //console.log("Succesfully send message to channel !");
+                ;
             })
             .catch(res => {
-                console.log("Error while sending message to channel 😢");
+                //console.log("Error while sending message to channel 😢");
+                ;
             })
     }
 
@@ -164,10 +119,12 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
 
         axios.post(url, body)
             .then(res => {
-                console.log("Succesfully left channel !");
+                //console.log("Succesfully left channel !");
+                ;
             })
             .catch(res => {
-                console.log("Error while leaving channel 😢 !");
+                //console.log("Error while leaving channel 😢 !");
+                ;
             })
     }
 
@@ -185,10 +142,12 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
 
         axios.get(url)
             .then(res => {
-                console.log("Successfully retrieved all messages");
+                //console.log("Successfully retrieved all messages");
+                ;
             })
             .catch(res => {
-                console.log("Error while retrieving all messages");
+                //console.log("Error while retrieving all messages");
+                ;
             })
     }
 
@@ -213,14 +172,15 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
 
         axios.post(url, body)
             .then(res => {
-                console.log("Successfully made target an admin");
+                //console.log("Successfully made target an admin");
+                ;
             })
             .catch(res => {
-                console.log("Error while making target admin");
+                //console.log("Error while making target admin");
+                ;
             })
     }
 
-    //TODO: a reprendre
     post_api_ban(id: number, username: string, datetime: string, pass: string) {
         let url = "http://localhost:3000/api/chat/ban/";
 
@@ -236,10 +196,12 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
 
         axios.post(url, body)
             .then(res => {
-                console.log("Successfully banned target");
+                //console.log("Successfully banned target");
+                ;
             })
             .catch(res => {
-                console.log("Error while banning target");
+                //console.log("Error while banning target");
+                ;
             })
     }
 
@@ -258,10 +220,12 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
 
         axios.post(url, body)
             .then(res => {
-                console.log("Successfully unbanned target");
+                //console.log("Successfully unbanned target");
+                ;
             })
             .catch(res => {
-                console.log("Error while unbanning target");
+                //console.log("Error while unbanning target");
+                ;
             })
     }
 
@@ -280,10 +244,12 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
 
         axios.post(url, body)
             .then(res => {
-                console.log("Successfully muted target");
+                //console.log("Successfully muted target");
+                ;
             })
             .catch(res => {
-                console.log("Error while muted target");
+                //console.log("Error while muted target");
+                ;
             })
     }
 
@@ -304,10 +270,12 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
 
         axios.post(url, body)
             .then(res => {
-                console.log("Successfully posted password target");
+                //console.log("Successfully posted password target");
+                ;
             })
             .catch(res => {
-                console.log("Error while posted password target");
+                //console.log("Error while posted password target");
+                ;
             })
     }
 
@@ -349,10 +317,12 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
 
         axios.post(url, body)
             .then(res => {
-                console.log("Successfully banned target");
+                //console.log("Successfully banned target");
+                ;
             })
             .catch(res => {
-                console.log("Error while banning target");
+                //console.log("Error while banning target");
+                ;
             })
     }
 
@@ -372,10 +342,12 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
 
         let res = axios.get(url)
             .then(res => {
-                console.log("Succesfully got user data");
+                //console.log("Succesfully got user data");
+                ;
             })
             .catch((error) => {
-                console.log("Error while getting user data");
+                //console.log("Error while getting user data");
+                ;
             })
     }
 
@@ -397,16 +369,14 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
 
         let res = axios.post(url, body)
             .then(res => {
-                //toast.notifySuccess("Successfully sent invitation !");
-                console.log(res);
-                console.log("Succesfully sent invitation !");
+                //console.log(res);
+                //console.log("Succesfully sent invitation !");
                 window.top.location = "http://localhost:3030/profile/".concat(login);
             })
             .catch((error) => {
                 toast.notifyDanger("Your invite failed")
-                console.log(error);
-                console.log("Error while sending invitation");
-                //window.top.location = "http://localhost:3030/profile/".concat(login);
+                //console.log(error);
+                //console.log("Error while sending invitation");
             })
     }
 
@@ -423,20 +393,17 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
 
         let res = axios.post(url, body)
             .then(res => {
-                console.log(res);
-                console.log("Succesfully answer invitation");
                 toast.notifySuccess("Succesfully answered to invitation !");
-                //TODO: a revoir
                 if (extra != "") {
                     let id = "minidisplay".concat("_" + login + "_" + extra);
-                    console.log("id looked is " + id);
+                    //console.log("id looked is " + id);
                     let elem = document.getElementById(id);
                     elem.parentNode.removeChild(elem);
                 }
             })
             .catch((error) => {
-                console.log(error);
-                console.log("Error while posting invitation");
+                //console.log(error);
+                //console.log("Error while posting invitation");
                 toast.notifyDanger("Error while answering invitation");
             })
     }
@@ -449,12 +416,14 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
 
         axios.get(url)
             .then(res => {
-                console.log("Succesfully retrieved received invitation");
-                console.log(res);
+                //console.log("Succesfully retrieved received invitation");
+                //console.log(res);
+                ;
             })
             .catch((error) => {
-                console.log("Error while retrieving received invitation");
-                console.log(error);
+                //console.log("Error while retrieving received invitation");
+                //console.log(error);
+                ;
             })
 
     }
@@ -467,12 +436,14 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
 
         axios.get(url)
             .then(res => {
-                console.log("Succesfully retrieved all friends");
-                console.log(res);
+                //console.log("Succesfully retrieved all friends");
+                //console.log(res);
+                ;
             })
             .catch((error) => {
-                console.log("Error while retrieving all friends");
-                console.log(error);
+                //console.log("Error while retrieving all friends");
+                //console.log(error);
+                ;
             })
     }
 
@@ -486,20 +457,20 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
 
         axios.delete(url)
             .then(res => {
-                console.log("Succesfully delete target friend");
-                console.log(res);
+                //console.log("Succesfully delete target friend");
+                //console.log(res);
                 toast.notifySuccess("Successfully removed friend.");
                 if (extra != "") {
                     let id = "minidisplay".concat("_" + login + "_" + extra);
-                    console.log("id looked is " + id);
+                    //console.log("id looked is " + id);
                     let elem = document.getElementById(id);
                     elem.parentNode.removeChild(elem);
                     window.top.location = "http://localhost:3030/profile/".concat(login);
                 }
             })
             .catch((error) => {
-                console.log("Error while deleting target friend");
-                console.log(error);
+                //console.log("Error while deleting target friend");
+                //console.log(error);
                 toast.notifyDanger("Error while removing friend.");
             })
     }
@@ -514,15 +485,15 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
 
         axios.post(url)
             .then(res => {
-                console.log("Succesfully blocked target friend");
-                console.log(res);
+                //console.log("Succesfully blocked target friend");
+                //console.log(res);
                 toast.notifySuccess("Successfully blocked user");
                 if (blocked_from === "people")
                     window.top.location = "http://localhost:3030/profile/".concat(login);
             })
             .catch((error) => {
-                console.log("Error while blocking target friend");
-                console.log(error);
+                //console.log("Error while blocking target friend");
+                //console.log(error);
                 toast.notifyDanger("Error while blocking contact");
                 if (blocked_from === "people")
                     window.top.location = "http://localhost:3030/profile/".concat(login);
@@ -539,19 +510,19 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
 
         axios.delete(url)
             .then(res => {
-                console.log("Succesfully unblocked target friend");
-                console.log(res);
+                //console.log("Succesfully unblocked target friend");
+                //console.log(res);
                 if (extra != "") {
                     let id = "minidisplay".concat("_" + login + "_" + extra);
-                    console.log("id looked is " + id);
+                    //console.log("id looked is " + id);
                     let elem = document.getElementById(id);
                     elem.parentNode.removeChild(elem);
                 }
                 window.top.location = "http://localhost:3030/profile/".concat(login);
             })
             .catch((error) => {
-                console.log("Error while unblocking target friend");
-                console.log(error);
+                //console.log("Error while unblocking target friend");
+                //console.log(error);
                 toast.notifyDanger("Error while unblocking contact !");
             })
     }
@@ -567,15 +538,16 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
         let status = "";
         axios.get(url)
             .then(res => {
-                console.log("Succesfully get relation status with" + login);
-                console.log(res);
+                //console.log("Succesfully get relation status with" + login);
+                //console.log(res);
                 let relation = res.data;
-                console.log(relation.status);
+                //console.log(relation.status);
                 status = relation.status;
             })
             .catch((error) => {
-                console.log("Error while get relation status with" + login);
-                console.log(error);
+                //console.log("Error while get relation status with" + login);
+                //console.log(error);
+                ;
             })
         return status;
     }
@@ -588,12 +560,14 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
 
         axios.post(url)
             .then(res => {
-                console.log("Succesfully blocked target friend");
-                console.log(res);
+                //console.log("Succesfully blocked target friend");
+                //console.log(res);
+                ;
             })
             .catch((error) => {
-                console.log("Error while blocking target friend");
-                console.log(error);
+                //console.log("Error while blocking target friend");
+                //console.log(error);
+                ;
             })
     }
 
@@ -631,9 +605,9 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
                 }
             })
             .catch((error) => {
-                console.log("Error while logging in.");
+                //console.log("Error while logging in.");
                 toast.notifyDanger("😢 Error while logging in !");
-                console.log(error);
+                //console.log(error);
             })
     }
 
@@ -664,7 +638,8 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
             }
         })
             .catch((error) => {
-                console.log("Catched error in signup function!");
+                //console.log("Catched error in signup function!");
+                ;
             })
     }
 
@@ -732,7 +707,8 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
                 return (this.getImage(imageCode, chosenLogin, is42, haschanged));
             })
             .catch(error => {
-                console.log("Catched error getting avatar");
+                //console.log("Catched error getting avatar");
+                ;
             })
     }
 
@@ -755,7 +731,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
         let res = axios.post(url, formData, { headers }).
             then(res => {
                 if (res.status == 201) {
-                    console.log("Yay ! Avatar updated");
+                    //console.log("Yay ! Avatar updated");
                     let haschanged = false;
                     if (res.data.login != res.data.login42)
                         haschanged = true;
@@ -763,11 +739,13 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
                     window.top.location = "http://localhost:3030/settings";
                 }
                 else {
-                    console.log("Oops! Avatar not updated");
+                    //console.log("Oops! Avatar not updated");
+                    ;
                 }
             })
             .catch((error) => {
-                console.log("Catched error !");
+                //console.log("Catched error !");
+                ;
             }
             )
     }
@@ -776,35 +754,27 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     ** edit user data (for login)
     */
     patch_user(old_login: string, new_login: string) {
-        //let url = "http://localhost:3000/api/user/".concat(old_login);
-
         let url = "http://localhost:3000/api/user/".concat(old_login).concat("/changeto/").concat(new_login);
-        //@Post(':oldlogin/changeto/:newlogin')
+
         axios.defaults.baseURL = 'http://localhost:3000/api/';
         axios.defaults.headers.post['Content-Type'] = 'application/json';
         axios.defaults.headers.post['Accept'] = '*/*';
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 
-        //let body = {
-        //    login: new_login
-        //}
-
         let headers = {
             login: new_login
         }
 
-        console.log("old login is " + old_login);
-        console.log("new login is " + new_login);
-        console.log("url is " + url);
-
         let res = axios.patch(url, { headers })
             .then(res => {
-                console.log("Yay ! Successfully changed login");
-                console.log(res);
+                //console.log("Yay ! Successfully changed login");
+                //console.log(res);
+                ;
             })
             .catch((error) => {
-                console.log("Catched error !");
-                console.log(error);
+                //console.log("Catched error !");
+                //console.log(error);
+                ;
             }
             )
     }
@@ -823,10 +793,12 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
         axios.post(url)
             .then(res => {
                 //console.log("Successfully generate 2fa target");
-                console.log(res);
+                //console.log(res);
+                ;
             })
             .catch((error) => {
-                console.log("Error while generating 2fa target");
+                //console.log("Error while generating 2fa target");
+                ;
                 //console.log(error);
             })
     }
@@ -855,7 +827,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
             .catch((error) => {
                 //console.log("Error while turning 2fa on");
                 toast.notifyDanger("❌ Error while turning on 2FA.")
-                console.log(error);
+                //console.log(error);
             })
     }
 
@@ -869,18 +841,19 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
 
         axios.post(url)
             .then(res => {
-                console.log("Successfully logging with 2fa");
+                //console.log("Successfully logging with 2fa");
                 //console.log(res);
+                ;
             })
             .catch((error) => {
-                console.log("Error while logging in with 2fa");
-                console.log(error);
+                //console.log("Error while logging in with 2fa");
+                //console.log(error);
+                ;
             })
     }
 
 
     get_api_achievements() {
-        //console.log("get achievement via axios request");
         let url = "http://localhost:3000/api/user/achievements/me";
 
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
@@ -889,14 +862,13 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
 
         axios.get(url)
             .then(res => {
-                //console.log("Successfully retrieve achievements");
-                //console.log(res.data);
                 let arr = res.data.map(element => element.title)
                 return arr;
             })
             .catch((error) => {
-                console.log("Error while retrieve achievements");
-                console.log(error);
+                //console.log("Error while retrieve achievements");
+                //console.log(error);
+                ;
             })
     }
 }
