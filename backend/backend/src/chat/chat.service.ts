@@ -240,7 +240,7 @@ export class ChatService {
 					return console.log('already in channel');
 			}
 			else
-				return console.log('wrong password');
+				throw new BadRequestException('Wrong password');
 		}
 		else
 			return console.log(chat + ' not found');

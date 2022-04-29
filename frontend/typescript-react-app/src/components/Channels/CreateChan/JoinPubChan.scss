@@ -12,6 +12,22 @@
 	}
 }
 
+.categ-join {
+	font-weight: 800 !important;
+	border-radius: variables.$border-radius-big !important;
+	background-color: rgb(46, 143, 143);
+	margin-left: 25% !important;
+
+	&:hover {
+		background-color: rgb(44, 179, 179);
+		color: white;
+	}
+}
+
+.put-on-right {
+	margin-left: 85% !important;
+}
+
 #list_title {
 	font-family: variables.$basic-font !important;
 	font-size: 14px !important;
@@ -21,35 +37,26 @@
 	font-family: variables.$basic-font !important;
 	font-size: 14px !important;
 	color: black !important;
-	background-color: rgb(95, 193, 214);
+	background-color: rgb(95, 214, 208);
+	height: 151px !important;
+	width: 106px !important;
+
+	text-align: center;
 
 	&:hover {
-		background-color: rgb(121, 212, 224);
+		background-color: rgb(121, 224, 219);
+		color: white !important;
 	}
 }
 
-.buttons {
-	//width: 100%;
-	//margin-left: 33%;
-	//position: absolute;
-	//bottom: 0;
-	//height: 50px;
-	//background-color: #FFF;
-
+.join--pub {
+	margin-top: 90% !important;
 }
 
 
-.categ {
-
-	margin-left: 25%;
-	border-color: black !important;
-	position: sticky !important;
-	background-color: red;
-	//width: 600px;
-	//position: absolute;
-	//bottom: 0;
-	//height: 50px;
-	//background-color: #FFF;
+.wrapper-2 {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
 }
 
 /*

@@ -30,8 +30,7 @@ export default function ListParticipant(props: ParticipantProps) {
     /*async*/
     function getUsersfromChannel() {
         let url: string;
-        if (props.activeID != "" && props.activeID != undefined && props.activeID != null)
-        {
+        if (props.activeID != "" && props.activeID != undefined && props.activeID != null) {
             url = "http://localhost:3000/api/chat/".concat(props.activeID).concat("/users");
             axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
             axios.defaults.withCredentials = true;
@@ -52,31 +51,28 @@ export default function ListParticipant(props: ParticipantProps) {
     }
 
     function getCurrentUserAdminStatus() {
-        if (props.activeID != "" && props.activeID != undefined && props.activeID != null)
-        {
+        if (props.activeID != "" && props.activeID != undefined && props.activeID != null) {
             let url = "http://localhost:3000/api/chat/isAdminIn/".concat(props.activeID);
             axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
             axios.defaults.withCredentials = true;
             /*await*/
             axios.get(url)
                 .then(res => {
-                    if (res.data === true)
+                    if (res.data === true) {
                         setCurrentUserAdmin(true);
+                    }
+                    else
+                        console.log(currentUserAdmin);
                 })
                 .catch((err) => {
-                    //console.log("Error while getting api auth");
-                    ;
                 })
         }
-        //else
-        //{
-        //    console.log("No active ID");
-        //}
     }
 
     React.useEffect(() => {
-        if (props.isChan === true)
-        {
+
+        if (props.isChan === true) {
+            setCurrentUserAdmin(false);
             getUsersfromChannel();
             getCurrentUserAdminStatus();
         }
@@ -242,7 +238,7 @@ export default function ListParticipant(props: ParticipantProps) {
             "idChat": props.activeID,
             "password": newPass
         }
-        /*await*/ 
+        /*await*/
         axios.post(url, body)
             .then(response => {
                 toast.notifySuccess("Update password :)");

@@ -174,7 +174,7 @@ export default function ListChannels(props: ListChannelsProps) {
 					<CreateDM setExited={setExited} setUpdate={setUpdate} exited={exited} />
 					<JoinChan setExited={setExited} setUpdate={setUpdate} exited={exited} />
 				</div>
-				<p className="selected--categorie">{selectedCat === "Channels" ? "Channels you are in" : "Your direct messages"}</p>
+				<p className="selected--categorie">{selectedCat === "Channels" ? "Your Channels" : "Your direct messages"}</p>
 				<div className="displaying-div">
 					{load === true && selectedCat === "Channels" && count !== 0 ?
 						Object.keys(channels).map(function (key, index) {

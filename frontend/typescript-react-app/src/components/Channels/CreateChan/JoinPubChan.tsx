@@ -51,6 +51,8 @@ export default function JoinChan(props: JoinChanProps) {
 
 		let toast = new ToastAlerts(null);
 
+		setForm(false);
+		setPublicPass("");
 		if (sucessfull == true) {
 			props.setExited(!props.exited);
 		}
@@ -65,18 +67,35 @@ export default function JoinChan(props: JoinChanProps) {
 		axios.defaults.withCredentials = true;
 		let url = "http://localhost:3000/api/chat/join";
 
-		let body = {
-			"name": chan,
+		console.log("you try to join the chan:" + chan);
+		let body = {};
+		if (!publicPass || publicPass.length <= 0) {
+			body = {
+				"name": chan,
+			}
 		}
+		else {
+			body = {
+				"password": publicPass,
+				"name": chan,
+			}
+		}
+
 		axios.post(url, body)
 			.then(res => {
 				toast.notifySuccess("You joined the channel");
 				props.setUpdate(chan);
 				setSuccessfull(true);
+				setForm(false);
+				setPublicPass("");
 				handleClose();
 			})
 			.catch(error => {
-				toast.notifyDanger("This channel already exists.");
+				toast.notifyDanger("Failed to join the channel.");
+				setSuccessfull(true);
+				setForm(false);
+				setPublicPass("");
+				handleClose();
 			})
 	}
 
@@ -114,9 +133,9 @@ export default function JoinChan(props: JoinChanProps) {
 		axios.defaults.withCredentials = true;
 		let url = "http://localhost:3000/api/chat/join";
 
-		//console.log(privateToJoin + ": chan i want to join while im on private side")
+		console.log(privateToJoin + ": chan i want to join while im on private side")
 		let body = {};
-		if (privatePass.length <= 0) {
+		if (!privatePass || privatePass.length <= 0) {
 			body = {
 				"name": privateToJoin,
 			}
@@ -127,6 +146,7 @@ export default function JoinChan(props: JoinChanProps) {
 				"name": privateToJoin,
 			}
 		}
+		console.log(body);
 		axios.post(url, body)
 			.then(res => {
 				toast.notifySuccess("You joined the channel");
@@ -135,16 +155,28 @@ export default function JoinChan(props: JoinChanProps) {
 				handleCloseFinale();
 			})
 			.catch(error => {
+				console.log(error);
 				toast.notifyDanger("Failed to join the channel.");
+				setSuccessfull(true);
+				handleCloseFinale();
 			})
 	}
 
 	const [form, setForm] = React.useState(false);
+	const [publicToJoin, setPublicToJoin] = React.useState(String);
 
-	function popForm() {
-		let toast = new ToastAlerts(null);
-		toast.notifyDanger("WIP, comment faire quand public + pass")
-		setForm(true);
+	function popForm(chan) {
+		/*
+		setPublicToJoin(chan);
+		if (form == false) {
+			setForm(true);
+
+		}
+		else {
+			//setForm(false);
+
+		}
+		*/
 	}
 
 	return (
@@ -160,8 +192,8 @@ export default function JoinChan(props: JoinChanProps) {
 				<Modal.Body>
 					<Form>
 						<Modal.Title className="Category">
-							<i className="categ" onClick={displayPublic} > Public</i>
-							<i className="categ" onClick={displayPrivate} > Private</i>
+							<button type="button" className="btn categ-join" onClick={displayPublic} > Public</button>
+							<button type="button" className="btn categ-join" onClick={displayPrivate} > Private</button>
 						</Modal.Title>
 						<br />
 						{isPublic === true ?
@@ -169,23 +201,40 @@ export default function JoinChan(props: JoinChanProps) {
 								{load == true ?
 									joignable.map(join =>
 										<div key={join} className="joignable_chans">
-											<i className="btn joignable" onClick={join.password ? () => popForm() : () => handleSend(join.name)}>{join.name}</i>
+											<i className="btn joignable">{join.name}
+												{
+													join.password ?
+														<>
+															<Form.Group >
+																<Form.Control
+																	type="password"
+																	value={publicPass}
+																	onChange={e => { setPublicPass(e.target.value) }}
+																	autoFocus
+																	placeholder="******"
+																/>
+															</Form.Group>
+															<Button variant="dark" type="button" onClick={() => handleSend(join.name)}>
+																Join
+															</Button>
+														</>
+														:
+														<Button variant="dark" type="button" className="join--pub" onClick={() => handleSend(join.name)}>
+															Join
+														</Button>
+												}
+
+											</i>
 										</div>)
 									:
 									null
 								}
-								{
-									form == true ?
-										<Form.Group >
-											<Form.Label>Password *</Form.Label>
-										</Form.Group>
-										: <div>lol</div>
-								}
+
 							</ul>
 							:
 							<>
 								<Form.Group>
-									<Form.Label>Channel Name *</Form.Label>
+									<Form.Label>Channel Name*</Form.Label>
 									<Form.Control
 										type="text"
 										value={privateToJoin}
@@ -204,8 +253,8 @@ export default function JoinChan(props: JoinChanProps) {
 										placeholder="******"
 									/>
 								</Form.Group>
-								<Button variant="dark" type="submit" onClick={handleJoinPrivate}>
-									Join Private Channel
+								<Button className="put-on-right" variant="dark" type="button" onClick={handleJoinPrivate}>
+									Join
 								</Button>
 							</>
 						}
