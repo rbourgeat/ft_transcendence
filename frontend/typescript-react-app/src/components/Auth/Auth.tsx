@@ -31,7 +31,10 @@ export default function Auth() {
                                     <div id="form--auth1" className="row d-flex justify-content-center">
                                         <p id="jouer">Pour jouer, vous devez vous authentifier 🏓 </p>
                                         <FourtyTwo />
-                                        {/*<Signup />*/}
+                                        <br />
+                                        <Signup />
+                                        <br />
+                                        <Login />
                                     </div>
                                     {/*<Login />*/}
                                 </div>
