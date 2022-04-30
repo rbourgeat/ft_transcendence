@@ -75,14 +75,15 @@ export default function Channels(props: ChatProps) {
 						: ""}
 					{load === true ?
 						<ListParticipant
-							socket={socket}
+							//socket={socket}
 							login={username}
 							isChan={isChan}
 							hasPass={hasPass}
 							setHasPass={setHasPass}
 							activeID={activeID}
 							activeName={activeName}
-							setActiveID={setActiveID} />
+						//setActiveID={setActiveID}
+						/>
 						: ""}
 				</div>
 			</div>

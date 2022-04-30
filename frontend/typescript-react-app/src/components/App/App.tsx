@@ -26,7 +26,7 @@ import Profile from "../Profile/Profile";
 import Live from '../Live/Live';
 import Settings from "../User/Settings/Settings";
 import UserSub from "../User/UserSub";
-import {ToastContainer} from "react-toastify";
+import { ToastContainer } from "react-toastify";
 
 function App() {
 
@@ -46,7 +46,7 @@ function App() {
     //{
     //  return ;
     //}
-    
+
     let url = "http://localhost:3000/api/auth/";
     let username = "";
     axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
@@ -88,11 +88,7 @@ function App() {
 
   return (
     <div id="main">
-<<<<<<< HEAD
       {/* <Particles
-=======
-      {/*<Particles
->>>>>>> c3c82dbb339fa776ae179b7f01c0cfade61b7f44
         id="tsparticles"
         options={{
           background: {
@@ -172,11 +168,7 @@ function App() {
           },
           detectRetina: false
         }}
-<<<<<<< HEAD
       /> */}
-=======
-      />*/}
->>>>>>> c3c82dbb339fa776ae179b7f01c0cfade61b7f44
       <Routes>
         <Route path="/" element={<Welcome />} />
         <Route path="/welcome" element={<Welcome />} />
@@ -205,15 +197,15 @@ function App() {
           : ""}
       </Routes>
       <ToastContainer
-                                position="top-right"
-                                autoClose={5000}
-                                hideProgressBar={false}
-                                newestOnTop={false}
-                                closeOnClick
-                                rtl={false}
-                                pauseOnFocusLoss
-                                draggable
-                                pauseOnHover/>
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover />
     </div>
   );
 }

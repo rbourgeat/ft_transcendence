@@ -1,13 +1,13 @@
 DOCKER			= docker
 COMPOSE 		= docker-compose
 
-.PHONY : all build up down pause unpause clean fclean re
+.PHONY: all build up down pause unpause clean fclean re
 
-all		:
+all:
 			$(COMPOSE) up --build
 
 #build or rebuild services
-build	:
+build:
 			$(COMPOSE) build
 
 # Creates and start containers
@@ -15,7 +15,7 @@ up:
 			${COMPOSE} up
 
 # Stops containers and removes containers, networks, volumes, and images created by up
-down	:
+down:
 			$(COMPOSE) down
 
 # Pause containers
@@ -27,7 +27,7 @@ unpause:
 			$(COMPOSE) unpause
 
 # down and make sure every containers are deleted
-clean	:
+clean:
 			$(COMPOSE) down -v --rmi all --remove-orphans
 			rm -rf ./database-data && echo "removed database"
 			rm -rf ./frontend/typescript-react-app/node_modules && echo "removed node_modules"
@@ -36,11 +36,11 @@ clean	:
 
 
 # cleans and makes sure every volumes, networks and image are deleted
-fclean	:	clean
+fclean:		clean
 			$(DOCKER) system prune --volumes --all --force
 			$(DOCKER) network prune --force
 			echo docker volume rm $(docker volume ls -q)
 			$(DOCKER) image prune --force
 
 # $(DOCKER) volume prune --force
-re		:	fclean all
+re:	fclean all
