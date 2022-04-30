@@ -3,6 +3,8 @@ import axios from "axios";
 import ToastAlerts from "../ToastAlerts/ToastAlerts"
 import Login from "../../Auth/Login/Login";
 
+let url_begin = "http://".concat(process.env.REACT_APP_IP);
+
 interface AxiosProps {
     method?: string,
     ressource?: string
@@ -30,7 +32,8 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     get_api_chat() {
         axios.defaults.withCredentials = true;
 
-        let url = "http://localhost:3000/api/chat/";
+        let url = "http://".concat(url_begin).concat(":3000/api/chat/");
+
         let res = axios.get(url)
             .then(res => {
                 //console.log("Get api chat successfully called.");
@@ -46,7 +49,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     ** post /api/chat/join
     */
     post_api_chat_join(pass: string, pub: boolean, channame: string) {
-        let url = "http://localhost:3000/api/chat/join";
+        let url = "http://".concat(url_begin).concat("3000/api/chat/join");
 
         const body = {
             password: pass,
@@ -54,7 +57,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
             name: channame
         }
 
-        axios.defaults.baseURL = 'http://localhost:3000/api/';
+        //axios.defaults.baseURL = 'http://localhost:3000/api/';
         axios.defaults.headers.post['Content-Type'] = 'application/json';
         axios.defaults.headers.post['Accept'] = '*/*';
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
@@ -75,7 +78,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     ** Sending a message in a channel
     */
     post_api_chat_sendmessage(message: string, channame: string) {
-        let url = "http://localhost:3000/api/chat/sendMessage/";
+        let url = "http://".concat(url_begin).concat(":3000/api/chat/sendMessage/");
 
         const body = {
             content: message,
