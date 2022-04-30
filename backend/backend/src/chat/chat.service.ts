@@ -286,7 +286,7 @@ export class ChatService {
 		return history;
 	}
 
-	async getMessagesbyName(name: string, login: string) {
+	async getMessagesbyName(name: string) {
 		const chat = await this.getChatByName(name);
 
 		const messages = chat.message;

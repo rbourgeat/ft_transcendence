@@ -23,8 +23,6 @@ export default function ListDiscussions(props: ListDiscussionsProps) {
 	useEffect(() => {
 
 		setsockChan(props.activeName);
-
-		//startLog();
 		props.socket.emit('requestAllMessages', props.activeID);
 		props.socket.on("sendAllMessages", (messagesUpdated) => {
 			if (messagesUpdated) {
@@ -40,8 +38,6 @@ export default function ListDiscussions(props: ListDiscussionsProps) {
 	}, [props.activeID]);
 
 	props.socket.on("refreshMessages", (...args) => {
-		//console.log("before modif and after refresh call sockchan:" + sockChan);
-		//console.log("before modif and after refresh call activename:" + props.activeName);
 		setOldMessages(messages);
 		if (args[1] == props.activeName && (props.activeName != "" || props.activeName != undefined || props.activeName != null)) {
 			setMessages(args[0]);
