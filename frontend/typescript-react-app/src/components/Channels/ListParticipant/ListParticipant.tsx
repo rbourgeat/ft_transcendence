@@ -175,13 +175,13 @@ export default function ListParticipant(props: ParticipantProps) {
     }
 
     function seeProfile() {
-        window.top.location = "http://localhost:3030/profile/".concat(selectedUser);
+        window.top.location = url_begin.concat(":3030/profile/").concat(selectedUser);
     }
 
     /*async*/
     async function makeAPIcall(endpoint: string, toastSuccessMessage: string, toastErrorMessage: string, me: boolean) {
         let toast = new ToastAlerts(null);
-        const url = 'http://localhost:3000/api/chat/'.concat(endpoint);
+        const url = url_begin.concat(':3000/api/chat/').concat(endpoint);
 
         // props.socket.emit('refresh', props.activeName);
         let user: string;
@@ -233,7 +233,7 @@ export default function ListParticipant(props: ParticipantProps) {
 
     const handleRemovePass = () => {
         let toast = new ToastAlerts(null);
-        const url = 'http://localhost:3000/api/chat/password';
+        const url = url_begin.concat(":3000/api/chat/password");
 
         const body = {
             "idChat": props.activeID,
@@ -252,7 +252,7 @@ export default function ListParticipant(props: ParticipantProps) {
 
     function updatePass() {
         let toast = new ToastAlerts(null);
-        const url = 'http://localhost:3000/api/chat/password';
+        const url = url_begin.concat(":3000/api/chat/password");
 
         const body = {
             "idChat": props.activeID,

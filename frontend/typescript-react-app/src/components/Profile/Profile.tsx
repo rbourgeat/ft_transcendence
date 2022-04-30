@@ -13,6 +13,8 @@ import Badge from "../Badge/Badge";
 import Footer from "../Footer/Footer";
 import { AiOutlineLoading3Quarters, AiOutlineLoading } from "react-icons/ai";
 
+let url_begin = "http://".concat(process.env.REACT_APP_IP);
+
 export interface ProfileProps {
 	login?: string,
 	avatar?: any
@@ -105,7 +107,7 @@ export default function Profile() {
 	function buttonToDisplay() {
 
 		let friends: boolean;
-		let url = "http://localhost:3000/api/user/relation/relationStatusWith/".concat(login);
+		let url = url_begin.concat(":3000/api/user/relation/relationStatusWith/").concat(login);
 
 		axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 		axios.defaults.withCredentials = true;
@@ -151,13 +153,13 @@ export default function Profile() {
 	function acceptFriend() {
 		let ax = new MyAxios(null);
 		ax.post_api_user_relation_answerInvitation_id(login, "accepted", "");
-		window.top.location = "http://localhost:3000/user/".concat(login);
+		window.top.location = url_begin.concat(":3000/user/").concat(login);
 	}
 
 	function declineFriend() {
 		let ax = new MyAxios(null);
 		ax.post_api_user_relation_answerInvitation_id(login, "declined", "");
-		window.top.location = "http://localhost:3000/user/".concat(login);
+		window.top.location = url_begin.concat(":3000/user/").concat(login);
 	}
 
 	function block() {
@@ -305,7 +307,7 @@ export default function Profile() {
 										<h1><span id="oops">Oops...</span></h1>
 										<h2><span id="page-not-found">Page not found</span></h2>
 										<button type="button" className="btn btn-outline-dark"
-											onClick={(e) => { window.top.location = "http://localhost:3030/game" }
+											onClick={(e) => { window.top.location = url_begin.concat(":3030/game") }
 											}
 										>Go to game</button>
 									</>

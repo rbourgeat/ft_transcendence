@@ -18,6 +18,7 @@ let joueur1: string;
 let joueur2: string;
 var isSearching = false;
 var gm = 0;
+let url_begin = "http://".concat(process.env.REACT_APP_IP);
 
 export default function Game() {
 	let size = useWindowDimensions();
@@ -33,9 +34,9 @@ export default function Game() {
 
 	// socket game
 	const [username, setUsername] = React.useState("");
-	/*async*/ 
+	/*async*/
 	function getUser() {
-		let url = "http://localhost:3000/api/auth/";
+		let url = url_begin.concat(":3000/api/auth/");
 		let username = "";
 		axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 		axios.defaults.withCredentials = true;
@@ -52,7 +53,7 @@ export default function Game() {
 	var SearchText = "Rechercher une partie"
 	// var SearchText2 = "Rejouer avec le même joueur"
 
-	var socket = io("http://localhost:3000/game", { query: { username: username } });
+	var socket = io(url_begin.concat(":3000/game"), { query: { username: username } });
 
 	function sendSearch() {
 		if (joueur) {
@@ -221,8 +222,7 @@ export default function Game() {
 	}
 
 	function initParty() {
-		if (canvas)
-		{
+		if (canvas) {
 			game = {
 				player: {
 					y: canvas.height / 2 - PLAYER_HEIGHT / 2,
@@ -263,7 +263,7 @@ export default function Game() {
 		}
 	}, []);
 
-	window.addEventListener('resize', function(event) {
+	window.addEventListener('resize', function (event) {
 		draw();
 	}, true);
 
@@ -368,7 +368,7 @@ export default function Game() {
 				// Update score
 				if (live == null) {
 					game.player.score++;
-					socket.emit('roundStart', 0 + ":" + joueur1 + ":" + joueur2 + ":" + game.player.score + ":" + game.player2.score+ ":left");
+					socket.emit('roundStart', 0 + ":" + joueur1 + ":" + joueur2 + ":" + game.player.score + ":" + game.player2.score + ":left");
 					document.querySelector('#player-score').textContent = game.player.score;
 				}
 				if (game.player.score === 5 || document.querySelector('#player-score').textContent == "5") {
@@ -420,7 +420,7 @@ export default function Game() {
 
 	function clearDataGame() {
 		if (live !== null)
-			window.top.location = "http://localhost:3030/live";
+			window.top.location = url_begin.concat(":3030/live");
 		joueur1 = null;
 		joueur2 = null;
 		// adversaire = null;
@@ -476,17 +476,17 @@ export default function Game() {
 												<div className="row d-flex justify-content-center text-center">
 													<Form.Label className="form--label">Choose game option</Form.Label>
 													<Form.Select id="form-select" aria-label="Modes de jeux:" defaultValue="original" onChange={e => chanScopeSet(e.target.value)}>
-															<option>Modes de jeux:</option>
-															<option value="original">Original (1972)</option>
-															<option value="bigball">Big Ball (Facile)</option>
-															<option value="blitz">Blitz (Balle Rapide)</option>
-															<option value="slow">Slow (Balle Lente)</option>
-															<option value="cube">Cube World (All is cubic)</option>
+														<option>Modes de jeux:</option>
+														<option value="original">Original (1972)</option>
+														<option value="bigball">Big Ball (Facile)</option>
+														<option value="blitz">Blitz (Balle Rapide)</option>
+														<option value="slow">Slow (Balle Lente)</option>
+														<option value="cube">Cube World (All is cubic)</option>
 													</Form.Select>
 												</div>
 											</Form.Group>
 										</Form>
-									: ""}
+										: ""}
 									<div className="row d-flex justify-content-center text-center">
 										{isActive ? <button type="button" className="btn btn-outline-light" id="search-button" onClick={() => sendSearch()}>{SearchText}</button> : ""}
 										{/* {isActive2 ? <button type="button" className="btn btn-outline-light" id="search-button2" onClick={() => sendSearch2()}>{SearchText2}</button> : ""} */}
