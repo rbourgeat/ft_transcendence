@@ -7,6 +7,8 @@ import ToastAlerts from '../../Utils/ToastAlerts/ToastAlerts';
 import MyAxios from '../../Utils/Axios/Axios';
 import { Button, Modal, Form } from 'react-bootstrap';
 
+let url_begin = "http://".concat(process.env.REACT_APP_IP);
+
 export interface ParticipantProps {
     login: string,
     isChan?: boolean,
@@ -33,7 +35,7 @@ export default function ListParticipant(props: ParticipantProps) {
     function getUsersfromChannel() {
         let url: string;
         if (props.activeID != "" && props.activeID != undefined && props.activeID != null) {
-            url = "http://localhost:3000/api/chat/".concat(props.activeID).concat("/users");
+            url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/chat/").concat(props.activeID).concat("/users");
             axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
             axios.defaults.withCredentials = true;
             /*await*/
@@ -54,7 +56,7 @@ export default function ListParticipant(props: ParticipantProps) {
 
     function getCurrentUserAdminStatus() {
         if (props.activeID != "" && props.activeID != undefined && props.activeID != null) {
-            let url = "http://localhost:3000/api/chat/isAdminIn/".concat(props.activeID);
+            let url = url_begin.concat(":3000/api/chat/isAdminIn/").concat(props.activeID);
             axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
             axios.defaults.withCredentials = true;
             /*await*/

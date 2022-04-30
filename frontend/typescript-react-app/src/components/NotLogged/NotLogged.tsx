@@ -1,14 +1,13 @@
 import './NotLogged.scss';
 import Nav from '../Nav/Nav';
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 
 export default function NotLogged() {
 
-	const calledOnce = React.useRef(false);
+    const calledOnce = React.useRef(false);
 
-	useEffect(() => {
-		//window.top.location = 'http://localhost:3030/auth';
-	}, []);
+    useEffect(() => {
+    }, []);
 
     return (
         <div id="NotFound">

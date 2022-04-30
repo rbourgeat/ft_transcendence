@@ -5,6 +5,9 @@ import axios from 'axios';
 import { renderMatches } from 'react-router-dom';
 
 
+let url_begin = "http://".concat(process.env.REACT_APP_IP);
+
+
 export interface MatchHistoryProps {
     login?: string
 }
@@ -14,6 +17,8 @@ export default function MatchHistory(props: MatchHistoryProps) {
     const [resultsID, setResultsID] = React.useState([]);
     const [len, setLen] = React.useState(0);
     const [load, setLoad] = React.useState(false);
+
+
 
     useEffect(() => {
         if (calledOnce.current) {
@@ -26,14 +31,12 @@ export default function MatchHistory(props: MatchHistoryProps) {
     /*async*/
     function getHistory() {
         let url: string = "";
-        if (props.login)
-        {
-            url = "http://localhost:3000/api/game/".concat(props.login).concat("/history");
+        if (props.login) {
+            url = url_begin.concat(":3000/api/game/").concat(props.login).concat("/history");
         }
-        else 
-        {
+        else {
             console.log("props is null !");
-            return ;
+            return;
         }
         let headers = {
             login: props.login

@@ -5,15 +5,17 @@ import axios from 'axios';
 import cookies from 'react-cookie';
 import ToastAlerts from '../Utils/ToastAlerts/ToastAlerts';
 
+let url_begin = "http://".concat(process.env.REACT_APP_IP);
+
 function Nav() {
 
 	function disconnect() {
-		axios.defaults.baseURL = 'http://localhost:3000/api/';
+		axios.defaults.baseURL = 'url_begin.concat().":3000/api/';
 		axios.defaults.headers.post['Accept'] = '*/*';
 		axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 		axios.defaults.withCredentials = true;
 
-		axios.post("http://localhost:3000/api/auth/log-out")
+		axios.post(url_begin.concat(":3000/api/auth/log-out"))
 			.then((response) => {
 				//Sauvegarde dans localStorage le fait qu'on est déconnecté
 				localStorage.setItem("loggedIn", JSON.stringify(false));
@@ -25,7 +27,7 @@ function Nav() {
 				if (twofa == "true") {
 					localStorage.setItem("2faverif", "false");
 				}
-				window.top.location = "http://localhost:3030/";
+				window.top.location = url_begin.concat(":3030/");
 			})
 			.catch((error) => {
 				;

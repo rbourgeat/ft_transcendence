@@ -49,7 +49,7 @@ export default function Profile() {
 
 	/*async*/
 	function getUserLogin(log: string) {
-		let url = "http://localhost:3000/api/user/".concat(login);
+		let url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/user/").concat(login);
 		/*await*/
 		axios.get(url)
 			.then(res => {

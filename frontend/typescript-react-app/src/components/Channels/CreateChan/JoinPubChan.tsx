@@ -70,7 +70,7 @@ export default function JoinChan(props: JoinChanProps) {
 		let toast = new ToastAlerts(null);
 
 		axios.defaults.withCredentials = true;
-		let url = "http://localhost:3000/api/chat/join";
+		let url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/chat/join");
 
 		console.log("you try to join the chan:" + chan);
 		let body = {};
@@ -94,7 +94,6 @@ export default function JoinChan(props: JoinChanProps) {
 				setForm(false);
 				setPublicPass("");
 
-				//	let socket = io("http://localhost:3000/chat", { query: { username: props.login } });
 				props.socket.emit('refresh', chan)
 				handleClose();
 			})
@@ -115,7 +114,7 @@ export default function JoinChan(props: JoinChanProps) {
 
 	const getJoignableChans = () => {
 
-		let url = "http://localhost:3000/api/chat/joinableChannels";
+		let url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/chat/joinableChannels");
 
 		axios.get(url)
 			.then((res) => {
@@ -139,7 +138,7 @@ export default function JoinChan(props: JoinChanProps) {
 		let toast = new ToastAlerts(null);
 
 		axios.defaults.withCredentials = true;
-		let url = "http://localhost:3000/api/chat/join";
+		let url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/chat/join");
 
 		console.log(privateToJoin + ": chan i want to join while im on private side")
 		let body = {};

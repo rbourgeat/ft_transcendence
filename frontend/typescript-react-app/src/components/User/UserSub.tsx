@@ -55,9 +55,9 @@ export default function User(props: UserfuncProps) {
 
 	function getUser() {
 
-		let url = "http://localhost:3000/api/auth/";
+		let url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/auth/");
 
-		axios.defaults.baseURL = 'http://localhost:3000/api/';
+		axios.defaults.baseURL = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/");
 		axios.defaults.headers.post['Content-Type'] = 'application/json';
 		axios.defaults.headers.post['Accept'] = '*/*';
 		axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
@@ -118,7 +118,7 @@ export default function User(props: UserfuncProps) {
 
 		if (log42 != "" && log42 != null && log42 != "null" && log42 != undefined)
 			return (ax.render_avatar(login, log42, haschanged));
-		
+
 		return (ax.render_avatar(login, "", haschanged));
 	}
 
@@ -134,34 +134,34 @@ export default function User(props: UserfuncProps) {
 									<span className="sr-only"><AiOutlineLoading /></span>
 								</div>
 								:*/}
-								<>
-									{/*<h2 className="own-profile">My profile</h2>*/}
+							<>
+								{/*<h2 className="own-profile">My profile</h2>*/}
+								<br />
+								<img id={username} className="profile--pic" height="80" width="80" />
+								<svg className="log--color_profile" height="40" width="40">
+									<circle cx="20" cy="20" r="15" fill={color} stroke="white" style={{ strokeWidth: '3' }} />
+								</svg>
+								<h2 id="user--data">{username}</h2>
+								<div className="col-9 mx-auto text-center" id="input-div">
 									<br />
-									<img id={username} className="profile--pic" height="80" width="80" />
-									<svg className="log--color_profile" height="40" width="40">
-										<circle cx="20" cy="20" r="15" fill={color} stroke="white" style={{ strokeWidth: '3' }} />
-									</svg>
-									<h2 id="user--data">{username}</h2>
-									<div className="col-9 mx-auto text-center" id="input-div">
-										<br />
-										<Achievements login={username} />
-										<br />
-										<Badge
-											rank={rank}
-											total_wins={wins}
-											total_loss={loss}
-											total_games={totalGames}
-											win_loss_ratio={ratio}
-											xp={xp}
-											points={points}
-											to_next={nextlevel}
-											level={level}
-										/>
-										<br />
-										{loaded == true ? <MatchHistory login={username} /> : ""}
-										<br />
-									</div>
-								</>
+									<Achievements login={username} />
+									<br />
+									<Badge
+										rank={rank}
+										total_wins={wins}
+										total_loss={loss}
+										total_games={totalGames}
+										win_loss_ratio={ratio}
+										xp={xp}
+										points={points}
+										to_next={nextlevel}
+										level={level}
+									/>
+									<br />
+									{loaded == true ? <MatchHistory login={username} /> : ""}
+									<br />
+								</div>
+							</>
 						</div>
 					</div>
 				</div>

@@ -19,7 +19,6 @@ export default function ListDiscussions(props: ListDiscussionsProps) {
 	const [sockChan, setsockChan] = React.useState(props.activeName);
 	const [messages, setMessages] = React.useState([]);
 	const [oldMessages, setOldMessages] = React.useState([]);
-	//const [socket, setSocket] = React.useState(io("http://localhost:3000/chat", { query: { username: props.login } }));
 
 	useEffect(() => {
 

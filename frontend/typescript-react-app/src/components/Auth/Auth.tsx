@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import './Auth.scss';
 import Header from "../Header/Header";
 import Login from "./Login/Login"
@@ -11,20 +11,19 @@ import MyAxios from '../Utils/Axios/Axios';
 export default function Auth() {
 
     useEffect(() => {
-		if (localStorage.getItem("loggedIn") == "true")
-        {
+        if (localStorage.getItem("loggedIn") == "true") {
             //console.log("You are already logged in");
-            window.top.location = "http://localhost:3030/settings";
+            window.top.location = "http://".concat(process.env.REACT_APP_IP).concat(":3030/settings");
         }
-	}, []);
+    }, []);
 
     return (
         <>
             <Header />
             <div className="container" id="auth-container">
                 <div className="row d-flex justify-content-center">
-                        {localStorage.getItem("loggedIn") != "true" ?
-                            <>
+                    {localStorage.getItem("loggedIn") != "true" ?
+                        <>
                             <div id="auth-form-div" className="col-8">
                                 <div id="auth--form1" className="row d-flex justify-content-center">
                                     <br />
@@ -39,20 +38,20 @@ export default function Auth() {
                                     {/*<Login />*/}
                                 </div>
                             </div>
-                            </>
+                        </>
                         : <p></p>}
-                            <ToastContainer
-                                position="top-right"
-                                autoClose={5000}
-                                hideProgressBar={false}
-                                newestOnTop={false}
-                                closeOnClick
-                                rtl={false}
-                                pauseOnFocusLoss
-                                draggable
-                                pauseOnHover/>
-                    </div>
+                    <ToastContainer
+                        position="top-right"
+                        autoClose={5000}
+                        hideProgressBar={false}
+                        newestOnTop={false}
+                        closeOnClick
+                        rtl={false}
+                        pauseOnFocusLoss
+                        draggable
+                        pauseOnHover />
                 </div>
+            </div>
         </>
     );
 }

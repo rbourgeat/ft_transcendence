@@ -3,9 +3,9 @@ import io from "socket.io-client";
 import axios from "axios";
 import React, { useState, useEffect, useRef } from "react";
 import Nav from "../../Nav/Nav";
-import AuthCode, { AuthCodeRef }  from 'react-auth-code-input';
+import AuthCode, { AuthCodeRef } from 'react-auth-code-input';
 import ToastAlerts from '../../Utils/ToastAlerts/ToastAlerts';
-import {ToastContainer} from "react-toastify";
+import { ToastContainer } from "react-toastify";
 
 
 export default function Login2fa() {
@@ -17,45 +17,44 @@ export default function Login2fa() {
 
 	useEffect(() => {
 		if (calledOnce.current) {
-			return;}
+			return;
+		}
 		calledOnce.current = true;
 	}, []);
 
-	let checkcode=(event: any) =>
-	{
+	let checkcode = (event: any) => {
 		event.preventDefault();
 		//console.log("Button clicked!");
 		let toast = new ToastAlerts(null);
-		if (code.length != 6)
-		{
+		if (code.length != 6) {
 			toast.notifyDanger("❗️ Error, the verif code is too short.");
-			return ;
+			return;
 		}
 		//console.log("Posting on api...");
-		let url = "http://localhost:3000/api/2fa/log-in";
-		axios.defaults.baseURL = 'http://localhost:3000/api/';
-        axios.defaults.headers.post['Content-Type'] = 'application/json';
-        axios.defaults.headers.post['Accept'] = '*/*';
-        axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
-        axios.defaults.withCredentials = true;
+		let url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/2fa/log-in");
+		axios.defaults.baseURL = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/");
+		axios.defaults.headers.post['Content-Type'] = 'application/json';
+		axios.defaults.headers.post['Accept'] = '*/*';
+		axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+		axios.defaults.withCredentials = true;
 
 		let bod = {
 			twoFactorAuthenticationCode: code
 		}
 
 		let res = axios.post(url, bod)
-		.then(res => {
-			//console.log("Succesfully logged in with 2fa!");
-			//console.log(res);
-			//console.log(res.data);
-			localStorage.setItem("2faverif", "true");
-			window.top.location = "http://localhost:3030/user";
-		})
-		.catch((error) => {
-			//console.log("Catched error while logging in with 2fa");
-			//console.log(error);
-			toast.notifyDanger("😢 Error while logging in with 2fa");
-		})
+			.then(res => {
+				//console.log("Succesfully logged in with 2fa!");
+				//console.log(res);
+				//console.log(res.data);
+				localStorage.setItem("2faverif", "true");
+				window.top.location = "http://".concat(process.env.REACT_APP_IP).concat(":3030/user");
+			})
+			.catch((error) => {
+				//console.log("Catched error while logging in with 2fa");
+				//console.log(error);
+				toast.notifyDanger("😢 Error while logging in with 2fa");
+			})
 	}
 
 	return (
@@ -73,8 +72,8 @@ export default function Login2fa() {
 									ref={AuthInputRef}
 									inputClassName="auth--code_2fa"
 									onChange={function (res: string): void {
-									setCode(res);
-								} } />
+										setCode(res);
+									}} />
 								<button type="submit" className="btn btn-outline-dark" value="Submit" id="check--button" onClick={checkcode}>Check code</button>
 								<ToastContainer
 									position="top-right"
