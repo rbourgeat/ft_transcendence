@@ -51,8 +51,11 @@ export default function CreateDM(props: CreateDMProps) {
 				handleClose();
 			})
 			.catch((error) => {
+				console.log(error);
 				//toast.notifyDanger("You have already a conversation with that user");
-				toast.notifyDanger("Error while creating DM conv");
+				toast.notifyDanger("Error while creating conversation with " + receiver);
+				//toast.notifyDanger(error);
+				handleClose();
 				setSuccessfull(false);
 			})
 	}

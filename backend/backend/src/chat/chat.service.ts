@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Chat } from './entity/chat.entity';
@@ -11,6 +11,8 @@ import { Socket } from 'socket.io';
 import { parse } from 'cookie';
 import { AuthService } from '../auth/auth.service';
 import { WsException } from '@nestjs/websockets';
+import { UserRelation } from 'src/user/entity/friend-request.entity';
+import { UserService } from 'src/user/user.service';
 
 @Injectable()
 export class ChatService {
@@ -23,7 +25,10 @@ export class ChatService {
 		private messageRepository: Repository<Message>,
 		@InjectRepository(Participate)
 		private participateRepository: Repository<Participate>,
-		private readonly authenticationService: AuthService
+		private readonly authenticationService: AuthService,
+		private readonly userService: UserService,
+		@InjectRepository(UserRelation)
+		private readonly userRelationRepository: Repository<UserRelation>,
 	) { }
 
 	async saveMessage(content: string, author: User) {
@@ -104,14 +109,11 @@ export class ChatService {
 	}
 
 	async getChatByName(name: string) {
-		console.log('we search for chat: ' + name);
 		const chat = await this.chatRepository.findOne({ name: name });
 		if (chat)
 			return chat;
-		else {
-			console.log(chat + ' not found');
+		else
 			return;
-		}
 	}
 
 	/**
@@ -148,6 +150,9 @@ export class ChatService {
 		if (await this.getChatByName("direct_" + user1.id + "_" + user2.id)) {
 			console.log('error: conv already exist');
 			throw new BadRequestException('Validation failed (files expected)');
+		}
+		if (await this.userService.hasBlockedRelation(user1, user2)) {
+			throw new HttpException('You can\'t start a conversation with ' + user2.login, HttpStatus.BAD_REQUEST);
 		}
 		const newParticipate1 = await this.participateRepository.create(
 			{
@@ -266,8 +271,22 @@ export class ChatService {
 		return history;
 	}
 
-	async getMessagesbyName(name: string) {
-		console.log("test getmessagebyname")
+	async getMessagesById2(id: number, login: string) {
+		// console.log(id + ':ID of chat in getMessagesById');
+		const chat = await this.chatRepository.findOne({ id });
+		const user = await this.userRepository.findOne({ login });
+
+		const messages = chat.message;
+		//TODO clear message when u have a user blocked
+		const history: Message[] = [];
+		for (const message of messages) {
+			if (!(await this.userRelationRepository.findOne({ where: [{ receiver: message.author, creator: user, status: 'blocked' }], relations: ['receiver', 'creator'] })))
+				history.push(message);
+		}
+		return history;
+	}
+
+	async getMessagesbyName(name: string, login: string) {
 		const chat = await this.getChatByName(name);
 
 		const messages = chat.message;

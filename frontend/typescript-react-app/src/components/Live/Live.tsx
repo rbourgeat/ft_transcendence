@@ -1,4 +1,4 @@
-import React, {useState,  useEffect, useLayoutEffect } from 'react';
+import React, {useState,  useEffect} from 'react';
 import './Live.scss';
 import Header from "../Header/Header";
 import Nav from "../Nav/Nav";
@@ -7,15 +7,16 @@ import GameRules from "../GameRules/GameRules";
 import io from "socket.io-client";
 import axios from "axios";
 import { Form } from 'react-bootstrap'
+import LiveButton from './LiveButton/LiveButton';
 
 var joueurs = [];
 var adversaires = [];
+var canvas = [];
+var game = [];
 
-// For resize elements from game canvas
-let resize = 4;
-
-//TODO: a refacto un tout petit peu @rbourgea ?
 export default function Live() {
+<<<<<<< HEAD
+=======
 
 	if (localStorage.getItem("loggedIn") != "true")
 	{
@@ -30,16 +31,31 @@ export default function Live() {
 			</div>
 		</>)
 	}
+>>>>>>> c3c82dbb339fa776ae179b7f01c0cfade61b7f44
 	let socket = io("http://localhost:3000/game");
+	const [myArgs, setmyArgs] = React.useState([""]);
+	const [displayedNo, setDisplayedNo] = React.useState(false);
 
-	useEffect(() => {
-		noGames();
-    }, []);
 
-	function noGames()
+	function display_no()
 	{
-		if (localStorage.getItem("loggedIn") != "true")
+		//setDisplayedNo(true);
+		if (displayedNo == false)
 		{
+<<<<<<< HEAD
+			let check = document.getElementsByClassName("nogame");
+			console.log("no game is " + check.length);
+			if (check.length == 0)
+			{
+				let nogame = document.createElement("div");
+				nogame.className = "nogame";
+				let parent = document.getElementById("list");
+				let newContent = document.createTextNode("😢 Nobody is currently playing");
+				nogame.appendChild(newContent);
+				parent.appendChild(nogame);
+			}
+			setDisplayedNo(true);
+=======
 			<>
 					<Nav />
 					<div className="container">
@@ -52,17 +68,24 @@ export default function Live() {
 						</div>
 					</div>
 				</>
+>>>>>>> c3c82dbb339fa776ae179b7f01c0cfade61b7f44
 		}
-		if (joueurs.length == 0 && adversaires.length == 0)
-			document.getElementById("content").innerHTML = `
-				<div id='box'>
-					<div id='vs'>😢 There is no live game at the moment.</div>
-				</div>
-				`;
+		
 	}
 
-	function display()
+	function remove_no()
 	{
+<<<<<<< HEAD
+		//if (displayedNo == true)
+		//{
+			const todelete = Array.from(document.getElementsByClassName("nogame"));
+			todelete.forEach(del => {
+				del.remove();
+			});
+			if (displayedNo == true)
+				setDisplayedNo(false);
+		//}
+=======
 		if (localStorage.getItem("loggedIn") != "true")
 		{
 			return
@@ -84,138 +107,145 @@ export default function Live() {
 			})
 		});
 		noGames();
+>>>>>>> c3c82dbb339fa776ae179b7f01c0cfade61b7f44
 	}
 
-	// PONG CODE BELOW
-	var canvas = [];
-	var game = [];
-	var anim;
-	// On peut changer les dimensions de la balle et des joueurs, ex: autres modes de jeux
-	var PLAYER_HEIGHT = 80;
-	var PLAYER_WIDTH = 10;
-	var BALL_HEIGHT = 10;
-	var BALL_SPEED = 2;
-	var BALL_ACCELERATE = true;
-	function draw(idGame: number) {
-		if (canvas.length != 0 && canvas[idGame]) {
-			var context = canvas[idGame].getContext('2d');
-			// Draw field
-			context.fillStyle = 'black';
-			context.fillRect(0, 0, canvas[idGame].width, canvas[idGame].height);
-			// Draw middle line
-			context.strokeStyle = 'white';
-			context.beginPath();
-			context.moveTo(canvas[idGame].width / 2, 0);
-			context.lineTo(canvas[idGame].width / 2, canvas[idGame].height);
-			context.stroke();
-			// Draw players
-			context.fillStyle = 'white';
-			context.fillRect(0, game[idGame].player.y, PLAYER_WIDTH, PLAYER_HEIGHT);
-			context.fillRect(canvas[idGame].width - PLAYER_WIDTH, game[idGame].player2.y, PLAYER_WIDTH, PLAYER_HEIGHT);
-			// Draw ball
-			context.beginPath();
-			context.fillStyle = 'white';
-			context.fillRect(game[idGame].ball.x, game[idGame].ball.y, BALL_HEIGHT, BALL_HEIGHT);
-			context.fill();
-		}
-	}
+	function display(args)
+	{
+		let parent:any;
+		let child: any;
+		let exists: any;
+		let newdiv: any;
+		let newContent : any;
+		let erases: any;
 
+		//Joueur est un Object et pas un Array
+		//console.log("type of joueurs is " + typeof joueurs);
+
+		console.log("args are " + args);
+
+		const b = args[0].split(':');
+
+		//if (!joueurs)
+		//{
+		//	//if (displayedNo == false)
+		//		display_no();
+		//}
+		//else
+		//{
+			remove_no();
+			Object.keys(joueurs).map(joueur => {
+				adversaires.map(adversaire => {
+					parent = document.getElementById("list");
+					if (parent)
+					{
+						exists = document.getElementById("div_".concat(joueur).concat("_").concat(adversaire));
+						if (!exists || exists == null || exists == undefined)
+						{
+							newdiv = document.createElement("div");
+							newdiv.id = "div_".concat(joueur).concat("_").concat(adversaire);
+							newdiv.className = "game";
+							newContent = document.createTextNode('🏓 ' + joueurs[joueur] + " vs " + adversaire);
+							newdiv.appendChild(newContent);
+							parent.appendChild(newdiv);
+							let newbutton = document.createElement("button");
+							newbutton.innerHTML = "See match";
+							newbutton.type = "submit";
+							newbutton.className = "btn btn-light watch";
+							newbutton.onclick = function () {
+								window.top.location = "http://localhost:3030/game?live=" + joueurs[joueur] + "+" + adversaire;
+							};
+							newdiv.appendChild(newbutton);
+						}
+					}
+					initParty(adversaires.indexOf(adversaire));
+				})
+			})
+		//}
+	}
+	//}
+
+	useEffect(() => {
+        //display();
+		if (displayedNo == false)
+			display_no();
+    }, []);
+
+//Initialisation de variables
 	function initParty(idGame: number)
 	{
-		canvas[idGame] = document.getElementById('canvas-' + idGame);
-		if (canvas.length != 0) {
 			game[idGame] = {
 				player: {
-					y: canvas[idGame].height / 2 - PLAYER_HEIGHT / 2,
 					score: 0
 				},
 				player2: {
-					y: canvas[idGame].height / 2 - PLAYER_HEIGHT / 2,
 					score: 0
 				},
-				ball: {
-					x: canvas[idGame].width / 2 - BALL_HEIGHT / 2,
-					y: canvas[idGame].height / 2 - BALL_HEIGHT / 2,
-					r: 5,
-					speed: {
-						x: BALL_SPEED,
-						y: BALL_SPEED
-					}
+			}
+	}
+
+	function display_null()
+	{
+		console.log("Should display null");
+		const todelete = Array.from(document.getElementsByClassName("game"));
+
+		todelete.forEach(del => {
+			del.remove();
+		});
+
+		const todelete2 = Array.from(document.getElementsByClassName("btn btn-lignt watch"));
+		todelete2.forEach(del => {
+			del.remove();
+		});
+
+		display_no();
+	}
+
+//un jeu commence
+	socket.on("roundStartLIVE", (...args) => {
+
+		let len: number;
+		let i: number = 0;
+		len = args.length;
+
+		//TODO: rbourgea : checker si il ne faut (comme c'était fait) checker que sur args[0] ou sur un args[i] ? (si il y a plusieurs match est-ce que c'est OK ?)
+		//Attention les args sont régulièrement null
+		if (args)
+		{
+			//console.log("args are : " + args)
+			if (args[i])
+			{
+				let check = args[i].split(':');
+				//if (args && check[1] != "null")
+				//{
+				//	console.log("New game");
+				//}
+				if (check[1] == "null")
+				{
+					display_null();
 				}
 			}
 		}
-		draw(idGame);
-		// play(idGame);
-		// canvas.addEventListener('mousemove', playerMove);
-	}
+	})
 
-	function play() {
-		var i = 0;
-		canvas.forEach(c => {
-			draw(i);
-			ballMove(i);
-			i++;
-		});
-		// draw(idGame);
-		// ballMove(idGame);
-		anim = requestAnimationFrame(play);
-	}
 
-	function setGameMode(gm: number) {
-		if (gm == 0)
-		{
-			PLAYER_HEIGHT = 80 / resize;
-			PLAYER_WIDTH = 10 / resize;
-			BALL_HEIGHT = 10 / resize;
-			BALL_SPEED = 2 / resize;
-			BALL_ACCELERATE = true;
-		} else if (gm == 1)
-		{
-			PLAYER_HEIGHT = 80 / resize;
-			PLAYER_WIDTH = 10 / resize;
-			BALL_HEIGHT = 50 / resize;
-			BALL_SPEED = 2 / resize;
-			BALL_ACCELERATE = true;
-		} else if (gm == 2)
-		{
-			PLAYER_HEIGHT = 80 / resize;
-			PLAYER_WIDTH = 10 / resize;
-			BALL_HEIGHT = 10 / resize;
-			BALL_SPEED = 4 / resize;
-			BALL_ACCELERATE = true;
-		} else if (gm == 3)
-		{
-			PLAYER_HEIGHT = 80 / resize;
-			PLAYER_WIDTH = 10 / resize;
-			BALL_HEIGHT = 10 / resize;
-			BALL_SPEED = 0.5 / resize;
-			BALL_ACCELERATE = false;
-		} else if (gm == 4)
-		{
-			PLAYER_HEIGHT = 80 / resize;
-			PLAYER_WIDTH = 80 / resize;
-			BALL_HEIGHT = 10 / resize;
-			BALL_SPEED = 2 / resize;
-			BALL_ACCELERATE = false;
-		}
-	}
-
+	//va permettre d'identifier les joueurs
 	socket.on("playerMove", (body: string) => {
+		console.log("Player move called");
 		// Update Paddle position in real time
 		const b = body.split(':');
 		if (joueurs.indexOf(b[0]) == -1 && adversaires.indexOf(b[0]) == -1) {
 			joueurs.push(b[0]);
 			adversaires.push(b[2]);
-			display();
+			display(body);
 		}
-		console.log("joueur: " + b[0] + ", position : " + b[1] + ", adversaire : " + b[2] + ", coté : " + b[3]);
 
 		if (b[3] == "gauche")
 			joueurs.map(joueur => {
 				if (joueur)
 					if (joueur == b[0]) {
 						game[joueurs.indexOf(joueur)].player.y = Number(b[1]);
-						draw(joueurs.indexOf(joueur));
+						//draw(joueurs.indexOf(joueur));
 					}
 			});
 		if (b[3] == "droit")
@@ -223,11 +253,13 @@ export default function Live() {
 				if (adversaire)
 					if (adversaire == b[0]) {
 						game[adversaires.indexOf(adversaire)].player2.y = Number(b[1]);
-						draw(adversaires.indexOf(adversaire));
 					}
 			})
 	});
 
+<<<<<<< HEAD
+	return (
+=======
 	socket.on("roundStartLIVE", (...args) => {
 		const b = args[0].split(':');
 		// console.log("round: " + b[0] + ", player1: " + b[1] + ", player2: " + b[2] + ", score1: " + b[3] + ", score2: " + b[4]);
@@ -315,16 +347,22 @@ export default function Live() {
 
 	//Attention sur les autres pages ont a le texte en anglais
 	return(
+>>>>>>> c3c82dbb339fa776ae179b7f01c0cfade61b7f44
 		<div id="live-page">
 			<Nav/>
 			<div className="container">
 				<div className="row d-flex justify-content-center text-center">
-					{/*<div className="col-9">*/}
+					<div className="col-9">
 						<div className="live--div">
 							<p id="titre">📺 Watch games live</p>
-							<div id="content"></div>
+							<div id="content">
+								<div id="box">
+									<ul id="list">
+									</ul>
+								</div>
+							</div>
 						</div>
-					{/*</div>*/}
+					</div>
 				</div>
 			</div>
 		</div>

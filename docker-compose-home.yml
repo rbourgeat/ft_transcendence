@@ -39,11 +39,7 @@ services:
     ports:
       - "31415:5432"
     volumes:
-<<<<<<< HEAD
-      - ./database-data:/goinfre/rbourgeam/postgresql/data
-=======
-      - ./database-data:/goinfre/$USER/postgresql/data
->>>>>>> c3c82dbb339fa776ae179b7f01c0cfade61b7f44
+      - ./database-data:/var/lib/postgresql/data
     networks:
       - database
     restart: always

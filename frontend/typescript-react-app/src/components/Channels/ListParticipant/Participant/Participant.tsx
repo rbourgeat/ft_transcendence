@@ -1,8 +1,10 @@
 import './Participant.scss';
 import React, { useEffect } from "react";
 import { FaCrown, FaVolumeMute, FaBan, FaShieldAlt } from "react-icons/fa";
+import { io } from "socket.io-client";
 
 export interface ParticipantsProps {
+	socket?: any
 	currentUser?: string,
 	currentUserAdmin?: boolean,
 	username?: string,
@@ -65,7 +67,9 @@ export default function Participant(props: ParticipantsProps) {
 		document.getElementById("admin-click").remove();
 	}
 
+
 	function setUpBlock() {
+		props.socket.emit('updateChat', true);
 		props.updateFunctionToUse("block");
 		document.getElementById("block-click").remove();
 	}

@@ -146,6 +146,16 @@ export class UserService {
 		return (invite ? true : false);
 	}
 
+	async hasBlockedRelation(creator: User, receiver: User) {
+		const invite = await this.userRelationRepository.findOne({
+			where: [
+				{ creator: receiver, receiver: creator, status: 'blocked' },
+				{ creator: creator, receiver: receiver, status: 'blocked' },
+			],
+		});
+		return (invite ? true : false);
+	}
+
 	async sendInvitation(receiverLogin: string, creator: User) {
 		const receiver = await this.getUserByLogin(receiverLogin);
 		if (!receiver || receiverLogin == creator.login)
