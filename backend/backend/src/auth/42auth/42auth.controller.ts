@@ -28,14 +28,15 @@ export class Auth42Controller {
     @ApiOperation({ summary: '[do not use in swagger, won\'t work]' })
     @Get('redirect')
     @UseGuards(FtOauthGuard)
-    @Redirect('http://localhost:3030/settings')
+    //@Redirect('http://localhost:3030/settings')
+    @Redirect('http://'.concat(process.env.TEST).concat(':3030/settings'))
     async ftAuthCallback(@Req() req) {
         console.log('test in redirect 42auth');
         const test = req.user;
         console.log(test.username);
         const currentUser = await this.userService.getUserByLogin42(test.username);
         console.log(currentUser.id);
-
+        //console.log(process.env.TEST);
         await this.userService.updateStatus(currentUser.login, "online");
 
         const accessTokenCookie = await this.authenticationService.getCookieWithJwtToken(currentUser.id);
@@ -46,7 +47,8 @@ export class Auth42Controller {
     @ApiOperation({ summary: '[To be redirected]' })
     @Get('redirect-user')
     //@UseGuards(FtOauthGuard)
-    @Redirect('http://localhost:3030/settings')
+    //@Redirect('http://localhost:3030/settings')
+    @Redirect('http://'.concat(process.env.TEST).concat(':3030/settings'))
     async ftRedirectUser() {
         //console.log("redirecting user");
         //return ;

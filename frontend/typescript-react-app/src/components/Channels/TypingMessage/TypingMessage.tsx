@@ -3,6 +3,8 @@ import React, { Component, useState, useEffect } from "react";
 import io from "socket.io-client";
 import SingleMessage from "../ListDiscussions/SingleMessage/SingleMessage";
 import axios from 'axios';
+// import { env } from 'process';
+import ToastAlerts from '../../Utils/ToastAlerts/ToastAlerts';
 
 export interface TypingProps {
     login: string,
@@ -79,9 +81,17 @@ export default function TypingMessage(props: TypingProps) {
     //let socket = io("http://localhost:3000/chat", { query: { username: props.login } });
 
     function sendMessage(message: string) {
+        console.log(process.env.REACT_APP_IP)
+        console.log("-------");
+        // console.log(TEST)
+        // console.log('port ' + env.PORT)
+        console.log("test");
+        // let toast = new ToastAlerts(null);
+
         if (message !== "") {
             updateText("");
-            props.socket.emit('message', props.login + ":" + props.channel + ":" + message)
+            props.socket.emit('message', props.login + ":" + props.channel + ":" + message);
+            // toast.notifySuccess(process.env.TEST);
         }
     }
 
