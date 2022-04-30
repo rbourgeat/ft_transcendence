@@ -23,18 +23,26 @@ export default function MatchHistory(props: MatchHistoryProps) {
         calledOnce.current = true;
     }, []);
 
-    async function getHistory() {
-        let url = "http://localhost:3000/api/game/".concat(props.login).concat("/history");
+    /*async*/
+    function getHistory() {
+        let url: string = "";
+        if (props.login)
+        {
+            url = "http://localhost:3000/api/game/".concat(props.login).concat("/history");
+        }
+        else 
+        {
+            console.log("props is null !");
+            return ;
+        }
         let headers = {
             login: props.login
         }
 
-        await axios.get(url, { headers })
+        /*await*/
+        axios.get(url, { headers })
             .then(res => {
-                console.log("Successfully retrived game info");
-                console.log(res);
                 let results = res.data;
-                console.log(results);
                 let l = results.length;
                 setLen(len);
                 let i = 0;
@@ -47,7 +55,6 @@ export default function MatchHistory(props: MatchHistoryProps) {
             }
             )
             .catch((error) => {
-                console.log("Error while getting game info");
                 setLen(0);
                 setLoad(true);
             })

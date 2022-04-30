@@ -245,7 +245,7 @@ export class ChatService {
 					return console.log('already in channel');
 			}
 			else
-				return console.log('wrong password');
+				throw new BadRequestException('Wrong password');
 		}
 		else
 			return console.log(chat + ' not found');
@@ -458,6 +458,18 @@ export class ChatService {
 		});
 
 		if (participate.admin)
+			return true;
+		return false;
+	}
+
+	async getIsMuted(channelId: number, user: User) {
+		const chat = await this.chatRepository.findOne({ id: channelId });
+		const userT = await this.userRepository.findOne({ login: user.login });
+		const participate = await this.participateRepository.findOne({
+			where: [{ chat: chat, user: userT }]
+		});
+
+		if (participate.role == "mute")
 			return true;
 		return false;
 	}

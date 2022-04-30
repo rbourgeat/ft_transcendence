@@ -31,12 +31,20 @@ export default function Settings(props: SettingsProps) {
 	//MODALS
 	const [show, setShow] = useState(false);
 	const handleClose = () => setShow(false);
-	const handleShow = () => setShow(true);
+	const handleShow = () => setShow(false);
 
 	//Style pour le authcode
 	const AuthInputRef = useRef<AuthCodeRef>(null);
 	const [code, setCode] = React.useState("");
 
+	//Pour modal changeUsername
+	const [exited, setExited] = React.useState(false);
+	const [checkExited, setCheckExited] = React.useState("false");
+	const [update, setUpdate] = React.useState("");
+	//const handleShow = () => setShow(true);
+
+
+	//Ici le async est ultra nécessaire !
 	async function manageQR() {
 		const res = await fetch('http://localhost:3000/api/2fa/generate', { method: 'POST', credentials: 'include' });
 		const blob = await res.blob();
@@ -64,14 +72,12 @@ export default function Settings(props: SettingsProps) {
 			})
 			.catch((error) => {
 				toast.notifyDanger('🥲 Error while turnoff on 2FA.');
-				console.log(error);
+				;
 			})
 	}
 
 	const checkCode = (event: any) => {
 		event.preventDefault();
-		//let number = verifCode;
-		console.log("verif code is " + code);
 
 		axios.defaults.baseURL = 'http://localhost:3000/api/';
 		axios.defaults.headers.post['Content-Type'] = 'application/json';
@@ -97,9 +103,7 @@ export default function Settings(props: SettingsProps) {
 			.catch((error) => {
 				toast.notifyDanger('🥲 Error while turning on 2FA. Your verif code is wrong or the QR Code is outdated.');
 				setCode("");
-				console.log(error);
 			})
-		//clearInput();
 	}
 
 
@@ -126,7 +130,8 @@ export default function Settings(props: SettingsProps) {
 		}
 	}
 
-	async function getUser() {
+	/*async*/
+	function getUser() {
 		let url = "http://localhost:3000/api/auth/";
 
 		axios.defaults.baseURL = 'http://localhost:3000/api/';
@@ -136,17 +141,15 @@ export default function Settings(props: SettingsProps) {
 		axios.defaults.withCredentials = true;
 
 		let username = "";
-		await axios.get(url)
+		/*await*/
+		axios.get(url)
 			.then(res => {
 				username = res.data.login;
-				console.log(res);
-				console.log("Successful api auth!");
 				if (res.data.login42 != null && res.data.login42 != undefined && res.data.login42 != "") {
 					setis42(true);
 					setlogin42(res.data.login42);
 					localStorage.setItem("login", res.data.login);
 					localStorage.setItem("login42", res.data.login42);
-					console.log(res.data);
 					if (res.data.status == "online") {
 						setColor("green");
 						setStatus("online");
@@ -161,19 +164,22 @@ export default function Settings(props: SettingsProps) {
 				renderImage(username);
 			})
 			.catch((err) => {
-				console.log("Auth returned 400 -> missing cookie");
+				//console.log("Auth returned 400 -> missing cookie");
+				localStorage.setItem("loggedIn", "false");
+				window.top.location = "http://localhost:3030/auth/"
 			})
 	}
 
-	async function renderImage(login: string) {
+	/*async*/
+	function renderImage(login: string) {
 		let ax = new MyAxios(null);
 		let log42 = localStorage.getItem("login42");
 		let haschanged = false;
 		if (login != log42)
 			haschanged = true;
 		if (log42 != "" && log42 != null && log42 != "null" && log42 != undefined)
-			return (await ax.render_avatar(login, log42, haschanged));
-		return (await ax.render_avatar(login, "", haschanged));
+			return (/*await*/ ax.render_avatar(login, log42, haschanged));
+		return (/*await*/ ax.render_avatar(login, "", haschanged));
 	}
 
 	useEffect(() => {
@@ -182,9 +188,16 @@ export default function Settings(props: SettingsProps) {
 		}
 		if (localStorage.getItem("2fa") == "true")
 			setActivated2fa(true);
+		let toast = new ToastAlerts(null);
+		toast.notifySuccess("Component loaded !");
 		getUser();
 		calledOnce.current = true;
 	});
+
+	useEffect(() => {
+		//console.log("updating because of new username");
+		getUser();
+	}, [exited]);
 
 	return (
 		<>
@@ -195,17 +208,17 @@ export default function Settings(props: SettingsProps) {
 						<div id="settings">
 							<h2 id="user--settings">Settings</h2>
 							<br />
-							{load == false ?
+							{/*{load == false ?
 								<div className="spinner-border m-5" role="status">
 									<span className="sr-only"><AiOutlineLoading /></span>
 								</div>
-								:
+								:*/}
 								<>
 									<img id={username} className="profile--pic" height="80" width="80" />
 									<svg className="log--color_profile" height="40" width="40">
 										<circle cx="20" cy="20" r="15" fill={color} stroke="white" style={{ strokeWidth: '3' }} />
 									</svg>
-									<p className="username-text">{username}</p>
+									<p className="username-text" id="user_username">{username}</p>
 									<p className="status-text">{status}</p>
 									<br />
 									<div className="row d-flex justify-content-center text-center">
@@ -229,10 +242,16 @@ export default function Settings(props: SettingsProps) {
 									<div className="row d-flex justify-content-center text-center">
 										<div id="change--username--div">
 											<h3 id="activate--modal">Change username</h3>
-											<button id="change--username" type="button" className="btn btn-outline-dark"
+											{/*<button id="change--username" type="button" className="btn btn-outline-dark"
 												onClick={handleShow}>Click to change
-											</button>
-											<EditUsernameModal username={username} show={show} onHide={handleClose} />
+											</button>*/}
+											<EditUsernameModal 
+												//setUsername={setUsername}
+												username={username}
+												//checkexited={setCheckExited}
+												//setUpdate={setUpdate}
+												exited={checkExited}
+												/>
 											<br />
 										</div>
 									</div>
@@ -264,7 +283,6 @@ export default function Settings(props: SettingsProps) {
 															onChange={
 																function (res: string): void {
 																	setCode(res);
-																	console.log("res is " + res);
 																}}
 														/>
 														: ""}
@@ -274,7 +292,7 @@ export default function Settings(props: SettingsProps) {
 															<button className="btn btn-outline-dark" type="button" id="check--auth" onClick={checkCode}>Check</button>
 														</>
 														: <p className="black--text"></p>}
-													<ToastContainer
+													{/* <ToastContainer
 														position="top-right"
 														autoClose={5000}
 														hideProgressBar={false}
@@ -284,13 +302,13 @@ export default function Settings(props: SettingsProps) {
 														pauseOnFocusLoss
 														draggable
 														pauseOnHover
-													/>
+													/> */}
 												</div>
 											</div>
 										</div>
 									</div>
 								</>
-							}
+							{/*}*/}
 						</div>
 					</div>
 				</div>

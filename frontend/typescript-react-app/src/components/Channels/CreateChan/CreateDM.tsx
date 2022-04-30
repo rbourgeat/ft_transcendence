@@ -18,8 +18,6 @@ export default function CreateDM(props: CreateDMProps) {
 	const [show, setShow] = React.useState(false);
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
-
-	//const [chanScope, chanScopeSet] = React.useState("public");
 	const [chanName, chanNameSet] = React.useState("");
 	const [receiver, setReceiver] = React.useState("");
 	const [sucessfull, setSuccessfull] = React.useState(false);
@@ -28,21 +26,16 @@ export default function CreateDM(props: CreateDMProps) {
 	const handleExit = () => {
 		let toast = new ToastAlerts(null);
 
-		console.log("it is successfull ? " + sucessfull);
 		if (sucessfull == true) {
-			//toast.notifySuccess("Successfully added");
 			console.log("result will be " + !props.exited);
+
 			//redirection crade pour recharger la page
 			//window.top.location = "http://localhost:3030/channels";
 			props.setExited(!props.exited);
 		}
-		else {
-
-			//toast.notifyDanger("Unsucessfull add");
-			console.log("Did not add anything")
-			//props.setExited(!props.exited);
-			//props.setUpdate(chanName);//pour trigger un update
-		}
+		//else {
+		//	console.log("Did not add anything");
+		//}
 		chanNameSet("");
 		setReceiver("");
 	}
@@ -69,13 +62,12 @@ export default function CreateDM(props: CreateDMProps) {
 
 	return (
 		<div>
-			<button type="button" className="btn btn-dark"
-				id="createdm-button" /*onClick={createJoinChan}*/
+			<button type="button" className="btn"
+				id="createdm-button"
 				onClick={handleShow}
-			//data-toggle="modal" data-target="#exampleModalCenter"
 			>New DM</button>
 			<Modal show={show} onHide={handleClose} animation={true} onExited={handleExit}>
-				<Modal.Header closeButton>
+				<Modal.Header>
 					<Modal.Title>Create DM conversation 💌</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
@@ -93,7 +85,7 @@ export default function CreateDM(props: CreateDMProps) {
 				</Modal.Body>
 				<Modal.Footer>
 					<Button variant="dark" type="submit" onClick={createDM}>
-						Send form
+						Confirm
 					</Button>
 				</Modal.Footer>
 			</Modal>

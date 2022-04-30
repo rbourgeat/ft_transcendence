@@ -7,8 +7,6 @@ import Blocked from "../Blocked/Blocked";
 import Friends from "../Friends/Friends";
 import { DetailedHTMLProps, HTMLAttributes } from 'react';
 import MiniDisplay from '../MiniDisplay/MiniDisplay';
-//const MiniDisplay = lazy(() => import('../MiniDisplay/MiniDisplay'));
-
 
 export interface InputWrapperProps {
 	login?: string
@@ -19,18 +17,16 @@ export default function All(props: InputWrapperProps) {
 	const [load, setLoad] = React.useState(true);
 	const [count, setCount] = useState(0);
 	const [stateLogin, setStateLogin] = React.useState(props.login);
-
 	const calledOnce = React.useRef(false);
 
-	async function renderUsers() {
-
+	/*async*/
+	function renderUsers() {
 		axios.defaults.withCredentials = true;
 		let log = localStorage.getItem("login");
-		console.log("My login is " + log);
 		let url = "http://localhost:3000/api/user/";
-		await axios.get(url)
+		/*await*/
+		axios.get(url)
 			.then(res => {
-				console.log("Get api users successfully called.");
 				let users = res.data;
 				let len = users.length;
 				let i = 0;
@@ -39,11 +35,12 @@ export default function All(props: InputWrapperProps) {
 						setUsers(prevArray => [...prevArray, users[i]])
 					i++;
 				}
+				setLoad(true);
 			})
 			.catch((error) => {
-				console.log("Error while getting all users");
+				;
 			})
-		setLoad(true);
+		//setLoad(true);
 	}
 
 	useEffect(() => {
@@ -66,9 +63,7 @@ export default function All(props: InputWrapperProps) {
 							{load == true ?
 								users.map(user =>
 									<div key={user.login}>
-										{/*<Suspense fallback={<Hearts color="#ffe4e1" height={100} width={100} key={user.login} />}>*/}
-											<MiniDisplay key={user.login} login={user.login} status={user.status} avatar={user.avatar} ftlogin={user.login42} extra="all" container="all" currentUser={props.login} />
-										{/*</Suspense>*/}
+										<MiniDisplay key={user.login} login={user.login} status={user.status} avatar={user.avatar} ftlogin={user.login42} extra="all" container="all" currentUser={props.login} />
 									</div>
 								)
 								: ""}

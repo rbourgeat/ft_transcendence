@@ -15,6 +15,23 @@ var canvas = [];
 var game = [];
 
 export default function Live() {
+<<<<<<< HEAD
+=======
+
+	if (localStorage.getItem("loggedIn") != "true")
+	{
+		return (<>
+			<Nav />
+			<div className="container">
+				<div className="row d-flex justify-content-center text-center">
+						<div className="channels-not-logged">
+							<p>You are not logged in.</p>
+						</div>
+				</div>
+			</div>
+		</>)
+	}
+>>>>>>> c3c82dbb339fa776ae179b7f01c0cfade61b7f44
 	let socket = io("http://localhost:3000/game");
 	const [myArgs, setmyArgs] = React.useState([""]);
 	const [displayedNo, setDisplayedNo] = React.useState(false);
@@ -25,6 +42,7 @@ export default function Live() {
 		//setDisplayedNo(true);
 		if (displayedNo == false)
 		{
+<<<<<<< HEAD
 			let check = document.getElementsByClassName("nogame");
 			console.log("no game is " + check.length);
 			if (check.length == 0)
@@ -37,12 +55,27 @@ export default function Live() {
 				parent.appendChild(nogame);
 			}
 			setDisplayedNo(true);
+=======
+			<>
+					<Nav />
+					<div className="container">
+						<div className="row d-flex justify-content-center text-center">
+							<div className="col-9">
+								<div className="channels-not-logged">
+									<p>You are not logged in.</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</>
+>>>>>>> c3c82dbb339fa776ae179b7f01c0cfade61b7f44
 		}
 		
 	}
 
 	function remove_no()
 	{
+<<<<<<< HEAD
 		//if (displayedNo == true)
 		//{
 			const todelete = Array.from(document.getElementsByClassName("nogame"));
@@ -52,6 +85,29 @@ export default function Live() {
 			if (displayedNo == true)
 				setDisplayedNo(false);
 		//}
+=======
+		if (localStorage.getItem("loggedIn") != "true")
+		{
+			return
+		}
+		document.getElementById("content").innerHTML = "<div></div>";
+		joueurs.map(joueur => {
+			adversaires.map(adversaire => {
+				document.getElementById("content").innerHTML += `
+				<div id='box'>
+					<div id='vs'>🏓 ` + joueur +` vs ` + adversaire +`</div>
+					<div id='score-` + adversaires.indexOf(adversaire) + `'></div>
+					<div id='dark-canvas'>
+						<canvas id="canvas-` + adversaires.indexOf(adversaire) + `"></canvas>
+					</div>
+				</div>
+				`;
+				// init partie pour chaque joueur + adversaire
+				initParty(adversaires.indexOf(adversaire));
+			})
+		});
+		noGames();
+>>>>>>> c3c82dbb339fa776ae179b7f01c0cfade61b7f44
 	}
 
 	function display(args)
@@ -201,7 +257,97 @@ export default function Live() {
 			})
 	});
 
+<<<<<<< HEAD
 	return (
+=======
+	socket.on("roundStartLIVE", (...args) => {
+		const b = args[0].split(':');
+		// console.log("round: " + b[0] + ", player1: " + b[1] + ", player2: " + b[2] + ", score1: " + b[3] + ", score2: " + b[4]);
+		joueurs.map(joueur => {
+			if (joueur)
+				if (joueur == b[1]) {
+					play();
+					document.querySelector('#score-' + joueurs.indexOf(joueur)).textContent = b[3] + " : " + b[4];
+				}
+		});
+	})
+
+
+	socket.on("stopGame", (...args) => {
+		if (localStorage.getItem("loggedIn") != "true")
+		{
+			//console.log("you are not legged in !");
+			return;
+		}
+		let i1 = joueurs.indexOf(args[0]);
+		let i2 = adversaires.indexOf(args[1]);
+		let i3 = adversaires.indexOf(args[0]);
+		let i4 = joueurs.indexOf(args[1]);
+		if (i1 > -1 && i2 > -1) {
+			joueurs.splice(i1, 1);
+			adversaires.splice(i2, 1);
+			display();
+		} else if (i3 > -1 && i4 > -1) {
+			joueurs.splice(i3, 1);
+			adversaires.splice(i4, 1);
+			display();
+		}
+	});
+
+	function ballMove(idGame: number) {
+		// Rebounds on top and bottom
+		if (canvas[idGame]) {
+			if (game[idGame].ball.y > canvas[idGame].height || game[idGame].ball.y < 0) {
+				game[idGame].ball.speed.y *= -1;
+			}
+			if (game[idGame].ball.x > canvas[idGame].width - PLAYER_WIDTH) {
+				collide(game[idGame].player2, idGame);
+			} else if (game[idGame].ball.x < PLAYER_WIDTH) {
+				collide(game[idGame].player, idGame);
+			}
+			// Ball progressive speed
+			game[idGame].ball.x += game[idGame].ball.speed.x;
+			game[idGame].ball.y += game[idGame].ball.speed.y;
+		}
+	}
+
+	function collide(player, idGame: number) {
+		// The player does not hit the ball
+		var bottom: Number;
+		bottom = Number(player.y) + Number(PLAYER_HEIGHT);
+		if (game[idGame].ball.y < player.y || game[idGame].ball.y > bottom) {
+			// Set ball and players to the center
+			game[idGame].ball.x = canvas[idGame].width / 2 - BALL_HEIGHT / 2;
+			game[idGame].ball.y = canvas[idGame].height / 2 - BALL_HEIGHT / 2;
+			game[idGame].ball.speed.y = BALL_SPEED;
+
+			if (player == game[idGame].player) {
+				// Change ball direction + reset speed
+				game[idGame].ball.speed.x = BALL_SPEED * -1;
+			} else {
+				// Change ball direction + reset speed
+				game[idGame].ball.speed.x = BALL_SPEED;
+			}
+		} else {
+			// Increase speed and change direction
+			if (BALL_ACCELERATE)
+				game[idGame].ball.speed.x *= -1.2;
+			else
+				game[idGame].ball.speed.x *= -1;
+			changeDirection(player.y, idGame);
+		}
+	}
+
+	function changeDirection(playerPosition, idGame: number) {
+		// Ball bounce
+		var impact = game[idGame].ball.y - playerPosition - PLAYER_HEIGHT / 2;
+		var ratio = 100 / (PLAYER_HEIGHT / 2);
+		game[idGame].ball.speed.y = Math.round(impact * ratio / 10);
+	}
+
+	//Attention sur les autres pages ont a le texte en anglais
+	return(
+>>>>>>> c3c82dbb339fa776ae179b7f01c0cfade61b7f44
 		<div id="live-page">
 			<Nav/>
 			<div className="container">

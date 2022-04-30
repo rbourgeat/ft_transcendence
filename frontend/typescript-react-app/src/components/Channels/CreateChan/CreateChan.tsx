@@ -28,11 +28,8 @@ export default function CreateChan(props: CreateChanProps) {
 
 	const handleExit = () => {
 		if (sucessfull === true) {
-			console.log("result will be " + !props.exited);
+			//console.log("result will be " + !props.exited);
 			props.setExited(!props.exited);
-		}
-		else {
-			console.log("Did not add anything")
 		}
 		chanNameSet("");
 		chanScopeSet("public");
@@ -52,15 +49,14 @@ export default function CreateChan(props: CreateChanProps) {
 		let isFree = false;
 		axios.get(url)
 			.then(res => {
-				console.log(res);//si existe renvoie faux
-				console.log(res.data);
-				console.log(typeof res.data);
+				//console.log(res);
+				//console.log(res.data);
+				//console.log(typeof res.data);
 				isFree = res.data;
 				load = true;
 
 				if (isFree == false) {
 					toast.notifyDanger("This channel already exists.");
-					//handleClose();
 					return;
 				}
 
@@ -73,10 +69,7 @@ export default function CreateChan(props: CreateChanProps) {
 				let body = {};
 
 				if (res.data == true || res.data == "true") {
-					//setIsFree("true");
-					//Ca ne rentre pas dans cette putin de condition
 					if (isFree == true && load == true) {
-						//console.log("creating channel");
 						url = "http://localhost:3000/api/chat/new";
 
 						let scope: boolean;
@@ -85,14 +78,14 @@ export default function CreateChan(props: CreateChanProps) {
 						else
 							scope = false;
 						if (chanPassword.length <= 0) {
-							console.log("body without pass");
+							//console.log("body without pass");
 							body = {
 								public: scope,
 								name: chanName
 							}
 						}
 						else {
-							console.log("body with pass:" + chanPassword);
+							//console.log("body with pass:" + chanPassword);
 							props.setHasPass(true);
 							body = {
 								password: chanPassword,
@@ -108,7 +101,8 @@ export default function CreateChan(props: CreateChanProps) {
 								handleClose();
 							})
 							.catch((error) => {
-								console.log("Catched error on post api chat. :(");
+								//console.log("Catched error on post api chat. :(");
+								;
 							})
 					}
 				}
@@ -117,7 +111,7 @@ export default function CreateChan(props: CreateChanProps) {
 
 	return (
 		<div id="create-chan_div">
-			<button type="button" className="btn btn-success"
+			<button type="button" className="btn"
 				id="createchan-button"
 				onClick={handleShow}
 				data-toggle="modal" data-target="#exampleModalCenter"

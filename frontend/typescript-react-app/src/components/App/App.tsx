@@ -26,6 +26,7 @@ import Profile from "../Profile/Profile";
 import Live from '../Live/Live';
 import Settings from "../User/Settings/Settings";
 import UserSub from "../User/UserSub";
+import {ToastContainer} from "react-toastify";
 
 function App() {
 
@@ -39,19 +40,25 @@ function App() {
 
 
 
-  async function getUser() {
+  /*async*/ function getUser() {
 
+    //if (localStorage.getItem("loggedIn") == "false")
+    //{
+    //  return ;
+    //}
+    
     let url = "http://localhost:3000/api/auth/";
     let username = "";
     axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
     axios.defaults.withCredentials = true;
-    await axios.get(url)
+    axios.get(url)
       .then(res => {
         username = res.data.login;
         setUsername(username);
       })
       .catch((err) => {
-        console.log("Error while getting api auth");
+        //console.log("Error while getting api auth");
+        ;
       })
   }
 
@@ -75,12 +82,17 @@ function App() {
   }, []);
 
   let particlesLoaded = (container) => {
-    console.log(container);
+    //console.log(container);
+    ;
   };
 
   return (
     <div id="main">
+<<<<<<< HEAD
       {/* <Particles
+=======
+      {/*<Particles
+>>>>>>> c3c82dbb339fa776ae179b7f01c0cfade61b7f44
         id="tsparticles"
         options={{
           background: {
@@ -133,9 +145,9 @@ function App() {
             },
             move: {
               direction: "bottom",
-              enable: true,
+              enable: false,
               outMode: "bounce",
-              random: true,
+              random: false,
               speed: 2,
               straight: false,
             },
@@ -160,7 +172,11 @@ function App() {
           },
           detectRetina: false
         }}
+<<<<<<< HEAD
       /> */}
+=======
+      />*/}
+>>>>>>> c3c82dbb339fa776ae179b7f01c0cfade61b7f44
       <Routes>
         <Route path="/" element={<Welcome />} />
         <Route path="/welcome" element={<Welcome />} />
@@ -178,9 +194,6 @@ function App() {
             <Route path="/game" element={<Game />} />
             <Route path="/profile/:login" element={<Profile />} />
             <Route path="*" element={<NotFound />} />
-            {/*<Route path="/welcome" element={<Welcome />} />
-            <Route path="/auth" element={<Auth />} />
-            <Route path="*" element={<Auth />} />*/}
           </>
           : ""
         }
@@ -191,6 +204,16 @@ function App() {
           <Route path="*" element={<Login2FA />} />
           : ""}
       </Routes>
+      <ToastContainer
+                                position="top-right"
+                                autoClose={5000}
+                                hideProgressBar={false}
+                                newestOnTop={false}
+                                closeOnClick
+                                rtl={false}
+                                pauseOnFocusLoss
+                                draggable
+                                pauseOnHover/>
     </div>
   );
 }

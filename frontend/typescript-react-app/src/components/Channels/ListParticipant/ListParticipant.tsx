@@ -6,17 +6,14 @@ import { ToastContainer } from 'react-toastify';
 import ToastAlerts from '../../Utils/ToastAlerts/ToastAlerts';
 import MyAxios from '../../Utils/Axios/Axios';
 import { Button, Modal, Form } from 'react-bootstrap';
-import { io } from "socket.io-client";
 
 export interface ParticipantProps {
-    socket?: any
     login: string,
     isChan?: boolean,
     hasPass?: boolean,
     setHasPass?: any,
     activeID?: string,
-    activeName?: string,
-    setActiveID?: any
+    activeName?: string
 }
 
 export default function ListParticipant(props: ParticipantProps) {
@@ -24,62 +21,71 @@ export default function ListParticipant(props: ParticipantProps) {
     const [functionToUse, updateFunctionToUse] = React.useState("");
     const [participates, updateParticipates] = React.useState([]);
     const [currentUserAdmin, setCurrentUserAdmin] = React.useState(false);
+    const [show, setShow] = React.useState(false);
+    const [passFail, setPassFAil] = React.useState("");
+    const [newPass, setNewPass] = React.useState("");
+    const [newPassConf, setNewPassConf] = React.useState("");
+    //const [loaded, setLoaded] = React.useState("false");
 
+    /*async*/
+    function getUsersfromChannel() {
+        let url: string;
+        if (props.activeID != "" && props.activeID != undefined && props.activeID != null) {
+            url = "http://localhost:3000/api/chat/".concat(props.activeID).concat("/users");
+            axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+            axios.defaults.withCredentials = true;
+            /*await*/
+            axios.get(url)
+                .then(response => {
+                    updateParticipates(response.data);
+                })
+                .catch(error => {
+                    //onsole.log("Error while getting users from a Channel/DM");
+                    ;
+                })
+        }
+        //else
+        //{
+        //    console.log("No active ID");
+        //}
+    }
+
+    function getCurrentUserAdminStatus() {
+        if (props.activeID != "" && props.activeID != undefined && props.activeID != null) {
+            let url = "http://localhost:3000/api/chat/isAdminIn/".concat(props.activeID);
+            axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+            axios.defaults.withCredentials = true;
+            /*await*/
+            axios.get(url)
+                .then(res => {
+                    if (res.data === true) {
+                        setCurrentUserAdmin(true);
+                    }
+                    else
+                        console.log(currentUserAdmin);
+                })
+                .catch((err) => {
+                })
+        }
+    }
 
     React.useEffect(() => {
-        console.log("------LIST PARTICIPANT PROPS--------");
-        console.log("activeID:" + props.activeID);
-        console.log("activeName:" + props.activeName);
-        console.log("isChan:" + props.isChan);
-        console.log("hasPass:" + props.hasPass);
-        console.log("--------------");
 
         if (props.isChan === true) {
+            setCurrentUserAdmin(false);
             getUsersfromChannel();
             getCurrentUserAdminStatus();
         }
         else if (props.isChan === false)
             getUsersfromChannel();
-
-        async function getCurrentUserAdminStatus() {
-
-            let url = "http://localhost:3000/api/chat/isAdminIn/".concat(props.activeID);
-            axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
-            axios.defaults.withCredentials = true;
-            await axios.get(url)
-                .then(res => {
-                    if (res.data === true)
-                        setCurrentUserAdmin(true);
-                })
-                .catch((err) => {
-                    console.log("Error while getting api auth");
-                })
-        }
     }, [props.activeID])
 
-    async function getUsersfromChannel() {
-        let url: string;
-        if (props.activeID) {
-            url = "http://localhost:3000/api/chat/".concat(props.activeID).concat("/users");
-            axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
-            axios.defaults.withCredentials = true;
-            await axios.get(url)
-                .then(response => {
-                    updateParticipates(response.data);
-                })
-                .catch(error => {
-                    console.log("Error while getting users from a Channel/DM");
-                })
-        }
-    }
-
-
     React.useEffect(() => {
-        console.log("selectedUser is set to : " + selectedUser);
+        //console.log("selectedUser is set to : " + selectedUser);
     }, [selectedUser])
 
     React.useEffect(() => {
-        console.log("functionToUse is set to : " + functionToUse);
+        //console.log("functionToUse is set to : " + functionToUse);
         executeFunction(functionToUse);
     }, [functionToUse])
 
@@ -129,9 +135,7 @@ export default function ListParticipant(props: ParticipantProps) {
     }
 
     function leaveChannel() {
-        props.socket.emit('updateChat', true);
         makeAPIcall("quit", "Successfull quit", "Error while quitting channel", true);
-        props.setActiveID = "0";
     }
 
     function blockUser() {
@@ -145,16 +149,16 @@ export default function ListParticipant(props: ParticipantProps) {
     }
 
     function inviteToPlay() {
-        // let toast = new ToastAlerts(null);
-        // toast.notifyDanger("A reprendre.");
-        window.top.location = "http://localhost:3030/game?vs=" + selectedUser;
+        let toast = new ToastAlerts(null);
+        toast.notifyDanger("A reprendre.");
     }
 
     function seeProfile() {
         window.top.location = "http://localhost:3030/profile/".concat(selectedUser);
     }
 
-    async function makeAPIcall(endpoint: string, toastSuccessMessage: string, toastErrorMessage: string, me: boolean) {
+    /*async*/
+    function makeAPIcall(endpoint: string, toastSuccessMessage: string, toastErrorMessage: string, me: boolean) {
         let toast = new ToastAlerts(null);
         const url = 'http://localhost:3000/api/chat/'.concat(endpoint);
 
@@ -164,43 +168,31 @@ export default function ListParticipant(props: ParticipantProps) {
             "idChat": props.activeID,
             "user": user
         }
-        await axios.post(url, body)
+        /*await*/
+        axios.post(url, body)
             .then(response => {
                 toast.notifySuccess(toastSuccessMessage);
                 if (endpoint == "quit") {
                     //let elem: any;
                     if (props.isChan == true) {
                         document.getElementById("display_chan_".concat(props.activeName)).remove();
-                        console.log("Removed channel from dom");
-                        //setActiveChannelName(document.getElementsByClassName("dm-title_notselected")[0]);
-                        console.log("---Inner html---");
                         let title = document.getElementsByClassName("chan-title_notselected")[0].innerHTML;
-                        console.log("title is " + title);
                         document.getElementsByClassName("chan-title_notselected")[0].className = 'chan-title_selected';
-                        //console.log(document.getElementsByClassName("chan-title_notselected")[0]);
-                        //console.log(document.getElementsByClassName("chan-title_notselected"));
-                        //if (title != "" && title != undefined)
-                        //props.setActiveChannelName(title);
                     }
                     else {
                         document.getElementById("dm_chan_".concat(props.activeName)).remove();
-                        console.log("Removed dm from dom");
-                        //Est-ce qu'on veut leave une channel DM?
                     }
 
                 }
             })
             .catch(error => {
                 //toast.notifyDanger(toastErrorMessage);
-                console.log("Error while leaving");
+                ;
             })
     }
 
-    const [show, setShow] = React.useState(false);
-    const [passFail, setPassFAil] = React.useState("");
-    const [newPass, setNewPass] = React.useState("");
-    const [newPassConf, setNewPassConf] = React.useState("");
     const handleClose = () => setShow(false);
+
     const handleShow = () => {
         setNewPass("");
         setNewPassConf("");
@@ -219,8 +211,6 @@ export default function ListParticipant(props: ParticipantProps) {
     }
 
     const handleRemovePass = () => {
-
-        console.log("we remove pass from chan");
         let toast = new ToastAlerts(null);
         const url = 'http://localhost:3000/api/chat/password';
 
@@ -239,7 +229,8 @@ export default function ListParticipant(props: ParticipantProps) {
         props.setHasPass(false);
     }
 
-    async function updatePass() {
+    /*async*/
+    function updatePass() {
         let toast = new ToastAlerts(null);
         const url = 'http://localhost:3000/api/chat/password';
 
@@ -247,7 +238,8 @@ export default function ListParticipant(props: ParticipantProps) {
             "idChat": props.activeID,
             "password": newPass
         }
-        await axios.post(url, body)
+        /*await*/
+        axios.post(url, body)
             .then(response => {
                 toast.notifySuccess("Update password :)");
             })
@@ -256,47 +248,34 @@ export default function ListParticipant(props: ParticipantProps) {
             })
     }
 
-
-    props.socket.on("updateParticipants", (...args) => {
-        console.log("updateParticipants");
-        getUsersfromChannel();
-        particip();
-    });
-
-    function particip() {
-
-        return (participates.map(participate =>
-            <Participant
-                socket={props.socket}
-                isChannel={props.isChan}
-                currentUserAdmin={currentUserAdmin}
-                currentUser={props.login}
-                key={participate.id}
-                username={participate.user.login}
-                role={participate.role}
-                owner={participate.owner}
-                admin={participate.admin}
-                updateSelectedUser={updateSelectedUser}
-                updateFunctionToUse={updateFunctionToUse} />
-        ))
-    }
-
     return (
         <div id="ListParticipant" className="col-3">
             <h2 id="participant--title">Members</h2>
             <div id="sub--div">
                 {
                     <div id="participants--div">
-                        {particip()}
+                        {participates.map(participate =>
+                            <Participant
+                                isChannel={props.isChan}
+                                currentUserAdmin={currentUserAdmin}
+                                currentUser={props.login}
+                                key={participate.id}
+                                username={participate.user.login}
+                                role={participate.role}
+                                owner={participate.owner}
+                                admin={participate.admin}
+                                updateSelectedUser={updateSelectedUser}
+                                updateFunctionToUse={updateFunctionToUse} />
+                        )}
                     </div>
                 }
             </div>
             <div className="buttons_div">
                 <div className="row">
                     <div className="col">
-                        {props.isChan === false ? null : <button id="leave--button" className="btn btn-danger" onClick={leaveChannel}>Leave channel</button>}
+                        {props.isChan === false ? null : <button id="leave--button" className="btn" onClick={leaveChannel}>Leave channel</button>}
                         {currentUserAdmin === true && props.hasPass ?
-                            <button id="leave--button" className="btn btn-warning" onClick={handleShow}>Update password</button>
+                            <button id="pass--button" className="btn" onClick={handleShow}>Update password</button>
                             :
                             null
                         }

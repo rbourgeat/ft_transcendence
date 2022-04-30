@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import './ButtonResume.scss';
-// import { Moment } from 'moment'
-// import { default as moment, Moment } from 'moment'
-//let moment = require('moment');
 
 export interface MatchHistoryProps {
     winner?: string,
@@ -22,9 +19,6 @@ export default function MatchHistory(props: MatchHistoryProps) {
 
     useEffect(() => {
         setMyDate(new Date(props.date));
-        console.log(myDate);
-        console.log(myDate.toDateString());
-        console.log(props.winner + ': is winning');
     }, []);
 
     function displayGamemode(mode: number) {
@@ -45,7 +39,6 @@ export default function MatchHistory(props: MatchHistoryProps) {
         <div className="buttonresume">
             <div className="row d-flex justify-content-center text-center">
                 <div className={props.winner === props.login ? "result--score_p result--score_winner" : "result--score_p result--score_loser"}>
-                {/*<div className={props.winner === props.login ? "result--score_winner" : "result--score_loser"}>*/}
                     <p className="info--game">{myDate.toDateString()} - {displayGamemode(props.gameMode)}</p>
                     <p className={props.winner === props.login ? "results--winner-color" : "results--loser-color"}>
                         {props.winner === props.login ? "Win" : "Loss"}</p>
