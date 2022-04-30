@@ -188,6 +188,8 @@ export default function Settings(props: SettingsProps) {
 		}
 		if (localStorage.getItem("2fa") == "true")
 			setActivated2fa(true);
+		let toast = new ToastAlerts(null);
+		toast.notifySuccess("Component loaded !");
 		getUser();
 		calledOnce.current = true;
 	});
@@ -290,7 +292,7 @@ export default function Settings(props: SettingsProps) {
 															<button className="btn btn-outline-dark" type="button" id="check--auth" onClick={checkCode}>Check</button>
 														</>
 														: <p className="black--text"></p>}
-													<ToastContainer
+													{/* <ToastContainer
 														position="top-right"
 														autoClose={5000}
 														hideProgressBar={false}
@@ -300,7 +302,7 @@ export default function Settings(props: SettingsProps) {
 														pauseOnFocusLoss
 														draggable
 														pauseOnHover
-													/>
+													/> */}
 												</div>
 											</div>
 										</div>

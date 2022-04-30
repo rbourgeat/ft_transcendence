@@ -26,6 +26,7 @@ import Profile from "../Profile/Profile";
 import Live from '../Live/Live';
 import Settings from "../User/Settings/Settings";
 import UserSub from "../User/UserSub";
+import {ToastContainer} from "react-toastify";
 
 function App() {
 
@@ -195,6 +196,16 @@ function App() {
           <Route path="*" element={<Login2FA />} />
           : ""}
       </Routes>
+      <ToastContainer
+                                position="top-right"
+                                autoClose={5000}
+                                hideProgressBar={false}
+                                newestOnTop={false}
+                                closeOnClick
+                                rtl={false}
+                                pauseOnFocusLoss
+                                draggable
+                                pauseOnHover/>
     </div>
   );
 }
