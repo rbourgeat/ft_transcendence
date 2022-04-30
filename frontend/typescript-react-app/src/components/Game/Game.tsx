@@ -73,28 +73,22 @@ export default function Game() {
 			document.querySelector('#search-button').textContent = "Impossible de te connecter !"
 	}
 
-	// function sendSearch2() {
-	// 	if (joueur) {
-	// 		isSearching = isSearching ? false : true;
-	// 		if (isSearching) {
-	// 			setActive(false);
-	// 			SearchText2 = "Annuler la demande"
-	// 			socket.emit('search', "RETRY:" + gameMode + ":" + adversaire);
-	// 		}
-	// 		else {
-	// 			setActive(true);
-	// 			SearchText2 = "Rejouer avec le même adversaire"
-	// 			socket.emit('search', "STOPSEARCH");
-	// 		}
-	// 		document.querySelector('#search-button2').textContent = SearchText;
-	// 	}
-	// 	else
-	// 		document.querySelector('#search-button2').textContent = "Impossible de te connecter !"
-	// }
 
-	// socket.on("roundStart", (...args) => {
-
-	// });
+	socket.on("roundStartLIVE", (...args) => {
+		if (live !== null) {
+			const b = args[0].split(':');
+			document.querySelector('#joueur1').textContent = b[1] + ": ";
+			document.querySelector('#joueur2').textContent = b[2] + ": ";
+			document.querySelector('#player-score').textContent = String(b[3]);
+			document.querySelector('#player2-score').textContent = String(b[4]);
+			joueur1 = b[1];
+			joueur2 = b[2];
+			cancelAnimationFrame(anim);
+			initParty();
+			play();
+			setActive(false);
+		}
+	});
 
 	socket.on("gameStart", (...args) => {
 		setWin(false);
@@ -104,6 +98,38 @@ export default function Game() {
 		joueur1 = args[0];
 		joueur2 = args[1];
 		gm = args[2];
+		initParty();
+		if (joueur1 != adversaire && joueur1 == joueur && game) {
+			adversaire = joueur2;
+			document.querySelector('#joueur1').textContent = joueur1 + ": ";
+			document.querySelector('#joueur2').textContent = joueur2 + ": ";
+			cancelAnimationFrame(anim);
+			play();
+			setActive(false);
+			// setActive2(false);
+			setGameMode(gm);
+		}
+		else if (joueur2 != adversaire && joueur2 == joueur && game) {
+			adversaire = joueur1;
+			document.querySelector('#joueur1').textContent = joueur1 + ": ";
+			document.querySelector('#joueur2').textContent = joueur2 + ": ";
+			cancelAnimationFrame(anim);
+			play();
+			setActive(false);
+			// setActive2(false);
+			setGameMode(gm);
+		}
+
+	});
+
+	socket.on("privateMatch", (...args) => {
+		setWin(false);
+		document.querySelector('#player-score').textContent = "0";
+		document.querySelector('#player2-score').textContent = "0";
+		document.querySelector('#victoryMessage').textContent = "";
+		joueur1 = args[0];
+		joueur2 = args[1];
+		gm = 0;
 		initParty();
 		if (joueur1 != adversaire && joueur1 == joueur && game) {
 			adversaire = joueur2;
@@ -224,8 +250,17 @@ export default function Game() {
 		getUser();
 		canvas = document.getElementById('canvas');
 		initParty();
-		if (!live)
+		if (live == null)
 			canvas.addEventListener('mousemove', playerMove);
+
+		if (live !== null) {
+			setActive(false);
+		}
+
+		if (vs) {
+			setActive(false);
+			this.socket.emit('vs', vs)
+		}
 	}, []);
 
 	window.addEventListener('resize', function(event) {
@@ -277,6 +312,15 @@ export default function Game() {
 			} else if (b[0] == joueur1 && joueur != joueur1) {
 				game.player.y = b[1];
 			}
+
+			if (live !== null) {
+				// const l = live.split('+');
+				// console.log(" joueur = " + b[0] + " et l[0]=" + l[0] + ", l[1]=" + l[1]);
+				if (b[0] == joueur1)
+					game.player.y = b[1];
+				else if (b[0] == joueur2)
+					game.player2.y = b[1];
+			}
 		}
 	});
 
@@ -309,10 +353,12 @@ export default function Game() {
 				// Change ball direction + reset speed
 				game.ball.speed.x = BALL_SPEED * -1;
 				// Update score
-				game.player2.score++;
-				socket.emit('roundStart', 0 + ":" + joueur1 + ":" + joueur2 + ":" + game.player.score + ":" + game.player2.score);
-				document.querySelector('#player2-score').textContent = game.player2.score;
-				if (game.player2.score === 5) {
+				if (live == null) {
+					game.player2.score++;
+					socket.emit('roundStart', 0 + ":" + joueur1 + ":" + joueur2 + ":" + game.player.score + ":" + game.player2.score + ":right");
+					document.querySelector('#player2-score').textContent = game.player2.score;
+				}
+				if (game.player2.score === 5 || document.querySelector('#player2-score').textContent == "5") {
 					stop();
 					clearDataGame();
 				}
@@ -320,10 +366,12 @@ export default function Game() {
 				// Change ball direction + reset speed
 				game.ball.speed.x = BALL_SPEED;
 				// Update score
-				game.player.score++;
-				socket.emit('roundStart', 0 + ":" + joueur1 + ":" + joueur2 + ":" + game.player.score + ":" + game.player2.score);
-				document.querySelector('#player-score').textContent = game.player.score;
-				if (game.player.score === 5) {
+				if (live == null) {
+					game.player.score++;
+					socket.emit('roundStart', 0 + ":" + joueur1 + ":" + joueur2 + ":" + game.player.score + ":" + game.player2.score+ ":left");
+					document.querySelector('#player-score').textContent = game.player.score;
+				}
+				if (game.player.score === 5 || document.querySelector('#player-score').textContent == "5") {
 					stop();
 					clearDataGame();
 				}
@@ -371,6 +419,8 @@ export default function Game() {
 	}
 
 	function clearDataGame() {
+		if (live !== null)
+			window.top.location = "http://localhost:3030/live";
 		joueur1 = null;
 		joueur2 = null;
 		// adversaire = null;

@@ -5,7 +5,6 @@ import { GameService } from './game.service';
 import { UserService } from '../user/user.service';
 
 let MatchMaking = [[],[],[],[],[]];
-let privateMatchMaking = [];
 
 @WebSocketGateway({ namespace: 'game', cors: true })
 export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, OnGatewayDisconnect {
@@ -75,6 +74,11 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
 		}
 
 		console.log(MatchMaking)
+	}
+
+	@SubscribeMessage('vs')
+	async versusMatch(@ConnectedSocket() socket: Socket, @MessageBody() body: string) {
+		this.server.emit('privateMatch', socket.handshake.query.username, body);
 	}
 
 	@SubscribeMessage('gameEnd')

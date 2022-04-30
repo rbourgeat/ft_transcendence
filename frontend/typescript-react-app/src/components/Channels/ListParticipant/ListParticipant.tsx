@@ -145,8 +145,9 @@ export default function ListParticipant(props: ParticipantProps) {
     }
 
     function inviteToPlay() {
-        let toast = new ToastAlerts(null);
-        toast.notifyDanger("A reprendre.");
+        // let toast = new ToastAlerts(null);
+        // toast.notifyDanger("A reprendre.");
+        window.top.location = "http://localhost:3030/game?vs=" + selectedUser;
     }
 
     function seeProfile() {
