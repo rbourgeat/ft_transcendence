@@ -9,6 +9,8 @@ import SentInvitations from "./SentInvitations/SentInvitations";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { AiOutlineLoading3Quarters, AiOutlineLoading } from "react-icons/ai";
+
+
 export interface PeopleProps {
 	login?: string
 }
@@ -22,7 +24,8 @@ export default function People(props: PeopleProps) {
 		window.top.location = "/people/";
 	}
 
-	async function getUser() {
+	/*async*/
+	function getUser() {
 		let url = "http://localhost:3000/api/auth/";
 
 		axios.defaults.baseURL = 'http://localhost:3000/api/';
@@ -32,15 +35,16 @@ export default function People(props: PeopleProps) {
 		axios.defaults.withCredentials = true;
 
 		let username = "";
-		await axios.get(url)
+		/*await*/
+		axios.get(url)
 			.then(res => {
 				username = res.data.login;
-				console.log(res);
+				setLoad(true);
 			})
 			.catch((err) => {
-				console.log("Auth returned 400 -> missing cookie");
+				;
 			})
-		setLoad(true);
+		//setLoad(true);
 	}
 
 	useEffect(() => {
@@ -60,7 +64,7 @@ export default function People(props: PeopleProps) {
 				<div id="all">
 					<div className="row" id="row-all">
 						<br />
-						{load == false ?
+						{/*{load == false ?
 							<div className="container">
 								<div className="row d-flex justify-content-center text-center">
 									<div className="mycontainer">
@@ -71,7 +75,7 @@ export default function People(props: PeopleProps) {
 								</div>
 							</div>
 							:
-							<>
+							<>*/}
 								<All login={props.login} />
 								<br />
 								<Friends />
@@ -82,8 +86,8 @@ export default function People(props: PeopleProps) {
 								<br />
 								<Blocked />
 								<br />
-							</>
-						}
+							{/*</>
+						}*/}
 					</div>
 				</div>
 			</div>

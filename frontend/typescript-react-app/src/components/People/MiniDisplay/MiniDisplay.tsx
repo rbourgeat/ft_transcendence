@@ -9,6 +9,7 @@ import { MdCancel, MdCheck, MdBlock } from 'react-icons/md';
 import { FiUserMinus, FiUserPlus, FiUserX } from 'react-icons/fi';
 import { FaMarsStroke } from 'react-icons/fa';
 import { ToastContainer, toast } from 'react-toastify';
+
 export interface MiniDisplayProps {
 	login?: string,
 	status?: string,
@@ -69,7 +70,6 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 				return (<img className="profile--pic" src={myImage.src} alt={imageName} id={props.login.concat("_" + props.extra)} height="100" width="100" />);
 			})
 			.catch((error) => {
-				console.log("Catched error during get/fileId/avatar");
 				return (<img className="profile--pic" src="https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg" alt={imageName} height="100" width="100" id={props.login.concat("_" + props.extra)} />);
 			})
 	}
@@ -119,13 +119,18 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 		window.top.location = url;
 	}
 
+	function azer(isBlocked) {
+		return (
+			<>
+				{isBlocked ? "" : <i className="user--action" onClick={() => addContact(props.login)}>{<FiUserPlus />}</i>}
+			</>
+		)
+	}
 	function buttonToDidsplay() {
-		if (props.container == "all") {
+		if (props.container === "all") {
 
-			let notBlocked: boolean = true;
-			let notFriend: boolean = true;
-
-
+			let isBlocked: boolean = false;
+			let isFriend: boolean = false;
 			let url = "http://localhost:3000/api/user/relation/relationStatusWith/".concat(props.login);
 
 			axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
@@ -138,18 +143,20 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 					setRelationStatus(status);
 				})
 				.catch((error) => {
-					console.log(error);
 				})
 
-			if (relationStatus == "accepted" || relationStatus == "pending")
-				notFriend = true;
-			else if (relationStatus == "blocked")
-				notBlocked = true;
+			if (relationStatus === "accepted" || relationStatus === "pending")
+				isFriend = true;
+			else if (relationStatus === "blocked")
+				isBlocked = true;
 
+			console.log("with " + props.login + " your friend status: " + isFriend + " your blocked status:" + isBlocked);
 			return (
 				<>
-					{notFriend ? <i className="user--action" onClick={() => addContact(props.login)}>{<FiUserPlus />}</i> : ""}
-					{notBlocked ? <i className="user--action" onClick={() => blockContact(props.login)}>{<FiUserX />}</i> : ""}
+					{isFriend ? "" :
+						azer(isBlocked)
+					}
+					{isBlocked ? "" : <i className="user--action" onClick={() => blockContact(props.login)}>{<FiUserX />}</i>}
 				</>
 			)
 		}

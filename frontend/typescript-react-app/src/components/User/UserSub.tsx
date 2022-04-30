@@ -67,8 +67,6 @@ export default function User(props: UserfuncProps) {
 		axios.get(url)
 			.then(res => {
 				username = res.data.login;
-				console.log(res);
-				/*if (res.data.login42 != null && res.data.login42 != undefined && res.data.login42 != "") {*/
 				setis42(true);
 				setlogin42(res.data.login42);
 				localStorage.setItem("login", res.data.login);
@@ -98,7 +96,7 @@ export default function User(props: UserfuncProps) {
 				renderImage(username);
 			})
 			.catch((err) => {
-				console.log("Auth returned 400 -> missing cookie");
+				;
 			})
 	}
 
@@ -113,14 +111,14 @@ export default function User(props: UserfuncProps) {
 	function renderImage(login: string) {
 		let ax = new MyAxios(null);
 		let log42 = localStorage.getItem("login42");
-		console.log("log42 is " + log42);
+
 		let haschanged = false;
 		if (login != log42)
 			haschanged = true;
-		console.log("calling render avatar");
+
 		if (log42 != "" && log42 != null && log42 != "null" && log42 != undefined)
 			return (ax.render_avatar(login, log42, haschanged));
-		console.log("Calling render avatar with login  " + login);
+		
 		return (ax.render_avatar(login, "", haschanged));
 	}
 
@@ -131,13 +129,13 @@ export default function User(props: UserfuncProps) {
 				<div className="row d-flex justify-content-center text-center">
 					<div className="col-9">
 						<div className="user--stats" key={username}>
-							{loaded == false ?
+							{/*{loaded == false ?
 								<div className="spinner-border m-5" role="status">
 									<span className="sr-only"><AiOutlineLoading /></span>
 								</div>
-								:
+								:*/}
 								<>
-									<h2 className="own-profile">My profile</h2>
+									{/*<h2 className="own-profile">My profile</h2>*/}
 									<br />
 									<img id={username} className="profile--pic" height="80" width="80" />
 									<svg className="log--color_profile" height="40" width="40">
@@ -160,11 +158,10 @@ export default function User(props: UserfuncProps) {
 											level={level}
 										/>
 										<br />
-										<MatchHistory login={username} />
+										{loaded == true ? <MatchHistory login={username} /> : ""}
 										<br />
 									</div>
 								</>
-							}
 						</div>
 					</div>
 				</div>

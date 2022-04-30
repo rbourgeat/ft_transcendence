@@ -4,22 +4,20 @@ import myAxios from "../../Utils/Axios/Axios";
 import axios from "axios";
 import MiniDisplay from '../MiniDisplay/MiniDisplay';
 
-
 export default function Blocked() {
 
 	const [users, setUsers] = React.useState([]);
 	const [load, setLoad] = React.useState(false);
 	const [reload, setReload] = React.useState(false);
-
 	const calledOnce = React.useRef(false);
 
-	async function renderBlocked() {
+	/*async*/
+	function renderBlocked() {
 		axios.defaults.withCredentials = true;
 		let url = "http://localhost:3000/api/user/relation/me/allBlocked";
-		await axios.get(url)
+		/*await*/
+		axios.get(url)
 			.then(res => {
-				console.log("Get api me/allBlocked successfully called.");
-				console.log(res);
 				let users = res.data;
 				let len = users.length;
 				let i = 0;
@@ -27,11 +25,13 @@ export default function Blocked() {
 					setUsers(prevArray => [...prevArray, users[i]])
 					i++;
 				}
+				setLoad(true);
 			})
 			.catch((error) => {
-				console.log("Error while getting my friends");
+				//console.log("Error while getting my friends");
+				;
 			})
-		setLoad(true);
+		//setLoad(true);
 	}
 
 	useEffect(() => {

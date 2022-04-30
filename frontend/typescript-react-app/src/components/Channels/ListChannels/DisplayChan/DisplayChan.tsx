@@ -32,11 +32,11 @@ export default function DisplayChan(props: DisplayChanProps) {
 
 			if (props.dm.participates[0].login == props.login || props.dm.participates[0].login === props.login)
 				rec = props.dm.participates[1].login;
-			else if (props.dm.participates[0].login == props.dm.participates[1].login)
-				console.log("Erreur, deux fois le même particpant");
+			//else if (props.dm.participates[0].login == props.dm.participates[1].login)
+			//	console.log("Erreur, deux fois le même particpant");
 			else
 				rec = props.dm.participates[0].login;
-			console.log("rec is " + rec);
+			//console.log("rec is " + rec);
 			setReceiver(rec);
 		}
 
@@ -68,7 +68,7 @@ export default function DisplayChan(props: DisplayChanProps) {
 			other.className = "chan-title_selected";
 
 			//bahaas needs pass boolean in participat to display button change pass
-			console.log("password of channel:" + props.channel.password)
+			//console.log("password of channel:" + props.channel.password)
 
 			if (props.channel.password)
 				props.setHasPass(true);
@@ -83,7 +83,7 @@ export default function DisplayChan(props: DisplayChanProps) {
 			selected.item(0).className = 'dm-title_notselected';
 			setIsSelected("true");
 
-			console.log("receiver is " + receiver);
+			//console.log("receiver is " + receiver);
 			props.setActiveID(props.channel.id);
 			props.setActiveName(receiver);
 

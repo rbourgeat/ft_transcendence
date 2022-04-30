@@ -4,8 +4,6 @@ import Nav from "../../Nav/Nav";
 import myAxios from "../../Utils/Axios/Axios";
 import axios from "axios";
 
-//TODO: a reprendre - ou supprimer (maxime)
-
 export default function ListPubChannels() {
 	const [pubChan, pubChanSet] = React.useState([]);
 
@@ -15,7 +13,8 @@ export default function ListPubChannels() {
 				pubChanSet(response.data);
 			})
 			.catch((error) => {
-				console.log(error);
+				//console.log(error);
+				;
 			})
 	}, [])
 
@@ -25,10 +24,12 @@ export default function ListPubChannels() {
 				"name": chanName
 			})
 				.then(function (response) {
-					console.log(response);
+					//console.log(response);
+					;
 				})
 				.catch(function (error) {
-					console.log(error);
+					//console.log(error);
+					;
 				});
 	}
 

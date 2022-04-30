@@ -9,12 +9,13 @@ export default function Friends() {
 	const [load, setLoad] = React.useState(false);
 	const calledOnce = React.useRef(false);
 
-	async function renderFriends() {
+	/*async*/
+	function renderFriends() {
 		axios.defaults.withCredentials = true;
 		let url = "http://localhost:3000/api/user/relation/me/allFriends";
-		await axios.get(url)
+		/*await*/ 
+		axios.get(url)
 			.then(res => {
-				console.log("Get api me/allFriends successfully called.");
 				let users = res.data;
 				let len = users.length;
 				let i = 0;
@@ -22,11 +23,12 @@ export default function Friends() {
 					setUsers(prevArray => [...prevArray, users[i]])
 					i++;
 				}
+				setLoad(true);
 			})
 			.catch((error) => {
-				console.log("Error while getting my friends");
+				;
 			})
-		setLoad(true);
+		//setLoad(true);
 	}
 
 	useEffect(() => {

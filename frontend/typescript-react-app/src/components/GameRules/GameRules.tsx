@@ -4,44 +4,30 @@ import io from "socket.io-client";
 import axios from "axios";
 import React, { Component, useState, useEffect } from "react";
 
-//TODO: idéalement à supprimer car on ne l'appelle plus et c'était pas très joli et le texte des règles est le même qu'un autre groupe
 export default function GameRules() {
 
 	const [username, setUsername] = React.useState("");
 
-	async function getUser() {
+	/*async*/
+	function getUser() {
 		let url = "http://localhost:3000/api/auth/";
 		let username = "";
 		axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 		axios.defaults.withCredentials = true;
-		await axios.get(url)
+		/*await*/
+		axios.get(url)
 			.then(res => {
 				username = res.data.login;
-				//console.log(username + ' <-- result of get user')
 				setUsername(username);
 			})
 			.catch((err) => {
-				console.log("Error while getting api auth");
+				//console.log("Error while getting api auth");
+				;
 			})
 	}
 
-	//const calledOnce = React.useRef(false);
-
-	//let socket = io("http://localhost:3000/game", { query: { username: username } });
-
 	useEffect(() => {
 		getUser();
-		/*
-				socket.on('connect', () => {
-					console.log(`Socket connectée !`);
-					//socket.emit('status', username + ':online')
-				})
-		
-				socket.on('disconnect', () => {
-					console.log(`Socket déconnectée !`);
-					//socket.emit('status', username + ':offline')
-				})
-				*/
 	}, []);
 
 	return (

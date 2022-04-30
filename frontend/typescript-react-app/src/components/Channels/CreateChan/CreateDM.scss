@@ -5,4 +5,9 @@
 	width: 85% !important;
 	border-radius: variables.$border-radius-big !important;
 	margin: 2px !important;
+	background-color: rgb(46, 138, 138);
+
+	&:hover {
+		background-color: rgb(59, 161, 161);
+	}
 }

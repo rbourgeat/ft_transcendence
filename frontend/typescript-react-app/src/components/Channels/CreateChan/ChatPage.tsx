@@ -14,26 +14,12 @@ export default function Chat(props: ChatProps) {
     function createChat()
     {
         let ax = new MyAxios(null);
-        let res = ax.post_api_chat("channel1", true, "password");
+        //let res = ax.post_api_chat("channel1", true, "password");
     }
 
     function listChats()
     {
         let ax = new MyAxios(null);
-
-        //axios.defaults.baseURL = 'http://localhost:3000/api/';
-		//axios.defaults.headers.post['Content-Type'] = 'application/json';
-		//	axios.defaults.headers.post['Accept'] = '*/*';
-		//	axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
-		//	axios.defaults.withCredentials = true;
-
-		//let headers = {
-		//	'Content-Type': 'application/json'
-		//}
-
-		//let body = {};
-
-        //let res = ax.get_api_chat();
     }
 
         return (

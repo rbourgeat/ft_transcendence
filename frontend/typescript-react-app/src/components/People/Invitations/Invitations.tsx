@@ -10,12 +10,13 @@ export default function Invitations() {
 
 	const calledOnce = React.useRef(false);
 
-	async function renderInvitations() {
+	/*async*/
+	function renderInvitations() {
 		axios.defaults.withCredentials = true;
 		let url = "http://localhost:3000/api/user/relation/me/pendingInvitations";
-		await axios.get(url)
+		/*await*/
+		axios.get(url)
 			.then(res => {
-				console.log("Get api me/pendingInvitations successfully called.");
 				let users = res.data.map(element => element.creator)
 				let len = users.length;
 				let i = 0;
@@ -23,11 +24,13 @@ export default function Invitations() {
 					setUsers(prevArray => [...prevArray, users[i]])
 					i++;
 				}
+				setLoad(true);
 			})
 			.catch((error) => {
-				console.log("Error while getting my friends");
+				//console.log("Error while getting my friends");
+				;
 			})
-		setLoad(true);
+		//setLoad(true);
 	}
 
 	useEffect(() => {
