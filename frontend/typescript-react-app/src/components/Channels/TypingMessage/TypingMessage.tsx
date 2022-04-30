@@ -3,6 +3,8 @@ import React, { Component, useState, useEffect } from "react";
 import io from "socket.io-client";
 import SingleMessage from "../ListDiscussions/SingleMessage/SingleMessage";
 import axios from 'axios';
+// import { env } from 'process';
+import ToastAlerts from '../../Utils/ToastAlerts/ToastAlerts';
 
 export interface TypingProps {
     login: string,
@@ -23,21 +25,6 @@ export default function TypingMessage(props: TypingProps) {
     const [text, updateText] = React.useState("");
     const [username, setUsername] = React.useState("");
     const [isMuted, setIsMuted] = React.useState(false);
-
-    function getUserParticipateCard() {
-        /*
-        let url = "http://localhost:3000/api/chat/".concat(parseInt(id)).concat("/users");
-        axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
-        axios.defaults.withCredentials = true;
-        axios.get(url)
-            .then(res => {
-            })
-            .catch((err) => {
-                //console.log("Error while getting api auth");
-                ;
-            })
-            */
-    }
 
     function checkisMuted() {
         //console.log("props chanId is " + props.chanId);
@@ -67,6 +54,26 @@ export default function TypingMessage(props: TypingProps) {
         }
     }
 
+    setInterval(() => {
+        /*
+        if (isMuted === true) {
+            setIsMuted(false);
+            //console.log("interval with isMuted == true");
+            const url = 'http://localhost:3000/api/chat/unmute';
+
+            const body = {
+                "idChat": props.chanId,
+                "user": props.login
+            }
+            axios.post(url, body)
+                .then(response => {
+                })
+                .catch(error => {
+                });
+        }
+        */
+    }, 50000);
+
     useEffect(() => {
         checkisMuted();
     }, [props.chanId]);
@@ -75,32 +82,71 @@ export default function TypingMessage(props: TypingProps) {
     //let socket = io("http://localhost:3000/chat", { query: { username: props.login } });
 
     function sendMessage(message: string) {
+        console.log(process.env.REACT_APP_IP)
+        console.log("-------");
+        // console.log(TEST)
+        // console.log('port ' + env.PORT)
+        console.log("test");
+        // let toast = new ToastAlerts(null);
+
         if (message !== "") {
             updateText("");
-            props.socket.emit('message', props.login + ":" + props.channel + ":" + message)
+            props.socket.emit('message', props.login + ":" + props.channel + ":" + message);
+            // toast.notifySuccess(process.env.TEST);
         }
     }
+
+    //this.server.emit('isMute', user.login, body.mute);
+
+    props.socket.on('isMute', (...args) => {
+        if (props.login == args[0] && args[1] == true) {
+            setIsMuted(true)
+            console.log("set is mute to true")
+        }
+        else if (props.login == args[0] && args[1] == false) {
+            setIsMuted(false)
+            console.log("set is mute to false")
+        }
+    })
+
+    const [seconds, setSeconds] = useState(600);
+    const [isActive, setIsActive] = useState(false);
+
+    useEffect(() => {
+        /*
+                let interval = null;
+
+                interval = setInterval(() => {
+                    setSeconds(seconds => seconds - 1);
+                }, 10000);
+
+                return () => clearInterval(interval);
+        */
+    }, [isActive, seconds]);
 
     return (
         <div id="typing--div">
             <section className="send-message-form">
-                <input
-                    placeholder="Your message..."
-                    value={text}
-                    className="form-control typing--input"
-                    id="message-typed"
-                    onChange={e => updateText(e.target.value)}
-                    disabled={isMuted == true ? true : false}
-                />
-                <button
-                    type="submit"
-                    className="btn btn-outline-dark"
-                    onClick={() => sendMessage(text)}
-                    disabled={isMuted == true ? true : false}
-                >
-                    Send
-                </button>
+                {
+                    isMuted === true ?
+                        <>
+                            You are muted in that channel for {seconds}s
+                        </>
+                        :
+                        <>
+                            <input
+                                placeholder="Your message..."
+                                value={text}
+                                className="form-control typing--input"
+                                id="message-typed"
+                                onChange={e => updateText(e.target.value)}
+                            />
+                            <button type="submit" className="btn btn-outline-dark" onClick={() => sendMessage(text)} >
+                                Send
+                            </button>
+                        </>
+                }
             </section>
-        </div>
+        </div >
     );
 }

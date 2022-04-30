@@ -3,6 +3,7 @@ import { Server, Socket } from 'socket.io';
 import { ChatService } from './chat.service';
 import { UserService } from 'src/user/user.service';
 import { Logger } from "@nestjs/common";
+import { CreateChatDto, MuteDto } from './dto/chat.dto';
 
 const clients = [];
 
@@ -41,6 +42,8 @@ export class ChatGateway implements OnGatewayConnection {
 
 	@SubscribeMessage('message')
 	async messageMessage(@ConnectedSocket() socket: Socket, @MessageBody() body: string) {
+		console.log(body + 'event message');
+		console.log(process.env.TEST);
 		const b = body.split(':');
 		const author = await this.userService.getUserByLogin(b[0]);
 		const message = await this.chatService.saveChatMessage(b[1], b[2], author);
@@ -54,11 +57,47 @@ export class ChatGateway implements OnGatewayConnection {
 			const messages = await this.chatService.getMessagesById2(body, String(socket.handshake.query.username));
 			socket.emit('sendAllMessages', messages);
 		}
-	} 
+	}
 
 	@SubscribeMessage('updateChat')
 	async updateChat(@ConnectedSocket() socket: Socket, @MessageBody() body: string) {
 		this.server.emit('newMessageEvent', true);
 		this.server.emit('updateParticipants', true);
+	}
+
+	@SubscribeMessage('refresh')
+	async refreshChat(@ConnectedSocket() socket: Socket, @MessageBody() body: string) {
+		console.log(body + 'event refresh');
+		//const b = body.split(':');
+		//const author = await this.userService.getUserByLogin(b[0]);
+		//const message = await this.chatService.saveChatMessage(b[1], b[2], author);
+
+		//const messages = await this.chatService.getMessagesbyName(b[1]);
+		const chat = await this.chatService.getChatByName(body);
+		const users = await this.chatService.getUsersInChannel(chat.id);
+		this.server.emit('refreshParticipants', users, body);
+	}
+
+	@SubscribeMessage('mute')
+	async muteUser(@ConnectedSocket() socket: Socket, @MessageBody() body: MuteDto) {
+		console.log(body.user + " " + body.mute + 'event isMute');
+		//const b = body.split(':');
+		//const author = await this.userService.getUserByLogin(b[0]);
+		//const message = await this.chatService.saveChatMessage(b[1], b[2], author);
+
+		//const messages = await this.chatService.getMessagesbyName(b[1]);
+		//const chat = await this.chatService.getChatByName(body);
+		const user = await this.userService.getUserByLogin(body.user);
+		this.server.emit('isMute', user.login, body.mute);
+	}
+
+	@SubscribeMessage('requestAllUsers')
+	async requestAllUsers(@ConnectedSocket() socket: Socket, @MessageBody() body: number) {
+		if (body) {
+			console.log(body + 'lollll');
+			const users = await this.chatService.getUsersInChannel(body);
+			socket.emit('sendAllUsers', users);
+			//this.server.emit('sendAllUsers', users, body);
+		}
 	}
 }

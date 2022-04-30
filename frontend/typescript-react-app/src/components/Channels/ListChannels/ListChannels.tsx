@@ -13,7 +13,8 @@ export interface ListChannelsProps {
 	setIsChan?: any,
 	minIdDM?: any,
 	setActiveID?: any,
-	setActiveName?: any
+	setActiveName?: any,
+	socket?: any
 }
 
 export default function ListChannels(props: ListChannelsProps) {
@@ -172,7 +173,7 @@ export default function ListChannels(props: ListChannelsProps) {
 				<div className="add-channel-a">
 					<CreateChan setExited={setExited} setUpdate={setUpdate} exited={exited} setHasPass={props.setHasPass} />
 					<CreateDM setExited={setExited} setUpdate={setUpdate} exited={exited} />
-					<JoinChan setExited={setExited} setUpdate={setUpdate} exited={exited} />
+					<JoinChan socket={props.socket} setExited={setExited} setUpdate={setUpdate} exited={exited} login={props.login} />
 				</div>
 				<p className="selected--categorie">{selectedCat === "Channels" ? "Your Channels" : "Your direct messages"}</p>
 				<div className="displaying-div">

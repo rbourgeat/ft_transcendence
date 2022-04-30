@@ -8,8 +8,12 @@ RUN npm install --save bootstrap@latest
 RUN apk add xsel
 RUN npm install -g serve
 
+#ARG TEST
+
+#ENV TEST $TEST
+
 EXPOSE 3030
-#Commande pour dev 
+#Commande pour dev
 ENTRYPOINT npm install --legacy-peer-deps --silent && npm update --silent && npm start
 
 #Command pour build / correction OK
