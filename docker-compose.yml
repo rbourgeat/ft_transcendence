@@ -39,7 +39,8 @@ services:
     ports:
       - "31415:5432"
     volumes:
-      - ./database-data:/var/lib/postgresql/data
+      #- ./database-data:/var/lib/postgresql/data
+      - ./database-data:/goinfre/$USER/postgresql/data
     networks:
       - database
     restart: always
