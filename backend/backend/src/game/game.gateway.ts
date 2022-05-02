@@ -76,7 +76,7 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
 		console.log(MatchMaking)
 	}
 
-	@SubscribeMessage('vs')
+	@SubscribeMessage('versus')
 	async versusMatch(@ConnectedSocket() socket: Socket, @MessageBody() body: string) {
 		this.server.emit('privateMatch', socket.handshake.query.username, body);
 	}
@@ -107,6 +107,12 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
 		const b = body.split(':');
 		this.server.emit('roundStartLIVE', body);
 		console.log("round: " + b[0] + ", player1: " + b[1] + ", player2: " + b[2] + ", score1: " + b[3] + ", score2: " + b[4]);
+	}
+
+	@SubscribeMessage('ballMoveFront')
+	async ballMoveEmit(@ConnectedSocket() socket: Socket, @MessageBody() body: string) {
+		// const b = body.split(':');
+		this.server.emit('ballMoveBack', body);
 	}
 
 

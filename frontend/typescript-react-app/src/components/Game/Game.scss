@@ -27,10 +27,11 @@
   background: black !important;
   padding: 50px !important;
   border-radius: variables.$border-radius-big;
-  border: 0.1rem solid white;
+  border: .4rem solid white;
   position: sticky;
-  box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
+  // box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
   margin-bottom: 50px;
+  transition-duration: 1s;
 }
 
 #form-select, #search-button, #search-button2 {

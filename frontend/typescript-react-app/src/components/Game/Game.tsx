@@ -76,7 +76,7 @@ export default function Game() {
 
 
 	socket.on("roundStartLIVE", (...args) => {
-		if (live !== null) {
+		if (live !== null || joueur == joueur2) {
 			const b = args[0].split(':');
 			document.querySelector('#joueur1').textContent = b[1] + ": ";
 			document.querySelector('#joueur2').textContent = b[2] + ": ";
@@ -84,10 +84,21 @@ export default function Game() {
 			document.querySelector('#player2-score').textContent = String(b[4]);
 			joueur1 = b[1];
 			joueur2 = b[2];
-			cancelAnimationFrame(anim);
-			initParty();
-			play();
+			// if (live !== null) {
+			// 	cancelAnimationFrame(anim);
+			// 	initParty();
+			// 	play();
+			// }
 			setActive(false);
+			if (game) {
+				game.player.score = b[3];
+				game.player2.score = b[4];
+			}
+			if ((document.querySelector('#player-score').textContent == "5" || 
+				document.querySelector('#player2-score').textContent == "5") && live == null) {
+				stop();
+				clearDataGame();
+			}
 		}
 	});
 
@@ -107,7 +118,6 @@ export default function Game() {
 			cancelAnimationFrame(anim);
 			play();
 			setActive(false);
-			// setActive2(false);
 			setGameMode(gm);
 		}
 		else if (joueur2 != adversaire && joueur2 == joueur && game) {
@@ -117,17 +127,20 @@ export default function Game() {
 			cancelAnimationFrame(anim);
 			play();
 			setActive(false);
-			// setActive2(false);
 			setGameMode(gm);
 		}
 
 	});
 
 	socket.on("privateMatch", (...args) => {
+		if (vs === null)
+			return;
+		console.log(args)
 		setWin(false);
 		document.querySelector('#player-score').textContent = "0";
 		document.querySelector('#player2-score').textContent = "0";
 		document.querySelector('#victoryMessage').textContent = "";
+		document.querySelector('#waitingPlayer').textContent = "";
 		joueur1 = args[0];
 		joueur2 = args[1];
 		gm = 0;
@@ -139,7 +152,6 @@ export default function Game() {
 			cancelAnimationFrame(anim);
 			play();
 			setActive(false);
-			// setActive2(false);
 			setGameMode(gm);
 		}
 		else if (joueur2 != adversaire && joueur2 == joueur && game) {
@@ -149,7 +161,6 @@ export default function Game() {
 			cancelAnimationFrame(anim);
 			play();
 			setActive(false);
-			// setActive2(false);
 			setGameMode(gm);
 		}
 
@@ -257,9 +268,10 @@ export default function Game() {
 			setActive(false);
 		}
 
-		if (vs) {
+		if (vs !== null) {
 			setActive(false);
-			this.socket.emit('vs', vs)
+			socket.emit('versus', vs)
+			document.querySelector('#waitingPlayer').textContent = "Waiting player...";
 		}
 	}, []);
 
@@ -314,30 +326,47 @@ export default function Game() {
 			}
 
 			if (live !== null) {
-				// const l = live.split('+');
-				// console.log(" joueur = " + b[0] + " et l[0]=" + l[0] + ", l[1]=" + l[1]);
-				if (b[0] == joueur1)
+				const l = live.split('+');
+				const li = l[0].split(' ');
+				console.log(" l[0] = " + li[0] + " et l[1]=" + li[1]);
+				console.log(" b[0] = " + b[0]);
+				if (b[0] == li[0])
 					game.player.y = b[1];
-				else if (b[0] == joueur2)
+				else if (b[0] == li[1])
 					game.player2.y = b[1];
+				draw();
 			}
 		}
 	});
 
 	function ballMove() {
 		// Rebounds on top and bottom
-		if (game.ball.y > canvas.height || game.ball.y < 0) {
-			game.ball.speed.y *= -1;
+		if (joueur == joueur1) {
+			if (game.ball.y > canvas.height || game.ball.y < 0) {
+				game.ball.speed.y *= -1;
+			}
+			if (game.ball.x > canvas.width - PLAYER_WIDTH) {
+				collide(game.player2);
+			} else if (game.ball.x < PLAYER_WIDTH) {
+				collide(game.player);
+			}
+			// Ball progressive speed
+			game.ball.x += game.ball.speed.x;
+			game.ball.y += game.ball.speed.y;
+			socket.emit('ballMoveFront', joueur1 + ":" + joueur2 + ":" + game.ball.x + ":" + game.ball.y + ":" + game.ball.speed.x + ":" + game.ball.speed.y);	
 		}
-		if (game.ball.x > canvas.width - PLAYER_WIDTH) {
-			collide(game.player2);
-		} else if (game.ball.x < PLAYER_WIDTH) {
-			collide(game.player);
-		}
-		// Ball progressive speed
-		game.ball.x += game.ball.speed.x;
-		game.ball.y += game.ball.speed.y;
 	}
+
+	socket.on("ballMoveBack", (body: string) => {
+		const b = body.split(':');
+		if (game !== undefined)
+			if ((joueur == joueur2 && joueur2 == b[1] && joueur1 == b[0]) || live !== null) {
+				game.ball.x = b[2];
+				game.ball.y = b[3];
+				if (live !== null)
+					draw();
+			}
+	});
 
 	function collide(player) {
 		// The player does not hit the ball
@@ -353,11 +382,9 @@ export default function Game() {
 				// Change ball direction + reset speed
 				game.ball.speed.x = BALL_SPEED * -1;
 				// Update score
-				if (live == null) {
-					game.player2.score++;
-					socket.emit('roundStart', 0 + ":" + joueur1 + ":" + joueur2 + ":" + game.player.score + ":" + game.player2.score + ":right");
-					document.querySelector('#player2-score').textContent = game.player2.score;
-				}
+				game.player2.score++;
+				socket.emit('roundStart', 0 + ":" + joueur1 + ":" + joueur2 + ":" + game.player.score + ":" + game.player2.score + ":right");
+				document.querySelector('#player2-score').textContent = game.player2.score;
 				if (game.player2.score === 5 || document.querySelector('#player2-score').textContent == "5") {
 					stop();
 					clearDataGame();
@@ -366,11 +393,9 @@ export default function Game() {
 				// Change ball direction + reset speed
 				game.ball.speed.x = BALL_SPEED;
 				// Update score
-				if (live == null) {
-					game.player.score++;
-					socket.emit('roundStart', 0 + ":" + joueur1 + ":" + joueur2 + ":" + game.player.score + ":" + game.player2.score + ":left");
-					document.querySelector('#player-score').textContent = game.player.score;
-				}
+				game.player.score++;
+				socket.emit('roundStart', 0 + ":" + joueur1 + ":" + joueur2 + ":" + game.player.score + ":" + game.player2.score+ ":left");
+				document.querySelector('#player-score').textContent = game.player.score;
 				if (game.player.score === 5 || document.querySelector('#player-score').textContent == "5") {
 					stop();
 					clearDataGame();
@@ -487,11 +512,12 @@ export default function Game() {
 											</Form.Group>
 										</Form>
 										: ""}
-									<div className="row d-flex justify-content-center text-center">
+$									<div className="row d-flex justify-content-center text-center">
 										{isActive ? <button type="button" className="btn btn-outline-light" id="search-button" onClick={() => sendSearch()}>{SearchText}</button> : ""}
 										{/* {isActive2 ? <button type="button" className="btn btn-outline-light" id="search-button2" onClick={() => sendSearch2()}>{SearchText2}</button> : ""} */}
 									</div>
 									<p id="victoryMessage"></p>
+									<p id="waitingPlayer"></p>
 									{isWin ? <Confetti width={2000} height={2000} /> : ""}
 									<main role="main">
 										<p className="canvas-score" id="scores">

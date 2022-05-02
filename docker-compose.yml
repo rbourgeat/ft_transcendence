@@ -5,12 +5,8 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
-      args:
-        TEST: ${TEST}
     ports:
       - "3030:3030"
-    env_file:
-      - .env
     networks:
       - webapp
     restart: always
@@ -24,8 +20,6 @@ services:
     build:
       context: ./backend/
       dockerfile: Dockerfile
-    env_file:
-      - .env
     ports:
       - "3000:3000"
     volumes:
@@ -45,7 +39,7 @@ services:
     ports:
       - "31415:5432"
     volumes:
-      - ./database-data:/goinfre/$USER/postgresql/data
+      - ./database-data:/var/lib/postgresql/data
     networks:
       - database
     restart: always
