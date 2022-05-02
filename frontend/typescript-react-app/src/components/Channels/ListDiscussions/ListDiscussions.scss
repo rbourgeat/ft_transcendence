@@ -28,8 +28,9 @@
 	background-color: rgb(28, 106, 111);
 	padding: 10px;
 	border-radius: 25px;
-	left: 10%;
-	// position: absolute;
+	left: 10% !important;
+	text-align: left;
+	word-break: break-all !important;
 }
 
 #author {

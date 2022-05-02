@@ -7,12 +7,17 @@ import axios from 'axios';
 import TypingMessage from "../TypingMessage/TypingMessage";
 import MyAxios from '../../Utils/Axios/Axios';
 
+let url_begin = "http://".concat(process.env.REACT_APP_IP);
+
 export interface ListDiscussionsProps {
 	login: string,
 	isChan?: any,
 	activeID?: string,
 	activeName?: string,
-	socket?: any
+	socket?: any,
+	hide?: boolean
+	isBanned?: boolean
+	setIsBanned?: any
 }
 
 export default function ListDiscussions(props: ListDiscussionsProps) {
@@ -48,6 +53,40 @@ export default function ListDiscussions(props: ListDiscussionsProps) {
 
 	});
 
+	props.socket.on('isBan', (...args) => {
+		if (props.login == args[0] && args[1] == true) {
+			props.setIsBanned(true)
+			console.log("set is ban to true")
+		}
+		else if (props.login == args[0] && args[1] == false) {
+			props.setIsBanned(false)
+			console.log("set is ban to false")
+		}
+	})
+
+	function checkisBanned() {
+		if (props.activeID != "" && props.activeID != undefined && props.activeID != null) {
+			let url = url_begin.concat(":3000/api/chat/isBannedIn/").concat(props.activeID);
+			axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+			axios.defaults.withCredentials = true;
+			axios.get(url)
+				.then(res => {
+					if (res.data == false) {
+						props.setIsBanned(false);
+					}
+					else if (res.data == true) {
+						props.setIsBanned(true);
+					}
+				})
+				.catch((error) => {
+				})
+		}
+	}
+
+	useEffect(() => {
+		checkisBanned();
+	}, [props.activeID]);
+
 	function renderImage(login: string, isUserProfile: boolean) {
 		let ax = new MyAxios(null);
 		let log42 = localStorage.getItem("login42");
@@ -64,41 +103,63 @@ export default function ListDiscussions(props: ListDiscussionsProps) {
 	return (
 		<div id="ListDiscussions" className="col-5">
 			<div className="title_chat_div">
-				<p className="chat--title">{props.activeName}</p>
+				{
+					props.hide === false ?
+						<p className="chat--title">{props.activeName}</p>
+						:
+						<p className="chat--title"></p>
+				}
 			</div>
 			<div className="messages-zone">
 				<ul className="text">
 					{
-						props.activeName === sockChan ?
-							messages.map(message =>
-								<div id="author" className={message.author.login === props.login ? "from-me" : "from-them"} key={message.id}>
-									{message.author.login}
-									<li id="message" key={message.id} className={message.author.login === props.login ? "my-messages" : ""}>
-										{message.content}
-									</li>
-									<br />
-								</div>
-							)
+						props.isBanned === true ?
+							null
 							:
-							oldMessages.map(message =>
-								<div id="author" className={message.author.login === props.login ? "from-me" : "from-them"} key={message.id}>
-									{message.author.login}
-									<li id="message" key={message.id} className={message.author.login === props.login ? "my-messages" : ""}>
-										{message.content}
-									</li>
-									<br />
-								</div>
-							)
+							props.hide === false ?
+								props.activeName === sockChan ?
+									messages.map(message =>
+										<div id="author" className={message.author.login === props.login ? "from-me" : "from-them"} key={message.id}>
+											{message.author.login}
+											<li id="message" key={message.id} className={message.author.login === props.login ? "my-messages" : ""}>
+												{message.content}
+											</li>
+											<br />
+										</div>
+									)
+									:
+									oldMessages.map(message =>
+										<div id="author" className={message.author.login === props.login ? "from-me" : "from-them"} key={message.id}>
+											{message.author.login}
+											<li id="message" key={message.id} className={message.author.login === props.login ? "my-messages" : ""}>
+												{message.content}
+											</li>
+											<br />
+										</div>
+									)
+								:
+								null
 					}
 				</ul>
 			</div>
-			<TypingMessage
-				socket={props.socket}
-				login={props.login}
-				channel={props.activeName}
-				id={props.activeID}
-				chanId={props.activeID}
-			/>
+			{
+				props.hide === true ?
+					""
+					:
+					props.isBanned === true ?
+						<div>BAN</div>
+						:
+						< TypingMessage
+							sockChan={sockChan}
+							socket={props.socket}
+							login={props.login}
+							channel={props.activeName}
+							id={props.activeID}
+							activeName={props.activeName}
+							chanId={props.activeID}
+						/>
+			}
+
 		</div>
 	);
 }

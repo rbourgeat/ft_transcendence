@@ -12,6 +12,7 @@ export interface DisplayChanProps {
 	setActiveID?: any,
 	setActiveName?: any
 	receiver?: string,
+	setHide?: any
 }
 
 export default function DisplayChan(props: DisplayChanProps) {
@@ -52,6 +53,7 @@ export default function DisplayChan(props: DisplayChanProps) {
 			}
 		}
 		setLoad(true);
+		props.setHide(false);
 		calledOnce.current = true;
 	}, [isSelected]);
 
@@ -74,6 +76,7 @@ export default function DisplayChan(props: DisplayChanProps) {
 				props.setHasPass(true);
 			else
 				props.setHasPass(false);
+			props.setHide(false);
 		}
 	}
 
@@ -89,6 +92,7 @@ export default function DisplayChan(props: DisplayChanProps) {
 
 			let other = document.getElementById("dm-title_".concat(props.channel.id));
 			other.className = "dm-title_selected";
+			props.setHide(false);
 		}
 	}
 

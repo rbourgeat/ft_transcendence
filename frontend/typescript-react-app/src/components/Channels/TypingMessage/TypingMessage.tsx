@@ -14,6 +14,9 @@ export interface TypingProps {
     id: string,
     socket?: any
     chanId?: string
+    activeID?: string,
+    activeName?: string,
+    sockChan?: any
 }
 
 export interface TypingState {
@@ -27,7 +30,7 @@ export default function TypingMessage(props: TypingProps) {
     const [text, updateText] = React.useState("");
     const [username, setUsername] = React.useState("");
     const [isMuted, setIsMuted] = React.useState(false);
-
+    const [sockChan, setsockChan] = React.useState(props.activeName);
     function checkisMuted() {
         //console.log("props chanId is " + props.chanId);
 
@@ -57,11 +60,14 @@ export default function TypingMessage(props: TypingProps) {
     }
 
     setInterval(() => {
+        //console.log("value every 10s = isMuted:" + isMuted + ", activeName:" + props.activeName + ", sockchan:" + props.sockChan);
+        if (isMuted === true && props.activeName === props.sockChan) {
 
-        /*
-        if (isMuted === true) {
+            // console.log("interval with isMuted == true");
+            // setIsMuted(false);
+            /*
             setIsMuted(false);
-            //console.log("interval with isMuted == true");
+            console.log("interval with isMuted == true");
             let url = url_begin.concat(":3000/api/chat/unmute");
             const body = {
                 "idChat": props.chanId,
@@ -72,9 +78,10 @@ export default function TypingMessage(props: TypingProps) {
                 })
                 .catch(error => {
                 });
+
             setSeconds(10);
+            */
         }
-        */
     }, 10000);
 
     useEffect(() => {
@@ -93,6 +100,7 @@ export default function TypingMessage(props: TypingProps) {
     props.socket.on('isMute', (...args) => {
         if (props.login == args[0] && args[1] == true) {
             setIsMuted(true)
+            setSeconds(10);
             console.log("set is mute to true")
         }
         else if (props.login == args[0] && args[1] == false) {
@@ -110,7 +118,7 @@ export default function TypingMessage(props: TypingProps) {
 
         interval = setInterval(() => {
             setSeconds(seconds => seconds - 1);
-        }, 2000);
+        }, 1000);
 
         return () => clearInterval(interval);
 

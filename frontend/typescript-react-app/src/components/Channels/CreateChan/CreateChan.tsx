@@ -158,7 +158,7 @@ export default function CreateChan(props: CreateChanProps) {
 					</Button>
 				</Modal.Footer>
 			</Modal>
-			<ToastContainer
+			{/* <ToastContainer
 				position="top-right"
 				autoClose={5000}
 				hideProgressBar={false}
@@ -168,7 +168,7 @@ export default function CreateChan(props: CreateChanProps) {
 				pauseOnFocusLoss
 				draggable
 				pauseOnHover
-			/>
+			/> */}
 		</div>
 	);
 

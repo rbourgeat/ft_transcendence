@@ -14,7 +14,9 @@ export interface ListChannelsProps {
 	minIdDM?: any,
 	setActiveID?: any,
 	setActiveName?: any,
-	socket?: any
+	socket?: any,
+	setHide?: any,
+	setIsBanned?: any
 }
 
 export default function ListChannels(props: ListChannelsProps) {
@@ -191,6 +193,7 @@ export default function ListChannels(props: ListChannelsProps) {
 											setHasPass={props.setHasPass}
 											setActiveID={props.setActiveID}
 											setActiveName={props.setActiveName}
+											setHide={props.setHide}
 										/>
 									</div>
 								)
@@ -220,7 +223,9 @@ export default function ListChannels(props: ListChannelsProps) {
 											login={props.login}
 											setHasPass={props.setHasPass}
 											setActiveID={props.setActiveID}
-											setActiveName={props.setActiveName} />
+											setActiveName={props.setActiveName}
+											setHide={props.setHide}
+										/>
 									</div>)
 							}
 						})
@@ -230,7 +235,7 @@ export default function ListChannels(props: ListChannelsProps) {
 					<button type="button" className="send--dm" onClick={displayDM} disabled={selectedCat === "DMs" ? true : false}>DM</button>
 					<button type="button" className="display--channels" onClick={displayChannels} disabled={selectedCat === "Channels" ? true : false}>Channels</button>
 				</div>
-				<ToastContainer
+				{/* <ToastContainer
 					position="top-right"
 					autoClose={5000}
 					hideProgressBar={false}
@@ -240,7 +245,7 @@ export default function ListChannels(props: ListChannelsProps) {
 					pauseOnFocusLoss
 					draggable
 					pauseOnHover
-				/>
+				/> */}
 			</div>
 		</div>
 	);

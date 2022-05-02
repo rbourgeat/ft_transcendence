@@ -109,6 +109,19 @@ export class UserMigration1645626140921 implements MigrationInterface {
             }),
         );
 
+        const rbourgea = await queryRunner.manager.save(
+            queryRunner.manager.create<User>(User, {
+                login: 'rbourgea',
+                status: 'offline',
+                email: 'rbourgea@student.42.fr',
+                login42: 'rbourgea',
+                isTwoFactorAuthenticationEnabled: false,
+                points: 1000,
+                level: 42,
+                rank: 8
+            }),
+        );
+
         const bahaasRelation1 = await queryRunner.manager.save(
             queryRunner.manager.create<UserRelation>(UserRelation, {
                 creator: dummy1,
