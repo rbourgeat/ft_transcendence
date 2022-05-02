@@ -192,23 +192,28 @@ export default function JoinChan(props: JoinChanProps) {
 				id="joinchan-button"
 				onClick={handleShow}
 				data-toggle="modal" data-target="#exampleModalCenter">Join channel</button>
-			<Modal show={show} animation={true} onHide={handleClose} onExited={handleExit}>
+			<Modal  {...props}
+     				size="lg"
+	  				show={show} 
+					animation={true} onHide={handleClose} onExited={handleExit} id="modal_join">
 				<Modal.Header>
 					<Modal.Title id="create_title">Join a channel</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
-					<Form>
+					<Form id="form_modal_join">
 						<Modal.Title className="Category">
-							<button type="button" className="btn categ-join" onClick={displayPublic} > Public</button>
-							<button type="button" className="btn categ-join" onClick={displayPrivate} > Private</button>
+							<div className="row d-flex justify-content-center text-center" id="chans_policy">
+								<button type="button" className="btn btn-light" onClick={displayPublic} >Public</button>
+								<button type="button" className="btn btn-light" /*categ-join*/ onClick={displayPrivate} >Private</button>
+							</div>
 						</Modal.Title>
 						<br />
 						{isPublic === true ?
-							<ul className="wrapper list-group list-group-horizontal-lg">
+							<ul className="wrapper list-group list-group-horizontal-sm" id="list_pub_chan">
 								{load == true ?
 									joignable.map(join =>
-										<div key={join} className="joignable_chans">
-											<i className="btn joignable">{join.name}
+										<div key={join} className="chans" /*list-group-item*/>
+											<div className="joignable">{join.name}
 												{
 													join.password ?
 														<>
@@ -221,7 +226,7 @@ export default function JoinChan(props: JoinChanProps) {
 																	placeholder="******"
 																/>
 															</Form.Group>
-															<Button variant="dark" type="button" onClick={() => handleSend(join.name)}>
+															<Button variant="dark" type="button" id="join--button" onClick={() => handleSend(join.name)}>
 																Join
 															</Button>
 														</>
@@ -230,8 +235,7 @@ export default function JoinChan(props: JoinChanProps) {
 															Join
 														</Button>
 												}
-
-											</i>
+											</div>
 										</div>)
 									:
 									null
@@ -240,13 +244,15 @@ export default function JoinChan(props: JoinChanProps) {
 							</ul>
 							:
 							<>
+							<div className="private-form">
 								<Form.Group>
-									<Form.Label>Channel Name*</Form.Label>
+									{/* <div className="private-form"> */}
+									<Form.Label>Channel name</Form.Label>
 									<Form.Control
 										type="text"
 										value={privateToJoin}
 										onChange={e => { setPrivateToJoin(e.target.value) }}
-										autoFocus
+										// autoFocus
 										placeholder="channel"
 									/>
 								</Form.Group>
@@ -256,19 +262,22 @@ export default function JoinChan(props: JoinChanProps) {
 										type="password"
 										value={privatePass}
 										onChange={e => { setPrivatePass(e.target.value) }}
-										autoFocus
+										// autoFocus
 										placeholder="******"
 									/>
+									{/* </div> */}
 								</Form.Group>
-								<Button className="put-on-right" variant="dark" type="button" onClick={handleJoinPrivate}>
+								<Button className="put-on-right" variant="light" type="button" onClick={handleJoinPrivate}>
 									Join
 								</Button>
+							</div>
+								
 							</>
 						}
 					</Form>
 				</Modal.Body>
 			</Modal >
-			<ToastContainer
+			{/* <ToastContainer
 				position="top-right"
 				autoClose={5000}
 				hideProgressBar={false}
@@ -278,7 +287,7 @@ export default function JoinChan(props: JoinChanProps) {
 				pauseOnFocusLoss
 				draggable
 				pauseOnHover
-			/>
+			/> */}
 		</div >
 	);
 

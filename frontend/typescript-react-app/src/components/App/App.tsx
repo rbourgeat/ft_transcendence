@@ -48,7 +48,7 @@ function App() {
 
 
 
-  /*async*/ function getUser() {
+	/*async*/ function getUser() {
 
     //if (localStorage.getItem("loggedIn") == "false")
     //{
@@ -93,6 +93,9 @@ function App() {
   // }
 
   //   var socket2 = io(url_begin.concat(":3000/game"), { query: { username: username } });
+
+  //   socket2.on('inviteToPlay', (...args) => {
+  //     console.log("step 1")
 
   //   socket2.on('inviteToPlay', (...args) => {
   //     console.log("step 1")
@@ -142,86 +145,86 @@ function App() {
   return (
     <div id="main">
       {/* <Particles
-        id="tsparticles"
-        options={{
-          background: {
-            color: {
-              value: "#00000",
-            },
-          },
-          fpsLimit: 120,
-          interactivity: {
-            events: {
-              onClick: {
-                enable: false,
-                mode: "push",
-              },
-              onHover: {
-                enable: false,
-                mode: "repulse",
-              },
-              resize: false,
-            },
-            modes: {
-              bubble: {
-                distance: 100,
-                duration: 5,
-                opacity: 0.8,
-                size: 20,
-              },
-              push: {
-                quantity: 20,
-              },
-              repulse: {
-                distance: 200,
-                duration: 0.4,
-              },
-            },
-          },
-          particles: {
-            color: {
-              value: "#54CFE8"
-            },
-            links: {
-              color: "#ffffff",
-              distance: 150,
-              enable: false,
-              opacity: 0.5,
-              width: 1,
-            },
-            collisions: {
-              enable: true,
-            },
-            move: {
-              direction: "bottom",
-              enable: false,
-              outMode: "bounce",
-              random: false,
-              speed: 2,
-              straight: false,
-            },
-            number: {
-              density: {
-                enable: true,
-                area: 120,
-              },
-              value: 10,
-            },
-            opacity: {
-              value: 0.3,
-              random: true,
-            },
-            shape: {
-              type: "circle",
-            },
-            size: {
-              random: false,
-              value: 40,
-            },
-          },
-          detectRetina: false
-        }}
-      /> */}
+				id="tsparticles"
+				options={{
+					background: {
+						color: {
+							value: "#00000",
+						},
+					},
+					fpsLimit: 120,
+					interactivity: {
+						events: {
+							onClick: {
+								enable: false,
+								mode: "push",
+							},
+							onHover: {
+								enable: false,
+								mode: "repulse",
+							},
+							resize: false,
+						},
+						modes: {
+							bubble: {
+								distance: 100,
+								duration: 5,
+								opacity: 0.8,
+								size: 20,
+							},
+							push: {
+								quantity: 20,
+							},
+							repulse: {
+								distance: 200,
+								duration: 0.4,
+							},
+						},
+					},
+					particles: {
+						color: {
+							value: "#54CFE8"
+						},
+						links: {
+							color: "#ffffff",
+							distance: 150,
+							enable: false,
+							opacity: 0.5,
+							width: 1,
+						},
+						collisions: {
+							enable: true,
+						},
+						move: {
+							direction: "bottom",
+							enable: false,
+							outMode: "bounce",
+							random: false,
+							speed: 2,
+							straight: false,
+						},
+						number: {
+							density: {
+								enable: true,
+								area: 120,
+							},
+							value: 10,
+						},
+						opacity: {
+							value: 0.3,
+							random: true,
+						},
+						shape: {
+							type: "circle",
+						},
+						size: {
+							random: false,
+							value: 40,
+						},
+					},
+					detectRetina: false
+				}}
+			/> */}
       <Routes>
         <Route path="/" element={<Welcome />} />
         <Route path="/welcome" element={<Welcome />} />

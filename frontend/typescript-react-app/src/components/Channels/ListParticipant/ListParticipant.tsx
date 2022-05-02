@@ -138,8 +138,7 @@ export default function ListParticipant(props: ParticipantProps) {
 	}
 
 	function inviteToPlay() {
-		let toast = new ToastAlerts(null);
-		toast.notifyDanger("A reprendre.");
+		window.top.location = url_begin.concat(":3030/game?vs=").concat(selectedUser);
 	}
 
 	function seeProfile() {
@@ -314,7 +313,7 @@ export default function ListParticipant(props: ParticipantProps) {
 					</div>
 				</div>
 			</div>
-			<ToastContainer
+			{/* <ToastContainer
 				position="top-right"
 				autoClose={5000}
 				hideProgressBar={false}
@@ -324,7 +323,7 @@ export default function ListParticipant(props: ParticipantProps) {
 				pauseOnFocusLoss
 				draggable
 				pauseOnHover
-			/>
+			/> */}
 		</div>
 	);
 }
