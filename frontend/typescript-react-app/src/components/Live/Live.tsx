@@ -24,7 +24,7 @@ export default function Live() {
 		//setDisplayedNo(true);
 		if (displayedNo == false) {
 			let check = document.getElementsByClassName("nogame");
-			console.log("no game is " + check.length);
+			// console.log("no game is " + check.length);
 			if (check.length == 0) {
 				let nogame = document.createElement("div");
 				nogame.className = "nogame";
@@ -61,7 +61,7 @@ export default function Live() {
 		//Joueur est un Object et pas un Array
 		//console.log("type of joueurs is " + typeof joueurs);
 
-		console.log("args are " + args);
+		// console.log("args are " + args);
 
 		const b = args[0].split(':');
 
@@ -91,7 +91,7 @@ export default function Live() {
 						newbutton.className = "btn btn-light watch";
 						newbutton.onclick = function () {
 							//alert("Button is clicked");
-							console.log("redirecting to game page");
+							// console.log("redirecting to game page");
 							window.top.location = "http://localhost:3030/game?live=" + joueurs[joueur] + "+" + adversaire;
 						};
 						newdiv.appendChild(newbutton);
@@ -123,7 +123,7 @@ export default function Live() {
 	}
 
 	function display_null() {
-		console.log("Should display null");
+		// console.log("Should display null");
 		const todelete = Array.from(document.getElementsByClassName("game"));
 
 		todelete.forEach(del => {
@@ -178,7 +178,8 @@ export default function Live() {
 			joueurs.map(joueur => {
 				if (joueur)
 					if (joueur == b[0]) {
-						game[joueurs.indexOf(joueur)].player.y = Number(b[1]);
+						if (game)
+							game[joueurs.indexOf(joueur)].player.y = Number(b[1]);
 						//draw(joueurs.indexOf(joueur));
 					}
 			});
