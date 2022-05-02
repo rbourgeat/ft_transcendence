@@ -89,15 +89,18 @@ export class ChatGateway implements OnGatewayConnection {
 
 	@SubscribeMessage('mute')
 	async muteUser(@ConnectedSocket() socket: Socket, @MessageBody() body: MuteDto) {
-		console.log(body.user + " " + body.mute + 'event isMute');
-		//const b = body.split(':');
-		//const author = await this.userService.getUserByLogin(b[0]);
-		//const message = await this.chatService.saveChatMessage(b[1], b[2], author);
-
-		//const messages = await this.chatService.getMessagesbyName(b[1]);
-		//const chat = await this.chatService.getChatByName(body);
+		//if (!socket.handshake.query.username)
+		//	return;
+		//console.log("bt " + body.time)
+		console.log(body.user + " " + body.mute + ' event isMute in chat ' + body.chatName);
 		const user = await this.userService.getUserByLogin(body.user);
-		this.server.emit('isMute', user.login, body.mute);
+		const admin = await this.userService.getUserByLogin(body.admin);
+		if (body.mute)
+			this.chatService.mute(body.chatName, body.user, admin, body.time);
+		else
+			this.chatService.active(body.chatName, body.user, admin);
+		this.server.emit('isMute', user.login, body.mute, body.time);
+
 	}
 
 	@SubscribeMessage('ban')

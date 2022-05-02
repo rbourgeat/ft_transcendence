@@ -109,8 +109,9 @@ export default function ListParticipant(props: ParticipantProps) {
 	}
 
 	function unmuteUser() {
-		makeAPIcall("unmute", "Successfully unmuted", "Error while unmuting", false);
-		props.socket.emit('mute', { user: selectedUser, mute: false });
+		// makeAPIcall("unmute", "Successfully unmuted", "Error while unmuting", false);
+		props.socket.emit('mute', { user: selectedUser, mute: false, chatName: props.activeName, admin: props.login });
+		props.socket.emit('refresh', props.activeName);
 	}
 
 	function setAdmin() {
@@ -118,8 +119,10 @@ export default function ListParticipant(props: ParticipantProps) {
 	}
 
 	function muteUser() {
-		makeAPIcall("mute", "Successfully mute", "Error while muting", false);
-		props.socket.emit('mute', { user: selectedUser, mute: true });
+		// makeAPIcall("mute", "Successfully mute", "Error while muting", false);
+		// console.log("p" + props.activeName)
+		props.socket.emit('mute', { user: selectedUser, mute: true, chatName: props.activeName, admin: props.login });
+		props.socket.emit('refresh', props.activeName);
 	}
 
 	function leaveChannel() {
@@ -153,8 +156,9 @@ export default function ListParticipant(props: ParticipantProps) {
 		me === true ? user = props.login : user = selectedUser;
 		const body = {
 			"idChat": props.activeID,
-			"user": user
-		}
+			"user": user,
+			"time": new Date()
+			}
 		await axios.post(url, body)
 			.then(response => {
 				toast.notifySuccess(toastSuccessMessage);
