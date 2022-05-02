@@ -24,8 +24,35 @@
 	}
 }
 
+#list_pub_chan {
+	// max-width: 10px !important;
+	// border: 0.1rem solid blue !important;
+	//position: sticky !important;
+	width: 100% !important;
+	margin-left: 20px !important;
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	//overflow-y: scroll !important;
+	//overflow-wrap: break-word !important;
+	//align-items: center !important;
+}
+
+// #create-chan_div > list-group-item {
+// 	//border: 1rem solid red !important;
+// 	flex-direction: row !important;
+// }
+
+// #create-chan_div > .list-group {
+// 	float: left !important;
+// }
+
 .put-on-right {
 	margin-left: 85% !important;
+	border-radius: variables.$border-radius !important;
+	font-family: variables.$basic-font !important;
+	font-size: 12px !important;
+	font-weight: 100 !important;
+	width: 15% !important;
 }
 
 #list_title {
@@ -35,11 +62,21 @@
 
 .joignable {
 	font-family: variables.$basic-font !important;
-	font-size: 14px !important;
+	font-size: 12px !important;
 	color: black !important;
+	font-weight: 100 !important;
 	background-color: rgb(95, 214, 208);
 	height: 151px !important;
 	width: 106px !important;
+	padding: 10px !important;
+	margin: 10px !important;
+	border-radius: variables.$border-radius;
+	// text-align: center;
+	//overflow-wrap: break-word !important;
+	// line-height: 0 !important;
+	
+	word-break: break-all !important;
+	//position: relative !important;
 
 	text-align: center;
 
@@ -49,15 +86,49 @@
 	}
 }
 
-.join--pub {
-	margin-top: 90% !important;
+#chans_policy > .btn {
+	width: 15% !important;
+	margin: 15px !important;
+	// border-radius: variables.$border-radius-big !important;
+	font-family: variables.$basic-font !important;
+	font-size: 14px !important;
+	font-weight: 100 !important;
+	//height: 15px !important;
+	//vertical-align: middle !important;
 }
 
+.join--pub {
+	margin-top: 30% !important;
+	//position: absolute !important;
+	//border: 0.1rem solid red !important;
+	//margin-top: auto !important;
+	
+}
+
+// #modal_join {
+// 	border: 0.1rem solid red !important;
+// }
+
+// #form_modal_join {
+// 	border: 0.1rem solid red !important;
+// 	//position: absolute !important;
+// }
 
 .wrapper-2 {
 	display: grid;
 	grid-template-columns: repeat(4, 1fr);
 }
+
+.private-form {
+	width: 80% !important;
+	margin-left: 10% !important;
+	//text-align: center !important;
+	//align-items: center !important;
+}
+
+// .private-form > Form.Control {
+// 	border-radius: variables.$border-radius-big !important;
+// }
 
 /*
 button+button {
