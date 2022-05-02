@@ -182,7 +182,6 @@ export default function Live() {
 					if (joueur == b[0]) {
 						if (game)
 							game[joueurs.indexOf(joueur)].player.y = Number(b[1]);
-						//draw(joueurs.indexOf(joueur));
 					}
 			});
 		if (b[3] == "droit")

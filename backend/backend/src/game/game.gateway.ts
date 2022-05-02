@@ -5,6 +5,8 @@ import { GameService } from './game.service';
 import { UserService } from '../user/user.service';
 
 let MatchMaking = [[],[],[],[],[]];
+let vs1 = [];
+let vs2 = [];
 
 @WebSocketGateway({ namespace: 'game', cors: true })
 export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, OnGatewayDisconnect {
@@ -79,8 +81,40 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
 	@SubscribeMessage('versus')
 	async versusMatch(@ConnectedSocket() socket: Socket, @MessageBody() body: string) {
 		const b = body.split(':');
-		this.server.emit('privateMatch',b[0], b[1]);
-		console.log(body)
+		var index1 = vs1.indexOf(b[0]);
+		var index2 = vs2.indexOf(b[1]);
+		if (index1 > -1 && index2 > -1) {
+			vs1.splice(index1, 1);
+			vs2.splice(index1, 1);
+			this.server.emit('gameStart', b[0], b[1], 0);
+			return;
+		}
+		index1 = vs1.indexOf(b[1]);
+		index2 = vs2.indexOf(b[0]);
+		if (index1 > -1 && index2 > -1) {
+			vs1.splice(index1, 1);
+			vs2.splice(index1, 1);
+			this.server.emit('gameStart', b[1], b[0], 0);
+			return;
+		}
+		vs1.push(b[0]);
+		vs2.push(b[1]);
+		this.server.emit('inviteToPlay', b[0], b[1]);
+		console.log("invite to play: " + b[0] + " et " + b[1])
+	}
+
+	@SubscribeMessage('removeInvit')
+	async removeInvit(@ConnectedSocket() socket: Socket, @MessageBody() body: string) {
+		var index = vs1.indexOf(socket.handshake.query.username);
+		if (index > -1) {
+			vs1.splice(index, 1);
+			vs2.splice(index, 1);
+		}
+		index = vs2.indexOf(socket.handshake.query.username);
+		if (index > -1) {
+			vs1.splice(index, 1);
+			vs2.splice(index, 1);
+		}
 	}
 
 	@SubscribeMessage('gameEnd')
