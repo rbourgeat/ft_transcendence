@@ -194,6 +194,7 @@ export default function ListChannels(props: ListChannelsProps) {
 											setActiveID={props.setActiveID}
 											setActiveName={props.setActiveName}
 											setHide={props.setHide}
+											socket={props.socket}
 										/>
 									</div>
 								)

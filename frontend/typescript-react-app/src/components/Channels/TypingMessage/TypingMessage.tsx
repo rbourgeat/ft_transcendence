@@ -64,7 +64,8 @@ export default function TypingMessage(props: TypingProps) {
         if (isMuted === true && props.activeName === props.sockChan) {
 
             // console.log("interval with isMuted == true");
-            // setIsMuted(false);
+            setIsMuted(false);
+            setSeconds(10);
             /*
             setIsMuted(false);
             console.log("interval with isMuted == true");
@@ -122,7 +123,7 @@ export default function TypingMessage(props: TypingProps) {
 
         return () => clearInterval(interval);
 
-    }, [isActive, seconds]);
+    }, [seconds]);
 
     return (
         <div id="typing--div">

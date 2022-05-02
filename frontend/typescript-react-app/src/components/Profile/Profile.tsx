@@ -16,8 +16,11 @@ import { AiOutlineLoading3Quarters, AiOutlineLoading } from "react-icons/ai";
 let url_begin = "http://".concat(process.env.REACT_APP_IP);
 
 export interface ProfileProps {
+
 	login?: string,
-	avatar?: any
+	avatar?: any,
+
+	//socket?: any
 }
 
 export default function Profile() {
@@ -217,11 +220,11 @@ export default function Profile() {
 											: "You are not able to see a detailed profile because you are not friends 😢 !"}</div>
 										{/* <br /> */}
 										{/* <div className="d-flex justify-content-center text-center"> */}
-											<img id={login} className="profile--pic" src="" width="100" height="100" />
-											{renderImage(login, isUser)}
-											<svg className="log--color" height="40" width="40">
-												<circle cx="20" cy="20" r="15" fill={color} stroke="white" style={{ strokeWidth: '3' }} />
-											</svg>
+										<img id={login} className="profile--pic" src="" width="100" height="100" />
+										{renderImage(login, isUser)}
+										<svg className="log--color" height="40" width="40">
+											<circle cx="20" cy="20" r="15" fill={color} stroke="white" style={{ strokeWidth: '3' }} />
+										</svg>
 										{/* </div> */}
 										<h2 id="profile-title">{login}</h2>
 										<p className="status-text">{status}</p>

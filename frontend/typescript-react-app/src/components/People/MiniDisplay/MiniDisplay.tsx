@@ -21,6 +21,7 @@ export interface MiniDisplayProps {
 	relation?: string;
 	extra?: string;
 	currentUser?: string;
+	socket?: any
 }
 
 export default function MiniDisplay(props: MiniDisplayProps) {
@@ -30,6 +31,27 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 	const [username, setUsername] = React.useState("");
 	const [color, setColor] = React.useState("");
 	const [relationStatus, setRelationStatus] = React.useState("");
+
+	const [socket, setSocket] = React.useState(io("http://".concat(process.env.REACT_APP_IP).concat(":3000/chat"), { query: { username: username } }));
+
+	// REPRENDRE USER ICI - SOCKET
+	async function getUser() {
+		let url = "http://localhost:3000/api/auth/";
+		let username = "";
+		axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+		axios.defaults.withCredentials = true;
+		await axios.get(url)
+			.then(res => {
+				setUsername(res.data.login);
+				username = res.data.login;
+				setLoad(true);
+				setSocket(io("http://".concat(process.env.REACT_APP_IP).concat(":3000/chat"), { query: { username: username } }));
+				//console.log(username + ' <-- result of get user')
+			})
+			.catch((err) => {
+				console.log("Error while getting api auth");
+			})
+	}
 
 	function renderImage(avatar: string, login: string, ftlogin: string, extra: string) {
 		if (!avatar)
@@ -150,7 +172,7 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 			else if (relationStatus === "blocked")
 				isBlocked = true;
 
-			console.log("with " + props.login + " your friend status: " + isFriend + " your blocked status:" + isBlocked);
+			//console.log("with " + props.login + " your friend status: " + isFriend + " your blocked status:" + isBlocked);
 			return (
 				<>
 					{isFriend ? "" :
@@ -188,12 +210,23 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 	}
 
 	useEffect(() => {
+		getUser();
 		if (calledOnce.current) {
 			return;
 		}
 		setLoad(true);
 		selectColor();
 		calledOnce.current = true;
+
+
+		//props.socket.on('updateStatus', (...args) => {
+		/*
+		if (pseudo) {
+			console.log("name: " + pseudo + " / " + "status: " + statusUpdated);
+			setStatus(statusUpdated);
+		}
+		*/
+		//})
 	}, []);
 
 	return (

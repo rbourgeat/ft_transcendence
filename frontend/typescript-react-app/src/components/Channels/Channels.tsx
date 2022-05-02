@@ -27,7 +27,8 @@ export default function Channels(props: ChatProps) {
 	const [hide, setHide] = React.useState(false);
 	const [isBanned, setIsBanned] = React.useState(false);
 
-	const [socket, setSocket] = React.useState(io("http://".concat(process.env.REACT_APP_IP).concat(":3000/chat"), { query: { username: props.username } }));
+
+	const [socket, setSocket] = React.useState(io("http://".concat(process.env.REACT_APP_IP).concat(":3000/chat"), { query: { username: username } }));
 
 	function getUser() {
 		let url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/auth/");

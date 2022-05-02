@@ -71,49 +71,53 @@ function App() {
       })
   }
 
+  /*
+  const [socket, setSocket] = React.useState(io("http://".concat(process.env.REACT_APP_IP).concat(":3000/chat"), { query: { username: username } }));
+*/
   useEffect(() => {
     getUser();
+    //  setSocket(io("http://".concat(process.env.REACT_APP_IP).concat(":3000/chat"), { query: { username: username } }));
   }, []);
 
-//   function acceptInvitePlay()
-//     {
-//         window.top.location = url_begin.concat(":3030/game?vs=").concat(selectedUser);;
-//     }
+  //   function acceptInvitePlay()
+  //     {
+  //         window.top.location = url_begin.concat(":3030/game?vs=").concat(selectedUser);;
+  //     }
 
-//   const InvitetoPlay = () => {
-//     return(
-//     <div>
-//         Somebody wants to play with you !
-//         <button className="btn btn-dark" onClick={acceptInvitePlay}>Accept</button>
-//     </div>)
-// }
+  //   const InvitetoPlay = () => {
+  //     return(
+  //     <div>
+  //         Somebody wants to play with you !
+  //         <button className="btn btn-dark" onClick={acceptInvitePlay}>Accept</button>
+  //     </div>)
+  // }
 
-//   var socket2 = io(url_begin.concat(":3000/game"), { query: { username: username } });
-  
-//   socket2.on('inviteToPlay', (...args) => {
-//     console.log("step 1")
+  //   var socket2 = io(url_begin.concat(":3000/game"), { query: { username: username } });
 
-//     if (username == args[0])
-//       selectedUser = args[1];
-//     else if (username == args[1])
-//       selectedUser = args[0];
-//     else
-//       return;
-//       console.log("step 2")
+  //   socket2.on('inviteToPlay', (...args) => {
+  //     console.log("step 1")
 
-//     toast.dark(<InvitetoPlay />, {
-//               position: "top-right",
-//               autoClose: 10000,
-//               hideProgressBar: false,
-//               closeOnClick: false,
-//               pauseOnHover: false,
-//               draggable: false,
-//               closeButton: false
-//               //progress: undefined
-//           });
-//   });
+  //     if (username == args[0])
+  //       selectedUser = args[1];
+  //     else if (username == args[1])
+  //       selectedUser = args[0];
+  //     else
+  //       return;
+  //       console.log("step 2")
 
-  
+  //     toast.dark(<InvitetoPlay />, {
+  //               position: "top-right",
+  //               autoClose: 10000,
+  //               hideProgressBar: false,
+  //               closeOnClick: false,
+  //               pauseOnHover: false,
+  //               draggable: false,
+  //               closeButton: false
+  //               //progress: undefined
+  //           });
+  //   });
+
+
 
   useEffect(() => {
     if (calledOnce.current) {

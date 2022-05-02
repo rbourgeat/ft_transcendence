@@ -9,7 +9,8 @@ import { DetailedHTMLProps, HTMLAttributes } from 'react';
 import MiniDisplay from '../MiniDisplay/MiniDisplay';
 
 export interface InputWrapperProps {
-	login?: string
+	login?: string,
+	//socket?: any
 }
 
 export default function All(props: InputWrapperProps) {
