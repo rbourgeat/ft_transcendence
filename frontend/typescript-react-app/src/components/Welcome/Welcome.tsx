@@ -5,11 +5,14 @@ import '../App/App.scss';
 import '../../index.scss';
 import Header from '../Header/Header';
 
+let url_begin = "http://".concat(process.env.REACT_APP_IP);
+
 export default function Welcome() {
 
     const routeChange = (e: any) => {
         e.preventDefault();
-        window.top.location = "http://".concat(process.env.REACT_APP_IP).concat(":3030/auth/")
+        console.log(url_begin);
+        window.top.location = url_begin.concat(":3030/auth/")
     }
 
     //const calledOnce = React.useRef(false);

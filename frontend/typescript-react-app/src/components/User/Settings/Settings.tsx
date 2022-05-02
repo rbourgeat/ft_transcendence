@@ -168,7 +168,7 @@ export default function Settings(props: SettingsProps) {
 			.catch((err) => {
 				//console.log("Auth returned 400 -> missing cookie");
 				localStorage.setItem("loggedIn", "false");
-				window.top.location = ":3030/auth/"
+				window.top.location = url_begin.concat(":3030/auth/");
 			})
 	}
 
@@ -248,7 +248,7 @@ export default function Settings(props: SettingsProps) {
 												onClick={handleShow}>Click to change
 											</button>*/}
 										<EditUsernameModal
-											//setUsername={setUsername}
+											setUsername={setUsername}
 											username={username}
 											//checkexited={setCheckExited}
 											//setUpdate={setUpdate}

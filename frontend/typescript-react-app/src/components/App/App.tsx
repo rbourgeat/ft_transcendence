@@ -28,6 +28,9 @@ import Live from '../Live/Live';
 import Settings from "../User/Settings/Settings";
 import UserSub from "../User/UserSub";
 import { ToastContainer } from "react-toastify";
+import { env } from 'process';
+
+let url_begin = "http://".concat(env.REACT_APP_IP);
 
 function App() {
 
@@ -48,7 +51,8 @@ function App() {
     //  return ;
     //}
 
-    let url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/auth/");
+    console.log(env.REACT_APP_IP)
+    let url = url_begin.concat(":3000/api/auth/");
     let username = "";
     axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
     axios.defaults.withCredentials = true;

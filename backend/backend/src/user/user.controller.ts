@@ -38,6 +38,7 @@ export class UserController {
     @ApiOkResponse({ description: 'Data updated' })
     @Patch(':oldlogin/changeto/:newlogin')
     async updateUser(@Param('oldlogin') oldlogin: string, @Param('newlogin') newlogin: string) {
+        console.log("test, oldlogin: " + oldlogin + ", newlogin: " + newlogin);
         return this.userService.updateUser(oldlogin, newlogin);
     }
 

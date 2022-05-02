@@ -757,34 +757,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     ** edit user data (for login)
     */
     patch_user(old_login: string, new_login: string) {
-        let url = url_begin.concat(":3000/api/user/").concat(old_login).concat("/changeto/").concat(new_login);
 
-        axios.defaults.baseURL = url_begin.concat(':3000/api/');
-        axios.defaults.headers.post['Content-Type'] = 'application/json';
-        axios.defaults.headers.post['Accept'] = '*/*';
-        axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
-
-        let headers = {
-            login: new_login
-        }
-
-        let toast = new ToastAlerts(null);
-
-        let res = axios.patch(url, { headers })
-            .then(res => {
-                toast.notifySuccess("✨ Successfully updated username");
-                let user = document.getElementById("user_username");
-                user.innerHTML = new_login;
-                //console.log("Yay ! Successfully changed login");
-                //console.log(res);
-                ;
-            })
-            .catch((error) => {
-                //console.log("Catched error !");
-                //console.log(error);
-                toast.notifySuccess("😢 Error while updating username");;
-            }
-            )
     }
 
     /*

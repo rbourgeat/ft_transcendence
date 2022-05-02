@@ -16,7 +16,8 @@ export interface ParticipantProps {
     setHasPass?: any,
     activeID?: string,
     activeName?: string,
-    socket?: any
+    socket?: any,
+    setHide?: any,
 }
 
 export default function ListParticipant(props: ParticipantProps) {
@@ -157,6 +158,7 @@ export default function ListParticipant(props: ParticipantProps) {
 
     function leaveChannel() {
         makeAPIcall("quit", "Successfull quit", "Error while quitting channel", true);
+        //setHide ?: any,
     }
 
     function blockUser() {

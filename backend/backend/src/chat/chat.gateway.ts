@@ -103,7 +103,6 @@ export class ChatGateway implements OnGatewayConnection {
 	@SubscribeMessage('requestAllUsers')
 	async requestAllUsers(@ConnectedSocket() socket: Socket, @MessageBody() body: number) {
 		if (body) {
-			console.log(body + 'lollll');
 			const users = await this.chatService.getUsersInChannel(body);
 			socket.emit('sendAllUsers', users);
 			//this.server.emit('sendAllUsers', users, body);

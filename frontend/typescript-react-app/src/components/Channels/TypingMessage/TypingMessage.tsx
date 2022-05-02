@@ -84,14 +84,11 @@ export default function TypingMessage(props: TypingProps) {
 
 
     function sendMessage(message: string) {
-        console.log(process.env.REACT_APP_IP)
         if (message !== "") {
             updateText("");
             props.socket.emit('message', props.login + ":" + props.channel + ":" + message);
         }
     }
-
-    //this.server.emit('isMute', user.login, body.mute);
 
     props.socket.on('isMute', (...args) => {
         if (props.login == args[0] && args[1] == true) {
