@@ -1,4 +1,6 @@
-FROM node:16-alpine3.14
+FROM node:18-alpine3.15
+
+RUN npm install -g npm@8.8.0
 
 WORKDIR /app_backend
 

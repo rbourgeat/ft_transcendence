@@ -1,10 +1,12 @@
 FROM node:18-alpine3.15
 
+RUN npm install -g npm@8.8.0
+
 WORKDIR /app
 
 #RUN npm install -g npm@8.8.0
 RUN apk add --update --no-cache python3 && ln -sf python3 /usr/bin/python
-RUN npm install --save bootstrap@latest
+# RUN npm install --save bootstrap@latest
 RUN apk add xsel
 RUN npm install -g serve
 
