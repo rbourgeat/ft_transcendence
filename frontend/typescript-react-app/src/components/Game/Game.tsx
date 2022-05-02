@@ -54,7 +54,6 @@ export default function Game() {
 					socket.emit('versus', joueur + ":" + vs)
 					setActive2(true);
 					vshisto = true;
-					console.log("spam")
 				}
 			})
 			.catch((err) => {
