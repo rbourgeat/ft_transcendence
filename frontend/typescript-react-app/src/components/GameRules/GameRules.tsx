@@ -4,13 +4,15 @@ import io from "socket.io-client";
 import axios from "axios";
 import React, { Component, useState, useEffect } from "react";
 
+let url_begin = "http://".concat(process.env.REACT_APP_IP);
+
 export default function GameRules() {
 
 	const [username, setUsername] = React.useState("");
 
 	/*async*/
 	function getUser() {
-		let url = "http://localhost:3000/api/auth/";
+		let url = url_begin.concat(":3000/api/auth/");
 		let username = "";
 		axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 		axios.defaults.withCredentials = true;

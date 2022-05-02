@@ -42,13 +42,22 @@ export class ChatGateway implements OnGatewayConnection {
 
 	@SubscribeMessage('message')
 	async messageMessage(@ConnectedSocket() socket: Socket, @MessageBody() body: string) {
+		/*
 		console.log(body + 'event message');
 		console.log(process.env.TEST);
 		const b = body.split(':');
 		const author = await this.userService.getUserByLogin(b[0]);
 		const message = await this.chatService.saveChatMessage(b[1], b[2], author);
 
-		this.server.emit('newMessageEvent', true);
+		this.server.emit('newMessageEvent', true);*/
+		console.log(body + 'event message');
+		console.log(process.env.TEST);
+		const b = body.split(':');
+		const author = await this.userService.getUserByLogin(b[0]);
+		const message = await this.chatService.saveChatMessage(b[1], b[2], author);
+
+		const messages = await this.chatService.getMessagesbyName(b[1]);
+		this.server.emit('refreshMessages', messages, b[1]);
 	}
 
 	@SubscribeMessage('requestAllMessages')

@@ -25,10 +25,10 @@ export default function Channels(props: ChatProps) {
 	const [activeID, setActiveID] = React.useState("");
 	const [activeName, setActiveName] = React.useState("");
 
-	const [socket, setSocket] = React.useState(io("http://localhost:3000/chat", { query: { username: props.username } }));
+	const [socket, setSocket] = React.useState(io("http://".concat(process.env.REACT_APP_IP).concat(":3000/chat"), { query: { username: props.username } }));
 
 	/*async*/ function getUser() {
-		let url = "http://localhost:3000/api/auth/";
+		let url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/auth/");
 		axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 		axios.defaults.withCredentials = true;
 		/*await*/
@@ -50,9 +50,7 @@ export default function Channels(props: ChatProps) {
 	useEffect(() => {
 	}, [activeName]);
 
-	//const [socket, setSocket] = React.useState(io("http://localhost:3000/chat", { query: { username: username } }));
 
-	//const socket = io("http://localhost:3000/chat", { query: { username: username } });
 	//setSocket(new)
 	return (
 		<div id="channels">

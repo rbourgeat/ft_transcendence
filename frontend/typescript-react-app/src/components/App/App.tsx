@@ -48,7 +48,7 @@ function App() {
     //  return ;
     //}
 
-    let url = "http://localhost:3000/api/auth/";
+    let url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/auth/");
     let username = "";
     axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
     axios.defaults.withCredentials = true;

@@ -6,6 +6,8 @@ import axios from 'axios';
 // import { env } from 'process';
 import ToastAlerts from '../../Utils/ToastAlerts/ToastAlerts';
 
+let url_begin = "http://".concat(process.env.REACT_APP_IP);
+
 export interface TypingProps {
     login: string,
     channel: string,
@@ -30,7 +32,7 @@ export default function TypingMessage(props: TypingProps) {
         //console.log("props chanId is " + props.chanId);
 
         if (props.chanId != "" && props.chanId != undefined && props.chanId != null) {
-            let url = "http://localhost:3000/api/chat/isMutedIn/".concat(props.chanId);
+            let url = url_begin.concat(":3000/api/chat/isMutedIn/").concat(props.chanId);
 
             axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
             axios.defaults.withCredentials = true;
@@ -55,12 +57,12 @@ export default function TypingMessage(props: TypingProps) {
     }
 
     setInterval(() => {
+
         /*
         if (isMuted === true) {
             setIsMuted(false);
             //console.log("interval with isMuted == true");
-            const url = 'http://localhost:3000/api/chat/unmute';
-
+            let url = url_begin.concat(":3000/api/chat/unmute");
             const body = {
                 "idChat": props.chanId,
                 "user": props.login
@@ -70,29 +72,22 @@ export default function TypingMessage(props: TypingProps) {
                 })
                 .catch(error => {
                 });
+            setSeconds(10);
         }
         */
-    }, 50000);
+    }, 10000);
 
     useEffect(() => {
         checkisMuted();
     }, [props.chanId]);
 
 
-    //let socket = io("http://localhost:3000/chat", { query: { username: props.login } });
 
     function sendMessage(message: string) {
         console.log(process.env.REACT_APP_IP)
-        console.log("-------");
-        // console.log(TEST)
-        // console.log('port ' + env.PORT)
-        console.log("test");
-        // let toast = new ToastAlerts(null);
-
         if (message !== "") {
             updateText("");
             props.socket.emit('message', props.login + ":" + props.channel + ":" + message);
-            // toast.notifySuccess(process.env.TEST);
         }
     }
 
@@ -109,19 +104,19 @@ export default function TypingMessage(props: TypingProps) {
         }
     })
 
-    const [seconds, setSeconds] = useState(600);
+    const [seconds, setSeconds] = useState(10);
     const [isActive, setIsActive] = useState(false);
 
     useEffect(() => {
-        /*
-                let interval = null;
 
-                interval = setInterval(() => {
-                    setSeconds(seconds => seconds - 1);
-                }, 10000);
+        let interval = null;
 
-                return () => clearInterval(interval);
-        */
+        interval = setInterval(() => {
+            setSeconds(seconds => seconds - 1);
+        }, 2000);
+
+        return () => clearInterval(interval);
+
     }, [isActive, seconds]);
 
     return (

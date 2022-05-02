@@ -6,20 +6,20 @@ import '../../index.scss';
 import Header from '../Header/Header';
 
 export default function Welcome() {
-    
+
     const routeChange = (e: any) => {
         e.preventDefault();
-        window.top.location = "http://localhost:3030/auth/"
+        window.top.location = "http://".concat(process.env.REACT_APP_IP).concat(":3030/auth/")
     }
 
     //const calledOnce = React.useRef(false);
 
     //useEffect(() => {
-	//	if (calledOnce.current) {
-	//		return;
-	//	}
-	//	calledOnce.current = true;
-	//}, []);
+    //	if (calledOnce.current) {
+    //		return;
+    //	}
+    //	calledOnce.current = true;
+    //}, []);
 
     return (
         <>
@@ -34,8 +34,8 @@ export default function Welcome() {
                             <br />
                         </ul>
                         <button id="play-button-1"
-                                className="btn btn-outline-light" 
-                                onClick={routeChange}>Play</button>
+                            className="btn btn-outline-light"
+                            onClick={routeChange}>Play</button>
                     </div>
                 </div>
             </div>

@@ -30,7 +30,6 @@ export default function CreateDM(props: CreateDMProps) {
 			console.log("result will be " + !props.exited);
 
 			//redirection crade pour recharger la page
-			//window.top.location = "http://localhost:3030/channels";
 			props.setExited(!props.exited);
 		}
 		//else {
@@ -42,7 +41,7 @@ export default function CreateDM(props: CreateDMProps) {
 
 	const createDM = () => {
 		let toast = new ToastAlerts(null);
-		let url = "http://localhost:3000/api/chat/".concat(receiver).concat("/direct");
+		let url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/chat/").concat(receiver).concat("/direct");
 
 		axios.post(url)
 			.then(res => {

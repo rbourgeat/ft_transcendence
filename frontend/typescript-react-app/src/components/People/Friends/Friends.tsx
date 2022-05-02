@@ -12,8 +12,8 @@ export default function Friends() {
 	/*async*/
 	function renderFriends() {
 		axios.defaults.withCredentials = true;
-		let url = "http://localhost:3000/api/user/relation/me/allFriends";
-		/*await*/ 
+		let url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/user/relation/me/allFriends");
+		/*await*/
 		axios.get(url)
 			.then(res => {
 				let users = res.data;
@@ -46,15 +46,15 @@ export default function Friends() {
 				<div className="row" id="row--users_friends">
 					<h1 className="text-people" id="displaying--friends">All my friends</h1>
 					<br />
-						<div id="ul--list" className="row">
-							<ul id="list--users--ul" className="wrapper list-group list-group-horizontal-lg">
-								{load == true && users.length == 0 ? <p className="no--contact">You have no friends 😢</p> : ""}
-								{load == true ?
-									users.map(user => <MiniDisplay key={user.login} login={user.login} status={user.status} avatar={user.avatar} ftlogin={user.login42} extra="friends" container="friends" />)
-									: ""}
-							</ul>
-						</div>
+					<div id="ul--list" className="row">
+						<ul id="list--users--ul" className="wrapper list-group list-group-horizontal-lg">
+							{load == true && users.length == 0 ? <p className="no--contact">You have no friends 😢</p> : ""}
+							{load == true ?
+								users.map(user => <MiniDisplay key={user.login} login={user.login} status={user.status} avatar={user.avatar} ftlogin={user.login42} extra="friends" container="friends" />)
+								: ""}
+						</ul>
 					</div>
+				</div>
 			</div>
 		</div>
 	);

@@ -12,10 +12,10 @@ export interface AchievementsProps {
 export default function Achievement(props: AchievementsProps) {
 
     const [myArray, setMyArray] = React.useState([]);
-    
+
     /*async*/
     function getAchievements() {
-        let url = "http://localhost:3000/api/user/achievements/".concat(props.login);
+        let url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/user/achievements/").concat(props.login);
 
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
         axios.defaults.withCredentials = true;

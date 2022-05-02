@@ -26,23 +26,23 @@ export default class Login extends React.Component<FourtyTwoProps, FourtyTwoStat
     event.preventDefault();
     localStorage.setItem("loggedIn", "true");
 
-    window.top.location = "http://localhost:3000/api/42auth/redirect/";
+    window.top.location = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/42auth/redirect/");
   }
 
   render() {
     return (
       <div className="row d-flex justify-content-center">
         {/*<div>*/}
-          <button
-            type="submit"
-            //className="btn btn-dark btn-block"
-            className="btn btn-outline-light"
-            id="auth-btn-3"
-            onClick={this.fourtytwo}
-          >
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/42_Logo.svg/1200px-42_Logo.svg.png" height="20" width="20" />
-              Auth
-          </button>
+        <button
+          type="submit"
+          //className="btn btn-dark btn-block"
+          className="btn btn-outline-light"
+          id="auth-btn-3"
+          onClick={this.fourtytwo}
+        >
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/42_Logo.svg/1200px-42_Logo.svg.png" height="20" width="20" />
+          Auth
+        </button>
         {/*</div>*/}
       </div>
     );

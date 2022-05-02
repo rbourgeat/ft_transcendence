@@ -26,9 +26,9 @@ export default function People(props: PeopleProps) {
 
 	/*async*/
 	function getUser() {
-		let url = "http://localhost:3000/api/auth/";
+		let url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/auth/");
 
-		axios.defaults.baseURL = 'http://localhost:3000/api/';
+		axios.defaults.baseURL = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api");
 		axios.defaults.headers.post['Content-Type'] = 'application/json';
 		axios.defaults.headers.post['Accept'] = '*/*';
 		axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
@@ -76,17 +76,17 @@ export default function People(props: PeopleProps) {
 							</div>
 							:
 							<>*/}
-								<All login={props.login} />
-								<br />
-								<Friends />
-								<br />
-								<Invitations />
-								<br />
-								<SentInvitations />
-								<br />
-								<Blocked />
-								<br />
-							{/*</>
+						<All login={props.login} />
+						<br />
+						<Friends />
+						<br />
+						<Invitations />
+						<br />
+						<SentInvitations />
+						<br />
+						<Blocked />
+						<br />
+						{/*</>
 						}*/}
 					</div>
 				</div>

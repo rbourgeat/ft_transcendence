@@ -3,6 +3,8 @@ import axios from "axios";
 import ToastAlerts from "../ToastAlerts/ToastAlerts"
 import Login from "../../Auth/Login/Login";
 
+let url_begin = "http://".concat(process.env.REACT_APP_IP);
+
 interface AxiosProps {
     method?: string,
     ressource?: string
@@ -30,7 +32,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     get_api_chat() {
         axios.defaults.withCredentials = true;
 
-        let url = "http://localhost:3000/api/chat/";
+        let url = url_begin.concat(":3000/api/chat/");
         let res = axios.get(url)
             .then(res => {
                 //console.log("Get api chat successfully called.");
@@ -46,7 +48,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     ** post /api/chat/join
     */
     post_api_chat_join(pass: string, pub: boolean, channame: string) {
-        let url = "http://localhost:3000/api/chat/join";
+        let url = url_begin.concat(":3000/api/chat/join");
 
         const body = {
             password: pass,
@@ -54,7 +56,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
             name: channame
         }
 
-        axios.defaults.baseURL = 'http://localhost:3000/api/';
+        axios.defaults.baseURL = url_begin.concat(':3000/api/');
         axios.defaults.headers.post['Content-Type'] = 'application/json';
         axios.defaults.headers.post['Accept'] = '*/*';
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
@@ -62,7 +64,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
 
         axios.post(url, body)
             .then(res => {
-               // console.log("Succesfully joined channel !");
+                // console.log("Succesfully joined channel !");
                 ;
             })
             .catch(res => {
@@ -75,14 +77,14 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     ** Sending a message in a channel
     */
     post_api_chat_sendmessage(message: string, channame: string) {
-        let url = "http://localhost:3000/api/chat/sendMessage/";
+        let url = url_begin.concat(":3000/api/chat/sendMessage/");
 
         const body = {
             content: message,
             name: channame
         }
 
-        axios.defaults.baseURL = 'http://localhost:3000/api/';
+        axios.defaults.baseURL = url_begin.concat(':3000/api/');
         axios.defaults.headers.post['Content-Type'] = 'application/json';
         axios.defaults.headers.post['Accept'] = '*/*';
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
@@ -103,7 +105,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     ** Leaving a channel
     */
     post_api_chat_quit(pass: string, pub: boolean, channame: string) {
-        let url = "http://localhost:3000/api/chat/quit/";
+        let url = url_begin.concat(":3000/api/chat/quit/");
 
         const body = {
             password: pass,
@@ -111,7 +113,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
             name: channame
         }
 
-        axios.defaults.baseURL = 'http://localhost:3000/api/';
+        axios.defaults.baseURL = url_begin.concat(':3000/api/');
         axios.defaults.headers.post['Content-Type'] = 'application/json';
         axios.defaults.headers.post['Accept'] = '*/*';
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
@@ -132,9 +134,9 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     ** get /api/chat/id/messages
     */
     get_api_id_messages(id: string) {
-        let url = "http://localhost:3000/api/chat/".concat(id).concat("/messages/");
+        let url = url_begin.concat(":3000/api/chat/").concat(id).concat("/messages/");
 
-        axios.defaults.baseURL = 'http://localhost:3000/api/';
+        axios.defaults.baseURL = url_begin.concat(':3000/api/');
         axios.defaults.headers.post['Content-Type'] = 'application/json';
         axios.defaults.headers.post['Accept'] = '*/*';
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
@@ -155,7 +157,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     ** Setting an admin
     */
     post_api_set_admin(id: number, username: string, datetime: string, pass: string) {
-        let url = "http://localhost:3000/api/chat/setAdmin/";
+        let url = url_begin.concat(":3000/api/chat/setAdmin/");
 
         const body = {
             idChat: id,
@@ -164,7 +166,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
             password: pass,
         }
 
-        axios.defaults.baseURL = 'http://localhost:3000/api/';
+        axios.defaults.baseURL = url_begin.concat(':3000/api/');
         axios.defaults.headers.post['Content-Type'] = 'application/json';
         axios.defaults.headers.post['Accept'] = '*/*';
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
@@ -182,7 +184,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     }
 
     post_api_ban(id: number, username: string, datetime: string, pass: string) {
-        let url = "http://localhost:3000/api/chat/ban/";
+        let url = url_begin.concat(":3000/api/chat/ban/");
 
         const body = {
             idChat: id,
@@ -206,7 +208,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     }
 
     post_api_unban(id: number, username: string, datetime: string, pass: string) {
-        let url = "http://localhost:3000/api/chat/unban/";
+        let url = url_begin.concat(":3000/api/chat/unban/");
 
         const body = {
             idChat: id,
@@ -230,7 +232,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     }
 
     post_api_mute(id: number, username: string, datetime: string, pass: string) {
-        let url = "http://localhost:3000/api/chat/mute/";
+        let url = url_begin.concat(":3000/api/chat/mute/");
 
         const body = {
             idChat: id,
@@ -255,7 +257,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
 
 
     post_api_password(id: number, username: string, datetime: string, pass: string) {
-        let url = "http://localhost:3000/api/chat/password/";
+        let url = url_begin.concat(":3000/api/chat/password/");
 
         console.log("post apo password called");
         const body = {
@@ -280,7 +282,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     }
 
     post_api_setprivate(id: number, username: string, datetime: string, pass: string) {
-        let url = "http://localhost:3000/api/chat/setPrivate/";
+        let url = url_begin.concat(":3000/api/chat/setPrivate/");
 
         console.log("post api set private called");
         const body = {
@@ -303,7 +305,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     }
 
     post_api_setpublic(id: number, username: string, datetime: string, pass: string) {
-        let url = "http://localhost:3000/api/chat/setPublic/";
+        let url = url_begin.concat(":3000/api/chat/setPublic/");
 
         const body = {
             idChat: id,
@@ -331,11 +333,11 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     ** User endpoint
     */
     get_api_user(username: string) {
-        axios.defaults.baseURL = 'http://localhost:3000/api/';
+        axios.defaults.baseURL = url_begin.concat(':3000/api/');
 
 
         let toast = new ToastAlerts(null);
-        let url = "http://localhost:3000/api/user/".concat(username);
+        let url = url_begin.concat(":3000/api/user/").concat(username);
 
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
         axios.defaults.withCredentials = true;
@@ -357,7 +359,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
 
     //Send invitation
     post_api_user_relation_sendInvation_id(login: string) {
-        let url = "http://localhost:3000/api/user/relation/sendInvitation/".concat(login);
+        let url = url_begin.concat(":3000/api/user/relation/sendInvitation/").concat(login);
 
         let toast = new ToastAlerts(null);
         const body = {
@@ -371,7 +373,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
             .then(res => {
                 //console.log(res);
                 //console.log("Succesfully sent invitation !");
-                window.top.location = "http://localhost:3030/profile/".concat(login);
+                window.top.location = url_begin.concat(":3030/profile/").concat(login);
             })
             .catch((error) => {
                 toast.notifyDanger("Your invite failed")
@@ -381,7 +383,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     }
 
     post_api_user_relation_answerInvitation_id(login: string, status: string, extra: string) {
-        let url = "http://localhost:3000/api/user/relation/answerToInvitation/".concat(login);
+        let url = url_begin.concat(":3000/api/user/relation/answerToInvitation/").concat(login);
 
         const body = {
             status: status
@@ -409,7 +411,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     }
 
     get_api_received_invitations(id: number) {
-        let url = "http://localhost:3000/api/user/relation/answerToInvitation/".concat(id.toString());
+        let url = url_begin.concat(":3000/api/user/relation/answerToInvitation/").concat(id.toString());
 
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
         axios.defaults.withCredentials = true;
@@ -429,7 +431,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     }
 
     get_api_me_allfriends() {
-        let url = "http://localhost:3000/api/user/relation/me/allFriends/"
+        let url = url_begin.concat(":3000/api/user/relation/me/allFriends/");
 
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
         axios.defaults.withCredentials = true;
@@ -448,7 +450,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     }
 
     delete_relation_id(login: string, extra: string) {
-        let url = "http://localhost:3000/api/user/relation/remove/".concat(login);
+        let url = url_begin.concat(":3000/api/user/relation/remove/").concat(login);
 
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
         axios.defaults.withCredentials = true;
@@ -465,7 +467,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
                     //console.log("id looked is " + id);
                     let elem = document.getElementById(id);
                     elem.parentNode.removeChild(elem);
-                    window.top.location = "http://localhost:3030/profile/".concat(login);
+                    window.top.location = url_begin.concat(":3030/profile/").concat(login);
                 }
             })
             .catch((error) => {
@@ -476,7 +478,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     }
 
     post_relation_block(login: string, blocked_from: string) {
-        let url = "http://localhost:3000/api/user/relation/block/".concat(login);
+        let url = url_begin.concat(":3000/api/user/relation/block/").concat(login);
 
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
         axios.defaults.withCredentials = true;
@@ -489,19 +491,19 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
                 //console.log(res);
                 toast.notifySuccess("Successfully blocked user");
                 if (blocked_from === "people")
-                    window.top.location = "http://localhost:3030/profile/".concat(login);
+                    window.top.location = url_begin.concat(":3030/profile/").concat(login);
             })
             .catch((error) => {
                 //console.log("Error while blocking target friend");
                 //console.log(error);
                 toast.notifyDanger("Error while blocking contact");
                 if (blocked_from === "people")
-                    window.top.location = "http://localhost:3030/profile/".concat(login);
+                    window.top.location = url_begin.concat(":3030/profile/").concat(login);
             })
     }
 
     delete_relation_unblock(login: string, extra: string) {
-        let url = "http://localhost:3000/api/user/relation/unblock/".concat(login);
+        let url = url_begin.concat(":3000/api/user/relation/unblock/").concat(login);
 
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
         axios.defaults.withCredentials = true;
@@ -518,7 +520,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
                     let elem = document.getElementById(id);
                     elem.parentNode.removeChild(elem);
                 }
-                window.top.location = "http://localhost:3030/profile/".concat(login);
+                window.top.location = url_begin.concat(":3030/profile/").concat(login);
             })
             .catch((error) => {
                 //console.log("Error while unblocking target friend");
@@ -531,7 +533,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     get_relation_status(login: string) {
 
         console.log("get relation with" + login);
-        let url = "http://localhost:3000/api/user/relation/relationStatusWith/".concat(login);
+        let url = url_begin.concat(":3000/api/user/relation/relationStatusWith/").concat(login);
 
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
         axios.defaults.withCredentials = true;
@@ -554,7 +556,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     }
 
     get_relation_allBlocked() {
-        let url = "http://localhost:3000/api/user/relation/me/allBlocked/";
+        let url = url_begin.concat(":3000/api/user/relation/me/allBlocked/");
 
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
         axios.defaults.withCredentials = true;
@@ -593,7 +595,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
         console.log(bod);
         let toast = new ToastAlerts(null);
 
-        let res = axios.post('http://localhost:3000/api/auth/log-in/', bod, { headers })
+        let res = axios.post(url_begin.concat(':3000/api/auth/log-in/'), bod, { headers })
             .then(res => {
                 if (res.status == 200 || res.status == 201) {
                     localStorage.setItem("loggedIn", "true");
@@ -602,7 +604,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
                         localStorage.setItem("login42", res.data.login42);
                     else
                         localStorage.setItem("login42", "");
-                    window.top.location = "http://localhost:3030/user";
+                    window.top.location = url_begin.concat(":3030/user");
                 }
             })
             .catch((error) => {
@@ -629,7 +631,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
 
         let toast = new ToastAlerts(null);
 
-        let res = axios.post('http://localhost:3000/api/auth/register/', bod, { headers }).then(res => {
+        let res = axios.post(url_begin.concat(':3000/api/auth/register/'), bod, { headers }).then(res => {
             console.log(res.status)
             if (res.status == 201) {
                 toast.notifySuccess('🦄 Yes! You are now registered ! You may log in.');
@@ -670,7 +672,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
         }
 
         //Va chercher l'image uploadée
-        let url = "http://localhost:3000/api/user/".concat(imageCode).concat("/avatar/");
+        let url = url_begin.concat(":3000/api/user/").concat(imageCode).concat("/avatar/");
 
         let res = axios.get(url, { responseType: 'blob' })
             .then(res => {
@@ -700,7 +702,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
 
         let imageCode = null;
         let imageName = "alt-photo";
-        let url = "http://localhost:3000/api/user/".concat(chosenLogin)
+        let url = url_begin.concat(":3000/api/user/").concat(chosenLogin)
 
         let res = axios.get(url)
             .then(res => {
@@ -715,9 +717,9 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
 
     post_avatar(login: string, file: any) {
         //Permet d'uploader son avatar / image
-        let url = "http://localhost:3000/api/user/avatar/".concat(login);
+        let url = url_begin.concat(":3000/api/user/avatar/").concat(login);
 
-        axios.defaults.baseURL = 'http://localhost:3000/api/';
+        axios.defaults.baseURL = url_begin.concat(':3000/api/');
         axios.defaults.headers.post['Content-Type'] = 'multipart/form-data';
         axios.defaults.headers.post['Accept'] = '*/*';
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
@@ -737,7 +739,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
                     if (res.data.login != res.data.login42)
                         haschanged = true;
                     this.render_avatar(login, "", haschanged);
-                    window.top.location = "http://localhost:3030/settings";
+                    window.top.location = url_begin.concat(":3030/settings");
                 }
                 else {
                     //console.log("Oops! Avatar not updated");
@@ -755,9 +757,9 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     ** edit user data (for login)
     */
     patch_user(old_login: string, new_login: string) {
-        let url = "http://localhost:3000/api/user/".concat(old_login).concat("/changeto/").concat(new_login);
+        let url = url_begin.concat(":3000/api/user/").concat(old_login).concat("/changeto/").concat(new_login);
 
-        axios.defaults.baseURL = 'http://localhost:3000/api/';
+        axios.defaults.baseURL = url_begin.concat(':3000/api/');
         axios.defaults.headers.post['Content-Type'] = 'application/json';
         axios.defaults.headers.post['Accept'] = '*/*';
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
@@ -791,7 +793,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     post_2fa_generate() {
         console.log("Generating 2fa");
 
-        let url = "http://localhost:3000/api/2fa/generate";
+        let url = url_begin.concat(":3000/api/2fa/generate");
 
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
         axios.defaults.withCredentials = true;
@@ -812,7 +814,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     post_2fa_turnOn(code?: string) {
         console.log("Turning on 2fa");
 
-        let url = "http://localhost:3000/api/2fa/turn-on";
+        let url = url_begin.concat(":3000/api/2fa/turn-on");
 
         const body = {
             twoFactorAuthenticationCode: code
@@ -840,7 +842,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     post_2fa_logIn() {
         console.log("Turning on 2fa");
 
-        let url = "http://localhost:3000/api/2fa/login";
+        let url = url_begin.concat(":3000/api/2fa/login");
 
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
         axios.defaults.withCredentials = true;
@@ -860,7 +862,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
 
 
     get_api_achievements() {
-        let url = "http://localhost:3000/api/user/achievements/me";
+        let url = url_begin.concat(":3000/api/user/achievements/me");
 
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
         axios.defaults.withCredentials = true;

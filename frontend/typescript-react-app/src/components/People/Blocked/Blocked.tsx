@@ -14,7 +14,8 @@ export default function Blocked() {
 	/*async*/
 	function renderBlocked() {
 		axios.defaults.withCredentials = true;
-		let url = "http://localhost:3000/api/user/relation/me/allBlocked";
+
+		let url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/user/relation/me/allBlocked");
 		/*await*/
 		axios.get(url)
 			.then(res => {
@@ -51,7 +52,7 @@ export default function Blocked() {
 						<h1 className="text-people" id="displaying--blocked">Blocked</h1>
 						<br />
 						<ul id="list--users--ul" className="wrapper list-group list-group-horizontal-lg">
-						{load == true && users.length == 0 ? <p className="no--contact">No blocked user 😇</p> : ""}
+							{load == true && users.length == 0 ? <p className="no--contact">No blocked user 😇</p> : ""}
 							{load == true ?
 								users.map(user => <MiniDisplay key={user.login} login={user.login} status={user.status} avatar={user.avatar} ftlogin={user.login42} user={user} extra="blocked" container="blocked" />)
 								: ""}

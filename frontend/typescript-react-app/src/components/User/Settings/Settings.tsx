@@ -9,6 +9,8 @@ import Nav from "../../Nav/Nav";
 import AuthCode, { AuthCodeRef } from 'react-auth-code-input';
 import { AiOutlineLoading3Quarters, AiOutlineLoading } from "react-icons/ai";
 
+let url_begin = "http://".concat(process.env.REACT_APP_IP);
+
 export interface SettingsProps {
 	username?: string
 	login42?: string
@@ -46,16 +48,16 @@ export default function Settings(props: SettingsProps) {
 
 	//Ici le async est ultra nécessaire !
 	async function manageQR() {
-		const res = await fetch('http://localhost:3000/api/2fa/generate', { method: 'POST', credentials: 'include' });
+		const res = await fetch(url_begin.concat(':3000/api/2fa/generate'), { method: 'POST', credentials: 'include' });
 		const blob = await res.blob();
 		const imgUrl = URL.createObjectURL(blob);
 		setqrCode(imgUrl);
 	}
 
 	function turnoff2FA() {
-		let url = "http://localhost:3000/api/2fa/turn-off";
+		let url = url_begin.concat(":3000/api/2fa/turn-off");
 
-		axios.defaults.baseURL = 'http://localhost:3000/api/';
+		axios.defaults.baseURL = url_begin.concat(':3000/api/');
 		axios.defaults.headers.post['Content-Type'] = 'application/json';
 		axios.defaults.headers.post['Accept'] = '*/*';
 		axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
@@ -79,7 +81,7 @@ export default function Settings(props: SettingsProps) {
 	const checkCode = (event: any) => {
 		event.preventDefault();
 
-		axios.defaults.baseURL = 'http://localhost:3000/api/';
+		axios.defaults.baseURL = url_begin.concat(':3000/api/');
 		axios.defaults.headers.post['Content-Type'] = 'application/json';
 		axios.defaults.headers.post['Accept'] = '*/*';
 		axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
@@ -90,7 +92,7 @@ export default function Settings(props: SettingsProps) {
 		}
 		let toast = new ToastAlerts(null);
 
-		let url = "http://localhost:3000/api/2fa/turn-on";
+		let url = url_begin.concat(":3000/api/2fa/turn-on");
 
 		axios.post(url, bod)
 			.then(res => {
@@ -132,9 +134,9 @@ export default function Settings(props: SettingsProps) {
 
 	/*async*/
 	function getUser() {
-		let url = "http://localhost:3000/api/auth/";
+		let url = url_begin.concat(":3000/api/auth/");
 
-		axios.defaults.baseURL = 'http://localhost:3000/api/';
+		axios.defaults.baseURL = url_begin.concat(':3000/api/');
 		axios.defaults.headers.post['Content-Type'] = 'application/json';
 		axios.defaults.headers.post['Accept'] = '*/*';
 		axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
@@ -166,7 +168,7 @@ export default function Settings(props: SettingsProps) {
 			.catch((err) => {
 				//console.log("Auth returned 400 -> missing cookie");
 				localStorage.setItem("loggedIn", "false");
-				window.top.location = "http://localhost:3030/auth/"
+				window.top.location = ":3030/auth/"
 			})
 	}
 
@@ -213,86 +215,86 @@ export default function Settings(props: SettingsProps) {
 									<span className="sr-only"><AiOutlineLoading /></span>
 								</div>
 								:*/}
-								<>
-									<img id={username} className="profile--pic" height="80" width="80" />
-									<svg className="log--color_profile" height="40" width="40">
-										<circle cx="20" cy="20" r="15" fill={color} stroke="white" style={{ strokeWidth: '3' }} />
-									</svg>
-									<p className="username-text" id="user_username">{username}</p>
-									<p className="status-text">{status}</p>
-									<br />
-									<div className="row d-flex justify-content-center text-center">
-										<div id="change-avatar-div" className="col-5">
-											<label id="change--avatar--label">Change avatar</label>
-											<div id="change--avatar">
-												<input
-													type="file"
-													name="image-upload"
-													id="input--upload"
-													accept="image/*"
-													onChange={onChangePicture}
-													className="input-file-upload"
-												/>
-											</div>
+							<>
+								<img id={username} className="profile--pic" height="80" width="80" />
+								<svg className="log--color_profile" height="40" width="40">
+									<circle cx="20" cy="20" r="15" fill={color} stroke="white" style={{ strokeWidth: '3' }} />
+								</svg>
+								<p className="username-text" id="user_username">{username}</p>
+								<p className="status-text">{status}</p>
+								<br />
+								<div className="row d-flex justify-content-center text-center">
+									<div id="change-avatar-div" className="col-5">
+										<label id="change--avatar--label">Change avatar</label>
+										<div id="change--avatar">
+											<input
+												type="file"
+												name="image-upload"
+												id="input--upload"
+												accept="image/*"
+												onChange={onChangePicture}
+												className="input-file-upload"
+											/>
 										</div>
-										<br />
 									</div>
 									<br />
-									<br />
-									<div className="row d-flex justify-content-center text-center">
-										<div id="change--username--div">
-											<h3 id="activate--modal">Change username</h3>
-											{/*<button id="change--username" type="button" className="btn btn-outline-dark"
+								</div>
+								<br />
+								<br />
+								<div className="row d-flex justify-content-center text-center">
+									<div id="change--username--div">
+										<h3 id="activate--modal">Change username</h3>
+										{/*<button id="change--username" type="button" className="btn btn-outline-dark"
 												onClick={handleShow}>Click to change
 											</button>*/}
-											<EditUsernameModal 
-												//setUsername={setUsername}
-												username={username}
-												//checkexited={setCheckExited}
-												//setUpdate={setUpdate}
-												exited={checkExited}
-												/>
-											<br />
-										</div>
+										<EditUsernameModal
+											//setUsername={setUsername}
+											username={username}
+											//checkexited={setCheckExited}
+											//setUpdate={setUpdate}
+											exited={checkExited}
+										/>
+										<br />
 									</div>
-									<br />
+								</div>
+								<br />
+								<div className="row d-flex justify-content-center text-center">
 									<div className="row d-flex justify-content-center text-center">
-										<div className="row d-flex justify-content-center text-center">
-											<div className="col-6">
-												<div id="2fa--div">
-													<h3 id="activate--2fa">2 Factor Authentication</h3>
-													<button className={activated2fa ? "btn btn-outline-danger" : "btn btn-outline-success"}
-														id="button--2fa" type="button" onClick={handle2FA}>{activated2fa == true ? "Turn off 2FA" : "Turn on 2FA"}
-													</button>
-													<br />
-													<br />
-													{qrcode != "" && activated2fa == false ? <img style={{ marginBottom: "20ox" }} id="qrcode" src={qrcode}></img> : <p></p>}
-													<br />
-													{qrcode != "" && activated2fa == false ? <p className="black--text" id="please">Please scan the QR Code with your Google Authenticator app.</p> : <p className="black--text"></p>}
-													{qrcode != "" && activated2fa == false ?
-														<>
-															<br />
-															<label className="black--text">Enter the code provided</label>
-														</>
-														: <p className="black--text"></p>}
-													{qrcode != "" && activated2fa == false ?
-														<AuthCode
-															allowedCharacters='numeric'
-															ref={AuthInputRef}
-															inputClassName="auth--code_settings"
-															onChange={
-																function (res: string): void {
-																	setCode(res);
-																}}
-														/>
-														: ""}
-													{qrcode != "" && activated2fa == false ?
-														<>
-															<br />
-															<button className="btn btn-outline-dark" type="button" id="check--auth" onClick={checkCode}>Check</button>
-														</>
-														: <p className="black--text"></p>}
-													{/* <ToastContainer
+										<div className="col-6">
+											<div id="2fa--div">
+												<h3 id="activate--2fa">2 Factor Authentication</h3>
+												<button className={activated2fa ? "btn btn-outline-danger" : "btn btn-outline-success"}
+													id="button--2fa" type="button" onClick={handle2FA}>{activated2fa == true ? "Turn off 2FA" : "Turn on 2FA"}
+												</button>
+												<br />
+												<br />
+												{qrcode != "" && activated2fa == false ? <img style={{ marginBottom: "20ox" }} id="qrcode" src={qrcode}></img> : <p></p>}
+												<br />
+												{qrcode != "" && activated2fa == false ? <p className="black--text" id="please">Please scan the QR Code with your Google Authenticator app.</p> : <p className="black--text"></p>}
+												{qrcode != "" && activated2fa == false ?
+													<>
+														<br />
+														<label className="black--text">Enter the code provided</label>
+													</>
+													: <p className="black--text"></p>}
+												{qrcode != "" && activated2fa == false ?
+													<AuthCode
+														allowedCharacters='numeric'
+														ref={AuthInputRef}
+														inputClassName="auth--code_settings"
+														onChange={
+															function (res: string): void {
+																setCode(res);
+															}}
+													/>
+													: ""}
+												{qrcode != "" && activated2fa == false ?
+													<>
+														<br />
+														<button className="btn btn-outline-dark" type="button" id="check--auth" onClick={checkCode}>Check</button>
+													</>
+													: <p className="black--text"></p>}
+												{/* <ToastContainer
 														position="top-right"
 														autoClose={5000}
 														hideProgressBar={false}
@@ -303,11 +305,11 @@ export default function Settings(props: SettingsProps) {
 														draggable
 														pauseOnHover
 													/> */}
-												</div>
 											</div>
 										</div>
 									</div>
-								</>
+								</div>
+							</>
 							{/*}*/}
 						</div>
 					</div>

@@ -33,7 +33,7 @@ export default function ListChannels(props: ListChannelsProps) {
 
 	function renderListChannels() {
 		axios.defaults.withCredentials = true;
-		const url = "http://localhost:3000/api/chat/joinedChannels";
+		const url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/chat/joinedChannels");
 		axios.get(url)
 			.then(res => {
 				let channels = res.data;
@@ -62,7 +62,7 @@ export default function ListChannels(props: ListChannelsProps) {
 
 	function renderListDMs() {
 		axios.defaults.withCredentials = true;
-		const url = "http://localhost:3000/api/chat/joinedChannels";
+		const url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/chat/joinedChannels");
 		axios.get(url)
 			.then(res => {
 				let DMs = res.data;

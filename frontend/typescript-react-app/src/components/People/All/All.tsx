@@ -1,5 +1,5 @@
 import './All.scss';
-import React, { Component, useState, useEffect} from "react";
+import React, { Component, useState, useEffect } from "react";
 import myAxios from "../../Utils/Axios/Axios";
 import axios from "axios";
 import Invitations from "../Invitations/Invitations";
@@ -23,7 +23,8 @@ export default function All(props: InputWrapperProps) {
 	function renderUsers() {
 		axios.defaults.withCredentials = true;
 		let log = localStorage.getItem("login");
-		let url = "http://localhost:3000/api/user/";
+		let url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/user/");
+
 		/*await*/
 		axios.get(url)
 			.then(res => {

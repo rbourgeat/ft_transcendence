@@ -14,8 +14,10 @@ var adversaires = [];
 var canvas = [];
 var game = [];
 
+let url_begin = "http://".concat(process.env.REACT_APP_IP);
+
 export default function Live() {
-	let socket = io("http://localhost:3000/game");
+	let socket = io(url_begin.concat(":3000/game"));
 	const [myArgs, setmyArgs] = React.useState([""]);
 	const [displayedNo, setDisplayedNo] = React.useState(false);
 
@@ -91,8 +93,8 @@ export default function Live() {
 						newbutton.className = "btn btn-light watch";
 						newbutton.onclick = function () {
 							//alert("Button is clicked");
-							// console.log("redirecting to game page");
-							window.top.location = "http://localhost:3030/game?live=" + joueurs[joueur] + "+" + adversaire;
+							console.log("redirecting to game page");
+							window.top.location = url_begin.concat(":3030/game?live=").concat(joueurs[joueur]).concat("+").concat(adversaire);
 						};
 						newdiv.appendChild(newbutton);
 					}

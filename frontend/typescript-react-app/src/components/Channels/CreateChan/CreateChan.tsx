@@ -41,7 +41,7 @@ export default function CreateChan(props: CreateChanProps) {
 		axios.defaults.withCredentials = true;
 
 		//Check si la channel existe ou pas
-		let url = "http://localhost:3000/api/chat/".concat(chanName).concat("/exist");
+		let url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/chat/").concat(chanName).concat("/exist");
 
 		let toast = new ToastAlerts(null);
 
@@ -70,7 +70,7 @@ export default function CreateChan(props: CreateChanProps) {
 
 				if (res.data == true || res.data == "true") {
 					if (isFree == true && load == true) {
-						url = "http://localhost:3000/api/chat/new";
+						url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/chat/new");
 
 						let scope: boolean;
 						if (chanScope === "public")
