@@ -23,14 +23,12 @@ let url_begin = "http://".concat(process.env.REACT_APP_IP);
 export default function Game() {
 	let size = useWindowDimensions();
 	const [isActive, setActive] = React.useState(true);
-	// const [isActive2, setActive2] = React.useState(false);
 	const [isWin, setWin] = React.useState(false);
 	const [gameMode, chanScopeSet] = React.useState("original");
 
 	const queryParams = new URLSearchParams(window.location.search);
 	const vs = queryParams.get('vs');
 	const live = queryParams.get('live');
-
 
 	// socket game
 	const [username, setUsername] = React.useState("");
@@ -46,12 +44,19 @@ export default function Game() {
 				username = res.data.login;
 				joueur = username;
 				setUsername(username);
+				if (vs !== null) {
+					setActive(false);
+					socket.emit('versus', joueur + ":" + vs)
+					joueur1 = joueur;
+					joueur2 = vs;
+					console.log("joueur1 = " + joueur1 + " / joueur2 = " + joueur2)
+					document.querySelector('#waitingPlayer').textContent = "Waiting player...";
+				}
 			})
 			.catch((err) => {
 			})
 	}
 	var SearchText = "Rechercher une partie"
-	// var SearchText2 = "Rejouer avec le même joueur"
 
 	var socket = io(url_begin.concat(":3000/game"), { query: { username: username } });
 
@@ -73,7 +78,6 @@ export default function Game() {
 		else
 			document.querySelector('#search-button').textContent = "Impossible de te connecter !"
 	}
-
 
 	socket.on("roundStartLIVE", (...args) => {
 		if (live !== null || joueur == joueur2) {
@@ -135,33 +139,37 @@ export default function Game() {
 	socket.on("privateMatch", (...args) => {
 		if (vs === null)
 			return;
-		console.log(args)
-		setWin(false);
-		document.querySelector('#player-score').textContent = "0";
-		document.querySelector('#player2-score').textContent = "0";
-		document.querySelector('#victoryMessage').textContent = "";
-		document.querySelector('#waitingPlayer').textContent = "";
-		joueur1 = args[0];
-		joueur2 = args[1];
-		gm = 0;
-		initParty();
-		if (joueur1 != adversaire && joueur1 == joueur && game) {
-			adversaire = joueur2;
-			document.querySelector('#joueur1').textContent = joueur1 + ": ";
-			document.querySelector('#joueur2').textContent = joueur2 + ": ";
-			cancelAnimationFrame(anim);
-			play();
-			setActive(false);
-			setGameMode(gm);
-		}
-		else if (joueur2 != adversaire && joueur2 == joueur && game) {
-			adversaire = joueur1;
-			document.querySelector('#joueur1').textContent = joueur1 + ": ";
-			document.querySelector('#joueur2').textContent = joueur2 + ": ";
-			cancelAnimationFrame(anim);
-			play();
-			setActive(false);
-			setGameMode(gm);
+		if (args[0] == joueur)
+			return;
+		if (args[1] == joueur){
+			console.log(args)
+			setWin(false);
+			document.querySelector('#player-score').textContent = "0";
+			document.querySelector('#player2-score').textContent = "0";
+			document.querySelector('#victoryMessage').textContent = "";
+			document.querySelector('#waitingPlayer').textContent = "";
+			joueur1 = args[1];
+			joueur2 = args[0];
+			gm = 0;
+			initParty();
+			if (joueur1 != adversaire && joueur1 == joueur) {
+				adversaire = joueur2;
+				document.querySelector('#joueur1').textContent = joueur1 + ": ";
+				document.querySelector('#joueur2').textContent = joueur2 + ": ";
+				cancelAnimationFrame(anim);
+				play();
+				setActive(false);
+				setGameMode(gm);
+			}
+			else if (joueur2 != adversaire && joueur2 == joueur) {
+				adversaire = joueur1;
+				document.querySelector('#joueur1').textContent = joueur1 + ": ";
+				document.querySelector('#joueur2').textContent = joueur2 + ": ";
+				cancelAnimationFrame(anim);
+				play();
+				setActive(false);
+				setGameMode(gm);
+			}
 		}
 
 	});
@@ -267,12 +275,6 @@ export default function Game() {
 		if (live !== null) {
 			setActive(false);
 		}
-
-		if (vs !== null) {
-			setActive(false);
-			socket.emit('versus', vs)
-			document.querySelector('#waitingPlayer').textContent = "Waiting player...";
-		}
 	}, []);
 
 	window.addEventListener('resize', function (event) {
@@ -341,7 +343,7 @@ export default function Game() {
 
 	function ballMove() {
 		// Rebounds on top and bottom
-		if (joueur == joueur1) {
+		if (joueur == joueur1 && live == null) {
 			if (game.ball.y > canvas.height || game.ball.y < 0) {
 				game.ball.speed.y *= -1;
 			}
@@ -512,7 +514,7 @@ export default function Game() {
 											</Form.Group>
 										</Form>
 										: ""}
-$									<div className="row d-flex justify-content-center text-center">
+									<div className="row d-flex justify-content-center text-center">
 										{isActive ? <button type="button" className="btn btn-outline-light" id="search-button" onClick={() => sendSearch()}>{SearchText}</button> : ""}
 										{/* {isActive2 ? <button type="button" className="btn btn-outline-light" id="search-button2" onClick={() => sendSearch2()}>{SearchText2}</button> : ""} */}
 									</div>
