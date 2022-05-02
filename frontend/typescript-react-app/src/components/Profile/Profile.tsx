@@ -101,6 +101,7 @@ export default function Profile() {
 		}
 		getUserLogin(login)
 		buttonToDisplay();
+
 		calledOnce.current = true;
 	}, []);
 
@@ -148,39 +149,48 @@ export default function Profile() {
 	function inviteFriend() {
 		let ax = new MyAxios(null);
 		ax.post_api_user_relation_sendInvation_id(login);
+		// TODO: attention retester toutes les redirs !
+		window.top.location = url_begin.concat(":3030/profile/").concat(login);
 	}
 
 	function acceptFriend() {
 		let ax = new MyAxios(null);
 		ax.post_api_user_relation_answerInvitation_id(login, "accepted", "");
-		window.top.location = url_begin.concat(":3000/user/").concat(login);
+		window.top.location = url_begin.concat(":3030/profile/").concat(login);
 	}
 
 	function declineFriend() {
 		let ax = new MyAxios(null);
 		ax.post_api_user_relation_answerInvitation_id(login, "declined", "");
-		window.top.location = url_begin.concat(":3000/user/").concat(login);
+		window.top.location = url_begin.concat(":3030/profile/").concat(login);
 	}
 
 	function block() {
 		let ax = new MyAxios(null);
 		ax.post_relation_block(login, "people");
+		window.top.location = url_begin.concat(":3030/profile/").concat(login);
 	}
 
-	function watchPlaying() {
-		let toast = new ToastAlerts(null);
-		toast.notifyDanger("To do @rbourgea");
-	}
+	// function watchPlaying() {
+	// 	let toast = new ToastAlerts(null);
+	// 	toast.notifyDanger("To do @rbourgea");
+	// }
 
 	function askToPlay() {
-		let toast = new ToastAlerts(null);
-		toast.notifyDanger("Not implemented yet");
+		// let toast = new ToastAlerts(null);
+		// toast.notifyDanger("Not implemented yet");
+		// function inviteToPlay() {
+			let selectedUser = login;
+			console.log("You are inviting " + selectedUser + " to play !");
+			window.top.location = url_begin.concat(":3030/game?vs=").concat(selectedUser);
+		// }
 	}
 
-	function sendDM() {
-		let toast = new ToastAlerts(null);
-		toast.notifyDanger("Not implemented yet");
-	}
+	// pas demande
+	// function sendDM() {
+	// 	let toast = new ToastAlerts(null);
+	// 	toast.notifyDanger("Not implemented yet");
+	// }
 
 	function unblock() {
 		let ax = new MyAxios(null);
@@ -259,11 +269,12 @@ export default function Profile() {
 											{isBlocked != true ? <button type="button" className="btn btn-outline-danger" id="block--buton" onClick={block}>Block</button> : ""}
 											{isFriend == true ? <button type="button" className="btn btn-outline-danger" id="remove--buton" onClick={remove}>Remove</button> : ""}
 										</div>
+										{/* TODO: a reprendre rbougea ? */}
 										<div className="row d-flex justify-content-center text-center" id="games--related">
-											{status == "ingame" && isBlocked == false ? <p className="profile_text">{login} is playing ! You can watch the game.</p> : ""}
-											{status == "ingame" && isBlocked == false ? <button type="button" className="btn btn-outline-dark" id="watch--buton" onClick={watchPlaying}>Watch</button> : ""}
+											{/* {status == "ingame" && isBlocked == false ? <p className="profile_text">{login} is playing ! You can watch the game.</p> : ""}
+											{status == "ingame" && isBlocked == false ? <button type="button" className="btn btn-outline-dark" id="watch--buton" onClick={watchPlaying}>Watch</button> : ""} */}
 											{status == "online" && isBlocked == false ? <button type="button" className="btn btn-outline-dark" id="play--buton" onClick={askToPlay}> Ask to Play</button> : ""}
-											{isBlocked == false ? <button type="button" className="btn btn-outline-dark" id="dm--buton" onClick={sendDM}>Send DM</button> : ""}
+											{/* {isBlocked == false ? <button type="button" className="btn btn-outline-dark" id="dm--buton" onClick={sendDM}>Send DM</button> : ""} */}
 											{isBlocked == true ?
 												<>
 													<br />
