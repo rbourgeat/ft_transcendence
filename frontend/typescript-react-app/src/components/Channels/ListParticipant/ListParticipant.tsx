@@ -60,7 +60,7 @@ export default function ListParticipant(props: ParticipantProps) {
 			setCurrentUserAdmin(false);
 			getCurrentUserAdminStatus();
 		}
-	}, [props.activeID])
+	}, [props.activeID, sockChan])
 
 	props.socket.on("refreshParticipants", (...args) => {
 		if (args[1] == props.activeName && (props.activeName != "" || props.activeName != undefined || props.activeName != null)) {
@@ -254,6 +254,7 @@ export default function ListParticipant(props: ParticipantProps) {
 										updateSelectedUser={updateSelectedUser}
 										updateFunctionToUse={updateFunctionToUse}
 										isBanned={props.isBanned}
+										status={participate.user.status}
 									/>
 								)
 								:

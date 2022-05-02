@@ -13,6 +13,7 @@ export interface DisplayChanProps {
 	setActiveName?: any
 	receiver?: string,
 	setHide?: any
+	socket?: any
 }
 
 export default function DisplayChan(props: DisplayChanProps) {
@@ -46,9 +47,11 @@ export default function DisplayChan(props: DisplayChanProps) {
 			if (props.isChan === false) {
 				props.setActiveID(props.channel.id);
 				props.setActiveName(receiver);
+				//props.socket.close();
 			}
 			else {
 				props.setActiveID(props.channel.id);
+				//props.socket.close();
 				props.setActiveName(props.channel.name)
 			}
 		}

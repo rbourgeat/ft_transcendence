@@ -146,6 +146,7 @@ export default function Settings(props: SettingsProps) {
 		/*await*/
 		axios.get(url)
 			.then(res => {
+				console.log("settings status:" + res.data.status);
 				username = res.data.login;
 				if (res.data.login42 != null && res.data.login42 != undefined && res.data.login42 != "") {
 					setis42(true);
@@ -190,8 +191,8 @@ export default function Settings(props: SettingsProps) {
 		}
 		if (localStorage.getItem("2fa") == "true")
 			setActivated2fa(true);
-		let toast = new ToastAlerts(null);
-		toast.notifySuccess("Component loaded !");
+		// let toast = new ToastAlerts(null);
+		// toast.notifySuccess("Component loaded !");
 		getUser();
 		calledOnce.current = true;
 	});
