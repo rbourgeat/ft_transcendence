@@ -11,6 +11,7 @@ import { Form } from 'react-bootstrap'
 import Confetti from 'react-confetti';
 import { Offline, Online } from "react-detect-offline";
 import "../../../node_modules/react-rain-animation/lib/style.css";
+import { ToastContainer, toast } from "react-toastify";
 
 var adversaire: string;
 var joueur: string;
@@ -19,18 +20,18 @@ let joueur2: string;
 var isSearching = false;
 var gm = 0;
 let url_begin = "http://".concat(process.env.REACT_APP_IP);
+let selectedUser = "";
 
 export default function Game() {
 	let size = useWindowDimensions();
 	const [isActive, setActive] = React.useState(true);
-	// const [isActive2, setActive2] = React.useState(false);
+	const [isActive2, setActive2] = React.useState(false);
 	const [isWin, setWin] = React.useState(false);
 	const [gameMode, chanScopeSet] = React.useState("original");
 
 	const queryParams = new URLSearchParams(window.location.search);
 	const vs = queryParams.get('vs');
 	const live = queryParams.get('live');
-
 
 	// socket game
 	const [username, setUsername] = React.useState("");
@@ -46,25 +47,33 @@ export default function Game() {
 				username = res.data.login;
 				joueur = username;
 				setUsername(username);
+				if (vs !== null) {
+					setActive(false);
+					socket.emit('versus', joueur + ":" + vs)
+					setActive2(true);
+				}
 			})
 			.catch((err) => {
 			})
 	}
 	var SearchText = "Rechercher une partie"
-	// var SearchText2 = "Rejouer avec le même joueur"
 
 	var socket = io(url_begin.concat(":3000/game"), { query: { username: username } });
+
+	function removeInvit() {
+		setActive2(false);
+		socket.emit('removeInvit', true)
+		setActive(true);
+	}
 
 	function sendSearch() {
 		if (joueur) {
 			isSearching = isSearching ? false : true;
 			if (isSearching) {
-				// setActive2(false);
 				SearchText = "Annuler la recherche"
 				socket.emit('search', gameMode);
 			}
 			else {
-				// setActive2(true);
 				SearchText = "Rechercher une partie à nouveau"
 				socket.emit('search', "STOPSEARCH-" + gameMode);
 			}
@@ -73,7 +82,6 @@ export default function Game() {
 		else
 			document.querySelector('#search-button').textContent = "Impossible de te connecter !"
 	}
-
 
 	socket.on("roundStartLIVE", (...args) => {
 		if (live !== null || joueur == joueur2) {
@@ -84,12 +92,8 @@ export default function Game() {
 			document.querySelector('#player2-score').textContent = String(b[4]);
 			joueur1 = b[1];
 			joueur2 = b[2];
-			// if (live !== null) {
-			// 	cancelAnimationFrame(anim);
-			// 	initParty();
-			// 	play();
-			// }
 			setActive(false);
+			setActive2(false);
 			if (game) {
 				game.player.score = b[3];
 				game.player2.score = b[4];
@@ -107,6 +111,7 @@ export default function Game() {
 		document.querySelector('#player-score').textContent = "0";
 		document.querySelector('#player2-score').textContent = "0";
 		document.querySelector('#victoryMessage').textContent = "";
+		document.querySelector('#waitingPlayer').textContent = "";
 		joueur1 = args[0];
 		joueur2 = args[1];
 		gm = args[2];
@@ -118,6 +123,7 @@ export default function Game() {
 			cancelAnimationFrame(anim);
 			play();
 			setActive(false);
+			setActive2(false);
 			setGameMode(gm);
 		}
 		else if (joueur2 != adversaire && joueur2 == joueur && game) {
@@ -127,40 +133,7 @@ export default function Game() {
 			cancelAnimationFrame(anim);
 			play();
 			setActive(false);
-			setGameMode(gm);
-		}
-
-	});
-
-	socket.on("privateMatch", (...args) => {
-		if (vs === null)
-			return;
-		console.log(args)
-		setWin(false);
-		document.querySelector('#player-score').textContent = "0";
-		document.querySelector('#player2-score').textContent = "0";
-		document.querySelector('#victoryMessage').textContent = "";
-		document.querySelector('#waitingPlayer').textContent = "";
-		joueur1 = args[0];
-		joueur2 = args[1];
-		gm = 0;
-		initParty();
-		if (joueur1 != adversaire && joueur1 == joueur && game) {
-			adversaire = joueur2;
-			document.querySelector('#joueur1').textContent = joueur1 + ": ";
-			document.querySelector('#joueur2').textContent = joueur2 + ": ";
-			cancelAnimationFrame(anim);
-			play();
-			setActive(false);
-			setGameMode(gm);
-		}
-		else if (joueur2 != adversaire && joueur2 == joueur && game) {
-			adversaire = joueur1;
-			document.querySelector('#joueur1').textContent = joueur1 + ": ";
-			document.querySelector('#joueur2').textContent = joueur2 + ": ";
-			cancelAnimationFrame(anim);
-			play();
-			setActive(false);
+			setActive2(false);
 			setGameMode(gm);
 		}
 
@@ -266,12 +239,7 @@ export default function Game() {
 
 		if (live !== null) {
 			setActive(false);
-		}
-
-		if (vs !== null) {
-			setActive(false);
-			socket.emit('versus', vs)
-			document.querySelector('#waitingPlayer').textContent = "Waiting player...";
+			setActive2(false);
 		}
 	}, []);
 
@@ -339,9 +307,45 @@ export default function Game() {
 		}
 	});
 
+	function acceptInvitePlay()
+    {
+        window.top.location = url_begin.concat(":3030/game?vs=").concat(selectedUser);;
+    }
+
+  	const InvitetoPlay = () => {
+		return(
+		<div>
+			Somebody wants to play with you !
+			<button className="btn btn-dark" onClick={acceptInvitePlay}>Accept</button>
+		</div>)
+	}
+
+  socket.on('inviteToPlay', (...args) => {
+    console.log("step 1")
+
+    if (username == args[0])
+      selectedUser = args[1];
+    else if (username == args[1])
+      selectedUser = args[0];
+    else
+      return;
+      console.log("step 2")
+
+    toast.dark(<InvitetoPlay />, {
+              position: "top-right",
+              autoClose: 10000,
+              hideProgressBar: false,
+              closeOnClick: false,
+              pauseOnHover: false,
+              draggable: false,
+              closeButton: false
+              //progress: undefined
+          });
+  });
+
 	function ballMove() {
 		// Rebounds on top and bottom
-		if (joueur == joueur1) {
+		if (joueur == joueur1 && live == null) {
 			if (game.ball.y > canvas.height || game.ball.y < 0) {
 				game.ball.speed.y *= -1;
 			}
@@ -468,9 +472,8 @@ export default function Game() {
 		cancelAnimationFrame(anim);
 		isSearching = false;
 		setActive(true);
-		// setActive2(true);
+		setActive2(false);
 		document.querySelector('#search-button').textContent = "Refaire une partie";
-		// document.querySelector('#search-button2').textContent = "Rejouer avec le même joueur";
 	}
 
 	return (
@@ -492,6 +495,7 @@ export default function Game() {
 				<div>
 					<Online>
 						<div id="game-root">
+						{isWin ? <Confetti width={size.width} height={size.height} /> : ""}
 							<Nav />
 							<div className="container">
 								<div className="row d-flex justify-content-center text-center">
@@ -512,13 +516,12 @@ export default function Game() {
 											</Form.Group>
 										</Form>
 										: ""}
-$									<div className="row d-flex justify-content-center text-center">
+									<div className="row d-flex justify-content-center text-center">
 										{isActive ? <button type="button" className="btn btn-outline-light" id="search-button" onClick={() => sendSearch()}>{SearchText}</button> : ""}
-										{/* {isActive2 ? <button type="button" className="btn btn-outline-light" id="search-button2" onClick={() => sendSearch2()}>{SearchText2}</button> : ""} */}
+										{isActive2 ? <button type="button" className="btn btn-outline-light" id="search-button" onClick={() => removeInvit()}>Annuler l'invitation</button> : ""}
 									</div>
 									<p id="victoryMessage"></p>
 									<p id="waitingPlayer"></p>
-									{isWin ? <Confetti width={2000} height={2000} /> : ""}
 									<main role="main">
 										<p className="canvas-score" id="scores">
 											<em className="canvas-score" id="joueur1"></em>

@@ -27,10 +27,14 @@ import Profile from "../Profile/Profile";
 import Live from '../Live/Live';
 import Settings from "../User/Settings/Settings";
 import UserSub from "../User/UserSub";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import { env } from 'process';
+import { Socket } from 'socket.io-client';
+import io from "socket.io-client";
 
 let url_begin = "http://".concat(env.REACT_APP_IP);
+
+let selectedUser = "";
 
 function App() {
 
@@ -70,6 +74,46 @@ function App() {
   useEffect(() => {
     getUser();
   }, []);
+
+//   function acceptInvitePlay()
+//     {
+//         window.top.location = url_begin.concat(":3030/game?vs=").concat(selectedUser);;
+//     }
+
+//   const InvitetoPlay = () => {
+//     return(
+//     <div>
+//         Somebody wants to play with you !
+//         <button className="btn btn-dark" onClick={acceptInvitePlay}>Accept</button>
+//     </div>)
+// }
+
+//   var socket2 = io(url_begin.concat(":3000/game"), { query: { username: username } });
+  
+//   socket2.on('inviteToPlay', (...args) => {
+//     console.log("step 1")
+
+//     if (username == args[0])
+//       selectedUser = args[1];
+//     else if (username == args[1])
+//       selectedUser = args[0];
+//     else
+//       return;
+//       console.log("step 2")
+
+//     toast.dark(<InvitetoPlay />, {
+//               position: "top-right",
+//               autoClose: 10000,
+//               hideProgressBar: false,
+//               closeOnClick: false,
+//               pauseOnHover: false,
+//               draggable: false,
+//               closeButton: false
+//               //progress: undefined
+//           });
+//   });
+
+  
 
   useEffect(() => {
     if (calledOnce.current) {
