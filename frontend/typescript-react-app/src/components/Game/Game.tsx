@@ -12,6 +12,9 @@ import Confetti from 'react-confetti';
 import { Offline, Online } from "react-detect-offline";
 import "../../../node_modules/react-rain-animation/lib/style.css";
 import { ToastContainer, toast } from "react-toastify";
+// import { useWindowSize } from '@react-hookz/web'; // cjs
+// import { useWindowSize } from '@react-hookz/web/esm'; // esm
+// import { useWindowSize } from '@react-hookz/web/esnext' // esnext
 
 var adversaire: string;
 var joueur: string;
@@ -23,7 +26,15 @@ let url_begin = "http://".concat(process.env.REACT_APP_IP);
 let selectedUser = "";
 
 export default function Game() {
-	let size = useWindowDimensions();
+	// const [savedHeight, setsavedHeight] = React.useState(0);
+	// const [savedWidth, setsavedWidth] = React.useState(0);
+
+	// let size = useWindowDimensions();
+	// const size = useWindowDimensions();
+	// const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
+
+	const { height, width } = useWindowDimensions();
+	
 	const [isActive, setActive] = React.useState(true);
 	const [isActive2, setActive2] = React.useState(false);
 	const [isWin, setWin] = React.useState(false);
@@ -236,6 +247,9 @@ export default function Game() {
 	useEffect(() => {
 		// First page loading event (only one time)
 		getUser();
+		// let size = useWindowDimensions();
+		// setsavedHeight(useWindowDimensions().height);
+		// setsavedWidth(useWindowDimensions().width);
 		canvas = document.getElementById('canvas');
 		initParty();
 		if (live == null)
@@ -477,7 +491,7 @@ export default function Game() {
 
 	return (
 		<>
-			{localStorage.getItem("loggedIn") != "true" ?
+			{/* {localStorage.getItem("loggedIn") != "true" ?
 				<>
 					<Nav />
 					<div className="container">
@@ -490,14 +504,15 @@ export default function Game() {
 						</div>
 					</div>
 				</>
-				:
+				: */}
 				<div>
 					<Online>
 						<div id="game-root">
-						{isWin ? <Confetti width={size.width} height={size.height} /> : ""}
+						
 							<Nav />
 							<div className="container">
 								<div className="row d-flex justify-content-center text-center">
+								{isWin ? <Confetti width={width} height={height} /> : ""}
 									{isActive ?
 										<Form>
 											<Form.Group>
@@ -536,7 +551,7 @@ export default function Game() {
 						<div id="offline">Vous n'êtes pas connecté à internet !</div>
 					</Offline>
 				</div>
-			}
+			{/* } */}
 		</>
 	);
 }
