@@ -25,9 +25,7 @@ export default function People(props: PeopleProps) {
 	}
 
 	const [username, setUsername] = React.useState("");
-	//const [socket, setSocket] = React.useState(io("http://".concat(process.env.REACT_APP_IP).concat(":3000/chat"), { query: { username: username } }));
 
-	/*async*/
 	function getUser() {
 		let url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/auth/");
 
@@ -37,19 +35,12 @@ export default function People(props: PeopleProps) {
 		axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 		axios.defaults.withCredentials = true;
 
-		let username = "";
-		/*await*/
 		axios.get(url)
 			.then(res => {
 				console.log(res.data.login)
-				username = res.data.login;
 				setUsername(res.data.login);
 				setLoad(true);
 			})
-			.catch((err) => {
-				;
-			})
-		//setLoad(true);
 	}
 
 	useEffect(() => {

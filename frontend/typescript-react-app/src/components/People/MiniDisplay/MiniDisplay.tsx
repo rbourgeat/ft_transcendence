@@ -32,7 +32,7 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 	const [color, setColor] = React.useState("");
 	const [relationStatus, setRelationStatus] = React.useState("");
 
-	const [socket, setSocket] = React.useState(io("http://".concat(process.env.REACT_APP_IP).concat(":3000/chat"), { query: { username: username } }));
+	//const [socket, setSocket] = React.useState(io("http://".concat(process.env.REACT_APP_IP).concat(":3000/chat"), { query: { username: username } }));
 
 	// REPRENDRE USER ICI - SOCKET
 	async function getUser() {
@@ -45,7 +45,7 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 				setUsername(res.data.login);
 				username = res.data.login;
 				setLoad(true);
-				setSocket(io("http://".concat(process.env.REACT_APP_IP).concat(":3000/chat"), { query: { username: username } }));
+				//setSocket(io("http://".concat(process.env.REACT_APP_IP).concat(":3000/chat"), { query: { username: username } }));
 				//console.log(username + ' <-- result of get user')
 			})
 			.catch((err) => {
@@ -217,7 +217,6 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 		setLoad(true);
 		selectColor();
 		calledOnce.current = true;
-
 
 		//props.socket.on('updateStatus', (...args) => {
 		/*
