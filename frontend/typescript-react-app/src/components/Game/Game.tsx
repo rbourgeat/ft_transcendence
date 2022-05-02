@@ -33,6 +33,8 @@ export default function Game() {
 	const vs = queryParams.get('vs');
 	const live = queryParams.get('live');
 
+	let vshisto = false;
+
 	// socket game
 	const [username, setUsername] = React.useState("");
 	/*async*/
@@ -47,10 +49,12 @@ export default function Game() {
 				username = res.data.login;
 				joueur = username;
 				setUsername(username);
-				if (vs !== null) {
+				if (vs !== null && !vshisto) {
 					setActive(false);
 					socket.emit('versus', joueur + ":" + vs)
 					setActive2(true);
+					vshisto = true;
+					console.log("spam")
 				}
 			})
 			.catch((err) => {
@@ -315,21 +319,16 @@ export default function Game() {
   	const InvitetoPlay = () => {
 		return(
 		<div>
-			Somebody wants to play with you !
+			{selectedUser} wants to play with you !
 			<button className="btn btn-dark" onClick={acceptInvitePlay}>Accept</button>
 		</div>)
 	}
 
   socket.on('inviteToPlay', (...args) => {
-    console.log("step 1")
-
-    if (username == args[0])
-      selectedUser = args[1];
-    else if (username == args[1])
-      selectedUser = args[0];
-    else
-      return;
-      console.log("step 2")
+    if (username == args[1] && selectedUser != args[0])
+		selectedUser = args[0];
+	else
+		return;
 
     toast.dark(<InvitetoPlay />, {
               position: "top-right",
