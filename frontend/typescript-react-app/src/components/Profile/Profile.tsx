@@ -200,27 +200,29 @@ export default function Profile() {
 				<div className="container">
 					<div className="row d-flex justify-content-center text-center">
 						<br />
-						<div className="col-6" id="main--profile--div">
+						<div className="col-9" id="main--profile--div">
 							<div>
 								<br />
-								{load == false ?
+								{/* {load == false ?
 									<div className="spinner-border m-5" role="status">
 										<span className="sr-only"><AiOutlineLoading /></span>
 									</div>
 
-									: ""}
+									: ""} */}
 								{userOK == true ?
 									<div id="profile--div">
 										<h3 className="profile--type">{isFriend == true ? "Friend profile" : "Public profile"}</h3>
 										<br />
 										<div id="text-type">{isFriend == true ? "You are able to see a detailed profile because you are friends 🥰 !"
 											: "You are not able to see a detailed profile because you are not friends 😢 !"}</div>
-										<br />
-										<img id={login} className="profile--pic" src="" width="100" height="100" />
-										{load == false ? renderImage(login, isUser) : ""}
-										<svg className="log--color" height="40" width="40">
-											<circle cx="20" cy="20" r="15" fill={color} stroke="white" style={{ strokeWidth: '3' }} />
-										</svg>
+										{/* <br /> */}
+										{/* <div className="d-flex justify-content-center text-center"> */}
+											<img id={login} className="profile--pic" src="" width="100" height="100" />
+											{renderImage(login, isUser)}
+											<svg className="log--color" height="40" width="40">
+												<circle cx="20" cy="20" r="15" fill={color} stroke="white" style={{ strokeWidth: '3' }} />
+											</svg>
+										{/* </div> */}
 										<h2 id="profile-title">{login}</h2>
 										<p className="status-text">{status}</p>
 										<div className="row d-flex justify-content-center text-center" id="relations">

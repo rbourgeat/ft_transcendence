@@ -6,7 +6,7 @@
 
 #main--profile--div {
 	margin-top: 50px;
-	width: 75% !important;
+	// width: 75% !important;
 	background-color: white;
 	position: sticky;
 	border-radius: variables.$border-radius-big;
@@ -19,7 +19,7 @@
 }
 
 #profile--div > .log--color {
-	margin-left: -8.5%;
+	margin-left: -8.5% !important;
 	margin-top: -6.5%;
 }
 
