@@ -78,7 +78,9 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
 
 	@SubscribeMessage('versus')
 	async versusMatch(@ConnectedSocket() socket: Socket, @MessageBody() body: string) {
-		this.server.emit('privateMatch', socket.handshake.query.username, body);
+		const b = body.split(':');
+		this.server.emit('privateMatch',b[0], b[1]);
+		console.log(body)
 	}
 
 	@SubscribeMessage('gameEnd')
