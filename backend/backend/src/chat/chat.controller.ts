@@ -135,7 +135,7 @@ export class ChatController {
     @Post('mute')
     async mute(@Body() chat: ChatDto, @Request() req) {
         console.log(req.user.login + ' mute ' + chat.user + ' in chat' + chat.idChat)
-        return this.chatService.mute(chat.idChat, chat.user, req.user, chat.time);
+        // return this.chatService.mute(chat.idChat, chat.user, req.user, chat.time);
     }
 
     @ApiOperation({ summary: 'Unmute user' })
@@ -145,7 +145,7 @@ export class ChatController {
     @Post('unmute')
     async unmute(@Body() chat: ChatDto, @Request() req) {
         console.log(req.user + ' unmute ' + chat.user + ' in chat' + chat.idChat)
-        return this.chatService.active(chat.idChat, chat.user, req.user);
+        // return this.chatService.active(chat.idChat, chat.user, req.user);
     }
 
     @ApiOperation({ summary: 'set chat password' })

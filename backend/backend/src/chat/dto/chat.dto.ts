@@ -24,6 +24,15 @@ export class MuteDto {
 
     @ApiProperty()
     mute: boolean;
+
+    @ApiProperty()
+    chatName: string;
+
+    @ApiProperty()
+    time: Date;
+
+    @ApiProperty()
+    admin: string;
 }
 
 @ApiTags('Chats')

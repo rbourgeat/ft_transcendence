@@ -23,6 +23,8 @@ export interface TypingState {
     text?: string
 }
 
+let timestamp;
+
 const message = document.getElementById('message');
 const messages = document.getElementById('messages');
 
@@ -82,6 +84,9 @@ export default function TypingMessage(props: TypingProps) {
 
             setSeconds(10);
             */
+            var d1 = new Date();
+            if (d1.getTime() < timestamp.getTime())
+                console.log("temps ecouleeee")
         }
     }, 10000);
 
@@ -103,6 +108,8 @@ export default function TypingMessage(props: TypingProps) {
             setIsMuted(true)
             setSeconds(10);
             console.log("set is mute to true")
+            timestamp = args[2];
+            console.log("time " + args[2])
         }
         else if (props.login == args[0] && args[1] == false) {
             setIsMuted(false)
@@ -119,6 +126,7 @@ export default function TypingMessage(props: TypingProps) {
 
         interval = setInterval(() => {
             setSeconds(seconds => seconds - 1);
+            // console.log(timestamp);
         }, 1000);
 
         return () => clearInterval(interval);

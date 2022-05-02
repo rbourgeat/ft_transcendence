@@ -323,8 +323,8 @@ export class ChatService {
 		console.log(user.login + ' has been banned');
 	}
 
-	async active(id: number, login: string, admin: User) {
-		const chat = await this.chatRepository.findOne({ id });
+	async active(name: string, login: string, admin: User) {
+		const chat = await this.chatRepository.findOne({ name });
 		const user = await this.userRepository.findOne({ login });
 		const participate = await this.participateRepository.findOne({
 			where: [{ chat: chat, user: user }]
@@ -338,6 +338,7 @@ export class ChatService {
 		//if (!adminParticipate.admin)
 		//	return console.log("L'utilisateur ne peut pas débannir/démute car il n'est pas admin du chat !");
 
+		console.log("went by active functio");
 		participate.timestamp = null;
 		participate.role = UserStatus.ACTIVE;
 
@@ -345,8 +346,8 @@ export class ChatService {
 		console.log(user.login + ' unbanned or unmuted');
 	}
 
-	async mute(id: number, login: string, admin: User, time: Date) {
-		const chat = await this.chatRepository.findOne({ id });
+	async mute(name: string, login: string, admin: User, time: Date) {
+		const chat = await this.chatRepository.findOne({ name });
 		const user = await this.userRepository.findOne({ login });
 		const participate = await this.participateRepository.findOne({
 			where: [{ chat: chat, user: user }]
@@ -363,7 +364,10 @@ export class ChatService {
 
 		participate.role = UserStatus.MUTE;
 		if (time)
+		{
 			participate.timestamp = time;
+			console.log(time);
+		}
 
 		await this.participateRepository.save(participate);
 		console.log(user.login + ' mute');
@@ -484,6 +488,20 @@ export class ChatService {
 		if (participate.role == "ban")
 			return true;
 		return false;
+	}
+
+	async gettimestempMute(chatName: string, login: string) {
+		const chat = await this.chatRepository.findOne({ name: chatName });
+		const user = await this.userRepository.findOne({ login: login });
+		const participate = await this.participateRepository.findOne({
+			where: [{ chat: chat, user: user }]
+		});
+		 console.log("particip " + participate.login)
+		 console.log("tt " + participate.timestamp)
+		 console.log("role " + participate.role)
+		 console.log("id " + participate.id)
+
+		return participate.timestamp;
 	}
 
 }
