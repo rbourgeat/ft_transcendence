@@ -25,7 +25,7 @@ export default function Chat(props: ChatProps) {
         return (
             <div id="channels">
                 <Nav />
-                <ToastContainer
+                {/* <ToastContainer
                     position="top-right"
                     autoClose={5000}
                     hideProgressBar={false}
@@ -35,7 +35,7 @@ export default function Chat(props: ChatProps) {
                     pauseOnFocusLoss
                     draggable
                     pauseOnHover
-                />
+                /> */}
                 <div className="container" id="chat--container">
                     <div className="row d-flex justify-content-center text-center">
                         <div className="col-7">

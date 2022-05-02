@@ -16,6 +16,8 @@ interface ChatProps {
 	username?: string
 }
 
+let selectedUser = "";
+
 export default function Channels(props: ChatProps) {
 	const calledOnce = React.useRef(false);
 	const [username, setUsername] = React.useState("");
@@ -28,6 +30,39 @@ export default function Channels(props: ChatProps) {
 	const [isBanned, setIsBanned] = React.useState(false);
 
 	const [socket, setSocket] = React.useState(io("http://".concat(process.env.REACT_APP_IP).concat(":3000/chat"), { query: { username: props.username } }));
+
+	function acceptInvitePlay()
+	{
+		window.top.location = "http://".concat(process.env.REACT_APP_IP).concat(":3030/game?vs=").concat(selectedUser);;
+	}
+
+	const InvitetoPlay = () => {
+	return(
+	<div>
+		{selectedUser} wants to play with you !
+		<button className="btn btn-dark" onClick={acceptInvitePlay}>Accept</button>
+	</div>)
+	}
+
+	  var socket2 = io("http://".concat(process.env.REACT_APP_IP).concat(":3000/game"), { query: { username: username } });
+	
+	  socket2.on('inviteToPlay', (...args) => {
+
+	    if (username == args[1] && selectedUser != args[0])
+	      selectedUser = args[0];
+	    else
+	      return;
+
+	    toast.dark(<InvitetoPlay />, {
+	              position: "top-right",
+	              autoClose: 10000,
+	              hideProgressBar: false,
+	              closeOnClick: false,
+	              pauseOnHover: false,
+	              draggable: false,
+	              closeButton: false
+	          });
+	  });
 
 	function getUser() {
 		let url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/auth/");

@@ -235,7 +235,7 @@ export default function ListChannels(props: ListChannelsProps) {
 					<button type="button" className="send--dm" onClick={displayDM} disabled={selectedCat === "DMs" ? true : false}>DM</button>
 					<button type="button" className="display--channels" onClick={displayChannels} disabled={selectedCat === "Channels" ? true : false}>Channels</button>
 				</div>
-				<ToastContainer
+				{/* <ToastContainer
 					position="top-right"
 					autoClose={5000}
 					hideProgressBar={false}
@@ -245,7 +245,7 @@ export default function ListChannels(props: ListChannelsProps) {
 					pauseOnFocusLoss
 					draggable
 					pauseOnHover
-				/>
+				/> */}
 			</div>
 		</div>
 	);

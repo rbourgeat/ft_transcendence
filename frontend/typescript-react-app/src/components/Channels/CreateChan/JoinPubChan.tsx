@@ -268,7 +268,7 @@ export default function JoinChan(props: JoinChanProps) {
 					</Form>
 				</Modal.Body>
 			</Modal >
-			<ToastContainer
+			{/* <ToastContainer
 				position="top-right"
 				autoClose={5000}
 				hideProgressBar={false}
@@ -278,7 +278,7 @@ export default function JoinChan(props: JoinChanProps) {
 				pauseOnFocusLoss
 				draggable
 				pauseOnHover
-			/>
+			/> */}
 		</div >
 	);
 
