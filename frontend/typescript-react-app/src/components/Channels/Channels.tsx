@@ -24,10 +24,12 @@ export default function Channels(props: ChatProps) {
 	const [hasPass, setHasPass] = React.useState(false);
 	const [activeID, setActiveID] = React.useState("");
 	const [activeName, setActiveName] = React.useState("");
+	const [hide, setHide] = React.useState(false);
+	const [isBanned, setIsBanned] = React.useState(false);
 
 	const [socket, setSocket] = React.useState(io("http://".concat(process.env.REACT_APP_IP).concat(":3000/chat"), { query: { username: props.username } }));
 
-	/*async*/ function getUser() {
+	function getUser() {
 		let url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/auth/");
 		axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 		axios.defaults.withCredentials = true;
@@ -47,11 +49,6 @@ export default function Channels(props: ChatProps) {
 		getUser();
 	}, [username]);
 
-	useEffect(() => {
-	}, [activeName]);
-
-
-	//setSocket(new)
 	return (
 		<div id="channels">
 			<Nav />
@@ -64,7 +61,10 @@ export default function Channels(props: ChatProps) {
 							setIsChan={setIsChan}
 							setHasPass={setHasPass}
 							setActiveID={setActiveID}
-							setActiveName={setActiveName} />
+							setActiveName={setActiveName}
+							setHide={setHide}
+							setIsBanned={setIsBanned}
+						/>
 						: ""}
 					{load === true ?
 						<ListDiscussions
@@ -72,7 +72,11 @@ export default function Channels(props: ChatProps) {
 							login={username}
 							isChan={isChan}
 							activeID={activeID}
-							activeName={activeName} />
+							activeName={activeName}
+							hide={hide}
+							setIsBanned={setIsBanned}
+							isBanned={isBanned}
+						/>
 						: ""}
 					{load === true ?
 						<ListParticipant
@@ -83,7 +87,9 @@ export default function Channels(props: ChatProps) {
 							setHasPass={setHasPass}
 							activeID={activeID}
 							activeName={activeName}
-						//setActiveID={setActiveID}
+							setHide={setHide}
+							hide={hide}
+							isBanned={isBanned}
 						/>
 						: ""}
 				</div>

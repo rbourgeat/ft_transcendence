@@ -26,6 +26,15 @@ export class MuteDto {
     mute: boolean;
 }
 
+@ApiTags('Chats')
+export class BanDto {
+    @ApiProperty()
+    user: string;
+
+    @ApiProperty()
+    ban: boolean;
+}
+
 @ApiTags('Chats') //Create a category on swagger
 export class ChatDto {
     @IsNotEmpty()

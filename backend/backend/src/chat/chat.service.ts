@@ -474,4 +474,16 @@ export class ChatService {
 		return false;
 	}
 
+	async getIsBanned(channelId: number, user: User) {
+		const chat = await this.chatRepository.findOne({ id: channelId });
+		const userT = await this.userRepository.findOne({ login: user.login });
+		const participate = await this.participateRepository.findOne({
+			where: [{ chat: chat, user: userT }]
+		});
+
+		if (participate.role == "ban")
+			return true;
+		return false;
+	}
+
 }

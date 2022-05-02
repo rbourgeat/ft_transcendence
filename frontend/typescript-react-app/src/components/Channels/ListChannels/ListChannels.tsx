@@ -14,7 +14,9 @@ export interface ListChannelsProps {
 	minIdDM?: any,
 	setActiveID?: any,
 	setActiveName?: any,
-	socket?: any
+	socket?: any,
+	setHide?: any,
+	setIsBanned?: any
 }
 
 export default function ListChannels(props: ListChannelsProps) {
@@ -191,6 +193,7 @@ export default function ListChannels(props: ListChannelsProps) {
 											setHasPass={props.setHasPass}
 											setActiveID={props.setActiveID}
 											setActiveName={props.setActiveName}
+											setHide={props.setHide}
 										/>
 									</div>
 								)
@@ -220,7 +223,9 @@ export default function ListChannels(props: ListChannelsProps) {
 											login={props.login}
 											setHasPass={props.setHasPass}
 											setActiveID={props.setActiveID}
-											setActiveName={props.setActiveName} />
+											setActiveName={props.setActiveName}
+											setHide={props.setHide}
+										/>
 									</div>)
 							}
 						})

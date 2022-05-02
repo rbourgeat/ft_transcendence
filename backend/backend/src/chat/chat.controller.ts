@@ -206,6 +206,14 @@ export class ChatController {
         return this.chatService.getIsMuted(channelId, req.user);
     }
 
+    @ApiOperation({ summary: 'Boolean to know if requesting user is banned [jwt-protected + for swagger test only]' })
+    @ApiOkResponse({ description: 'Suceed' })
+    @UseGuards(JwtAuthenticationGuard)
+    @Get('/isBannedIn/:channelId')
+    async getIsBanned(@Param('channelId') channelId: number, @Request() req) {
+        return this.chatService.getIsBanned(channelId, req.user);
+    }
+
     @ApiOperation({ summary: 'Boolean to know if requesting user is admin [jwt-protected + for swagger test only]' })
     @ApiOkResponse({ description: 'Suceed' })
     @UseGuards(JwtAuthenticationGuard)

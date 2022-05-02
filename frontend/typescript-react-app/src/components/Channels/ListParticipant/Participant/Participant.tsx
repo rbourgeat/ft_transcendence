@@ -14,6 +14,7 @@ export interface ParticipantsProps {
 	updateSelectedUser?: any,
 	updateFunctionToUse?: any,
 	isChannel?: boolean,
+	isBanned?: boolean
 }
 
 export default function Participant(props: ParticipantsProps) {
@@ -82,7 +83,7 @@ export default function Participant(props: ParticipantsProps) {
 				</p>
 				{props.currentUser === props.username ?
 					<div className="dropdown-menu" aria-labelledby="dropdownMenuButton1" >
-						{props.isChannel ? <p className="dropdown-item" onClick={() => setUpLeave()}>leave</p> : null}
+						{props.isChannel && props.isBanned === false ? <p className="dropdown-item" onClick={() => setUpLeave()}>leave</p> : null}
 					</div>
 					:
 					<div className="dropdown-menu" aria-labelledby="dropdownMenuButton1">

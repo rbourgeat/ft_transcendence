@@ -18,6 +18,8 @@ export interface ParticipantProps {
     activeName?: string,
     socket?: any,
     setHide?: any,
+    hide?: any
+    isBanned?: boolean
 }
 
 export default function ListParticipant(props: ParticipantProps) {
@@ -30,46 +32,15 @@ export default function ListParticipant(props: ParticipantProps) {
     const [newPass, setNewPass] = React.useState("");
     const [newPassConf, setNewPassConf] = React.useState("");
 
-    //const [loaded, setLoaded] = React.useState("false");
-
-    /*async*/
-    function getUsersfromChannel() {
-        let url: string;
-        if (props.activeID != "" && props.activeID != undefined && props.activeID != null) {
-            url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/chat/").concat(props.activeID).concat("/users");
-            axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
-            axios.defaults.withCredentials = true;
-            /*await*/
-            axios.get(url)
-                .then(response => {
-                    updateParticipates(response.data);
-                })
-                .catch(error => {
-                    //onsole.log("Error while getting users from a Channel/DM");
-                    ;
-                })
-        }
-        //else
-        //{
-        //    console.log("No active ID");
-        //}
-    }
-
     function getCurrentUserAdminStatus() {
         if (props.activeID != "" && props.activeID != undefined && props.activeID != null) {
             let url = url_begin.concat(":3000/api/chat/isAdminIn/").concat(props.activeID);
             axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
             axios.defaults.withCredentials = true;
-            /*await*/
             axios.get(url)
                 .then(res => {
-                    if (res.data === true) {
+                    if (res.data === true)
                         setCurrentUserAdmin(true);
-                    }
-                    else
-                        console.log(currentUserAdmin);
-                })
-                .catch((err) => {
                 })
         }
     }
@@ -77,19 +48,14 @@ export default function ListParticipant(props: ParticipantProps) {
     const [sockChan, setsockChan] = React.useState(props.activeName);
 
     React.useEffect(() => {
-
         setsockChan(props.activeName);
         props.socket.emit('requestAllUsers', props.activeID);
         props.socket.on("sendAllUsers", (participants) => {
-            if (participants) {
+            if (participants)
                 updateParticipates(participants);
-            }
-            else {
+            else
                 updateParticipates(null)
-            }
-
         });
-
         if (props.isChan === true) {
             setCurrentUserAdmin(false);
             getCurrentUserAdminStatus();
@@ -102,7 +68,6 @@ export default function ListParticipant(props: ParticipantProps) {
             setsockChan(args[1]);
         }
     });
-
 
     React.useEffect(() => {
         executeFunction(functionToUse);
@@ -135,15 +100,16 @@ export default function ListParticipant(props: ParticipantProps) {
 
     function unbanUser() {
         makeAPIcall("unban", "Successfully unbanned", "Error while unbanning", false);
+        props.socket.emit('ban', { user: selectedUser, ban: false });
     }
 
     function banUser() {
         makeAPIcall("ban", "Successfully ban", "Error while banning", false);
+        props.socket.emit('ban', { user: selectedUser, ban: true });
     }
 
     function unmuteUser() {
         makeAPIcall("unmute", "Successfully unmuted", "Error while unmuting", false);
-        console.log("unmute in listparticipant");
         props.socket.emit('mute', { user: selectedUser, mute: false });
     }
 
@@ -158,7 +124,7 @@ export default function ListParticipant(props: ParticipantProps) {
 
     function leaveChannel() {
         makeAPIcall("quit", "Successfull quit", "Error while quitting channel", true);
-        //setHide ?: any,
+        props.setHide(true);
     }
 
     function blockUser() {
@@ -180,19 +146,16 @@ export default function ListParticipant(props: ParticipantProps) {
         window.top.location = url_begin.concat(":3030/profile/").concat(selectedUser);
     }
 
-    /*async*/
     async function makeAPIcall(endpoint: string, toastSuccessMessage: string, toastErrorMessage: string, me: boolean) {
         let toast = new ToastAlerts(null);
         const url = url_begin.concat(':3000/api/chat/').concat(endpoint);
 
-        // props.socket.emit('refresh', props.activeName);
         let user: string;
         me === true ? user = props.login : user = selectedUser;
         const body = {
             "idChat": props.activeID,
             "user": user
         }
-        /*await*/
         await axios.post(url, body)
             .then(response => {
                 toast.notifySuccess(toastSuccessMessage);
@@ -202,10 +165,8 @@ export default function ListParticipant(props: ParticipantProps) {
                         let title = document.getElementsByClassName("chan-title_notselected")[0].innerHTML;
                         document.getElementsByClassName("chan-title_notselected")[0].className = 'chan-title_selected';
                     }
-                    else {
+                    else
                         document.getElementById("dm_chan_".concat(props.activeName)).remove();
-                    }
-
                 }
             })
             .catch(error => {
@@ -275,27 +236,33 @@ export default function ListParticipant(props: ParticipantProps) {
             <div id="sub--div">
                 {
                     <div id="participants--div">
-                        {participates.map(participate =>
-                            <Participant
-                                isChannel={props.isChan}
-                                currentUserAdmin={currentUserAdmin}
-                                currentUser={props.login}
-                                key={participate.id}
-                                username={participate.user.login}
-                                role={participate.role}
-                                owner={participate.owner}
-                                admin={participate.admin}
-                                updateSelectedUser={updateSelectedUser}
-                                updateFunctionToUse={updateFunctionToUse}
-                            />
-                        )}
+                        {
+                            props.hide === false ?
+                                participates.map(participate =>
+                                    <Participant
+                                        isChannel={props.isChan}
+                                        currentUserAdmin={currentUserAdmin}
+                                        currentUser={props.login}
+                                        key={participate.id}
+                                        username={participate.user.login}
+                                        role={participate.role}
+                                        owner={participate.owner}
+                                        admin={participate.admin}
+                                        updateSelectedUser={updateSelectedUser}
+                                        updateFunctionToUse={updateFunctionToUse}
+                                        isBanned={props.isBanned}
+                                    />
+                                )
+                                :
+                                null
+                        }
                     </div>
                 }
             </div>
             <div className="buttons_div">
                 <div className="row">
                     <div className="col">
-                        {props.isChan === false ? null : <button id="leave--button" className="btn" onClick={leaveChannel}>Leave channel</button>}
+                        {props.isChan === true && props.hide === false && props.isBanned === false ? <button id="leave--button" className="btn" onClick={leaveChannel}>Leave channel</button> : null}
                         {currentUserAdmin === true && props.hasPass ?
                             <button id="pass--button" className="btn" onClick={handleShow}>Update password</button>
                             :

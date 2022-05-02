@@ -3,7 +3,7 @@ import { Server, Socket } from 'socket.io';
 import { ChatService } from './chat.service';
 import { UserService } from 'src/user/user.service';
 import { Logger } from "@nestjs/common";
-import { CreateChatDto, MuteDto } from './dto/chat.dto';
+import { BanDto, CreateChatDto, MuteDto } from './dto/chat.dto';
 
 const clients = [];
 
@@ -98,6 +98,19 @@ export class ChatGateway implements OnGatewayConnection {
 		//const chat = await this.chatService.getChatByName(body);
 		const user = await this.userService.getUserByLogin(body.user);
 		this.server.emit('isMute', user.login, body.mute);
+	}
+
+	@SubscribeMessage('ban')
+	async banUser(@ConnectedSocket() socket: Socket, @MessageBody() body: BanDto) {
+		console.log(body.user + " " + body.ban + 'event isBan');
+		//const b = body.split(':');
+		//const author = await this.userService.getUserByLogin(b[0]);
+		//const message = await this.chatService.saveChatMessage(b[1], b[2], author);
+
+		//const messages = await this.chatService.getMessagesbyName(b[1]);
+		//const chat = await this.chatService.getChatByName(body);
+		const user = await this.userService.getUserByLogin(body.user);
+		this.server.emit('isBan', user.login, body.ban);
 	}
 
 	@SubscribeMessage('requestAllUsers')
