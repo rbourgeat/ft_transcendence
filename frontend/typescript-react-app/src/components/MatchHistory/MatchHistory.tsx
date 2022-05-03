@@ -92,7 +92,7 @@ export default function MatchHistory(props: MatchHistoryProps) {
                                     </div>) : ""}
                                 {
                                     load == true && resultsID.length == 0 ?
-                                        <p id="no--game">You did not play any game yet.</p>
+                                        <p id="no--game">{props.login == localStorage.getItem("login") ? "You" : "He/she"} did not play any game yet.</p>
                                         : ""
                                 }
                             </ul>
