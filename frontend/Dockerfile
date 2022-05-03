@@ -4,6 +4,7 @@ RUN npm install -g npm@8.8.0
 
 WORKDIR /app
 
+RUN npm install --save-dev env-cmd
 #RUN npm install -g npm@8.8.0
 RUN apk add --update --no-cache python3 && ln -sf python3 /usr/bin/python
 # RUN npm install --save bootstrap@latest
@@ -28,5 +29,6 @@ CMD npm install --legacy-peer-deps --silent && npm update --silent \
 #    && sed -i -- 's/color-adjust/print-color-adjust/g'  ./node_modules/postcss-loader/dist/cjs.js \
 #    && sed -i -- 's/color-adjust/print-color-adjust/g' ./node_modules/bootstrap/dist/css/bootstrap.css \
 #    && sed -i -- 's/color-adjust/print-color-adjust/g' ./node_modules/source-map-loader/dist/cjs.js \
-#    && npm run-script build 
+#    #&& npm run-script build
+#    && npm run build 
 #ENTRYPOINT serve -l 3030 -s build
