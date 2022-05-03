@@ -92,7 +92,7 @@ export default function JoinChan(props: JoinChanProps) {
 
 		axios.post(url, body)
 			.then(res => {
-				toast.notifySuccess("You joined the channel");
+				toast.notifySuccess("✅ You joined the channel !");
 				props.setUpdate(chan);
 				setSuccessfull(true);
 				setForm(false);
@@ -102,11 +102,15 @@ export default function JoinChan(props: JoinChanProps) {
 				handleClose();
 			})
 			.catch(error => {
-				toast.notifyDanger("Failed to join the channel.");
+				//toast.notifyDanger("Failed to join the channel.");
 				setSuccessfull(true);
 				setForm(false);
+				console.log("here !");
 				setPublicPass("");
+				setJoignable([]);
 				handleClose();
+				//Attention si on clique sur join sans rien rejoindre puis qu'on revient sur le modal les channels publiques s'affichaient en double
+				//handleCloseFinale();
 			})
 	}
 
@@ -168,15 +172,16 @@ export default function JoinChan(props: JoinChanProps) {
 		console.log(body);
 		axios.post(url, body)
 			.then(res => {
-				toast.notifySuccess("You joined the channel");
+				toast.notifySuccess("✅ You joined the channel");
 				props.setUpdate(privateToJoin);
 				setSuccessfull(true);
 				handleCloseFinale();
 			})
 			.catch(error => {
 				console.log(error);
-				toast.notifyDanger("Failed to join the channel.");
+				//toast.notifyDanger("Failed to join the channel.");
 				setSuccessfull(true);
+				setJoignable([]);
 				handleCloseFinale();
 			})
 	}
@@ -205,9 +210,9 @@ export default function JoinChan(props: JoinChanProps) {
 				onClick={handleShow}
 				data-toggle="modal" data-target="#exampleModalCenter">Join channel</button>
 			<Modal  {...props}
-     				size="lg"
-	  				show={show} 
-					animation={true} onHide={handleClose} onExited={handleExit} id="modal_join">
+     			size="lg"
+	  			show={show} 
+				animation={true} onHide={handleClose} onExited={handleExit} id="modal_join">
 				<Modal.Header>
 					<Modal.Title id="create_title">Join a channel</Modal.Title>
 				</Modal.Header>
@@ -224,7 +229,7 @@ export default function JoinChan(props: JoinChanProps) {
 							<ul className="wrapper list-group list-group-horizontal-sm" id="list_pub_chan">
 								{load == true ?
 									joignable.map(join =>
-										<div key={join} className="chans" /*list-group-item*/>
+										<div key={join.name} className="chans" /*list-group-item*/>
 											<div className="joignable">{join.name}
 												{
 													join.password ?

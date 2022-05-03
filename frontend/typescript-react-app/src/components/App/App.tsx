@@ -36,7 +36,7 @@ let url_begin = "";
 if (process.env.REACT_APP_IP == "" || process.env.REACT_APP_IP == undefined)
   url_begin = "http://localhost";
 else
-  url_begin = "http://".concat(env.REACT_APP_IP);
+  url_begin = "http://".concat(process.env.REACT_APP_IP);
 
 let selectedUser = "";
 
@@ -59,8 +59,9 @@ function App() {
     //  return ;
     //}
 
-    console.log(env.REACT_APP_IP)
+    //console.log(env.REACT_APP_IP)
     let url = url_begin.concat(":3000/api/auth/");
+    console.log("url 2 is " + url);
     let username = "";
     axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
     axios.defaults.withCredentials = true;

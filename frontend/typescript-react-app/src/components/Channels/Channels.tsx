@@ -31,19 +31,32 @@ export default function Channels(props: ChatProps) {
 
 	function getUser() {
 		let url = "";
-
+		console.log("env var is " + process.env.REACT_APP_IP);
 		if (process.env.REACT_APP_IP == "" || process.env.REACT_APP_IP == undefined)
+		{
 			url = "http://localhost:3000/api/auth/";
+			console.log("first condition !");
+		}
 		else
+		{
 			url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/auth/");
+			console.log("second condition !");
+		}
+			
+		console.log("called here !");
 		axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 		axios.defaults.withCredentials = true;
 		/*await*/
+
+		console.log("url is " + url);
+		
 		axios.get(url)
 			.then(res => {
 				setUsername(res.data.login);
-				setSocket(io("http://".concat(process.env.REACT_APP_IP).concat(":3000/chat"), { query: { username: username } }))
-
+				if (process.env.REACT_APP_IP != undefined && process.env.REACT_APP_IP != "")
+					setSocket(io("http://".concat(process.env.REACT_APP_IP).concat(":3000/chat"), { query: { username: username } }))
+				else 
+					setSocket(io("http://".concat("localhost").concat(":3000/chat"), { query: { username: username } }))
 			})
 			.catch((err) => {
 				//console.log("Error while getting api auth");

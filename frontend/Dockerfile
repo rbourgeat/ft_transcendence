@@ -23,7 +23,7 @@ CMD npm install --legacy-peer-deps --silent && npm update --silent \
                 && sed -i -- 's/color-adjust/print-color-adjust/g' ./node_modules/source-map-loader/dist/cjs.js \
                 && npm start
 
-#Command pour build / correction OK
+#Command pour build - a retester (est-ce que le build est bien mis à jour ?)
 #CMD npm install --legacy-peer-deps --silent && npm update --silent \
 #    && sed -i -- 's/color-adjust/print-color-adjust/g'  ./node_modules/postcss-loader/dist/cjs.js \
 #    && sed -i -- 's/color-adjust/print-color-adjust/g' ./node_modules/bootstrap/dist/css/bootstrap.css \
