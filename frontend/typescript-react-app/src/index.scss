@@ -8,6 +8,11 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+#root {
+  //border: 0.2rem solid orange !important;
+  height: 100% !important;
+}
+
 body, code {
   font-family: "Arial", "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Fira Sans", "Droid Sans", "Helvetica Neue",

@@ -5,6 +5,17 @@
 	margin-top: 10px;
 }
 
+#channels {
+	height: 100% !important;
+	//border: 0.2rem solid white !important;
+}
+
+#container_chat {
+	height: 90% !important;
+	display: table;
+	//border: 0.2rem solid violet !important;
+}
+
 #websocket--tile {
 	color: white;
 	font-size: 12px;
@@ -38,8 +49,9 @@
 }
 
 #row_chat {
-	margin-top: 5%;
-	max-height: 90%;
+	//margin-top: 5%;
+	//max-height: 90%;
+	height: 100% !important;
 }
 
 .send--dm_div {
@@ -47,9 +59,6 @@
 }
 
 .send--dm {
-	//background-color: red !important;
-	//border-radius: variables.$border-radius-big;
-	//width: 90% !important;
 	font-weight: 600 !important;
 	background: rgb(255, 255, 255) !important;
 	padding-top: 5px;
@@ -66,9 +75,6 @@
 }
 
 .display--channels {
-	//background-color: red !important;
-	//border-radius: variables.$border-radius-big;
-	//width: 90% !important;
 	font-weight: 600 !important;
 	background: rgb(255, 255, 255) !important;
 	padding-top: 5px;

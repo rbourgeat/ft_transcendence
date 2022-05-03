@@ -24,7 +24,11 @@ export default function All(props: InputWrapperProps) {
 	function renderUsers() {
 		axios.defaults.withCredentials = true;
 		let log = localStorage.getItem("login");
-		let url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/user/");
+		let url = "";
+		if (process.env.REACT_APP_IP == "" || process.env.REACT_APP_IP == undefined)
+			url = "http://localhost:3000/api/user/";
+		else 
+			url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/user/");
 
 		/*await*/
 		axios.get(url)

@@ -7,7 +7,11 @@ import axios from 'axios';
 import TypingMessage from "../TypingMessage/TypingMessage";
 import MyAxios from '../../Utils/Axios/Axios';
 
-let url_begin = "http://".concat(process.env.REACT_APP_IP);
+let url_begin = "";
+if (process.env.REACT_APP_IP == "" || process.env.REACT_APP_IP == undefined)
+	url_begin = "http://localhost";
+else
+	url_begin = "http://".concat(process.env.REACT_APP_IP);
 
 export interface ListDiscussionsProps {
 	login: string,
@@ -101,7 +105,7 @@ export default function ListDiscussions(props: ListDiscussionsProps) {
 	}
 
 	return (
-		<div id="ListDiscussions" className="col-5">
+		<div id="ListDiscussions" className="col-md-5">
 			<div className="title_chat_div">
 				{
 					props.hide === false ?

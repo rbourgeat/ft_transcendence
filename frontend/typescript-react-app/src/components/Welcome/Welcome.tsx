@@ -6,6 +6,11 @@ import '../../index.scss';
 import Header from '../Header/Header';
 
 let url_begin = "http://".concat(process.env.REACT_APP_IP);
+//Pour faire fonctionner sur mac
+if (url_begin == "http://")
+{
+    url_begin = "http://localhost";
+}
 
 export default function Welcome() {
 

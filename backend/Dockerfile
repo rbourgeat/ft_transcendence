@@ -13,4 +13,8 @@ RUN npm i -g @nestjs/cli
 
 EXPOSE 3000
 
+#pour dev
 ENTRYPOINT npm install --silent && npm run start:dev
+
+#pour correction
+#ENTRYPOINT npm install --silent && npm run start:prod

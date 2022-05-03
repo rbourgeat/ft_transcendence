@@ -27,7 +27,11 @@ export default function People(props: PeopleProps) {
 	const [username, setUsername] = React.useState("");
 
 	function getUser() {
-		let url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/auth/");
+		let url = "";
+		if (process.env.REACT_APP_IP == "" || process.env.REACT_APP_IP == undefined)
+			url = "http://localhost:3000/api/auth";
+		else
+			url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/auth/");
 
 		axios.defaults.baseURL = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api");
 		axios.defaults.headers.post['Content-Type'] = 'application/json';

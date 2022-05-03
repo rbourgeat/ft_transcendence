@@ -6,14 +6,6 @@
 	margin-bottom: 2.5rem;
 }
 
-/*
-#typing--div {
-	border: 0.1rem solid white;
-	border-radius: variables.$border-radius;
-	background-color: white !important;
-}
-*/
-
 .typing--input {
 	border-radius: variables.$border-radius;
 }
@@ -23,6 +15,10 @@
 	padding-left: 20px;
 	padding-right: 20px;
 	padding-top: 20px;
+	//border: 0.2rem solid violet !important;
+	position: absolute; 
+	width: 100% !important;
+	bottom: 10px;
 }
 
 .send-message-form {

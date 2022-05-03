@@ -3,7 +3,11 @@ import axios from "axios";
 import ToastAlerts from "../ToastAlerts/ToastAlerts"
 import Login from "../../Auth/Login/Login";
 
-let url_begin = "http://".concat(process.env.REACT_APP_IP);
+let url_begin = "";
+if (process.env.REACT_APP_IP == "" || process.env.REACT_APP_IP == undefined)
+    url_begin = "http://localhost";
+else
+    url_begin = "http://".concat(process.env.REACT_APP_IP);
 
 interface AxiosProps {
     method?: string,

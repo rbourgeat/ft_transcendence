@@ -13,7 +13,10 @@ export default function Auth() {
     useEffect(() => {
         if (localStorage.getItem("loggedIn") == "true") {
             //console.log("You are already logged in");
-            window.top.location = "http://".concat(process.env.REACT_APP_IP).concat(":3030/settings");
+            if (process.env.REACT_APP_IP == "" || process.env.REACT_APP_IP == undefined)
+                window.top.location = "http://localhost:3030/settings";
+            else
+                window.top.location = "http://".concat(process.env.REACT_APP_IP).concat(":3030/settings");
         }
     }, []);
 

@@ -70,7 +70,11 @@ export default function JoinChan(props: JoinChanProps) {
 		let toast = new ToastAlerts(null);
 
 		axios.defaults.withCredentials = true;
-		let url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/chat/join");
+		let url = "";
+		if (process.env.REACT_APP_IP == "" || process.env.REACT_APP_IP == undefined)
+			url = "http://localhost:3000/api/chat/join";
+		else
+			url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/chat/join");
 
 		console.log("you try to join the chan:" + chan);
 		let body = {};
@@ -114,7 +118,11 @@ export default function JoinChan(props: JoinChanProps) {
 
 	const getJoignableChans = () => {
 
-		let url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/chat/joinableChannels");
+		let url = "";
+		if (process.env.REACT_APP_IP == "" || process.env.REACT_APP_IP == undefined)
+			url = "http://localhost:3000/api/chat/joignableChannels";
+		else
+			url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/chat/joinableChannels");
 
 		axios.get(url)
 			.then((res) => {
@@ -138,7 +146,11 @@ export default function JoinChan(props: JoinChanProps) {
 		let toast = new ToastAlerts(null);
 
 		axios.defaults.withCredentials = true;
-		let url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/chat/join");
+		let url = "";
+		if (process.env.REACT_APP_IP == "" || process.env.REACT_APP_IP == undefined)
+			url = "http://localhost:3000/api/chat/join";
+		else 
+			url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/chat/join");
 
 		console.log(privateToJoin + ": chan i want to join while im on private side")
 		let body = {};

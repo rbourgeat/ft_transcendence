@@ -6,7 +6,11 @@ import "./editUsername.scss";
 import { Modal, Button } from "react-bootstrap";
 import axios from "axios";
 
-let url_begin = "http://".concat(process.env.REACT_APP_IP);
+let url_begin = "";
+if (process.env.REACT_APP_IP == "" || process.env.REACT_APP_IP == undefined)
+	url_begin = "http://localhost";
+else 
+	url_begin = "http://".concat(process.env.REACT_APP_IP);
 
 export interface EditUsernameModalProps {
 	username?: string,

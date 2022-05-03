@@ -11,7 +11,11 @@ import { AiOutlineLoading3Quarters, AiOutlineLoading } from "react-icons/ai";
 import { Socket } from 'socket.io-client';
 import io from "socket.io-client";
 
-let url_begin = "http://".concat(process.env.REACT_APP_IP);
+let url_begin = "";
+if (process.env.REACT_APP_IP == "" || process.env.REACT_APP_IP == undefined)
+	url_begin = "http://localhost";
+else
+	url_begin = "http://".concat(process.env.REACT_APP_IP);
 
 export interface SettingsProps {
 	username?: string

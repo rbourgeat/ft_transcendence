@@ -22,7 +22,12 @@ let joueur1: string;
 let joueur2: string;
 var isSearching = false;
 var gm = 0;
-let url_begin = "http://".concat(process.env.REACT_APP_IP);
+
+let url_begin = "";
+if (process.env.REACT_APP_IP == "" || process.env.REACT_APP_IP == undefined)
+	url_begin = "http://localhost";
+else 
+	url_begin = "http://".concat(process.env.REACT_APP_IP);
 let selectedUser = "";
 
 export default function Game() {

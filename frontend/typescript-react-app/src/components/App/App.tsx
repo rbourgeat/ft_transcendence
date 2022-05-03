@@ -32,7 +32,11 @@ import { env } from 'process';
 import { Socket } from 'socket.io-client';
 import io from "socket.io-client";
 
-let url_begin = "http://".concat(env.REACT_APP_IP);
+let url_begin = "";
+if (process.env.REACT_APP_IP == "" || process.env.REACT_APP_IP == undefined)
+  url_begin = "http://localhost";
+else
+  url_begin = "http://".concat(env.REACT_APP_IP);
 
 let selectedUser = "";
 
