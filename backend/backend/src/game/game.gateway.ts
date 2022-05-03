@@ -4,7 +4,7 @@ import { Logger } from "@nestjs/common";
 import { GameService } from './game.service';
 import { UserService } from '../user/user.service';
 
-let MatchMaking = [[],[],[],[],[]];
+let MatchMaking = [[], [], [], [], []];
 let vs1 = [];
 let vs2 = [];
 
@@ -25,11 +25,9 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
 	}
 
 	async handleConnection(socket: Socket, ...args: any[]) {
-		this.logger.log("Client connected: " + socket.handshake.query.username + ' id: ' + socket.id + ')');
 	}
 
 	async handleDisconnect(socket: Socket, ...args: any[]) {
-		this.logger.log("Client disconnected: " + socket.handshake.query.username + ' id: ' + socket.id + ')');
 	}
 
 	@SubscribeMessage('search')
@@ -60,8 +58,7 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
 			console.log("File d'attente " + gameMode + ": " + MatchMaking[gameMode]);
 		}
 
-		if (socket.handshake.query.username && MatchMaking[gameMode].length >= 2)
-		{
+		if (socket.handshake.query.username && MatchMaking[gameMode].length >= 2) {
 			var index = MatchMaking[gameMode].indexOf(socket.handshake.query.username);
 			if (index > -1) {
 				MatchMaking[gameMode].splice(index, 1);
@@ -72,6 +69,7 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
 				MatchMaking[gameMode].splice(index, 1);
 			}
 			this.server.emit('gameStart', socket.handshake.query.username, adversaire, gameMode);
+
 			console.log("Une partie commence avec " + socket.handshake.query.username + " VS " + adversaire)
 		}
 
@@ -125,10 +123,11 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
 		if (b[0] && b[1]) {
 			this.gameService.createGame(b[0], b[1], Number(b[2]), Number(b[3]), Number(b[4]));
 			this.server.emit('stopGame', b[0], b[1]);
-			this.userService.updateStatus(String(b[0]), "online");
-			this.userService.updateStatus(String(b[1]), "online");
+			//this.userService.updateStatus(String(b[0]), "online");
+			//this.userService.updateStatus(String(b[1]), "online");
+
 		}
-		 
+
 	}
 
 	@SubscribeMessage('playerMove')
@@ -136,14 +135,14 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
 		const b = body.split(':');
 		this.server.emit('playerMove', body);
 		this.userService.updateStatus(String(socket.handshake.query.username), "ingame");
-		console.log("joueur: " + b[0] + ", position : " + b[1] + ", adversaire : " + b[2] + ", coté : " + b[3]);
+		//console.log("joueur: " + b[0] + ", position : " + b[1] + ", adversaire : " + b[2] + ", coté : " + b[3]);
 	}
 
 	@SubscribeMessage('roundStart')
 	async roundStart(@ConnectedSocket() socket: Socket, @MessageBody() body: string) {
 		const b = body.split(':');
 		this.server.emit('roundStartLIVE', body);
-		console.log("round: " + b[0] + ", player1: " + b[1] + ", player2: " + b[2] + ", score1: " + b[3] + ", score2: " + b[4]);
+		//console.log("round: " + b[0] + ", player1: " + b[1] + ", player2: " + b[2] + ", score1: " + b[3] + ", score2: " + b[4]);
 	}
 
 	@SubscribeMessage('ballMoveFront')

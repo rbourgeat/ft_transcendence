@@ -37,6 +37,7 @@ export default function TypingMessage(props: TypingProps) {
     const [username, setUsername] = React.useState("");
     const [isMuted, setIsMuted] = React.useState(false);
     const [sockChan, setsockChan] = React.useState(props.activeName);
+
     function checkisMuted() {
         //console.log("props chanId is " + props.chanId);
 
@@ -53,6 +54,7 @@ export default function TypingMessage(props: TypingProps) {
                     //console.log(res);
                     if (res.data == false) {
                         setIsMuted(false);
+                        //setSeconds(10);
                     }
                     else if (res.data == true) {
                         setIsMuted(true);
@@ -65,39 +67,9 @@ export default function TypingMessage(props: TypingProps) {
         }
     }
 
-    setInterval(() => {
-        //console.log("value every 10s = isMuted:" + isMuted + ", activeName:" + props.activeName + ", sockchan:" + props.sockChan);
-        if (isMuted === true && props.activeName === props.sockChan) {
-
-            // console.log("interval with isMuted == true");
-            setIsMuted(false);
-            setSeconds(10);
-            /*
-            setIsMuted(false);
-            console.log("interval with isMuted == true");
-            let url = url_begin.concat(":3000/api/chat/unmute");
-            const body = {
-                "idChat": props.chanId,
-                "user": props.login
-            }
-            axios.post(url, body)
-                .then(response => {
-                })
-                .catch(error => {
-                });
-
-            setSeconds(10);
-            */
-            var d1 = new Date();
-            if (d1.getTime() < timestamp.getTime())
-                console.log("temps ecouleeee")
-        }
-    }, 10000);
-
     useEffect(() => {
         checkisMuted();
     }, [props.chanId]);
-
 
 
     function sendMessage(message: string) {
@@ -110,10 +82,10 @@ export default function TypingMessage(props: TypingProps) {
     props.socket.on('isMute', (...args) => {
         if (props.login == args[0] && args[1] == true) {
             setIsMuted(true)
-            setSeconds(10);
+            //setSeconds(10);
             console.log("set is mute to true")
-            timestamp = args[2];
-            console.log("time " + args[2])
+            //timestamp = args[2];
+            //console.log("time " + args[2])
         }
         else if (props.login == args[0] && args[1] == false) {
             setIsMuted(false)
@@ -121,9 +93,10 @@ export default function TypingMessage(props: TypingProps) {
         }
     })
 
-    const [seconds, setSeconds] = useState(10);
-    const [isActive, setIsActive] = useState(false);
+    //const [seconds, setSeconds] = React.useState(10);
+    //const [isActive, setIsActive] = React.useState(false);
 
+    /*
     useEffect(() => {
 
         let interval = null;
@@ -136,6 +109,7 @@ export default function TypingMessage(props: TypingProps) {
         return () => clearInterval(interval);
 
     }, [seconds]);
+    */
 
     return (
         <div id="typing--div">
@@ -143,7 +117,7 @@ export default function TypingMessage(props: TypingProps) {
                 {
                     isMuted === true ?
                         <>
-                            You are muted in that channel for {seconds}s
+                            You are muted in that channel
                         </>
                         :
                         <>

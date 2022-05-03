@@ -39,7 +39,7 @@ export default function Game() {
 	// const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
 
 	const { height, width } = useWindowDimensions();
-	
+
 	const [isActive, setActive] = React.useState(true);
 	const [isActive2, setActive2] = React.useState(false);
 	const [isWin, setWin] = React.useState(false);
@@ -78,6 +78,7 @@ export default function Game() {
 	var SearchText = "Rechercher une partie"
 
 	var socket = io(url_begin.concat(":3000/game"), { query: { username: username } });
+	var socket2 = io(url_begin.concat(":3000/chat"), { query: { username: username } });
 
 	function removeInvit() {
 		setActive2(false);
@@ -117,7 +118,7 @@ export default function Game() {
 				game.player.score = b[3];
 				game.player2.score = b[4];
 			}
-			if ((document.querySelector('#player-score').textContent == "5" || 
+			if ((document.querySelector('#player-score').textContent == "5" ||
 				document.querySelector('#player2-score').textContent == "5") && live == null) {
 				stop();
 				clearDataGame();
@@ -133,6 +134,8 @@ export default function Game() {
 		document.querySelector('#waitingPlayer').textContent = "";
 		joueur1 = args[0];
 		joueur2 = args[1];
+		socket2.emit("update", joueur1 + ":ingame");
+		socket2.emit("update", joueur2 + ":ingame");
 		gm = args[2];
 		initParty();
 		if (joueur1 != adversaire && joueur1 == joueur && game) {
@@ -329,36 +332,35 @@ export default function Game() {
 		}
 	});
 
-	function acceptInvitePlay()
-    {
-        window.top.location = url_begin.concat(":3030/game?vs=").concat(selectedUser);;
-    }
-
-  	const InvitetoPlay = () => {
-		return(
-		<div>
-			{selectedUser} wants to play with you !
-			<button className="btn btn-dark" onClick={acceptInvitePlay}>Accept</button>
-		</div>)
+	function acceptInvitePlay() {
+		window.top.location = url_begin.concat(":3030/game?vs=").concat(selectedUser);;
 	}
 
-  socket.on('inviteToPlay', (...args) => {
-    if (username == args[1] && selectedUser != args[0])
-		selectedUser = args[0];
-	else
-		return;
+	const InvitetoPlay = () => {
+		return (
+			<div>
+				{selectedUser} wants to play with you !
+				<button className="btn btn-dark" onClick={acceptInvitePlay}>Accept</button>
+			</div>)
+	}
 
-    toast.dark(<InvitetoPlay />, {
-              position: "top-right",
-              autoClose: 10000,
-              hideProgressBar: false,
-              closeOnClick: false,
-              pauseOnHover: false,
-              draggable: false,
-              closeButton: false
-              //progress: undefined
-          });
-  });
+	socket.on('inviteToPlay', (...args) => {
+		if (username == args[1] && selectedUser != args[0])
+			selectedUser = args[0];
+		else
+			return;
+
+		toast.dark(<InvitetoPlay />, {
+			position: "top-right",
+			autoClose: 10000,
+			hideProgressBar: false,
+			closeOnClick: false,
+			pauseOnHover: false,
+			draggable: false,
+			closeButton: false
+			//progress: undefined
+		});
+	});
 
 	function ballMove() {
 		// Rebounds on top and bottom
@@ -374,7 +376,7 @@ export default function Game() {
 			// Ball progressive speed
 			game.ball.x += game.ball.speed.x;
 			game.ball.y += game.ball.speed.y;
-			socket.emit('ballMoveFront', joueur1 + ":" + joueur2 + ":" + game.ball.x + ":" + game.ball.y + ":" + game.ball.speed.x + ":" + game.ball.speed.y);	
+			socket.emit('ballMoveFront', joueur1 + ":" + joueur2 + ":" + game.ball.x + ":" + game.ball.y + ":" + game.ball.speed.x + ":" + game.ball.speed.y);
 		}
 	}
 
@@ -415,7 +417,7 @@ export default function Game() {
 				game.ball.speed.x = BALL_SPEED;
 				// Update score
 				game.player.score++;
-				socket.emit('roundStart', 0 + ":" + joueur1 + ":" + joueur2 + ":" + game.player.score + ":" + game.player2.score+ ":left");
+				socket.emit('roundStart', 0 + ":" + joueur1 + ":" + joueur2 + ":" + game.player.score + ":" + game.player2.score + ":left");
 				document.querySelector('#player-score').textContent = game.player.score;
 				if (game.player.score === 5 || document.querySelector('#player-score').textContent == "5") {
 					stop();
@@ -462,6 +464,9 @@ export default function Game() {
 		// Reset speed
 		game.ball.speed.x = 0;
 		game.ball.speed.y = 0;
+
+		socket2.emit("update", joueur1 + ":online");
+		socket2.emit("update", joueur2 + ":online");
 	}
 
 	function clearDataGame() {
@@ -509,52 +514,52 @@ export default function Game() {
 					</div>
 				</>
 				: */}
-				<div>
-					<Online>
-						<div id="game-root">
-						
-							<Nav />
-							<div className="container">
-								<div className="row d-flex justify-content-center text-center">
+			<div>
+				<Online>
+					<div id="game-root">
+
+						<Nav />
+						<div className="container">
+							<div className="row d-flex justify-content-center text-center">
 								{isWin ? <Confetti width={width} height={height} /> : ""}
-									{isActive ?
-										<Form>
-											<Form.Group>
-												<div className="row d-flex justify-content-center text-center">
-													<Form.Label className="form--label">Choose game option</Form.Label>
-													<Form.Select id="form-select" aria-label="Modes de jeux:" defaultValue="original" onChange={e => chanScopeSet(e.target.value)}>
-														<option>Modes de jeux:</option>
-														<option value="original">Original (1972)</option>
-														<option value="bigball">Big Ball (Facile)</option>
-														<option value="blitz">Blitz (Balle Rapide)</option>
-														<option value="slow">Slow (Balle Lente)</option>
-														<option value="cube">Cube World (All is cubic)</option>
-													</Form.Select>
-												</div>
-											</Form.Group>
-										</Form>
-										: ""}
-									<div className="row d-flex justify-content-center text-center">
-										{isActive ? <button type="button" className="btn btn-outline-light" id="search-button" onClick={() => sendSearch()}>{SearchText}</button> : ""}
-										{isActive2 ? <button type="button" className="btn btn-outline-light" id="search-button" onClick={() => removeInvit()}>Annuler l'invitation</button> : ""}
-									</div>
-									<p id="victoryMessage"></p>
-									<p id="waitingPlayer"></p>
-									<main role="main">
-										<p className="canvas-score" id="scores">
-											<em className="canvas-score" id="joueur1"></em>
-											<em className="canvas-score" id="player-score">0</em> - <em id="joueur2"></em>
-											<em className="canvas-score" id="player2-score">0</em></p>
-										<canvas id="canvas" width={500} height={500}></canvas>
-									</main>
+								{isActive ?
+									<Form>
+										<Form.Group>
+											<div className="row d-flex justify-content-center text-center">
+												<Form.Label className="form--label">Choose game option</Form.Label>
+												<Form.Select id="form-select" aria-label="Modes de jeux:" defaultValue="original" onChange={e => chanScopeSet(e.target.value)}>
+													<option>Modes de jeux:</option>
+													<option value="original">Original (1972)</option>
+													<option value="bigball">Big Ball (Facile)</option>
+													<option value="blitz">Blitz (Balle Rapide)</option>
+													<option value="slow">Slow (Balle Lente)</option>
+													<option value="cube">Cube World (All is cubic)</option>
+												</Form.Select>
+											</div>
+										</Form.Group>
+									</Form>
+									: ""}
+								<div className="row d-flex justify-content-center text-center">
+									{isActive ? <button type="button" className="btn btn-outline-light" id="search-button" onClick={() => sendSearch()}>{SearchText}</button> : ""}
+									{isActive2 ? <button type="button" className="btn btn-outline-light" id="search-button" onClick={() => removeInvit()}>Annuler l'invitation</button> : ""}
 								</div>
+								<p id="victoryMessage"></p>
+								<p id="waitingPlayer"></p>
+								<main role="main">
+									<p className="canvas-score" id="scores">
+										<em className="canvas-score" id="joueur1"></em>
+										<em className="canvas-score" id="player-score">0</em> - <em id="joueur2"></em>
+										<em className="canvas-score" id="player2-score">0</em></p>
+									<canvas id="canvas" width={500} height={500}></canvas>
+								</main>
 							</div>
 						</div>
-					</Online>
-					<Offline>
-						<div id="offline">Vous n'êtes pas connecté à internet !</div>
-					</Offline>
-				</div>
+					</div>
+				</Online>
+				<Offline>
+					<div id="offline">Vous n'êtes pas connecté à internet !</div>
+				</Offline>
+			</div>
 			{/* } */}
 		</>
 	);

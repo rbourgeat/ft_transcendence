@@ -8,6 +8,8 @@ import EditUsernameModal from '../editUsername/EditUsername';
 import Nav from "../../Nav/Nav";
 import AuthCode, { AuthCodeRef } from 'react-auth-code-input';
 import { AiOutlineLoading3Quarters, AiOutlineLoading } from "react-icons/ai";
+import { Socket } from 'socket.io-client';
+import io from "socket.io-client";
 
 let url_begin = "";
 if (process.env.REACT_APP_IP == "" || process.env.REACT_APP_IP == undefined)
@@ -32,7 +34,7 @@ export default function Settings(props: SettingsProps) {
 
 	//status, realtime variable (a reprendre avec les sockets)
 	const [status, setStatus] = React.useState("online");
-	const [color, setColor] = React.useState("green");
+	const [color, setColor] = React.useState("grey");
 
 	//MODALS
 	const [show, setShow] = useState(false);
@@ -138,6 +140,7 @@ export default function Settings(props: SettingsProps) {
 
 	/*async*/
 	function getUser() {
+		console.log("aaaaaaaaaaaaaaaaaaaaaaa")
 		let url = url_begin.concat(":3000/api/auth/");
 
 		axios.defaults.baseURL = url_begin.concat(':3000/api/');
@@ -169,12 +172,14 @@ export default function Settings(props: SettingsProps) {
 				setLoaded(true);
 				setUsername(username);
 				renderImage(username);
+				socket.emit("update", "online");
 			})
 			.catch((err) => {
 				//console.log("Auth returned 400 -> missing cookie");
 				localStorage.setItem("loggedIn", "false");
 				window.top.location = url_begin.concat(":3030/auth/");
 			})
+
 	}
 
 	/*async*/
@@ -189,7 +194,10 @@ export default function Settings(props: SettingsProps) {
 		return (/*await*/ ax.render_avatar(login, "", haschanged));
 	}
 
+	const [socket, setSocket] = React.useState(io("http://".concat(process.env.REACT_APP_IP).concat(":3000/chat"), { query: { username: username } }));
+
 	useEffect(() => {
+
 		if (calledOnce.current) {
 			return;
 		}
