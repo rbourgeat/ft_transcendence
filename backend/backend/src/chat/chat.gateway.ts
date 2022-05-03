@@ -3,7 +3,7 @@ import { Server, Socket } from 'socket.io';
 import { ChatService } from './chat.service';
 import { UserService } from 'src/user/user.service';
 import { Logger } from "@nestjs/common";
-import { AdminDto, BanDto, CreateChatDto, MuteDto } from './dto/chat.dto';
+import { AdminDto, BanDto, CreateChatDto, LeaveDto, MuteDto } from './dto/chat.dto';
 
 const clients = [];
 
@@ -21,7 +21,7 @@ export class ChatGateway implements OnGatewayConnection {
 	) { }
 
 	async handleConnection(socket: Socket, ...args: any[]) {
-		this.logger.log("Client connected: " + socket.handshake.query.username);
+		this.logger.log("Client connected: " + socket.handshake.query.username + ' id: ' + socket.id + ')');
 		this.userService.updateStatus(String(socket.handshake.query.username), "online");
 		clients.push(socket);
 		clients.forEach(function (client) {
@@ -30,7 +30,7 @@ export class ChatGateway implements OnGatewayConnection {
 	}
 
 	async handleDisconnect(socket: Socket, ...args: any[]) {
-		this.logger.log("Client disconnected: " + socket.handshake.query.username);
+		this.logger.log("Client disconnected: " + socket.handshake.query.username + ' id: ' + socket.id + ')');
 		this.userService.updateStatus(String(socket.handshake.query.username), "offline");
 		clients.forEach(function (client) {
 			client.emit("updateStatus", String(socket.handshake.query.username), "offline");
@@ -51,7 +51,6 @@ export class ChatGateway implements OnGatewayConnection {
 
 		this.server.emit('newMessageEvent', true);*/
 		console.log(body + 'event message');
-		console.log(process.env.TEST);
 		const b = body.split(':');
 		const author = await this.userService.getUserByLogin(b[0]);
 		const message = await this.chatService.saveChatMessage(b[1], b[2], author);
@@ -85,6 +84,15 @@ export class ChatGateway implements OnGatewayConnection {
 		const chat = await this.chatService.getChatByName(body);
 		const users = await this.chatService.getUsersInChannel(chat.id);
 		this.server.emit('refreshParticipants', users, body);
+	}
+
+	@SubscribeMessage('leave')
+	async leaveChat(@ConnectedSocket() socket: Socket, @MessageBody() body: LeaveDto) {
+		console.log(body.user + ' event leave in chat ' + body.chatName);
+		const user = await this.userService.getUserByLogin(body.user);
+		const chat = await this.chatService.getChatByName(body.chatName);
+		await this.chatService.quitChat(chat.id, user);
+		this.refreshChat(socket, body.chatName);
 	}
 
 	@SubscribeMessage('mute')

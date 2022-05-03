@@ -119,7 +119,8 @@ export default function ListParticipant(props: ParticipantProps) {
 	}
 
 	function leaveChannel() {
-		props.socket.emit('refresh', props.activeName);
+		props.socket.emit('leave', { user: props.login, chatName: props.activeName });
+		//props.socket.emit('refresh', props.activeName);
 		props.setHide(true);
 	}
 

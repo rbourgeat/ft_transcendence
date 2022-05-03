@@ -62,6 +62,15 @@ export class AdminDto {
     admin: string;
 }
 
+@ApiTags('Chats')
+export class LeaveDto {
+    @ApiProperty()
+    user: string;
+
+    @ApiProperty()
+    chatName: string;
+}
+
 @ApiTags('Chats') //Create a category on swagger
 export class ChatDto {
     @IsNotEmpty()
