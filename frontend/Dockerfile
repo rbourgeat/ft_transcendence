@@ -24,5 +24,9 @@ CMD npm install --legacy-peer-deps --silent && npm update --silent \
                 && npm start
 
 #Command pour build / correction OK
-#CMD npm install --legacy-peer-deps --silent && npm update --silent && npm run-script build
+#CMD npm install --legacy-peer-deps --silent && npm update --silent \
+#    && sed -i -- 's/color-adjust/print-color-adjust/g'  ./node_modules/postcss-loader/dist/cjs.js \
+#    && sed -i -- 's/color-adjust/print-color-adjust/g' ./node_modules/bootstrap/dist/css/bootstrap.css \
+#    && sed -i -- 's/color-adjust/print-color-adjust/g' ./node_modules/source-map-loader/dist/cjs.js \
+#    && npm run-script build 
 #ENTRYPOINT serve -l 3030 -s build

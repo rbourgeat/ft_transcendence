@@ -4,11 +4,13 @@
 	border-radius: variables.$border-radius-big;
 	background: white;
 	position: sticky;
-	min-height: 740px !important;
-	max-height: 740px !important;
+	//min-height: 740px !important;
+	//max-height: 740px !important;
 	border: 0.1rem solid #f9f9f9 !important;
+	//border: 0.1rem solid blue !important;
 	margin-right: 2% !important;
 	margin-left: 2% !important;
+	height: 100% !important;
 }
 
 #ListDiscussions>* {
@@ -52,13 +54,12 @@
 
 .title_chat_div {
 	border-radius: variables.$border-radius-big;
-	border: 0.1rem solid #f9f9f9;
-	min-height: 40px;
-	max-height: 40px;
+	//border: 0.1rem solid #f9f9f9;
+	//border: 0.2rem solid orange !important;
+	//min-height: 40px;
+	//max-height: 40px;
 	background: #f9f9f9;
 	position: sticky;
-	//padding-top: 10px;
-
 }
 
 .chat--title {
@@ -78,10 +79,12 @@
 }
 
 .messages-zone {
-	min-height: 590px;
-	max-height: 590px;
+	//min-height: 590px;
+	//max-height: 590px;
 	margin: 5px;
 	border: 0.1rem solid #f9f9f9;
+	//border: 0.2rem solid violet !important;
+	height: 85% !important;
 	border-radius: variables.$border-radius-big;
 	overflow-y: scroll;
 	scrollbar-color: rgb(119, 119, 119) rgb(174, 174, 174);

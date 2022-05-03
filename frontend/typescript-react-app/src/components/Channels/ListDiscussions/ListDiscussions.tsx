@@ -105,7 +105,7 @@ export default function ListDiscussions(props: ListDiscussionsProps) {
 	}
 
 	return (
-		<div id="ListDiscussions" className="col-5">
+		<div id="ListDiscussions" className="col-md-5">
 			<div className="title_chat_div">
 				{
 					props.hide === false ?

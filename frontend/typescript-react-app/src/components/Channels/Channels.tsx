@@ -59,8 +59,8 @@ export default function Channels(props: ChatProps) {
 	return (
 		<div id="channels">
 			<Nav />
-			<div className="container">
-				<div className="row" id="row_chat">
+			<div className="container" id="container_chat">
+				<div className="row d-flex justify-content-center text-center" id="row_chat">
 					{load === true ?
 						<ListChannels
 							socket={socket}

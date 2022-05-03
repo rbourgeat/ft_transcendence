@@ -234,7 +234,7 @@ export default function ListParticipant(props: ParticipantProps) {
 	}
 
 	return (
-		<div id="ListParticipant" className="col-3">
+		<div id="ListParticipant" className="col-md-3">
 			<h2 id="participant--title">Members</h2>
 			<div id="sub--div">
 				{

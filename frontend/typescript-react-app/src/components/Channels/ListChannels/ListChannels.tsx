@@ -177,7 +177,7 @@ export default function ListChannels(props: ListChannelsProps) {
 	}
 
 	return (
-		<div id="listChannels" className="col-3" >
+		<div id="listChannels" className="col-md-3" >
 			<div id="channel--col">
 				<div className="title--channel--col">
 					<p className="channels-title">Channels</p>
