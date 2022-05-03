@@ -25,11 +25,9 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
 	}
 
 	async handleConnection(socket: Socket, ...args: any[]) {
-		//	this.logger.log("Client connected: " + socket.handshake.query.username + ' id: ' + socket.id + ')');
 	}
 
 	async handleDisconnect(socket: Socket, ...args: any[]) {
-		//this.logger.log("Client disconnected: " + socket.handshake.query.username + ' id: ' + socket.id + ')');
 	}
 
 	@SubscribeMessage('search')

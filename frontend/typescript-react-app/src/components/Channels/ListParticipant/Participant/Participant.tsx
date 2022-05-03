@@ -105,8 +105,7 @@ export default function Participant(props: ParticipantsProps) {
 		<div className="participant--div">
 			{<div className="dropdown show">
 				<p className="btn btn-sm dropdown-toggle p--participant" role="button" data-toggle="dropdown" onClick={() => props.updateSelectedUser(props.username)}>
-					{props.owner ? <FaCrown /> : ""} {props.admin ? <FaShieldAlt /> : ""} {props.role === "ban" ? <FaBan /> : ""}{props.role === "mute" ? <FaVolumeMute /> : ""} {props.username}
-					<FaCircle color={color} />
+					{props.owner ? <FaCrown /> : ""} {props.admin ? <FaShieldAlt /> : ""} {props.role === "ban" ? <FaBan /> : ""}{props.role === "mute" ? <FaVolumeMute /> : ""} {props.username}  <FaCircle color={color} />
 				</p>
 				{props.currentUser === props.username ?
 					<div className="dropdown-menu" aria-labelledby="dropdownMenuButton1" >
