@@ -21,23 +21,22 @@ export class ChatGateway implements OnGatewayConnection {
 	) { }
 
 	async handleConnection(socket: Socket, ...args: any[]) {
-		this.logger.log("Client connected: " + socket.handshake.query.username + ' id: ' + socket.id + ')');
+		//this.logger.log("Client connected: " + socket.handshake.query.username + ' id: ' + socket.id + ')');
 		this.userService.updateStatus(String(socket.handshake.query.username), "online");
-		clients.push(socket);
-		clients.forEach(function (client) {
-			client.emit("updateStatus", String(socket.handshake.query.username), "online");
-		});
+		//this.server.emit("updateStatus", String(socket.handshake.query.username), "online");
 	}
 
 	async handleDisconnect(socket: Socket, ...args: any[]) {
-		this.logger.log("Client disconnected: " + socket.handshake.query.username + ' id: ' + socket.id + ')');
+		//this.logger.log("Client disconnected: " + socket.handshake.query.username + ' id: ' + socket.id + ')');
 		this.userService.updateStatus(String(socket.handshake.query.username), "offline");
-		clients.forEach(function (client) {
-			client.emit("updateStatus", String(socket.handshake.query.username), "offline");
-		});
-		const index = clients.indexOf(socket);
-		if (index > -1)
-			clients.splice(index, 1);
+		this.server.emit("updateStatus", String(socket.handshake.query.username), "offline");
+	}
+
+	@SubscribeMessage('update')
+	async update(@ConnectedSocket() socket: Socket, @MessageBody() body: string) {
+		const b = body.split(':');
+		//console.log("www:" + b[0]);
+		this.server.emit("updateStatus", b[0], b[1]);
 	}
 
 	@SubscribeMessage('message')

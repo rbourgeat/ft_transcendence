@@ -21,7 +21,8 @@ export interface MiniDisplayProps {
 	relation?: string;
 	extra?: string;
 	currentUser?: string;
-	socket?: any
+	//key?: any
+	//socket?: any
 }
 
 export default function MiniDisplay(props: MiniDisplayProps) {
@@ -32,7 +33,7 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 	const [color, setColor] = React.useState("");
 	const [relationStatus, setRelationStatus] = React.useState("");
 
-	//const [socket, setSocket] = React.useState(io("http://".concat(process.env.REACT_APP_IP).concat(":3000/chat"), { query: { username: username } }));
+	const [socket, setSocket] = React.useState(io("http://".concat(process.env.REACT_APP_IP).concat(":3000/chat"), { query: { username: username } }));
 
 	// REPRENDRE USER ICI - SOCKET
 	async function getUser() {
@@ -97,12 +98,14 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 	}
 
 	function selectColor() {
-		if (props.status == "offline")
+		//console.log("status:" + status);
+		if (status == "offline")
 			setColor("grey")
-		if (props.status == "online")
+		if (status == "online")
 			setColor("green")
-		if (props.status == "ingame")
+		if (status == "ingame")
 			setColor("purple")
+		//console.log("final color:" + color);
 	}
 
 	function addContact(login: string) {
@@ -211,22 +214,26 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 
 	useEffect(() => {
 		getUser();
+		/*
 		if (calledOnce.current) {
 			return;
 		}
+		*/
 		setLoad(true);
 		selectColor();
 		calledOnce.current = true;
 
-		//props.socket.on('updateStatus', (...args) => {
-		/*
-		if (pseudo) {
-			console.log("name: " + pseudo + " / " + "status: " + statusUpdated);
-			setStatus(statusUpdated);
-		}
-		*/
-		//})
-	}, []);
+		socket.on('updateStatus', (...args) => {
+			//console.log("receive update status for " + args[0] + ": " + args[1]);
+			if (props.login == args[0]) {
+				console.log("name: " + props.login + " / " + "status: " + args[1]);
+				setStatus(args[1]);
+				//console.log("go in select colorafter socketon");
+				selectColor();
+			}
+
+		})
+	}, [status, color]);
 
 	return (
 		<div className="mini--display--div" id={"minidisplay".concat("_" + props.login + "_" + props.extra)}>

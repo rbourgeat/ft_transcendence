@@ -49,6 +49,7 @@ export default function TypingMessage(props: TypingProps) {
                     //console.log(res);
                     if (res.data == false) {
                         setIsMuted(false);
+                        setSeconds(10);
                     }
                     else if (res.data == true) {
                         setIsMuted(true);
@@ -84,9 +85,9 @@ export default function TypingMessage(props: TypingProps) {
 
             setSeconds(10);
             */
-            var d1 = new Date();
-            if (d1.getTime() < timestamp.getTime())
-                console.log("temps ecouleeee")
+            //var d1 = new Date();
+            //if (d1.getTime() < timestamp.getTime())
+            //   console.log("temps ecouleeee")
         }
     }, 10000);
 
@@ -117,8 +118,8 @@ export default function TypingMessage(props: TypingProps) {
         }
     })
 
-    const [seconds, setSeconds] = useState(10);
-    const [isActive, setIsActive] = useState(false);
+    const [seconds, setSeconds] = React.useState(10);
+    const [isActive, setIsActive] = React.useState(false);
 
     useEffect(() => {
 

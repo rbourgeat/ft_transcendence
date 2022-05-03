@@ -121,6 +121,13 @@ export default function ListParticipant(props: ParticipantProps) {
 	function leaveChannel() {
 		props.socket.emit('leave', { user: props.login, chatName: props.activeName });
 		//props.socket.emit('refresh', props.activeName);
+		if (props.isChan === true) {
+			document.getElementById("display_chan_".concat(props.activeName)).remove();
+			let title = document.getElementsByClassName("chan-title_notselected")[0].innerHTML;
+			document.getElementsByClassName("chan-title_notselected")[0].className = 'chan-title_selected';
+		}
+		else
+			document.getElementById("dm_chan_".concat(props.activeName)).remove();
 		props.setHide(true);
 	}
 
@@ -251,6 +258,7 @@ export default function ListParticipant(props: ParticipantProps) {
 										updateFunctionToUse={updateFunctionToUse}
 										isBanned={props.isBanned}
 										status={participate.user.status}
+										socket={props.socket}
 									/>
 								)
 								:

@@ -13,6 +13,7 @@ import Settings from "./Settings/Settings"
 import MatchHistory from '../MatchHistory/MatchHistory';
 import Login from '../Auth/Login/Login';
 import { AiOutlineLoading3Quarters, AiOutlineLoading } from "react-icons/ai";
+import io from "socket.io-client";
 
 export interface UserfuncProps {
 	username?: string,
@@ -50,9 +51,10 @@ export default function User(props: UserfuncProps) {
 	const [pendingInvite, setPendingInvite] = React.useState(false);
 
 	//Status socket
-	const [color, setColor] = React.useState("green");
+	const [color, setColor] = React.useState("grey");
 	const [status, setStatus] = React.useState("online");
 
+	const [socket, setSocket] = React.useState(io("http://".concat(process.env.REACT_APP_IP).concat(":3000/chat"), { query: { username: username } }));
 	function getUser() {
 
 		let url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/auth/");
@@ -92,6 +94,8 @@ export default function User(props: UserfuncProps) {
 
 				/*}*/
 				setUsername(username);
+				//setSocket(io("http://".concat(process.env.REACT_APP_IP).concat(":3000/chat"), { query: { username: username } }));
+				socket.emit("update", res.data.login + ":online");
 				setLoaded(true);
 				renderImage(username);
 			})
