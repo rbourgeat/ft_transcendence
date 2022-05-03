@@ -105,7 +105,7 @@ export class ChatController {
     @Post('setAdmin')
     async setAdmin(@Body() chat: ChatDto, @Request() req) {
         console.log(req.user.login + ' set admin ' + chat.user + ' to chat ' + chat.idChat)
-        return this.chatService.setAdmin(chat.idChat, chat.user, req.user);
+        //return this.chatService.setAdmin(chat.idChat, chat.user, req.user);
     }
 
     @ApiOperation({ summary: 'Ban user' })
@@ -115,7 +115,7 @@ export class ChatController {
     @Post('ban')
     async ban(@Body() chat: ChatDto, @Request() req) {
         console.log(req.user.login + ' ban ' + chat.user + ' in chat' + chat.idChat)
-        return this.chatService.ban(chat.idChat, chat.user, req.user, chat.time);
+        //return this.chatService.ban(chat.idChat, chat.user, req.user, chat.time);
     }
 
     @ApiOperation({ summary: 'Unban user' })
@@ -125,7 +125,7 @@ export class ChatController {
     @Post('unban')
     async unban(@Body() chat: ChatDto, @Request() req) {
         console.log(req.user.login + ' unban ' + chat.user + ' in chat' + chat.idChat)
-        return this.chatService.active(chat.idChat, chat.user, req.user);
+        //return this.chatService.active(chat.idChat, chat.user, req.user);
     }
 
     @ApiOperation({ summary: 'Mute user' })

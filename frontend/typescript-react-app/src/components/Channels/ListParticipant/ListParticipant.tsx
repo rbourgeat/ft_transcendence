@@ -99,34 +99,27 @@ export default function ListParticipant(props: ParticipantProps) {
 	}
 
 	function unbanUser() {
-		makeAPIcall("unban", "Successfully unbanned", "Error while unbanning", false);
-		props.socket.emit('ban', { user: selectedUser, ban: false });
+		props.socket.emit('ban', { user: selectedUser, ban: false, chatName: props.activeName, admin: props.login });
 	}
 
 	function banUser() {
-		makeAPIcall("ban", "Successfully ban", "Error while banning", false);
-		props.socket.emit('ban', { user: selectedUser, ban: true });
+		props.socket.emit('ban', { user: selectedUser, ban: true, chatName: props.activeName, admin: props.login });
 	}
 
 	function unmuteUser() {
-		// makeAPIcall("unmute", "Successfully unmuted", "Error while unmuting", false);
 		props.socket.emit('mute', { user: selectedUser, mute: false, chatName: props.activeName, admin: props.login });
-		props.socket.emit('refresh', props.activeName);
 	}
 
-	function setAdmin() {
-		makeAPIcall("setAdmin", "Successfully set as admin", "Error while setting as admin", false);
+	async function setAdmin() {
+		props.socket.emit('setAdmin', { user: selectedUser, chatName: props.activeName, admin: props.login });
 	}
 
 	function muteUser() {
-		// makeAPIcall("mute", "Successfully mute", "Error while muting", false);
-		// console.log("p" + props.activeName)
 		props.socket.emit('mute', { user: selectedUser, mute: true, chatName: props.activeName, admin: props.login });
-		props.socket.emit('refresh', props.activeName);
 	}
 
 	function leaveChannel() {
-		makeAPIcall("quit", "Successfull quit", "Error while quitting channel", true);
+		props.socket.emit('refresh', props.activeName);
 		props.setHide(true);
 	}
 
@@ -148,6 +141,7 @@ export default function ListParticipant(props: ParticipantProps) {
 		window.top.location = url_begin.concat(":3030/profile/").concat(selectedUser);
 	}
 
+	/*
 	async function makeAPIcall(endpoint: string, toastSuccessMessage: string, toastErrorMessage: string, me: boolean) {
 		let toast = new ToastAlerts(null);
 		const url = url_begin.concat(':3000/api/chat/').concat(endpoint);
@@ -158,7 +152,7 @@ export default function ListParticipant(props: ParticipantProps) {
 			"idChat": props.activeID,
 			"user": user,
 			"time": new Date()
-			}
+		}
 		await axios.post(url, body)
 			.then(response => {
 				toast.notifySuccess(toastSuccessMessage);
@@ -177,6 +171,7 @@ export default function ListParticipant(props: ParticipantProps) {
 			});
 		props.socket.emit('refresh', props.activeName);
 	}
+	*/
 
 	const handleClose = () => setShow(false);
 

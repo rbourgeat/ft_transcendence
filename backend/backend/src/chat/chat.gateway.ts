@@ -3,7 +3,7 @@ import { Server, Socket } from 'socket.io';
 import { ChatService } from './chat.service';
 import { UserService } from 'src/user/user.service';
 import { Logger } from "@nestjs/common";
-import { BanDto, CreateChatDto, MuteDto } from './dto/chat.dto';
+import { AdminDto, BanDto, CreateChatDto, MuteDto } from './dto/chat.dto';
 
 const clients = [];
 
@@ -89,31 +89,38 @@ export class ChatGateway implements OnGatewayConnection {
 
 	@SubscribeMessage('mute')
 	async muteUser(@ConnectedSocket() socket: Socket, @MessageBody() body: MuteDto) {
-		//if (!socket.handshake.query.username)
-		//	return;
-		//console.log("bt " + body.time)
 		console.log(body.user + " " + body.mute + ' event isMute in chat ' + body.chatName);
 		const user = await this.userService.getUserByLogin(body.user);
 		const admin = await this.userService.getUserByLogin(body.admin);
 		if (body.mute)
-			this.chatService.mute(body.chatName, body.user, admin, body.time);
+			await this.chatService.mute(body.chatName, body.user, admin, body.time);
 		else
-			this.chatService.active(body.chatName, body.user, admin);
+			await this.chatService.active(body.chatName, body.user, admin);
 		this.server.emit('isMute', user.login, body.mute, body.time);
-
+		this.refreshChat(socket, body.chatName);
 	}
 
 	@SubscribeMessage('ban')
 	async banUser(@ConnectedSocket() socket: Socket, @MessageBody() body: BanDto) {
-		console.log(body.user + " " + body.ban + 'event isBan');
-		//const b = body.split(':');
-		//const author = await this.userService.getUserByLogin(b[0]);
-		//const message = await this.chatService.saveChatMessage(b[1], b[2], author);
-
-		//const messages = await this.chatService.getMessagesbyName(b[1]);
-		//const chat = await this.chatService.getChatByName(body);
+		console.log(body.user + " " + body.ban + ' event isBan in chat ' + body.chatName);
 		const user = await this.userService.getUserByLogin(body.user);
+		const admin = await this.userService.getUserByLogin(body.admin);
+		if (body.ban)
+			await this.chatService.ban(body.chatName, body.user, admin);
+		else
+			await this.chatService.active(body.chatName, body.user, admin);
 		this.server.emit('isBan', user.login, body.ban);
+		this.refreshChat(socket, body.chatName);
+	}
+
+	@SubscribeMessage('setAdmin')
+	async setAdmin(@ConnectedSocket() socket: Socket, @MessageBody() body: AdminDto) {
+		console.log(body.user + ' event setAdmin in chat ' + body.chatName);
+		const user = await this.userService.getUserByLogin(body.user);
+		const admin = await this.userService.getUserByLogin(body.admin);
+
+		await this.chatService.setAdmin(body.chatName, user.login, admin);
+		this.refreshChat(socket, body.chatName);
 	}
 
 	@SubscribeMessage('requestAllUsers')
@@ -121,7 +128,6 @@ export class ChatGateway implements OnGatewayConnection {
 		if (body) {
 			const users = await this.chatService.getUsersInChannel(body);
 			socket.emit('sendAllUsers', users);
-			//this.server.emit('sendAllUsers', users, body);
 		}
 	}
 }

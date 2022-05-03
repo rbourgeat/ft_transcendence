@@ -42,6 +42,24 @@ export class BanDto {
 
     @ApiProperty()
     ban: boolean;
+
+    @ApiProperty()
+    chatName: string;
+
+    @ApiProperty()
+    admin: string;
+}
+
+@ApiTags('Chats')
+export class AdminDto {
+    @ApiProperty()
+    user: string;
+
+    @ApiProperty()
+    chatName: string;
+
+    @ApiProperty()
+    admin: string;
 }
 
 @ApiTags('Chats') //Create a category on swagger

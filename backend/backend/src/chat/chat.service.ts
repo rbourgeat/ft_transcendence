@@ -298,8 +298,8 @@ export class ChatService {
 		return history;
 	}
 
-	async ban(id: number, login: string, admin: User, time: Date) {
-		const chat = await this.chatRepository.findOne({ id });
+	async ban(name: string, login: string, admin: User) {
+		const chat = await this.chatRepository.findOne({ name });
 		const user = await this.userRepository.findOne({ login });
 		const participate = await this.participateRepository.findOne({
 			where: [{ chat: chat, user: user }]
@@ -316,8 +316,6 @@ export class ChatService {
 			return console.log("L'utilisateur ne peut pas bannir un admin !");
 
 		participate.role = UserStatus.BAN;
-		if (time)
-			participate.timestamp = time;
 
 		await this.participateRepository.save(participate);
 		console.log(user.login + ' has been banned');
@@ -363,8 +361,7 @@ export class ChatService {
 			return console.log("L'utilisateur ne peut pas mute un admin !");
 
 		participate.role = UserStatus.MUTE;
-		if (time)
-		{
+		if (time) {
 			participate.timestamp = time;
 			console.log(time);
 		}
@@ -373,8 +370,8 @@ export class ChatService {
 		console.log(user.login + ' mute');
 	}
 
-	async setAdmin(id: number, login: string, admin: User) {
-		const chat = await this.chatRepository.findOne({ id });
+	async setAdmin(name: string, login: string, admin: User) {
+		const chat = await this.chatRepository.findOne({ name });
 		const user = await this.userRepository.findOne({ login });
 		const participate = await this.participateRepository.findOne({
 			where: [{ chat: chat, user: user }]
@@ -496,10 +493,10 @@ export class ChatService {
 		const participate = await this.participateRepository.findOne({
 			where: [{ chat: chat, user: user }]
 		});
-		 console.log("particip " + participate.login)
-		 console.log("tt " + participate.timestamp)
-		 console.log("role " + participate.role)
-		 console.log("id " + participate.id)
+		console.log("particip " + participate.login)
+		console.log("tt " + participate.timestamp)
+		console.log("role " + participate.role)
+		console.log("id " + participate.id)
 
 		return participate.timestamp;
 	}
