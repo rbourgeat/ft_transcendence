@@ -13,7 +13,11 @@ export default function Invitations() {
 	/*async*/
 	function renderInvitations() {
 		axios.defaults.withCredentials = true;
-		let url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/user/relation/me/pendingInvitations");
+		let url = "";
+		if (process.env.REACT_APP_IP == "" || process.env.REACT_APP_IP == undefined)
+			url = "http://localhost:3000/api/user/relation/me/pendingInvitations";
+		else 
+			url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/user/relation/me/pendingInvitations");
 
 		/*await*/
 		axios.get(url)

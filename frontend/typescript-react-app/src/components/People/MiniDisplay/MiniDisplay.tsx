@@ -36,7 +36,11 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 
 	// REPRENDRE USER ICI - SOCKET
 	async function getUser() {
-		let url = "http://localhost:3000/api/auth/";
+		let url = "";
+		if (process.env.REACT_APP_IP == "" || process.env.REACT_APP_IP == undefined)
+			url = "http://localhost:3000/api/auth/";
+		else 
+			url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/auth");
 		let username = "";
 		axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 		axios.defaults.withCredentials = true;
@@ -82,8 +86,12 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 				return;
 			}
 		}
+		let url = "";
+		if (process.env.REACT_APP_IP == "" || process.env.REACT_APP_IP == undefined)
+			url = "http://localhost:3000/api/user/".concat(avatar).concat("/avatar");
+		else
+			url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/user/").concat(avatar).concat("/avatar/");
 
-		let url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/user/").concat(avatar).concat("/avatar/");
 		let res = axios.get(url, { responseType: 'blob' })
 			.then(res => {
 				let myImage: HTMLImageElement = document.querySelector("#".concat(login + "_" + extra));
@@ -137,7 +145,11 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 	}
 
 	function gotoprofile() {
-		let url = "http://".concat(process.env.REACT_APP_IP).concat(":3030/profile/").concat(props.login);
+		let url = "";
+		if (process.env.REACT_APP_IP == "" || process.env.REACT_APP_IP == undefined)
+			url = "http://localhost:3030/profile/".concat(props.login);
+		else
+			url = "http://".concat(process.env.REACT_APP_IP).concat(":3030/profile/").concat(props.login);
 		window.top.location = url;
 	}
 

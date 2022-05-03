@@ -31,7 +31,11 @@ export default function Login2fa() {
 			return;
 		}
 		//console.log("Posting on api...");
-		let url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/2fa/log-in");
+		let url = "";
+		if (process.env.REACT_APP_IP == "" || process.env.REACT_APP_IP == undefined)
+			url = "http://localhost:3000/api/2fa/log-in";
+		else
+			url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/2fa/log-in");
 		axios.defaults.baseURL = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/");
 		axios.defaults.headers.post['Content-Type'] = 'application/json';
 		axios.defaults.headers.post['Accept'] = '*/*';

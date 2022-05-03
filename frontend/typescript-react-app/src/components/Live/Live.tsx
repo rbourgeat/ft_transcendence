@@ -14,7 +14,11 @@ var adversaires = [];
 var canvas = [];
 var game = [];
 
-let url_begin = "http://".concat(process.env.REACT_APP_IP);
+let url_begin = "";
+if (process.env.REACT_APP_IP == "" || process.env.REACT_APP_IP == undefined)
+	url_begin = "http://localhost";
+else
+	url_begin = "http://".concat(process.env.REACT_APP_IP);
 
 export default function Live() {
 	let socket = io(url_begin.concat(":3000/game"));

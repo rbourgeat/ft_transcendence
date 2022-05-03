@@ -4,7 +4,11 @@ import io from "socket.io-client";
 import axios from "axios";
 import React, { Component, useState, useEffect } from "react";
 
-let url_begin = "http://".concat(process.env.REACT_APP_IP);
+let url_begin = "";
+if (process.env.REACT_APP_IP == "" || process.env.REACT_APP_IP == undefined)
+	url_begin = "http://localhost";
+else 
+	url_begin = "http://".concat(process.env.REACT_APP_IP);
 
 export default function GameRules() {
 

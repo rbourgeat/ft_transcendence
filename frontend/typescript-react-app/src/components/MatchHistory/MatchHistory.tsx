@@ -4,8 +4,11 @@ import ButtonResume from "./ButtonResume/ButtonResume";
 import axios from 'axios';
 import { renderMatches } from 'react-router-dom';
 
-
-let url_begin = "http://".concat(process.env.REACT_APP_IP);
+let url_begin = "";
+if (process.env.REACT_APP_IP == "" || process.env.REACT_APP_IP == undefined)
+    url_begin = "http://localhost";
+else
+    url_begin = "http://".concat(process.env.REACT_APP_IP);
 
 
 export interface MatchHistoryProps {

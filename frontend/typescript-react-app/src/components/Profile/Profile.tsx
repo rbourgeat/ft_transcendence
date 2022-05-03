@@ -13,7 +13,11 @@ import Badge from "../Badge/Badge";
 import Footer from "../Footer/Footer";
 import { AiOutlineLoading3Quarters, AiOutlineLoading } from "react-icons/ai";
 
-let url_begin = "http://".concat(process.env.REACT_APP_IP);
+let url_begin = "";
+if (process.env.REACT_APP_IP == "" || process.env.REACT_APP_IP == undefined)
+	url_begin = "http://localhost";
+else
+	url_begin = "http://".concat(process.env.REACT_APP_IP);
 
 export interface ProfileProps {
 
@@ -54,7 +58,11 @@ export default function Profile() {
 
 	/*async*/
 	function getUserLogin(log: string) {
-		let url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/user/").concat(login);
+		let url = "";
+		if (process.env.REACT_APP_IP == "" || process.env.REACT_APP_IP == undefined)
+			url = "http://localhost:3000/api/user/".concat(login);
+		else 
+			url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/user/").concat(login);
 		/*await*/
 		axios.get(url)
 			.then(res => {

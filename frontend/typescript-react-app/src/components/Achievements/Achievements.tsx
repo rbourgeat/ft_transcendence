@@ -15,7 +15,12 @@ export default function Achievement(props: AchievementsProps) {
 
     /*async*/
     function getAchievements() {
-        let url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/user/achievements/").concat(props.login);
+        let url = "";
+        //modif pour faire fonctionner sur mac
+        if (process.env.REACT_APP_IP == "" || process.env.REACT_APP_IP == undefined)
+            url = "http://".concat("localhost:3000/api/user/achievements/").concat(props.login);
+        else 
+            url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/user/achievements/").concat(props.login);
 
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
         axios.defaults.withCredentials = true;
