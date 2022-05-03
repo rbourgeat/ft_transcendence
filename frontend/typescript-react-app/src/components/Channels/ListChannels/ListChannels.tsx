@@ -34,6 +34,7 @@ export default function ListChannels(props: ListChannelsProps) {
 	const [count, setCount] = React.useState(0);
 
 	function renderListChannels() {
+
 		axios.defaults.withCredentials = true;
 		let url = "";
 		if (process.env.REACT_APP_IP == "" || process.env.REACT_APP_IP == undefined)
@@ -106,6 +107,7 @@ export default function ListChannels(props: ListChannelsProps) {
 		if (arg === "Channels") {
 			props.setIsChan(true);
 			renderListChannels();
+			//props.socket.emit("getChannels", props.login);
 		}
 		else if (arg === "DMs") {
 			props.setIsChan(false);
@@ -244,17 +246,6 @@ export default function ListChannels(props: ListChannelsProps) {
 					<button type="button" className="send--dm" onClick={displayDM} disabled={selectedCat === "DMs" ? true : false}>DM</button>
 					<button type="button" className="display--channels" onClick={displayChannels} disabled={selectedCat === "Channels" ? true : false}>Channels</button>
 				</div>
-				{/* <ToastContainer
-					position="top-right"
-					autoClose={5000}
-					hideProgressBar={false}
-					newestOnTop={false}
-					closeOnClick
-					rtl={false}
-					pauseOnFocusLoss
-					draggable
-					pauseOnHover
-				/> */}
 			</div>
 		</div>
 	);
