@@ -73,6 +73,15 @@ export class ChatGateway implements OnGatewayConnection {
 		this.server.emit('updateParticipants', true);
 	}
 
+	@SubscribeMessage('getChannels')
+	async getChannels(@ConnectedSocket() socket: Socket, @MessageBody() body: string) {
+		const user = await this.userService.getUserByLogin(body);
+		const channels = await this.chatService.getChatsFromUser(user);
+		socket.emit('channels', channels);
+		//this.server.emit('newMessageEvent', true);
+		//this.server.emit('updateParticipants', true);
+	}
+
 	@SubscribeMessage('refresh')
 	async refreshChat(@ConnectedSocket() socket: Socket, @MessageBody() body: string) {
 		console.log(body + 'event refresh');
