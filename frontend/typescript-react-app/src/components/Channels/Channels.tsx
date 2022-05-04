@@ -30,13 +30,10 @@ export default function Channels(props: ChatProps) {
 
 	function getUser() {
 		let url = "";
-		console.log("env var is " + process.env.REACT_APP_IP);
-		if (process.env.REACT_APP_IP == "" || process.env.REACT_APP_IP == undefined) {
+		if (process.env.REACT_APP_IP == "" || process.env.REACT_APP_IP == undefined)
 			url = "http://localhost:3000/api/auth/";
-		}
-		else {
+		else
 			url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/auth/");
-		}
 
 		axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 		axios.defaults.withCredentials = true;

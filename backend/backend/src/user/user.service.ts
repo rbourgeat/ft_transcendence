@@ -49,33 +49,24 @@ export class UserService {
 
 	async updateUser(oldlogin: string, newlogin: string) {
 		const alreadyTaken = await this.userRepository.findOne({ login: newlogin });
-		if (alreadyTaken) {
-			console.log("name already taken");
+		if (alreadyTaken)
 			throw new HttpException('Login already taken', HttpStatus.UNAUTHORIZED);
-		}
-		await this.userRepository.update({ login: oldlogin },
-			{
-				login: newlogin
-			});
+
+		await this.userRepository.update({ login: oldlogin }, { login: newlogin });
 		const updatedUser = await this.userRepository.findOne({ login: newlogin });
 		await this.triggerAchievement42(updatedUser);
 		return updatedUser;
 	}
 
 	async updateStatus(login: string, s: string) {
-		return this.userRepository.update({ login }, {
-			status: s
-		});
+		return this.userRepository.update({ login }, { status: s });
 	}
 
 	async addAvatar(login: string, filename: string) {
-		return this.userRepository.update({ login }, {
-			avatar: filename
-		});
+		return this.userRepository.update({ login }, { avatar: filename });
 	}
 
 	async triggerAchievement42(user: User) {
-		console.log(user);
 		if (user.login == "norminet")
 			this.saveAchievement(user, "42")
 	}
@@ -112,7 +103,6 @@ export class UserService {
 		const user = await this.userRepository.findOne({ email: userData.email });
 		if (user)
 			return console.log("that user already exists");
-		console.log("that user didnt exists, gonna create it");
 		const newUser = await this.usersRepository.createUser42(userData);
 		await this.giveRankOnCreation(newUser);
 		await this.triggerAchievement42(newUser);
@@ -179,7 +169,6 @@ export class UserService {
 				return console.log('You have blocked that user, unblock it first');
 			if (inviteFromYou && (inviteFromYou.status == 'pending' || inviteFromYou.status == 'accepted'))
 				return console.log('You have already sent a invite to that user or you are already friends');
-			//si demande de chaque coté, on update automatiquement la relation a accepted ? //
 		}
 		const newRelation = this.userRelationRepository.create(
 			{
@@ -305,22 +294,10 @@ export class UserService {
 		await this.userRelationRepository.delete({ receiver: target, creator: user });
 	}
 
-	/**
-	 * Unblock target only from your side of the relation only
-	 * @param target
-	 * @param user
-	 */
 	async unblockUser(target: User, user: User) {
 		await this.userRelationRepository.delete({ receiver: target, creator: user, status: 'blocked' });
 	}
 
-	/**
-	 * Add target to your list of blocked users. If initial invite was from you, update it, if
-	 * invite was from target and was accepted/declined remove the existing relation and then block him.
-	 * @param target
-	 * @param creator
-	 * @returns
-	 */
 	async blockUser(target: User, user: User) {
 		if (target.login == user.login)
 			return console.log('It is not possible to block yourself!');
@@ -349,12 +326,6 @@ export class UserService {
 		this.userRelationRepository.save(newRelation);
 	}
 
-	/**
-	 * Get the relation between you and target
-	 * @param target
-	 * @param user
-	 * @returns struct of the relation object
-	 */
 	async getRelation(target: User, user: User) {
 		const invite = await this.userRelationRepository.findOne({
 			where: [

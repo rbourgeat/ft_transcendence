@@ -28,7 +28,6 @@ export class AuthenticationController {
     @ApiOkResponse({ description: 'Your registration suceed' })
     @Post('register')
     async register(@Body() registrationData: RegisterDto) {
-        console.log('went by register in auth controller');
         return this.authenticationService.register(registrationData);
     }
 
@@ -40,13 +39,8 @@ export class AuthenticationController {
     async logIn(@Body() loginDto: LogInDto, @Req() req) { //loginDto not used but mandatory to let know that params needs to be sent
         const { user } = req;
         const accessTokenCookie = this.authenticationService.getCookieWithJwtToken(user.id);
-
-        console.log(user.login);
-        console.log(accessTokenCookie)
         this.userService.updateStatus(user.login, "online");
-
         req.res.setHeader('Set-Cookie', accessTokenCookie);
-        console.log('end of login');
         if (user.isTwoFactorAuthenticationEnabled)
             return user;
         return user;
@@ -57,10 +51,8 @@ export class AuthenticationController {
     @UseGuards(JwtAuthenticationGuard)
     @Post('log-out')
     async logOut(@Res({ passthrough: true }) response: Response, @Req() request: RequestWithUser) {
-
         const { user } = request;
         this.userService.updateStatus(user.login, "offline");
-        console.log('went by logout in auth controller');
         response.setHeader('Set-Cookie', this.authenticationService.getCookieForLogOut());
         return user;
     }

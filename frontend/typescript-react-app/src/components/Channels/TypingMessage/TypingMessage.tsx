@@ -1,9 +1,6 @@
 import './TypingMessage.scss';
-import React, { Component, useState, useEffect } from "react";
-import io from "socket.io-client";
-import SingleMessage from "../ListDiscussions/SingleMessage/SingleMessage";
+import React, { useEffect } from "react";
 import axios from 'axios';
-// import { env } from 'process';
 import ToastAlerts from '../../Utils/ToastAlerts/ToastAlerts';
 
 let url_begin = "";
@@ -27,8 +24,6 @@ export interface TypingProps {
 export interface TypingState {
     text?: string
 }
-
-let timestamp;
 
 const message = document.getElementById('message');
 const messages = document.getElementById('messages');

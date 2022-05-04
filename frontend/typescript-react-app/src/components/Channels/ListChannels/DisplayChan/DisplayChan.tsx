@@ -24,38 +24,39 @@ export default function DisplayChan(props: DisplayChanProps) {
 	const calledOnce = React.useRef(false);
 	const [isSelected, setIsSelected] = React.useState(false);
 	const [load, setLoad] = React.useState(false);
-	const [isDM, setIsDM] = React.useState(false);
+	//const [isDM, setIsDM] = React.useState(false);
 	const [receiver, setReceiver] = React.useState("");
 
 	useEffect(() => {
 		//setLoad(true);
-		setIsDM(false);
+		//setIsDM(false);
 		//setReceiver(null)
-		console.log("props direct is " + props.direct);
+		//console.log("props direct is " + props.direct);
 		if (props.direct === true) {
 			//console.log(JSON.stringify(props.channel.participates));
 			if (props.channel.participates[0].login == props.login && props.login != null) {
 				props.setActiveName(props.channel.participates[1].login);
 				setReceiver(props.channel.participates[1].login)
-				console.log("here 1");
+				console.log("in direct");
 			}
 			else if (props.login != "null" && props.channel.participates[0].login != null) {
 				props.setActiveName(props.channel.participates[0].login);
 				setReceiver(props.channel.participates[0].login);
+				console.log("receiver is " + receiver);
 				console.log("here 2");
 			}
-			else 
-			{
+			else {
 				//Test avec un dummy
 				console.log("here 3");
+				console.log("receiver is " + receiver);
 				setReceiver("dummy");
 			}
-			setIsDM(true);
+			//setIsDM(true);
 			//setLoad(true);
 		}
 		//setIsSelected("true");
 		setLoad(true);
-		console.log("receiver is " + receiver);
+		//console.log("receiver is " + receiver);
 		/*
 				console.log("enter in display chan with:" + props.channel[1].name)
 				if (calledOnce.current) {
@@ -93,15 +94,12 @@ export default function DisplayChan(props: DisplayChanProps) {
 	function selectChan() {
 
 		if (load === true) {
-
 			let selected = document.getElementsByClassName("chan-title_selected");
-
 			for (let i = 0; i < selected.length; i++) {
 				selected[i].className = 'chan-title_notselected';
 			}
 
 			setIsSelected(true);
-
 			props.setActiveID(props.channel.id);
 			props.setActiveName(props.channel.name);
 
@@ -120,7 +118,7 @@ export default function DisplayChan(props: DisplayChanProps) {
 				props.setIsChan(false);
 			else
 				props.setIsChan(true);
-			//props.setHide(false);
+			props.setHide(false);
 		}
 	}
 
@@ -129,8 +127,8 @@ export default function DisplayChan(props: DisplayChanProps) {
 			<div className="display_chan" id={"display_chan".concat("_" + props.channel.name)}>
 				{load === true ?
 					<>
-						<button 
-							type="button" id={"chan-title_".concat(props.channel.id)} 
+						<button
+							type="button" id={"chan-title_".concat(props.channel.id)}
 							className={isSelected === true ? "chan-title_selected" : "chan-title_notselected"}
 							onClick={() => { selectChan() }}>{props.direct == false ? props.channel.name : receiver}</button>
 					</> : ""}

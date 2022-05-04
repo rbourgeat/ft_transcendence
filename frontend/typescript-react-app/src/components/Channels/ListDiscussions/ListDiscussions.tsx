@@ -1,11 +1,7 @@
 import './ListDiscussions.scss';
-import SingleMessage from "./SingleMessage/SingleMessage";
-import React, { Component, useState, useEffect } from "react";
-import myAxios from "../../Utils/Axios/Axios";
-import { io } from "socket.io-client";
+import React, { useEffect } from "react";
 import axios from 'axios';
 import TypingMessage from "../TypingMessage/TypingMessage";
-import MyAxios from '../../Utils/Axios/Axios';
 
 let url_begin = "";
 if (process.env.REACT_APP_IP == "" || process.env.REACT_APP_IP == undefined)
@@ -30,27 +26,19 @@ export default function ListDiscussions(props: ListDiscussionsProps) {
 	const [oldMessages, setOldMessages] = React.useState([]);
 
 	useEffect(() => {
-
 		setsockChan(props.activeName);
 		props.socket.emit('requestAllMessages', props.activeID);
 		props.socket.on("sendAllMessages", (messagesUpdated) => {
-			if (messagesUpdated) {
+			if (messagesUpdated)
 				setMessages(messagesUpdated);
-				//console.log("refres h mssg")
-			}
-			else {
-				console.log(" refresh mmsg set as null ;(")
+			else
 				setMessages(null)
-			}
-
 		});
 	}, [props.activeID]);
 
 	props.socket.on("refreshMessages", (...args) => {
-
 		let b = args[1].split('_');
 		if (b[0] == "direct") {
-			//console.log("we need to grep name of user based on the id");
 			props.socket.emit('getUsersLogins', b[1] + ":" + b[2]);
 			props.socket.on("receiveLogins", (...args2) => {
 				if (args2[1] == props.activeName) {
@@ -61,7 +49,6 @@ export default function ListDiscussions(props: ListDiscussionsProps) {
 					setMessages(args[0]);
 					setsockChan(args2[0]);
 				}
-				console.log("messages are refreshed");
 				return;
 			})
 		}
@@ -70,22 +57,16 @@ export default function ListDiscussions(props: ListDiscussionsProps) {
 		if (args[1] == props.activeName && (props.activeName != "" || props.activeName != undefined || props.activeName != null)) {
 			setMessages(args[0]);
 			setsockChan(args[1]);
-			//console.log(sockChan);
-			//console.log("messages are refreshed");
 		}
 
 	});
 
 	props.socket.on('isBan', (...args) => {
-		if (props.login == args[0] && args[1] == true) {
+		if (props.login == args[0] && args[1] == true)
 			props.setIsBanned(true)
-			console.log("set is ban to true")
-		}
-		else if (props.login == args[0] && args[1] == false) {
+		else if (props.login == args[0] && args[1] == false)
 			props.setIsBanned(false)
-			console.log("set is ban to false")
-		}
-	})
+	});
 
 	function checkisBanned() {
 		if (props.activeID != "" && props.activeID != undefined && props.activeID != null) {
@@ -106,31 +87,41 @@ export default function ListDiscussions(props: ListDiscussionsProps) {
 		}
 	}
 
-	useEffect(() => {
-		checkisBanned();
-	}, [props.activeID]);
+	//TODO BLOCK DM IF U BLOCKED USER
+	const [isBlocked, setIsBlocked] = React.useState(false);
 
-	function renderImage(login: string, isUserProfile: boolean) {
-		let ax = new MyAxios(null);
-		let log42 = localStorage.getItem("login42");
-		let haschanged = false;
-		if (login != log42)
-			haschanged = true;
-		if (isUserProfile == false)
-			haschanged = false;
-		if (log42 != "" && log42 != null && log42 != undefined)
-			return (ax.render_avatar(login, log42, haschanged));
-		return (ax.render_avatar(login, "", haschanged));
+	function checkisBlocked() {
+		if (props.activeID != "" && props.activeID != undefined && props.activeID != null) {
+			let url = url_begin.concat(":3000/api/user/relation/me/allBlocked");
+			axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+			axios.defaults.withCredentials = true;
+			axios.get(url)
+				.then(res => {
+					/*
+					*/
+				})
+				.catch((error) => {
+				})
+		}
 	}
+
+	useEffect(() => {
+		console.log(props.activeName + ": activename atm")
+		checkisBanned();
+		checkisBlocked();
+	}, [props.activeID]);
 
 	return (
 		<div id="ListDiscussions" className="col-md-5">
 			<div className="title_chat_div">
 				{
 					props.hide === false ?
-						<p className="chat--title">{props.activeName.startsWith("direct") ? "DM" : props.activeName}</p>
+						props.activeName ?
+							<p className="chat--title">{props.activeName.startsWith("direct") ? "DM" : props.activeName}</p>
+							:
+							null
 						:
-						<p className="chat--title"></p>
+						null
 				}
 			</div>
 			<div className="messages-zone">

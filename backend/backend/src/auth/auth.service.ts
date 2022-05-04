@@ -29,14 +29,12 @@ export class AuthService {
     }
 
     public async register(registrationData: RegisterDto) {
-        console.log('went by register in auth service');
         //const hashedPassword = await bcrypt.hash(registrationData.password, 10);
         //const hashedPassword = await argon2.hash(registrationData.password);
         const hashedPassword = registrationData.password;
         try {
             const createdUser = await this.usersService.create({ ...registrationData, password: hashedPassword });
             createdUser.password = undefined;
-            console.log('SUCESS: new user registered');
             return createdUser;
         } catch (error) {
             if (error?.code === PostgresErrorCode.UniqueViolation) {
@@ -48,7 +46,6 @@ export class AuthService {
 
     //Classic
     public getCookieWithJwtToken(userId: number) {
-        console.log('went by getcookiewithjwttoken in auth service');
         const payload: TokenPayload = { userId };
         const token = this.jwtService.sign(payload);
         return `Authentication=${token}; HttpOnly; Path=/; Max-Age=${process.env.JWT_EXPIRATION_TIME}`;
@@ -65,12 +62,10 @@ export class AuthService {
     }
 
     public getCookieForLogOut() {
-        console.log('went by getcookieforlogout in auth service');
         return `Authentication=; HttpOnly; Path=/; Max-Age=0`;
     }
 
     public async getAuthenticatedUser(email: string, plainTextPassword: string) {
-        console.log('went by getcauthenticateduser in auth service');
         try {
             const user = await this.usersService.getByEmail(email);
             await this.verifyPassword(plainTextPassword, user.password);
@@ -81,7 +76,6 @@ export class AuthService {
     }
 
     private async verifyPassword(plainTextPassword: string, hashedPassword: string) {
-        console.log('went by verifypassword in auth service');
         //const isPasswordMatching = await bcrypt.compare(
         /*
         const isPasswordMatching = await argon2.verify(

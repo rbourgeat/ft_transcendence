@@ -12,7 +12,6 @@ export class TwoFactorAuthenticationService {
   ) { }
 
   public async generateTwoFactorAuthenticationSecret(user: User) {
-    console.log('generate 2FA secret')
     const secret = authenticator.generateSecret();
     const otpauthUrl = authenticator.keyuri(user.email, process.env.TWO_FACTOR_AUTHENTICATION_APP_NAME, secret);
     await this.userService.setTwoFactorAuthenticationSecret(secret, user.id);
@@ -25,7 +24,6 @@ export class TwoFactorAuthenticationService {
   }
 
   public isTwoFactorAuthenticationCodeValid(twoFactorAuthenticationCode: string, user: User) {
-    console.log('check if 2fa code is valid');
     return authenticator.verify({ token: twoFactorAuthenticationCode, secret: user.twoFactorAuthenticationSecret })
   }
 }

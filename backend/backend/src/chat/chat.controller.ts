@@ -48,7 +48,6 @@ export class ChatController {
     @UseGuards(JwtAuthenticationGuard)
     @Post('join')
     async joinChat(@Body() chat: CreateChatDto, @Req() req: RequestWithUser) {
-        console.log(req.user.login + ' tries to join the chat:' + chat.name);
         return this.chatService.joinChat(chat, req.user);
     }
 
@@ -93,7 +92,6 @@ export class ChatController {
     @ApiConflictResponse({ description: 'Fail' })
     @Get(':idChat/messages')
     async getMessages(@Param('idChat') id: number) {
-        console.log('Retrieve message history from chat: ' + id)
         return this.chatService.getMessagesById(id);
     }
 
@@ -104,7 +102,6 @@ export class ChatController {
     @UseGuards(JwtAuthenticationGuard)
     @Post('setAdmin')
     async setAdmin(@Body() chat: ChatDto, @Request() req) {
-        console.log(req.user.login + ' set admin ' + chat.user + ' to chat ' + chat.idChat)
         //return this.chatService.setAdmin(chat.idChat, chat.user, req.user);
     }
 
@@ -114,7 +111,6 @@ export class ChatController {
     @UseGuards(JwtAuthenticationGuard)
     @Post('ban')
     async ban(@Body() chat: ChatDto, @Request() req) {
-        console.log(req.user.login + ' ban ' + chat.user + ' in chat' + chat.idChat)
         //return this.chatService.ban(chat.idChat, chat.user, req.user, chat.time);
     }
 
@@ -124,7 +120,6 @@ export class ChatController {
     @UseGuards(JwtAuthenticationGuard)
     @Post('unban')
     async unban(@Body() chat: ChatDto, @Request() req) {
-        console.log(req.user.login + ' unban ' + chat.user + ' in chat' + chat.idChat)
         //return this.chatService.active(chat.idChat, chat.user, req.user);
     }
 
@@ -134,7 +129,6 @@ export class ChatController {
     @UseGuards(JwtAuthenticationGuard)
     @Post('mute')
     async mute(@Body() chat: ChatDto, @Request() req) {
-        console.log(req.user.login + ' mute ' + chat.user + ' in chat' + chat.idChat)
         // return this.chatService.mute(chat.idChat, chat.user, req.user, chat.time);
     }
 
@@ -144,7 +138,6 @@ export class ChatController {
     @UseGuards(JwtAuthenticationGuard)
     @Post('unmute')
     async unmute(@Body() chat: ChatDto, @Request() req) {
-        console.log(req.user + ' unmute ' + chat.user + ' in chat' + chat.idChat)
         // return this.chatService.active(chat.idChat, chat.user, req.user);
     }
 
@@ -153,7 +146,6 @@ export class ChatController {
     @ApiConflictResponse({ description: 'Chat password error' })
     @Post('password')
     async password(@Body() chat: ChatDto, @Req() req: RequestWithUser) {
-        console.log(' set password to chat ' + chat.idChat + ' to:' + chat.password)
         return this.chatService.password(chat.idChat, req.user, chat.password);
     }
 
@@ -162,7 +154,6 @@ export class ChatController {
     @ApiConflictResponse({ description: 'Chat can\'t being private' })
     @Post('setPrivate')
     async setPrivate(@Body() chat: ChatDto, @Req() req: RequestWithUser) {
-        console.log(' set chat ' + chat.idChat + ' to private')
         return this.chatService.setPrivate(chat.idChat, req.user);
     }
 
@@ -171,7 +162,6 @@ export class ChatController {
     @ApiConflictResponse({ description: 'Chat can\'t being public' })
     @Post('setPublic')
     async setPublic(@Body() chat: ChatDto, @Req() req: RequestWithUser) {
-        console.log(' set chat ' + chat.idChat + ' to public')
         return this.chatService.setPublic(chat.idChat, req.user);
     }
 

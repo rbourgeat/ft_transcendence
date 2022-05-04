@@ -130,8 +130,6 @@ export default function ListParticipant(props: ParticipantProps) {
 			let title = document.getElementsByClassName("chan-title_notselected")[0].innerHTML;
 			document.getElementsByClassName("chan-title_notselected")[0].className = 'chan-title_selected';
 		}
-		else
-			document.getElementById("dm_chan_".concat(props.activeName)).remove();
 		props.setHide(true);
 	}
 
@@ -241,7 +239,7 @@ ax.post_relation_block(selectedUser, "chat");
 			<div className="buttons_div">
 				<div className="row">
 					<div className="col">
-						{props.isChan === true/* && props.hide === false*/ && props.isBanned === false && props.activeID != "" && props.activeName != "" ? <button id="leave--button" className="btn" onClick={leaveChannel}>Leave channel</button> : null}
+						{props.isChan === true && props.hide === false && props.isBanned === false && props.activeID != "" && props.activeName != "" ? <button id="leave--button" className="btn" onClick={leaveChannel}>Leave channel</button> : null}
 						{currentUserAdmin === true && props.hasPass ?
 							<button id="pass--button" className="btn" onClick={handleShow}>Update password</button>
 							:

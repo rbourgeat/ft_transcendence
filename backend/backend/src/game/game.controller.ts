@@ -20,15 +20,7 @@ export class GameController {
     @ApiOperation({ summary: 'Returns game history specific user [jwt-protected]' })
     @UseGuards(JwtAuthenticationGuard)
     @Get(':login/history')
-    getGames(@Param('login') login: string, @Request() reqq) {
-        console.log('get game history of user' + login);
+    getGames(@Param('login') login: string, @Request() req) {
         return this.gameService.getGames(login);
-    }
-
-    @ApiOperation({ summary: 'FOR TEST ONLY, TO DELETE LATE' })
-    @UseGuards(JwtAuthenticationGuard)
-    @Post('CreateCustomResult:login1/:login2')
-    createGame(@Param('login1') login: string, @Param('login2') login2: string, @Request() req) {
-        return this.gameService.createGame(login, login2, 5, 2, 0);
     }
 }
