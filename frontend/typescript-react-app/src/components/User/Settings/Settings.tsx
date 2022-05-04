@@ -138,7 +138,6 @@ export default function Settings(props: SettingsProps) {
 		}
 	}
 
-<<<<<<< HEAD
 	function selectColor() {
 		//console.log("status:" + status);
 		if (status == "offline")
@@ -150,8 +149,6 @@ export default function Settings(props: SettingsProps) {
 		//console.log("final color:" + color);
 	}
 
-=======
->>>>>>> b50f5e92f5b2d81371340410ac3687f964c64dd1
 	function getUser() {
 		let url = url_begin.concat(":3000/api/auth/");
 
@@ -162,10 +159,6 @@ export default function Settings(props: SettingsProps) {
 		axios.defaults.withCredentials = true;
 
 		let username = "";
-<<<<<<< HEAD
-=======
-
->>>>>>> b50f5e92f5b2d81371340410ac3687f964c64dd1
 		axios.get(url)
 			.then(res => {
 				console.log("settings status:" + res.data.status);
