@@ -39,6 +39,11 @@ function Nav() {
 
 	}
 
+	function funcGame() {
+		// location.reload();
+		window.top.location = url_begin.concat(":3030/game");
+	}
+
 	return (
 		<div id="nav">
 			<nav className="navbar navbar-expand-lg" /*navbar-expand-lg bg-dark*/ id="nav-bar">
@@ -48,9 +53,9 @@ function Nav() {
 				</button>
 				<div className="collapse navbar-collapse in" /*id="navbarNav"*/>
 					<ul className="navbar-nav d-flex flex-row">
-						<li className="nav-item">
+						<li onClick={funcGame} className="nav-item">
 							<Link to="/game" className="nav-link">
-								<div className='nav-link-text'><p className="navbar--title">Game</p></div>
+								<div  className='nav-link-text'><p className="navbar--title">Game</p></div>
 							</Link>
 						</li>
 						<li className="nav-item">
