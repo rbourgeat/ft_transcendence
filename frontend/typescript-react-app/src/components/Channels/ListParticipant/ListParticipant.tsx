@@ -3,9 +3,9 @@ import React from "react";
 import Participant from './Participant/Participant';
 import axios from "axios";
 import { ToastContainer } from 'react-toastify';
-import ToastAlerts from '../../Utils/ToastAlerts/ToastAlerts';
 import MyAxios from '../../Utils/Axios/Axios';
 import { Button, Modal, Form } from 'react-bootstrap';
+import ToastAlerts from '../../Utils/ToastAlerts/ToastAlerts';
 
 let url_begin = "";
 if (process.env.REACT_APP_IP == "" || process.env.REACT_APP_IP == undefined)
@@ -99,8 +99,6 @@ export default function ListParticipant(props: ParticipantProps) {
 				return leaveChannel();
 			case 'profile':
 				return seeProfile();
-			case 'dm':
-				return sendDM();
 		}
 	}
 
@@ -138,13 +136,12 @@ export default function ListParticipant(props: ParticipantProps) {
 	}
 
 	function blockUser() {
-		let ax = new MyAxios(null);
-		ax.post_relation_block(selectedUser, "chat");
-	}
+		/*
+let ax = new MyAxios(null);
+ax.post_relation_block(selectedUser, "chat");
+*/
 
-	function sendDM() {
-		let toast = new ToastAlerts(null);
-		toast.notifyDanger("A reprendre.");
+		props.socket.emit('block', { user: selectedUser, me: props.login, chatName: props.activeName });
 	}
 
 	function inviteToPlay() {
@@ -212,7 +209,7 @@ export default function ListParticipant(props: ParticipantProps) {
 
 	return (
 		<div id="ListParticipant" className="col-md-3">
-			<h2 id="participant--title">Members</h2>
+			<h2 id="participant--title">{props.activeID != "" && props.activeName != "" ? "Members" : null}</h2>
 			<div id="sub--div">
 				{
 					<div id="participants--div">
@@ -244,7 +241,7 @@ export default function ListParticipant(props: ParticipantProps) {
 			<div className="buttons_div">
 				<div className="row">
 					<div className="col">
-						{props.isChan === true/* && props.hide === false*/ && props.isBanned === false ? <button id="leave--button" className="btn" onClick={leaveChannel}>Leave channel</button> : null}
+						{props.isChan === true/* && props.hide === false*/ && props.isBanned === false && props.activeID != "" && props.activeName != "" ? <button id="leave--button" className="btn" onClick={leaveChannel}>Leave channel</button> : null}
 						{currentUserAdmin === true && props.hasPass ?
 							<button id="pass--button" className="btn" onClick={handleShow}>Update password</button>
 							:

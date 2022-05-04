@@ -3,7 +3,7 @@ import { Server, Socket } from 'socket.io';
 import { ChatService } from './chat.service';
 import { UserService } from 'src/user/user.service';
 import { Logger } from "@nestjs/common";
-import { AdminDto, BanDto, CreateChatDto, LeaveDto, MuteDto } from './dto/chat.dto';
+import { AdminDto, BanDto, BlockDto, CreateChatDto, LeaveDto, MuteDto } from './dto/chat.dto';
 
 const clients = [];
 
@@ -39,7 +39,7 @@ export class ChatGateway implements OnGatewayConnection {
 		this.server.emit("updateStatus", b[0], b[1]);
 	}
 
-		@SubscribeMessage('getUsersLogins')
+	@SubscribeMessage('getUsersLogins')
 	async getLogins(@ConnectedSocket() socket: Socket, @MessageBody() body: string) {
 		const b = body.split(':');
 		//console.log("www:" + body);
@@ -54,27 +54,25 @@ export class ChatGateway implements OnGatewayConnection {
 	@SubscribeMessage('message')
 	async messageMessage(@ConnectedSocket() socket: Socket, @MessageBody() body: string) {
 
-		console.log(body + ' = body in event message');
+		console.log(body + ' =  body in event message');
 		let b = body.split(':');
 		const author = await this.userService.getUserByLogin(b[0]);
 
 		console.log(b[4] + ' = chat or dm');
 
-		if(b[4] == "chat")
-		{
-		const message = await this.chatService.saveChatMessage(b[1], b[2], author);
-		const messages = await this.chatService.getMessagesbyName(b[1]);
-		this.server.emit('refreshMessages', messages, b[1]);
+		if (b[4] == "chat") {
+			const message = await this.chatService.saveChatMessage(b[1], b[2], author);
+			const messages = await this.chatService.getMessagesbyName(b[1]);
+			this.server.emit('refreshMessages', messages, b[1]);
 		}
-		else if(b[4] == "dm")
-		{
-		   console.log(b[1] + ' = check dm');
-		   var y: number = +b[3];
-		   console.log("dm id:" + y);
-           const dm = await this.chatService.getChatById(y);
-		   const message = await this.chatService.saveChatMessage(dm.name, b[2], author);
-		   const messages = await this.chatService.getMessagesbyName(dm.name);
-		   	this.server.emit('refreshMessages', messages, dm.name);
+		else if (b[4] == "dm") {
+			console.log(b[1] + ' = check dm');
+			var y: number = +b[3];
+			console.log("dm id:" + y);
+			const dm = await this.chatService.getChatById(y);
+			const message = await this.chatService.saveChatMessage(dm.name, b[2], author);
+			const messages = await this.chatService.getMessagesbyName(dm.name);
+			this.server.emit('refreshMessages', messages, dm.name);
 		}
 	}
 
@@ -121,6 +119,21 @@ export class ChatGateway implements OnGatewayConnection {
 		const chat = await this.chatService.getChatByName(body.chatName);
 		await this.chatService.quitChat(chat.id, user);
 		this.refreshChat(socket, body.chatName);
+	}
+
+	@SubscribeMessage('block')
+	async blockUser(@ConnectedSocket() socket: Socket, @MessageBody() body: BlockDto) {
+		console.log(body.user + ' event block');
+		const target = await this.userService.getUserByLogin(body.user);
+		const me = await this.userService.getUserByLogin(body.me);
+		const chat = await this.chatService.getChatByName(body.chatName);
+		await this.userService.blockUser(target, me);
+
+		this.requestAllMessagesbyName(socket, chat.id);
+		//const messages = await this.chatService.getMessagesbyId2(body.chatName);
+		//this.server.emit('refreshMessages', messages, body.chatName);
+		//this.refreshChat(socket, body.chatName);
+		//this.updateChat(socket, null);
 	}
 
 	@SubscribeMessage('mute')

@@ -33,7 +33,7 @@ export class UserService {
 		throw new HttpException('User not found', HttpStatus.NOT_FOUND);
 	}
 
-		async getUserById(id: number) {
+	async getUserById(id: number) {
 		const user = await this.userRepository.findOne({ id: id });
 		if (user)
 			return user;
@@ -332,7 +332,7 @@ export class UserService {
 				return console.log('update the existing relation. you blocked the targeted user invite from you');
 			}
 			else if (inviteFromYou && inviteFromYou.status == 'blocked')
-				return console.log('You have already blocked that user');
+				throw new HttpException('You have already blocked that user', HttpStatus.CONFLICT);
 
 			const inviteFromHim = await this.userRelationRepository.findOne({ creator: target, receiver: user });
 			if (inviteFromHim && (inviteFromHim.status != 'blocked'))

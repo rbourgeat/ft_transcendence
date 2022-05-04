@@ -155,9 +155,11 @@ export class ChatService {
 	}
 
 	async createDirectMessage(user1: User, user2: User) {
-		if (await this.getChatByName("direct_" + user1.id + "_" + user2.id)) {
+		if (await this.getChatByName("direct_" + user1.id + "_" + user2.id) ||
+			await this.getChatByName("direct_" + user2.id + "_" + user1.id)) {
 			console.log('error: conv already exist');
-			throw new BadRequestException('Validation failed (files expected)');
+			//throw new BadRequestException('Validation failed (files expected)');
+			throw new HttpException('You can\'t start a conversation with that user', HttpStatus.CONFLICT);
 		}
 		if (await this.userService.hasBlockedRelation(user1, user2)) {
 			throw new HttpException('You can\'t start a conversation with ' + user2.login, HttpStatus.BAD_REQUEST);

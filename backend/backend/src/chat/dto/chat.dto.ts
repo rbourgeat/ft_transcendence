@@ -71,6 +71,18 @@ export class LeaveDto {
     chatName: string;
 }
 
+@ApiTags('Chats')
+export class BlockDto {
+    @ApiProperty()
+    user: string;
+
+    @ApiProperty()
+    me: string;
+
+    @ApiProperty()
+    chatName: string;
+}
+
 @ApiTags('Chats') //Create a category on swagger
 export class ChatDto {
     @IsNotEmpty()

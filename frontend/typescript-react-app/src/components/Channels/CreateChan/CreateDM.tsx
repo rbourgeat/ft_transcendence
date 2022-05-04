@@ -50,8 +50,8 @@ export default function CreateDM(props: CreateDMProps) {
 				handleClose();
 			})
 			.catch((error) => {
-				//console.log(error);
-				//toast.notifyDanger("Error while creating conversation with " + receiver);
+				console.log(error.message);
+				toast.notifyDanger("Error while creating conversation with " + receiver);
 				handleClose();
 				setSuccessfull(false);
 			})

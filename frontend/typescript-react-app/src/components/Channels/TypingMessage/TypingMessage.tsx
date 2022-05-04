@@ -69,10 +69,10 @@ export default function TypingMessage(props: TypingProps) {
     function sendMessage(message: string) {
         if (message !== "") {
             updateText("");
-            if(props.isChan === false)
-              props.socket.emit('message', props.login + ":" + props.channel + ":" + message + ":" + props.chanId + ":dm");
+            if (props.isChan === false)
+                props.socket.emit('message', props.login + ":" + props.channel + ":" + message + ":" + props.chanId + ":dm");
             else
-              props.socket.emit('message', props.login + ":" + props.channel + ":" + message + ":" + props.chanId + ":chat");
+                props.socket.emit('message', props.login + ":" + props.channel + ":" + message + ":" + props.chanId + ":chat");
             console.log("send message with" + props.login + "to the channel " + props.channel + ", content:" + message);
 
         }
@@ -93,23 +93,26 @@ export default function TypingMessage(props: TypingProps) {
         <div id="typing--div">
             <section className="send-message-form">
                 {
-                    isMuted === true ?
-                        <>
-                            You are muted in that channel
-                        </>
+                    props.activeID != "" && props.activeName != "" ?
+                        isMuted === true ?
+                            <>
+                                You are muted in that channel
+                            </>
+                            :
+                            <>
+                                <input
+                                    placeholder="Your message..."
+                                    value={text}
+                                    className="form-control typing--input"
+                                    id="message-typed"
+                                    onChange={e => updateText(e.target.value)}
+                                />
+                                <button type="submit" className="btn btn-outline-dark" onClick={() => sendMessage(text)} >
+                                    Send
+                                </button>
+                            </>
                         :
-                        <>
-                            <input
-                                placeholder="Your message..."
-                                value={text}
-                                className="form-control typing--input"
-                                id="message-typed"
-                                onChange={e => updateText(e.target.value)}
-                            />
-                            <button type="submit" className="btn btn-outline-dark" onClick={() => sendMessage(text)} >
-                                Send
-                            </button>
-                        </>
+                        ""
                 }
             </section>
         </div >
