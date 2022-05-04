@@ -36,7 +36,7 @@ export default function ListDiscussions(props: ListDiscussionsProps) {
 		props.socket.on("sendAllMessages", (messagesUpdated) => {
 			if (messagesUpdated) {
 				setMessages(messagesUpdated);
-				console.log("refresh mssg")
+				console.log("refres h mssg")
 			}
 			else {
 				console.log(" refresh mmsg set as null ;(")
@@ -47,12 +47,34 @@ export default function ListDiscussions(props: ListDiscussionsProps) {
 	}, [props.activeID]);
 
 	props.socket.on("refreshMessages", (...args) => {
+
+		let b = args[1].split('_');
+		if(b[0] == "direct")
+		{
+			//console.log("we need to grep name of user based on the id");
+            props.socket.emit('getUsersLogins', b[1] + ":" + b[2]);
+			props.socket.on("receiveLogins", (...args2) => {
+				if(args2[1] == props.activeName)
+				{
+					setMessages(args[0]);
+			        setsockChan(args2[1]);
+				}
+				else if(args2[0] == props.activeName)
+				{
+					setMessages(args[0]);
+			        setsockChan(args2[0]);
+				}
+                console.log("messages are refreshed");
+				return ;
+			})
+		}
+		//console.log("gonna refresh the chat (backname) of:" + args[1] + ", but name in front is:" + props.activeName)
 		setOldMessages(messages);
 		if (args[1] == props.activeName && (props.activeName != "" || props.activeName != undefined || props.activeName != null)) {
 			setMessages(args[0]);
 			setsockChan(args[1]);
-			console.log(sockChan);
-			console.log("messages are refreshed");
+			//console.log(sockChan);
+			//console.log("messages are refreshed");
 		}
 
 	});
@@ -160,6 +182,7 @@ export default function ListDiscussions(props: ListDiscussionsProps) {
 							channel={props.activeName}
 							id={props.activeID}
 							activeName={props.activeName}
+							isChan={props.isChan}
 							chanId={props.activeID}
 						/>
 			}
