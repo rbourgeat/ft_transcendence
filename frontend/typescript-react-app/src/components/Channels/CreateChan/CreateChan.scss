@@ -1,0 +1,18 @@
+@use "../../../variables";
+
+#createchan-button {
+	font-weight: 800 !important;
+	width: 85% !important;
+	border-radius: variables.$border-radius-big !important;
+	margin: 2px !important;
+	background-color: rgb(34, 102, 102);
+
+	&:hover {
+		background-color: rgb(46, 133, 133);
+	}
+}
+
+#create_title {
+	font-family: variables.$big-font;
+	font-size: 14px;
+}
