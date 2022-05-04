@@ -73,3 +73,9 @@
 	border: 0.1rem solid rgb(9, 194, 191) !important;
 	background-color: rgb(9, 194, 191) !important;
 }
+
+.navbar-collapse.collapse {
+	display: block !important;
+	//flex-direction: row !important;
+	//flex-wrap: nowrap !important;
+}
