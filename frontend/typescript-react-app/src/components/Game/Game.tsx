@@ -4,7 +4,6 @@ import useWindowDimensions from "./useWindowDimensions"
 import Header from "../Header/Header";
 import Nav from "../Nav/Nav";
 import Footer from "../Footer/Footer";
-import GameRules from "../GameRules/GameRules";
 import io from "socket.io-client";
 import axios from "axios";
 import { Form } from 'react-bootstrap'

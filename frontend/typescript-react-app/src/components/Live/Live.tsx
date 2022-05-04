@@ -3,11 +3,9 @@ import './Live.scss';
 import Header from "../Header/Header";
 import Nav from "../Nav/Nav";
 import Footer from "../Footer/Footer";
-import GameRules from "../GameRules/GameRules";
 import io from "socket.io-client";
 import axios from "axios";
 import { Form } from 'react-bootstrap'
-import LiveButton from './LiveButton/LiveButton';
 
 var joueurs = [];
 var adversaires = [];
