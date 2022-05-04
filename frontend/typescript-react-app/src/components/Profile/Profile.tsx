@@ -328,12 +328,12 @@ export default function Profile() {
 
 									</div>
 									: <>
-										<h1><span id="oops">Oops...</span></h1>
+										{/*<h1><span id="oops">Oops...</span></h1>
 										<h2><span id="page-not-found">Page not found</span></h2>
 										<button type="button" className="btn btn-outline-dark"
 											onClick={(e) => { window.top.location = url_begin.concat(":3030/game") }
 											}
-										>Go to game</button>
+										>Go to game</button>*/}
 									</>
 								}
 							</div>

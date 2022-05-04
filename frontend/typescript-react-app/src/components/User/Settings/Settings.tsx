@@ -34,7 +34,7 @@ export default function Settings(props: SettingsProps) {
 
 	//status, realtime variable (a reprendre avec les sockets)
 	const [status, setStatus] = React.useState("online");
-	const [color, setColor] = React.useState("grey");
+	const [color, setColor] = React.useState("green");
 
 	//MODALS
 	const [show, setShow] = useState(false);
