@@ -11,7 +11,7 @@ export interface CreateChanProps {
 	handleshow?: any,
 	setExited?: any,
 	setUpdate?: any,
-	exited?: any,
+	exited?: boolean,
 	setHasPass?: any
 }
 export default function CreateChan(props: CreateChanProps) {
@@ -41,7 +41,7 @@ export default function CreateChan(props: CreateChanProps) {
 		let url = "";
 		if (process.env.REACT_APP_IP == "" || process.env.REACT_APP_IP == undefined)
 			url = "http://localhost:3000/api/chat/".concat(chanName).concat("/exist");
-		else 
+		else
 			url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/chat/").concat(chanName).concat("/exist");
 
 		let toast = new ToastAlerts(null);
@@ -71,7 +71,7 @@ export default function CreateChan(props: CreateChanProps) {
 
 						if (process.env.REACT_APP_IP == "" || process.env.REACT_APP_IP == undefined)
 							url = "http://localhost:3000/api/chat/new";
-						else 
+						else
 							url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/chat/new");
 
 						let scope: boolean;

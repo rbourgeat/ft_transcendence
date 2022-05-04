@@ -31,30 +31,28 @@ export default function Channels(props: ChatProps) {
 	function getUser() {
 		let url = "";
 		console.log("env var is " + process.env.REACT_APP_IP);
-		if (process.env.REACT_APP_IP == "" || process.env.REACT_APP_IP == undefined)
-		{
+		if (process.env.REACT_APP_IP == "" || process.env.REACT_APP_IP == undefined) {
 			url = "http://localhost:3000/api/auth/";
 			console.log("first condition !");
 		}
-		else
-		{
+		else {
 			url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/auth/");
 			console.log("second condition !");
 		}
-			
+
 		console.log("called here !");
 		axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 		axios.defaults.withCredentials = true;
 		/*await*/
 
 		console.log("url is " + url);
-		
+
 		axios.get(url)
 			.then(res => {
 				setUsername(res.data.login);
 				if (process.env.REACT_APP_IP != undefined && process.env.REACT_APP_IP != "")
 					setSocket(io("http://".concat(process.env.REACT_APP_IP).concat(":3000/chat"), { query: { username: username } }))
-				else 
+				else
 					setSocket(io("http://".concat("localhost").concat(":3000/chat"), { query: { username: username } }))
 			})
 			.catch((err) => {
@@ -82,6 +80,8 @@ export default function Channels(props: ChatProps) {
 							setActiveName={setActiveName}
 							setHide={setHide}
 							setIsBanned={setIsBanned}
+							isChan={isChan}
+							activeName={activeName}
 						/>
 						: ""}
 					{load === true ?

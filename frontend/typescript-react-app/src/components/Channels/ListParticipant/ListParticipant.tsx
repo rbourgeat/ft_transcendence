@@ -52,6 +52,8 @@ export default function ListParticipant(props: ParticipantProps) {
 	const [sockChan, setsockChan] = React.useState(props.activeName);
 
 	React.useEffect(() => {
+
+		//console.log("isChan ?:" + props.isChan + ", isBanned:" + props.isBanned)
 		setsockChan(props.activeName);
 		props.socket.emit('requestAllUsers', props.activeID);
 		props.socket.on("sendAllUsers", (participants) => {
@@ -242,7 +244,7 @@ export default function ListParticipant(props: ParticipantProps) {
 			<div className="buttons_div">
 				<div className="row">
 					<div className="col">
-						{props.isChan === true && props.hide === false && props.isBanned === false ? <button id="leave--button" className="btn" onClick={leaveChannel}>Leave channel</button> : null}
+						{props.isChan === true/* && props.hide === false*/ && props.isBanned === false ? <button id="leave--button" className="btn" onClick={leaveChannel}>Leave channel</button> : null}
 						{currentUserAdmin === true && props.hasPass ?
 							<button id="pass--button" className="btn" onClick={handleShow}>Update password</button>
 							:

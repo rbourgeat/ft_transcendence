@@ -11,9 +11,11 @@ export interface ListChannelsProps {
 	setHasPass?: any,
 	login: string,
 	setIsChan?: any,
+	isChan?: boolean,
 	minIdDM?: any,
 	setActiveID?: any,
 	setActiveName?: any,
+	activeName?: string,
 	socket?: any,
 	setHide?: any,
 	setIsBanned?: any
@@ -39,7 +41,7 @@ export default function ListChannels(props: ListChannelsProps) {
 		let url = "";
 		if (process.env.REACT_APP_IP == "" || process.env.REACT_APP_IP == undefined)
 			url = "http://localhost:3000/api/chat/joinedChannels";
-		else 
+		else
 			url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/chat/joinedChannels");
 		axios.get(url)
 			.then(res => {
@@ -116,9 +118,10 @@ export default function ListChannels(props: ListChannelsProps) {
 	// 		})
 	// }
 
+	/*
 	function displaySelectedCat(arg: string) {
 		renderListChannels();
-		/*
+
 		if (arg === "Channels") {
 			props.setIsChan(true);
 			renderListChannels();
@@ -127,22 +130,25 @@ export default function ListChannels(props: ListChannelsProps) {
 			props.setIsChan(false);
 			renderListChannels();
 		}
-		*/
-	}
 
+	}
+*/
 	//nécessaire pour mettre à jour suite à la fermeture d'un modal
 	useEffect(() => {
-		//clean();
+		clean();
 		//displaySelectedCat(selectedCat);
-	}, [/*exited*/])
+		renderListChannels();
+	}, [exited])
 
 	//permet d'afficher les channels sans faire de doublons
+	/*
 	useEffect(() => {
 		renderListChannels();
 		//if (load === true) {
 		//	displaySelectedCat(selectedCat);
 		//}
-	}, [])
+	}, [update])
+	*/
 
 	function clean() {
 		let chans = Array.from(document.getElementsByClassName("displaying_channels"));
@@ -164,6 +170,7 @@ export default function ListChannels(props: ListChannelsProps) {
 		}
 	}
 
+	/*
 	function displayDM() {
 		setSelectedCat("DMs");
 		setCount(0);
@@ -191,7 +198,7 @@ export default function ListChannels(props: ListChannelsProps) {
 		}
 		displaySelectedCat("Channels");
 	}
-
+*/
 	return (
 		<div id="listChannels" className="col-md-3" >
 			<div id="channel--col">
@@ -211,7 +218,8 @@ export default function ListChannels(props: ListChannelsProps) {
 								return (
 									<div key={channels[key].id} className="displaying_channels">
 										<DisplayChan
-											isChan={true}
+											setIsChan={props.setIsChan}
+											isChan={props.isChan}
 											channel={channels[key]}
 											minId={minId}
 											login={props.login}
@@ -220,6 +228,8 @@ export default function ListChannels(props: ListChannelsProps) {
 											setActiveName={props.setActiveName}
 											setHide={props.setHide}
 											socket={props.socket}
+											update={update}
+											activeName={props.activeName}
 										/>
 									</div>
 								)
@@ -236,7 +246,7 @@ export default function ListChannels(props: ListChannelsProps) {
 							<p className="no_message">You have no DM</p>
 						</>
 						: ""} */}
-						
+
 					{/* {load === true && selectedCat === "DMs" && count !== 0 ?
 						Object.keys(channels).map(function (key, index) {
 							if (channels[key].id !== undefined && selectedCat === "DMs") {
@@ -257,9 +267,9 @@ export default function ListChannels(props: ListChannelsProps) {
 							}
 						})
 						: ""} */}
-					
+
 				</div>
-			
+
 				{/* <div className="send--dm_div">
 					<button type="button" className="send--dm" onClick={displayDM} disabled={selectedCat === "DMs" ? true : false}>DM</button>
 					<button type="button" className="display--channels" onClick={displayChannels} disabled={selectedCat === "Channels" ? true : false}>Channels</button>

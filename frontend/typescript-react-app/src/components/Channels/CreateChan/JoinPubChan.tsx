@@ -12,7 +12,7 @@ export interface JoinChanProps {
 	action?: any,
 	setExited?: any,
 	setUpdate?: any,
-	exited?: any,
+	exited?: boolean,
 	login?: string,
 	socket?: any
 }
@@ -149,7 +149,7 @@ export default function JoinChan(props: JoinChanProps) {
 		let url = "";
 		if (process.env.REACT_APP_IP == "" || process.env.REACT_APP_IP == undefined)
 			url = "http://localhost:3000/api/chat/join";
-		else 
+		else
 			url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/chat/join");
 
 		console.log(privateToJoin + ": chan i want to join while im on private side")
@@ -189,7 +189,7 @@ export default function JoinChan(props: JoinChanProps) {
 				data-toggle="modal" data-target="#exampleModalCenter">Join channel</button>
 			<Modal  {...props}
 				size="lg"
-				show={show} 
+				show={show}
 				animation={true} onHide={handleClose} onExited={handleExit} id="modal_join">
 				<Modal.Header>
 					<Modal.Title id="create_title">Join a channel</Modal.Title>
@@ -239,29 +239,29 @@ export default function JoinChan(props: JoinChanProps) {
 							</ul>
 							:
 							<>
-							<div className="private-form">
-								<Form.Group>
-									<Form.Label>Channel name</Form.Label>
-									<Form.Control
-										type="text"
-										value={privateToJoin}
-										onChange={e => { setPrivateToJoin(e.target.value) }}
-										placeholder="channel"
-									/>
-								</Form.Group>
-								<Form.Group>
-									<Form.Label>Password</Form.Label>
-									<Form.Control
-										type="password"
-										value={privatePass}
-										onChange={e => { setPrivatePass(e.target.value) }}
-										placeholder="******"
-									/>
-								</Form.Group>
-								<Button className="put-on-right" variant="light" type="button" onClick={handleJoinPrivate}>
-									Join
-								</Button>
-							</div>	
+								<div className="private-form">
+									<Form.Group>
+										<Form.Label>Channel name</Form.Label>
+										<Form.Control
+											type="text"
+											value={privateToJoin}
+											onChange={e => { setPrivateToJoin(e.target.value) }}
+											placeholder="channel"
+										/>
+									</Form.Group>
+									<Form.Group>
+										<Form.Label>Password</Form.Label>
+										<Form.Control
+											type="password"
+											value={privatePass}
+											onChange={e => { setPrivatePass(e.target.value) }}
+											placeholder="******"
+										/>
+									</Form.Group>
+									<Button className="put-on-right" variant="light" type="button" onClick={handleJoinPrivate}>
+										Join
+									</Button>
+								</div>
 							</>
 						}
 					</Form>
