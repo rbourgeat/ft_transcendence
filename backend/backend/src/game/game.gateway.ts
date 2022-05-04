@@ -40,7 +40,7 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
 			gameMode = 2;
 		else if (body.includes("slow"))
 			gameMode = 3;
-		else if (body.includes("reverse"))
+		else if (body.includes("cube"))
 			gameMode = 4;
 		if (body.includes("STOPSEARCH"))
 			isSearching = false;

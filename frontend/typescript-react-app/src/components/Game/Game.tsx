@@ -148,37 +148,37 @@ export default function Game() {
 
 	});
 
-	function setGameMode(gm: number) {
-		if (gm == 0) {
+	function setGameMode(g: number) {
+		if (g == 0) {
 			PLAYER_HEIGHT = 80;
 			PLAYER_WIDTH = 10;
 			BALL_HEIGHT = 10;
 			BALL_SPEED = 2;
 			BALL_ACCELERATE = true;
-		} else if (gm == 1) {
+		} else if (g == 1) {
 			PLAYER_HEIGHT = 80;
 			PLAYER_WIDTH = 10;
 			BALL_HEIGHT = 50;
 			BALL_SPEED = 2;
 			BALL_ACCELERATE = true;
-		} else if (gm == 2) {
+		} else if (g == 2) {
 			PLAYER_HEIGHT = 80;
 			PLAYER_WIDTH = 10;
 			BALL_HEIGHT = 10;
 			BALL_SPEED = 5;
 			BALL_ACCELERATE = true;
-		} else if (gm == 3) {
+		} else if (g == 3) {
 			PLAYER_HEIGHT = 80;
 			PLAYER_WIDTH = 10;
 			BALL_HEIGHT = 10;
 			BALL_SPEED = 0.5;
 			BALL_ACCELERATE = false;
-		} else if (gm == 4) {
+		} else if (g == 4) {
 			PLAYER_HEIGHT = 80;
 			PLAYER_WIDTH = 80;
 			BALL_HEIGHT = 10;
 			BALL_SPEED = 2;
-			BALL_ACCELERATE = false;
+			BALL_ACCELERATE = true;
 		}
 	}
 
@@ -427,11 +427,11 @@ export default function Game() {
 
 	function stop() {
 		// console.log("username: ", joueur, ", adversaire: ", adversaire, ", score player 1: ", game.player.score, ", score player 2: ", game.player.score, ", gameMode: ", gm)
-		if (game.player.score > game.player2.score && joueur1 && joueur2 && joueur1 == joueur) {
+		if (game !== undefined && game.player.score > game.player2.score && joueur1 && joueur2 && joueur1 == joueur) {
 			socket.emit('gameEnd', joueur1 + ":" + joueur2 + ":" + game.player.score + ":" + game.player2.score + ":" + gm);
 			document.querySelector('#victoryMessage').textContent = "Victory";
 		}
-		if (game.player.score < game.player2.score && joueur1 && joueur2 && joueur2 == joueur) {
+		if (game !== undefined && game.player.score < game.player2.score && joueur1 && joueur2 && joueur2 == joueur) {
 			socket.emit('gameEnd', joueur2 + ":" + joueur1 + ":" + game.player2.score + ":" + game.player.score + ":" + gm);
 			document.querySelector('#victoryMessage').textContent = "Victory";
 		}
