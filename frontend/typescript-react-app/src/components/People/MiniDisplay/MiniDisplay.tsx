@@ -273,7 +273,7 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 					/>
 				</div>
 				<svg className="log--color" height="40" width="40">
-					<circle cx="20" cy="20" r="15" fill={color} stroke="white" style={{ strokeWidth: '3' }} />
+					<circle className="svg_circle" cx="20" cy="20" r="15" fill={color} stroke="white" style={{ strokeWidth: '3' }} />
 				</svg>
 			</li>
 		</div>
