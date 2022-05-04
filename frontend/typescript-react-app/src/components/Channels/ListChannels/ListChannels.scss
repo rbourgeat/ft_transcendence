@@ -5,7 +5,6 @@
 	background: white !important;
 	position: sticky;
 	border: 0.1rem solid #f9f9f9 !important;
-	//border: 0.1rem solid red !important;
 	padding: 0px !important;
 	margin: 0px !important;
 	height: 100% !important;
@@ -42,8 +41,6 @@
 
 #createchannel-button {
 	border-radius: variables.$border-radius-big;
-	//width: 100% !important;
-	//height: 100% !important;
 	border: 0.1rem solid #f9f9f9;
 	position: sticky;
 	margin: 0px !important;
@@ -78,17 +75,11 @@
 
 .displaying-div {
 	border-radius: variables.$border-radius-big;
-	//border: 0.2rem solid violet !important;
-	//border: 0.1rem solid #f9f9f9 !important;
 	margin: 10px !important;
-	//min-height: 90% !important;
-	//max-height: 90% !important;
 	overflow-y: scroll;
 }
 
 .send--dm_div {
-	//border: 0.2rem solid orange !important;
-	//align-items: flex-end !important;
 	position:absolute;
 	width: 100% !important;
 	bottom: 10px;

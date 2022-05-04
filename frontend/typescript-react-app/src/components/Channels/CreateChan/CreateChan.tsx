@@ -28,7 +28,6 @@ export default function CreateChan(props: CreateChanProps) {
 
 	const handleExit = () => {
 		if (sucessfull === true) {
-			//console.log("result will be " + !props.exited);
 			props.setExited(!props.exited);
 		}
 		chanNameSet("");
@@ -37,13 +36,11 @@ export default function CreateChan(props: CreateChanProps) {
 	}
 
 	const handleSend = () => {
-		//console.log("Creating channel");
 		axios.defaults.withCredentials = true;
 
 		let url = "";
 		if (process.env.REACT_APP_IP == "" || process.env.REACT_APP_IP == undefined)
 			url = "http://localhost:3000/api/chat/".concat(chanName).concat("/exist");
-		//Check si la channel existe ou pas
 		else 
 			url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/chat/").concat(chanName).concat("/exist");
 
@@ -53,9 +50,6 @@ export default function CreateChan(props: CreateChanProps) {
 		let isFree = false;
 		axios.get(url)
 			.then(res => {
-				//console.log(res);
-				//console.log(res.data);
-				//console.log(typeof res.data);
 				isFree = res.data;
 				load = true;
 
@@ -86,14 +80,12 @@ export default function CreateChan(props: CreateChanProps) {
 						else
 							scope = false;
 						if (chanPassword.length <= 0) {
-							//console.log("body without pass");
 							body = {
 								public: scope,
 								name: chanName
 							}
 						}
 						else {
-							//console.log("body with pass:" + chanPassword);
 							props.setHasPass(true);
 							body = {
 								password: chanPassword,
@@ -109,7 +101,6 @@ export default function CreateChan(props: CreateChanProps) {
 								handleClose();
 							})
 							.catch((error) => {
-								//console.log("Catched error on post api chat. :(");
 								;
 							})
 					}
@@ -166,17 +157,6 @@ export default function CreateChan(props: CreateChanProps) {
 					</Button>
 				</Modal.Footer>
 			</Modal>
-			{/* <ToastContainer
-				position="top-right"
-				autoClose={5000}
-				hideProgressBar={false}
-				newestOnTop={false}
-				closeOnClick
-				rtl={false}
-				pauseOnFocusLoss
-				draggable
-				pauseOnHover
-			/> */}
 		</div>
 	);
 

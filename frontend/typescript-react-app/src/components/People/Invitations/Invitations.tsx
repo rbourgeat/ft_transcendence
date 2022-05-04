@@ -7,10 +7,8 @@ import MiniDisplay from '../MiniDisplay/MiniDisplay';
 export default function Invitations() {
 	const [users, setUsers] = React.useState([]);
 	const [load, setLoad] = React.useState(false);
-
 	const calledOnce = React.useRef(false);
 
-	/*async*/
 	function renderInvitations() {
 		axios.defaults.withCredentials = true;
 		let url = "";
@@ -19,7 +17,6 @@ export default function Invitations() {
 		else 
 			url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/user/relation/me/pendingInvitations");
 
-		/*await*/
 		axios.get(url)
 			.then(res => {
 				let users = res.data.map(element => element.creator)
@@ -32,10 +29,8 @@ export default function Invitations() {
 				setLoad(true);
 			})
 			.catch((error) => {
-				//console.log("Error while getting my friends");
 				;
 			})
-		//setLoad(true);
 	}
 
 	useEffect(() => {

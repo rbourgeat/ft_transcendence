@@ -34,11 +34,8 @@ export default function DisplayChan(props: DisplayChanProps) {
 
 			if (props.dm.participates[0].login == props.login || props.dm.participates[0].login === props.login)
 				rec = props.dm.participates[1].login;
-			//else if (props.dm.participates[0].login == props.dm.participates[1].login)
-			//	console.log("Erreur, deux fois le même particpant");
 			else
 				rec = props.dm.participates[0].login;
-			//console.log("rec is " + rec);
 			setReceiver(rec);
 		}
 
@@ -47,11 +44,9 @@ export default function DisplayChan(props: DisplayChanProps) {
 			if (props.isChan === false) {
 				props.setActiveID(props.channel.id);
 				props.setActiveName(receiver);
-				//props.socket.close();
 			}
 			else {
 				props.setActiveID(props.channel.id);
-				//props.socket.close();
 				props.setActiveName(props.channel.name)
 			}
 		}
@@ -73,8 +68,6 @@ export default function DisplayChan(props: DisplayChanProps) {
 			other.className = "chan-title_selected";
 
 			//bahaas needs pass boolean in participat to display button change pass
-			//console.log("password of channel:" + props.channel.password)
-
 			if (props.channel.password)
 				props.setHasPass(true);
 			else
@@ -89,7 +82,6 @@ export default function DisplayChan(props: DisplayChanProps) {
 			selected.item(0).className = 'dm-title_notselected';
 			setIsSelected("true");
 
-			//console.log("receiver is " + receiver);
 			props.setActiveID(props.channel.id);
 			props.setActiveName(receiver);
 
@@ -108,7 +100,7 @@ export default function DisplayChan(props: DisplayChanProps) {
 				</> : ""}
 			</div>
 			<div className="display_dm" id={"dm_chan".concat("_" + props.channel.name)}>
-				{load === true && props.isChan === false /*&& load2 == true*/ ? <>
+				{load === true && props.isChan === false ? <>
 					<button type="button" id={"dm-title_".concat(props.channel.id)} className={isSelected === "true" ? "dm-title_selected" : "dm-title_notselected"}
 						onClick={selectDM}>{receiver}</button>
 				</> : ""}

@@ -28,13 +28,8 @@ export default function CreateDM(props: CreateDMProps) {
 
 		if (sucessfull == true) {
 			console.log("result will be " + !props.exited);
-
-			//redirection crade pour recharger la page
 			props.setExited(!props.exited);
 		}
-		//else {
-		//	console.log("Did not add anything");
-		//}
 		chanNameSet("");
 		setReceiver("");
 	}
@@ -55,10 +50,8 @@ export default function CreateDM(props: CreateDMProps) {
 				handleClose();
 			})
 			.catch((error) => {
-				console.log(error);
-				//toast.notifyDanger("You have already a conversation with that user");
-				toast.notifyDanger("Error while creating conversation with " + receiver);
-				//toast.notifyDanger(error);
+				//console.log(error);
+				//toast.notifyDanger("Error while creating conversation with " + receiver);
 				handleClose();
 				setSuccessfull(false);
 			})

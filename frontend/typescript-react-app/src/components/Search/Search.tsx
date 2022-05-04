@@ -6,8 +6,6 @@ import Footer from "../Footer/Footer";
 export interface SearchProps {}
 export interface SearchState {}
 
-//Plus utilisé car supprimé du sujet
-
 export default class Search extends React.Component<SearchProps, SearchState>
 {
 	constructor(props: SearchProps)

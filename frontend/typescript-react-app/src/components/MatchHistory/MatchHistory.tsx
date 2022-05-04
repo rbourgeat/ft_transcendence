@@ -31,7 +31,6 @@ export default function MatchHistory(props: MatchHistoryProps) {
         calledOnce.current = true;
     }, []);
 
-    /*async*/
     function getHistory() {
         let url: string = "";
         if (props.login) {
@@ -45,7 +44,6 @@ export default function MatchHistory(props: MatchHistoryProps) {
             login: props.login
         }
 
-        /*await*/
         axios.get(url, { headers })
             .then(res => {
                 let results = res.data;

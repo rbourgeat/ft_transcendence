@@ -64,18 +64,6 @@ export default function People(props: PeopleProps) {
 				<div id="all">
 					<div className="row" id="row-all">
 						<br />
-						{/*{load == false ?
-							<div className="container">
-								<div className="row d-flex justify-content-center text-center">
-									<div className="mycontainer">
-										<div className="spinner-border m-5" role="status">
-											<span className="sr-only"><AiOutlineLoading /></span>
-										</div>
-									</div>
-								</div>
-							</div>
-							:
-							<>*/}
 						<All login={props.login} />
 						<br />
 						<Friends />
@@ -86,8 +74,6 @@ export default function People(props: PeopleProps) {
 						<br />
 						<Blocked />
 						<br />
-						{/*</>
-						}*/}
 					</div>
 				</div>
 			</div>

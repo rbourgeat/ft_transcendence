@@ -13,10 +13,8 @@ export default function Achievement(props: AchievementsProps) {
 
     const [myArray, setMyArray] = React.useState([]);
 
-    /*async*/
     function getAchievements() {
         let url = "";
-        //modif pour faire fonctionner sur mac
         if (process.env.REACT_APP_IP == "" || process.env.REACT_APP_IP == undefined)
             url = "http://".concat("localhost:3000/api/user/achievements/").concat(props.login);
         else 
@@ -27,12 +25,9 @@ export default function Achievement(props: AchievementsProps) {
 
         axios.get(url)
             .then(res => {
-                //console.log("Succesfully retrieved achievements");
                 setMyArray(res.data.map(element => element.title))
             })
             .catch((error) => {
-                //console.log("Error while retrieve achievements");
-                //console.log(error);
                 ;
             })
     }

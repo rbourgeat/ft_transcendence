@@ -59,7 +59,6 @@ export default function Channels(props: ChatProps) {
 					setSocket(io("http://".concat("localhost").concat(":3000/chat"), { query: { username: username } }))
 			})
 			.catch((err) => {
-				//console.log("Error while getting api auth");
 				;
 			})
 		setLoad(true);

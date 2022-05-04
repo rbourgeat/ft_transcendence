@@ -23,12 +23,10 @@ export interface ProfileProps {
 
 	login?: string,
 	avatar?: any,
-
 	//socket?: any
 }
 
 export default function Profile() {
-	//Check user et status
 	const [color, setColor] = React.useState("");
 	const [status, setStatus] = React.useState("offline");
 	const calledOnce = React.useRef(false);
@@ -36,14 +34,12 @@ export default function Profile() {
 	const [is42, setis42] = React.useState(false);
 	const { login } = useParams();
 
-	//relation
 	const [isFriend, setisFriend] = React.useState(false);
 	const [isBlocked, setisBlocked] = React.useState(false);
 
 	const [receivedInvitation, setReceivedInvitation] = React.useState(false);
 	const [sentInvitation, setSentInvitation] = React.useState(false);
 
-	//Badge
 	const [load, setLoad] = React.useState(false);
 	const [points, setPoints] = React.useState(0);
 	const [rank, setRank] = React.useState(0);
@@ -56,14 +52,13 @@ export default function Profile() {
 	const [nextlevel, setNextLevel] = React.useState(0);
 	const [pendingInvite, setPendingInvite] = React.useState(false);
 
-	/*async*/
 	function getUserLogin(log: string) {
 		let url = "";
 		if (process.env.REACT_APP_IP == "" || process.env.REACT_APP_IP == undefined)
 			url = "http://localhost:3000/api/user/".concat(login);
 		else 
 			url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/user/").concat(login);
-		/*await*/
+
 		axios.get(url)
 			.then(res => {
 				setUserOk(true);
@@ -144,9 +139,6 @@ export default function Profile() {
 				else if (relation.status == "blocked" && relation.receiver == login) {
 					setisBlocked(true);
 				}
-				//else if (relation.status == "blocked" && relation.creator == login) {
-				//	console.log("You are blocked by this contact");
-				//}
 				else {
 					setisFriend(false);
 				}
@@ -160,7 +152,6 @@ export default function Profile() {
 	function inviteFriend() {
 		let ax = new MyAxios(null);
 		ax.post_api_user_relation_sendInvation_id(login);
-		// TODO: attention retester toutes les redirs !
 		window.top.location = url_begin.concat(":3030/profile/").concat(login);
 	}
 
@@ -182,26 +173,11 @@ export default function Profile() {
 		window.top.location = url_begin.concat(":3030/profile/").concat(login);
 	}
 
-	// function watchPlaying() {
-	// 	let toast = new ToastAlerts(null);
-	// 	toast.notifyDanger("To do @rbourgea");
-	// }
-
 	function askToPlay() {
-		// let toast = new ToastAlerts(null);
-		// toast.notifyDanger("Not implemented yet");
-		// function inviteToPlay() {
-			let selectedUser = login;
-			console.log("You are inviting " + selectedUser + " to play !");
-			window.top.location = url_begin.concat(":3030/game?vs=").concat(selectedUser);
-		// }
+		let selectedUser = login;
+		console.log("You are inviting " + selectedUser + " to play !");
+		window.top.location = url_begin.concat(":3030/game?vs=").concat(selectedUser);
 	}
-
-	// pas demande
-	// function sendDM() {
-	// 	let toast = new ToastAlerts(null);
-	// 	toast.notifyDanger("Not implemented yet");
-	// }
 
 	function unblock() {
 		let ax = new MyAxios(null);
@@ -224,26 +200,17 @@ export default function Profile() {
 						<div className="col-9" id="main--profile--div">
 							<div>
 								<br />
-								{/* {load == false ?
-									<div className="spinner-border m-5" role="status">
-										<span className="sr-only"><AiOutlineLoading /></span>
-									</div>
-
-									: ""} */}
 								{userOK == true ?
 									<div id="profile--div">
 										<h3 className="profile--type">{isFriend == true ? "Friend profile" : "Public profile"}</h3>
 										<br />
 										<div id="text-type">{isFriend == true ? "You are able to see a detailed profile because you are friends 🥰 !"
 											: "You are not able to see a detailed profile because you are not friends 😢 !"}</div>
-										{/* <br /> */}
-										{/* <div className="d-flex justify-content-center text-center"> */}
 										<img id={login} className="profile--pic" src="" width="100" height="100" />
 										{renderImage(login, isUser)}
 										<svg className="log--color" height="40" width="40">
 											<circle cx="20" cy="20" r="15" fill={color} stroke="white" style={{ strokeWidth: '3' }} />
 										</svg>
-										{/* </div> */}
 										<h2 id="profile-title">{login}</h2>
 										<p className="status-text">{status}</p>
 										<div className="row d-flex justify-content-center text-center" id="relations">
@@ -280,12 +247,8 @@ export default function Profile() {
 											{isBlocked != true ? <button type="button" className="btn btn-outline-danger" id="block--buton" onClick={block}>Block</button> : ""}
 											{isFriend == true ? <button type="button" className="btn btn-outline-danger" id="remove--buton" onClick={remove}>Remove</button> : ""}
 										</div>
-										{/* TODO: a reprendre rbougea ? */}
 										<div className="row d-flex justify-content-center text-center" id="games--related">
-											{/* {status == "ingame" && isBlocked == false ? <p className="profile_text">{login} is playing ! You can watch the game.</p> : ""}
-											{status == "ingame" && isBlocked == false ? <button type="button" className="btn btn-outline-dark" id="watch--buton" onClick={watchPlaying}>Watch</button> : ""} */}
 											{status == "online" && isBlocked == false ? <button type="button" className="btn btn-outline-dark" id="play--buton" onClick={askToPlay}> Ask to Play</button> : ""}
-											{/* {isBlocked == false ? <button type="button" className="btn btn-outline-dark" id="dm--buton" onClick={sendDM}>Send DM</button> : ""} */}
 											{isBlocked == true ?
 												<>
 													<br />
@@ -328,12 +291,6 @@ export default function Profile() {
 
 									</div>
 									: <>
-										{/*<h1><span id="oops">Oops...</span></h1>
-										<h2><span id="page-not-found">Page not found</span></h2>
-										<button type="button" className="btn btn-outline-dark"
-											onClick={(e) => { window.top.location = url_begin.concat(":3030/game") }
-											}
-										>Go to game</button>*/}
 									</>
 								}
 							</div>

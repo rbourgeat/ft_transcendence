@@ -12,7 +12,6 @@ export default function Auth() {
 
     useEffect(() => {
         if (localStorage.getItem("loggedIn") == "true") {
-            //console.log("You are already logged in");
             if (process.env.REACT_APP_IP == "" || process.env.REACT_APP_IP == undefined)
                 window.top.location = "http://localhost:3030/settings";
             else
@@ -38,7 +37,6 @@ export default function Auth() {
                                         <br />
                                         <Login />
                                     </div>
-                                    {/*<Login />*/}
                                 </div>
                             </div>
                         </>

@@ -24,13 +24,12 @@ export default function Login2fa() {
 
 	let checkcode = (event: any) => {
 		event.preventDefault();
-		//console.log("Button clicked!");
 		let toast = new ToastAlerts(null);
 		if (code.length != 6) {
 			toast.notifyDanger("❗️ Error, the verif code is too short.");
 			return;
 		}
-		//console.log("Posting on api...");
+
 		let url = "";
 		if (process.env.REACT_APP_IP == "" || process.env.REACT_APP_IP == undefined)
 			url = "http://localhost:3000/api/2fa/log-in";
@@ -48,15 +47,10 @@ export default function Login2fa() {
 
 		let res = axios.post(url, bod)
 			.then(res => {
-				//console.log("Succesfully logged in with 2fa!");
-				//console.log(res);
-				//console.log(res.data);
 				localStorage.setItem("2faverif", "true");
 				window.top.location = "http://".concat(process.env.REACT_APP_IP).concat(":3030/user");
 			})
 			.catch((error) => {
-				//console.log("Catched error while logging in with 2fa");
-				//console.log(error);
 				toast.notifyDanger("😢 Error while logging in with 2fa");
 			})
 	}

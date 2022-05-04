@@ -13,7 +13,6 @@ interface LoginState {
   isLogged?: boolean
 }
 
-//Utilisé pour tests quand membres de l'équipe freeze
 export default class Login extends React.Component<LoginProps, LoginState>
 {
   constructor(props: LoginProps) {

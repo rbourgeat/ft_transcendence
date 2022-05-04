@@ -12,9 +12,6 @@ import Confetti from 'react-confetti';
 import { Offline, Online } from "react-detect-offline";
 import "../../../node_modules/react-rain-animation/lib/style.css";
 import { ToastContainer, toast } from "react-toastify";
-// import { useWindowSize } from '@react-hookz/web'; // cjs
-// import { useWindowSize } from '@react-hookz/web/esm'; // esm
-// import { useWindowSize } from '@react-hookz/web/esnext' // esnext
 
 var adversaire: string;
 var joueur: string;
@@ -31,12 +28,6 @@ else
 let selectedUser = "";
 
 export default function Game() {
-	// const [savedHeight, setsavedHeight] = React.useState(0);
-	// const [savedWidth, setsavedWidth] = React.useState(0);
-
-	// let size = useWindowDimensions();
-	// const size = useWindowDimensions();
-	// const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
 
 	const { height, width } = useWindowDimensions();
 
@@ -51,15 +42,12 @@ export default function Game() {
 
 	let vshisto = false;
 
-	// socket game
 	const [username, setUsername] = React.useState("");
-	/*async*/
 	function getUser() {
 		let url = url_begin.concat(":3000/api/auth/");
 		let username = "";
 		axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 		axios.defaults.withCredentials = true;
-		/*await*/
 		axios.get(url)
 			.then(res => {
 				username = res.data.login;
@@ -254,9 +242,6 @@ export default function Game() {
 	useEffect(() => {
 		// First page loading event (only one time)
 		getUser();
-		// let size = useWindowDimensions();
-		// setsavedHeight(useWindowDimensions().height);
-		// setsavedWidth(useWindowDimensions().width);
 		canvas = document.getElementById('canvas');
 		initParty();
 		if (live == null)
@@ -500,20 +485,6 @@ export default function Game() {
 
 	return (
 		<>
-			{/* {localStorage.getItem("loggedIn") != "true" ?
-				<>
-					<Nav />
-					<div className="container">
-						<div className="row d-flex justify-content-center text-center">
-							<div className="col-9">
-								<div className="channels-not-logged">
-									<p>You are not logged in.</p>
-								</div>
-							</div>
-						</div>
-					</div>
-				</>
-				: */}
 			<div>
 				<Online>
 					<div id="game-root">
@@ -560,7 +531,6 @@ export default function Game() {
 					<div id="offline">Vous n'êtes pas connecté à internet !</div>
 				</Offline>
 			</div>
-			{/* } */}
 		</>
 	);
 }

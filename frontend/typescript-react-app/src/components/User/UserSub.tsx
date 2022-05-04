@@ -96,9 +96,7 @@ export default function User(props: UserfuncProps) {
 					setStatus("ingame")
 				}
 
-				/*}*/
 				setUsername(username);
-				//setSocket(io("http://".concat(process.env.REACT_APP_IP).concat(":3000/chat"), { query: { username: username } }));
 				socket.emit("update", res.data.login + ":online");
 				setLoaded(true);
 				renderImage(username);
@@ -137,13 +135,7 @@ export default function User(props: UserfuncProps) {
 				<div className="row d-flex justify-content-center text-center">
 					<div className="col-9">
 						<div className="user--stats" key={username}>
-							{/*{loaded == false ?
-								<div className="spinner-border m-5" role="status">
-									<span className="sr-only"><AiOutlineLoading /></span>
-								</div>
-								:*/}
 							<>
-								{/*<h2 className="own-profile">My profile</h2>*/}
 								<br />
 								<img id={username} className="profile--pic" height="80" width="80" />
 								<svg className="log--color_profile" height="40" width="40">

@@ -62,7 +62,6 @@ export default function ListChannels(props: ListChannelsProps) {
 				props.setIsChan(true);
 			})
 			.catch((error) => {
-				//console.log("Error while getting all channels");
 				;
 			})
 	}
@@ -98,7 +97,6 @@ export default function ListChannels(props: ListChannelsProps) {
 				props.setIsChan(false);
 			})
 			.catch((error) => {
-				//console.log("Error while getting all channels");
 				;
 			})
 	}
@@ -107,7 +105,6 @@ export default function ListChannels(props: ListChannelsProps) {
 		if (arg === "Channels") {
 			props.setIsChan(true);
 			renderListChannels();
-			//props.socket.emit("getChannels", props.login);
 		}
 		else if (arg === "DMs") {
 			props.setIsChan(false);

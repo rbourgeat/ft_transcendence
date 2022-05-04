@@ -27,10 +27,8 @@ export default function Live() {
 
 
 	function display_no() {
-		//setDisplayedNo(true);
 		if (displayedNo == false) {
 			let check = document.getElementsByClassName("nogame");
-			// console.log("no game is " + check.length);
 			if (check.length == 0) {
 				let nogame = document.createElement("div");
 				nogame.className = "nogame";
@@ -45,15 +43,12 @@ export default function Live() {
 	}
 
 	function remove_no() {
-		//if (displayedNo == true)
-		//{
 		const todelete = Array.from(document.getElementsByClassName("nogame"));
 		todelete.forEach(del => {
 			del.remove();
 		});
 		if (displayedNo == true)
 			setDisplayedNo(false);
-		//}
 	}
 
 	function display(args) {
@@ -64,20 +59,8 @@ export default function Live() {
 		let newContent: any;
 		let erases: any;
 
-		//Joueur est un Object et pas un Array
-		//console.log("type of joueurs is " + typeof joueurs);
-
-		// console.log("args are " + args);
-
 		const b = args[0].split(':');
 
-		//if (!joueurs)
-		//{
-		//	//if (displayedNo == false)
-		//		display_no();
-		//}
-		//else
-		//{
 		remove_no();
 		Object.keys(joueurs).map(joueur => {
 			adversaires.map(adversaire => {
@@ -96,7 +79,6 @@ export default function Live() {
 						newbutton.type = "submit";
 						newbutton.className = "btn btn-light watch";
 						newbutton.onclick = function () {
-							//alert("Button is clicked");
 							console.log("redirecting to game page");
 							window.top.location = url_begin.concat(":3030/game?live=").concat(joueurs[joueur]).concat("+").concat(adversaire);
 						};
@@ -106,12 +88,9 @@ export default function Live() {
 				initParty(adversaires.indexOf(adversaire));
 			})
 		})
-		//}
 	}
-	//}
 
 	useEffect(() => {
-		//display();
 		if (displayedNo == false)
 			display_no();
 	}, []);
@@ -129,7 +108,6 @@ export default function Live() {
 	}
 
 	function display_null() {
-		// console.log("Should display null");
 		const todelete = Array.from(document.getElementsByClassName("game"));
 
 		todelete.forEach(del => {
@@ -144,7 +122,6 @@ export default function Live() {
 		display_no();
 	}
 
-	//un jeu commence
 	socket.on("roundStartLIVE", (...args) => {
 
 		let len: number;
@@ -152,15 +129,10 @@ export default function Live() {
 		len = args.length;
 
 		//TODO: rbourgea : checker si il ne faut (comme c'était fait) checker que sur args[0] ou sur un args[i] ? (si il y a plusieurs match est-ce que c'est OK ?)
-		//Attention les args sont régulièrement null
 		if (args) {
 			//console.log("args are : " + args)
 			if (args[i]) {
 				let check = args[i].split(':');
-				//if (args && check[1] != "null")
-				//{
-				//	console.log("New game");
-				//}
 				if (check[1] == "null") {
 					display_null();
 				}

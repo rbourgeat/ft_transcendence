@@ -27,7 +27,6 @@ export default function GameRules() {
 				setUsername(username);
 			})
 			.catch((err) => {
-				//console.log("Error while getting api auth");
 				;
 			})
 	}

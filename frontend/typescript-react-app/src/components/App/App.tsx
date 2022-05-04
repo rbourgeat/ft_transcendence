@@ -112,9 +112,6 @@ function App() {
 
         {localStorage.getItem("loggedIn") == "true" && localStorage.getItem("2fa") == "true" && localStorage.getItem("2faverif") == "false" ?
           <Route path="*" element={<Login2fa />} /> : ""}
-        {/*{(localStorage.getItem("2fa") == "true" && localStorage.getItem("2faverif") == "false") ?
-          <Route path="*" element={<Login2FA />} />
-          : ""}*/}
       </Routes>
       <ToastContainer
         position="top-right"

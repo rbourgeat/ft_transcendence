@@ -20,7 +20,6 @@ export default function All(props: InputWrapperProps) {
 	const [stateLogin, setStateLogin] = React.useState(props.login);
 	const calledOnce = React.useRef(false);
 
-	/*async*/
 	function renderUsers() {
 		axios.defaults.withCredentials = true;
 		let log = localStorage.getItem("login");
@@ -30,7 +29,6 @@ export default function All(props: InputWrapperProps) {
 		else 
 			url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/user/");
 
-		/*await*/
 		axios.get(url)
 			.then(res => {
 				let users = res.data;

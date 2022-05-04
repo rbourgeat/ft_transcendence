@@ -15,19 +15,13 @@ else
 export interface EditUsernameModalProps {
 	username?: string,
 	setUsername?: any,
-	//checkexited?: any,
 	exited?: any,
-	//setUpdate?: any
-	//show?: any
 }
 
 export default function EditUsernameModal(props: EditUsernameModalProps) {
 	const [inputValue, setInputValue] = React.useState("");
 	const [sucessfull, setSuccessfull] = React.useState(false);
 	const [show, setShow] = React.useState(false);
-
-	//const [show, setShow] = React.useState(false);
-	//const handleShow = () => setShow(true);
 
 	function clearInput() {
 		setInputValue("");
