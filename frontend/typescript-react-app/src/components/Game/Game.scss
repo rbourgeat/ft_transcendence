@@ -31,6 +31,9 @@
   position: sticky;
   margin-bottom: 50px;
   transition-duration: 1s;
+  width: 75% !important;
+  height: 100% !important;
+  // padding-top: 50% !important;
 }
 
 #form-select, #search-button, #search-button2 {
