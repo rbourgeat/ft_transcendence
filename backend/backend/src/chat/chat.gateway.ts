@@ -21,13 +21,13 @@ export class ChatGateway implements OnGatewayConnection {
 	) { }
 
 	async handleConnection(socket: Socket, ...args: any[]) {
-		//this.logger.log("Client connected: " + socket.handshake.query.username + ' id: ' + socket.id + ')');
+		// this.logger.log("Client connected: " + socket.handshake.query.username + ' id: ' + socket.id + ')');
 		this.userService.updateStatus(String(socket.handshake.query.username), "online");
 		//this.server.emit("updateStatus", String(socket.handshake.query.username), "online");
 	}
 
 	async handleDisconnect(socket: Socket, ...args: any[]) {
-		//this.logger.log("Client disconnected: " + socket.handshake.query.username + ' id: ' + socket.id + ')');
+		// this.logger.log("Client disconnected: " + socket.handshake.query.username + ' id: ' + socket.id + ')');
 		this.userService.updateStatus(String(socket.handshake.query.username), "offline");
 		this.server.emit("updateStatus", String(socket.handshake.query.username), "offline");
 	}
