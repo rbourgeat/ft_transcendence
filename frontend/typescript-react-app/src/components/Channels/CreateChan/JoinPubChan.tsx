@@ -31,6 +31,9 @@ export default function JoinChan(props: JoinChanProps) {
 	const [load, setLoad] = React.useState(false);
 	const calledOnce = React.useRef(false);
 
+	const [form, setForm] = React.useState(false);
+	const [publicToJoin, setPublicToJoin] = React.useState(String);
+
 	const displayPrivate = () => setPublic(false);
 
 	const displayPublic = () => setPublic(true);
@@ -48,7 +51,6 @@ export default function JoinChan(props: JoinChanProps) {
 	}
 
 	React.useEffect(() => {
-		//console.log("in join channel")
 		;
 	}, [])
 
@@ -61,9 +63,6 @@ export default function JoinChan(props: JoinChanProps) {
 		if (sucessfull == true) {
 			props.setExited(!props.exited);
 		}
-		//else {
-		//	console.log("Did not add anything")
-		//}
 	}
 
 	function handleSend(chan: string) {
@@ -105,12 +104,10 @@ export default function JoinChan(props: JoinChanProps) {
 				//toast.notifyDanger("Failed to join the channel.");
 				setSuccessfull(true);
 				setForm(false);
-				console.log("here !");
+				//console.log("here !");
 				setPublicPass("");
 				setJoignable([]);
 				handleClose();
-				//Attention si on clique sur join sans rien rejoindre puis qu'on revient sur le modal les channels publiques s'affichaient en double
-				//handleCloseFinale();
 			})
 	}
 
@@ -141,7 +138,6 @@ export default function JoinChan(props: JoinChanProps) {
 
 			})
 			.catch((error) => {
-				//console.log("Catched error while getting joignable.");
 				;
 			})
 	}
@@ -178,29 +174,11 @@ export default function JoinChan(props: JoinChanProps) {
 				handleCloseFinale();
 			})
 			.catch(error => {
-				console.log(error);
-				//toast.notifyDanger("Failed to join the channel.");
+				//console.log(error);
 				setSuccessfull(true);
 				setJoignable([]);
 				handleCloseFinale();
 			})
-	}
-
-	const [form, setForm] = React.useState(false);
-	const [publicToJoin, setPublicToJoin] = React.useState(String);
-
-	function popForm(chan) {
-		/*
-		setPublicToJoin(chan);
-		if (form == false) {
-			setForm(true);
-
-		}
-		else {
-			//setForm(false);
-
-		}
-		*/
 	}
 
 	return (
@@ -210,8 +188,8 @@ export default function JoinChan(props: JoinChanProps) {
 				onClick={handleShow}
 				data-toggle="modal" data-target="#exampleModalCenter">Join channel</button>
 			<Modal  {...props}
-     			size="lg"
-	  			show={show} 
+				size="lg"
+				show={show} 
 				animation={true} onHide={handleClose} onExited={handleExit} id="modal_join">
 				<Modal.Header>
 					<Modal.Title id="create_title">Join a channel</Modal.Title>
@@ -229,7 +207,7 @@ export default function JoinChan(props: JoinChanProps) {
 							<ul className="wrapper list-group list-group-horizontal-sm" id="list_pub_chan">
 								{load == true ?
 									joignable.map(join =>
-										<div key={join.name} className="chans" /*list-group-item*/>
+										<div key={join.name} className="chans">
 											<div className="joignable">{join.name}
 												{
 													join.password ?
@@ -263,13 +241,11 @@ export default function JoinChan(props: JoinChanProps) {
 							<>
 							<div className="private-form">
 								<Form.Group>
-									{/* <div className="private-form"> */}
 									<Form.Label>Channel name</Form.Label>
 									<Form.Control
 										type="text"
 										value={privateToJoin}
 										onChange={e => { setPrivateToJoin(e.target.value) }}
-										// autoFocus
 										placeholder="channel"
 									/>
 								</Form.Group>
@@ -279,32 +255,18 @@ export default function JoinChan(props: JoinChanProps) {
 										type="password"
 										value={privatePass}
 										onChange={e => { setPrivatePass(e.target.value) }}
-										// autoFocus
 										placeholder="******"
 									/>
-									{/* </div> */}
 								</Form.Group>
 								<Button className="put-on-right" variant="light" type="button" onClick={handleJoinPrivate}>
 									Join
 								</Button>
-							</div>
-								
+							</div>	
 							</>
 						}
 					</Form>
 				</Modal.Body>
 			</Modal >
-			{/* <ToastContainer
-				position="top-right"
-				autoClose={5000}
-				hideProgressBar={false}
-				newestOnTop={false}
-				closeOnClick
-				rtl={false}
-				pauseOnFocusLoss
-				draggable
-				pauseOnHover
-			/> */}
 		</div >
 	);
 

@@ -3,7 +3,6 @@ import Nav from '../Nav/Nav';
 import TypingMessage from "./TypingMessage/TypingMessage";
 import ListDiscussions from "./ListDiscussions/ListDiscussions";
 import ListParticipant from './ListParticipant/ListParticipant';
-import CreateChan from './CreateChan/CreateChan';
 import React, { useState, useEffect } from "react";
 import MyAxios from '../Utils/Axios/Axios';
 import ToastAlerts from '../Utils/ToastAlerts/ToastAlerts';
@@ -59,7 +58,6 @@ export default function Channels(props: ChatProps) {
 					setSocket(io("http://".concat("localhost").concat(":3000/chat"), { query: { username: username } }))
 			})
 			.catch((err) => {
-				//console.log("Error while getting api auth");
 				;
 			})
 		setLoad(true);

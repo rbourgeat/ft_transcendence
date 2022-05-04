@@ -50,7 +50,6 @@
 	}
 }
 
-//On a principalement besoin d'utiliser le mot clé important car on veut surcharger les règles css bootstrap
 #quick--actions {
 	font-family: variables.$basic-font !important;
 	font-size: 12px !important;
@@ -73,4 +72,10 @@
 		color: black !important;
 	border: 0.1rem solid rgb(9, 194, 191) !important;
 	background-color: rgb(9, 194, 191) !important;
+}
+
+.navbar-collapse.collapse {
+	display: block !important;
+	//flex-direction: row !important;
+	//flex-wrap: nowrap !important;
 }

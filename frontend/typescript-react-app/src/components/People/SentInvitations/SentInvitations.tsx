@@ -10,7 +10,6 @@ export default function Invitations() {
 
 	const calledOnce = React.useRef(false);
 
-	/*async*/
 	function renderInvitations() {
 		axios.defaults.withCredentials = true;
 		let url = "";
@@ -18,7 +17,7 @@ export default function Invitations() {
 			url = "http://localhost:3000/api/user/relation/me/sentInvitations";
 		else 
 			url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/user/relation/me/sentInvitations");
-		/*await*/
+
 		axios.get(url)
 			.then(res => {
 				let users = res.data.map(element => element.receiver)
@@ -33,7 +32,6 @@ export default function Invitations() {
 			.catch((error) => {
 				;
 			})
-		//setLoad(true);
 	}
 
 	useEffect(() => {

@@ -41,13 +41,13 @@ function Nav() {
 
 	return (
 		<div id="nav">
-			<nav className="navbar navbar-expand-lg bg-dark" id="nav-bar">
+			<nav className="navbar navbar-expand-lg" /*navbar-expand-lg bg-dark*/ id="nav-bar">
 				<Link to="/" id="nav--title">PONG</Link>
 				<button className="navbar-toggler" type="button">
 					<span className="navbar-toggler-icon"></span>
 				</button>
-				<div className="collapse navbar-collapse" id="navbarNav">
-					<ul className="navbar-nav">
+				<div className="collapse navbar-collapse in" /*id="navbarNav"*/>
+					<ul className="navbar-nav d-flex flex-row">
 						<li className="nav-item">
 							<Link to="/game" className="nav-link">
 								<div className='nav-link-text'><p className="navbar--title">Game</p></div>

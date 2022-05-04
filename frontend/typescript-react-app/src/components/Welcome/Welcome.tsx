@@ -7,15 +7,9 @@ import Header from '../Header/Header';
 
 let url_begin = "";
 if (process.env.REACT_APP_IP == "" || process.env.REACT_APP_IP == undefined)
-  url_begin = "http://localhost";
+    url_begin = "http://localhost";
 else
-  url_begin = "http://".concat(process.env.REACT_APP_IP);
-
-//Pour faire fonctionner sur mac
-//if (url_begin == "http://")
-//{
-//    url_begin = "http://localhost";
-//}
+    url_begin = "http://".concat(process.env.REACT_APP_IP);
 
 export default function Welcome() {
 
@@ -24,15 +18,6 @@ export default function Welcome() {
         console.log("url begin is " + url_begin);
         window.top.location = url_begin.concat(":3030/auth/")
     }
-
-    //const calledOnce = React.useRef(false);
-
-    //useEffect(() => {
-    //	if (calledOnce.current) {
-    //		return;
-    //	}
-    //	calledOnce.current = true;
-    //}, []);
 
     return (
         <>

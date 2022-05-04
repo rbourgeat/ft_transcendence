@@ -11,7 +11,6 @@ export default function Blocked() {
 	const [reload, setReload] = React.useState(false);
 	const calledOnce = React.useRef(false);
 
-	/*async*/
 	function renderBlocked() {
 		axios.defaults.withCredentials = true;
 		let url = "";
@@ -19,7 +18,7 @@ export default function Blocked() {
 			url = "http://localhost:3000/api/user/relation/me/allBlocked";
 		else 
 			url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/user/relation/me/allBlocked");
-		/*await*/
+
 		axios.get(url)
 			.then(res => {
 				let users = res.data;
@@ -32,10 +31,8 @@ export default function Blocked() {
 				setLoad(true);
 			})
 			.catch((error) => {
-				//console.log("Error while getting my friends");
 				;
 			})
-		//setLoad(true);
 	}
 
 	useEffect(() => {

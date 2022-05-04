@@ -32,10 +32,8 @@ export default class Login extends React.Component<FourtyTwoProps, FourtyTwoStat
   render() {
     return (
       <div className="row d-flex justify-content-center">
-        {/*<div>*/}
         <button
           type="submit"
-          //className="btn btn-dark btn-block"
           className="btn btn-outline-light"
           id="auth-btn-3"
           onClick={this.fourtytwo}
@@ -43,7 +41,6 @@ export default class Login extends React.Component<FourtyTwoProps, FourtyTwoStat
           <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/42_Logo.svg/1200px-42_Logo.svg.png" height="20" width="20" />
           Auth
         </button>
-        {/*</div>*/}
       </div>
     );
   }

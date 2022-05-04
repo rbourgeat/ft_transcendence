@@ -40,27 +40,20 @@ export default function TypingMessage(props: TypingProps) {
     const [sockChan, setsockChan] = React.useState(props.activeName);
 
     function checkisMuted() {
-        //console.log("props chanId is " + props.chanId);
-
         if (props.chanId != "" && props.chanId != undefined && props.chanId != null) {
             let url = url_begin.concat(":3000/api/chat/isMutedIn/").concat(props.chanId);
 
             axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
             axios.defaults.withCredentials = true;
 
-            //console.log("check is muted");
-
             axios.get(url)
                 .then(res => {
-                    //console.log(res);
                     if (res.data == false) {
                         setIsMuted(false);
-                        //setSeconds(10);
                     }
                     else if (res.data == true) {
                         setIsMuted(true);
                     }
-                    //console.log("is muted is " + isMuted);
                 })
                 .catch((error) => {
                     ;
@@ -88,34 +81,13 @@ export default function TypingMessage(props: TypingProps) {
     props.socket.on('isMute', (...args) => {
         if (props.login == args[0] && args[1] == true) {
             setIsMuted(true)
-            //setSeconds(10);
-            console.log("set is mute to true")
-            //timestamp = args[2];
-            //console.log("time " + args[2])
+            //console.log("set is mute to true")
         }
         else if (props.login == args[0] && args[1] == false) {
             setIsMuted(false)
-            console.log("set is mute to false")
+            //console.log("set is mute to false")
         }
     })
-
-    //const [seconds, setSeconds] = React.useState(10);
-    //const [isActive, setIsActive] = React.useState(false);
-
-    /*
-    useEffect(() => {
-
-        let interval = null;
-
-        interval = setInterval(() => {
-            setSeconds(seconds => seconds - 1);
-            // console.log(timestamp);
-        }, 1000);
-
-        return () => clearInterval(interval);
-
-    }, [seconds]);
-    */
 
     return (
         <div id="typing--div">

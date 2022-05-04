@@ -4,10 +4,8 @@
 	border-radius: variables.$border-radius-big;
 	background: white;
 	position: sticky;
-	//min-height: 740px !important;
-	//max-height: 740px !important;
 	border: 0.1rem solid #f9f9f9 !important;
-	//border: 0.1rem solid blue !important;
+	//border: 0.2rem solid orange !important;
 	margin-right: 2% !important;
 	margin-left: 2% !important;
 	height: 100% !important;
@@ -54,10 +52,6 @@
 
 .title_chat_div {
 	border-radius: variables.$border-radius-big;
-	//border: 0.1rem solid #f9f9f9;
-	//border: 0.2rem solid orange !important;
-	//min-height: 40px;
-	//max-height: 40px;
 	background: #f9f9f9;
 	position: sticky;
 }
@@ -78,17 +72,26 @@
 	padding-top: 10px !important;
 }
 
-.messages-zone {
-	//min-height: 590px;
-	//max-height: 590px;
-	margin: 5px;
+.text_ul {
+	//border: 0.2rem solid orange !important;
 	border: 0.1rem solid #f9f9f9;
-	//border: 0.2rem solid violet !important;
-	height: 85% !important;
-	border-radius: variables.$border-radius-big;
-	overflow-y: scroll;
+	border-radius: variables.$border-radius-big !important;
+	height: 90% !important;
+	position: absolute;
+	overflow-y: scroll !important;
 	scrollbar-color: rgb(119, 119, 119) rgb(174, 174, 174);
 	scrollbar-width: thin;
-	display: flex;
-	flex-direction: column-reverse;
+	padding: 5% !important;
+	width: 95% !important;
+	margin-bottom: 5% !important;
+}
+
+.messages-zone {
+	margin: 5px;
+	border: 0.1rem solid #f9f9f9;
+	border-radius: variables.$border-radius-big;
+	scrollbar-color: rgb(119, 119, 119) rgb(174, 174, 174);
+	scrollbar-width: thin;
+	//display: flex;
+	//flex-direction: column-reverse;
 }

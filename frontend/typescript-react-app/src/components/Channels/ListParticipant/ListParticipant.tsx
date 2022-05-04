@@ -153,38 +153,6 @@ export default function ListParticipant(props: ParticipantProps) {
 		window.top.location = url_begin.concat(":3030/profile/").concat(selectedUser);
 	}
 
-	/*
-	async function makeAPIcall(endpoint: string, toastSuccessMessage: string, toastErrorMessage: string, me: boolean) {
-		let toast = new ToastAlerts(null);
-		const url = url_begin.concat(':3000/api/chat/').concat(endpoint);
-
-		let user: string;
-		me === true ? user = props.login : user = selectedUser;
-		const body = {
-			"idChat": props.activeID,
-			"user": user,
-			"time": new Date()
-		}
-		await axios.post(url, body)
-			.then(response => {
-				toast.notifySuccess(toastSuccessMessage);
-				if (endpoint === "quit") {
-					if (props.isChan === true) {
-						document.getElementById("display_chan_".concat(props.activeName)).remove();
-						let title = document.getElementsByClassName("chan-title_notselected")[0].innerHTML;
-						document.getElementsByClassName("chan-title_notselected")[0].className = 'chan-title_selected';
-					}
-					else
-						document.getElementById("dm_chan_".concat(props.activeName)).remove();
-				}
-			})
-			.catch(error => {
-				toast.notifyDanger(toastErrorMessage);
-			});
-		props.socket.emit('refresh', props.activeName);
-	}
-	*/
-
 	const handleClose = () => setShow(false);
 
 	const handleShow = () => {
@@ -325,17 +293,6 @@ export default function ListParticipant(props: ParticipantProps) {
 					</div>
 				</div>
 			</div>
-			{/* <ToastContainer
-				position="top-right"
-				autoClose={5000}
-				hideProgressBar={false}
-				newestOnTop={false}
-				closeOnClick
-				rtl={false}
-				pauseOnFocusLoss
-				draggable
-				pauseOnHover
-			/> */}
 		</div>
 	);
 }

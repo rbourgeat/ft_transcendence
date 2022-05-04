@@ -13,7 +13,6 @@ export default function ListPubChannels() {
 				pubChanSet(response.data);
 			})
 			.catch((error) => {
-				//console.log(error);
 				;
 			})
 	}, [])
@@ -24,11 +23,9 @@ export default function ListPubChannels() {
 			"name": chanName
 		})
 			.then(function (response) {
-				//console.log(response);
 				;
 			})
 			.catch(function (error) {
-				//console.log(error);
 				;
 			});
 	}

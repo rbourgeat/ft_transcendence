@@ -35,7 +35,6 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 
 	const [socket, setSocket] = React.useState(io("http://".concat(process.env.REACT_APP_IP).concat(":3000/chat"), { query: { username: username } }));
 
-	// REPRENDRE USER ICI - SOCKET
 	async function getUser() {
 		let url = "";
 		if (process.env.REACT_APP_IP == "" || process.env.REACT_APP_IP == undefined)
@@ -50,8 +49,6 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 				setUsername(res.data.login);
 				username = res.data.login;
 				setLoad(true);
-				//setSocket(io("http://".concat(process.env.REACT_APP_IP).concat(":3000/chat"), { query: { username: username } }));
-				//console.log(username + ' <-- result of get user')
 			})
 			.catch((err) => {
 				console.log("Error while getting api auth");
@@ -106,14 +103,12 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 	}
 
 	function selectColor() {
-		//console.log("status:" + status);
 		if (status == "offline")
 			setColor("grey")
 		if (status == "online")
 			setColor("green")
 		if (status == "ingame")
 			setColor("purple")
-		//console.log("final color:" + color);
 	}
 
 	function addContact(login: string) {
@@ -187,7 +182,6 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 			else if (relationStatus === "blocked")
 				isBlocked = true;
 
-			//console.log("with " + props.login + " your friend status: " + isFriend + " your blocked status:" + isBlocked);
 			return (
 				<>
 					{isFriend ? "" :
@@ -226,21 +220,14 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 
 	useEffect(() => {
 		getUser();
-		/*
-		if (calledOnce.current) {
-			return;
-		}
-		*/
 		setLoad(true);
 		selectColor();
 		calledOnce.current = true;
 
 		socket.on('updateStatus', (...args) => {
-			//console.log("receive update status for " + args[0] + ": " + args[1]);
 			if (props.login == args[0]) {
-				console.log("name: " + props.login + " / " + "status: " + args[1]);
+				//console.log("name: " + props.login + " / " + "status: " + args[1]);
 				setStatus(args[1]);
-				//console.log("go in select colorafter socketon");
 				selectColor();
 			}
 

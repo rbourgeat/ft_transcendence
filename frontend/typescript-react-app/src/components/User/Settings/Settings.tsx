@@ -34,7 +34,7 @@ export default function Settings(props: SettingsProps) {
 
 	//status, realtime variable (a reprendre avec les sockets)
 	const [status, setStatus] = React.useState("online");
-	const [color, setColor] = React.useState("grey");
+	const [color, setColor] = React.useState("green");
 
 	//MODALS
 	const [show, setShow] = useState(false);
@@ -79,7 +79,7 @@ export default function Settings(props: SettingsProps) {
 				localStorage.setItem("2faverif", "false");
 			})
 			.catch((error) => {
-				toast.notifyDanger('🥲 Error while turnoff on 2FA.');
+				//toast.notifyDanger('🥲 Error while turnoff on 2FA.');
 				;
 			})
 	}
@@ -138,6 +138,7 @@ export default function Settings(props: SettingsProps) {
 		}
 	}
 
+<<<<<<< HEAD
 	function selectColor() {
 		//console.log("status:" + status);
 		if (status == "offline")
@@ -149,6 +150,8 @@ export default function Settings(props: SettingsProps) {
 		//console.log("final color:" + color);
 	}
 
+=======
+>>>>>>> b50f5e92f5b2d81371340410ac3687f964c64dd1
 	function getUser() {
 		let url = url_begin.concat(":3000/api/auth/");
 
@@ -159,6 +162,10 @@ export default function Settings(props: SettingsProps) {
 		axios.defaults.withCredentials = true;
 
 		let username = "";
+<<<<<<< HEAD
+=======
+
+>>>>>>> b50f5e92f5b2d81371340410ac3687f964c64dd1
 		axios.get(url)
 			.then(res => {
 				console.log("settings status:" + res.data.status);
@@ -183,14 +190,12 @@ export default function Settings(props: SettingsProps) {
 				socket.emit("update", "online");
 			})
 			.catch((err) => {
-				//console.log("Auth returned 400 -> missing cookie");
 				localStorage.setItem("loggedIn", "false");
 				window.top.location = url_begin.concat(":3030/auth/");
 			})
 
 	}
 
-	/*async*/
 	function renderImage(login: string) {
 		let ax = new MyAxios(null);
 		let log42 = localStorage.getItem("login42");
@@ -198,8 +203,8 @@ export default function Settings(props: SettingsProps) {
 		if (login != log42)
 			haschanged = true;
 		if (log42 != "" && log42 != null && log42 != "null" && log42 != undefined)
-			return (/*await*/ ax.render_avatar(login, log42, haschanged));
-		return (/*await*/ ax.render_avatar(login, "", haschanged));
+			return ( ax.render_avatar(login, log42, haschanged));
+		return (ax.render_avatar(login, "", haschanged));
 	}
 
 	const [socket, setSocket] = React.useState(io("http://".concat(process.env.REACT_APP_IP).concat(":3000/chat"), { query: { username: username } }));
@@ -222,8 +227,6 @@ export default function Settings(props: SettingsProps) {
 
 		if (localStorage.getItem("2fa") == "true")
 			setActivated2fa(true);
-		// let toast = new ToastAlerts(null);
-		// toast.notifySuccess("Component loaded !");
 		getUser();
 		selectColor();
 		calledOnce.current = true;
@@ -231,7 +234,6 @@ export default function Settings(props: SettingsProps) {
 	}, [status, color]);
 
 	useEffect(() => {
-		//console.log("updating because of new username");
 		getUser();
 	}, [exited]);
 
@@ -244,11 +246,6 @@ export default function Settings(props: SettingsProps) {
 						<div id="settings">
 							<h2 id="user--settings">Settings</h2>
 							<br />
-							{/*{load == false ?
-								<div className="spinner-border m-5" role="status">
-									<span className="sr-only"><AiOutlineLoading /></span>
-								</div>
-								:*/}
 							<>
 								<img id={username} className="profile--pic" height="80" width="80" />
 								<svg className="log--color_profile" height="40" width="40">
@@ -278,14 +275,9 @@ export default function Settings(props: SettingsProps) {
 								<div className="row d-flex justify-content-center text-center">
 									<div id="change--username--div">
 										<h3 id="activate--modal">Change username</h3>
-										{/*<button id="change--username" type="button" className="btn btn-outline-dark"
-												onClick={handleShow}>Click to change
-											</button>*/}
 										<EditUsernameModal
 											setUsername={setUsername}
 											username={username}
-											//checkexited={setCheckExited}
-											//setUpdate={setUpdate}
 											exited={checkExited}
 										/>
 										<br />
@@ -328,23 +320,11 @@ export default function Settings(props: SettingsProps) {
 														<button className="btn btn-outline-dark" type="button" id="check--auth" onClick={checkCode}>Check</button>
 													</>
 													: <p className="black--text"></p>}
-												{/* <ToastContainer
-														position="top-right"
-														autoClose={5000}
-														hideProgressBar={false}
-														newestOnTop={false}
-														closeOnClick
-														rtl={false}
-														pauseOnFocusLoss
-														draggable
-														pauseOnHover
-													/> */}
 											</div>
 										</div>
 									</div>
 								</div>
 							</>
-							{/*}*/}
 						</div>
 					</div>
 				</div>

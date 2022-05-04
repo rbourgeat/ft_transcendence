@@ -19,8 +19,6 @@ export interface ParticipantsProps {
 }
 
 export default function Participant(props: ParticipantsProps) {
-	//const [isBanned, setIsBanned] = React.useState("ban");
-	//const [isMuted, setIsMuted] = React.useState("mute");
 	const [isAdmin, setIsAdmin] = React.useState(false);
 	const [color, setColor] = React.useState("grey");
 	const [status, setStatus] = React.useState(props.status);
@@ -28,42 +26,23 @@ export default function Participant(props: ParticipantsProps) {
 	const calledOnce = React.useRef(false);
 
 	function selectColor() {
-		//console.log("status:" + status);
 		if (status == "offline")
 			setColor("grey")
 		if (status == "online")
 			setColor("green")
 		if (status == "ingame")
 			setColor("purple")
-		//console.log("final color:" + color);
 	}
 
 	useEffect(() => {
 		selectColor();
 
 		props.socket.on('updateStatus', (...args) => {
-
-			//console.log("receive update status for in chat" + args[0] + ": " + args[1]);
 			if (props.username == args[0]) {
-				//console.log("name: " + props.username + " / " + "status: " + args[1]);
 				setStatus(args[1]);
-				//console.log("go in select colorafter socketon");
 				selectColor();
 			}
 		})
-
-		/*
-		if (props.role === 'ban')
-			setIsBanned("unban");
-		else if (props.role === 'mute')
-			setIsMuted("unmute");
-		if (calledOnce.current) {
-			return;
-		}
-		*/
-		//console.log('props of ' + props.username + ', owner: ' + props.owner + ', admin: ' + props.admin + ', role: ' + props.role);
-		//console.log('current user is:' + props.currentUser + ', its admin status:' + props.currentUserAdmin);
-		//calledOnce.current = true;
 	}, [status, color]);
 
 	function setUpBan() {
