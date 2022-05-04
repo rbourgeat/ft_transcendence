@@ -15,7 +15,6 @@ import Achievements from "../Achievements/Achievements";
 import CreateChan from "../Channels/CreateChan/CreateChan";
 import People from "../People/People";
 import Game from "../Game/Game";
-import Pong from "../Pong/Pong";
 import Login2FA from "../Auth/Login2FA/Login2FA"
 import Channels from "../Channels/Channels"
 import axios from 'axios';
@@ -101,7 +100,6 @@ function App() {
             <Route path="/channels" element={<Channels username={username} />} />
             <Route path="/people" element={<People login={username} />} />
             <Route path="/game" element={<Game />} />
-            <Route path="/pong" element={<Pong />} />
             <Route path="/profile/:login" element={<Profile />} />
             <Route path="*" element={<NotFound />} />
           </>
