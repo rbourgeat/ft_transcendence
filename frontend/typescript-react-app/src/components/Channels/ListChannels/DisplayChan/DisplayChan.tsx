@@ -120,7 +120,7 @@ export default function DisplayChan(props: DisplayChanProps) {
 				{load === true ?
 					<>
 						<button type="button" id={"chan-title_".concat(props.channel.id)} className={isSelected === true ? "chan-title_selected" : "chan-title_notselected"}
-							onClick={() => { selectChan() }}>{isDM ? "DMlol" : props.channel.name}</button>
+							onClick={() => { selectChan() }}>{isDM ? "nom du mec" : props.channel.name}</button>
 					</> : ""}
 			</div>
 		</>
