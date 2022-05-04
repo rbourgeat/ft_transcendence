@@ -5,6 +5,7 @@
 	background: white;
 	position: sticky;
 	border: 0.1rem solid #f9f9f9 !important;
+	//border: 0.2rem solid orange !important;
 	margin-right: 2% !important;
 	margin-left: 2% !important;
 	height: 100% !important;
@@ -71,14 +72,26 @@
 	padding-top: 10px !important;
 }
 
+.text_ul {
+	//border: 0.2rem solid orange !important;
+	border: 0.1rem solid #f9f9f9;
+	border-radius: variables.$border-radius-big !important;
+	height: 90% !important;
+	position: absolute;
+	overflow-y: scroll !important;
+	scrollbar-color: rgb(119, 119, 119) rgb(174, 174, 174);
+	scrollbar-width: thin;
+	padding: 5% !important;
+	width: 95% !important;
+	margin-bottom: 5% !important;
+}
+
 .messages-zone {
 	margin: 5px;
 	border: 0.1rem solid #f9f9f9;
-	height: 85% !important;
 	border-radius: variables.$border-radius-big;
-	overflow-y: scroll;
 	scrollbar-color: rgb(119, 119, 119) rgb(174, 174, 174);
 	scrollbar-width: thin;
-	display: flex;
-	flex-direction: column-reverse;
+	//display: flex;
+	//flex-direction: column-reverse;
 }

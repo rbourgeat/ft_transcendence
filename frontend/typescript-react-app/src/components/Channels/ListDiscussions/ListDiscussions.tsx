@@ -115,7 +115,7 @@ export default function ListDiscussions(props: ListDiscussionsProps) {
 				}
 			</div>
 			<div className="messages-zone">
-				<ul className="text">
+				<ul className="text text_ul">
 					{
 						props.isBanned === true ?
 							null
