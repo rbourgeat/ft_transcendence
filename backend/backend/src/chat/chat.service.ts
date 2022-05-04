@@ -116,6 +116,14 @@ export class ChatService {
 			return;
 	}
 
+	async getChatById(id: number) {
+		const chat = await this.chatRepository.findOne({ id: id });
+		if (chat)
+			return chat;
+		else
+			return;
+	}
+
 	/**
 	 * 1.check for duplicate
 	 * 2.create new participant

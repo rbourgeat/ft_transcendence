@@ -33,6 +33,13 @@ export class UserService {
 		throw new HttpException('User not found', HttpStatus.NOT_FOUND);
 	}
 
+		async getUserById(id: number) {
+		const user = await this.userRepository.findOne({ id: id });
+		if (user)
+			return user;
+		throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+	}
+
 	async getUserByLogin42(login: string) {
 		const user = await this.userRepository.findOne({ login42: login });
 		if (user)

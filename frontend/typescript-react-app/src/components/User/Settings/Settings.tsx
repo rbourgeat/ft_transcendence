@@ -138,8 +138,18 @@ export default function Settings(props: SettingsProps) {
 		}
 	}
 
+	function selectColor() {
+		//console.log("status:" + status);
+		if (status == "offline")
+			setColor("grey")
+		if (status == "online")
+			setColor("green")
+		if (status == "ingame")
+			setColor("purple")
+		//console.log("final color:" + color);
+	}
+
 	function getUser() {
-		console.log("aaaaaaaaaaaaaaaaaaaaaaa")
 		let url = url_begin.concat(":3000/api/auth/");
 
 		axios.defaults.baseURL = url_begin.concat(':3000/api/');
@@ -149,7 +159,6 @@ export default function Settings(props: SettingsProps) {
 		axios.defaults.withCredentials = true;
 
 		let username = "";
-
 		axios.get(url)
 			.then(res => {
 				console.log("settings status:" + res.data.status);
@@ -196,13 +205,26 @@ export default function Settings(props: SettingsProps) {
 	useEffect(() => {
 
 		if (calledOnce.current) {
+			socket.on('updateStatus', (...args) => {
+				//console.log("receive update status for " + args[0] + ": " + args[1]);
+				if (username == args[0]) {
+					console.log("name: " + username + " / " + "status: " + args[1]);
+					setStatus(args[1]);
+					//console.log("go in select colorafter socketon");
+					selectColor();
+				}
+
+			})
 			return;
 		}
+
 		if (localStorage.getItem("2fa") == "true")
 			setActivated2fa(true);
 		getUser();
+		selectColor();
 		calledOnce.current = true;
-	});
+
+	}, [status, color]);
 
 	useEffect(() => {
 		getUser();

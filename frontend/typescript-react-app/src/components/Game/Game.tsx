@@ -479,7 +479,8 @@ export default function Game() {
 		isSearching = false;
 		setActive(true);
 		setActive2(false);
-		document.querySelector('#search-button').textContent = "Refaire une partie";
+		// document.querySelector('#search-button').textContent = "Refaire une partie";
+		SearchText = "Refaire une partie";
 	}
 
 	return (
@@ -511,7 +512,7 @@ export default function Game() {
 									: ""}
 								<div className="row d-flex justify-content-center text-center">
 									{isActive ? <button type="button" className="btn btn-outline-light" id="search-button" onClick={() => sendSearch()}>{SearchText}</button> : ""}
-									{isActive2 ? <button type="button" className="btn btn-outline-light" id="search-button" onClick={() => removeInvit()}>Annuler l'invitation</button> : ""}
+									{isActive2 ? <button type="button" className="btn btn-outline-light" id="search-button2" onClick={() => removeInvit()}>Annuler l'invitation</button> : ""}
 								</div>
 								<p id="victoryMessage"></p>
 								<p id="waitingPlayer"></p>

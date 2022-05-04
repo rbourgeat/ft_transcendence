@@ -141,7 +141,7 @@ export default function Live() {
 
 	//va permettre d'identifier les joueurs
 	socket.on("playerMove", (body: string) => {
-		console.log("Player move called");
+		// console.log("Player move called");
 		// Update Paddle position in real time
 		const b = body.split(':');
 		if (joueurs.indexOf(b[0]) == -1 && adversaires.indexOf(b[0]) == -1) {
