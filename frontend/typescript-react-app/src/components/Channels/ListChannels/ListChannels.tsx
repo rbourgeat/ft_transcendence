@@ -21,7 +21,7 @@ export interface ListChannelsProps {
 
 export default function ListChannels(props: ListChannelsProps) {
 	const [channels, setChannels] = React.useState([{}]);
-	const [DMs, setDMs] = React.useState([{}]);
+	// const [DMs, setDMs] = React.useState([{}]);
 	const [receiver, setReceiver] = React.useState([]);
 
 	//Affichage sélection DM ou channels
@@ -49,80 +49,99 @@ export default function ListChannels(props: ListChannelsProps) {
 				let first = 0;
 				while (i < len) {
 					if (channels[i].direct === false) {
+						/*
 						if (first === 0) {
 							setMinID(channels[i].id);
 							first = 1;
 							setCount(1);
 						}
+						*/
 						setChannels(prevArray => [...prevArray, channels[i]]);
 					}
-					i++;
-				}
-				setLoad(true);
-				props.setIsChan(true);
-			})
-			.catch((error) => {
-				;
-			})
-	}
-
-	function renderListDMs() {
-		axios.defaults.withCredentials = true;
-		let url = "";
-		if (process.env.REACT_APP_IP == "" || process.env.REACT_APP_IP == undefined)
-			url = "http://localhost:3000/api/chat/joinedChannels";
-		else
-			url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/chat/joinedChannels");
-		axios.get(url)
-			.then(res => {
-				let DMs = res.data;
-				let len = DMs.length;
-				let i = 0;
-				let first = 0;
-
-				while (i < len) {
-					if (DMs[i].direct === true) {
+					else if (channels[i].direct === true) {
+						/*
 						if (first === 0) {
-							setMinID(DMs[i].id);
+							setMinID(channels[i].id);
 							first = 1;
 							setCount(1);
 
 						}
-						setDMs(prevArray => [...prevArray, DMs[i]]);
-						setReceiver(prevArray1 => [...prevArray1, DMs[i].participates]);
+						*/
+						setChannels(prevArray => [...prevArray, channels[i]]);
+						setReceiver(prevArray1 => [...prevArray1, channels[i].participates]);
 					}
+					console.log("get chan/dm:" + channels[i].name);
 					i++;
 				}
 				setLoad(true);
-				props.setIsChan(false);
+				//props.setIsChan(true);
 			})
 			.catch((error) => {
 				;
 			})
 	}
 
+	// function renderListDMs() {
+	// 	axios.defaults.withCredentials = true;
+	// 	let url = "";
+	// 	if (process.env.REACT_APP_IP == "" || process.env.REACT_APP_IP == undefined)
+	// 		url = "http://localhost:3000/api/chat/joinedChannels";
+	// 	else
+	// 		url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/chat/joinedChannels");
+	// 	axios.get(url)
+	// 		.then(res => {
+	// 			let DMs = res.data;
+	// 			let len = DMs.length;
+	// 			let i = 0;
+	// 			let first = 0;
+
+	// 			while (i < len) {
+	// 				if (DMs[i].direct === true) {
+	// 					if (first === 0) {
+	// 						setMinID(DMs[i].id);
+	// 						first = 1;
+	// 						setCount(1);
+
+	// 					}
+	// 					setDMs(prevArray => [...prevArray, DMs[i]]);
+	// 					setReceiver(prevArray1 => [...prevArray1, DMs[i].participates]);
+	// 				}
+	// 				i++;
+	// 			}
+	// 			setLoad(true);
+	// 			props.setIsChan(false);
+	// 		})
+	// 		.catch((error) => {
+	// 			;
+	// 		})
+	// }
+
 	function displaySelectedCat(arg: string) {
+		renderListChannels();
+		/*
 		if (arg === "Channels") {
 			props.setIsChan(true);
 			renderListChannels();
 		}
 		else if (arg === "DMs") {
 			props.setIsChan(false);
-			renderListDMs();
+			renderListChannels();
 		}
+		*/
 	}
 
 	//nécessaire pour mettre à jour suite à la fermeture d'un modal
 	useEffect(() => {
-		clean();
-		displaySelectedCat(selectedCat);
-	}, [exited])
+		//clean();
+		//displaySelectedCat(selectedCat);
+	}, [/*exited*/])
 
 	//permet d'afficher les channels sans faire de doublons
 	useEffect(() => {
-		if (load === true) {
-			displaySelectedCat(selectedCat);
-		}
+		renderListChannels();
+		//if (load === true) {
+		//	displaySelectedCat(selectedCat);
+		//}
 	}, [])
 
 	function clean() {
@@ -140,7 +159,7 @@ export default function ListChannels(props: ListChannelsProps) {
 		i = 0;
 		while (i < len) {
 			chans.pop();
-			DMs.pop();
+			// DMs.pop();
 			i++;
 		}
 	}
@@ -167,7 +186,7 @@ export default function ListChannels(props: ListChannelsProps) {
 		let i: number = 0;
 		while (i < len) {
 			chans.pop();
-			DMs.pop();
+			// DMs.pop();
 			i++;
 		}
 		displaySelectedCat("Channels");
@@ -184,15 +203,14 @@ export default function ListChannels(props: ListChannelsProps) {
 					<CreateDM setExited={setExited} setUpdate={setUpdate} exited={exited} />
 					<JoinChan socket={props.socket} setExited={setExited} setUpdate={setUpdate} exited={exited} login={props.login} />
 				</div>
-				<p className="selected--categorie">{selectedCat === "Channels" ? "Your Channels" : "Your direct messages"}</p>
+				{/* <p className="selected--categorie">{selectedCat === "Channels" ? "Your Channels" : "Your direct messages"}</p> */}
 				<div className="displaying-div">
-					{load === true && selectedCat === "Channels" && count !== 0 ?
+					{load === true ?
 						Object.keys(channels).map(function (key, index) {
-							if (channels[key].id !== undefined && selectedCat === "Channels") {
+							if (channels[key].id !== undefined) {
 								return (
 									<div key={channels[key].id} className="displaying_channels">
 										<DisplayChan
-											dm={DMs[key]}
 											isChan={true}
 											channel={channels[key]}
 											minId={minId}
@@ -207,8 +225,8 @@ export default function ListChannels(props: ListChannelsProps) {
 								)
 							}
 						})
-						: ""}
-					{load === true && selectedCat === "Channels" && count === 0 ?
+						: null}
+					{/* {load === true && selectedCat === "Channels" && count === 0 ?
 						<>
 							<p className="no_message">You have no channel</p>
 						</>
@@ -217,16 +235,17 @@ export default function ListChannels(props: ListChannelsProps) {
 						<>
 							<p className="no_message">You have no DM</p>
 						</>
-						: ""}
-					{load === true && selectedCat === "DMs" && count !== 0 ?
-						Object.keys(DMs).map(function (key, index) {
-							if (DMs[key].id !== undefined && selectedCat === "DMs") {
+						: ""} */}
+						
+					{/* {load === true && selectedCat === "DMs" && count !== 0 ?
+						Object.keys(channels).map(function (key, index) {
+							if (channels[key].id !== undefined && selectedCat === "DMs") {
 								return (
-									<div key={DMs[key].id} className="displaying_dm">
+									<div key={channels[key].id} className="displaying_dm">
 										<DisplayChan
-											dm={DMs[key]}
+											dm={channels[key]}
 											isChan={false}
-											channel={DMs[key]}
+											channel={channels[key]}
 											minId={minId}
 											login={props.login}
 											setHasPass={props.setHasPass}
@@ -237,12 +256,14 @@ export default function ListChannels(props: ListChannelsProps) {
 									</div>)
 							}
 						})
-						: ""}
+						: ""} */}
+					
 				</div>
-				<div className="send--dm_div">
+			
+				{/* <div className="send--dm_div">
 					<button type="button" className="send--dm" onClick={displayDM} disabled={selectedCat === "DMs" ? true : false}>DM</button>
 					<button type="button" className="display--channels" onClick={displayChannels} disabled={selectedCat === "Channels" ? true : false}>Channels</button>
-				</div>
+				</div> */}
 			</div>
 		</div>
 	);
