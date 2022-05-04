@@ -59,6 +59,7 @@ export default function ListChannels(props: ListChannelsProps) {
 						}
 						*/
 						setChannels(prevArray => [...prevArray, channels[i]]);
+						//console.log("channel is " + channels[i]);
 					}
 					else if (channels[i].direct === true) {
 						/*
@@ -71,8 +72,10 @@ export default function ListChannels(props: ListChannelsProps) {
 						*/
 						setChannels(prevArray => [...prevArray, channels[i]]);
 						setReceiver(prevArray1 => [...prevArray1, channels[i].participates]);
+						//console.log("channel is " + channels[i]);
 					}
-					console.log("get chan/dm:" + channels[i].name);
+					//console.log("get chan/dm:" + channels[i].name);
+					//console.log("get chan/dm:" + JSON.stringify(channels[i]));
 					i++;
 				}
 				setLoad(true);
@@ -230,6 +233,7 @@ export default function ListChannels(props: ListChannelsProps) {
 											socket={props.socket}
 											update={update}
 											activeName={props.activeName}
+											direct={channels[key].direct}
 										/>
 									</div>
 								)

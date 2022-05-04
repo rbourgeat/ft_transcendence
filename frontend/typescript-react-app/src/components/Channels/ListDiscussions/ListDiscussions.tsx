@@ -128,7 +128,7 @@ export default function ListDiscussions(props: ListDiscussionsProps) {
 			<div className="title_chat_div">
 				{
 					props.hide === false ?
-						<p className="chat--title">{props.activeName}</p>
+						<p className="chat--title">{props.activeName.startsWith("direct") ? "DM" : props.activeName}</p>
 						:
 						<p className="chat--title"></p>
 				}
