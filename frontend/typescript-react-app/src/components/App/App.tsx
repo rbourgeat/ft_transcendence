@@ -29,8 +29,13 @@ import { Socket } from 'socket.io-client';
 import io from "socket.io-client";
 
 let url_begin = "";
+
 if (process.env.REACT_APP_IP == "" || process.env.REACT_APP_IP == undefined)
+{
   url_begin = "http://localhost";
+  console.log("process env is empty !")
+}
+  
 else
   url_begin = "http://".concat(process.env.REACT_APP_IP);
 

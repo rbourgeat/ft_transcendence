@@ -51,6 +51,20 @@ export default function Profile() {
 	const [level, setLevel] = React.useState(0);
 	const [nextlevel, setNextLevel] = React.useState(0);
 	const [pendingInvite, setPendingInvite] = React.useState(false);
+	const [ftlogin, setftLogin] = React.useState("");
+	const [avatar, setAvatar] = React.useState();
+	
+	// function getAvatar()
+	// {
+	// 	let url = "";
+	// 	if (process.env.REACT_APP_IP == "" || process.env.REACT_APP_IP == undefined)
+	// 		url = "http://localhost:3000/api/user/".concat(login);
+	// 	else 
+	// 		url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/user/").concat(login);
+		
+	// 	return ;
+
+	// }
 
 	function getUserLogin(log: string) {
 		let url = "";
@@ -71,6 +85,7 @@ export default function Profile() {
 				setWins(res.data.total_wins);
 				setRatio(res.data.win_loss_ration);
 				setXp(res.data.xp);
+				setAvatar(res.data.avatar);
 				if (res.data.status === "offline")
 					setColor("grey")
 				if (res.data.status === "online") {
@@ -88,17 +103,64 @@ export default function Profile() {
 		setLoad(true);
 	}
 
-	function renderImage(login: string, isUserProfile: boolean) {
-		let ax = new MyAxios(null);
-		let log42 = localStorage.getItem("login42");
-		let haschanged = false;
-		if (login != log42)
-			haschanged = true;
-		if (isUserProfile == false)
-			haschanged = false;
-		if (log42 != "" && log42 != null && log42 != undefined)
-			return (ax.render_avatar(login, log42, haschanged));
-		return (ax.render_avatar(login, "", haschanged));
+	// function renderImage(login: string, isUserProfile: boolean) {
+	// 	let ax = new MyAxios(null);
+	// 	let log42 = localStorage.getItem("login42");
+	// 	// let logi = localStorage.getItem("login");
+
+	// 	console.log("login is " + login + " and login42 is " + log42);
+
+	// 	let haschanged = false;
+	// 	if (login != log42)
+	// 		haschanged = true;
+	// 	if (isUserProfile == false)
+	// 		haschanged = false;
+	// 	// if (log42 != "" && log42 != null && log42 != undefined)
+	// 		// return (ax.render_avatar(login, log42, haschanged));
+	// 	return (ax.render_avatar(login, log42, haschanged, isUserProfile));
+	// }
+
+	function renderImage(avatar: string, login: string, ftlogin?: string, extra?: string) {
+		if (!avatar)
+			return;
+
+		console.log("avatar is " + avatar);
+
+		if (avatar.startsWith("http")) {
+
+			//console.log("youpi !");
+
+			return (<img className="profile--pic"
+						width="100" height="100"
+						src={avatar}
+						id={login} />);
+
+			var myImg = document.getElementById(login) as HTMLImageElement;
+		}
+
+		let url = "";
+
+		// console.log("hihi");
+
+		if (process.env.REACT_APP_IP == "" || process.env.REACT_APP_IP == undefined)
+			url = "http://localhost:3000/api/user/".concat(avatar).concat("/avatar");
+		else
+			url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/user/").concat(avatar).concat("/avatar/");
+
+		let res = axios.get(url, { responseType: 'blob' })
+			.then(res => {
+				let myImage: HTMLImageElement = document.querySelector("#".concat(login + "_" + extra));
+				var objectURL = URL.createObjectURL(res.data);
+				myImage.src = objectURL;
+				return (<img className="profile--pic"
+				width="100" height="100"
+				src={myImage.src} id={login} />);
+			})
+			.catch((error) => {
+				return (<img className="profile--pic"
+				width="100" height="100"
+				src="https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg" id={login} />);
+			})
 	}
 
 	useEffect(() => {
@@ -206,8 +268,9 @@ export default function Profile() {
 										<br />
 										<div id="text-type">{isFriend == true ? "You are able to see a detailed profile because you are friends 🥰 !"
 											: "You are not able to see a detailed profile because you are not friends 😢 !"}</div>
-										<img id={login} className="profile--pic" src="" width="100" height="100" />
-										{renderImage(login, isUser)}
+										<img id={login} width="100" height="100" className="profile--pic" src="" />
+										{/* {renderImage("", login, isUser)} */}
+										{renderImage(avatar, login)}
 										<svg className="log--color" height="40" width="40">
 											<circle cx="20" cy="20" r="15" fill={color} stroke="white" style={{ strokeWidth: '3' }} />
 										</svg>

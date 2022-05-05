@@ -694,7 +694,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
             })
     }
 
-    render_avatar(login: string, login42: string, haschanged: boolean) {
+    render_avatar(login: string, login42: string, haschanged: boolean, isUserProfile?: boolean) {
         if (!login) {
             return;
         }
@@ -708,12 +708,15 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
 
         let imageCode = null;
         let imageName = "alt-photo";
+        console.log("chosen login is " + chosenLogin);
+
         let url = url_begin.concat(":3000/api/user/").concat(chosenLogin)
 
         let res = axios.get(url)
             .then(res => {
                 imageCode = res.data.avatar;
-                return (this.getImage(imageCode, chosenLogin, is42, haschanged));
+                console.log("here");
+                this.getImage(imageCode, chosenLogin, is42, haschanged);
             })
             .catch(error => {
                 //console.log("Catched error getting avatar");
