@@ -49,15 +49,19 @@ export class ChatGateway implements OnGatewayConnection {
 
 		if (b[4] == "chat") {
 			const message = await this.chatService.saveChatMessage(b[1], b[2], author);
-			const messages = await this.chatService.getMessagesbyName(b[1]);
-			this.server.emit('refreshMessages', messages, b[1]);
+			//const messages = await this.chatService.getMessagesbyName(b[1]);
+			//const messages = await this.chatService.getMessagesById2(Number(b[3]), author.login);
+			// this.server.emit('refreshMessages', messages, b[1]);
+			this.server.emit('goRefreshChannel', b[1]);
 		}
 		else if (b[4] == "dm") {
 			var y: number = +b[3];
 			const dm = await this.chatService.getChatById(y);
 			const message = await this.chatService.saveChatMessage(dm.name, b[2], author);
-			const messages = await this.chatService.getMessagesbyName(dm.name);
-			this.server.emit('refreshMessages', messages, dm.name);
+			//const messages = await this.chatService.getMessagesbyName(dm.name);
+			//const messages = await this.chatService.getMessagesById2(dm.id, author.login);
+			// this.server.emit('refreshMessages', messages, dm.name);
+			this.server.emit('goRefreshChannel', b[1]);
 		}
 	}
 

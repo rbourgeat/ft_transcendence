@@ -22,7 +22,7 @@ var gm = 0;
 let url_begin = "";
 if (process.env.REACT_APP_IP == "" || process.env.REACT_APP_IP == undefined)
 	url_begin = "http://localhost";
-else 
+else
 	url_begin = "http://".concat(process.env.REACT_APP_IP);
 let selectedUser = "";
 
@@ -91,6 +91,10 @@ export default function Game() {
 	}
 
 	socket.on("roundStartLIVE", (...args) => {
+		if (live !== null && (document.querySelector('#player-score').textContent == "5" ||
+			document.querySelector('#player2-score').textContent == "5") && joueur != joueur2 && joueur != joueur1)
+			window.top.location = url_begin.concat(":3030/live");
+
 		if (live !== null || joueur == joueur2) {
 			const b = args[0].split(':');
 			document.querySelector('#joueur1').textContent = b[1] + ": ";
@@ -441,6 +445,7 @@ export default function Game() {
 			setWin(true);
 		cancelAnimationFrame(anim);
 		// Set ball and players to the center
+
 		game.ball.x = canvas.width / 2 - BALL_HEIGHT / 2;
 		game.ball.y = canvas.height / 2 - BALL_HEIGHT / 2;
 		game.player.y = canvas.height / 2 - PLAYER_HEIGHT / 2;
@@ -448,6 +453,7 @@ export default function Game() {
 		// Reset speed
 		game.ball.speed.x = 0;
 		game.ball.speed.y = 0;
+
 
 		socket2.emit("update", joueur1 + ":online");
 		socket2.emit("update", joueur2 + ":online");

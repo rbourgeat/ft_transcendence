@@ -7,8 +7,7 @@ import io from "socket.io-client";
 import axios from "axios";
 import { Form } from 'react-bootstrap'
 
-var joueurs = [];
-var adversaires = [];
+
 var canvas = [];
 var game = [];
 
@@ -19,6 +18,9 @@ else
 	url_begin = "http://".concat(process.env.REACT_APP_IP);
 
 export default function Live() {
+	var joueurs = [];
+	var adversaires = [];
+
 	let socket = io(url_begin.concat(":3000/game"));
 	const [myArgs, setmyArgs] = React.useState([""]);
 	const [displayedNo, setDisplayedNo] = React.useState(false);
@@ -140,31 +142,46 @@ export default function Live() {
 
 
 	//va permettre d'identifier les joueurs
-	socket.on("playerMove", (body: string) => {
+	// socket.on("playerMove", (body: string) => {
+	// 	// console.log("Player move called");
+	// 	// Update Paddle position in real time
+	// 	const b = body.split(':');
+	// 	if (joueurs.indexOf(b[0]) == -1 && adversaires.indexOf(b[0]) == -1) {
+	// 		joueurs.push(b[0]);
+	// 		adversaires.push(b[2]);
+	// 		display(body);
+	// 	}
+
+	// 	if (b[3] == "gauche")
+	// 		joueurs.map(joueur => {
+	// 			if (joueur)
+	// 				if (joueur == b[0]) {
+	// 					if (game)
+	// 						game[joueurs.indexOf(joueur)].player.y = Number(b[1]);
+	// 				}
+	// 		});
+	// 	if (b[3] == "droit")
+	// 		adversaires.map(adversaire => {
+	// 			if (adversaire)
+	// 				if (adversaire == b[0]) {
+	// 					game[adversaires.indexOf(adversaire)].player2.y = Number(b[1]);
+	// 				}
+	// 		})
+	// });
+
+	socket.on("ballMoveBack", (body: string) => {
 		// console.log("Player move called");
 		// Update Paddle position in real time
 		const b = body.split(':');
-		if (joueurs.indexOf(b[0]) == -1 && adversaires.indexOf(b[0]) == -1) {
+		if (joueurs.indexOf(b[0]) == -1 && adversaires.indexOf(b[0]) == -1
+			&& joueurs.indexOf(b[1]) == -1 && adversaires.indexOf(b[1])) {
 			joueurs.push(b[0]);
-			adversaires.push(b[2]);
+			adversaires.push(b[1]);
 			display(body);
 		}
+		else
+			return;
 
-		if (b[3] == "gauche")
-			joueurs.map(joueur => {
-				if (joueur)
-					if (joueur == b[0]) {
-						if (game)
-							game[joueurs.indexOf(joueur)].player.y = Number(b[1]);
-					}
-			});
-		if (b[3] == "droit")
-			adversaires.map(adversaire => {
-				if (adversaire)
-					if (adversaire == b[0]) {
-						game[adversaires.indexOf(adversaire)].player2.y = Number(b[1]);
-					}
-			})
 	});
 
 	return (

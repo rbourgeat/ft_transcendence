@@ -137,12 +137,11 @@ export default function ListParticipant(props: ParticipantProps) {
 	}
 
 	function blockUser() {
-		/*
-let ax = new MyAxios(null);
-ax.post_relation_block(selectedUser, "chat");
-*/
-
-		props.socket.emit('block', { user: selectedUser, me: props.login, chatName: props.activeName });
+		try {
+			props.socket.emit('block', { user: selectedUser, me: props.login, chatName: props.activeName });
+		}
+		catch (error) {
+		}
 	}
 
 	function inviteToPlay() {

@@ -5,6 +5,7 @@ import myAxios from "../../Utils/Axios/Axios";
 import "./editUsername.scss";
 import { Modal, Button } from "react-bootstrap";
 import axios from "axios";
+import { copyFileSync } from "fs";
 
 let url_begin = "";
 if (process.env.REACT_APP_IP == "" || process.env.REACT_APP_IP == undefined)
@@ -34,19 +35,26 @@ export default function EditUsernameModal(props: EditUsernameModalProps) {
 	let changeUsername = (event: any) => {
 		event.preventDefault();
 		setSuccessfull(true);
-		let url = url_begin.concat(":3000/api/user/").concat(props.username).concat("/changeto/").concat(inputValue);
+		let url = url_begin.concat(":3000/api/user/changeLogin");
 
+		const body = {
+			oldlogin: props.username,
+			newlogin: inputValue
+		}
 		axios.defaults.baseURL = url_begin.concat(':3000/api/');
 		axios.defaults.headers.post['Content-Type'] = 'application/json';
 		axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 
+		/*
 		let headers = {
 			login: inputValue
 		}
+		*/
 
 		let toast = new ToastAlerts(null);
 
-		axios.patch(url, { headers })
+		axios.patch(url, body
+			/*, { headers }*/)
 			.then(res => {
 				toast.notifySuccess("✨ Successfully updated username");
 				localStorage.setItem("login", inputValue);

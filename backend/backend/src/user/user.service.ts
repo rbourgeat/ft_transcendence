@@ -161,19 +161,15 @@ export class UserService {
 		if (await this.hasExistingRelation(creator, receiver)) {
 			const inviteFromHim = await this.userRelationRepository.findOne({ creator: receiver, receiver: creator });
 			if (inviteFromHim && inviteFromHim.status == 'blocked')
-				// return console.log('You have been blocked by that user');
-				return;
+				return console.log('You have been blocked by that user');
 			else if (inviteFromHim && (inviteFromHim.status == 'pending' || inviteFromHim.status == 'accepted'))
-				// return console.log('A friend request has already been (sent to/received from) that user');
-				return;
+				return console.log('A friend request has already been (sent to/received from) that user');
 
 			const inviteFromYou = await this.userRelationRepository.findOne({ creator: creator, receiver: receiver });
 			if (inviteFromYou && inviteFromYou.status == 'blocked')
-				// return console.log('You have blocked that user, unblock it first');
-				return;
+				return console.log('You have blocked that user, unblock it first');
 			if (inviteFromYou && (inviteFromYou.status == 'pending' || inviteFromYou.status == 'accepted'))
-				// return console.log('You have already sent a invite to that user or you are already friends');
-				return;
+				return console.log('You have already sent a invite to that user or you are already friends');
 		}
 		const newRelation = this.userRelationRepository.create(
 			{
@@ -305,8 +301,9 @@ export class UserService {
 
 	async blockUser(target: User, user: User) {
 		if (target.login == user.login)
-			// return console.log('It is not possible to block yourself!');
 			return;
+
+		// return console.log('It is not possible to block yourself!');
 
 		if (await this.hasExistingRelation(user, target)) {
 			const inviteFromYou = await this.userRelationRepository.findOne({ creator: user, receiver: target });
@@ -316,7 +313,8 @@ export class UserService {
 				return;
 			}
 			else if (inviteFromYou && inviteFromYou.status == 'blocked')
-				throw new HttpException('You have already blocked that user', HttpStatus.CONFLICT);
+				return;
+			//throw new HttpException({ error: 'You have already blocked', status: HttpStatus.CONFLICT }, HttpStatus.CONFLICT);
 
 			const inviteFromHim = await this.userRelationRepository.findOne({ creator: target, receiver: user });
 			if (inviteFromHim && (inviteFromHim.status != 'blocked'))

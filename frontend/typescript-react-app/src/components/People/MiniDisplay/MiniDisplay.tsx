@@ -262,17 +262,6 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 					<br />
 					<p className="user--p" id={"mini--login".concat("_" + props.login)}>{props.login}</p>
 					{buttonToDidsplay()}
-					<ToastContainer
-						position="top-right"
-						autoClose={5000}
-						hideProgressBar={false}
-						newestOnTop={false}
-						closeOnClick
-						rtl={false}
-						pauseOnFocusLoss
-						draggable
-						pauseOnHover
-					/>
 				</div>
 				<svg className="log--color" height="40" width="40">
 					<circle className="svg_circle" cx="20" cy="20" r="15" fill={color} stroke="white" style={{ strokeWidth: '3' }} />

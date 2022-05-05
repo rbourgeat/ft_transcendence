@@ -159,24 +159,26 @@ export default function JoinChan(props: JoinChanProps) {
 		if (!privatePass || privatePass.length <= 0) {
 			body = {
 				"name": privateToJoin,
+				"public": false
 			}
 		}
 		else {
 			body = {
 				"password": privatePass,
 				"name": privateToJoin,
+				"public": false
 			}
 		}
 		// console.log(body);
 		axios.post(url, body)
 			.then(res => {
-				toast.notifySuccess("✅ You joined the channel");
+				toast.notifySuccess("You joined a private channel");
 				props.setUpdate(privateToJoin);
 				setSuccessfull(true);
 				handleCloseFinale();
 			})
 			.catch(error => {
-				//console.log(error);
+				toast.notifyDanger("Failed to join a private channel")
 				setSuccessfull(true);
 				setJoignable([]);
 				handleCloseFinale();

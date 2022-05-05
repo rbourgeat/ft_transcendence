@@ -62,6 +62,10 @@ export default function ListDiscussions(props: ListDiscussionsProps) {
 
 	});
 
+	props.socket.on("goRefreshChannel", (...args) => {
+		props.socket.emit('requestAllMessages', props.activeID);
+	});
+
 	props.socket.on('isBan', (...args) => {
 		if (props.login == args[0] && args[1] == true)
 			props.setIsBanned(true)

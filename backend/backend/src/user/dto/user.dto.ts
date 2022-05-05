@@ -12,6 +12,18 @@ export class UpdateUserDto {
 }
 
 @ApiTags('Users')
+export class PatchNameDto {
+    @ApiProperty()
+    oldlogin: string;
+
+    @IsNotEmpty()
+    @Length(4, 15)
+    @IsAlphanumeric()
+    @ApiProperty()
+    newlogin: string;
+}
+
+@ApiTags('Users')
 export class UserDto {
     @IsNotEmpty()
     @Length(4, 20)

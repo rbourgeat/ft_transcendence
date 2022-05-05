@@ -68,10 +68,7 @@ export default function Participant(props: ParticipantsProps) {
 	function setUpBlock() {
 		props.socket.emit('updateChat', true);
 		props.updateFunctionToUse("block");
-	}
-
-	function setUpLeave() {
-		props.updateFunctionToUse("leave");
+		document.getElementById("block-user").remove();
 	}
 
 	function setUpProfile() {
@@ -88,7 +85,6 @@ export default function Participant(props: ParticipantsProps) {
 				</p>
 				{props.currentUser === props.username ?
 					<div className="dropdown-menu" aria-labelledby="dropdownMenuButton1" >
-						{props.isChannel && props.isBanned === false ? <p className="dropdown-item" onClick={() => setUpLeave()}>leave</p> : null}
 					</div>
 					:
 					<div className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
@@ -96,7 +92,7 @@ export default function Participant(props: ParticipantsProps) {
 						{props.isChannel && props.currentUserAdmin && !props.owner ? <p id="ban-click" className="dropdown-item" onClick={() => setUpBan()}>un/ban</p> : ""}
 						{props.isChannel && props.currentUserAdmin && !props.owner ? <p id="mute-click" className="dropdown-item" onClick={() => setUpMute()}>un/mute</p> : ""}
 						<p className="dropdown-item" onClick={() => props.updateFunctionToUse("invite")}>invite to play</p>
-						<p className="dropdown-item" onClick={() => setUpBlock()}>block</p>
+						<p id="block-user" className="dropdown-item" onClick={() => setUpBlock()}>block</p>
 						<p className="dropdown-item" onClick={() => setUpProfile()}>see profile</p>
 					</div>
 				}

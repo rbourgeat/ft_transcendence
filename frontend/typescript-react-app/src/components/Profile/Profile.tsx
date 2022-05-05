@@ -56,7 +56,7 @@ export default function Profile() {
 		let url = "";
 		if (process.env.REACT_APP_IP == "" || process.env.REACT_APP_IP == undefined)
 			url = "http://localhost:3000/api/user/".concat(login);
-		else 
+		else
 			url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/user/").concat(login);
 
 		axios.get(url)
@@ -173,12 +173,6 @@ export default function Profile() {
 		window.top.location = url_begin.concat(":3030/profile/").concat(login);
 	}
 
-	function askToPlay() {
-		let selectedUser = login;
-		// console.log("You are inviting " + selectedUser + " to play !");
-		window.top.location = url_begin.concat(":3030/game?vs=").concat(selectedUser);
-	}
-
 	function unblock() {
 		let ax = new MyAxios(null);
 		ax.delete_relation_unblock(login, "");
@@ -248,7 +242,6 @@ export default function Profile() {
 											{isFriend == true ? <button type="button" className="btn btn-outline-danger" id="remove--buton" onClick={remove}>Remove</button> : ""}
 										</div>
 										<div className="row d-flex justify-content-center text-center" id="games--related">
-											{status == "online" && isBlocked == false ? <button type="button" className="btn btn-outline-dark" id="play--buton" onClick={askToPlay}> Ask to Play</button> : ""}
 											{isBlocked == true ?
 												<>
 													<br />

@@ -127,7 +127,7 @@ export class ChatService {
 	async createChat(chat: CreateChatDto, user: User) {
 		if (await this.getChatByName(chat.name))
 			//return console.log('error: ' + chat + ' already exist');
-			return ;
+			return;
 
 		const newParticipate = await this.participateRepository.create(
 			{
@@ -150,6 +150,9 @@ export class ChatService {
 	}
 
 	async createDirectMessage(user1: User, user2: User) {
+		if (user1.id == user2.id) {
+			throw new HttpException('You can\'t start a conversation with yourself', HttpStatus.CONFLICT);
+		}
 		if (await this.getChatByName("direct_" + user1.id + "_" + user2.id) ||
 			await this.getChatByName("direct_" + user2.id + "_" + user1.id)) {
 			throw new HttpException('You can\'t start a conversation with that user', HttpStatus.CONFLICT);
@@ -203,7 +206,7 @@ export class ChatService {
 		const participate = await this.participateRepository.findOne({ user: user, chat: chat });
 		if (participate.role == UserStatus.BAN || participate.role == UserStatus.MUTE) {
 			//return console.log('can\'t send message, you are banned or mute');
-			return ;
+			return;
 		}
 		const newMessage = await this.messageRepository.create({
 			content: message.content,
@@ -216,7 +219,11 @@ export class ChatService {
 
 	async joinChat(chat: CreateChatDto, user: User) {
 		const joinedChat = await this.getChatByName(chat.name);
+
 		if (joinedChat) {
+			if (joinedChat.public === true && chat.public === false)
+				throw new HttpException({ error: 'Tried to join a public channel as private', status: HttpStatus.CONFLICT }, HttpStatus.CONFLICT);
+
 			if (chat.password == joinedChat.password) {
 				const chatT = await this.getChatByName(chat.name);
 				const participate = await this.participateRepository.findOne({ user: user, chat: chatT });
@@ -229,22 +236,16 @@ export class ChatService {
 						}
 					);
 					await this.participateRepository.save(newParticipate);
-					// return console.log('create new channel member: ' + newParticipate.user.login);
-					return ;
+					return;
 				}
-				else if (participate && participate.role != UserStatus.BAN)
-					//return console.log('you are banned from this channel');
-					return;
-				else if (participate)
-					// return console.log('already in channel');
-					return;
+				else
+					throw new HttpException({ error: 'Tried to join a joinded channel', status: HttpStatus.CONFLICT }, HttpStatus.CONFLICT);
 			}
 			else
-				throw new BadRequestException('Wrong password');
+				throw new HttpException({ error: 'Wrong password', status: HttpStatus.CONFLICT }, HttpStatus.CONFLICT);
 		}
 		else
-			// return console.log(chat + ' not found');
-			return;
+			throw new HttpException({ error: 'Channel doesn\'t exist', status: HttpStatus.CONFLICT }, HttpStatus.CONFLICT);
 	}
 
 	async quitChat(id: number, user: User) {
@@ -266,12 +267,13 @@ export class ChatService {
 
 	async getMessagesById2(id: number, login: string) {
 		const chat = await this.chatRepository.findOne({ id });
-		const user = await this.userRepository.findOne({ login });
+		const me = await this.userRepository.findOne({ login });
+		//console.log(me.login);
 		const messages = chat.message;
 
 		const history: Message[] = [];
 		for (const message of messages) {
-			if (!(await this.userRelationRepository.findOne({ where: [{ receiver: message.author, creator: user, status: 'blocked' }], relations: ['receiver', 'creator'] })))
+			if (!(await this.userRelationRepository.findOne({ where: [{ receiver: message.author, creator: me, status: 'blocked' }], relations: ['receiver', 'creator'] })))
 				history.push(message);
 		}
 		return history;

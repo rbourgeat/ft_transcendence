@@ -10,6 +10,7 @@ import { Observable } from 'rxjs';
 import { RelationStatusClass, } from 'src/user/interface/friend-request.interface';
 import { User } from 'src/user/entity/user.entity';
 import { editFileName, imageFileFilter } from './upload.utils'
+import { PatchNameDto } from './dto/user.dto';
 
 @ApiTags('Users')
 @ApiExtraModels(CreateUserDtoViaRegistration) //force unused dto to show on swagger
@@ -44,9 +45,9 @@ export class UserController {
 
     @ApiOperation({ summary: 'Update {login}\'s data' })
     @ApiOkResponse({ description: 'Data updated' })
-    @Patch(':oldlogin/changeto/:newlogin')
-    async updateUser(@Param('oldlogin') oldlogin: string, @Param('newlogin') newlogin: string) {
-        return this.userService.updateUser(oldlogin, newlogin);
+    @Patch('/changeLogin/')
+    async updateUser(@Body() updated: PatchNameDto) {
+        return this.userService.updateUser(updated.oldlogin, updated.newlogin);
     }
 
     @ApiOperation({ summary: 'Upload {login} avatar' })
