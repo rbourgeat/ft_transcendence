@@ -27,7 +27,7 @@ export default function CreateDM(props: CreateDMProps) {
 		let toast = new ToastAlerts(null);
 
 		if (sucessfull == true) {
-			console.log("result will be " + !props.exited);
+			// console.log("result will be " + !props.exited);
 			props.setExited(!props.exited);
 		}
 		chanNameSet("");
@@ -50,7 +50,7 @@ export default function CreateDM(props: CreateDMProps) {
 				handleClose();
 			})
 			.catch((error) => {
-				console.log(error.message);
+				// console.log(error.message);
 				toast.notifyDanger("Error while creating conversation with " + receiver);
 				handleClose();
 				setSuccessfull(false);

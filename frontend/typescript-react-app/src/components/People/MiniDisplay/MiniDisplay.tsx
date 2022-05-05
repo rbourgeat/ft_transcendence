@@ -51,7 +51,8 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 				setLoad(true);
 			})
 			.catch((err) => {
-				console.log("Error while getting api auth");
+				// console.log("Error while getting api auth");
+				;
 			})
 	}
 

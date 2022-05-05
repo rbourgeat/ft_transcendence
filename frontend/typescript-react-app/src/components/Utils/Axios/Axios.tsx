@@ -288,7 +288,7 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
     post_api_setprivate(id: number, username: string, datetime: string, pass: string) {
         let url = url_begin.concat(":3000/api/chat/setPrivate/");
 
-        console.log("post api set private called");
+        // console.log("post api set private called");
         const body = {
             idChat: id,
             user: username,
@@ -301,10 +301,12 @@ export default class MyAxios extends React.Component<AxiosProps, AxiosState>
 
         axios.post(url, body)
             .then(res => {
-                console.log("Successfully set private");
+                // console.log("Successfully set private");
+                ;
             })
             .catch(res => {
-                console.log("Error while set private target");
+                // console.log("Error while set private target");
+                ;
             })
     }
 

@@ -75,7 +75,7 @@ export default function JoinChan(props: JoinChanProps) {
 		else
 			url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/chat/join");
 
-		console.log("you try to join the chan:" + chan);
+		// console.log("you try to join the chan:" + chan);
 		let body = {};
 		if (!publicPass || publicPass.length <= 0) {
 			body = {
@@ -152,7 +152,7 @@ export default function JoinChan(props: JoinChanProps) {
 		else
 			url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/chat/join");
 
-		console.log(privateToJoin + ": chan i want to join while im on private side")
+		// console.log(privateToJoin + ": chan i want to join while im on private side")
 		let body = {};
 		if (!privatePass || privatePass.length <= 0) {
 			body = {
@@ -165,7 +165,7 @@ export default function JoinChan(props: JoinChanProps) {
 				"name": privateToJoin,
 			}
 		}
-		console.log(body);
+		// console.log(body);
 		axios.post(url, body)
 			.then(res => {
 				toast.notifySuccess("✅ You joined the channel");

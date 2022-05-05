@@ -126,7 +126,8 @@ export class ChatService {
 
 	async createChat(chat: CreateChatDto, user: User) {
 		if (await this.getChatByName(chat.name))
-			return console.log('error: ' + chat + ' already exist');;
+			//return console.log('error: ' + chat + ' already exist');
+			return ;
 
 		const newParticipate = await this.participateRepository.create(
 			{
@@ -201,7 +202,8 @@ export class ChatService {
 		const chat = await this.getChatByName(message.channel);
 		const participate = await this.participateRepository.findOne({ user: user, chat: chat });
 		if (participate.role == UserStatus.BAN || participate.role == UserStatus.MUTE) {
-			return console.log('can\'t send message, you are banned or mute');;
+			//return console.log('can\'t send message, you are banned or mute');
+			return ;
 		}
 		const newMessage = await this.messageRepository.create({
 			content: message.content,
@@ -227,18 +229,22 @@ export class ChatService {
 						}
 					);
 					await this.participateRepository.save(newParticipate);
-					return console.log('create new channel member: ' + newParticipate.user.login);;
+					// return console.log('create new channel member: ' + newParticipate.user.login);
+					return ;
 				}
 				else if (participate && participate.role != UserStatus.BAN)
-					return console.log('you are banned from this channel');
+					//return console.log('you are banned from this channel');
+					return;
 				else if (participate)
-					return console.log('already in channel');
+					// return console.log('already in channel');
+					return;
 			}
 			else
 				throw new BadRequestException('Wrong password');
 		}
 		else
-			return console.log(chat + ' not found');
+			// return console.log(chat + ' not found');
+			return;
 	}
 
 	async quitChat(id: number, user: User) {
@@ -291,14 +297,17 @@ export class ChatService {
 		});
 
 		if (!participate)
-			return console.log("L'utilisateur ne peut pas être banni car il n'est pas dans le chat !");
+			// return console.log("L'utilisateur ne peut pas être banni car il n'est pas dans le chat !");
+			return;
 		const adminParticipate = await this.participateRepository.findOne({
 			where: [{ chat: chat, user: admin }]
 		});
 		if (!adminParticipate.admin)
-			return console.log("L'utilisateur ne peut pas bannir car il n'est pas admin du chat !");
+			// return console.log("L'utilisateur ne peut pas bannir car il n'est pas admin du chat !");
+			return;
 		if (participate.admin || participate.owner)
-			return console.log("L'utilisateur ne peut pas bannir un admin !");
+			// return console.log("L'utilisateur ne peut pas bannir un admin !");
+			return;
 
 		participate.role = UserStatus.BAN;
 		await this.participateRepository.save(participate);
@@ -312,7 +321,8 @@ export class ChatService {
 		});
 
 		if (!participate)
-			return console.log("L'utilisateur ne peut pas être débanni/démute car il n'est pas dans le chat !");
+			// return console.log("L'utilisateur ne peut pas être débanni/démute car il n'est pas dans le chat !");
+			return;
 
 		participate.timestamp = null;
 		participate.role = UserStatus.ACTIVE;
@@ -326,14 +336,17 @@ export class ChatService {
 			where: [{ chat: chat, user: user }]
 		});
 		if (!participate)
-			return console.log("L'utilisateur ne peut pas être mute car il n'est pas dans le chat !");
+			// return console.log("L'utilisateur ne peut pas être mute car il n'est pas dans le chat !");
+			return;
 		const adminParticipate = await this.participateRepository.findOne({
 			where: [{ chat: chat, user: admin }]
 		});
 		if (!adminParticipate.admin)
-			return console.log("L'utilisateur ne peut pas mute car il n'est pas admin du chat !");
+			// return console.log("L'utilisateur ne peut pas mute car il n'est pas admin du chat !");
+			return;
 		if (participate.admin || participate.owner)
-			return console.log("L'utilisateur ne peut pas mute un admin !");
+			// return console.log("L'utilisateur ne peut pas mute un admin !");
+			return;
 
 		participate.role = UserStatus.MUTE;
 		if (time)
@@ -348,15 +361,18 @@ export class ChatService {
 			where: [{ chat: chat, user: user }]
 		});
 		if (!participate)
-			return console.log("L'utilisateur ne peut pas être admin car il n'est pas dans le chat !");
+			// return console.log("L'utilisateur ne peut pas être admin car il n'est pas dans le chat !");
+			return;
 
 		const adminParticipate = await this.participateRepository.findOne({
 			where: [{ chat: chat, user: admin }]
 		});
 		if (!adminParticipate.owner)
-			return console.log("L'utilisateur ne peut pas rendre qqn admin car il n'est pas owner du chat !");
+			// return console.log("L'utilisateur ne peut pas rendre qqn admin car il n'est pas owner du chat !");
+			return;
 		if (participate.admin || participate.owner)
-			return console.log("L'utilisateur ne peut pas rendre admin un admin !");
+			// return console.log("L'utilisateur ne peut pas rendre admin un admin !");
+			return;
 		participate.admin = true;
 		await this.participateRepository.save(participate);
 	}
@@ -371,7 +387,8 @@ export class ChatService {
 	async setPrivate(id: number, admin: User) {
 		const chat = await this.chatRepository.findOne({ id });
 		if (!admin.participate.find(e => e.chat == chat).owner)
-			return console.log("L'utilisateur ne peut pas set le chat en privé car il n'est pas owner !");
+			// return console.log("L'utilisateur ne peut pas set le chat en privé car il n'est pas owner !");
+			return;
 		chat.public = false;
 		await this.chatRepository.save(chat);
 		return chat;
@@ -380,7 +397,8 @@ export class ChatService {
 	async setPublic(id: number, admin: User) {
 		const chat = await this.chatRepository.findOne({ id });
 		if (!admin.participate.find(e => e.chat == chat).owner)
-			return console.log("L'utilisateur ne peut pas set le chat en public car il n'est pas owner !");
+			// return console.log("L'utilisateur ne peut pas set le chat en public car il n'est pas owner !");
+			return;
 		chat.public = true;
 		await this.chatRepository.save(chat);
 		return chat;

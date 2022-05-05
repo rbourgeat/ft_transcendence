@@ -37,18 +37,15 @@ export default function DisplayChan(props: DisplayChanProps) {
 			if (props.channel.participates[0].login == props.login && props.login != null) {
 				props.setActiveName(props.channel.participates[1].login);
 				setReceiver(props.channel.participates[1].login)
-				console.log("in direct");
+				// console.log("in direct");
 			}
 			else if (props.login != "null" && props.channel.participates[0].login != null) {
 				props.setActiveName(props.channel.participates[0].login);
 				setReceiver(props.channel.participates[0].login);
-				console.log("receiver is " + receiver);
-				console.log("here 2");
+				// console.log("receiver is " + receiver);
 			}
 			else {
 				//Test avec un dummy
-				console.log("here 3");
-				console.log("receiver is " + receiver);
 				setReceiver("dummy");
 			}
 			//setIsDM(true);

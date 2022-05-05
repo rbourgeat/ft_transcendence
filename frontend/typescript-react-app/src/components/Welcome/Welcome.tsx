@@ -15,7 +15,7 @@ export default function Welcome() {
 
     const routeChange = (e: any) => {
         e.preventDefault();
-        console.log("url begin is " + url_begin);
+        // console.log("url begin is " + url_begin);
         window.top.location = url_begin.concat(":3030/auth/")
     }
 

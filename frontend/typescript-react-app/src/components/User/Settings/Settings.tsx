@@ -161,7 +161,7 @@ export default function Settings(props: SettingsProps) {
 		let username = "";
 		axios.get(url)
 			.then(res => {
-				console.log("settings status:" + res.data.status);
+				// console.log("settings status:" + res.data.status);
 				username = res.data.login;
 				if (res.data.login42 != null && res.data.login42 != undefined && res.data.login42 != "") {
 					setis42(true);
@@ -208,7 +208,7 @@ export default function Settings(props: SettingsProps) {
 			socket.on('updateStatus', (...args) => {
 				//console.log("receive update status for " + args[0] + ": " + args[1]);
 				if (username == args[0]) {
-					console.log("name: " + username + " / " + "status: " + args[1]);
+					// console.log("name: " + username + " / " + "status: " + args[1]);
 					setStatus(args[1]);
 					//console.log("go in select colorafter socketon");
 					selectColor();

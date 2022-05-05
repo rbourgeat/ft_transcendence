@@ -106,7 +106,7 @@ export default function ListDiscussions(props: ListDiscussionsProps) {
 	}
 
 	useEffect(() => {
-		console.log(props.activeName + ": activename atm")
+		// console.log(props.activeName + ": activename atm")
 		checkisBanned();
 		checkisBlocked();
 	}, [props.activeID]);
