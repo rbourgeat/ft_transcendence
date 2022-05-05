@@ -1,18 +1,11 @@
-import React, { Component, useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import Nav from "../Nav/Nav";
 import './User.scss';
 import axios from 'axios';
 import MyAxios from '../Utils/Axios/Axios';
-import { ToastContainer, toast } from 'react-toastify';
-import ToastAlerts from '../Utils/ToastAlerts/ToastAlerts';
-import EditUsernameModal from "./editUsername/EditUsername";
 import Badge from "../Badge/Badge"
 import Achievements from "../Achievements/Achievements";
-import { Modal } from "react-bootstrap"
-import Settings from "./Settings/Settings"
 import MatchHistory from '../MatchHistory/MatchHistory';
-import Login from '../Auth/Login/Login';
-import { AiOutlineLoading3Quarters, AiOutlineLoading } from "react-icons/ai";
 import io from "socket.io-client";
 
 export interface UserfuncProps {
@@ -30,15 +23,10 @@ export interface UserfuncProps {
 export default function User(props: UserfuncProps) {
 	//User et check
 	const [username, setUsername] = React.useState("");
-	const [logged, setLogged] = React.useState(true);
-	const [is42, setis42] = React.useState(false);
-	const [login42, setlogin42] = React.useState("");
 	const calledOnce = React.useRef(false);
 	const [loaded, setLoaded] = React.useState(false);
-	const [authorized, setAuthorized] = React.useState(true);
 
 	//Badge
-	const [load, setLoad] = React.useState(false);
 	const [points, setPoints] = React.useState(0);
 	const [rank, setRank] = React.useState(0);
 	const [totalGames, setTotalGames] = React.useState(0);
@@ -48,7 +36,6 @@ export default function User(props: UserfuncProps) {
 	const [xp, setXp] = React.useState(0);
 	const [level, setLevel] = React.useState(0);
 	const [nextlevel, setNextLevel] = React.useState(0);
-	const [pendingInvite, setPendingInvite] = React.useState(false);
 
 	//Status socket
 	const [color, setColor] = React.useState("grey");
@@ -73,8 +60,6 @@ export default function User(props: UserfuncProps) {
 		axios.get(url)
 			.then(res => {
 				username = res.data.login;
-				setis42(true);
-				setlogin42(res.data.login42);
 				localStorage.setItem("login", res.data.login);
 				localStorage.setItem("login42", res.data.login42);
 				setNextLevel(res.data.percent_to_next_lvl);
@@ -109,11 +94,9 @@ export default function User(props: UserfuncProps) {
 	useEffect(() => {
 		if (calledOnce.current) {
 			return;
-			//return () => { socket.disconnect() }
 		}
 		getUser();
 		calledOnce.current = true;
-		//return () => { socket.disconnect() }
 	}, []);
 
 	function renderImage(login: string) {

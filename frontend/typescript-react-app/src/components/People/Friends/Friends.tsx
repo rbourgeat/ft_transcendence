@@ -1,6 +1,5 @@
 import './Friends.scss';
-import React, { Component, useState, useEffect } from "react";
-import myAxios from "../../Utils/Axios/Axios";
+import React, { useEffect } from "react";
 import axios from "axios";
 import MiniDisplay from '../MiniDisplay/MiniDisplay';
 
@@ -14,8 +13,8 @@ export default function Friends() {
 		let url = "";
 		if (process.env.REACT_APP_IP == "" || process.env.REACT_APP_IP == undefined)
 			url = "http://localhost:3000/api/user/relation/me/allFriends";
-		else 
-		url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/user/relation/me/allFriends");
+		else
+			url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/user/relation/me/allFriends");
 
 		axios.get(url)
 			.then(res => {
@@ -31,7 +30,7 @@ export default function Friends() {
 			.catch((error) => {
 				;
 			})
-		;
+			;
 	}
 
 	useEffect(() => {

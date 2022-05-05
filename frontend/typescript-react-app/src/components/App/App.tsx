@@ -1,41 +1,31 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom'
 import './App.scss';
 import {
   BrowserRouter as Router,
   Route,
   Routes
 } from "react-router-dom";
-import Particles from "react-tsparticles";
 import Auth from '../Auth/Auth';
 import Welcome from '../Welcome/Welcome';
 import NotFound from '../NotFound/NotFound';
-import Achievements from "../Achievements/Achievements";
-import CreateChan from "../Channels/CreateChan/CreateChan";
 import People from "../People/People";
 import Game from "../Game/Game";
-import Login2FA from "../Auth/Login2FA/Login2FA"
 import Channels from "../Channels/Channels"
 import axios from 'axios';
-import NotLogged from '../NotLogged/NotLogged'; import Login2fa from '../Auth/Login2FA/Login2FA';
+import Login2fa from '../Auth/Login2FA/Login2FA';
 import Profile from "../Profile/Profile";
 import Live from '../Live/Live';
 import Settings from "../User/Settings/Settings";
 import UserSub from "../User/UserSub";
-import { ToastContainer, toast } from "react-toastify";
-import { env } from 'process';
-import { Socket } from 'socket.io-client';
-import io from "socket.io-client";
+import { ToastContainer } from "react-toastify";
 
 let url_begin = "";
 
-if (process.env.REACT_APP_IP == "" || process.env.REACT_APP_IP == undefined)
-{
+if (process.env.REACT_APP_IP == "" || process.env.REACT_APP_IP == undefined) {
   url_begin = "http://localhost";
-  console.log("process env is empty !")
 }
-  
+
 else
   url_begin = "http://".concat(process.env.REACT_APP_IP);
 
@@ -43,12 +33,10 @@ let selectedUser = "";
 
 function App() {
 
-  const [user, setUser] = useState(null);
   const [username, setUsername] = React.useState("");
-  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   const calledOnce = React.useRef(false);
 
-	function getUser() {
+  function getUser() {
     let url = url_begin.concat(":3000/api/auth/");
     let username = "";
     axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
@@ -88,11 +76,11 @@ function App() {
         <Route path="/" element={<Welcome />} />
         <Route path="/welcome" element={<Welcome />} />
         <Route path="/auth" element={<Auth />} />
-        {localStorage.getItem("loggedIn") == "false" ? 
-        <>
-          <Route path="*" element={<Auth />} />
-        </> 
-        : ""
+        {localStorage.getItem("loggedIn") == "false" ?
+          <>
+            <Route path="*" element={<Auth />} />
+          </>
+          : ""
         }
         {(localStorage.getItem("loggedIn") == "true" &&
           ((localStorage.getItem("2fa") == "true" && localStorage.getItem("2faverif") == "true") || (localStorage.getItem("2fa") == "false" && localStorage.getItem("2faverif") == "false")))

@@ -22,17 +22,11 @@ export interface ListChannelsProps {
 
 export default function ListChannels(props: ListChannelsProps) {
 	const [channels, setChannels] = React.useState([]);
-	// const [DMs, setDMs] = React.useState([{}]);
-	//const [receiver, setReceiver] = React.useState([]);
 
 	//Affichage sélection DM ou channels
-	//const [selectedCat, setSelectedCat] = React.useState("Channels");
 	const [load, setLoad] = React.useState(false);
-	//const [minId, setMinID] = React.useState(0);
 	const [exited, setExited] = React.useState("false");
 	const [update, setUpdate] = React.useState("");
-	//const calledOnce = React.useRef(false);
-	//const [count, setCount] = React.useState(0);
 
 	function renderListChannels() {
 
@@ -50,19 +44,13 @@ export default function ListChannels(props: ListChannelsProps) {
 				while (i < len) {
 					if (channels[i].direct === false) {
 						setChannels(prevArray => [...prevArray, channels[i]]);
-						//console.log("channel is " + channels[i]);
 					}
 					else if (channels[i].direct === true) {
 						setChannels(prevArray => [...prevArray, channels[i]]);
-						//setReceiver(prevArray1 => [...prevArray1, channels[i].participates]);
-						//console.log("channel is " + channels[i]);
 					}
-					//console.log("get chan/dm:" + channels[i].name);
-					//console.log("get chan/dm:" + JSON.stringify(channels[i]));
 					i++;
 				}
 				setLoad(true);
-				//props.setIsChan(true);
 			})
 			.catch((error) => {
 				;
@@ -71,24 +59,18 @@ export default function ListChannels(props: ListChannelsProps) {
 
 	//nécessaire pour mettre à jour suite à la fermeture d'un modal
 	useEffect(() => {
-		//setExited(false);
-		console.log("exited:" + exited)
-		//if (exited === true) {
-		console.log("clean and render list channels");
 		clean();
 		renderListChannels();
-		//}
 	}, [exited])
 
 	function clean() {
 		let chans = Array.from(document.getElementsByClassName("displaying_channels"));
-		console.log()
 		for (let i = 0; i <= chans.length; i++) {
 			chans.pop();
 			channels.pop();
 		}
 		setChannels([]);
-
+		chans = null;
 	}
 
 	return (
@@ -97,11 +79,14 @@ export default function ListChannels(props: ListChannelsProps) {
 				<div className="title--channel--col">
 					<p className="channels-title">Channels</p>
 				</div>
-				<div className="add-channel-a">
-					<CreateChan setExited={setExited} setUpdate={setUpdate} exited={exited} setHasPass={props.setHasPass} />
-					<CreateDM setExited={setExited} setUpdate={setUpdate} exited={exited} />
-					<JoinChan socket={props.socket} setExited={setExited} setUpdate={setUpdate} exited={exited} login={props.login} />
-				</div>
+				{load == true ?
+					<div className="add-channel-a">
+						<CreateChan setExited={setExited} setUpdate={setUpdate} exited={exited} setHasPass={props.setHasPass} />
+						<CreateDM setExited={setExited} setUpdate={setUpdate} exited={exited} />
+						<JoinChan socket={props.socket} setExited={setExited} setUpdate={setUpdate} exited={exited} login={props.login} />
+					</div>
+					: ""}
+
 				<div className="displaying-div">
 					{load === true ?
 						channels.map(channel => {
@@ -112,7 +97,6 @@ export default function ListChannels(props: ListChannelsProps) {
 											setIsChan={props.setIsChan}
 											isChan={props.isChan}
 											channel={channel}
-											//minId={minId}
 											login={props.login}
 											setHasPass={props.setHasPass}
 											setActiveID={props.setActiveID}

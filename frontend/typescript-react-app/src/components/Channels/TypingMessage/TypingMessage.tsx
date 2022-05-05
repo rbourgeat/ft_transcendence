@@ -1,7 +1,6 @@
 import './TypingMessage.scss';
 import React, { useEffect } from "react";
 import axios from 'axios';
-import ToastAlerts from '../../Utils/ToastAlerts/ToastAlerts';
 
 let url_begin = "";
 if (process.env.REACT_APP_IP == "" || process.env.REACT_APP_IP == undefined)
@@ -25,14 +24,9 @@ export interface TypingState {
     text?: string
 }
 
-const message = document.getElementById('message');
-const messages = document.getElementById('messages');
-
 export default function TypingMessage(props: TypingProps) {
     const [text, updateText] = React.useState("");
-    const [username, setUsername] = React.useState("");
     const [isMuted, setIsMuted] = React.useState(false);
-    const [sockChan, setsockChan] = React.useState(props.activeName);
 
     function checkisMuted() {
         if (props.chanId != "" && props.chanId != undefined && props.chanId != null) {
@@ -68,19 +62,15 @@ export default function TypingMessage(props: TypingProps) {
                 props.socket.emit('message', props.login + ":" + props.channel + ":" + message + ":" + props.chanId + ":dm");
             else
                 props.socket.emit('message', props.login + ":" + props.channel + ":" + message + ":" + props.chanId + ":chat");
-            // console.log("send message with" + props.login + "to the channel " + props.channel + ", content:" + message);
-
         }
     }
 
     props.socket.on('isMute', (...args) => {
         if (props.login == args[0] && args[1] == true) {
             setIsMuted(true)
-            //console.log("set is mute to true")
         }
         else if (props.login == args[0] && args[1] == false) {
             setIsMuted(false)
-            //console.log("set is mute to false")
         }
     })
 

@@ -1,16 +1,14 @@
-import React, { useState, useEffect, useLayoutEffect } from 'react';
+import React, { useEffect } from 'react';
 import './Game.scss';
 import useWindowDimensions from "./useWindowDimensions"
-import Header from "../Header/Header";
 import Nav from "../Nav/Nav";
-import Footer from "../Footer/Footer";
 import io from "socket.io-client";
 import axios from "axios";
 import { Form } from 'react-bootstrap'
 import Confetti from 'react-confetti';
 import { Offline, Online } from "react-detect-offline";
 import "../../../node_modules/react-rain-animation/lib/style.css";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 var adversaire: string;
 var joueur: string;
@@ -63,7 +61,6 @@ export default function Game() {
 			})
 	}
 	var SearchText = "Rechercher une partie"
-
 	var socket = io(url_begin.concat(":3000/game"), { query: { username: username } });
 	var socket2 = io(url_begin.concat(":3000/chat"), { query: { username: username } });
 
@@ -309,8 +306,6 @@ export default function Game() {
 			if (live !== null) {
 				const l = live.split('+');
 				const li = l[0].split(' ');
-				// console.log(" l[0] = " + li[0] + " et l[1]=" + li[1]);
-				// console.log(" b[0] = " + b[0]);
 				if (b[0] == li[0])
 					game.player.y = b[1];
 				else if (b[0] == li[1])
@@ -453,7 +448,6 @@ export default function Game() {
 		// Reset speed
 		game.ball.speed.x = 0;
 		game.ball.speed.y = 0;
-
 
 		socket2.emit("update", joueur1 + ":online");
 		socket2.emit("update", joueur2 + ":online");

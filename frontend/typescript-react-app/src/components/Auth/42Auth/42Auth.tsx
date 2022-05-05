@@ -1,8 +1,6 @@
 import './42Auth.scss';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import 'react-toastify/dist/ReactToastify.css';
-import myAxios from "../../Utils/Axios/Axios"
-import axios from "axios";
 
 interface FourtyTwoProps { }
 
@@ -25,7 +23,6 @@ export default class Login extends React.Component<FourtyTwoProps, FourtyTwoStat
   fourtytwo = (event: any) => {
     event.preventDefault();
     localStorage.setItem("loggedIn", "true");
-
     window.top.location = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/42auth/redirect/");
   }
 

@@ -59,7 +59,8 @@
 	margin: 0px;
 }
 
-#send--dm, #display--channels {
+#send--dm,
+#display--channels {
 	border-radius: variables.$border-radius-big;
 	width: 100% !important;
 	height: 100% !important;
@@ -77,10 +78,15 @@
 	border-radius: variables.$border-radius-big;
 	margin: 10px !important;
 	overflow-y: scroll;
+	height: 75% !important;
+	width: 95% !important;
+	position: absolute;
+	scrollbar-color: rgb(119, 119, 119) rgb(174, 174, 174);
+	scrollbar-width: thin;
 }
 
 .send--dm_div {
-	position:absolute;
+	position: absolute;
 	width: 100% !important;
 	bottom: 10px;
 }
@@ -93,7 +99,8 @@
 	text-align: justify;
 }
 
-.selected--categorie, .quick--add {
+.selected--categorie,
+.quick--add {
 	font-size: 10px;
 	padding-top: 5px !important;
 	padding-bottom: 5px !important;

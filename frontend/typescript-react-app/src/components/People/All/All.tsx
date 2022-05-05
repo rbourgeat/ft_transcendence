@@ -1,24 +1,16 @@
 import './All.scss';
-import React, { Component, useState, useEffect } from "react";
-import myAxios from "../../Utils/Axios/Axios";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Invitations from "../Invitations/Invitations";
-import Blocked from "../Blocked/Blocked";
-import Friends from "../Friends/Friends";
-import { DetailedHTMLProps, HTMLAttributes } from 'react';
 import MiniDisplay from '../MiniDisplay/MiniDisplay';
 
 export interface InputWrapperProps {
 	login?: string,
-	//socket?: any
 }
 
 export default function All(props: InputWrapperProps) {
 	const [users, setUsers] = React.useState([]);
 	const [load, setLoad] = React.useState(true);
-	const [count, setCount] = useState(0);
-	const [stateLogin, setStateLogin] = React.useState(props.login);
-	const calledOnce = React.useRef(false);
+	// const calledOnce = React.useRef(false);
 
 	function renderUsers() {
 		axios.defaults.withCredentials = true;
@@ -26,7 +18,7 @@ export default function All(props: InputWrapperProps) {
 		let url = "";
 		if (process.env.REACT_APP_IP == "" || process.env.REACT_APP_IP == undefined)
 			url = "http://localhost:3000/api/user/";
-		else 
+		else
 			url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/user/");
 
 		axios.get(url)
@@ -44,15 +36,14 @@ export default function All(props: InputWrapperProps) {
 			.catch((error) => {
 				;
 			})
-		//setLoad(true);
 	}
 
 	useEffect(() => {
-		if (calledOnce.current) {
-			return;
-		}
+		// if (calledOnce.current) {
+		// 	return;
+		// }
 		renderUsers();
-		calledOnce.current = true;
+		// calledOnce.current = true;
 
 	}, []);
 

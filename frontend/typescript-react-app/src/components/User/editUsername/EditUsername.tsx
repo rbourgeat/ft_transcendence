@@ -1,11 +1,8 @@
-import React, { Component, useState, useEffect } from "react";
+import React from "react";
 import ToastAlerts from "../../Utils/ToastAlerts/ToastAlerts";
-import { ToastContainer, toast } from 'react-toastify';
-import myAxios from "../../Utils/Axios/Axios";
 import "./editUsername.scss";
 import { Modal, Button } from "react-bootstrap";
 import axios from "axios";
-import { copyFileSync } from "fs";
 
 let url_begin = "";
 if (process.env.REACT_APP_IP == "" || process.env.REACT_APP_IP == undefined)
@@ -21,12 +18,7 @@ export interface EditUsernameModalProps {
 
 export default function EditUsernameModal(props: EditUsernameModalProps) {
 	const [inputValue, setInputValue] = React.useState("");
-	const [sucessfull, setSuccessfull] = React.useState(false);
 	const [show, setShow] = React.useState(false);
-
-	function clearInput() {
-		setInputValue("");
-	}
 
 	function handleInputChange(event) {
 		setInputValue(event.target.value);
@@ -34,7 +26,6 @@ export default function EditUsernameModal(props: EditUsernameModalProps) {
 
 	let changeUsername = (event: any) => {
 		event.preventDefault();
-		setSuccessfull(true);
 		let url = url_begin.concat(":3000/api/user/changeLogin");
 
 		const body = {
@@ -45,16 +36,9 @@ export default function EditUsernameModal(props: EditUsernameModalProps) {
 		axios.defaults.headers.post['Content-Type'] = 'application/json';
 		axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 
-		/*
-		let headers = {
-			login: inputValue
-		}
-		*/
-
 		let toast = new ToastAlerts(null);
 
-		axios.patch(url, body
-			/*, { headers }*/)
+		axios.patch(url, body)
 			.then(res => {
 				toast.notifySuccess("✨ Successfully updated username");
 				localStorage.setItem("login", inputValue);
@@ -85,13 +69,11 @@ export default function EditUsernameModal(props: EditUsernameModalProps) {
 			<button type="button"
 				id="change--username"
 				className="btn btn-outline-dark"
-				//id="joinchan-button"
 				onClick={handleShow}
 				data-toggle="modal"
 				data-target="#exampleModalCenter">Changer username
 			</button>
 			<Modal
-				{...props}
 				size="lg"
 				aria-labelledby="contained-modal-title-vcenter"
 				onHide={handleClose}
@@ -124,15 +106,5 @@ export default function EditUsernameModal(props: EditUsernameModalProps) {
 					>Close</Button>
 				</Modal.Footer>
 			</Modal>
-			<ToastContainer
-				position="top-right"
-				autoClose={5000}
-				hideProgressBar={false}
-				newestOnTop={false}
-				closeOnClick
-				rtl={false}
-				pauseOnFocusLoss
-				draggable
-				pauseOnHover />
 		</div>)
 }

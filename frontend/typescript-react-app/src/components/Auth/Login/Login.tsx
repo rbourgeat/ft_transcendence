@@ -1,8 +1,6 @@
 import './Login.scss';
-import React, { useState, useEffect } from 'react';
-import ToastAlerts from "../../Utils/ToastAlerts/ToastAlerts"
+import React from 'react';
 import { ToastContainer } from 'react-toastify';
-import axios from "axios";
 import myAxios from "../../Utils/Axios/Axios"
 
 interface LoginProps { }
@@ -26,7 +24,7 @@ export default class Login extends React.Component<LoginProps, LoginState>
   submit = (event: any) => {
     event.preventDefault();
     let ax = new myAxios(null);
-    let res = ax.login(this.state.email, this.state.password);
+    ax.login(this.state.email, this.state.password);
   }
 
   render() {
@@ -63,7 +61,7 @@ export default class Login extends React.Component<LoginProps, LoginState>
             onClick={this.submit}
           >
             Me connecter
-              </button>
+          </button>
           <ToastContainer
             position="top-right"
             autoClose={5000}

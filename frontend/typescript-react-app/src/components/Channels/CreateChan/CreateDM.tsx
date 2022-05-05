@@ -1,8 +1,7 @@
 import { Button, Modal, Form } from 'react-bootstrap';
 import axios from 'axios';
-import React, { useState } from "react";
+import React from "react";
 import ToastAlerts from '../../Utils/ToastAlerts/ToastAlerts';
-import MyAxios from '../../Utils/Axios/Axios';
 import "./CreateDM.scss";
 
 export interface CreateDMProps {
@@ -18,19 +17,13 @@ export default function CreateDM(props: CreateDMProps) {
 	const [show, setShow] = React.useState(false);
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
-	const [chanName, chanNameSet] = React.useState("");
 	const [receiver, setReceiver] = React.useState("");
 	const [sucessfull, setSuccessfull] = React.useState(false);
-	const [load, setLoad] = React.useState(false);
 
 	const handleExit = () => {
-		let toast = new ToastAlerts(null);
-
 		if (sucessfull == true) {
-			// console.log("result will be " + !props.exited);
 			props.setExited(!props.exited);
 		}
-		chanNameSet("");
 		setReceiver("");
 	}
 
@@ -50,7 +43,6 @@ export default function CreateDM(props: CreateDMProps) {
 				handleClose();
 			})
 			.catch((error) => {
-				// console.log(error.message);
 				toast.notifyDanger("Error while creating conversation with " + receiver);
 				handleClose();
 				setSuccessfull(false);

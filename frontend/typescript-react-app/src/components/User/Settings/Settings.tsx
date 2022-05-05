@@ -1,15 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './Settings.scss';
-import { ToastContainer } from 'react-toastify';
-import ToastAlerts from '../../Utils/ToastAlerts/ToastAlerts';
 import axios from "axios";
 import MyAxios from '../../Utils/Axios/Axios';
 import EditUsernameModal from '../editUsername/EditUsername';
 import Nav from "../../Nav/Nav";
 import AuthCode, { AuthCodeRef } from 'react-auth-code-input';
-import { AiOutlineLoading3Quarters, AiOutlineLoading } from "react-icons/ai";
-import { Socket } from 'socket.io-client';
 import io from "socket.io-client";
+import ToastAlerts from '../../Utils/ToastAlerts/ToastAlerts';
 
 let url_begin = "";
 if (process.env.REACT_APP_IP == "" || process.env.REACT_APP_IP == undefined)
@@ -27,19 +24,11 @@ export default function Settings(props: SettingsProps) {
 	const [qrcode, setqrCode] = useState("");
 	const [activated2fa, setActivated2fa] = React.useState(false);
 	const calledOnce = React.useRef(false);
-	const [load, setLoaded] = React.useState(false);
-	const [is42, setis42] = React.useState(false);
-	const [login42, setlogin42] = React.useState("");
 	const [username, setUsername] = React.useState("");
 
 	//status, realtime variable (a reprendre avec les sockets)
 	const [status, setStatus] = React.useState("online");
 	const [color, setColor] = React.useState("green");
-
-	//MODALS
-	const [show, setShow] = useState(false);
-	const handleClose = () => setShow(false);
-	const handleShow = () => setShow(false);
 
 	//Style pour le authcode
 	const AuthInputRef = useRef<AuthCodeRef>(null);
@@ -48,9 +37,6 @@ export default function Settings(props: SettingsProps) {
 	//Pour modal changeUsername
 	const [exited, setExited] = React.useState(false);
 	const [checkExited, setCheckExited] = React.useState("false");
-	const [update, setUpdate] = React.useState("");
-	//const handleShow = () => setShow(true);
-
 
 	//Ici le async est ultra nécessaire !
 	async function manageQR() {
@@ -79,7 +65,6 @@ export default function Settings(props: SettingsProps) {
 				localStorage.setItem("2faverif", "false");
 			})
 			.catch((error) => {
-				//toast.notifyDanger('🥲 Error while turnoff on 2FA.');
 				;
 			})
 	}
@@ -130,23 +115,20 @@ export default function Settings(props: SettingsProps) {
 			});
 
 			reader.readAsDataURL(e.target.files[0]);
-			const file_name = e.target.files[0].name;
 			const file = e.target.files[0];
 
 			let ax = new MyAxios(null);
-			let ret = ax.post_avatar(username, file);
+			ax.post_avatar(username, file);
 		}
 	}
 
 	function selectColor() {
-		//console.log("status:" + status);
 		if (status == "offline")
 			setColor("grey")
 		if (status == "online")
 			setColor("green")
 		if (status == "ingame")
 			setColor("purple")
-		//console.log("final color:" + color);
 	}
 
 	function getUser() {
@@ -161,11 +143,8 @@ export default function Settings(props: SettingsProps) {
 		let username = "";
 		axios.get(url)
 			.then(res => {
-				// console.log("settings status:" + res.data.status);
 				username = res.data.login;
 				if (res.data.login42 != null && res.data.login42 != undefined && res.data.login42 != "") {
-					setis42(true);
-					setlogin42(res.data.login42);
 					localStorage.setItem("login", res.data.login);
 					localStorage.setItem("login42", res.data.login42);
 					if (res.data.status == "online") {
@@ -177,7 +156,6 @@ export default function Settings(props: SettingsProps) {
 						setStatus("ingame")
 					}
 				}
-				setLoaded(true);
 				setUsername(username);
 				renderImage(username);
 				socket.emit("update", "online");
@@ -206,16 +184,12 @@ export default function Settings(props: SettingsProps) {
 
 		if (calledOnce.current) {
 			socket.on('updateStatus', (...args) => {
-				//console.log("receive update status for " + args[0] + ": " + args[1]);
 				if (username == args[0]) {
-					// console.log("name: " + username + " / " + "status: " + args[1]);
 					setStatus(args[1]);
-					//console.log("go in select colorafter socketon");
 					selectColor();
 				}
 
 			})
-			//return () => { socket.disconnect() }
 		}
 
 		if (localStorage.getItem("2fa") == "true")

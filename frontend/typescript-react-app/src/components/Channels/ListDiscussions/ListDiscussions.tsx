@@ -26,7 +26,6 @@ export default function ListDiscussions(props: ListDiscussionsProps) {
 	const [oldMessages, setOldMessages] = React.useState([]);
 
 	useEffect(() => {
-		console.log(props.activeName + ": activename atm")
 		setsockChan(props.activeName);
 		props.socket.emit('requestAllMessages', props.activeID);
 		props.socket.on("sendAllMessages", (messagesUpdated) => {
@@ -53,7 +52,6 @@ export default function ListDiscussions(props: ListDiscussionsProps) {
 				return;
 			})
 		}
-		//console.log("gonna refresh the chat (backname) of:" + args[1] + ", but name in front is:" + props.activeName)
 		setOldMessages(messages);
 		if (args[1] == props.activeName && (props.activeName != "" || props.activeName != undefined || props.activeName != null)) {
 			setMessages(args[0]);
@@ -92,43 +90,13 @@ export default function ListDiscussions(props: ListDiscussionsProps) {
 		}
 	}
 
-	//TODO BLOCK DM IF U BLOCKED USER
-	const [isBlocked, setIsBlocked] = React.useState(false);
-
-	function checkisBlocked() {
-		if (props.activeID != "" && props.activeID != undefined && props.activeID != null) {
-			let url = url_begin.concat(":3000/api/user/relation/me/allBlocked");
-			axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
-			axios.defaults.withCredentials = true;
-			axios.get(url)
-				.then(res => {
-					/*
-					*/
-				})
-				.catch((error) => {
-				})
-		}
-	}
 
 	useEffect(() => {
-		// console.log(props.activeName + ": activename atm")
 		checkisBanned();
-		checkisBlocked();
 	}, [props.activeID, props.activeName]);
 
 	return (
 		<div id="ListDiscussions" className="col-md-5">
-			{/* <div className="title_chat_div">
-				{
-					props.hide === false ?
-						props.activeName ?
-							<p className="chat--title">{props.activeName.startsWith("direct") ? "DM" : props.activeName}</p>
-							:
-							null
-						:
-						null
-				}
-			</div> */}
 			<div className="messages-zone">
 				<ul className="text text_ul">
 					{

@@ -1,15 +1,12 @@
 import './People.scss';
 import Nav from '../Nav/Nav';
-import Footer from "../Footer/Footer";
 import All from "./All/All";
 import Invitations from "./Invitations/Invitations";
 import Friends from "./Friends/Friends";
 import Blocked from "./Blocked/Blocked";
 import SentInvitations from "./SentInvitations/SentInvitations";
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import axios from "axios";
-import { AiOutlineLoading3Quarters, AiOutlineLoading } from "react-icons/ai";
-import io from "socket.io-client";
 
 export interface PeopleProps {
 	login?: string
@@ -41,7 +38,6 @@ export default function People(props: PeopleProps) {
 
 		axios.get(url)
 			.then(res => {
-				console.log(res.data.login)
 				setUsername(res.data.login);
 				setLoad(true);
 			})
@@ -54,8 +50,6 @@ export default function People(props: PeopleProps) {
 		getUser();
 		calledOnce.current = true;
 	}, []);
-
-
 
 	return (
 		<>

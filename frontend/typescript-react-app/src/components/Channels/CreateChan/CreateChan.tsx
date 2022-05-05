@@ -3,7 +3,6 @@ import axios from 'axios';
 import React from "react";
 import ToastAlerts from '../../Utils/ToastAlerts/ToastAlerts';
 import "./CreateChan.scss";
-import { ToastContainer } from 'react-toastify';
 
 export interface CreateChanProps {
 	endpoint?: any,
@@ -24,7 +23,6 @@ export default function CreateChan(props: CreateChanProps) {
 	const [chanName, chanNameSet] = React.useState("");
 	const [chanPassword, chanPasswordSet] = React.useState("");
 	const [sucessfull, setSuccessfull] = React.useState(false);
-	const [load, setLoad] = React.useState(false);
 
 	const handleExit = () => {
 		if (sucessfull === true) {
@@ -59,10 +57,6 @@ export default function CreateChan(props: CreateChanProps) {
 				}
 
 				axios.defaults.withCredentials = true;
-
-				let headers = {
-					'Content-Type': 'application/json'
-				}
 
 				let body = {};
 

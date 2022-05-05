@@ -1,6 +1,6 @@
 @use "../../variables";
 
-#nav > * {
+#nav>* {
 	margin-bottom: 20px;
 	font-family: variables.$big-font;
 	font-size: 12px;
@@ -13,11 +13,12 @@
 	background-color: black !important;
 }
 
-.navbar--title, .nav-item > * {
+.navbar--title,
+.nav-item>* {
 	color: white !important;
 }
 
-.navbar--title:hover  {
+.navbar--title:hover {
 	color: rgb(9, 194, 191) !important;
 }
 
@@ -26,6 +27,13 @@
 	margin-top: 0px !important;
 	font-family: variables.$basic-font;
 	font-size: 12px !important;
+}
+
+.disabled-link,
+.disabled-link>* {
+	pointer-events: none;
+	// color: red !important;
+	// color: white !important;
 }
 
 #nav--title {
@@ -55,7 +63,8 @@
 	font-size: 12px !important;
 }
 
-#dropdownMenuButton1 , #logout--button {
+#dropdownMenuButton1,
+#logout--button {
 	border: 0.1rem solid white !important;
 	font-size: 12px !important;
 	padding: 5px !important;
@@ -69,7 +78,7 @@
 }
 
 #dropdownMenuButton1:hover {
-		color: black !important;
+	color: black !important;
 	border: 0.1rem solid rgb(9, 194, 191) !important;
 	background-color: rgb(9, 194, 191) !important;
 }

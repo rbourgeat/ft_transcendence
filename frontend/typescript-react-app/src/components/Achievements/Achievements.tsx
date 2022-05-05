@@ -1,8 +1,6 @@
 import './Achievements.scss';
-import Nav from "../Nav/Nav";
 import React, { useEffect } from "react";
 import axios from 'axios';
-import MyAxios from "../Utils/Axios/Axios";
 import { BsCheckLg } from "react-icons/bs";
 
 export interface AchievementsProps {
@@ -43,7 +41,6 @@ export default function Achievement(props: AchievementsProps) {
             getAchievements()
     }, []);
 
-    const style = { height: "40", width: "40" }
     return (
         <div id="Leaderboard">
             <div id="achievements">

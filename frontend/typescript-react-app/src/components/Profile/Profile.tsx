@@ -1,17 +1,12 @@
-import React, { useState, useEffect, useRef, useContext } from 'react';
+import React, { useEffect } from 'react';
 import './Profile.scss';
 import axios from "axios";
-import { ToastContainer } from 'react-toastify';
-import ToastAlerts from '../Utils/ToastAlerts/ToastAlerts';
 import Nav from "../Nav/Nav";
 import { useParams } from 'react-router-dom'
-import NotFound from "../../components/NotFound/NotFound";
 import MyAxios from '../Utils/Axios/Axios';
 import MatchHistory from '../MatchHistory/MatchHistory';
 import Achievement from '../Achievements/Achievements';
 import Badge from "../Badge/Badge";
-import Footer from "../Footer/Footer";
-import { AiOutlineLoading3Quarters, AiOutlineLoading } from "react-icons/ai";
 
 let url_begin = "";
 if (process.env.REACT_APP_IP == "" || process.env.REACT_APP_IP == undefined)
@@ -23,7 +18,6 @@ export interface ProfileProps {
 
 	login?: string,
 	avatar?: any,
-	//socket?: any
 }
 
 export default function Profile() {
@@ -31,7 +25,6 @@ export default function Profile() {
 	const [status, setStatus] = React.useState("offline");
 	const calledOnce = React.useRef(false);
 	const [userOK, setUserOk] = React.useState(false);
-	const [is42, setis42] = React.useState(false);
 	const { login } = useParams();
 
 	const [isFriend, setisFriend] = React.useState(false);
@@ -51,20 +44,7 @@ export default function Profile() {
 	const [level, setLevel] = React.useState(0);
 	const [nextlevel, setNextLevel] = React.useState(0);
 	const [pendingInvite, setPendingInvite] = React.useState(false);
-	const [ftlogin, setftLogin] = React.useState("");
 	const [avatar, setAvatar] = React.useState();
-	
-	// function getAvatar()
-	// {
-	// 	let url = "";
-	// 	if (process.env.REACT_APP_IP == "" || process.env.REACT_APP_IP == undefined)
-	// 		url = "http://localhost:3000/api/user/".concat(login);
-	// 	else 
-	// 		url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/user/").concat(login);
-		
-	// 	return ;
-
-	// }
 
 	function getUserLogin(log: string) {
 		let url = "";
@@ -103,44 +83,18 @@ export default function Profile() {
 		setLoad(true);
 	}
 
-	// function renderImage(login: string, isUserProfile: boolean) {
-	// 	let ax = new MyAxios(null);
-	// 	let log42 = localStorage.getItem("login42");
-	// 	// let logi = localStorage.getItem("login");
-
-	// 	console.log("login is " + login + " and login42 is " + log42);
-
-	// 	let haschanged = false;
-	// 	if (login != log42)
-	// 		haschanged = true;
-	// 	if (isUserProfile == false)
-	// 		haschanged = false;
-	// 	// if (log42 != "" && log42 != null && log42 != undefined)
-	// 		// return (ax.render_avatar(login, log42, haschanged));
-	// 	return (ax.render_avatar(login, log42, haschanged, isUserProfile));
-	// }
-
 	function renderImage(avatar: string, login: string, ftlogin?: string, extra?: string) {
 		if (!avatar)
 			return;
 
-		console.log("avatar is " + avatar);
-
 		if (avatar.startsWith("http")) {
-
-			//console.log("youpi !");
-
 			return (<img className="profile--pic"
-						width="100" height="100"
-						src={avatar}
-						id={login} />);
-
-			var myImg = document.getElementById(login) as HTMLImageElement;
+				width="100" height="100"
+				src={avatar}
+				id={login} />);
 		}
 
 		let url = "";
-
-		// console.log("hihi");
 
 		if (process.env.REACT_APP_IP == "" || process.env.REACT_APP_IP == undefined)
 			url = "http://localhost:3000/api/user/".concat(avatar).concat("/avatar");
@@ -153,13 +107,13 @@ export default function Profile() {
 				var objectURL = URL.createObjectURL(res.data);
 				myImage.src = objectURL;
 				return (<img className="profile--pic"
-				width="100" height="100"
-				src={myImage.src} id={login} />);
+					width="100" height="100"
+					src={myImage.src} id={login} />);
 			})
 			.catch((error) => {
 				return (<img className="profile--pic"
-				width="100" height="100"
-				src="https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg" id={login} />);
+					width="100" height="100"
+					src="https://pbs.twimg.com/profile_images/1380427848075317248/nxgi57Th_400x400.jpg" id={login} />);
 			})
 	}
 
@@ -184,11 +138,9 @@ export default function Profile() {
 		axios.get(url)
 			.then(res => {
 				let relation = res.data;
-				let status = relation.status;
 				if (relation.status == "accepted") {
 					friends = true;
 					setisFriend(true);
-					let message = "You are friends !";
 				}
 				else if (relation.status == "pending" && relation.receiver == login) {
 					setSentInvitation(true);
@@ -206,7 +158,6 @@ export default function Profile() {
 				}
 			})
 			.catch((error) => {
-				friends = false;
 				;
 			})
 	}
@@ -245,7 +196,6 @@ export default function Profile() {
 		ax.delete_relation_id(login, "");
 	}
 
-	let isUser = (login == localStorage.getItem("login") ? true : false);
 	return (
 		<>
 			<div id="profile--div">
@@ -263,7 +213,6 @@ export default function Profile() {
 										<div id="text-type">{isFriend == true ? "You are able to see a detailed profile because you are friends 🥰 !"
 											: "You are not able to see a detailed profile because you are not friends 😢 !"}</div>
 										<img id={login} width="100" height="100" className="profile--pic" src="" />
-										{/* {renderImage("", login, isUser)} */}
 										{renderImage(avatar, login)}
 										<svg className="log--color" height="40" width="40">
 											<circle cx="20" cy="20" r="15" fill={color} stroke="white" style={{ strokeWidth: '3' }} />
@@ -321,17 +270,6 @@ export default function Profile() {
 										<br />
 										{isFriend == true ? <MatchHistory login={login} /> : ""}
 										<br />
-										<ToastContainer
-											position="top-right"
-											autoClose={5000}
-											hideProgressBar={false}
-											newestOnTop={false}
-											closeOnClick
-											rtl={false}
-											pauseOnFocusLoss
-											draggable
-											pauseOnHover
-										/>
 										{isFriend == true ? <Badge
 											rank={rank}
 											level={level}
@@ -344,7 +282,6 @@ export default function Profile() {
 											points={points}
 											to_next={nextlevel}
 										/> : ""}
-
 									</div>
 									: <>
 									</>

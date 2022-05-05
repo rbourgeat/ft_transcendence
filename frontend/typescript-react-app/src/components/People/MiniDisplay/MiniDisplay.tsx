@@ -1,14 +1,11 @@
 import './MiniDisplay.scss';
 import MyAxios from '../../Utils/Axios/Axios';
-import React, { Component, useState, useEffect } from 'react';
-import { AiOutlineCloseCircle, AiFillPlusCircle, AiFillCheckCircle, AiFillUnlock } from "react-icons/ai";
-import { BsFillPersonPlusFill, BsFillPersonXFill } from "react-icons/bs";
+import React, { useEffect } from 'react';
+import { AiFillCheckCircle, AiFillUnlock } from "react-icons/ai";
 import io from "socket.io-client";
 import axios from 'axios';
-import { MdCancel, MdCheck, MdBlock } from 'react-icons/md';
+import { MdCancel } from 'react-icons/md';
 import { FiUserMinus, FiUserPlus, FiUserX } from 'react-icons/fi';
-import { FaMarsStroke } from 'react-icons/fa';
-import { ToastContainer, toast } from 'react-toastify';
 
 export interface MiniDisplayProps {
 	login?: string,
@@ -21,13 +18,11 @@ export interface MiniDisplayProps {
 	relation?: string;
 	extra?: string;
 	currentUser?: string;
-	//key?: any
-	//socket?: any
 }
 
 export default function MiniDisplay(props: MiniDisplayProps) {
 	const [load, setLoad] = React.useState(false);
-	const calledOnce = React.useRef(false);
+	// const calledOnce = React.useRef(false);
 	const [status, setStatus] = React.useState(props.status);
 	const [username, setUsername] = React.useState("");
 	const [color, setColor] = React.useState("green");
@@ -35,26 +30,23 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 
 	const [socket, setSocket] = React.useState(io("http://".concat(process.env.REACT_APP_IP).concat(":3000/chat"), { query: { username: username } }));
 
-	function getUser() {
-		let url = "";
-		if (process.env.REACT_APP_IP == "" || process.env.REACT_APP_IP == undefined)
-			url = "http://localhost:3000/api/auth/";
-		else
-			url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/auth");
-		let username = "";
-		axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
-		axios.defaults.withCredentials = true;
-		axios.get(url)
-			.then(res => {
-				setUsername(res.data.login);
-				username = res.data.login;
-				setLoad(true);
-			})
-			.catch((err) => {
-				// console.log("Error while getting api auth");
-				;
-			})
-	}
+	// function getUser() {
+	// 	let url = "";
+	// 	if (process.env.REACT_APP_IP == "" || process.env.REACT_APP_IP == undefined)
+	// 		url = "http://localhost:3000/api/auth/";
+	// 	else
+	// 		url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/auth");
+	// 	axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+	// 	axios.defaults.withCredentials = true;
+	// 	axios.get(url)
+	// 		.then(res => {
+	// 			setUsername(res.data.login);
+	// 			setLoad(true);
+	// 		})
+	// 		.catch((err) => {
+	// 			;
+	// 		})
+	// }
 
 	function renderImage(avatar: string, login: string, ftlogin: string, extra: string) {
 		if (!avatar)
@@ -220,20 +212,38 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 	}
 
 	useEffect(() => {
-		getUser();
-		setLoad(true);
+		// getUser();
+
+		let user = () => {
+			let url = "";
+			if (process.env.REACT_APP_IP == "" || process.env.REACT_APP_IP == undefined)
+				url = "http://localhost:3000/api/auth/";
+			else
+				url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/auth");
+			axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+			axios.defaults.withCredentials = true;
+			axios.get(url)
+				.then(res => {
+					setUsername(res.data.login);
+					setLoad(true);
+				})
+				.catch((err) => {
+					;
+				})
+		}
+
+		// setLoad(true);
+		renderImage(props.avatar, props.login, props.ftlogin, props.extra);
 		selectColor();
-		calledOnce.current = true;
+		// calledOnce.current = true;
 
 		socket.on('updateStatus', (...args) => {
 			if (props.login == args[0]) {
-				//console.log("name: " + props.login + " / " + "status: " + args[1]);
 				setStatus(args[1]);
 				selectColor();
 			}
-
 		})
-		//return () => { socket.disconnect() }
+		return () => { setLoad(false) }
 	}, [status, color]);
 
 	return (
@@ -248,17 +258,14 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 						height="100"
 						onClick={gotoprofile}
 					/>
-					{load == true ?
+					{/* {load == true ?
 						<>
 							{renderImage(props.avatar, props.login, props.ftlogin, props.extra)}
 						</>
 
-						:
-						<div className="d-flex justify-content-center">
-							<div className="spinner-border" role="status">
-							</div>
-						</div>
-					}
+						: ""
+
+					} */}
 					<br />
 					<p className="user--p" id={"mini--login".concat("_" + props.login)}>{props.login}</p>
 					{buttonToDidsplay()}

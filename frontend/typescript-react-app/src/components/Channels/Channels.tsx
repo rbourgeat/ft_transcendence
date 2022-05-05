@@ -1,12 +1,8 @@
 import './Channels.scss';
 import Nav from '../Nav/Nav';
-import TypingMessage from "./TypingMessage/TypingMessage";
 import ListDiscussions from "./ListDiscussions/ListDiscussions";
 import ListParticipant from './ListParticipant/ListParticipant';
-import React, { useState, useEffect } from "react";
-import MyAxios from '../Utils/Axios/Axios';
-import ToastAlerts from '../Utils/ToastAlerts/ToastAlerts';
-import { ToastContainer, toast } from 'react-toastify';
+import React, { useEffect } from "react";
 import { io } from "socket.io-client";
 import ListChannels from './ListChannels/ListChannels';
 import axios from 'axios';
@@ -16,7 +12,6 @@ interface ChatProps {
 }
 
 export default function Channels(props: ChatProps) {
-	const calledOnce = React.useRef(false);
 	const [username, setUsername] = React.useState("");
 	const [load, setLoad] = React.useState(false);
 	const [isChan, setIsChan] = React.useState(true);
@@ -53,7 +48,6 @@ export default function Channels(props: ChatProps) {
 
 	useEffect(() => {
 		getUser();
-		//return () => { socket.disconnect() }
 	}, [username]);
 
 	return (

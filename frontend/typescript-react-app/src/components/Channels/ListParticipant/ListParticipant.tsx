@@ -2,8 +2,6 @@ import './ListParticipant.scss';
 import React from "react";
 import Participant from './Participant/Participant';
 import axios from "axios";
-import { ToastContainer } from 'react-toastify';
-import MyAxios from '../../Utils/Axios/Axios';
 import { Button, Modal, Form } from 'react-bootstrap';
 import ToastAlerts from '../../Utils/ToastAlerts/ToastAlerts';
 
@@ -52,8 +50,6 @@ export default function ListParticipant(props: ParticipantProps) {
 	const [sockChan, setsockChan] = React.useState(props.activeName);
 
 	React.useEffect(() => {
-
-		//console.log("isChan ?:" + props.isChan + ", isBanned:" + props.isBanned)
 		setsockChan(props.activeName);
 		props.socket.emit('requestAllUsers', props.activeID);
 		props.socket.on("sendAllUsers", (participants) => {
@@ -124,24 +120,14 @@ export default function ListParticipant(props: ParticipantProps) {
 
 	function leaveChannel() {
 		props.socket.emit('leave', { user: props.login, chatName: props.activeName });
-		//props.socket.emit('refresh', props.activeName);
 		if (props.isChan === true) {
 			document.getElementById("display_chan_".concat(props.activeName)).remove();
-			//if (document.getElementsByClassName("chan-title_notselected").length > 0) {
-			//let title = document.getElementsByClassName("chan-title_notselected")[0].innerHTML;
-			//document.getElementsByClassName("chan-title_notselected")[0].className = 'chan-title_selected';
-			//}
 		}
 		props.setHide(true);
-		console.log(props.activeID + " is activeID & " + props.activeName + " is activeName");
 	}
 
 	function blockUser() {
-		try {
-			props.socket.emit('block', { user: selectedUser, me: props.login, chatName: props.activeName });
-		}
-		catch (error) {
-		}
+		props.socket.emit('block', { user: selectedUser, me: props.login, chatName: props.activeName });
 	}
 
 	function inviteToPlay() {

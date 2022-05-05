@@ -1,11 +1,8 @@
 import { Button, Modal, Form } from 'react-bootstrap';
 import axios from 'axios';
-import React, { useState, useEffect, useRef } from "react";
+import React from "react";
 import ToastAlerts from '../../Utils/ToastAlerts/ToastAlerts';
-import MyAxios from '../../Utils/Axios/Axios';
-import { ToastContainer } from 'react-toastify';
 import "./JoinPubChan.scss";
-import { io, Socket } from "socket.io-client";
 
 export interface JoinChanProps {
 	endpoint?: any,
@@ -18,21 +15,14 @@ export interface JoinChanProps {
 }
 export default function JoinChan(props: JoinChanProps) {
 	const [show, setShow] = React.useState(false);
-	const [newPass, setNewPass] = React.useState("")
-	const [show2, setShow2] = React.useState(false);
 	const [isPublic, setPublic] = React.useState(Boolean);
 	const [privatePass, setPrivatePass] = React.useState(String);
 	const [publicPass, setPublicPass] = React.useState(String);
 	const [privateToJoin, setPrivateToJoin] = React.useState(String);
-	const [chanName, chanNameSet] = React.useState("");
-	const [chanPassword, chanPasswordSet] = React.useState("");
 	const [sucessfull, setSuccessfull] = React.useState(false);
 	const [joignable, setJoignable] = React.useState([]);
 	const [load, setLoad] = React.useState(false);
-	const calledOnce = React.useRef(false);
 
-	const [form, setForm] = React.useState(false);
-	const [publicToJoin, setPublicToJoin] = React.useState(String);
 
 	const displayPrivate = () => setPublic(false);
 
@@ -42,8 +32,6 @@ export default function JoinChan(props: JoinChanProps) {
 		props.setExited("true");
 		setShow(false);
 	}
-
-	const handleClose2 = () => setShow2(false);
 
 	const handleClose = () => {
 		setJoignable([]);
@@ -57,10 +45,6 @@ export default function JoinChan(props: JoinChanProps) {
 	}, [])
 
 	const handleExit = () => {
-
-		let toast = new ToastAlerts(null);
-
-		setForm(false);
 		setPublicPass("");
 		if (sucessfull == true) {
 			props.setExited("true");
@@ -77,7 +61,6 @@ export default function JoinChan(props: JoinChanProps) {
 		else
 			url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/chat/join");
 
-		// console.log("you try to join the chan:" + chan);
 		let body = {};
 		if (!publicPass || publicPass.length <= 0) {
 			body = {
@@ -96,17 +79,13 @@ export default function JoinChan(props: JoinChanProps) {
 				toast.notifySuccess("✅ You joined the channel !");
 				props.setUpdate(chan);
 				setSuccessfull(true);
-				setForm(false);
 				setPublicPass("");
 
 				props.socket.emit('refresh', chan)
 				handleClose();
 			})
 			.catch(error => {
-				//toast.notifyDanger("Failed to join the channel.");
 				setSuccessfull(true);
-				setForm(false);
-				//console.log("here !");
 				setPublicPass("");
 				setJoignable([]);
 				handleClose();
@@ -153,8 +132,6 @@ export default function JoinChan(props: JoinChanProps) {
 			url = "http://localhost:3000/api/chat/join";
 		else
 			url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/chat/join");
-
-		// console.log(privateToJoin + ": chan i want to join while im on private side")
 		let body = {};
 		if (!privatePass || privatePass.length <= 0) {
 			body = {
@@ -169,7 +146,6 @@ export default function JoinChan(props: JoinChanProps) {
 				"public": false
 			}
 		}
-		// console.log(body);
 		axios.post(url, body)
 			.then(res => {
 				toast.notifySuccess("You joined a private channel");

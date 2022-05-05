@@ -1,6 +1,5 @@
 import './Blocked.scss';
-import React, { Component, useState, useEffect } from "react";
-import myAxios from "../../Utils/Axios/Axios";
+import React, { useEffect } from "react";
 import axios from "axios";
 import MiniDisplay from '../MiniDisplay/MiniDisplay';
 
@@ -8,15 +7,14 @@ export default function Blocked() {
 
 	const [users, setUsers] = React.useState([]);
 	const [load, setLoad] = React.useState(false);
-	const [reload, setReload] = React.useState(false);
-	const calledOnce = React.useRef(false);
+	// const calledOnce = React.useRef(false);
 
 	function renderBlocked() {
 		axios.defaults.withCredentials = true;
 		let url = "";
 		if (process.env.REACT_APP_IP == "" || process.env.REACT_APP_IP == undefined)
 			url = "http://localhost:3000/api/user/relation/me/allBlocked";
-		else 
+		else
 			url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/user/relation/me/allBlocked");
 
 		axios.get(url)
@@ -36,11 +34,11 @@ export default function Blocked() {
 	}
 
 	useEffect(() => {
-		if (calledOnce.current) {
-			return;
-		}
+		// if (calledOnce.current) {
+		// 	return;
+		// }
 		renderBlocked();
-		calledOnce.current = true;
+		// calledOnce.current = true;
 	}, []);
 
 	return (

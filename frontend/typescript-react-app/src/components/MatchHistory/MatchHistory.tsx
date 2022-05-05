@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import './MatchHistory.scss';
 import ButtonResume from "./ButtonResume/ButtonResume";
 import axios from 'axios';
-import { renderMatches } from 'react-router-dom';
 
 let url_begin = "";
 if (process.env.REACT_APP_IP == "" || process.env.REACT_APP_IP == undefined)
@@ -36,10 +35,9 @@ export default function MatchHistory(props: MatchHistoryProps) {
         if (props.login) {
             url = url_begin.concat(":3000/api/game/").concat(props.login).concat("/history");
         }
-        else {
-            console.log("props is null !");
+        else
             return;
-        }
+
         let headers = {
             login: props.login
         }

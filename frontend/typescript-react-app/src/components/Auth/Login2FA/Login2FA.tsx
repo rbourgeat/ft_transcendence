@@ -1,16 +1,11 @@
 import './Login2FA.scss';
-import io from "socket.io-client";
 import axios from "axios";
-import React, { useState, useEffect, useRef } from "react";
-import Nav from "../../Nav/Nav";
+import React, { useEffect, useRef } from "react";
 import AuthCode, { AuthCodeRef } from 'react-auth-code-input';
 import ToastAlerts from '../../Utils/ToastAlerts/ToastAlerts';
 import { ToastContainer } from "react-toastify";
 
-
 export default function Login2fa() {
-	const [activated2fa, setActivated2fa] = React.useState(false);
-	const [loggedIn, setLoggedIn] = React.useState("false");
 	const calledOnce = React.useRef(false);
 	const [code, setCode] = React.useState("");
 	const AuthInputRef = useRef<AuthCodeRef>(null);
@@ -26,7 +21,7 @@ export default function Login2fa() {
 		event.preventDefault();
 		let toast = new ToastAlerts(null);
 		if (code.length != 6) {
-			toast.notifyDanger("❗️ Error, the verif code is too short.");
+			toast.notifyDanger("Error, the verif code is too short.");
 			return;
 		}
 
@@ -45,7 +40,7 @@ export default function Login2fa() {
 			twoFactorAuthenticationCode: code
 		}
 
-		let res = axios.post(url, bod)
+		axios.post(url, bod)
 			.then(res => {
 				localStorage.setItem("2faverif", "true");
 				window.top.location = "http://".concat(process.env.REACT_APP_IP).concat(":3030/user");

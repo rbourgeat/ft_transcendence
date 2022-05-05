@@ -1,14 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import './Live.scss';
-import Header from "../Header/Header";
 import Nav from "../Nav/Nav";
-import Footer from "../Footer/Footer";
 import io from "socket.io-client";
-import axios from "axios";
-import { Form } from 'react-bootstrap'
 
-
-var canvas = [];
 var game = [];
 
 let url_begin = "";
@@ -22,9 +16,7 @@ export default function Live() {
 	var adversaires = [];
 
 	let socket = io(url_begin.concat(":3000/game"));
-	const [myArgs, setmyArgs] = React.useState([""]);
 	const [displayedNo, setDisplayedNo] = React.useState(false);
-
 
 	function display_no() {
 		if (displayedNo == false) {
@@ -53,13 +45,9 @@ export default function Live() {
 
 	function display(args) {
 		let parent: any;
-		let child: any;
 		let exists: any;
 		let newdiv: any;
 		let newContent: any;
-		let erases: any;
-
-		const b = args[0].split(':');
 
 		remove_no();
 		Object.keys(joueurs).map(joueur => {
@@ -79,7 +67,6 @@ export default function Live() {
 						newbutton.type = "submit";
 						newbutton.className = "btn btn-light watch";
 						newbutton.onclick = function () {
-							console.log("redirecting to game page");
 							window.top.location = url_begin.concat(":3030/game?live=").concat(joueurs[joueur]).concat("+").concat(adversaire);
 						};
 						newdiv.appendChild(newbutton);
@@ -128,9 +115,7 @@ export default function Live() {
 		let i: number = 0;
 		len = args.length;
 
-		//TODO: rbourgea : checker si il ne faut (comme c'était fait) checker que sur args[0] ou sur un args[i] ? (si il y a plusieurs match est-ce que c'est OK ?)
 		if (args) {
-			//console.log("args are : " + args)
 			if (args[i]) {
 				let check = args[i].split(':');
 				if (check[1] == "null") {
@@ -140,37 +125,7 @@ export default function Live() {
 		}
 	})
 
-
-	//va permettre d'identifier les joueurs
-	// socket.on("playerMove", (body: string) => {
-	// 	// console.log("Player move called");
-	// 	// Update Paddle position in real time
-	// 	const b = body.split(':');
-	// 	if (joueurs.indexOf(b[0]) == -1 && adversaires.indexOf(b[0]) == -1) {
-	// 		joueurs.push(b[0]);
-	// 		adversaires.push(b[2]);
-	// 		display(body);
-	// 	}
-
-	// 	if (b[3] == "gauche")
-	// 		joueurs.map(joueur => {
-	// 			if (joueur)
-	// 				if (joueur == b[0]) {
-	// 					if (game)
-	// 						game[joueurs.indexOf(joueur)].player.y = Number(b[1]);
-	// 				}
-	// 		});
-	// 	if (b[3] == "droit")
-	// 		adversaires.map(adversaire => {
-	// 			if (adversaire)
-	// 				if (adversaire == b[0]) {
-	// 					game[adversaires.indexOf(adversaire)].player2.y = Number(b[1]);
-	// 				}
-	// 		})
-	// });
-
 	socket.on("ballMoveBack", (body: string) => {
-		// console.log("Player move called");
 		// Update Paddle position in real time
 		const b = body.split(':');
 		if (joueurs.indexOf(b[0]) == -1 && adversaires.indexOf(b[0]) == -1

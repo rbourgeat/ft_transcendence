@@ -1,6 +1,5 @@
 import './SentInvitations.scss';
-import React, { Component, useState, useEffect } from "react";
-import myAxios from "../../Utils/Axios/Axios";
+import React, { useEffect } from "react";
 import axios from "axios";
 import MiniDisplay from '../MiniDisplay/MiniDisplay';
 
@@ -15,7 +14,7 @@ export default function Invitations() {
 		let url = "";
 		if (process.env.REACT_APP_IP == "" || process.env.REACT_APP_IP == undefined)
 			url = "http://localhost:3000/api/user/relation/me/sentInvitations";
-		else 
+		else
 			url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/user/relation/me/sentInvitations");
 
 		axios.get(url)
@@ -35,11 +34,11 @@ export default function Invitations() {
 	}
 
 	useEffect(() => {
-		if (calledOnce.current) {
-			return;
-		}
+		// if (calledOnce.current) {
+		// 	return;
+		// }
 		renderInvitations();
-		calledOnce.current = true;
+		// calledOnce.current = true;
 	}, []);
 
 	return (
