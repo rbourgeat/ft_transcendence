@@ -13,6 +13,7 @@ export class UserMigration1645626140921 implements MigrationInterface {
             queryRunner.manager.create<User>(User, {
                 login: 'dummy1',
                 password: 'dummy1',
+                login42: 'dummy1',
                 email: 'dummy1@gmail.com',
                 status: 'offline',
                 avatar: 'norminet.jpg',
@@ -69,7 +70,6 @@ export class UserMigration1645626140921 implements MigrationInterface {
                 login42: 'dummy5',
                 password: 'dummy5',
                 email: 'dummy5@gmail.com',
-                //status: 'ingame',
                 status: 'offline',
                 avatar: 'turtle.jpg',
                 rank: 5,
@@ -146,14 +146,6 @@ export class UserMigration1645626140921 implements MigrationInterface {
             }),
         );
 
-        //const bahaasRelation31 = await queryRunner.manager.save(
-        //    queryRunner.manager.create<UserRelation>(UserRelation, {
-        //        creator: bahaas,
-        //        receiver: malatini,
-        //        status: 'blocked',
-        //    }),
-        //);
-
         const bahaasRelation4 = await queryRunner.manager.save(
             queryRunner.manager.create<UserRelation>(UserRelation, {
                 creator: bahaas,
@@ -209,14 +201,6 @@ export class UserMigration1645626140921 implements MigrationInterface {
                 status: 'pending',
             }),
         );
-
-        //const malatiniRelation6 = await queryRunner.manager.save(
-        //    queryRunner.manager.create<UserRelation>(UserRelation, {
-        //        creator: bahaas,
-        //        receiver: malatini,
-        //        status: 'blocked',
-        //    }),
-        //);
 
         const malatiniRelation6 = await queryRunner.manager.save(
             queryRunner.manager.create<UserRelation>(UserRelation, {
