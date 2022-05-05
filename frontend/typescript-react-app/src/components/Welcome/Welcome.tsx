@@ -7,9 +7,14 @@ import Header from '../Header/Header';
 
 let url_begin = "";
 if (process.env.REACT_APP_IP == "" || process.env.REACT_APP_IP == undefined)
+{
     url_begin = "http://localhost";
+    console.log("process env is empty !")
+}
 else
     url_begin = "http://".concat(process.env.REACT_APP_IP);
+
+console.log("url begin is :" + url_begin);
 
 export default function Welcome() {
 
