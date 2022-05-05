@@ -11,7 +11,7 @@ export interface CreateDMProps {
 	handleshow?: any,
 	setExited?: any,
 	setUpdate?: any,
-	exited?: boolean
+	exited?: any
 }
 export default function CreateDM(props: CreateDMProps) {
 

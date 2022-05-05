@@ -11,7 +11,7 @@ export interface CreateChanProps {
 	handleshow?: any,
 	setExited?: any,
 	setUpdate?: any,
-	exited?: boolean,
+	exited?: any,
 	setHasPass?: any
 }
 export default function CreateChan(props: CreateChanProps) {

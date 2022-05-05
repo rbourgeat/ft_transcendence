@@ -9,7 +9,7 @@ import axios from "axios";
 let url_begin = "";
 if (process.env.REACT_APP_IP == "" || process.env.REACT_APP_IP == undefined)
 	url_begin = "http://localhost";
-else 
+else
 	url_begin = "http://".concat(process.env.REACT_APP_IP);
 
 export interface EditUsernameModalProps {
@@ -49,6 +49,7 @@ export default function EditUsernameModal(props: EditUsernameModalProps) {
 		axios.patch(url, { headers })
 			.then(res => {
 				toast.notifySuccess("✨ Successfully updated username");
+				localStorage.setItem("login", inputValue);
 				props.setUsername(inputValue)
 			})
 			.catch((error) => {

@@ -35,16 +35,16 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 
 	const [socket, setSocket] = React.useState(io("http://".concat(process.env.REACT_APP_IP).concat(":3000/chat"), { query: { username: username } }));
 
-	async function getUser() {
+	function getUser() {
 		let url = "";
 		if (process.env.REACT_APP_IP == "" || process.env.REACT_APP_IP == undefined)
 			url = "http://localhost:3000/api/auth/";
-		else 
+		else
 			url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/auth");
 		let username = "";
 		axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 		axios.defaults.withCredentials = true;
-		await axios.get(url)
+		axios.get(url)
 			.then(res => {
 				setUsername(res.data.login);
 				username = res.data.login;
@@ -232,6 +232,7 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 			}
 
 		})
+		//return () => { socket.disconnect() }
 	}, [status, color]);
 
 	return (

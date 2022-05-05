@@ -127,10 +127,13 @@ export default function ListParticipant(props: ParticipantProps) {
 		//props.socket.emit('refresh', props.activeName);
 		if (props.isChan === true) {
 			document.getElementById("display_chan_".concat(props.activeName)).remove();
-			let title = document.getElementsByClassName("chan-title_notselected")[0].innerHTML;
-			document.getElementsByClassName("chan-title_notselected")[0].className = 'chan-title_selected';
+			//if (document.getElementsByClassName("chan-title_notselected").length > 0) {
+			//let title = document.getElementsByClassName("chan-title_notselected")[0].innerHTML;
+			//document.getElementsByClassName("chan-title_notselected")[0].className = 'chan-title_selected';
+			//}
 		}
 		props.setHide(true);
+		console.log(props.activeID + " is activeID & " + props.activeName + " is activeName");
 	}
 
 	function blockUser() {

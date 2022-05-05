@@ -12,7 +12,7 @@ export interface JoinChanProps {
 	action?: any,
 	setExited?: any,
 	setUpdate?: any,
-	exited?: boolean,
+	exited?: any,
 	login?: string,
 	socket?: any
 }
@@ -39,6 +39,7 @@ export default function JoinChan(props: JoinChanProps) {
 	const displayPublic = () => setPublic(true);
 
 	const handleCloseFinale = () => {
+		props.setExited("true");
 		setShow(false);
 	}
 
@@ -51,6 +52,7 @@ export default function JoinChan(props: JoinChanProps) {
 	}
 
 	React.useEffect(() => {
+		props.setExited("false");
 		;
 	}, [])
 
@@ -61,7 +63,7 @@ export default function JoinChan(props: JoinChanProps) {
 		setForm(false);
 		setPublicPass("");
 		if (sucessfull == true) {
-			props.setExited(!props.exited);
+			props.setExited("true");
 		}
 	}
 
@@ -113,12 +115,12 @@ export default function JoinChan(props: JoinChanProps) {
 
 
 	const handleShow = () => {
+		props.setExited("false");
 		getJoignableChans();
 		setShow(true);
 	}
 
 	const getJoignableChans = () => {
-
 		let url = "";
 		if (process.env.REACT_APP_IP == "" || process.env.REACT_APP_IP == undefined)
 			url = "http://localhost:3000/api/chat/joignableChannels";

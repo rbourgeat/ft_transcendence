@@ -26,6 +26,7 @@ export default function ListDiscussions(props: ListDiscussionsProps) {
 	const [oldMessages, setOldMessages] = React.useState([]);
 
 	useEffect(() => {
+		console.log(props.activeName + ": activename atm")
 		setsockChan(props.activeName);
 		props.socket.emit('requestAllMessages', props.activeID);
 		props.socket.on("sendAllMessages", (messagesUpdated) => {
@@ -34,7 +35,7 @@ export default function ListDiscussions(props: ListDiscussionsProps) {
 			else
 				setMessages(null)
 		});
-	}, [props.activeID]);
+	}, [props.activeID, props.activeName]);
 
 	props.socket.on("refreshMessages", (...args) => {
 		let b = args[1].split('_');
@@ -109,11 +110,11 @@ export default function ListDiscussions(props: ListDiscussionsProps) {
 		console.log(props.activeName + ": activename atm")
 		checkisBanned();
 		checkisBlocked();
-	}, [props.activeID]);
+	}, [props.activeID, props.activeName]);
 
 	return (
 		<div id="ListDiscussions" className="col-md-5">
-			<div className="title_chat_div">
+			{/* <div className="title_chat_div">
 				{
 					props.hide === false ?
 						props.activeName ?
@@ -123,7 +124,7 @@ export default function ListDiscussions(props: ListDiscussionsProps) {
 						:
 						null
 				}
-			</div>
+			</div> */}
 			<div className="messages-zone">
 				<ul className="text text_ul">
 					{

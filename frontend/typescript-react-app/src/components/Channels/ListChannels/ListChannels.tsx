@@ -21,7 +21,7 @@ export interface ListChannelsProps {
 }
 
 export default function ListChannels(props: ListChannelsProps) {
-	const [channels, setChannels] = React.useState([{}]);
+	const [channels, setChannels] = React.useState([]);
 	// const [DMs, setDMs] = React.useState([{}]);
 	//const [receiver, setReceiver] = React.useState([]);
 
@@ -29,7 +29,7 @@ export default function ListChannels(props: ListChannelsProps) {
 	//const [selectedCat, setSelectedCat] = React.useState("Channels");
 	const [load, setLoad] = React.useState(false);
 	//const [minId, setMinID] = React.useState(0);
-	const [exited, setExited] = React.useState(false);
+	const [exited, setExited] = React.useState("false");
 	const [update, setUpdate] = React.useState("");
 	//const calledOnce = React.useRef(false);
 	//const [count, setCount] = React.useState(0);
@@ -71,16 +71,23 @@ export default function ListChannels(props: ListChannelsProps) {
 
 	//nécessaire pour mettre à jour suite à la fermeture d'un modal
 	useEffect(() => {
+		//setExited(false);
+		console.log("exited:" + exited)
+		//if (exited === true) {
+		console.log("clean and render list channels");
 		clean();
 		renderListChannels();
+		//}
 	}, [exited])
 
 	function clean() {
 		let chans = Array.from(document.getElementsByClassName("displaying_channels"));
-		for (let i = 0; i < chans.length; i++) {
+		console.log()
+		for (let i = 0; i <= chans.length; i++) {
 			chans.pop();
 			channels.pop();
 		}
+		setChannels([]);
 
 	}
 
@@ -97,14 +104,14 @@ export default function ListChannels(props: ListChannelsProps) {
 				</div>
 				<div className="displaying-div">
 					{load === true ?
-						Object.keys(channels).map(function (key, index) {
-							if (channels[key].id !== undefined) {
+						channels.map(channel => {
+							if (channel.id !== undefined) {
 								return (
-									<div key={channels[key].id} className="displaying_channels">
+									<div key={channel.id} className="displaying_channels">
 										<DisplayChan
 											setIsChan={props.setIsChan}
 											isChan={props.isChan}
-											channel={channels[key]}
+											channel={channel}
 											//minId={minId}
 											login={props.login}
 											setHasPass={props.setHasPass}
@@ -114,7 +121,7 @@ export default function ListChannels(props: ListChannelsProps) {
 											socket={props.socket}
 											update={update}
 											activeName={props.activeName}
-											direct={channels[key].direct}
+											direct={channel.direct}
 										/>
 									</div>
 								)

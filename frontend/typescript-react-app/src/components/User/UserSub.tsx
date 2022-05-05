@@ -109,9 +109,11 @@ export default function User(props: UserfuncProps) {
 	useEffect(() => {
 		if (calledOnce.current) {
 			return;
+			//return () => { socket.disconnect() }
 		}
 		getUser();
 		calledOnce.current = true;
+		//return () => { socket.disconnect() }
 	}, []);
 
 	function renderImage(login: string) {

@@ -196,7 +196,7 @@ export default function Settings(props: SettingsProps) {
 		if (login != log42)
 			haschanged = true;
 		if (log42 != "" && log42 != null && log42 != "null" && log42 != undefined)
-			return ( ax.render_avatar(login, log42, haschanged));
+			return (ax.render_avatar(login, log42, haschanged));
 		return (ax.render_avatar(login, "", haschanged));
 	}
 
@@ -215,7 +215,7 @@ export default function Settings(props: SettingsProps) {
 				}
 
 			})
-			return;
+			//return () => { socket.disconnect() }
 		}
 
 		if (localStorage.getItem("2fa") == "true")

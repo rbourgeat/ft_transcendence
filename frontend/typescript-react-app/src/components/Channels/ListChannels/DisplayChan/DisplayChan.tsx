@@ -31,7 +31,7 @@ export default function DisplayChan(props: DisplayChanProps) {
 		//setLoad(true);
 		//setIsDM(false);
 		//setReceiver(null)
-		//console.log("props direct is " + props.direct);
+		console.log("props direct is " + props.direct);
 		if (props.direct === true) {
 			//console.log(JSON.stringify(props.channel.participates));
 			if (props.channel.participates[0].login == props.login && props.login != null) {
@@ -130,7 +130,15 @@ export default function DisplayChan(props: DisplayChanProps) {
 						<button
 							type="button" id={"chan-title_".concat(props.channel.id)}
 							className={isSelected === true ? "chan-title_selected" : "chan-title_notselected"}
-							onClick={() => { selectChan() }}>{props.direct == false ? props.channel.name : receiver}</button>
+							onClick={() => {
+								// setIsSelected(true);
+								selectChan();
+								// if (props.direct == false)
+								// 	props.setActiveName(props.channel.name);
+								// else
+								// 	props.setActiveName(receiver);
+							}
+							}>{props.direct == false ? props.channel.name : receiver}</button>
 					</> : ""}
 			</div>
 		</>

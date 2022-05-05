@@ -53,6 +53,7 @@ export default function Channels(props: ChatProps) {
 
 	useEffect(() => {
 		getUser();
+		//return () => { socket.disconnect() }
 	}, [username]);
 
 	return (
