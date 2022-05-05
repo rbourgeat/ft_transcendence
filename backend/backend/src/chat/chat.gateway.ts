@@ -133,6 +133,7 @@ export class ChatGateway implements OnGatewayConnection {
 	@SubscribeMessage('setAdmin')
 	async setAdmin(@ConnectedSocket() socket: Socket, @MessageBody() body: AdminDto) {
 		const user = await this.userService.getUserByLogin(body.user);
+		await this.userService.saveAchievement(user, "BeAdmin");
 		const admin = await this.userService.getUserByLogin(body.admin);
 		await this.chatService.setAdmin(body.chatName, user.login, admin);
 		this.refreshChat(socket, body.chatName);

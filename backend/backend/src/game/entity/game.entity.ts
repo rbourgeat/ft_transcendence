@@ -16,10 +16,10 @@ export class Game {
     loser_score: number;
 
     @Column({ nullable: true })
-    loser: string;
+    loser: number;
 
     @Column({ nullable: true })
-    winner: string;
+    winner: number;
 
     @Column({ nullable: true })
     game_mode: number;

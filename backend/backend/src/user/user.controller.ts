@@ -34,6 +34,14 @@ export class UserController {
         return this.userService.getUserByLogin(login);
     }
 
+    @ApiOperation({ summary: 'Retrieve {id}\'s data' })
+    @ApiOkResponse({ description: 'Data received' })
+    @ApiConflictResponse({ description: '{id} does\'t exist' })
+    @Get('id/:id')
+    getUserById(@Param('id') id: number) {
+        return this.userService.getUserById(id);
+    }
+
     @ApiOperation({ summary: 'Update {login}\'s data' })
     @ApiOkResponse({ description: 'Data updated' })
     @Patch(':oldlogin/changeto/:newlogin')

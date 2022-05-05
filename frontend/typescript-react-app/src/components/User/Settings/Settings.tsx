@@ -245,7 +245,6 @@ export default function Settings(props: SettingsProps) {
 									<circle cx="20" cy="20" r="15" fill={color} stroke="white" style={{ strokeWidth: '3' }} />
 								</svg>
 								<p className="username-text" id="user_username">{username}</p>
-								<p className="status-text">{status}</p>
 								<br />
 								<div className="row d-flex justify-content-center text-center">
 									<div id="change-avatar-div" className="col-5">

@@ -30,7 +30,7 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 	const calledOnce = React.useRef(false);
 	const [status, setStatus] = React.useState(props.status);
 	const [username, setUsername] = React.useState("");
-	const [color, setColor] = React.useState("");
+	const [color, setColor] = React.useState("green");
 	const [relationStatus, setRelationStatus] = React.useState("");
 
 	const [socket, setSocket] = React.useState(io("http://".concat(process.env.REACT_APP_IP).concat(":3000/chat"), { query: { username: username } }));
