@@ -149,7 +149,7 @@ export default function Profile() {
 
 		let res = axios.get(url, { responseType: 'blob' })
 			.then(res => {
-				let myImage: HTMLImageElement = document.querySelector("#".concat(login + "_" + extra));
+				let myImage: HTMLImageElement = document.querySelector("#".concat(login));
 				var objectURL = URL.createObjectURL(res.data);
 				myImage.src = objectURL;
 				return (<img className="profile--pic"
