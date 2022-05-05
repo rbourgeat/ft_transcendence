@@ -64,6 +64,8 @@ export default function MatchHistory(props: MatchHistoryProps) {
             })
     }
 
+
+
     return (
         <div id="matchhistory--div" className="container">
             <div >

@@ -20,7 +20,7 @@ export interface ParticipantsProps {
 
 export default function Participant(props: ParticipantsProps) {
 	const [isAdmin, setIsAdmin] = React.useState(false);
-	const [color, setColor] = React.useState("grey");
+	const [color, setColor] = React.useState("green");
 	const [status, setStatus] = React.useState(props.status);
 
 	const calledOnce = React.useRef(false);

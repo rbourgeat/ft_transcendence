@@ -333,8 +333,8 @@ export class UserMigration1645626140921 implements MigrationInterface {
                 game_mode: 2,
                 winner_score: 5,
                 loser_score: 3,
-                winner: "dummy4",
-                loser: "dummy2",
+                winner: dummy4.id,
+                loser: dummy2.id,
                 players: [dummy4, dummy2]
             }),
         );
@@ -344,8 +344,8 @@ export class UserMigration1645626140921 implements MigrationInterface {
                 game_mode: 1,
                 winner_score: 5,
                 loser_score: 0,
-                winner: "dummy3",
-                loser: "dummy4",
+                winner: dummy3.id,
+                loser: dummy4.id,
                 players: [dummy3, dummy4]
             }),
         );
@@ -355,8 +355,8 @@ export class UserMigration1645626140921 implements MigrationInterface {
                 game_mode: 1,
                 winner_score: 5,
                 loser_score: 3,
-                winner: "dummy1",
-                loser: "dummy4",
+                winner: dummy1.id,
+                loser: dummy4.id,
                 players: [dummy1, dummy4]
             }),
         );
@@ -366,8 +366,8 @@ export class UserMigration1645626140921 implements MigrationInterface {
                 game_mode: 1,
                 winner_score: 5,
                 loser_score: 3,
-                winner: "dummy2",
-                loser: "dummy1",
+                winner: dummy2.id,
+                loser: dummy1.id,
                 players: [dummy2, dummy1]
             }),
         );
@@ -377,8 +377,8 @@ export class UserMigration1645626140921 implements MigrationInterface {
                 game_mode: 0,
                 winner_score: 5,
                 loser_score: 0,
-                winner: "bahaas",
-                loser: "dummy4",
+                winner: bahaas.id,
+                loser: dummy4.id,
                 players: [bahaas, dummy4]
             }),
         );
@@ -388,8 +388,8 @@ export class UserMigration1645626140921 implements MigrationInterface {
                 game_mode: 2,
                 winner_score: 5,
                 loser_score: 3,
-                winner: "bahaas",
-                loser: "dummy2",
+                winner: bahaas.id,
+                loser: dummy2.id,
                 players: [dummy2, bahaas]
             }),
         );
@@ -399,8 +399,8 @@ export class UserMigration1645626140921 implements MigrationInterface {
                 game_mode: 1,
                 winner_score: 2,
                 loser_score: 1,
-                winner: "dummy3",
-                loser: "bahaas",
+                winner: dummy3.id,
+                loser: bahaas.id,
                 players: [dummy3, bahaas]
             }),
         );
@@ -410,8 +410,8 @@ export class UserMigration1645626140921 implements MigrationInterface {
                 game_mode: 2,
                 winner_score: 5,
                 loser_score: 1,
-                winner: "dummy5",
-                loser: "bahaas",
+                winner: dummy5.id,
+                loser: bahaas.id,
                 players: [dummy5, bahaas]
             }),
         );
@@ -421,8 +421,8 @@ export class UserMigration1645626140921 implements MigrationInterface {
                 game_mode: 1,
                 winner_score: 5,
                 loser_score: 4,
-                winner: "dummy3",
-                loser: "bahaas",
+                winner: dummy3.id,
+                loser: bahaas.id,
                 players: [dummy3, bahaas]
             }),
         );

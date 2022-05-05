@@ -17,7 +17,7 @@ export default function Achievement(props: AchievementsProps) {
         let url = "";
         if (process.env.REACT_APP_IP == "" || process.env.REACT_APP_IP == undefined)
             url = "http://".concat("localhost:3000/api/user/achievements/").concat(props.login);
-        else 
+        else
             url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/user/achievements/").concat(props.login);
 
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
@@ -55,8 +55,8 @@ export default function Achievement(props: AchievementsProps) {
                         <div className={isUnlocked("BeAdmin") ? "card card--unlocked" : "card card--locked"}>
                             {isUnlocked("BeAdmin") ? <svg className="checkmark"><BsCheckLg /></svg> : ""}
                             <div className="card-body">
-                                <h5 className="card-title">Let's talk</h5>
-                                <p className="card-text">Admin of a channel</p>
+                                <h5 className="card-title">Promoted</h5>
+                                <p className="card-text">Someone set you admin</p>
                             </div>
                         </div>
 
@@ -64,7 +64,7 @@ export default function Achievement(props: AchievementsProps) {
                             {isUnlocked("5Row") ? <svg className="checkmark"><BsCheckLg /></svg> : ""}
                             <div className="card-body">
                                 <h5 className="card-title">On fire</h5>
-                                <p className="card-text">Win 5 games</p>
+                                <p className="card-text">Win 5 games in a row</p>
                             </div>
                         </div>
 
