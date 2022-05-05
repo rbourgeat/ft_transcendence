@@ -3,6 +3,7 @@ import { Server, Socket } from 'socket.io';
 import { ChatService } from './chat.service';
 import { UserService } from 'src/user/user.service';
 import { AdminDto, BanDto, BlockDto, LeaveDto, MuteDto } from './dto/chat.dto';
+import { SendMessageToChatDto } from './dto/message.dto';
 
 
 @WebSocketGateway({ namespace: 'chat', cors: true })
@@ -43,25 +44,18 @@ export class ChatGateway implements OnGatewayConnection {
 	}
 
 	@SubscribeMessage('message')
-	async messageMessage(@ConnectedSocket() socket: Socket, @MessageBody() body: string) {
-		let b = body.split(':');
-		const author = await this.userService.getUserByLogin(b[0]);
+	async messageMessage(@ConnectedSocket() socket: Socket, @MessageBody() message: SendMessageToChatDto) {
+		const author = await this.userService.getUserByLogin(message.login);
 
-		if (b[4] == "chat") {
-			const message = await this.chatService.saveChatMessage(b[1], b[2], author);
-			//const messages = await this.chatService.getMessagesbyName(b[1]);
-			//const messages = await this.chatService.getMessagesById2(Number(b[3]), author.login);
-			// this.server.emit('refreshMessages', messages, b[1]);
-			this.server.emit('goRefreshChannel', b[1]);
+		if (message.type == "chat") {
+			await this.chatService.saveChatMessage(message.channel, message.content, author);
+			this.server.emit('goRefreshChannel', message.channel);
 		}
-		else if (b[4] == "dm") {
-			var y: number = +b[3];
+		else if (message.type == "dm") {
+			var y: number = +message.id;
 			const dm = await this.chatService.getChatById(y);
-			const message = await this.chatService.saveChatMessage(dm.name, b[2], author);
-			//const messages = await this.chatService.getMessagesbyName(dm.name);
-			//const messages = await this.chatService.getMessagesById2(dm.id, author.login);
-			// this.server.emit('refreshMessages', messages, dm.name);
-			this.server.emit('goRefreshChannel', b[1]);
+			await this.chatService.saveChatMessage(dm.name, message.content, author);
+			this.server.emit('goRefreshChannel', message.channel);
 		}
 	}
 

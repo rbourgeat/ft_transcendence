@@ -194,6 +194,7 @@ export default function Profile() {
 	function remove() {
 		let ax = new MyAxios(null);
 		ax.delete_relation_id(login, "");
+		//document.getElementById("remove--button").remove();
 	}
 
 	return (

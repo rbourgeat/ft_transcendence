@@ -13,7 +13,8 @@ import { AuthService } from '../auth/auth.service';
 import { WsException } from '@nestjs/websockets';
 import { UserRelation } from 'src/user/entity/friend-request.entity';
 import { UserService } from 'src/user/user.service';
-
+//import * as bcrypt from 'bcrypt';
+import * as argon2 from "argon2";
 @Injectable()
 export class ChatService {
 	constructor(
@@ -85,6 +86,7 @@ export class ChatService {
 			relations: ['user', 'chat'],
 		});
 
+		//console.log(listParticipateCard);
 		const channelsIds: number[] = [];
 		listParticipateCard.forEach((participate: Participate) => {
 			channelsIds.push(participate.chat.id);
@@ -125,9 +127,9 @@ export class ChatService {
 	}
 
 	async createChat(chat: CreateChatDto, user: User) {
-		if (await this.getChatByName(chat.name))
-			//return console.log('error: ' + chat + ' already exist');
-			return;
+
+		if (await this.getChatByName(chat.name) || chat.name.startsWith("direct_"))
+			throw new HttpException('Forbidden name', HttpStatus.CONFLICT);
 
 		const newParticipate = await this.participateRepository.create(
 			{
@@ -139,6 +141,9 @@ export class ChatService {
 		);
 		await this.participateRepository.save(newParticipate);
 
+		console.log(chat.password);
+		chat.password = await argon2.hash(chat.password);
+		console.log(chat.password);
 		const newChat = await this.chatRepository.create(
 			{
 				...chat,
@@ -224,7 +229,12 @@ export class ChatService {
 			if (joinedChat.public === true && chat.public === false)
 				throw new HttpException({ error: 'Tried to join a public channel as private', status: HttpStatus.CONFLICT }, HttpStatus.CONFLICT);
 
-			if (chat.password == joinedChat.password) {
+			const isPasswordMatching = await argon2.verify(
+				joinedChat.password,
+				chat.password
+			);
+
+			if (joinedChat.password && isPasswordMatching) {
 				const chatT = await this.getChatByName(chat.name);
 				const participate = await this.participateRepository.findOne({ user: user, chat: chatT });
 				if (!participate) {

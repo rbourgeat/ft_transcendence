@@ -82,7 +82,7 @@ export class AuthService {
             plainTextPassword,
             hashedPassword
         );
-        */
+         */
         //if (!isPasswordMatching) {
         if (plainTextPassword != hashedPassword) {
             throw new HttpException('Wrong credentials provided', HttpStatus.BAD_REQUEST);

@@ -58,10 +58,31 @@ export default function TypingMessage(props: TypingProps) {
     function sendMessage(message: string) {
         if (message !== "") {
             updateText("");
-            if (props.isChan === false)
-                props.socket.emit('message', props.login + ":" + props.channel + ":" + message + ":" + props.chanId + ":dm");
-            else
-                props.socket.emit('message', props.login + ":" + props.channel + ":" + message + ":" + props.chanId + ":chat");
+            let body = {};
+            if (props.isChan === false) {
+                body = {
+                    login: props.login,
+                    channel: props.channel,
+                    content: message,
+                    id: props.chanId,
+                    type: "dm"
+                }
+                //props.socket.emit('message', props.login + ":" + props.channel + ":" + message + ":" + props.chanId + ":dm");
+                props.socket.emit('message', body);
+            }
+            else {
+                body = {
+                    login: props.login,
+                    channel: props.channel,
+                    content: message,
+                    id: props.chanId,
+                    type: "chat"
+                }
+
+                //props.socket.emit('message', props.login + ":" + props.channel + ":" + message + ":" + props.chanId + ":chat");
+                props.socket.emit('message', body);
+
+            }
         }
     }
 

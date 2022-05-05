@@ -15,15 +15,25 @@ export class SendMessageToChatDto {
     @IsString()
     @IsNotEmpty()
     @ApiProperty({ example: 'Hello world !' })
+    login: string;
+
+    @IsString()
+    @IsNotEmpty()
+    @ApiProperty({ example: 'Hello world !' })
+    channel: string;
+
+    @IsString()
+    @IsNotEmpty()
+    @ApiProperty({ example: 'Hello world !' })
     content: string;
 
-    // @IsString()
-    // @IsNotEmpty()
-    // @ApiProperty({ example: 'Hello world !' })
-    // author: User;
+    @IsString()
+    @IsNotEmpty()
+    @ApiProperty({ example: 'Hello world !' })
+    id: string;
 
     @IsString()
     @IsNotEmpty()
     @ApiProperty({ example: 'chat-1' })
-    channel: string;
+    type: string;
 }

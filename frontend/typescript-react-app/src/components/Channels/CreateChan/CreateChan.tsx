@@ -95,7 +95,9 @@ export default function CreateChan(props: CreateChanProps) {
 								handleClose();
 							})
 							.catch((error) => {
-								;
+								setSuccessfull(false);
+								toast.notifyDanger("Failed channel creation");
+								handleClose();
 							})
 					}
 				}
