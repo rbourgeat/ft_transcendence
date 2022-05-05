@@ -102,7 +102,8 @@ export class UserService {
 	async createUser42(userData: User42Dto) {
 		const user = await this.userRepository.findOne({ email: userData.email });
 		if (user)
-			return console.log("that user already exists");
+			// return console.log("that user already exists");
+			return;
 		const newUser = await this.usersRepository.createUser42(userData);
 		await this.giveRankOnCreation(newUser);
 		await this.triggerAchievement42(newUser);
@@ -160,15 +161,19 @@ export class UserService {
 		if (await this.hasExistingRelation(creator, receiver)) {
 			const inviteFromHim = await this.userRelationRepository.findOne({ creator: receiver, receiver: creator });
 			if (inviteFromHim && inviteFromHim.status == 'blocked')
-				return console.log('You have been blocked by that user');
+				// return console.log('You have been blocked by that user');
+				return;
 			else if (inviteFromHim && (inviteFromHim.status == 'pending' || inviteFromHim.status == 'accepted'))
-				return console.log('A friend request has already been (sent to/received from) that user');
+				// return console.log('A friend request has already been (sent to/received from) that user');
+				return;
 
 			const inviteFromYou = await this.userRelationRepository.findOne({ creator: creator, receiver: receiver });
 			if (inviteFromYou && inviteFromYou.status == 'blocked')
-				return console.log('You have blocked that user, unblock it first');
+				// return console.log('You have blocked that user, unblock it first');
+				return;
 			if (inviteFromYou && (inviteFromYou.status == 'pending' || inviteFromYou.status == 'accepted'))
-				return console.log('You have already sent a invite to that user or you are already friends');
+				// return console.log('You have already sent a invite to that user or you are already friends');
+				return;
 		}
 		const newRelation = this.userRelationRepository.create(
 			{
@@ -194,13 +199,13 @@ export class UserService {
 			}
 		);
 		await this.achievementRepository.save(newAchievement);
-		console.log('User ' + user.login + ' unlocked the ' + achievementTitle + ' achievement');
+		// console.log('User ' + user.login + ' unlocked the ' + achievementTitle + ' achievement');
 	}
 
 	async triggerFriendAchievement(user: User) {
 		const friendsList = await this.getFriends(user);
 		if (friendsList.length == 1) {
-			console.log(user.login + " will unlocked friend achievement");
+			// console.log(user.login + " will unlocked friend achievement");
 			await this.saveAchievement(user, "AddFriend");
 		}
 	}
@@ -300,13 +305,15 @@ export class UserService {
 
 	async blockUser(target: User, user: User) {
 		if (target.login == user.login)
-			return console.log('It is not possible to block yourself!');
+			// return console.log('It is not possible to block yourself!');
+			return;
 
 		if (await this.hasExistingRelation(user, target)) {
 			const inviteFromYou = await this.userRelationRepository.findOne({ creator: user, receiver: target });
 			if (inviteFromYou && inviteFromYou.status != 'blocked') {
 				await this.updateRelationStatus('blocked', user, target);
-				return console.log('update the existing relation. you blocked the targeted user invite from you');
+				// return console.log('update the existing relation. you blocked the targeted user invite from you');
+				return;
 			}
 			else if (inviteFromYou && inviteFromYou.status == 'blocked')
 				throw new HttpException('You have already blocked that user', HttpStatus.CONFLICT);

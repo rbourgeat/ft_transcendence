@@ -305,8 +305,8 @@ export default function Game() {
 			if (live !== null) {
 				const l = live.split('+');
 				const li = l[0].split(' ');
-				console.log(" l[0] = " + li[0] + " et l[1]=" + li[1]);
-				console.log(" b[0] = " + b[0]);
+				// console.log(" l[0] = " + li[0] + " et l[1]=" + li[1]);
+				// console.log(" b[0] = " + b[0]);
 				if (b[0] == li[0])
 					game.player.y = b[1];
 				else if (b[0] == li[1])

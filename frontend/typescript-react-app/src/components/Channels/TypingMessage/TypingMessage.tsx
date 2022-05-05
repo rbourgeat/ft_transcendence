@@ -68,7 +68,7 @@ export default function TypingMessage(props: TypingProps) {
                 props.socket.emit('message', props.login + ":" + props.channel + ":" + message + ":" + props.chanId + ":dm");
             else
                 props.socket.emit('message', props.login + ":" + props.channel + ":" + message + ":" + props.chanId + ":chat");
-            console.log("send message with" + props.login + "to the channel " + props.channel + ", content:" + message);
+            // console.log("send message with" + props.login + "to the channel " + props.channel + ", content:" + message);
 
         }
     }

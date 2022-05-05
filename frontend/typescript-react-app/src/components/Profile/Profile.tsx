@@ -175,7 +175,7 @@ export default function Profile() {
 
 	function askToPlay() {
 		let selectedUser = login;
-		console.log("You are inviting " + selectedUser + " to play !");
+		// console.log("You are inviting " + selectedUser + " to play !");
 		window.top.location = url_begin.concat(":3030/game?vs=").concat(selectedUser);
 	}
 
