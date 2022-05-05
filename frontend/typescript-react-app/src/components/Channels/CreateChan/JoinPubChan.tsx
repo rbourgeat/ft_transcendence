@@ -186,12 +186,12 @@ export default function JoinChan(props: JoinChanProps) {
 	}
 
 	return (
-		<div id="create-chan_div">
+		<div>
 			<button type="button" className="btn"
 				id="joinchan-button"
 				onClick={handleShow}
 				data-toggle="modal" data-target="#exampleModalCenter">Join channel</button>
-			<Modal  {...props}
+			<Modal
 				size="lg"
 				show={show}
 				animation={true} onHide={handleClose} onExited={handleExit} id="modal_join">
