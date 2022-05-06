@@ -505,7 +505,7 @@ export default function Game() {
 													<option value="original">Original (1972)</option>
 													<option value="bigball">Big Ball (Facile)</option>
 													<option value="blitz">Blitz (Balle Rapide)</option>
-													<option value="slow">Slow (Balle Lente)</option>
+													{/* <option value="slow">Slow (Balle Lente)</option> */}
 													<option value="cube">Cube World (All is cubic)</option>
 												</Form.Select>
 											</div>

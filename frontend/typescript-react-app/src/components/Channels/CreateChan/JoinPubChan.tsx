@@ -41,6 +41,7 @@ export default function JoinChan(props: JoinChanProps) {
 
 	React.useEffect(() => {
 		props.setExited("false");
+		// console.log("eo");
 		;
 	}, [])
 
@@ -52,6 +53,7 @@ export default function JoinChan(props: JoinChanProps) {
 	}
 
 	function handleSend(chan: string) {
+
 		let toast = new ToastAlerts(null);
 
 		axios.defaults.withCredentials = true;
@@ -74,6 +76,9 @@ export default function JoinChan(props: JoinChanProps) {
 			}
 		}
 
+		console.log("test");
+		console.log(body);
+		console.log (url);
 		axios.post(url, body)
 			.then(res => {
 				toast.notifySuccess("✅ You joined the channel !");
@@ -201,7 +206,7 @@ export default function JoinChan(props: JoinChanProps) {
 																	placeholder="******"
 																/>
 															</Form.Group>
-															<Button variant="dark" type="button" id="join--button" onClick={() => handleSend(join.name)}>
+															<Button variant="dark" type="button" className="join--button" onClick={() => handleSend(join.name)}>
 																Join
 															</Button>
 														</>

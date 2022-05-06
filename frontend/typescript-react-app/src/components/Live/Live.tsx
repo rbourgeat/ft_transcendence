@@ -81,7 +81,7 @@ export default function Live() {
 	useEffect(() => {
 		let isMounted = true;
 		setLoad(true);
-		if (displayedNo == false)
+		// if (displayedNo == false)
 			display_no();
 		// return () => { isMounted = false }; 
 		return () => { setLoad(false)};

@@ -33,6 +33,7 @@ export default function ListParticipant(props: ParticipantProps) {
 	const [passFail, setPassFAil] = React.useState("");
 	const [newPass, setNewPass] = React.useState("");
 	const [newPassConf, setNewPassConf] = React.useState("");
+	const [load, setLoad] = React.useState(false);
 
 	function getCurrentUserAdminStatus() {
 		if (props.activeID != "" && props.activeID != undefined && props.activeID != null) {
@@ -73,7 +74,7 @@ export default function ListParticipant(props: ParticipantProps) {
 
 	React.useEffect(() => {
 		executeFunction(functionToUse);
-		// return () => { setLoad(false)};
+		return () => { setLoad(false)};
 	}, [functionToUse])
 
 	function executeFunction(param: string) {
@@ -229,8 +230,9 @@ export default function ListParticipant(props: ParticipantProps) {
 				<div className="row">
 					<div className="col">
 						{props.isChan === true && props.hide === false && props.isBanned === false && props.activeID != "" && props.activeName != "" ? <button id="leave--button" className="btn" onClick={leaveChannel}>Leave channel</button> : null}
+
 						{currentUserAdmin === true && props.hasPass ?
-							<button id="pass--button" className="btn" onClick={handleShow}>Update password</button>
+							<button id="pass--button" className={props.hide == false ? "btn" : "invisible"} onClick={handleShow}>Update password</button>
 							:
 							null
 						}

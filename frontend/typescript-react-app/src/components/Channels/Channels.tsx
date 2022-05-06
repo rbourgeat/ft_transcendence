@@ -44,11 +44,12 @@ export default function Channels(props: ChatProps) {
 			.catch((err) => {
 				;
 			})
-		setLoad(true);
+		// setLoad(true);
 	}
 
 	useEffect(() => {
 		getUser();
+		//console.log("channel use effect called");
 		return () => { setLoad(false)};
 	}, [username]);
 

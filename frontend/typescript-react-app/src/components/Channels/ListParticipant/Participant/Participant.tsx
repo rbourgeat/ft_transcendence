@@ -20,6 +20,7 @@ export interface ParticipantsProps {
 export default function Participant(props: ParticipantsProps) {
 	const [color, setColor] = React.useState("green");
 	const [status, setStatus] = React.useState(props.status);
+	const [load, setLoad] = React.useState(false);
 
 
 	function selectColor() {
@@ -40,6 +41,7 @@ export default function Participant(props: ParticipantsProps) {
 				selectColor();
 			}
 		})
+		return () => { setLoad(false)};
 	}, [status, color]);
 
 	function setUpBan() {

@@ -34,11 +34,14 @@ export default function Friends() {
 	}
 
 	useEffect(() => {
-		if (calledOnce.current) {
-			return;
-		}
+		// if (calledOnce.current) {
+		// 	return;
+		// }
 		renderFriends();
-		calledOnce.current = true;
+		// calledOnce.current = true;
+
+		return () => { setLoad(false); };
+		
 	}, []);
 
 	return (

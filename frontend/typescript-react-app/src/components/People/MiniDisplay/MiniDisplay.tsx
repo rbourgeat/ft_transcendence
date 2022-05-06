@@ -242,7 +242,7 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 				})
 		}
 
-		// setLoad(true);
+		setLoad(true);
 		renderImage(props.avatar, props.login, props.ftlogin, props.extra);
 		selectColor();
 		// calledOnce.current = true;

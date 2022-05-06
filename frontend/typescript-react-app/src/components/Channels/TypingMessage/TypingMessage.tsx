@@ -27,6 +27,7 @@ export interface TypingState {
 export default function TypingMessage(props: TypingProps) {
     const [text, updateText] = React.useState("");
     const [isMuted, setIsMuted] = React.useState(false);
+    const [load, setLoad] = React.useState(false);
 
     function checkisMuted() {
         if (props.chanId != "" && props.chanId != undefined && props.chanId != null) {
@@ -52,6 +53,7 @@ export default function TypingMessage(props: TypingProps) {
 
     useEffect(() => {
         checkisMuted();
+        return () => { setLoad(false)};
     }, [props.chanId]);
 
 
