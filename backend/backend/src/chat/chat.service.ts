@@ -13,8 +13,8 @@ import { AuthService } from '../auth/auth.service';
 import { WsException } from '@nestjs/websockets';
 import { UserRelation } from 'src/user/entity/friend-request.entity';
 import { UserService } from 'src/user/user.service';
-//import * as bcrypt from 'bcrypt';
 import * as argon2 from "argon2";
+
 @Injectable()
 export class ChatService {
 	constructor(
@@ -86,7 +86,6 @@ export class ChatService {
 			relations: ['user', 'chat'],
 		});
 
-		//console.log(listParticipateCard);
 		const channelsIds: number[] = [];
 		listParticipateCard.forEach((participate: Participate) => {
 			channelsIds.push(participate.chat.id);
@@ -138,12 +137,12 @@ export class ChatService {
 				owner: true,
 				login: user.login42,
 			}
+			
 		);
 		await this.participateRepository.save(newParticipate);
 
-		console.log(chat.password);
-		chat.password = await argon2.hash(chat.password);
-		console.log(chat.password);
+		if(chat.password)
+			chat.password = await argon2.hash(chat.password);
 		const newChat = await this.chatRepository.create(
 			{
 				...chat,
@@ -210,7 +209,6 @@ export class ChatService {
 		const chat = await this.getChatByName(message.channel);
 		const participate = await this.participateRepository.findOne({ user: user, chat: chat });
 		if (participate.role == UserStatus.BAN || participate.role == UserStatus.MUTE) {
-			//return console.log('can\'t send message, you are banned or mute');
 			return;
 		}
 		const newMessage = await this.messageRepository.create({
@@ -227,35 +225,72 @@ export class ChatService {
 
 		if (joinedChat) {
 			if (joinedChat.public === true && chat.public === false)
+			{
 				throw new HttpException({ error: 'Tried to join a public channel as private', status: HttpStatus.CONFLICT }, HttpStatus.CONFLICT);
-
-			const isPasswordMatching = await argon2.verify(
-				joinedChat.password,
-				chat.password
-			);
-
-			if (joinedChat.password && isPasswordMatching) {
-				const chatT = await this.getChatByName(chat.name);
-				const participate = await this.participateRepository.findOne({ user: user, chat: chatT });
-				if (!participate) {
-					const newParticipate = await this.participateRepository.create(
-						{
-							user: user,
-							chat: joinedChat,
-							login: user.login42,
-						}
+			}
+				if(joinedChat.password && chat.password != undefined)
+				{
+					const isPasswordMatching = await argon2.verify(
+						joinedChat.password,
+						chat.password
 					);
-					await this.participateRepository.save(newParticipate);
-					return;
+
+					if(isPasswordMatching)
+					{
+						const chatT = await this.getChatByName(chat.name);
+						const participate = await this.participateRepository.findOne({ user: user, chat: chatT });
+						if (!participate) {
+							const newParticipate = await this.participateRepository.create(
+								{
+									user: user,
+									chat: joinedChat,
+									login: user.login42,
+								}
+							);
+							await this.participateRepository.save(newParticipate);
+							return;
+						}
+						else
+						{
+							throw new HttpException({ error: 'Tried to join a joinded channel', status: HttpStatus.CONFLICT }, HttpStatus.CONFLICT);
+
+						}
+					}
+					else
+					{
+						throw new HttpException({ error: 'Wrong password', status: HttpStatus.CONFLICT }, HttpStatus.CONFLICT);
+					}
+				}
+				else if(!joinedChat.password)
+				{
+					const chatT = await this.getChatByName(chat.name);
+					const participate = await this.participateRepository.findOne({ user: user, chat: chatT });
+					if (!participate) {
+						const newParticipate = await this.participateRepository.create(
+							{
+								user: user,
+								chat: joinedChat,
+								login: user.login42,
+							}
+						);
+						await this.participateRepository.save(newParticipate);
+						return;
+					}
+					else
+					{
+						throw new HttpException({ error: 'Tried to join a joinded channel', status: HttpStatus.CONFLICT }, HttpStatus.CONFLICT);
+
+					}
 				}
 				else
-					throw new HttpException({ error: 'Tried to join a joinded channel', status: HttpStatus.CONFLICT }, HttpStatus.CONFLICT);
-			}
-			else
-				throw new HttpException({ error: 'Wrong password', status: HttpStatus.CONFLICT }, HttpStatus.CONFLICT);
+				{
+								throw new HttpException({ error: 'Tried to join a joinded channel', status: HttpStatus.CONFLICT }, HttpStatus.CONFLICT);
+				}
 		}
 		else
-			throw new HttpException({ error: 'Channel doesn\'t exist', status: HttpStatus.CONFLICT }, HttpStatus.CONFLICT);
+		{
+						throw new HttpException({ error: 'Tried to join a joinded channel', status: HttpStatus.CONFLICT }, HttpStatus.CONFLICT);
+		}
 	}
 
 	async quitChat(id: number, user: User) {
@@ -267,7 +302,6 @@ export class ChatService {
 	async getMessagesById(id: number) {
 		const chat = await this.chatRepository.findOne({ id });
 		const messages = chat.message;
-		//TODO clear message when u have a user blocked
 		const history: Message[] = [];
 		for (const message of messages) {
 			history.push(message);
@@ -278,7 +312,6 @@ export class ChatService {
 	async getMessagesById2(id: number, login: string) {
 		const chat = await this.chatRepository.findOne({ id });
 		const me = await this.userRepository.findOne({ login });
-		//console.log(me.login);
 		const messages = chat.message;
 
 		const history: Message[] = [];
@@ -293,7 +326,6 @@ export class ChatService {
 		const chat = await this.getChatByName(name);
 
 		const messages = chat.message;
-		//TODO clear message when u have a user blocked
 		const history: Message[] = [];
 		for (const message of messages) {
 			history.push(message);
@@ -309,16 +341,13 @@ export class ChatService {
 		});
 
 		if (!participate)
-			// return console.log("L'utilisateur ne peut pas être banni car il n'est pas dans le chat !");
 			return;
 		const adminParticipate = await this.participateRepository.findOne({
 			where: [{ chat: chat, user: admin }]
 		});
 		if (!adminParticipate.admin)
-			// return console.log("L'utilisateur ne peut pas bannir car il n'est pas admin du chat !");
 			return;
 		if (participate.admin || participate.owner)
-			// return console.log("L'utilisateur ne peut pas bannir un admin !");
 			return;
 
 		participate.role = UserStatus.BAN;
@@ -333,7 +362,6 @@ export class ChatService {
 		});
 
 		if (!participate)
-			// return console.log("L'utilisateur ne peut pas être débanni/démute car il n'est pas dans le chat !");
 			return;
 
 		participate.timestamp = null;
@@ -348,16 +376,13 @@ export class ChatService {
 			where: [{ chat: chat, user: user }]
 		});
 		if (!participate)
-			// return console.log("L'utilisateur ne peut pas être mute car il n'est pas dans le chat !");
 			return;
 		const adminParticipate = await this.participateRepository.findOne({
 			where: [{ chat: chat, user: admin }]
 		});
 		if (!adminParticipate.admin)
-			// return console.log("L'utilisateur ne peut pas mute car il n'est pas admin du chat !");
 			return;
 		if (participate.admin || participate.owner)
-			// return console.log("L'utilisateur ne peut pas mute un admin !");
 			return;
 
 		participate.role = UserStatus.MUTE;
@@ -373,17 +398,14 @@ export class ChatService {
 			where: [{ chat: chat, user: user }]
 		});
 		if (!participate)
-			// return console.log("L'utilisateur ne peut pas être admin car il n'est pas dans le chat !");
 			return;
 
 		const adminParticipate = await this.participateRepository.findOne({
 			where: [{ chat: chat, user: admin }]
 		});
 		if (!adminParticipate.owner)
-			// return console.log("L'utilisateur ne peut pas rendre qqn admin car il n'est pas owner du chat !");
 			return;
 		if (participate.admin || participate.owner)
-			// return console.log("L'utilisateur ne peut pas rendre admin un admin !");
 			return;
 		participate.admin = true;
 		await this.participateRepository.save(participate);
@@ -391,7 +413,10 @@ export class ChatService {
 
 	async password(id: number, admin: User, password: string) {
 		const chat = await this.chatRepository.findOne({ id });
-		chat.password = password;
+		if(password)
+			chat.password = await argon2.hash(password);
+		else
+			chat.password =null;
 		await this.chatRepository.save(chat);
 		return chat;
 	}
@@ -399,7 +424,6 @@ export class ChatService {
 	async setPrivate(id: number, admin: User) {
 		const chat = await this.chatRepository.findOne({ id });
 		if (!admin.participate.find(e => e.chat == chat).owner)
-			// return console.log("L'utilisateur ne peut pas set le chat en privé car il n'est pas owner !");
 			return;
 		chat.public = false;
 		await this.chatRepository.save(chat);
@@ -409,7 +433,6 @@ export class ChatService {
 	async setPublic(id: number, admin: User) {
 		const chat = await this.chatRepository.findOne({ id });
 		if (!admin.participate.find(e => e.chat == chat).owner)
-			// return console.log("L'utilisateur ne peut pas set le chat en public car il n'est pas owner !");
 			return;
 		chat.public = true;
 		await this.chatRepository.save(chat);

@@ -9,20 +9,20 @@ import { UserRelation } from "src/user/entity/friend-request.entity";
 
 export class UserMigration1645626140921 implements MigrationInterface {
     public async up(queryRunner: QueryRunner): Promise<void> {
-        const dummy1 = await queryRunner.manager.save(
-            queryRunner.manager.create<User>(User, {
-                login: 'dummy1',
-                password: 'dummy1',
-                login42: 'dummy1',
-                email: 'dummy1@gmail.com',
-                status: 'offline',
-                avatar: 'norminet.jpg',
-                rank: 1,
-                level: 42,
-                points: 10000,
-                xp: 0
-            }),
-        );
+        // const dummy1 = await queryRunner.manager.save(
+        //     queryRunner.manager.create<User>(User, {
+        //         login: 'dummy1',
+        //         password: 'dummy1',
+        //         login42: 'dummy1',
+        //         email: 'dummy1@gmail.com',
+        //         status: 'offline',
+        //         avatar: 'norminet.jpg',
+        //         rank: 1,
+        //         level: 42,
+        //         points: 10000,
+        //         xp: 0
+        //     }),
+        // );
 
         // const dummy2 = await queryRunner.manager.save(
         //     queryRunner.manager.create<User>(User, {
@@ -88,7 +88,7 @@ export class UserMigration1645626140921 implements MigrationInterface {
                 isTwoFactorAuthenticationEnabled: false,
                 points: 1000,
                 level: 1,
-                rank: 7
+                rank: 1
             }),
         );
 
@@ -98,15 +98,10 @@ export class UserMigration1645626140921 implements MigrationInterface {
                 status: 'offline',
                 email: 'bahaas@student.42.fr',
                 login42: 'bahaas',
-                xp: 150,
-                points: 1050,
-                level: 2,
-                percent_to_next_lvl: 75,
-                win_loss_ration: 40,
-                total_loss: 3,
-                total_wins: 2,
-                total_games: 5,
-                rank: 6
+                isTwoFactorAuthenticationEnabled: false,
+                points: 1000,
+                level: 1,
+                rank: 2
             }),
         );
 
@@ -118,8 +113,8 @@ export class UserMigration1645626140921 implements MigrationInterface {
                 login42: 'rbourgea',
                 isTwoFactorAuthenticationEnabled: false,
                 points: 1000,
-                level: 42,
-                rank: 8
+                level: 1,
+                rank: 3
             }),
         );
 
@@ -203,35 +198,35 @@ export class UserMigration1645626140921 implements MigrationInterface {
         //     }),
         // );
 
-        const malatiniRelation6 = await queryRunner.manager.save(
-            queryRunner.manager.create<UserRelation>(UserRelation, {
-                creator: malatini,
-                receiver: bahaas,
-                status: 'pending',
-            }),
-        );
+        // const malatiniRelation6 = await queryRunner.manager.save(
+        //     queryRunner.manager.create<UserRelation>(UserRelation, {
+        //         creator: malatini,
+        //         receiver: bahaas,
+        //         status: 'pending',
+        //     }),
+        // );
 
 
-        const channel1 = await queryRunner.manager.save(
-            queryRunner.manager.create<Chat>(Chat, {
-                name: "DummyChannel",
-                public: true,
-            }),
-        );
+        // const channel1 = await queryRunner.manager.save(
+        //     queryRunner.manager.create<Chat>(Chat, {
+        //         name: "DummyChannel",
+        //         public: true,
+        //     }),
+        // );
 
-        const channel2 = await queryRunner.manager.save(
-            queryRunner.manager.create<Chat>(Chat, {
-                name: "NotDummyChannel",
-                public: true,
-            }),
-        );
+        // const channel2 = await queryRunner.manager.save(
+        //     queryRunner.manager.create<Chat>(Chat, {
+        //         name: "NotDummyChannel",
+        //         public: true,
+        //     }),
+        // );
 
-        const channel3 = await queryRunner.manager.save(
-            queryRunner.manager.create<Chat>(Chat, {
-                name: "SuperChannel",
-                public: true,
-            }),
-        );
+        // const channel3 = await queryRunner.manager.save(
+        //     queryRunner.manager.create<Chat>(Chat, {
+        //         name: "SuperChannel",
+        //         public: true,
+        //     }),
+        // );
 
         // const participate4 = await queryRunner.manager.save(
         //     queryRunner.manager.create<Participate>(Participate, {
@@ -243,13 +238,13 @@ export class UserMigration1645626140921 implements MigrationInterface {
         //     }),
         // );
 
-        const channel4 = await queryRunner.manager.save(
-            queryRunner.manager.create<Chat>(Chat, {
-                name: "SecretChannel",
-                public: false,
-                password: "SecretPass"
-            }),
-        );
+        // const channel4 = await queryRunner.manager.save(
+        //     queryRunner.manager.create<Chat>(Chat, {
+        //         name: "SecretChannel",
+        //         public: false,
+        //         password: "SecretPass"
+        //     }),
+        // );
 
         // const participate5 = await queryRunner.manager.save(
         //     queryRunner.manager.create<Participate>(Participate, {
@@ -261,41 +256,41 @@ export class UserMigration1645626140921 implements MigrationInterface {
         //     }),
         // );
 
-        const bahaasparticipate1 = await queryRunner.manager.save(
-            queryRunner.manager.create<Participate>(Participate, {
-                user: bahaas,
-                chat: channel1,
-                owner: true,
-                admin: true,
-                login: bahaas.login
-            }),
-        );
+        // const bahaasparticipate1 = await queryRunner.manager.save(
+        //     queryRunner.manager.create<Participate>(Participate, {
+        //         user: bahaas,
+        //         chat: channel1,
+        //         owner: true,
+        //         admin: true,
+        //         login: bahaas.login
+        //     }),
+        // );
 
-        const malatiniparticipate1 = await queryRunner.manager.save(
-            queryRunner.manager.create<Participate>(Participate, {
-                user: malatini,
-                chat: channel1,
-                login: malatini.login
-            }),
-        );
+        // const malatiniparticipate1 = await queryRunner.manager.save(
+        //     queryRunner.manager.create<Participate>(Participate, {
+        //         user: malatini,
+        //         chat: channel1,
+        //         login: malatini.login
+        //     }),
+        // );
 
-        const malatiniparticipate2 = await queryRunner.manager.save(
-            queryRunner.manager.create<Participate>(Participate, {
-                user: malatini,
-                chat: channel2,
-                login: malatini.login,
-                owner: true,
-                admin: true,
-            }),
-        );
+        // const malatiniparticipate2 = await queryRunner.manager.save(
+        //     queryRunner.manager.create<Participate>(Participate, {
+        //         user: malatini,
+        //         chat: channel2,
+        //         login: malatini.login,
+        //         owner: true,
+        //         admin: true,
+        //     }),
+        // );
 
-        const bahaasparticipate2 = await queryRunner.manager.save(
-            queryRunner.manager.create<Participate>(Participate, {
-                user: bahaas,
-                chat: channel2,
-                login: bahaas.login
-            }),
-        );
+        // const bahaasparticipate2 = await queryRunner.manager.save(
+        //     queryRunner.manager.create<Participate>(Participate, {
+        //         user: bahaas,
+        //         chat: channel2,
+        //         login: bahaas.login
+        //     }),
+        // );
 
         // const participate1 = await queryRunner.manager.save(
         //     queryRunner.manager.create<Participate>(Participate, {
@@ -429,19 +424,19 @@ export class UserMigration1645626140921 implements MigrationInterface {
         // );
 
 
-        const malatiniachievement1 = await queryRunner.manager.save(
-            queryRunner.manager.create<Achievement>(Achievement, {
-                user: malatini,
-                title: "AddFriend"
-            }),
-        );
+        // const malatiniachievement1 = await queryRunner.manager.save(
+        //     queryRunner.manager.create<Achievement>(Achievement, {
+        //         user: malatini,
+        //         title: "AddFriend"
+        //     }),
+        // );
 
-        const bahaasachievement1 = await queryRunner.manager.save(
-            queryRunner.manager.create<Achievement>(Achievement, {
-                user: bahaas,
-                title: "AddFriend"
-            }),
-        );
+        // const bahaasachievement1 = await queryRunner.manager.save(
+        //     queryRunner.manager.create<Achievement>(Achievement, {
+        //         user: bahaas,
+        //         title: "AddFriend"
+        //     }),
+        // );
 
         // const dummy2chievement1 = await queryRunner.manager.save(
         //     queryRunner.manager.create<Achievement>(Achievement, {
@@ -457,12 +452,12 @@ export class UserMigration1645626140921 implements MigrationInterface {
         //     }),
         // );
 
-        const bahaasachievement2 = await queryRunner.manager.save(
-            queryRunner.manager.create<Achievement>(Achievement, {
-                user: bahaas,
-                title: "FirstGame"
-            }),
-        );
+        // const bahaasachievement2 = await queryRunner.manager.save(
+        //     queryRunner.manager.create<Achievement>(Achievement, {
+        //         user: bahaas,
+        //         title: "FirstGame"
+        //     }),
+        // );
 
         // const dummy4achievement2 = await queryRunner.manager.save(
         //     queryRunner.manager.create<Achievement>(Achievement, {
