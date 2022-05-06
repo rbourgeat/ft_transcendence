@@ -229,12 +229,14 @@ export class ChatService {
 			if (joinedChat.public === true && chat.public === false)
 				throw new HttpException({ error: 'Tried to join a public channel as private', status: HttpStatus.CONFLICT }, HttpStatus.CONFLICT);
 
-			const isPasswordMatching = await argon2.verify(
-				joinedChat.password,
-				chat.password
-			);
-
-			if (joinedChat.password && isPasswordMatching) {
+			if(joinedChat.password)
+			{
+			    const isPasswordMatching = await argon2.verify(
+				  joinedChat.password,
+				  chat.password
+			    );
+				if(isPasswordMatching)
+				{
 				const chatT = await this.getChatByName(chat.name);
 				const participate = await this.participateRepository.findOne({ user: user, chat: chatT });
 				if (!participate) {
@@ -249,11 +251,28 @@ export class ChatService {
 					return;
 				}
 				else
-					throw new HttpException({ error: 'Tried to join a joinded channel', status: HttpStatus.CONFLICT }, HttpStatus.CONFLICT);
+                       throw new HttpException({ error: 'Wrong password', status: HttpStatus.CONFLICT }, HttpStatus.CONFLICT);
 			}
 			else
-				throw new HttpException({ error: 'Wrong password', status: HttpStatus.CONFLICT }, HttpStatus.CONFLICT);
-		}
+			{
+				const chatT = await this.getChatByName(chat.name);
+				const participate = await this.participateRepository.findOne({ user: user, chat: chatT });
+				if (!participate) {
+					const newParticipate = await this.participateRepository.create(
+						{
+							user: user,
+							chat: joinedChat,
+							login: user.login42,
+						}
+					);
+					await this.participateRepository.save(newParticipate);
+					return;
+				}
+			}
+				}
+				else
+					throw new HttpException({ error: 'Tried to join a joinded channel', status: HttpStatus.CONFLICT }, HttpStatus.CONFLICT);
+			}
 		else
 			throw new HttpException({ error: 'Channel doesn\'t exist', status: HttpStatus.CONFLICT }, HttpStatus.CONFLICT);
 	}
