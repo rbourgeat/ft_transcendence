@@ -18,6 +18,7 @@ export interface ProfileProps {
 
 	login?: string,
 	avatar?: any,
+	login42?: string,
 }
 
 export default function Profile() {
@@ -45,6 +46,7 @@ export default function Profile() {
 	const [nextlevel, setNextLevel] = React.useState(0);
 	const [pendingInvite, setPendingInvite] = React.useState(false);
 	const [avatar, setAvatar] = React.useState();
+	const [login42, setLogin42] = React.useState("");
 
 	function getUserLogin(log: string) {
 		let url = "";
@@ -66,6 +68,7 @@ export default function Profile() {
 				setRatio(res.data.win_loss_ration);
 				setXp(res.data.xp);
 				setAvatar(res.data.avatar);
+				setLogin42(res.data.login42);
 				if (res.data.status === "offline")
 					setColor("grey")
 				if (res.data.status === "online") {
@@ -87,11 +90,15 @@ export default function Profile() {
 		if (!avatar)
 			return;
 
-		if (avatar.startsWith("http")) {
+		if (avatar.startsWith("http"))
+		{
+			let imageUser42 = "";
+			imageUser42 = "https://cdn.intra.42.fr/users/".concat(ftlogin).concat(".jpg");
 			return (<img className="profile--pic"
 				width="100" height="100"
-				src={avatar}
+				src={imageUser42}
 				id={login} />);
+
 		}
 
 		let url = "";
@@ -214,7 +221,7 @@ export default function Profile() {
 										<div id="text-type">{isFriend == true ? "You are able to see a detailed profile because you are friends 🥰 !"
 											: "You are not able to see a detailed profile because you are not friends 😢 !"}</div>
 										<img id={login} width="100" height="100" className="profile--pic" src="" />
-										{renderImage(avatar, login)}
+										{renderImage(avatar, login, login42)}
 										<svg className="log--color" height="40" width="40">
 											<circle cx="20" cy="20" r="15" fill={color} stroke="white" style={{ strokeWidth: '3' }} />
 										</svg>

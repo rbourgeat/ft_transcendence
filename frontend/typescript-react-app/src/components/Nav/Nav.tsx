@@ -11,7 +11,7 @@ else
 
 function Nav() {
 
-	const [sleep, setSleep] = React.useState(false);
+	const [sleep, setSleep] = React.useState(true);
 	const [load, setLoad] = React.useState(false);
 
 	function disconnect() {
@@ -49,10 +49,10 @@ function Nav() {
 	useEffect(() => {
 		let isMounted = true;
 		setLoad(true);
-		// setTimeout((() => {
-		// 	setSleep(false);
-		// 	// console.log("reenabled");
-		// }), 8000);
+		setTimeout((() => {
+			setSleep(false);
+			// console.log("reenabled");
+		}), 2000);
 		return () => { setLoad(false) }; 
 	}, [sleep]);
 
