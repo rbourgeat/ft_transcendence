@@ -137,7 +137,7 @@ export class ChatService {
 				owner: true,
 				login: user.login42,
 			}
-			
+
 		);
 		await this.participateRepository.save(newParticipate);
 

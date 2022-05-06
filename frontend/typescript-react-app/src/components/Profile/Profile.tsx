@@ -22,8 +22,8 @@ export interface ProfileProps {
 }
 
 export default function Profile() {
-	const [color, setColor] = React.useState("");
-	const [status, setStatus] = React.useState("offline");
+	const [color, setColor] = React.useState("green");
+	const [status, setStatus] = React.useState("online");
 	// const calledOnce = React.useRef(false);
 	const [userOK, setUserOk] = React.useState(false);
 	const { login } = useParams();
