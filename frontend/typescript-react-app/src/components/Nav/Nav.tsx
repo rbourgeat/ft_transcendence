@@ -49,7 +49,7 @@ function Nav() {
 		setTimeout((() => {
 			setSleep(false);
 			// console.log("reenabled");
-		}), 4000);
+		}), 3000);
 	}, [sleep]);
 
 	// console.log("render");

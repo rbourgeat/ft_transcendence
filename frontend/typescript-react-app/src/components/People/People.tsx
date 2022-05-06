@@ -15,7 +15,7 @@ export interface PeopleProps {
 export default function People(props: PeopleProps) {
 
 	const [load, setLoad] = React.useState(false);
-	const calledOnce = React.useRef(false);
+	// const calledOnce = React.useRef(false);
 
 	function update() {
 		window.top.location = "/people/";
@@ -44,11 +44,11 @@ export default function People(props: PeopleProps) {
 	}
 
 	useEffect(() => {
-		if (calledOnce.current) {
-			return;
-		}
-		getUser();
-		calledOnce.current = true;
+		// if (calledOnce.current) {
+		// 	return;
+		// }
+		// getUser();
+		// calledOnce.current = true;
 	}, []);
 
 	return (
