@@ -31,7 +31,8 @@
 
 .disabled-link,
 .disabled-link>* {
-	pointer-events: none;
+	pointer-events: none !important;
+	display: none !important;
 	// color: red !important;
 	// color: white !important;
 }

@@ -48,11 +48,11 @@ function Nav() {
 	useEffect(() => {
 		setTimeout((() => {
 			setSleep(false);
-			console.log("reenabled");
-		}), 1000);
+			// console.log("reenabled");
+		}), 2000);
 	}, [sleep]);
 
-	console.log("render");
+	// console.log("render");
 
 	return (
 		<div id="nav">
@@ -62,34 +62,36 @@ function Nav() {
 					<span className="navbar-toggler-icon"></span>
 				</button>
 				<div className="collapse navbar-collapse in">
-					<ul /*className={sleep ? "navbar-nav d-flex flex-row" : "navbar-nav d-flex flex-row"}*/ className="navbar-nav d-flex flex-row">
-						<li onClick={funcGame} className={sleep ? "disabled-link nav-item" : "nav-item"}>
-							<Link to="/game" className={sleep ? "disabled-link nav-link" : "nav-link"}>
+					<ul className={sleep ? "disabled-link" : "navbar-nav d-flex flex-row"}
+						// className="navbar-nav d-flex flex-row"
+						>
+						<li onClick={funcGame} className={sleep ? "disabled-link" : "nav-item"}>
+							<Link to="/game" className={sleep ? "disabled-link" : "nav-link"}>
 								<div className='nav-link-text'><p className="navbar--title">Game</p></div>
 							</Link>
 						</li>
-						<li className={sleep ? "disabled-link nav-item" : "nav-item"}>
-							<Link to="/live" className={sleep ? "disabled-link nav-link" : "nav-link"}>
+						<li className={sleep ? "disabled-link" : "nav-item"}>
+							<Link to="/live" className={sleep ? "disabled-link" : "nav-link"}>
 								<div className='nav-link-text'><p className="navbar--title">Live</p></div>
 							</Link>
 						</li>
-						<li className={sleep ? "disabled-link nav-item" : "nav-item"}>
-							<Link to="/people" className={sleep ? "disabled-link nav-link" : "nav-link"}>
+						<li className={sleep ? "disabled-link" : "nav-item"}>
+							<Link to="/people" className={sleep ? "disabled-link" : "nav-link"}>
 								<div className='nav-link-text'><p className="navbar--title">People</p></div>
 							</Link>
 						</li>
-						<li className={sleep ? "disabled-link nav-item" : "nav-item"}>
-							<Link to="/channels" className={sleep ? "disabled-link nav-link" : "nav-link"}>
+						<li className={sleep ? "disabled-link" : "nav-item"}>
+							<Link to="/channels" className={sleep ? "disabled-link" : "nav-link"}>
 								<div className='nav-link-text'><p className="navbar--title">Chat</p></div>
 							</Link>
 						</li>
-						<li className={sleep ? "disabled-link nav-item" : "nav-item"}>
-							<Link to="/user" className={sleep ? "disabled-link nav-link" : "nav-link"}>
+						<li className={sleep ? "disabled-link" : "nav-item"}>
+							<Link to="/user" className={sleep ? "disabled-link" : "nav-link"}>
 								<div className='nav-link-text'><p className="navbar--title">User</p></div>
 							</Link>
 						</li>
-						<li className={sleep ? "disabled-link nav-item" : "nav-item"}>
-							<Link to="/settings" className={sleep ? "disabled-link nav-link" : "nav-link"}>
+						<li className={sleep ? "disabled-link" : "nav-item"}>
+							<Link to="/settings" className={sleep ? "disabled-link" : "nav-link"}>
 								<div className='nav-link-text'><p className="navbar--title">Settings</p></div>
 							</Link>
 						</li>

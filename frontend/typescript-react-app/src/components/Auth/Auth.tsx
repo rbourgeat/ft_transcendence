@@ -3,6 +3,10 @@ import './Auth.scss';
 import Header from "../Header/Header";
 import FourtyTwo from "./42Auth/42Auth";
 
+//Pour tests
+import Signup from './Signup/Signup';
+import Login from './Login/Login';
+
 export default function Auth() {
 
     useEffect(() => {
@@ -28,9 +32,9 @@ export default function Auth() {
                                         <p id="jouer">Pour jouer, vous devez vous authentifier 🏓 </p>
                                         <FourtyTwo />
                                         <br />
-                                        {/* <Signup />
+                                        <Signup />
                                         <br />
-                                        <Login /> */}
+                                        <Login />
                                     </div>
                                 </div>
                             </div>

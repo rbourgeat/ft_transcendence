@@ -57,7 +57,7 @@
   },
   "scripts": {
     "start": "PORT=3030 react-scripts start --host=0.0.0.0",
-    "build": "sh -ac '. .env.production.local; react-scripts build",
+    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "test-coverage": "npm run test -- --coverage --watchAll=false"
