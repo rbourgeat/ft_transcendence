@@ -27,26 +27,36 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 	const [username, setUsername] = React.useState("");
 	const [color, setColor] = React.useState("green");
 	const [relationStatus, setRelationStatus] = React.useState("");
-
 	const [socket, setSocket] = React.useState(io("http://".concat(process.env.REACT_APP_IP).concat(":3000/chat"), { query: { username: username } }));
 
-	// function getUser() {
-	// 	let url = "";
-	// 	if (process.env.REACT_APP_IP == "" || process.env.REACT_APP_IP == undefined)
-	// 		url = "http://localhost:3000/api/auth/";
-	// 	else
-	// 		url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/auth");
-	// 	axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
-	// 	axios.defaults.withCredentials = true;
-	// 	axios.get(url)
-	// 		.then(res => {
-	// 			setUsername(res.data.login);
-	// 			setLoad(true);
-	// 		})
-	// 		.catch((err) => {
-	// 			;
-	// 		})
+	// try {
+	// 	setSocket(io("http://".concat(process.env.REACT_APP_IP).concat(":3000/chat"), { query: { username: username } }));
 	// }
+	// catch(error) {
+	// 	// const [socket, setSocket] = React.useState();
+	// 	// console.log("catched socket !")
+	// }
+
+	function getAuth() {
+		let url = "";
+		if (process.env.REACT_APP_IP == "" || process.env.REACT_APP_IP == undefined)
+			url = "http://localhost:3000/api/auth/";
+		else
+			url = "http://".concat(process.env.REACT_APP_IP).concat(":3000/api/auth");
+		axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+		axios.defaults.withCredentials = true;
+		axios.get(url)
+			.then(res => {
+				setUsername(res.data.login);
+				setLoad(true);
+			})
+			.catch((err) => {
+				//Redirection si la personne n est plus authentifiee
+				localStorage.setItem("loggedIn", "false");
+				window.top.location = "http://".concat(process.env.REACT_APP_IP).concat(":3030/auth");
+				;
+			})
+	}
 
 	function renderImage(avatar: string, login: string, ftlogin: string, extra: string) {
 		if (!avatar)
@@ -212,7 +222,7 @@ export default function MiniDisplay(props: MiniDisplayProps) {
 	}
 
 	useEffect(() => {
-		// getUser();
+		getAuth();
 
 		let user = () => {
 			let url = "";
