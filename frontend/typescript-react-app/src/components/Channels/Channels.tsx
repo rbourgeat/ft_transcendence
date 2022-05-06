@@ -39,6 +39,7 @@ export default function Channels(props: ChatProps) {
 					setSocket(io("http://".concat(process.env.REACT_APP_IP).concat(":3000/chat"), { query: { username: username } }))
 				else
 					setSocket(io("http://".concat("localhost").concat(":3000/chat"), { query: { username: username } }))
+				setLoad(true);
 			})
 			.catch((err) => {
 				;
@@ -48,6 +49,7 @@ export default function Channels(props: ChatProps) {
 
 	useEffect(() => {
 		getUser();
+		return () => { setLoad(false)};
 	}, [username]);
 
 	return (

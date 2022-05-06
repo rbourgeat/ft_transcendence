@@ -24,6 +24,7 @@ export default function ListDiscussions(props: ListDiscussionsProps) {
 	const [sockChan, setsockChan] = React.useState(props.activeName);
 	const [messages, setMessages] = React.useState([]);
 	const [oldMessages, setOldMessages] = React.useState([]);
+	const [load, setLoad] = React.useState(false);
 
 	useEffect(() => {
 		setsockChan(props.activeName);
@@ -93,6 +94,7 @@ export default function ListDiscussions(props: ListDiscussionsProps) {
 
 	useEffect(() => {
 		checkisBanned();
+		return () => { setLoad(false)};
 	}, [props.activeID, props.activeName]);
 
 	return (

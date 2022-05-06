@@ -23,7 +23,7 @@ export default function Settings(props: SettingsProps) {
 
 	const [qrcode, setqrCode] = useState("");
 	const [activated2fa, setActivated2fa] = React.useState(false);
-	const calledOnce = React.useRef(false);
+	// const calledOnce = React.useRef(false);
 	const [username, setUsername] = React.useState("");
 
 	//status, realtime variable (a reprendre avec les sockets)
@@ -37,6 +37,8 @@ export default function Settings(props: SettingsProps) {
 	//Pour modal changeUsername
 	const [exited, setExited] = React.useState(false);
 	const [checkExited, setCheckExited] = React.useState("false");
+
+	const [load, setLoad] = React.useState(false);
 
 	//Ici le async est ultra nécessaire !
 	async function manageQR() {
@@ -182,7 +184,7 @@ export default function Settings(props: SettingsProps) {
 
 	useEffect(() => {
 
-		if (calledOnce.current) {
+		// if (calledOnce.current) {
 			socket.on('updateStatus', (...args) => {
 				if (username == args[0]) {
 					setStatus(args[1]);
@@ -190,18 +192,19 @@ export default function Settings(props: SettingsProps) {
 				}
 
 			})
-		}
+		// }
 
 		if (localStorage.getItem("2fa") == "true")
 			setActivated2fa(true);
 		getUser();
 		selectColor();
-		calledOnce.current = true;
-
+		// calledOnce.current = true;
+		return () => { setLoad(false); };
 	}, [status, color]);
 
 	useEffect(() => {
 		getUser();
+		return () => { setLoad(false); };
 	}, [exited]);
 
 	return (

@@ -240,6 +240,7 @@ export default function Game() {
 	}
 
 	useEffect(() => {
+		let isMounted = true;
 		// First page loading event (only one time)
 		getUser();
 		canvas = document.getElementById('canvas');
@@ -251,6 +252,7 @@ export default function Game() {
 			setActive(false);
 			setActive2(false);
 		}
+		return () => { isMounted = false };
 	}, []);
 
 	window.addEventListener('resize', function (event) {

@@ -73,6 +73,7 @@ export default function ListParticipant(props: ParticipantProps) {
 
 	React.useEffect(() => {
 		executeFunction(functionToUse);
+		// return () => { setLoad(false)};
 	}, [functionToUse])
 
 	function executeFunction(param: string) {

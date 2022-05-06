@@ -17,6 +17,7 @@ export default function Live() {
 
 	let socket = io(url_begin.concat(":3000/game"));
 	const [displayedNo, setDisplayedNo] = React.useState(false);
+	const [load, setLoad] = React.useState(false);
 
 	function display_no() {
 		if (displayedNo == false) {
@@ -78,8 +79,12 @@ export default function Live() {
 	}
 
 	useEffect(() => {
+		let isMounted = true;
+		setLoad(true);
 		if (displayedNo == false)
 			display_no();
+		// return () => { isMounted = false }; 
+		return () => { setLoad(false)};
 	}, []);
 
 	//Initialisation de variables
@@ -146,13 +151,18 @@ export default function Live() {
 				<div className="row d-flex justify-content-center text-center">
 					<div className="col-9">
 						<div className="live--div">
-							<p id="titre">📺 Watch games live</p>
-							<div id="content">
-								<div id="box">
-									<ul id="list">
-									</ul>
+							{/* { load == true ?  */}
+							{/* <> */}
+								<p id="titre">📺 Watch games live</p>
+								<div id="content">
+									<div id="box">
+										<ul id="list">
+										</ul>
+									</div>
 								</div>
-							</div>
+							{/* </> */}
+							{/* : "" */}
+							{/* } */}
 						</div>
 					</div>
 				</div>

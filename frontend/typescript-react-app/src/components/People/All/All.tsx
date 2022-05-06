@@ -45,6 +45,9 @@ export default function All(props: InputWrapperProps) {
 		renderUsers();
 		// calledOnce.current = true;
 
+		// let isMounted = true;
+
+		return () => { setLoad(false); };
 	}, []);
 
 	return (

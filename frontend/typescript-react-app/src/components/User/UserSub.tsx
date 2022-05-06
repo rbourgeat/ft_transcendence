@@ -23,7 +23,7 @@ export interface UserfuncProps {
 export default function User(props: UserfuncProps) {
 	//User et check
 	const [username, setUsername] = React.useState("");
-	const calledOnce = React.useRef(false);
+	// const calledOnce = React.useRef(false);
 	const [loaded, setLoaded] = React.useState(false);
 
 	//Badge
@@ -36,6 +36,8 @@ export default function User(props: UserfuncProps) {
 	const [xp, setXp] = React.useState(0);
 	const [level, setLevel] = React.useState(0);
 	const [nextlevel, setNextLevel] = React.useState(0);
+
+	const [load, setLoad] = React.useState(false);
 
 	//Status socket
 	const [color, setColor] = React.useState("grey");
@@ -92,11 +94,14 @@ export default function User(props: UserfuncProps) {
 	}
 
 	useEffect(() => {
-		if (calledOnce.current) {
-			return;
-		}
+		// if (calledOnce.current) {
+		// 	return;
+		// }
 		getUser();
-		calledOnce.current = true;
+		// calledOnce.current = true;
+
+		return () => { setLoad(false); };
+
 	}, []);
 
 	function renderImage(login: string) {
@@ -122,30 +127,37 @@ export default function User(props: UserfuncProps) {
 						<div className="user--stats" key={username}>
 							<>
 								<br />
-								<img id={username} className="profile--pic" height="80" width="80" />
-								<svg className="log--color_profile" height="40" width="40">
-									<circle cx="20" cy="20" r="15" fill={color} stroke="white" style={{ strokeWidth: '3' }} />
-								</svg>
-								<h2 id="user--data">{username}</h2>
-								<div className="col-9 mx-auto text-center" id="input-div">
-									<br />
-									<Achievements login={username} />
-									<br />
-									<Badge
-										rank={rank}
-										total_wins={wins}
-										total_loss={loss}
-										total_games={totalGames}
-										win_loss_ratio={ratio}
-										xp={xp}
-										points={points}
-										to_next={nextlevel}
-										level={level}
-									/>
-									<br />
-									{loaded == true ? <MatchHistory login={username} /> : ""}
-									<br />
-								</div>
+								{
+									loaded  == true ?
+									<div>
+										<img id={username} className="profile--pic" height="80" width="80" />
+										<svg className="log--color_profile" height="40" width="40">
+											<circle cx="20" cy="20" r="15" fill={color} stroke="white" style={{ strokeWidth: '3' }} />
+										</svg>
+										<h2 id="user--data">{username}</h2>
+										<div className="col-9 mx-auto text-center" id="input-div">
+											<br />
+											<Achievements login={username} />
+											<br />
+											<Badge
+												rank={rank}
+												total_wins={wins}
+												total_loss={loss}
+												total_games={totalGames}
+												win_loss_ratio={ratio}
+												xp={xp}
+												points={points}
+												to_next={nextlevel}
+												level={level}
+											/>
+											<br />
+										</div>
+									</div>
+									: ""
+								}
+								{loaded == true ? <MatchHistory login={username} /> : ""}
+								<br />
+								{/* </div> */}
 							</>
 						</div>
 					</div>

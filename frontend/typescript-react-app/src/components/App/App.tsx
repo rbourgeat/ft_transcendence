@@ -34,7 +34,8 @@ let selectedUser = "";
 function App() {
 
   const [username, setUsername] = React.useState("");
-  const calledOnce = React.useRef(false);
+  const [load, setLoaded] = React.useState(false);
+  // const calledOnce = React.useRef(false);
 
   function getUser() {
     let url = url_begin.concat(":3000/api/auth/");
@@ -53,21 +54,26 @@ function App() {
 
   useEffect(() => {
     getUser();
+    let isMounted = true;
+    setLoaded(true);
+
+		return () => { setLoaded(false)};
   }, []);
 
   useEffect(() => {
-    if (calledOnce.current) {
-      return;
-    }
+    // if (calledOnce.current) {
+    //   return;
+    // }
     if (localStorage.getItem("2fa") != "true" && localStorage.getItem("2fa") != "false")
       localStorage.setItem("2fa", "false");
     if (localStorage.getItem("loggedIn") != "true" && localStorage.getItem("loggedIn") != "false")
       localStorage.setItem("loggedIn", "false");
-    calledOnce.current = true;
+    // calledOnce.current = true;
     if (localStorage.getItem("2fa") != "true" && localStorage.getItem("2fa") != "false")
       localStorage.setItem("2fa", "false");
     if (localStorage.getItem("2faverif") != "true" && localStorage.getItem("2faverif") != "false")
       localStorage.setItem("2faverif", "false");
+      // setLoad(false);
   }, []);
 
   return (

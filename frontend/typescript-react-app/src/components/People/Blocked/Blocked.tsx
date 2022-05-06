@@ -39,6 +39,8 @@ export default function Blocked() {
 		// }
 		renderBlocked();
 		// calledOnce.current = true;
+		
+		return () => { setLoad(false); };
 	}, []);
 
 	return (

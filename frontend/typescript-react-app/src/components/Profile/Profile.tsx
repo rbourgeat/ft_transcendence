@@ -23,7 +23,7 @@ export interface ProfileProps {
 export default function Profile() {
 	const [color, setColor] = React.useState("");
 	const [status, setStatus] = React.useState("offline");
-	const calledOnce = React.useRef(false);
+	// const calledOnce = React.useRef(false);
 	const [userOK, setUserOk] = React.useState(false);
 	const { login } = useParams();
 
@@ -118,13 +118,13 @@ export default function Profile() {
 	}
 
 	useEffect(() => {
-		if (calledOnce.current) {
-			return;
-		}
+		// if (calledOnce.current) {
+		// 	return;
+		// }
 		getUserLogin(login)
 		buttonToDisplay();
-
-		calledOnce.current = true;
+		return () => { setLoad(false); };
+		// calledOnce.current = true;
 	}, []);
 
 	function buttonToDisplay() {

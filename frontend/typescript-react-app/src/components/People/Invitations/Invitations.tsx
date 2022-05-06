@@ -38,6 +38,7 @@ export default function Invitations() {
 		// }
 		renderInvitations();
 		// calledOnce.current = true;
+		return () => { setLoad(false); };
 	}, []);
 
 	return (

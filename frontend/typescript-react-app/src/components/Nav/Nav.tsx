@@ -11,7 +11,8 @@ else
 
 function Nav() {
 
-	const [sleep, setSleep] = React.useState(true);
+	const [sleep, setSleep] = React.useState(false);
+	const [load, setLoad] = React.useState(false);
 
 	function disconnect() {
 		axios.defaults.baseURL = 'url_begin.concat().":3000/api/';
@@ -46,10 +47,13 @@ function Nav() {
 
 
 	useEffect(() => {
-		setTimeout((() => {
-			setSleep(false);
-			// console.log("reenabled");
-		}), 3000);
+		let isMounted = true;
+		setLoad(true);
+		// setTimeout((() => {
+		// 	setSleep(false);
+		// 	// console.log("reenabled");
+		// }), 8000);
+		return () => { setLoad(false) }; 
 	}, [sleep]);
 
 	// console.log("render");
@@ -57,7 +61,10 @@ function Nav() {
 	return (
 		<div id="nav">
 			<nav className="navbar navbar-expand-lg" id="nav-bar">
-				<Link to="/" id="nav--title">PONG</Link>
+				{
+					load == true ?
+					<>
+					<Link to="/" id="nav--title">PONG</Link>
 				<button className="navbar-toggler" type="button">
 					<span className="navbar-toggler-icon"></span>
 				</button>
@@ -97,6 +104,9 @@ function Nav() {
 						</li>
 					</ul>
 				</div>
+				</>
+					: ""
+				}
 				<button id="logout--button" type="button" className="btn btn-dark" onClick={disconnect}>Log Out</button>
 			</nav >
 		</div >

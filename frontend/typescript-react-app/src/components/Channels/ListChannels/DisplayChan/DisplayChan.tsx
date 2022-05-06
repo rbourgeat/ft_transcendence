@@ -38,7 +38,7 @@ export default function DisplayChan(props: DisplayChanProps) {
 			}
 		}
 		setLoad(true);
-
+		return () => { setLoad(false)};
 	}, [isSelected, props.isChan]);
 
 	function selectChan() {

@@ -61,6 +61,7 @@ export default function ListChannels(props: ListChannelsProps) {
 	useEffect(() => {
 		clean();
 		renderListChannels();
+		return () => { setLoad(false)};
 	}, [exited])
 
 	function clean() {

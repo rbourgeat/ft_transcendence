@@ -10,6 +10,7 @@ export interface AchievementsProps {
 export default function Achievement(props: AchievementsProps) {
 
     const [myArray, setMyArray] = React.useState([]);
+    const [load, setLoad] = React.useState(false);
 
     function getAchievements() {
         let url = "";
@@ -38,7 +39,11 @@ export default function Achievement(props: AchievementsProps) {
 
     useEffect(() => {
         if (props.login)
-            getAchievements()
+            getAchievements();
+        let isMounted = true;
+        setLoad(true);
+
+        return () => { setLoad(false)};
     }, []);
 
     return (

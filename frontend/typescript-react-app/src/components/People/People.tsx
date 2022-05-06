@@ -49,6 +49,12 @@ export default function People(props: PeopleProps) {
 		// }
 		// getUser();
 		// calledOnce.current = true;
+
+		let isMounted = true;
+
+		// return () => { isMounted = false }; 
+		return () => { setLoad(false); };
+
 	}, []);
 
 	return (
